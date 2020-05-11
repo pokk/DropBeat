@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,29 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.presentation.activity
+package taiwan.no.one.dropbeat.presentation.fragment
 
-import androidx.navigation.navArgs
-import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.jurassicpark.databinding.ActivitySecondBinding
+import android.net.Uri
+import androidx.navigation.fragment.findNavController
+import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.databinding.ActivitySecondBinding
+import taiwan.no.one.dropbeat.presentation.activity.MainActivity
 
-class SecondActivity : BaseActivity<ActivitySecondBinding>() {
-    private val args by navArgs<SecondActivityArgs>()
-
+class MainFragment : BaseFragment<MainActivity, ActivitySecondBinding>() {
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
     override fun viewComponentBinding() {
-        binding.tvMsg.text = "This is second Activity ${args.id}"
+        binding.tvMsg.text = "321862189hfeuwih89d2h8923"
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        binding.btnClick.setOnClickListener {
+            //            findNavController().navigate(MainFragmentDirections.actionFragmentSecondToActivitySecond(13))
+            findNavController().navigate(Uri.parse("https://taiwan.no.one.dummy/dummy"))
+        }
     }
 }

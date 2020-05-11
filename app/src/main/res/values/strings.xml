@@ -1,7 +1,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2019 SmashKs
+  ~ Copyright (c) 2020 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,6 @@
   -->
 
 <resources>
-    <string name="app_name">jurassicpark</string>
+    <string name="app_name">dropbeat</string>
     <string name="title_dummy">dummy</string>
 </resources>

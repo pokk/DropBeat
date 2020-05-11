@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 package taiwan.no.one.featDummy
 
 import androidx.navigation.NavGraph
-import taiwan.no.one.jurassicpark.provider.NaviGraphRouteProvider
+import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
 
 object FeatureARoute : NaviGraphRouteProvider {
     override lateinit var navGraph: NavGraph

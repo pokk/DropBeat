@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,28 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.provider
+package taiwan.no.one.dropbeat.provider
 
-import org.kodein.di.Kodein
+import androidx.navigation.NavGraph
 
-interface ModuleProvider {
-    fun provide(): Kodein.Module
+/**
+ * Provides necessary information for NavGraph in other modules
+ */
+interface NaviGraphRouteProvider {
+    /*
+     * The inflated NavGraph
+     */
+    var navGraph: NavGraph
+
+    /**
+     * The .xml name for the nav-graph
+     */
+    val graphName: String
+
+    /**
+     * The full package name where the nav-graph is located
+     */
+    val packageName: String
+
+    val resourceId: Int
 }

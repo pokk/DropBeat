@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.featDummy.FeatModules.FEAT_NAME
 import taiwan.no.one.featDummy.domain.usecase.RetrieveDummyCase
 import taiwan.no.one.featDummy.domain.usecase.RetrieveDummyDeferredCase
-import taiwan.no.one.jurassicpark.provider.ModuleProvider
 
 object DomainModules : ModuleProvider {
     override fun provide() = Kodein.Module("${FEAT_NAME}DomainModule") {

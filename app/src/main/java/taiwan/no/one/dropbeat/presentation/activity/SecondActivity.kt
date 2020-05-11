@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.presentation.activity
+package taiwan.no.one.dropbeat.presentation.activity
 
-import android.content.Context
-import android.content.res.Configuration
-import com.google.android.play.core.splitcompat.SplitCompat
+import androidx.navigation.navArgs
 import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.jurassicpark.JurassicParkApp
-import taiwan.no.one.jurassicpark.databinding.ActivityMainBinding
-import taiwan.no.one.jurassicpark.presentation.lifecycle.SplitModuleAddLifecycle
-import java.util.Locale
+import taiwan.no.one.dropbeat.databinding.ActivitySecondBinding
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-    init {
-        SplitModuleAddLifecycle(JurassicParkApp.appContext, listOf("featDummy"))
-    }
+class SecondActivity : BaseActivity<ActivitySecondBinding>() {
+    private val args by navArgs<SecondActivityArgs>()
 
-    override fun attachBaseContext(newBase: Context?) {
-        val config = Configuration().apply { setLocale(Locale.getDefault()) }
-        val ctx = newBase?.createConfigurationContext(config)
-        super.attachBaseContext(ctx)
-        SplitCompat.install(this)
+    override fun viewComponentBinding() {
+        binding.tvMsg.text = "This is second Activity ${args.id}"
     }
 }

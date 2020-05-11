@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2019 SmashKs
+  ~ Copyright (c) 2020 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="taiwan.no.one.jurassicpark">
+    package="taiwan.no.one.dropbeat">
 
     <application
-        android:name=".JurassicParkApp"
+        android:name="taiwan.no.one.dropbeat.DropBeatApp"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -40,7 +40,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:label"
         tools:targetApi="M">
-        <activity android:name=".presentation.activity.MainActivity">
+        <activity android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -57,6 +57,6 @@
                     android:scheme="http"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.activity.SecondActivity"/>
+        <activity android:name="taiwan.no.one.dropbeat.presentation.activity.SecondActivity"/>
     </application>
 </manifest>

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,28 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.di
+package taiwan.no.one.dropbeat
 
-import taiwan.no.one.jurassicpark.BuildConfig
-import taiwan.no.one.jurassicpark.provider.ModuleProvider
+import android.app.Application
+import android.content.Context
+import com.google.android.play.core.splitcompat.SplitCompat
+import org.kodein.di.KodeinAware
+import taiwan.no.one.dropbeat.di.Dispatcher
 
-object FeatModuleHelper {
-    // Will get the string "taiwan.no.one.".
-    val featurePackagePrefix by lazy {
-        BuildConfig.APPLICATION_ID
-            .split(".")
-            .dropLast(1)
-            .joinToString(".")
+class DropBeatApp : Application(), KodeinAware {
+    companion object {
+        lateinit var appContext: Context
+            private set
     }
 
-    val kodeinModules = BuildConfig.FEATURE_MODULE_NAMES
-        .map { "$featurePackagePrefix.$it.FeatModules" }
-        .map {
-            try {
-                Class.forName(it).kotlin.objectInstance as ModuleProvider
-            }
-            catch (e: ClassNotFoundException) {
-                throw ClassNotFoundException("Kodein module class not found $it")
-            }
-        }
-        .map { it.provide() }
+    init {
+        appContext = this
+    }
+
+    override val kodein = Dispatcher.importIntoApp(this)
+
+    override fun attachBaseContext(context: Context?) {
+        super.attachBaseContext(context)
+        SplitCompat.install(this)
+    }
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,29 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.presentation.fragment
+package taiwan.no.one.dropbeat.di
 
-import android.net.Uri
-import androidx.navigation.fragment.findNavController
-import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.jurassicpark.databinding.ActivitySecondBinding
-import taiwan.no.one.jurassicpark.presentation.activity.MainActivity
+import taiwan.no.one.dropbeat.BuildConfig
+import taiwan.no.one.dropbeat.provider.ModuleProvider
 
-class MainFragment : BaseFragment<MainActivity, ActivitySecondBinding>() {
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
-    override fun viewComponentBinding() {
-        binding.tvMsg.text = "321862189hfeuwih89d2h8923"
+object FeatModuleHelper {
+    // Will get the string "taiwan.no.one.".
+    val featurePackagePrefix by lazy {
+        BuildConfig.APPLICATION_ID
+            .split(".")
+            .dropLast(1)
+            .joinToString(".")
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all component listeners here.
-     */
-    override fun componentListenersBinding() {
-        binding.btnClick.setOnClickListener {
-            //            findNavController().navigate(MainFragmentDirections.actionFragmentSecondToActivitySecond(13))
-            findNavController().navigate(Uri.parse("https://taiwan.no.one.dummy/dummy"))
+    val kodeinModules = BuildConfig.FEATURE_MODULE_NAMES
+        .map { "$featurePackagePrefix.$it.FeatModules" }
+        .map {
+            try {
+                Class.forName(it).kotlin.objectInstance as ModuleProvider
+            }
+            catch (e: ClassNotFoundException) {
+                throw ClassNotFoundException("Kodein module class not found $it")
+            }
         }
-    }
+        .map { it.provide() }
 }

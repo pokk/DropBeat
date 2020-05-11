@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,12 @@
 package taiwan.no.one.featDummy.presentation
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe as obs
 import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.featDummy.databinding.FragmentDummyBinding
 import taiwan.no.one.featDummy.presentation.viewmodel.DummyViewModel
+import androidx.lifecycle.observe as obs
 
 class DummyFragment : BaseFragment<BaseActivity<*>, FragmentDummyBinding>() {
     private val vm by viewModels<DummyViewModel> { vmFactory }

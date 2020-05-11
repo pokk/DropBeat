@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,6 @@ object AndroidConfiguration {
     const val TARGET_SDK = 29
     const val COMPILE_SDK = TARGET_SDK
 
-    const val ID = "taiwan.no.one.jurassicpark"
+    const val ID = "taiwan.no.one.dropbeat"
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }

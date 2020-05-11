@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.di
+package taiwan.no.one.dropbeat.di
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import org.kodein.di.Kodein
+import org.kodein.di.android.x.androidXModule
 
-typealias ViewModelEntry = Pair<Class<out ViewModel>, ViewModel>
-typealias ViewModelEntries = Set<ViewModelEntry>
+object Dispatcher {
+    fun importIntoApp(app: Application) = Kodein.lazy {
+        import(androidXModule(app))
+        import(ContainerModule.provide())
+        importAll(FeatModuleHelper.kodeinModules)
+    }
+}

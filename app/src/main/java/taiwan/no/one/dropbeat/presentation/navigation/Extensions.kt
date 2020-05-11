@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.presentation.navigation
+package taiwan.no.one.dropbeat.presentation.navigation
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
-import taiwan.no.one.jurassicpark.provider.NaviGraphRouteProvider
+import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
 
 fun Fragment.addNavGraphDestination(
     navigationGraphRoute: NaviGraphRouteProvider,

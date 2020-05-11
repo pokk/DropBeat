@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,28 +22,22 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark
+package taiwan.no.one.dropbeat.di
 
-import android.app.Application
-import android.content.Context
-import com.google.android.play.core.splitcompat.SplitCompat
-import org.kodein.di.KodeinAware
-import taiwan.no.one.jurassicpark.di.Dispatcher
+import androidx.lifecycle.ViewModelProvider
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.setBinding
+import org.kodein.di.generic.singleton
+import taiwan.no.one.core.presentation.viewmodel.ViewModelFactory
 
-class JurassicParkApp : Application(), KodeinAware {
-    companion object {
-        lateinit var appContext: Context
-            private set
-    }
+object ContainerModule {
+    fun provide() = Kodein.Module("ContainerModule") {
+        bind() from setBinding<ViewModelEntry>()
 
-    init {
-        appContext = this
-    }
-
-    override val kodein = Dispatcher.importIntoApp(this)
-
-    override fun attachBaseContext(context: Context?) {
-        super.attachBaseContext(context)
-        SplitCompat.install(this)
+        bind<ViewModelProvider.Factory>() with singleton {
+            ViewModelFactory(instance<ViewModelEntries>().toMap().toMutableMap())
+        }
     }
 }

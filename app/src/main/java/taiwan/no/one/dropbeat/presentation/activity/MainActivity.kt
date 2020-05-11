@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,26 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.di
+package taiwan.no.one.dropbeat.presentation.activity
 
-import androidx.lifecycle.ViewModelProvider
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.setBinding
-import org.kodein.di.generic.singleton
-import taiwan.no.one.core.presentation.viewmodel.ViewModelFactory
+import android.content.Context
+import android.content.res.Configuration
+import com.google.android.play.core.splitcompat.SplitCompat
+import taiwan.no.one.core.presentation.activity.BaseActivity
+import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.databinding.ActivityMainBinding
+import taiwan.no.one.dropbeat.presentation.lifecycle.SplitModuleAddLifecycle
+import java.util.Locale
 
-object ContainerModule {
-    fun provide() = Kodein.Module("ContainerModule") {
-        bind() from setBinding<ViewModelEntry>()
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+    init {
+        SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featDummy"))
+    }
 
-        bind<ViewModelProvider.Factory>() with singleton {
-            ViewModelFactory(instance<ViewModelEntries>().toMap().toMutableMap())
-        }
+    override fun attachBaseContext(newBase: Context?) {
+        val config = Configuration().apply { setLocale(Locale.getDefault()) }
+        val ctx = newBase?.createConfigurationContext(config)
+        super.attachBaseContext(ctx)
+        SplitCompat.install(this)
     }
 }

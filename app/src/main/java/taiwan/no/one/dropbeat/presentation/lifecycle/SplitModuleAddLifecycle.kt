@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.jurassicpark.presentation.lifecycle
+package taiwan.no.one.dropbeat.presentation.lifecycle
 
 import android.content.Context
 import androidx.lifecycle.Lifecycle
@@ -32,8 +32,8 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
-import taiwan.no.one.jurassicpark.di.FeatModuleHelper
-import taiwan.no.one.jurassicpark.provider.NaviGraphRouteProvider
+import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
 
 class SplitModuleAddLifecycle(
     private val context: Context,
