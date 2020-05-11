@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2019 SmashKs
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Default Material Units Dimens -->
+    <dimen name="md_zero_unit">0dp</dimen>
+    <dimen name="md_one_half_unit">4dp</dimen>
+    <dimen name="md_one_unit">8dp</dimen>
+    <dimen name="md_two_half_unit">12dp</dimen>
+    <dimen name="md_two_unit">16dp</dimen>
+    <dimen name="md_three_half_unit">20dp</dimen>
+    <dimen name="md_three_unit">24dp</dimen>
+    <dimen name="md_four_half_unit">28dp</dimen>
+    <dimen name="md_four_unit">32dp</dimen>
+    <dimen name="md_five_half_unit">36dp</dimen>
+    <dimen name="md_five_unit">40dp</dimen>
+    <dimen name="md_six_half_unit">44dp</dimen>
+    <dimen name="md_six_unit">48dp</dimen>
+    <dimen name="md_seven_half_unit">52dp</dimen>
+    <dimen name="md_seven_unit">56dp</dimen>
+    <dimen name="md_eight_half_unit">60dp</dimen>
+    <dimen name="md_eight_unit">64dp</dimen>
+    <dimen name="md_nine_half_unit">68dp</dimen>
+    <dimen name="md_nine_unit">72dp</dimen>
+    <dimen name="md_ten_half_unit">76dp</dimen>
+    <dimen name="md_ten_unit">80dp</dimen>
+
+    <dimen name="one_dp">1dp</dimen>
+
+    <!-- Default Corner Radius -->
+    <dimen name="fragment_dialog_corner_radius">8dp</dimen>
+</resources>
