@@ -44,7 +44,7 @@ class SplitModuleAddLifecycle(
         SplitInstallRequest.newBuilder().apply { modules.forEach { addModule(it) } }.build()
     }
     private val listener by lazy {
-        val dummyRoute = "${FeatModuleHelper.featurePackagePrefix}.featDummy.FeatureARoute"
+        val dummyRoute = "${FeatModuleHelper.featurePackagePrefix}.featSearchMusic.FeatureARoute"
         SplitInstallStateUpdatedListener {
             when (it.status()) {
                 SplitInstallSessionStatus.INSTALLED -> {
