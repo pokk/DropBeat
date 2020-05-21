@@ -22,5 +22,10 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.domain.usecase
+
+import taiwan.no.one.core.domain.usecase.ObserverUsecase
+import taiwan.no.one.featSearchMusic.domain.model.Dummy
+
+internal typealias RetrieveDummyCase = ObserverUsecase<List<Dummy>, RetrieveDummyReq>
+internal typealias RetrieveDummyReq = RetrieveDummyDeferredCase.Request

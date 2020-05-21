@@ -22,5 +22,11 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.domain.repository
+
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.featSearchMusic.domain.model.Dummy
+
+internal interface DummyRepo : Repository {
+    suspend fun retrieveDummies(): List<Dummy>
+}

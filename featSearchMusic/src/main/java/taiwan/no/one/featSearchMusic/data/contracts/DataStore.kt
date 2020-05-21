@@ -22,5 +22,6 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.contracts
+
+internal interface DataStore

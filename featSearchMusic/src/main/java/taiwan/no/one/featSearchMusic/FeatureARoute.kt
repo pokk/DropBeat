@@ -22,5 +22,17 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic
+
+import androidx.navigation.NavGraph
+import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
+
+object FeatureARoute : NaviGraphRouteProvider {
+    override lateinit var navGraph: NavGraph
+
+    override val graphName get() = "nav_dummy"
+
+    override val packageName get() = BuildConfig.APPLICATION_ID
+
+    override val resourceId get() = R.navigation.nav_dummy
+}

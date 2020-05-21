@@ -22,5 +22,16 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.repository
+
+import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+import taiwan.no.one.featSearchMusic.data.stores.LocalStore
+import taiwan.no.one.featSearchMusic.data.stores.RemoteStore
+import taiwan.no.one.featSearchMusic.domain.repository.DummyRepo
+
+internal class DummyRepository(
+    private val local: LocalStore,
+    private val remote: RemoteStore
+) : DummyRepo {
+    override suspend fun retrieveDummies() = local.getDummies().map(DummyEntity::toModel)
+}

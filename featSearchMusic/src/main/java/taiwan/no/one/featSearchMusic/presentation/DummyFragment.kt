@@ -22,5 +22,30 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.presentation
+
+import androidx.fragment.app.viewModels
+import com.devrapid.kotlinknifer.logw
+import taiwan.no.one.core.presentation.activity.BaseActivity
+import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.featSearchMusic.databinding.FragmentDummyBinding
+import taiwan.no.one.featSearchMusic.presentation.viewmodel.DummyViewModel
+import androidx.lifecycle.observe as obs
+
+class DummyFragment : BaseFragment<BaseActivity<*>, FragmentDummyBinding>() {
+    private val vm by viewModels<DummyViewModel> { vmFactory }
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        vm.dummy.obs(this) {
+            logw(it)
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        vm.getDummies()
+    }
+}

@@ -22,5 +22,22 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.presentation
+
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.inSet
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
+import taiwan.no.one.dropbeat.di.ViewModelEntry
+import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
+import taiwan.no.one.featSearchMusic.presentation.viewmodel.DummyViewModel
+
+object PresentationModules : ModuleProvider {
+    override fun provide() = Kodein.Module("${FEAT_NAME}PreziModule") {
+        bind<ViewModelEntry>().inSet() with provider {
+            DummyViewModel::class.java to DummyViewModel(instance())
+        }
+    }
+}

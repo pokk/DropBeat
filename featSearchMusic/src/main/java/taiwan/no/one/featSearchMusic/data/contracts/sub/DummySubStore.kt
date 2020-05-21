@@ -22,5 +22,10 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.contracts.sub
+
+import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+
+internal interface DummySubStore {
+    suspend fun getDummies(): List<DummyEntity>
+}

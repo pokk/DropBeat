@@ -22,5 +22,15 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.presentation
+
+import android.app.Activity
+import android.os.Bundle
+import taiwan.no.one.featSearchMusic.R
+
+class EntryActivity : Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_dummy)
+    }
+}

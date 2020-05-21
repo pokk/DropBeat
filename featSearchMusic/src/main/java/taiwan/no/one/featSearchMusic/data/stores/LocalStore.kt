@@ -22,5 +22,21 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.stores
+
+import taiwan.no.one.featSearchMusic.data.contracts.DataStore
+import taiwan.no.one.featSearchMusic.data.contracts.sub.DummySubStore
+import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+import taiwan.no.one.featSearchMusic.data.local.services.database.v1.DummyDao
+import taiwan.no.one.featSearchMusic.data.local.services.json.v1.DummyFile
+
+internal class LocalStore(
+    private val dummyDao: DummyDao,
+    private val dummyFile: DummyFile
+) : DataStore, DummySubStore {
+    override suspend fun getDummies(): List<DummyEntity> {
+        val dbDummy = dummyDao.getDummies()
+        if (dbDummy.isNotEmpty()) return dbDummy
+        return dummyFile.getDummies()
+    }
+}

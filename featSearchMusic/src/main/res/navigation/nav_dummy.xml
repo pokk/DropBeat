@@ -26,12 +26,17 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navFeatDummy"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navDummy"
     app:startDestination="@id/dummyFragment">
 
     <fragment
         android:id="@+id/dummyFragment"
         android:name="taiwan.no.one.featSearchMusic.presentation.DummyFragment"
-        android:label="Dummy Index">
+        android:label="Dummy Fragment"
+        tools:layout="@layout/fragment_dummy">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="taiwan.no.one.dummy/dummy"/>
     </fragment>
 </navigation>

@@ -22,5 +22,20 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic
+
+import org.kodein.di.Kodein
+import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.featSearchMusic.data.DataModules
+import taiwan.no.one.featSearchMusic.domain.DomainModules
+import taiwan.no.one.featSearchMusic.presentation.PresentationModules
+
+object FeatModules : ModuleProvider {
+    internal const val FEAT_NAME = "Dummy"
+
+    override fun provide() = Kodein.Module("${FEAT_NAME}Module") {
+        import(DataModules.provide())
+        import(DomainModules.provide())
+        import(PresentationModules.provide())
+    }
+}

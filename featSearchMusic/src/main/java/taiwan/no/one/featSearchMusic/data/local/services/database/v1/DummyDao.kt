@@ -22,5 +22,21 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.local.services.database.v1
+
+import androidx.room.Dao
+import androidx.room.Query
+import taiwan.no.one.core.data.local.room.BaseDao
+import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+
+/**
+ * Integrated the base [androidx.room.Room] database operations.
+ * Thru [androidx.room.Room] we can just define the interfaces that we want to
+ * access for from a local database.
+ * Using prefix name (get), (insert), (update), (delete)
+ */
+@Dao
+internal abstract class DummyDao : BaseDao<DummyEntity> {
+    @Query("""SELECT * FROM table_dummy""")
+    abstract suspend fun getDummies(): List<DummyEntity>
+}

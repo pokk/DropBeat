@@ -35,7 +35,7 @@ import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     init {
-        SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featDummy"))
+        SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featSearchMusic"))
     }
 
     override fun attachBaseContext(newBase: Context?) {

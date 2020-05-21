@@ -22,5 +22,17 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.local.services.json.v1
+
+import android.content.Context
+import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+import taiwan.no.one.featSearchMusic.data.parser.parseObjectFromJson
+
+internal class DummyFile(
+    private val context: Context
+) {
+    suspend fun getDummies(): List<DummyEntity> {
+        val jsonFileName = "json/dummy.json"
+        return context.parseObjectFromJson<List<DummyEntity>>(jsonFileName).orEmpty()
+    }
+}

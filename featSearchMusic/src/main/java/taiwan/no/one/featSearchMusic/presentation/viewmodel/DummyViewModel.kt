@@ -22,5 +22,21 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.presentation.viewmodel
+
+import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import taiwan.no.one.featSearchMusic.domain.model.Dummy
+import taiwan.no.one.featSearchMusic.domain.usecase.RetrieveDummyCase
+import taiwan.no.one.ktx.livedata.SilentMutableLiveData
+import taiwan.no.one.ktx.livedata.toLiveData
+
+internal class DummyViewModel(
+    private val retrieveDummyCase: RetrieveDummyCase
+) : BehindViewModel() {
+    private val _dummy by lazy { SilentMutableLiveData<List<Dummy>>() }
+    val dummy = _dummy.toLiveData()
+
+    fun getDummies() = launchBehind {
+        retrieveDummyCase.execute().onSuccess(_dummy::postValue)
+    }
+}

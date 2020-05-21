@@ -22,5 +22,8 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.stores
+
+import taiwan.no.one.featSearchMusic.data.contracts.DataStore
+
+internal class RemoteStore : DataStore
