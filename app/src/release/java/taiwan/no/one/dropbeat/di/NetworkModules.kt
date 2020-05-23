@@ -21,39 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package taiwan.no.one.featSearchMusic
+package taiwan.no.one.dropbeat.di
 
 import android.content.Context
 import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
-import retrofit2.Retrofit
-import taiwan.no.one.dropbeat.di.NetworkModules
-import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.featSearchMusic.data.DataModules
-import taiwan.no.one.featSearchMusic.domain.DomainModules
-import taiwan.no.one.featSearchMusic.presentation.PresentationModules
+import org.kodein.di.generic.provider
+import taiwan.no.one.dropbeat.di.BasedNetworkModules
+import taiwan.no.one.dropbeat.di.Constant.TAG_BASE_OKHTTP
 
-object FeatModules : ModuleProvider {
-    internal const val FEAT_NAME = "SearchMusic"
-
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}Module") {
-        import(NetworkModules.provide(context))
-        import(provideNetwork())
-        import(DataModules.provide(context))
-        import(DomainModules.provide(context))
-        import(PresentationModules.provide(context))
-    }
-
-    private fun provideNetwork() = Kodein.Module("${FEAT_NAME}NetworkModule") {
-        // Build Retrofit2 object
-        bind<Retrofit.Builder>() with singleton {
-            Retrofit.Builder()
-                .addConverterFactory(instance())
-                .client(instance<OkHttpClient.Builder>().build())
-        }
+object NetworkModules {
+    fun provide(context: Context) = Kodein.Module("NetworkModule") {
+        import(BasedNetworkModules.netProvider(context))
+        // Build Debug OkHttp object
+        bind<OkHttpClient.Builder>() with provider { instance<OkHttpClient.Builder>(TAG_BASE_OKHTTP) }
     }
 }
