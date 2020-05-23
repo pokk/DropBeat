@@ -22,6 +22,12 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "presentation/build.gradle" }}
       - run:
+          name: Decode Local Properties Key
+          command: echo ${LOCAL_PROPERTIES} | base64 --decode > ${HOME}/workspace/local.properties
+      #      - run:
+      #          name: Decode Google Services Key
+      #          command: echo ${GOOGLE_SERVICES_KEY} | base64 --decode > ${HOME}/workspace/app/google-services.json
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
