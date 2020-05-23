@@ -24,8 +24,9 @@
 
 package taiwan.no.one.dropbeat.provider
 
+import android.content.Context
 import org.kodein.di.Kodein
 
 interface ModuleProvider {
-    fun provide(): Kodein.Module
+    fun provide(context: Context): Kodein.Module
 }

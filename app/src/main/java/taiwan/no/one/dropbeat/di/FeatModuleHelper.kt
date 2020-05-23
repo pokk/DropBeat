@@ -24,6 +24,7 @@
 
 package taiwan.no.one.dropbeat.di
 
+import android.content.Context
 import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 
@@ -36,7 +37,7 @@ object FeatModuleHelper {
             .joinToString(".")
     }
 
-    val kodeinModules = BuildConfig.FEATURE_MODULE_NAMES
+    fun kodeinModules(context: Context) = BuildConfig.FEATURE_MODULE_NAMES
         .map { "$featurePackagePrefix.$it.FeatModules" }
         .map {
             try {
@@ -46,5 +47,5 @@ object FeatModuleHelper {
                 throw ClassNotFoundException("Kodein module class not found $it")
             }
         }
-        .map { it.provide() }
+        .map { it.provide(context) }
 }

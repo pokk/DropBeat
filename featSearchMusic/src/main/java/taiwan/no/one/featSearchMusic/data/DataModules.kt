@@ -24,6 +24,7 @@
 
 package taiwan.no.one.featSearchMusic.data
 
+import android.content.Context
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -39,7 +40,7 @@ import taiwan.no.one.featSearchMusic.data.stores.RemoteStore
 import taiwan.no.one.featSearchMusic.domain.repositories.SearchMusicRepo
 
 object DataModules : ModuleProvider {
-    override fun provide() = Kodein.Module("${FEAT_NAME}DataModule") {
+    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide())
 

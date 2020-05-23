@@ -24,6 +24,7 @@
 
 package taiwan.no.one.featSearchMusic.presentation
 
+import android.content.Context
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.inSet
@@ -35,7 +36,7 @@ import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
 import taiwan.no.one.featSearchMusic.presentation.viewmodels.DummyViewModel
 
 object PresentationModules : ModuleProvider {
-    override fun provide() = Kodein.Module("${FEAT_NAME}PreziModule") {
+    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
         bind<ViewModelEntry>().inSet() with provider {
             DummyViewModel::class.java to DummyViewModel(instance())
         }

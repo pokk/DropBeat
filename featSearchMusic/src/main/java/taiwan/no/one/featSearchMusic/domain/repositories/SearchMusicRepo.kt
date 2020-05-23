@@ -25,7 +25,7 @@
 package taiwan.no.one.featSearchMusic.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity.MusicEntity
+import taiwan.no.one.featSearchMusic.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.featSearchMusic.domain.models.Dummy
 
 /**
@@ -35,5 +35,5 @@ import taiwan.no.one.featSearchMusic.domain.models.Dummy
 internal interface SearchMusicRepo : Repository {
     suspend fun fetchDummies(): List<Dummy>
 
-    suspend fun fetchMusic(): MusicEntity
+    suspend fun fetchMusic(): List<SongEntity>
 }

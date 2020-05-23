@@ -22,23 +22,29 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.domain
+package taiwan.no.one.featSearchMusic.domain.usecases
 
-import android.content.Context
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
-import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
-import taiwan.no.one.featSearchMusic.domain.usecases.FetchMusicCase
-import taiwan.no.one.featSearchMusic.domain.usecases.FetchMusicOneShotCase
-import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyCase
-import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyDeferredCase
+import android.media.MediaMetadataRetriever
+import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.featSearchMusic.domain.repositories.SearchMusicRepo
 
-object DomainModules : ModuleProvider {
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
-        bind<RetrieveDummyCase>() with singleton { RetrieveDummyDeferredCase(instance()) }
-        bind<FetchMusicCase>() with singleton { FetchMusicOneShotCase(instance()) }
+internal class FetchMusicOneShotCase(
+    private val searchMusicRepo: SearchMusicRepo
+) : FetchMusicCase() {
+    override suspend fun acquireCase(parameter: Request?) = searchMusicRepo.fetchMusic().map {
+        // Fix the track with 0 duration.
+        if (it.length == 0) {
+            val retriever = MediaMetadataRetriever().apply {
+                setDataSource(it.url, hashMapOf())
+            }
+            val time = retriever.extractMetadata(METADATA_KEY_DURATION).toLong() / 1000
+            it.copy(length = time.toInt())
+        }
+        else {
+            it
+        }
     }
+
+    data class Request(val id: Int) : Usecase.RequestValues
 }

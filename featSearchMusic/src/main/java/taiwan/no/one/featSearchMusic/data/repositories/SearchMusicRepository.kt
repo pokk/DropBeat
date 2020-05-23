@@ -35,5 +35,5 @@ internal class SearchMusicRepository(
 ) : SearchMusicRepo {
     override suspend fun fetchDummies() = local.getDummies().map(DummyEntity::toModel)
 
-    override suspend fun fetchMusic() = remote.getMusic().entity
+    override suspend fun fetchMusic() = remote.getMusic().entity.items
 }
