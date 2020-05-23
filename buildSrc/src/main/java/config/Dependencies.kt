@@ -96,6 +96,7 @@ fun DependencyHandlerScope.androidJetpackDependencies(env: String) {
     env(LibraryDependency.JetPack.APPCOMPAT)
     env(LibraryDependency.JetPack.LIFECYCLE_SERVICE)
     env(LibraryDependency.JetPack.LIFECYCLE_PROCESS)
+    env(LibraryDependency.JetPack.NAVIGATION_DYNAMIC_FEATURE)
 }
 
 fun DependencyHandlerScope.commonKtxDependencies(env: String) {

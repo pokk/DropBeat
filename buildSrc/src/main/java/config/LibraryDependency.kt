@@ -90,6 +90,8 @@ object LibraryDependency {
         const val LIFECYCLE_COMPILER = "androidx.lifecycle:lifecycle-compiler:${Version.AAC_LIFECYCLE}"
         const val LIFECYCLE_SERVICE = "androidx.lifecycle:lifecycle-service:${Version.AAC_LIFECYCLE}"
         const val LIFECYCLE_PROCESS = "androidx.lifecycle:lifecycle-process:${Version.AAC_LIFECYCLE}"
+        const val NAVIGATION_DYNAMIC_FEATURE =
+            "androidx.navigation:navigation-dynamic-features-fragment:${Version.NAVIGATION_KTX}"
     }
 
     object AndroidKtx {
