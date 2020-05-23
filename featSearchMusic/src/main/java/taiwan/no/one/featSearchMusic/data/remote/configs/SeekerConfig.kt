@@ -29,7 +29,7 @@ import taiwan.no.one.featSearchMusic.BuildConfig
 /**
  * The configuration of a remote google news api service.
  */
-class SeekerConfig : ApiConfig {
+internal class SeekerConfig : ApiConfig {
     companion object {
         const val API_REQUEST = BuildConfig.SeekSongUriRequest
 

@@ -27,7 +27,7 @@ package taiwan.no.one.featSearchMusic.data.remote.configs
 /**
  * Interface of the setting of the difference http configurations.
  */
-interface ApiConfig {
+internal interface ApiConfig {
     /**
      * Obtain the base http url.
      *

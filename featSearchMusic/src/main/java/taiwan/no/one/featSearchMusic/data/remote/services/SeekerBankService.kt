@@ -33,7 +33,7 @@ import taiwan.no.one.featSearchMusic.data.remote.configs.SeekerConfig
  * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
-interface SeekerBankService {
+internal interface SeekerBankService {
     @GET(SeekerConfig.API_REQUEST)
     suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoEntity
 }

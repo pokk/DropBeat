@@ -35,7 +35,7 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
 import taiwan.no.one.featSearchMusic.presentation.viewmodels.DummyViewModel
 
-object PresentationModules : ModuleProvider {
+internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
         bind<ViewModelEntry>().inSet() with provider {
             DummyViewModel::class.java to DummyViewModel(instance())

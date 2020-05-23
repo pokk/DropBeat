@@ -31,21 +31,23 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import taiwan.no.one.core.data.local.room.convert.DateConvert
 import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
+import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.featSearchMusic.data.local.services.database.v1.DummyDao
+import taiwan.no.one.featSearchMusic.data.local.services.database.v1.SearchHistoryDao
 
 /**
  * The access operations to a database.
  */
-@Database(entities = [DummyEntity::class],
+@Database(entities = [DummyEntity::class, SearchHistoryEntity::class],
           version = 1,
           exportSchema = false)
 @TypeConverters(DateConvert::class)
-internal abstract class DummyDatabase : RoomDatabase() {
+internal abstract class BankDatabase : RoomDatabase() {
     companion object {
-        @Volatile private var INSTANCE: DummyDatabase? = null
-        private const val DATABASE_NAME = "number_one.db"
+        @Volatile private var INSTANCE: BankDatabase? = null
+        private const val DATABASE_NAME = "music_bank.db"
 
-        fun getDatabase(context: Context): DummyDatabase {
+        fun getDatabase(context: Context): BankDatabase {
             val tempInstance = INSTANCE
 
             if (tempInstance != null) {
@@ -54,7 +56,7 @@ internal abstract class DummyDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    DummyDatabase::class.java,
+                    BankDatabase::class.java,
                     DATABASE_NAME
                 ).build()
                 INSTANCE = instance
@@ -65,4 +67,5 @@ internal abstract class DummyDatabase : RoomDatabase() {
     }
 
     abstract fun createDummyDao(): DummyDao
+    abstract fun createSearchHistoryDao(): SearchHistoryDao
 }

@@ -36,7 +36,7 @@ import taiwan.no.one.featSearchMusic.domain.usecases.FetchMusicOneShotCase
 import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyCase
 import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyDeferredCase
 
-object DomainModules : ModuleProvider {
+internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
         bind<RetrieveDummyCase>() with singleton { RetrieveDummyDeferredCase(instance()) }
         bind<FetchMusicCase>() with singleton { FetchMusicOneShotCase(instance()) }

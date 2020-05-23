@@ -22,21 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts
+package taiwan.no.one.featSearchMusic.domain.repositories
 
 import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
 
 /**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
+ * This interface will be the similar to [com.no1.taiwan.stationmusicfm.data.datastores.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-internal interface DataStore {
-    suspend fun getMusic(): MusicInfoEntity
+internal interface HistoryRepository {
+    suspend fun addOrUpdateSearchHistory(keyword: String): Boolean
 
-    suspend fun createOrModifySearchHistory(keyword: String): Boolean
+    suspend fun fetchSearchHistories(count: Int): List<SearchHistoryEntity>
 
-    suspend fun getSearchHistories(count: Int): List<SearchHistoryEntity>
-
-    suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
+    suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
 }

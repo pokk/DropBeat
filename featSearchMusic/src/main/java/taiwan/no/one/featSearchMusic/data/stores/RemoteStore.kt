@@ -24,11 +24,17 @@
 
 package taiwan.no.one.featSearchMusic.data.stores
 
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.featSearchMusic.BuildConfig
 import taiwan.no.one.featSearchMusic.data.contracts.DataStore
+import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.featSearchMusic.data.remote.services.SeekerBankService
 
+/**
+ * The implementation of the remote data store. The responsibility is selecting a correct
+ * remote service to access the data.
+ */
 internal class RemoteStore(
     private val seekerBankService: SeekerBankService
 ) : DataStore {
@@ -38,4 +44,13 @@ internal class RemoteStore(
         )
         return seekerBankService.retrieveSearchMusic(queries)
     }
+
+    override suspend fun createOrModifySearchHistory(keyword: String) = throw UnsupportedOperation()
+
+    override suspend fun getSearchHistories(count: Int) = throw UnsupportedOperation()
+
+    override suspend fun removeSearchHistory(
+        keyword: String?,
+        entity: SearchHistoryEntity?
+    ) = throw UnsupportedOperation()
 }

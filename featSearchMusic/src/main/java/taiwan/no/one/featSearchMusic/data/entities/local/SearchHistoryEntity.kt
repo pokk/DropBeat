@@ -22,21 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts
+package taiwan.no.one.featSearchMusic.data.entities.local
 
-import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import taiwan.no.one.ext.DEFAULT_STR
+import java.util.Date
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-internal interface DataStore {
-    suspend fun getMusic(): MusicInfoEntity
-
-    suspend fun createOrModifySearchHistory(keyword: String): Boolean
-
-    suspend fun getSearchHistories(count: Int): List<SearchHistoryEntity>
-
-    suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
-}
+@Entity(tableName = "table_history")
+internal data class SearchHistoryEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val keyword: String = DEFAULT_STR,
+    val updated: Date = Date()
+)

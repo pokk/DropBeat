@@ -28,7 +28,7 @@ import com.google.gson.annotations.SerializedName
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.featSearchMusic.data.entities.remote.CommonMusicEntity.SongEntity
 
-data class MusicInfoEntity(
+internal data class MusicInfoEntity(
     val status: String = DEFAULT_STR,
     val entity: MusicEntity = MusicEntity()
 ) {

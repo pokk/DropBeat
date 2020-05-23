@@ -27,8 +27,8 @@ package taiwan.no.one.featSearchMusic.data.entities.remote
 import com.google.gson.annotations.SerializedName
 import taiwan.no.one.ext.DEFAULT_STR
 
-object CommonMusicEntity {
-    data class UserEntity(
+internal object CommonMusicEntity {
+    internal data class UserEntity(
         val address: String = DEFAULT_STR,
         @SerializedName("avatar_url")
         val avatarUrl: String = DEFAULT_STR,
@@ -44,7 +44,7 @@ object CommonMusicEntity {
         val uid: String = DEFAULT_STR
     )
 
-    data class SongEntity(
+    internal data class SongEntity(
         val artist: String = DEFAULT_STR,
         @SerializedName("cdn_coverURL")
         val cdnCoverUrl: String = DEFAULT_STR,
@@ -70,7 +70,7 @@ object CommonMusicEntity {
         val url: String = DEFAULT_STR
     )
 
-    data class PlayListEntity(
+    internal data class PlayListEntity(
         @SerializedName("comment_count")
         val commentCount: Int = 0,
         @SerializedName("fav_count")
@@ -107,7 +107,7 @@ object CommonMusicEntity {
         val user: UserEntity = UserEntity()
     )
 
-    data class MvEntity(
+    internal data class MvEntity(
         val comments: Int = 0,
         @SerializedName("cover_image")
         val coverImage: String = DEFAULT_STR,
@@ -143,7 +143,7 @@ object CommonMusicEntity {
         val yVideoId: String = DEFAULT_STR
     )
 
-    data class SourceEntity(
+    internal data class SourceEntity(
         val unknown: Any? = null
     )
 }

@@ -22,21 +22,27 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts
+package taiwan.no.one.featSearchMusic.data.repositories
 
+import taiwan.no.one.featSearchMusic.data.contracts.DataStore
 import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.featSearchMusic.domain.repositories.HistoryRepository
 
 /**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
+ * The data repository for being responsible for selecting an appropriate data store to access
+ * the data.
+ * Also we need to do [async] & [await] one time for getting the data then transform and wrap to Domain layer.
+ *
+ * @property local from database/file/memory data store.
+ * @property diggerDelegate keeping all of the data mapper here.
  */
-internal interface DataStore {
-    suspend fun getMusic(): MusicInfoEntity
+internal class HistoryDataRepository(
+    private val local: DataStore,
+) : HistoryRepository {
+    override suspend fun addOrUpdateSearchHistory(keyword: String) = local.createOrModifySearchHistory(keyword)
 
-    suspend fun createOrModifySearchHistory(keyword: String): Boolean
+    override suspend fun fetchSearchHistories(count: Int) = local.getSearchHistories(count)
 
-    suspend fun getSearchHistories(count: Int): List<SearchHistoryEntity>
-
-    suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
+    override suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?) =
+        local.removeSearchHistory(keyword, entity)
 }
