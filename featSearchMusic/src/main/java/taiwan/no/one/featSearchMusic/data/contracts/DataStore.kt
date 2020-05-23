@@ -24,4 +24,8 @@
 
 package taiwan.no.one.featSearchMusic.data.contracts
 
-internal interface DataStore
+import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
+
+internal interface DataStore {
+    suspend fun getMusic(): MusicInfoEntity
+}

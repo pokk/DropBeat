@@ -30,7 +30,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import taiwan.no.one.core.data.local.room.convert.DateConvert
-import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
 import taiwan.no.one.featSearchMusic.data.local.services.database.v1.DummyDao
 
 /**

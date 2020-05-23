@@ -22,5 +22,23 @@
  * SOFTWARE.
  */
 
-include ':app', ':ktx', ':ext', ':widget', ':device', ':core'
-include ':featSearchMusic'
+package taiwan.no.one.featSearchMusic.data.entities.remote
+
+import com.google.gson.annotations.SerializedName
+import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.featSearchMusic.data.entities.remote.CommonMusicEntity.SongEntity
+
+data class MusicInfoEntity(
+    val status: String = DEFAULT_STR,
+    val entity: MusicEntity = MusicEntity()
+) {
+    data class MusicEntity(
+        // 🔽 Only Music has.
+        @SerializedName("has_more")
+        val hasMore: Boolean = false,
+        val items: List<SongEntity> = emptyList(),
+        // 🔽 Only Rank has.
+        val timestamp: Double = 0.0,
+        val songs: List<SongEntity> = emptyList()
+    )
+}

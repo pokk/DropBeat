@@ -32,7 +32,7 @@ import org.kodein.di.generic.provider
 import taiwan.no.one.dropbeat.di.ViewModelEntry
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
-import taiwan.no.one.featSearchMusic.presentation.viewmodel.DummyViewModel
+import taiwan.no.one.featSearchMusic.presentation.viewmodels.DummyViewModel
 
 object PresentationModules : ModuleProvider {
     override fun provide() = Kodein.Module("${FEAT_NAME}PreziModule") {

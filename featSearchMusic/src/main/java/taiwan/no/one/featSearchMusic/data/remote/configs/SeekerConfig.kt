@@ -22,10 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts.sub
+package taiwan.no.one.featSearchMusic.data.remote.configs
 
-import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
+import taiwan.no.one.featSearchMusic.BuildConfig
 
-internal interface DummySubStore {
-    suspend fun getDummies(): List<DummyEntity>
+/**
+ * The configuration of a remote google news api service.
+ */
+class SeekerConfig : ApiConfig {
+    companion object {
+        const val API_REQUEST = BuildConfig.SeekSongUriRequest
+
+        // All basic http api url of Search Music.
+        private const val BASE_URL = BuildConfig.SeekSongUriDomain
+    }
+
+    override val apiBaseUrl = BASE_URL
 }

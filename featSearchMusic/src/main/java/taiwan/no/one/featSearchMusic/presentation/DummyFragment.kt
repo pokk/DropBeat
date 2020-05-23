@@ -29,7 +29,7 @@ import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.featSearchMusic.databinding.FragmentDummyBinding
-import taiwan.no.one.featSearchMusic.presentation.viewmodel.DummyViewModel
+import taiwan.no.one.featSearchMusic.presentation.viewmodels.DummyViewModel
 import androidx.lifecycle.observe as obs
 
 class DummyFragment : BaseFragment<BaseActivity<*>, FragmentDummyBinding>() {

@@ -22,15 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.domain.usecase
+package taiwan.no.one.featSearchMusic.domain.repositories
 
-import taiwan.no.one.core.domain.usecase.Usecase
-import taiwan.no.one.featSearchMusic.domain.repository.DummyRepo
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity.MusicEntity
+import taiwan.no.one.featSearchMusic.domain.models.Dummy
 
-internal class RetrieveDummyDeferredCase(
-    private val dummyRepo: DummyRepo
-) : RetrieveDummyCase() {
-    override suspend fun acquireCase(parameter: Request?) = dummyRepo.retrieveDummies()
+/**
+ * This interface will be the similar to [taiwan.no.one.featSearchMusic.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+internal interface SearchMusicRepo : Repository {
+    suspend fun fetchDummies(): List<Dummy>
 
-    data class Request(val id: Int) : Usecase.RequestValues
+    suspend fun fetchMusic(): MusicEntity
 }

@@ -30,8 +30,8 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
-import taiwan.no.one.featSearchMusic.domain.usecase.RetrieveDummyCase
-import taiwan.no.one.featSearchMusic.domain.usecase.RetrieveDummyDeferredCase
+import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyCase
+import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyDeferredCase
 
 object DomainModules : ModuleProvider {
     override fun provide() = Kodein.Module("${FEAT_NAME}DomainModule") {

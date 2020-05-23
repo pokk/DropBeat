@@ -22,10 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts.sub
+package taiwan.no.one.featSearchMusic.data.remote.configs
 
-import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
-
-internal interface DummySubStore {
-    suspend fun getDummies(): List<DummyEntity>
+/**
+ * Interface of the setting of the difference http configurations.
+ */
+interface ApiConfig {
+    /**
+     * Obtain the base http url.
+     *
+     * @return restful api base url information.
+     */
+    val apiBaseUrl: String
 }

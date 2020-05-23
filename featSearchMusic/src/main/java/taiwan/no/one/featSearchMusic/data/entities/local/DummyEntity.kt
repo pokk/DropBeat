@@ -22,21 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.presentation.viewmodel
+package taiwan.no.one.featSearchMusic.data.entities.local
 
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
-import taiwan.no.one.featSearchMusic.domain.model.Dummy
-import taiwan.no.one.featSearchMusic.domain.usecase.RetrieveDummyCase
-import taiwan.no.one.ktx.livedata.SilentMutableLiveData
-import taiwan.no.one.ktx.livedata.toLiveData
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import taiwan.no.one.featSearchMusic.domain.models.Dummy
+import java.util.Date
 
-internal class DummyViewModel(
-    private val retrieveDummyCase: RetrieveDummyCase
-) : BehindViewModel() {
-    private val _dummy by lazy { SilentMutableLiveData<List<Dummy>>() }
-    val dummy = _dummy.toLiveData()
-
-    fun getDummies() = launchBehind {
-        retrieveDummyCase.execute().onSuccess(_dummy::postValue)
-    }
+@Entity(tableName = "table_dummy")
+internal data class DummyEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val content: String,
+    val updated: Date = Date()
+) {
+    fun toModel() = Dummy(id, content)
 }

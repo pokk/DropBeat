@@ -27,7 +27,7 @@ package taiwan.no.one.featSearchMusic.data.local.services.database.v1
 import androidx.room.Dao
 import androidx.room.Query
 import taiwan.no.one.core.data.local.room.BaseDao
-import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
 
 /**
  * Integrated the base [androidx.room.Room] database operations.

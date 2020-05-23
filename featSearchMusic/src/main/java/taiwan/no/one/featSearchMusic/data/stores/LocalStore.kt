@@ -26,7 +26,7 @@ package taiwan.no.one.featSearchMusic.data.stores
 
 import taiwan.no.one.featSearchMusic.data.contracts.DataStore
 import taiwan.no.one.featSearchMusic.data.contracts.sub.DummySubStore
-import taiwan.no.one.featSearchMusic.data.local.entities.DummyEntity
+import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
 import taiwan.no.one.featSearchMusic.data.local.services.database.v1.DummyDao
 import taiwan.no.one.featSearchMusic.data.local.services.json.v1.DummyFile
 
@@ -39,4 +39,6 @@ internal class LocalStore(
         if (dbDummy.isNotEmpty()) return dbDummy
         return dummyFile.getDummies()
     }
+
+    override suspend fun getMusic() = TODO()
 }

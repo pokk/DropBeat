@@ -24,6 +24,18 @@
 
 package taiwan.no.one.featSearchMusic.data.stores
 
+import taiwan.no.one.featSearchMusic.BuildConfig
 import taiwan.no.one.featSearchMusic.data.contracts.DataStore
+import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.featSearchMusic.data.remote.services.SeekerBankService
 
-internal class RemoteStore : DataStore
+internal class RemoteStore(
+    private val seekerBankService: SeekerBankService
+) : DataStore {
+    override suspend fun getMusic(): MusicInfoEntity {
+        val queries = hashMapOf(
+            BuildConfig.SearchMusicQuery to BuildConfig.SearchMusicParameter
+        )
+        return seekerBankService.retrieveSearchMusic(queries)
+    }
+}

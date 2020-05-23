@@ -22,11 +22,9 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.domain.repository
+package taiwan.no.one.featSearchMusic.domain.models
 
-import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.featSearchMusic.domain.model.Dummy
-
-internal interface DummyRepo : Repository {
-    suspend fun retrieveDummies(): List<Dummy>
-}
+internal data class Dummy(
+    val id: Int,
+    val content: String
+)

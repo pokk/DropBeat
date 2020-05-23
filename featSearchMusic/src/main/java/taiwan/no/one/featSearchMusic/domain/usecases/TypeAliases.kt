@@ -22,19 +22,10 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.local.entities
+package taiwan.no.one.featSearchMusic.domain.usecases
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import taiwan.no.one.featSearchMusic.domain.model.Dummy
-import java.util.Date
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.featSearchMusic.domain.models.Dummy
 
-@Entity(tableName = "table_dummy")
-internal data class DummyEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val content: String,
-    val updated: Date = Date()
-) {
-    fun toModel() = Dummy(id, content)
-}
+internal typealias RetrieveDummyCase = OneShotUsecase<List<Dummy>, RetrieveDummyReq>
+internal typealias RetrieveDummyReq = RetrieveDummyDeferredCase.Request

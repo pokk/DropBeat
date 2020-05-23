@@ -22,10 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts.sub
+package taiwan.no.one.featSearchMusic.data.remote.services
 
-import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
+import retrofit2.http.GET
+import retrofit2.http.QueryMap
+import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.featSearchMusic.data.remote.configs.SeekerConfig
 
-internal interface DummySubStore {
-    suspend fun getDummies(): List<DummyEntity>
+/**
+ * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
+ */
+interface SeekerBankService {
+    @GET(SeekerConfig.API_REQUEST)
+    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoEntity
 }

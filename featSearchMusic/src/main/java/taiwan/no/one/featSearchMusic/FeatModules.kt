@@ -31,7 +31,7 @@ import taiwan.no.one.featSearchMusic.domain.DomainModules
 import taiwan.no.one.featSearchMusic.presentation.PresentationModules
 
 object FeatModules : ModuleProvider {
-    internal const val FEAT_NAME = "Dummy"
+    internal const val FEAT_NAME = "SearchMusic"
 
     override fun provide() = Kodein.Module("${FEAT_NAME}Module") {
         import(DataModules.provide())

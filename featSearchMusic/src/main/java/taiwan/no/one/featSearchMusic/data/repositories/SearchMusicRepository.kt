@@ -22,10 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.domain.usecase
+package taiwan.no.one.featSearchMusic.data.repositories
 
-import taiwan.no.one.core.domain.usecase.ObserverUsecase
-import taiwan.no.one.featSearchMusic.domain.model.Dummy
+import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
+import taiwan.no.one.featSearchMusic.data.stores.LocalStore
+import taiwan.no.one.featSearchMusic.data.stores.RemoteStore
+import taiwan.no.one.featSearchMusic.domain.repositories.SearchMusicRepo
 
-internal typealias RetrieveDummyCase = ObserverUsecase<List<Dummy>, RetrieveDummyReq>
-internal typealias RetrieveDummyReq = RetrieveDummyDeferredCase.Request
+internal class SearchMusicRepository(
+    private val local: LocalStore,
+    private val remote: RemoteStore
+) : SearchMusicRepo {
+    override suspend fun fetchDummies() = local.getDummies().map(DummyEntity::toModel)
+
+    override suspend fun fetchMusic() = remote.getMusic().entity
+}

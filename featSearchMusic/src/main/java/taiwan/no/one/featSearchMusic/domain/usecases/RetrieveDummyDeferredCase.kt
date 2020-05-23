@@ -22,9 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.domain.model
+package taiwan.no.one.featSearchMusic.domain.usecases
 
-internal data class Dummy(
-    val id: Int,
-    val content: String
-)
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.featSearchMusic.domain.repositories.SearchMusicRepo
+
+internal class RetrieveDummyDeferredCase(
+    private val searchMusicRepo: SearchMusicRepo
+) : RetrieveDummyCase() {
+    override suspend fun acquireCase(parameter: Request?) = searchMusicRepo.fetchDummies()
+
+    data class Request(val id: Int) : Usecase.RequestValues
+}

@@ -33,10 +33,10 @@ import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
 import taiwan.no.one.featSearchMusic.data.local.configs.DummyDatabase
 import taiwan.no.one.featSearchMusic.data.local.services.database.v1.DummyDao
 import taiwan.no.one.featSearchMusic.data.local.services.json.v1.DummyFile
-import taiwan.no.one.featSearchMusic.data.repository.DummyRepository
+import taiwan.no.one.featSearchMusic.data.repositories.SearchMusicRepository
 import taiwan.no.one.featSearchMusic.data.stores.LocalStore
 import taiwan.no.one.featSearchMusic.data.stores.RemoteStore
-import taiwan.no.one.featSearchMusic.domain.repository.DummyRepo
+import taiwan.no.one.featSearchMusic.domain.repositories.SearchMusicRepo
 
 object DataModules : ModuleProvider {
     override fun provide() = Kodein.Module("${FEAT_NAME}DataModule") {
@@ -44,9 +44,9 @@ object DataModules : ModuleProvider {
         import(remoteProvide())
 
         bind<LocalStore>() with singleton { LocalStore(instance(), instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore() }
+        bind<RemoteStore>() with singleton { RemoteStore(instance()) }
 
-        bind<DummyRepo>() with singleton { DummyRepository(instance(), instance()) }
+        bind<SearchMusicRepo>() with singleton { SearchMusicRepository(instance(), instance()) }
     }
 
     private fun localProvide() = Kodein.Module("LocalModule") {

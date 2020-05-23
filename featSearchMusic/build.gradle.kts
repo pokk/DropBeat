@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import config.AndroidConfiguration
 import config.CommonModuleDependency
 import config.Configuration
@@ -67,6 +68,19 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+
+            buildConfigField("String",
+                             "SeekSongUriDomain",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
+            buildConfigField("String",
+                             "SeekSongUriRequest",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
+            buildConfigField("String",
+                             "SearchMusicQuery",
+                             gradleLocalProperties(rootDir).getProperty("query_1"))
+            buildConfigField("String",
+                             "SearchMusicParameter",
+                             gradleLocalProperties(rootDir).getProperty("param_1"))
         }
         getByName("debug") {
             splits.abi.isEnable = false
@@ -77,6 +91,19 @@ android {
             // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
             ext.set("alwaysUpdateBuildId", false)
             isCrunchPngs = false // Enabled by default for RELEASE build type
+
+            buildConfigField("String",
+                             "SeekSongUriDomain",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
+            buildConfigField("String",
+                             "SeekSongUriRequest",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
+            buildConfigField("String",
+                             "SearchMusicQuery",
+                             gradleLocalProperties(rootDir).getProperty("query_1"))
+            buildConfigField("String",
+                             "SearchMusicParameter",
+                             gradleLocalProperties(rootDir).getProperty("param_1"))
         }
     }
     sourceSets {

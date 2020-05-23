@@ -22,10 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts.sub
+package taiwan.no.one.featSearchMusic.presentation.viewmodels
 
-import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
+import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import taiwan.no.one.featSearchMusic.domain.models.Dummy
+import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyCase
+import taiwan.no.one.ktx.livedata.SilentMutableLiveData
+import taiwan.no.one.ktx.livedata.toLiveData
 
-internal interface DummySubStore {
-    suspend fun getDummies(): List<DummyEntity>
+internal class DummyViewModel(
+    private val retrieveDummyCase: RetrieveDummyCase
+) : BehindViewModel() {
+    private val _dummy by lazy { SilentMutableLiveData<List<Dummy>>() }
+    val dummy = _dummy.toLiveData()
+
+    fun getDummies() = launchBehind {
+        retrieveDummyCase.execute().onSuccess(_dummy::postValue)
+    }
 }
