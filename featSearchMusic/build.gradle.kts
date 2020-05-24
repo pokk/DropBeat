@@ -76,11 +76,17 @@ android {
                              "SeekSongUriRequest",
                              gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
             buildConfigField("String",
-                             "SearchMusicQuery",
-                             gradleLocalProperties(rootDir).getProperty("query_1"))
+                             "SearchMusicQuery1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_query_1"))
             buildConfigField("String",
-                             "SearchMusicParameter",
-                             gradleLocalProperties(rootDir).getProperty("param_1"))
+                             "SearchMusicParameter1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_1"))
+            buildConfigField("String",
+                             "SearchMusicQuery2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
+            buildConfigField("String",
+                             "SearchMusicParameter2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
         }
         getByName("debug") {
             splits.abi.isEnable = false
@@ -99,11 +105,17 @@ android {
                              "SeekSongUriRequest",
                              gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
             buildConfigField("String",
-                             "SearchMusicQuery",
-                             gradleLocalProperties(rootDir).getProperty("query_1"))
+                             "SearchMusicQuery1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_query_1"))
             buildConfigField("String",
-                             "SearchMusicParameter",
-                             gradleLocalProperties(rootDir).getProperty("param_1"))
+                             "SearchMusicParameter1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_1"))
+            buildConfigField("String",
+                             "SearchMusicQuery2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
+            buildConfigField("String",
+                             "SearchMusicParameter2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
         }
     }
     sourceSets {

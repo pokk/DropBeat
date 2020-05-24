@@ -29,6 +29,7 @@ import taiwan.no.one.featSearchMusic.BuildConfig
 import taiwan.no.one.featSearchMusic.data.contracts.DataStore
 import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.featSearchMusic.data.remote.parameters.SeekerBank
 import taiwan.no.one.featSearchMusic.data.remote.services.SeekerBankService
 
 /**
@@ -38,19 +39,19 @@ import taiwan.no.one.featSearchMusic.data.remote.services.SeekerBankService
 internal class RemoteStore(
     private val seekerBankService: SeekerBankService
 ) : DataStore {
-    override suspend fun getMusic(): MusicInfoEntity {
+    override suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity {
         val queries = hashMapOf(
-            BuildConfig.SearchMusicQuery to BuildConfig.SearchMusicParameter
+            BuildConfig.SearchMusicQuery1 to BuildConfig.SearchMusicParameter1,
+            BuildConfig.SearchMusicQuery2 to BuildConfig.SearchMusicParameter2,
+            SeekerBank.PARAM_NAME_QUERY to keyword,
+            SeekerBank.PARAM_NAME_PAGE_NO to page.toString(),
         )
         return seekerBankService.retrieveSearchMusic(queries)
     }
 
-    override suspend fun createOrModifySearchHistory(keyword: String) = throw UnsupportedOperation()
+    override suspend fun createOrModifySearchHistory(keyword: String) = UnsupportedOperation()
 
-    override suspend fun getSearchHistories(count: Int) = throw UnsupportedOperation()
+    override suspend fun getSearchHistories(count: Int) = UnsupportedOperation()
 
-    override suspend fun removeSearchHistory(
-        keyword: String?,
-        entity: SearchHistoryEntity?
-    ) = throw UnsupportedOperation()
+    override suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?) = UnsupportedOperation()
 }

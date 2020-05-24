@@ -22,21 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts
+package taiwan.no.one.core.exceptions.internet
 
-import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
+sealed class InternetException : Exception {
+    constructor() : super()
+    constructor(msg: String) : super(msg)
+    constructor(msg: String, throwable: Throwable) : super(msg, throwable)
+    constructor(throwable: Throwable) : super(throwable)
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-internal interface DataStore {
-    suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity
-
-    suspend fun createOrModifySearchHistory(keyword: String): Boolean
-
-    suspend fun getSearchHistories(count: Int): List<SearchHistoryEntity>
-
-    suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
+    class ParameterNotMatchException : InternetException {
+        constructor() : super()
+        constructor(msg: String) : super(msg)
+        constructor(msg: String, throwable: Throwable) : super(msg, throwable)
+        constructor(throwable: Throwable) : super(throwable)
+    }
 }

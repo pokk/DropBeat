@@ -22,21 +22,9 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.featSearchMusic.data.contracts
+package taiwan.no.one.featSearchMusic.data.remote.parameters
 
-import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
-
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-internal interface DataStore {
-    suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity
-
-    suspend fun createOrModifySearchHistory(keyword: String): Boolean
-
-    suspend fun getSearchHistories(count: Int): List<SearchHistoryEntity>
-
-    suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
+internal object SeekerBank {
+    const val PARAM_NAME_PAGE_NO = "page_no"
+    const val PARAM_NAME_QUERY = "query"
 }

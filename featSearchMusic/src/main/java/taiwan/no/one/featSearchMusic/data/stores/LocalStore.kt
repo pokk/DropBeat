@@ -48,7 +48,7 @@ internal class LocalStore(
         return dummyFile.getDummies()
     }
 
-    override suspend fun getMusic() = TODO()
+    override suspend fun getMusic(keyword: String, page: Int) = TODO()
 
     override suspend fun createOrModifySearchHistory(keyword: String) = tryWrapper {
         searchHistoryDao.insertBy(keyword)

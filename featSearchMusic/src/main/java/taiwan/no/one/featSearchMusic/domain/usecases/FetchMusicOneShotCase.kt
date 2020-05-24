@@ -27,24 +27,27 @@ package taiwan.no.one.featSearchMusic.domain.usecases
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
 import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
 import taiwan.no.one.featSearchMusic.domain.repositories.SearchMusicRepo
 
 internal class FetchMusicOneShotCase(
     private val searchMusicRepo: SearchMusicRepo
 ) : FetchMusicCase() {
-    override suspend fun acquireCase(parameter: Request?) = searchMusicRepo.fetchMusic().map {
-        // Fix the track with 0 duration.
-        if (it.length == 0) {
-            val retriever = MediaMetadataRetriever().apply {
-                setDataSource(it.url, hashMapOf())
+    override suspend fun acquireCase(parameter: Request?) = parameter?.run {
+        searchMusicRepo.fetchMusic(keyword, page).map {
+            // Fix the track with 0 duration.
+            if (it.length == 0) {
+                val retriever = MediaMetadataRetriever().apply {
+                    setDataSource(it.url, hashMapOf())
+                }
+                val time = retriever.extractMetadata(METADATA_KEY_DURATION).toLong() / 1000
+                it.copy(length = time.toInt())
             }
-            val time = retriever.extractMetadata(METADATA_KEY_DURATION).toLong() / 1000
-            it.copy(length = time.toInt())
+            else {
+                it
+            }
         }
-        else {
-            it
-        }
-    }
+    } ?: throw ParameterNotMatchException()
 
-    data class Request(val id: Int) : Usecase.RequestValues
+    data class Request(val keyword: String, val page: Int) : Usecase.RequestValues
 }

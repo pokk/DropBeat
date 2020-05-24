@@ -35,5 +35,5 @@ import taiwan.no.one.featSearchMusic.domain.models.Dummy
 internal interface SearchMusicRepo : Repository {
     suspend fun fetchDummies(): List<Dummy>
 
-    suspend fun fetchMusic(): List<SongEntity>
+    suspend fun fetchMusic(keyword: String, page: Int): List<SongEntity>
 }
