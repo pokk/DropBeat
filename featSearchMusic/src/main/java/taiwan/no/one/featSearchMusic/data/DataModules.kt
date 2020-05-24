@@ -29,12 +29,16 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
+import retrofit2.Retrofit
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
 import taiwan.no.one.featSearchMusic.data.local.configs.BankDatabase
 import taiwan.no.one.featSearchMusic.data.local.services.database.v1.DummyDao
 import taiwan.no.one.featSearchMusic.data.local.services.database.v1.SearchHistoryDao
 import taiwan.no.one.featSearchMusic.data.local.services.json.v1.DummyFile
+import taiwan.no.one.featSearchMusic.data.remote.RestfulApiFactory
+import taiwan.no.one.featSearchMusic.data.remote.configs.SeekerConfig
+import taiwan.no.one.featSearchMusic.data.remote.services.SeekerBankService
 import taiwan.no.one.featSearchMusic.data.repositories.SearchMusicRepository
 import taiwan.no.one.featSearchMusic.data.stores.LocalStore
 import taiwan.no.one.featSearchMusic.data.stores.RemoteStore
@@ -60,5 +64,12 @@ internal object DataModules : ModuleProvider {
     }
 
     private fun remoteProvide() = Kodein.Module("RemoteModule") {
+        bind<SeekerConfig>() with instance(RestfulApiFactory().createSeekerConfig())
+
+        bind<SeekerBankService>() with singleton {
+            with(instance<Retrofit.Builder>()) {
+                baseUrl(instance<SeekerConfig>().apiBaseUrl)
+            }.build().create(SeekerBankService::class.java)
+        }
     }
 }
