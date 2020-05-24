@@ -17,9 +17,6 @@ jobs:
     docker:
       - image: circleci/android:api-29
     steps:
-      - run: exit 0
-      - slack/status:
-          webhook: ${SLACK_WEBHOOK}
       - checkout
       - run:
           name: Decode Api URL
@@ -59,3 +56,5 @@ jobs:
           path: app/build/test-results
           environment:
             TERM: dumb
+      - slack/status:
+          webhook: ${SLACK_WEBHOOK}
