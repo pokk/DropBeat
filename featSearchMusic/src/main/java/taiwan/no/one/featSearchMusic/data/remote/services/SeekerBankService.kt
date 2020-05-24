@@ -25,6 +25,7 @@
 package taiwan.no.one.featSearchMusic.data.remote.services
 
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.QueryMap
 import taiwan.no.one.featSearchMusic.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.featSearchMusic.data.remote.configs.SeekerConfig
@@ -34,6 +35,8 @@ import taiwan.no.one.featSearchMusic.data.remote.configs.SeekerConfig
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 internal interface SeekerBankService {
+    @Headers("mock:true",
+             "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
     @GET(SeekerConfig.API_REQUEST)
     suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoEntity
 }

@@ -30,6 +30,7 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
+import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
 import taiwan.no.one.featSearchMusic.data.local.configs.BankDatabase
@@ -47,7 +48,7 @@ import taiwan.no.one.featSearchMusic.domain.repositories.SearchMusicRepo
 internal object DataModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
-        import(remoteProvide())
+        import(remoteProvide(context))
 
         bind<LocalStore>() with singleton { LocalStore(instance(), instance(), instance()) }
         bind<RemoteStore>() with singleton { RemoteStore(instance()) }
@@ -63,13 +64,13 @@ internal object DataModules : ModuleProvider {
         bind<SearchHistoryDao>() with singleton { instance<BankDatabase>().createSearchHistoryDao() }
     }
 
-    private fun remoteProvide() = Kodein.Module("RemoteModule") {
+    private fun remoteProvide(context: Context) = Kodein.Module("RemoteModule") {
         bind<SeekerConfig>() with instance(RestfulApiFactory().createSeekerConfig())
 
-        bind<SeekerBankService>() with singleton {
-            with(instance<Retrofit.Builder>()) {
-                baseUrl(instance<SeekerConfig>().apiBaseUrl)
-            }.build().create(SeekerBankService::class.java)
+        bind<Retrofit>() with singleton {
+            DefaultRetrofitConfig(context, instance<SeekerConfig>().apiBaseUrl).provideRetrofitBuilder().build()
         }
+
+        bind<SeekerBankService>() with singleton { instance<Retrofit>().create(SeekerBankService::class.java) }
     }
 }

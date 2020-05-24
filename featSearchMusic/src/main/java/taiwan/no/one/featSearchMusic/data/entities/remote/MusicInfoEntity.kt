@@ -30,6 +30,7 @@ import taiwan.no.one.featSearchMusic.data.entities.remote.CommonMusicEntity.Song
 
 internal data class MusicInfoEntity(
     val status: String = DEFAULT_STR,
+    @SerializedName("data")
     val entity: MusicEntity = MusicEntity()
 ) {
     data class MusicEntity(

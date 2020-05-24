@@ -22,30 +22,8 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.core.data.remote.provider
 
 import android.content.Context
-import com.facebook.stetho.okhttp3.StethoInterceptor
-import okhttp3.OkHttpClient
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import taiwan.no.one.dropbeat.BuildConfig
-import taiwan.no.one.dropbeat.di.Constant.TAG_BASE_OKHTTP
 
-object NetworkModules {
-    fun provide(context: Context) = Kodein.Module("NetworkModule") {
-        import(BasedNetworkModules.netProvider(context))
-        // Build Debug OkHttp object
-        bind<OkHttpClient.Builder>() with provider {
-            instance<OkHttpClient.Builder>(TAG_BASE_OKHTTP).apply {
-                if (BuildConfig.DEBUG) {
-//                    addInterceptor(HttpLoggingInterceptor().setLevel(BODY))  // For print to logcat.
-//                    addInterceptor(OkHttpProfilerInterceptor())  // For OkHttp Profiler plugins.
-                    addNetworkInterceptor(StethoInterceptor())
-                }
-            }
-        }
-    }
-}
+class DefaultOkHttpClientProvider(context: Context) : OkHttpClientProvider(context)

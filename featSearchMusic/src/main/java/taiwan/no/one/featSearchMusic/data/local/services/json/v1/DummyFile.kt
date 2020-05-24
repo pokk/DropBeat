@@ -25,8 +25,8 @@
 package taiwan.no.one.featSearchMusic.data.local.services.json.v1
 
 import android.content.Context
+import taiwan.no.one.core.data.extensions.parseObjectFromJson
 import taiwan.no.one.featSearchMusic.data.entities.local.DummyEntity
-import taiwan.no.one.featSearchMusic.data.parser.parseObjectFromJson
 
 internal class DummyFile(
     private val context: Context

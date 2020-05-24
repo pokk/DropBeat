@@ -30,12 +30,19 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 
-inline fun <reified T> Context.parseObjectFromJson(jsonFileName: String): T? {
+/**
+ * Parse the json file to an object by [Gson].
+ *
+ * @receiver Context
+ * @param filePath String using full path on assets folder, eg. "json/xxx.json"
+ * @return T?
+ */
+inline fun <reified T> Context.parseObjectFromJson(filePath: String): T? {
     var dataObj: T? = null
 
     try {
         val gson = Gson().newBuilder().create()
-        applicationContext.assets.open(jsonFileName).use { inputStream ->
+        applicationContext.assets.open(filePath).use { inputStream ->
             JsonReader(inputStream.reader()).use { jsonReader ->
                 val type = object : TypeToken<T>() {}.type
                 dataObj = gson.fromJson<T>(jsonReader, type)
@@ -49,3 +56,8 @@ inline fun <reified T> Context.parseObjectFromJson(jsonFileName: String): T? {
 
     return dataObj
 }
+
+fun Context.readFileFromAssets(filePath: String) =
+    applicationContext.assets.open(filePath).bufferedReader().use {
+        it.readText()
+    }

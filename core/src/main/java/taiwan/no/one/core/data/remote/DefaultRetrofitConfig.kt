@@ -21,21 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package taiwan.no.one.dropbeat.di
+
+package taiwan.no.one.core.data.remote
 
 import android.content.Context
-import okhttp3.OkHttpClient
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import taiwan.no.one.dropbeat.di.BasedNetworkModules
-import taiwan.no.one.dropbeat.di.Constant.TAG_BASE_OKHTTP
+import taiwan.no.one.core.data.remote.provider.DefaultOkHttpClientProvider
+import taiwan.no.one.core.data.remote.provider.DefaultRetrofitProvider
 
-object NetworkModules {
-    fun provide(context: Context) = Kodein.Module("NetworkModule") {
-        import(BasedNetworkModules.netProvider(context))
-        // Build Debug OkHttp object
-        bind<OkHttpClient.Builder>() with provider { instance<OkHttpClient.Builder>(TAG_BASE_OKHTTP) }
-    }
+class DefaultRetrofitConfig(
+    context: Context,
+    baseDomainUrl: String
+) : BaseRetrofitConfig(context, DefaultOkHttpClientProvider(context), DefaultRetrofitProvider()) {
+    override val baseUrl = baseDomainUrl
 }
