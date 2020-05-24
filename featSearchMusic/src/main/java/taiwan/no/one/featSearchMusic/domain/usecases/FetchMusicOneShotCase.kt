@@ -34,7 +34,7 @@ internal class FetchMusicOneShotCase(
     private val searchMusicRepo: SearchMusicRepo
 ) : FetchMusicCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter?.run {
-        searchMusicRepo.fetchMusic(keyword, page).map {
+        searchMusicRepo.fetchMusic("keyword", 1).map {
             // Fix the track with 0 duration.
             if (it.length == 0) {
                 val retriever = MediaMetadataRetriever().apply {

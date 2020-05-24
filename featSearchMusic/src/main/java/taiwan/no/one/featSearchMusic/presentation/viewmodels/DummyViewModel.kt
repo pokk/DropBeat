@@ -25,18 +25,16 @@
 package taiwan.no.one.featSearchMusic.presentation.viewmodels
 
 import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.featSearchMusic.domain.models.Dummy
 import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyCase
-import taiwan.no.one.ktx.livedata.SilentMutableLiveData
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class DummyViewModel(
     private val retrieveDummyCase: RetrieveDummyCase
 ) : BehindViewModel() {
-    private val _dummy by lazy { SilentMutableLiveData<List<Dummy>>() }
+    private val _dummy by lazy { ResultLiveData<List<Dummy>>() }
     val dummy = _dummy.toLiveData()
 
-    fun getDummies() = launchBehind {
-        retrieveDummyCase.execute().onSuccess(_dummy::postValue)
-    }
+    fun getDummies() = launchBehind { _dummy.postValue(retrieveDummyCase.execute()) }
 }

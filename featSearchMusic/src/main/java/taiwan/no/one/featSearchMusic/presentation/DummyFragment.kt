@@ -38,7 +38,7 @@ class DummyFragment : BaseFragment<BaseActivity<*>, FragmentDummyBinding>() {
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.dummy.obs(this) {
-            logw(it)
+            it.onSuccess { logw(it) }
         }
     }
 
