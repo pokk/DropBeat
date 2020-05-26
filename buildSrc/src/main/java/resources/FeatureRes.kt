@@ -35,7 +35,4 @@ object FeatureRes {
         "src/main/res-theme",
         "src/main/res-main"
     )
-
-    const val MANIFEST_APP = "src/main/app/AndroidManifest.xml"
-    const val MANIFEST_FEATURE = "src/main/feature/AndroidManifest.xml"
 }

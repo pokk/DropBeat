@@ -22,5 +22,19 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.domain.usecases.history
+
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.search.domain.repositories.HistoryRepository
+import taiwan.no.one.feat.search.domain.usecases.FetchHistoryCase
+
+internal class FetchHistoryOneShotCase(
+    private val repository: HistoryRepository
+) : FetchHistoryCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        repository.fetchSearchHistories(count)
+    }
+
+    class Request(val count: Int) : RequestValues
+
+}

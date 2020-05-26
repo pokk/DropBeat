@@ -22,5 +22,19 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.entities.local
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import taiwan.no.one.feat.search.domain.models.Dummy
+import java.util.Date
+
+@Entity(tableName = "table_dummy")
+internal data class DummyEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val content: String,
+    val updated: Date = Date()
+) {
+    fun toModel() = Dummy(id, content)
+}

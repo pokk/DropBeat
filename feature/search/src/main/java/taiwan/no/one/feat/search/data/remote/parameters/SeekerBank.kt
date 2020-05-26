@@ -22,5 +22,9 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.remote.parameters
+
+internal object SeekerBank {
+    const val PARAM_NAME_PAGE_NO = "page_no"
+    const val PARAM_NAME_QUERY = "query"
+}

@@ -22,5 +22,15 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.presentation
+
+import android.app.Activity
+import android.os.Bundle
+import taiwan.no.one.feat.search.R
+
+class EntryActivity : Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_dummy)
+    }
+}

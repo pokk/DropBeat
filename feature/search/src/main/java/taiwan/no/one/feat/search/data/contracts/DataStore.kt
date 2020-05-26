@@ -22,5 +22,21 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.contracts
+
+import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
+import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
+
+/**
+ * This interface will common the all data stores.
+ * Using prefix name (get), (create), (modify), (remove), (store)
+ */
+internal interface DataStore {
+    suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity
+
+    suspend fun createOrModifySearchHistory(keyword: String): Boolean
+
+    suspend fun getSearchHistories(count: Int): List<SearchHistoryEntity>
+
+    suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
+}

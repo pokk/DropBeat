@@ -22,5 +22,18 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.domain.repositories
+
+import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
+
+/**
+ * This interface will be the similar to [taiwan.no.one.feat.data.contracts.DataStore]
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+internal interface HistoryRepository {
+    suspend fun addOrUpdateSearchHistory(keyword: String): Boolean
+
+    suspend fun fetchSearchHistories(count: Int): List<SearchHistoryEntity>
+
+    suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
+}

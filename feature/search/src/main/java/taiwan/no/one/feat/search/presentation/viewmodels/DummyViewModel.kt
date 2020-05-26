@@ -22,5 +22,19 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.presentation.viewmodels
+
+import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.feat.search.domain.models.Dummy
+import taiwan.no.one.feat.search.domain.usecases.RetrieveDummyCase
+import taiwan.no.one.ktx.livedata.toLiveData
+
+internal class DummyViewModel(
+    private val retrieveDummyCase: RetrieveDummyCase
+) : BehindViewModel() {
+    private val _dummy by lazy { ResultLiveData<List<Dummy>>() }
+    val dummy = _dummy.toLiveData()
+
+    fun getDummies() = launchBehind { _dummy.postValue(retrieveDummyCase.execute()) }
+}

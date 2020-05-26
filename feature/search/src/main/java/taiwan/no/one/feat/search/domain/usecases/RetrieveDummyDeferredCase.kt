@@ -22,5 +22,15 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.domain.usecases
+
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
+
+internal class RetrieveDummyDeferredCase(
+    private val searchMusicRepo: SearchMusicRepo
+) : RetrieveDummyCase() {
+    override suspend fun acquireCase(parameter: Request?) = searchMusicRepo.fetchDummies()
+
+    data class Request(val id: Int) : Usecase.RequestValues
+}

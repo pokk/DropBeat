@@ -22,5 +22,16 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.remote.configs
+
+/**
+ * Interface of the setting of the difference http configurations.
+ */
+internal interface ApiConfig {
+    /**
+     * Obtain the base http url.
+     *
+     * @return restful api base url information.
+     */
+    val apiBaseUrl: String
+}

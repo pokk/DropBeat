@@ -22,5 +22,21 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.remote.services
+
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.QueryMap
+import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+
+/**
+ * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
+ */
+internal interface SeekerBankService {
+    @Headers("mock:true",
+             "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
+    @GET(SeekerConfig.API_REQUEST)
+    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoEntity
+}

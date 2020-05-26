@@ -22,5 +22,27 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.repositories
+
+import taiwan.no.one.feat.search.data.contracts.DataStore
+import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
+import taiwan.no.one.feat.search.domain.repositories.HistoryRepository
+
+/**
+ * The data repository for being responsible for selecting an appropriate data store to access
+ * the data.
+ * Also we need to do [async] & [await] one time for getting the data then transform and wrap to Domain layer.
+ *
+ * @property local from database/file/memory data store.
+ * @property diggerDelegate keeping all of the data mapper here.
+ */
+internal class HistoryDataRepository(
+    private val local: DataStore,
+) : HistoryRepository {
+    override suspend fun addOrUpdateSearchHistory(keyword: String) = local.createOrModifySearchHistory(keyword)
+
+    override suspend fun fetchSearchHistories(count: Int) = local.getSearchHistories(count)
+
+    override suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?) =
+        local.removeSearchHistory(keyword, entity)
+}

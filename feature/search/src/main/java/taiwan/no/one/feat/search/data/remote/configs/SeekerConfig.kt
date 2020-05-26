@@ -22,5 +22,20 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.remote.configs
+
+import taiwan.no.one.feat.search.BuildConfig
+
+/**
+ * The configuration of a remote google news api service.
+ */
+internal class SeekerConfig : ApiConfig {
+    companion object {
+        const val API_REQUEST = BuildConfig.SeekSongUriRequest
+
+        // All basic http api url of Search Music.
+        private const val BASE_URL = BuildConfig.SeekSongUriDomain
+    }
+
+    override val apiBaseUrl = BASE_URL
+}

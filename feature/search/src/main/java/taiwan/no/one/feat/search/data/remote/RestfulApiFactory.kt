@@ -22,5 +22,13 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.remote
+
+import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+
+/**
+ * Factory that creates different implementations of [taiwan.no.one.feat.data.remote.configs.ApiConfig].
+ */
+internal class RestfulApiFactory {
+    fun createSeekerConfig() = SeekerConfig()
+}

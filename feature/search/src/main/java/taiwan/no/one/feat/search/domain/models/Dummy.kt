@@ -22,5 +22,9 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.domain.models
+
+internal data class Dummy(
+    val id: Int,
+    val content: String
+)

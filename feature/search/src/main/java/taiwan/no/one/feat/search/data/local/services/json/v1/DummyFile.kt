@@ -22,5 +22,17 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.local.services.json.v1
+
+import android.content.Context
+import taiwan.no.one.core.data.extensions.parseObjectFromJson
+import taiwan.no.one.feat.search.data.entities.local.DummyEntity
+
+internal class DummyFile(
+    private val context: Context
+) {
+    suspend fun getDummies(): List<DummyEntity> {
+        val jsonFileName = "json/dummy.json"
+        return context.parseObjectFromJson<List<DummyEntity>>(jsonFileName).orEmpty()
+    }
+}

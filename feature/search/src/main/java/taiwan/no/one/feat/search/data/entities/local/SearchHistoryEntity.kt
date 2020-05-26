@@ -22,5 +22,17 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.entities.local
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import taiwan.no.one.ext.DEFAULT_STR
+import java.util.Date
+
+@Entity(tableName = "table_history")
+internal data class SearchHistoryEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val keyword: String = DEFAULT_STR,
+    val updated: Date = Date()
+)

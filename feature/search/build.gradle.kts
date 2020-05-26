@@ -22,15 +22,13 @@
  * SOFTWARE.
  */
 
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import config.AndroidConfiguration
 import config.CommonModuleDependency
 import config.annotationDependencies
-import config.appDependencies
-import org.jetbrains.kotlin.gradle.internal.CacheImplementation
-import resources.FeatureRes
 
 plugins {
-    id("com.android.application")
+    id("com.android.dynamic-feature")
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
@@ -40,14 +38,12 @@ plugins {
 android {
     compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
     defaultConfig {
-        applicationId = AndroidConfiguration.ID
         minSdkVersion(AndroidConfiguration.MIN_SDK)
         targetSdkVersion(AndroidConfiguration.TARGET_SDK)
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi = AndroidConfiguration.MIN_SDK
-        renderscriptSupportModeEnabled = true
         testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
         consumerProguardFiles(file("consumer-rules.pro"))
         javaCompileOptions {
@@ -59,13 +55,29 @@ android {
                 )
             }
         }
-        buildConfigField("FEATURE_MODULE_NAMES",
-                         CommonModuleDependency.getFeatureModuleName().map { it.replace(":feature:", "feat.") }.toSet())
     }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), file("proguard-rules.pro"))
+
+            buildConfigField("String",
+                             "SeekSongUriDomain",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
+            buildConfigField("String",
+                             "SeekSongUriRequest",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
+            buildConfigField("String",
+                             "SearchMusicQuery1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_query_1"))
+            buildConfigField("String",
+                             "SearchMusicParameter1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_1"))
+            buildConfigField("String",
+                             "SearchMusicQuery2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
+            buildConfigField("String",
+                             "SearchMusicParameter2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
         }
         getByName("debug") {
             splits.abi.isEnable = false
@@ -76,12 +88,25 @@ android {
             // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
             ext.set("alwaysUpdateBuildId", false)
             isCrunchPngs = false // Enabled by default for RELEASE build type
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), file("proguard-rules.pro"))
-        }
-    }
-    sourceSets {
-        getByName("main").apply {
-            res.srcDirs(*FeatureRes.dirs)
+
+            buildConfigField("String",
+                             "SeekSongUriDomain",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
+            buildConfigField("String",
+                             "SeekSongUriRequest",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
+            buildConfigField("String",
+                             "SearchMusicQuery1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_query_1"))
+            buildConfigField("String",
+                             "SearchMusicParameter1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_1"))
+            buildConfigField("String",
+                             "SearchMusicQuery2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
+            buildConfigField("String",
+                             "SearchMusicParameter2",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
         }
     }
     dexOptions {
@@ -93,10 +118,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    packagingOptions {
-        exclude("META-INF/atomicfu.kotlin_module")
-        exclude("META-INF/kotlinx-coroutines-core.kotlin_module")
-    }
     testOptions { unitTests.apply { isReturnDefaultValues = true } }
     lintOptions { isAbortOnError = false }
     kotlinOptions {
@@ -106,15 +127,7 @@ android {
         options.jvmTarget = JavaVersion.VERSION_1_8.toString()
         languageVersion = "1.4"
     }
-    buildFeatures {
-        viewBinding = true
-    }
-    dynamicFeatures = CommonModuleDependency.getFeatureModuleName()
-}
-
-androidExtensions {
-    isExperimental = true
-    defaultCacheImplementation = CacheImplementation.SPARSE_ARRAY
+    viewBinding.isEnabled = true
 }
 
 kapt {
@@ -124,14 +137,6 @@ kapt {
 }
 
 dependencies {
-    //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    api(project(CommonModuleDependency.LIB_CORE))
-    appDependencies()
+    implementation(project(CommonModuleDependency.APP))
     annotationDependencies()
-}
-
-fun com.android.build.gradle.internal.dsl.DefaultConfig.buildConfigField(name: String, value: Set<String>) {
-    // Generates String that holds Java String Array code
-    val strValue = value.joinToString(prefix = "{", separator = ",", postfix = "}", transform = { "\"$it\"" })
-    buildConfigField("String[]", name, strValue)
 }

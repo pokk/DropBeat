@@ -22,5 +22,10 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.data.contracts.sub
+
+import taiwan.no.one.feat.search.data.entities.local.DummyEntity
+
+internal interface DummySubStore {
+    suspend fun getDummies(): List<DummyEntity>
+}

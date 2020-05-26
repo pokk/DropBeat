@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ MIT License
   ~
@@ -23,15 +22,17 @@
   ~ SOFTWARE.
   -->
 
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navFeatSearchMusic"
-    app:startDestination="@id/dummyFragment">
+<manifest
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="taiwan.no.one.feat.ranking">
 
-    <fragment
-        android:id="@+id/dummyFragment"
-        android:name="taiwan.no.one.feat.search.presentation.DummyFragment"
-        android:label="Dummy Index">
-    </fragment>
-</navigation>
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_feat_ranking">
+        <dist:delivery>
+            <!--<dist:on-demand/>-->
+            <dist:install-time/>
+        </dist:delivery>
+        <dist:fusing dist:include="true"/>
+    </dist:module>
+</manifest>

@@ -22,5 +22,18 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search.domain.repositories
+
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.domain.models.Dummy
+
+/**
+ * This interface will be the similar to [taiwan.no.one.feat.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+internal interface SearchMusicRepo : Repository {
+    suspend fun fetchDummies(): List<Dummy>
+
+    suspend fun fetchMusic(keyword: String, page: Int): List<SongEntity>
+}

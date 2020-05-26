@@ -22,5 +22,17 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+package taiwan.no.one.feat.search
+
+import androidx.navigation.NavGraph
+import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
+
+object FeatureARoute : NaviGraphRouteProvider {
+    override lateinit var navGraph: NavGraph
+
+    override val graphName get() = "nav_dummy"
+
+    override val packageName get() = BuildConfig.APPLICATION_ID
+
+    override val resourceId get() = R.navigation.nav_dummy
+}
