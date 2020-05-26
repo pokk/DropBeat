@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  slack: circleci/slack@3.4.2
 
 jobs:
   build:
@@ -56,5 +54,3 @@ jobs:
           path: app/build/test-results
           environment:
             TERM: dumb
-      - slack/status:
-          webhook: ${SLACK_WEBHOOK}
