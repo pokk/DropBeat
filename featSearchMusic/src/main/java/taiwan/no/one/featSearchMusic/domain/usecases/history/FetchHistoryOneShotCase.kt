@@ -22,24 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.domain.usecase
+package taiwan.no.one.featSearchMusic.domain.usecases.history
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
-import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.featSearchMusic.domain.repositories.HistoryRepository
+import taiwan.no.one.featSearchMusic.domain.usecases.FetchHistoryCase
 
-/**
- * A base abstract class for wrapping a coroutine [OneShotUsecase] object and do the
- * error handling when an error or cancellation happened.
- */
-abstract class OneShotUsecase<T : Any, R : Usecase.RequestValues> : Usecase<R> {
-    abstract suspend fun acquireCase(parameter: R? = null): T
-
-    open suspend fun execute(parameter: R? = null) = withContext(Dispatchers.Default) {
-        runCatching { acquireCase(parameter) }
+internal class FetchHistoryOneShotCase(
+    private val repository: HistoryRepository
+) : FetchHistoryCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        repository.fetchSearchHistories(count)
     }
 
-    protected suspend fun R?.ensure(errorMessage: String = DEFAULT_STR, block: suspend R.() -> T) =
-        this?.run { block() } ?: throw ParameterNotMatchException(errorMessage)
+    class Request(val count: Int) : RequestValues
+
 }

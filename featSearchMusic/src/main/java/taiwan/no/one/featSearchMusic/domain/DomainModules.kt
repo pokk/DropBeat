@@ -31,14 +31,23 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.featSearchMusic.FeatModules.FEAT_NAME
+import taiwan.no.one.featSearchMusic.domain.usecases.AddOrUpdateHistoryCase
+import taiwan.no.one.featSearchMusic.domain.usecases.DeleteHistoryCase
+import taiwan.no.one.featSearchMusic.domain.usecases.FetchHistoryCase
 import taiwan.no.one.featSearchMusic.domain.usecases.FetchMusicCase
-import taiwan.no.one.featSearchMusic.domain.usecases.FetchMusicOneShotCase
 import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyCase
 import taiwan.no.one.featSearchMusic.domain.usecases.RetrieveDummyDeferredCase
+import taiwan.no.one.featSearchMusic.domain.usecases.history.AddOrUpdateHistoryOneShotCase
+import taiwan.no.one.featSearchMusic.domain.usecases.history.DeleteHistoryOneShotCase
+import taiwan.no.one.featSearchMusic.domain.usecases.history.FetchHistoryOneShotCase
+import taiwan.no.one.featSearchMusic.domain.usecases.music.FetchMusicOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
         bind<RetrieveDummyCase>() with singleton { RetrieveDummyDeferredCase(instance()) }
         bind<FetchMusicCase>() with singleton { FetchMusicOneShotCase(instance()) }
+        bind<FetchHistoryCase>() with singleton { FetchHistoryOneShotCase(instance()) }
+        bind<AddOrUpdateHistoryCase>() with singleton { AddOrUpdateHistoryOneShotCase(instance()) }
+        bind<DeleteHistoryCase>() with singleton { DeleteHistoryOneShotCase(instance()) }
     }
 }

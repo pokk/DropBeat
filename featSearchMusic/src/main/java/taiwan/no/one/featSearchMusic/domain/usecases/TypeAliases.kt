@@ -25,11 +25,23 @@
 package taiwan.no.one.featSearchMusic.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.featSearchMusic.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.featSearchMusic.domain.models.Dummy
+import taiwan.no.one.featSearchMusic.domain.usecases.history.AddOrUpdateHistoryOneShotCase
+import taiwan.no.one.featSearchMusic.domain.usecases.history.DeleteHistoryOneShotCase
+import taiwan.no.one.featSearchMusic.domain.usecases.history.FetchHistoryOneShotCase
+import taiwan.no.one.featSearchMusic.domain.usecases.music.FetchMusicOneShotCase
 
 internal typealias RetrieveDummyCase = OneShotUsecase<List<Dummy>, RetrieveDummyReq>
 internal typealias RetrieveDummyReq = RetrieveDummyDeferredCase.Request
 
 internal typealias FetchMusicCase = OneShotUsecase<List<SongEntity>, FetchMusicReq>
 internal typealias FetchMusicReq = FetchMusicOneShotCase.Request
+
+internal typealias FetchHistoryCase = OneShotUsecase<List<SearchHistoryEntity>, FetchHistoryReq>
+internal typealias FetchHistoryReq = FetchHistoryOneShotCase.Request
+internal typealias AddOrUpdateHistoryCase = OneShotUsecase<Boolean, AddOrUpdateHistoryReq>
+internal typealias AddOrUpdateHistoryReq = AddOrUpdateHistoryOneShotCase.Request
+internal typealias DeleteHistoryCase = OneShotUsecase<Boolean, DeleteHistoryReq>
+internal typealias DeleteHistoryReq = DeleteHistoryOneShotCase.Request

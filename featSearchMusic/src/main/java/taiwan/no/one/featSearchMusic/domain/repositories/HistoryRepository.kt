@@ -27,7 +27,7 @@ package taiwan.no.one.featSearchMusic.domain.repositories
 import taiwan.no.one.featSearchMusic.data.entities.local.SearchHistoryEntity
 
 /**
- * This interface will be the similar to [com.no1.taiwan.stationmusicfm.data.datastores.DataStore].
+ * This interface will be the similar to [taiwan.no.one.featSearchMusic.data.contracts.DataStore]
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface HistoryRepository {
