@@ -34,7 +34,6 @@ import taiwan.no.one.feat.search.domain.repositories.HistoryRepository
  * Also we need to do [async] & [await] one time for getting the data then transform and wrap to Domain layer.
  *
  * @property local from database/file/memory data store.
- * @property diggerDelegate keeping all of the data mapper here.
  */
 internal class HistoryDataRepository(
     private val local: DataStore,

@@ -43,9 +43,7 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
     open suspend fun insertBy(keyword: String) {
         val history = retrieveHistory(keyword)
         if (history == null)
-            insert(SearchHistoryEntity(0,
-                                       keyword,
-                                       Date()))
+            insert(SearchHistoryEntity(0, keyword, Date()))
         else
             update(history.copy(updated = Date()))
     }

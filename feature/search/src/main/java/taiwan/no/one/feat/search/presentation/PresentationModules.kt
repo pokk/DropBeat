@@ -37,9 +37,6 @@ import taiwan.no.one.feat.search.presentation.viewmodels.DummyViewModel
 
 internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
-        bind<ViewModelEntry>().inSet() with provider {
-            DummyViewModel::class.java to DummyViewModel(
-                instance())
-        }
+        bind<ViewModelEntry>().inSet() with provider { DummyViewModel::class.java to DummyViewModel(instance()) }
     }
 }

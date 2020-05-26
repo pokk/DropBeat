@@ -51,7 +51,7 @@ object CommonModuleDependency {
         .toMutableSet()
 
     fun getFeatureModuleName() = getDynamicFeatureModules()
-        .filter { it == FEAT_SEARCH_MUSIC } // Only one will be imported
+//        .filter { it == FEAT_SEARCH_MUSIC } // Only one will be imported
 //        .map { it.replace(":feature", "") }
         .toMutableSet()
 }

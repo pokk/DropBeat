@@ -50,42 +50,27 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton {
-            LocalStore(instance(),
-                       instance(),
-                       instance())
-        }
-        bind<RemoteStore>() with singleton {
-            RemoteStore(instance())
-        }
+        bind<LocalStore>() with singleton { LocalStore(instance(), instance(), instance()) }
+        bind<RemoteStore>() with singleton { RemoteStore(instance()) }
 
-        bind<SearchMusicRepo>() with singleton {
-            SearchMusicRepository(instance(),
-                                  instance())
-        }
+        bind<SearchMusicRepo>() with singleton { SearchMusicRepository(instance(), instance()) }
     }
 
     private fun localProvide() = Kodein.Module("LocalModule") {
         bind<BankDatabase>() with singleton { BankDatabase.getDatabase(instance()) }
 
-        bind<DummyFile>() with singleton {
-            DummyFile(instance())
-        }
+        bind<DummyFile>() with singleton { DummyFile(instance()) }
         bind<DummyDao>() with singleton { instance<BankDatabase>().createDummyDao() }
         bind<SearchHistoryDao>() with singleton { instance<BankDatabase>().createSearchHistoryDao() }
     }
 
     private fun remoteProvide(context: Context) = Kodein.Module("RemoteModule") {
-        bind<SeekerConfig>() with instance(
-            RestfulApiFactory().createSeekerConfig())
+        bind<SeekerConfig>() with instance(RestfulApiFactory().createSeekerConfig())
 
         bind<Retrofit>() with singleton {
             DefaultRetrofitConfig(context, instance<SeekerConfig>().apiBaseUrl).provideRetrofitBuilder().build()
         }
 
-        bind<SeekerBankService>() with singleton {
-            instance<Retrofit>().create(
-                SeekerBankService::class.java)
-        }
+        bind<SeekerBankService>() with singleton { instance<Retrofit>().create(SeekerBankService::class.java) }
     }
 }

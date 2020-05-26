@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.search
 
 import androidx.navigation.NavGraph
+import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
 
 object FeatureARoute : NaviGraphRouteProvider {
