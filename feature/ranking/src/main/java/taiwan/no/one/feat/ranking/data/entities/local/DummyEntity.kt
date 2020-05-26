@@ -22,13 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.entities.local
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import taiwan.no.one.feat.ranking.domain.models.Dummy
+import java.util.Date
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+@Entity(tableName = "table_dummy")
+internal data class DummyEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val content: String,
+    val updated: Date = Date()
+) {
+    fun toModel() = Dummy(id, content)
 }

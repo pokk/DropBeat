@@ -22,13 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.contracts
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * This interface will common the all data stores.
+ * Using prefix name (get), (create), (modify), (remove), (store)
  */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal interface DataStore {
+    suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity
 }

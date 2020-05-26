@@ -22,13 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.stores
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.feat.ranking.data.contracts.DataStore
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.ranking.data.remote.parameters.SeekerBank
+import taiwan.no.one.feat.ranking.data.remote.services.SeekerBankService
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * The implementation of the remote data store. The responsibility is selecting a correct
+ * remote service to access the data.
  */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal class RemoteStore(
+    private val seekerBankService: SeekerBankService
+) : DataStore {
+    override suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity {
+        val queries = hashMapOf(
+            SeekerBank.PARAM_NAME_QUERY to keyword,
+            SeekerBank.PARAM_NAME_PAGE_NO to page.toString(),
+        )
+        return seekerBankService.retrieveSearchMusic(queries)
+    }
 }

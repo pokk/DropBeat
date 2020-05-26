@@ -22,13 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
-
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+package taiwan.no.one.feat.ranking.data.remote.configs
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * Interface of the setting of the difference http configurations.
  */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal interface ApiConfig {
+    /**
+     * Obtain the base http url.
+     *
+     * @return restful api base url information.
+     */
+    val apiBaseUrl: String
 }

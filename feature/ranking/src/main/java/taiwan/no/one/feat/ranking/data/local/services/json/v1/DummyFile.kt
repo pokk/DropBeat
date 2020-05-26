@@ -22,13 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.local.services.json.v1
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import android.content.Context
+import taiwan.no.one.core.data.extensions.parseObjectFromJson
+import taiwan.no.one.feat.ranking.data.entities.local.DummyEntity
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal class DummyFile(
+    private val context: Context
+) {
+    suspend fun getDummies(): List<DummyEntity> {
+        val jsonFileName = "json/dummy.json"
+        return context.parseObjectFromJson<List<DummyEntity>>(jsonFileName).orEmpty()
+    }
 }

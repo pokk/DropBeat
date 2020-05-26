@@ -29,7 +29,7 @@ import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEnti
 import taiwan.no.one.feat.search.domain.models.Dummy
 
 /**
- * This interface will be the similar to [taiwan.no.one.feat.data.contracts.DataStore].
+ * This interface will be the similar to [taiwan.no.one.feat.search.data.contracts.DataStore].
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface SearchMusicRepo : Repository {

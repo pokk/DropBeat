@@ -25,5 +25,6 @@
 package taiwan.no.one.dropbeat.di
 
 object Constant {
-    const val TAG_BASE_OKHTTP = "base okhttp"
+    const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
+    const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
 }

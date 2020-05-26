@@ -22,13 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import androidx.navigation.NavGraph
+import taiwan.no.one.dropbeat.BuildConfig
+import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+object FeatureARoute : NaviGraphRouteProvider {
+    override lateinit var navGraph: NavGraph
+
+    override val graphName get() = TODO()
+
+    override val packageName get() = BuildConfig.APPLICATION_ID
+
+    override val resourceId get() = TODO()
 }

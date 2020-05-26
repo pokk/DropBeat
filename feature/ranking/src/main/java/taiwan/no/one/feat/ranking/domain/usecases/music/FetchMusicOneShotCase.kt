@@ -22,13 +22,32 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.domain.usecases.music
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import android.media.MediaMetadataRetriever
+import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
+import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicCase
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal class FetchMusicOneShotCase(
+    private val searchMusicRepo: SearchMusicRepo
+) : FetchMusicCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        searchMusicRepo.fetchMusic(keyword, page).map {
+            // Fix the track with 0 duration.
+            if (it.length == 0) {
+                val retriever = MediaMetadataRetriever().apply {
+                    setDataSource(it.url, hashMapOf())
+                }
+                val time = retriever.extractMetadata(METADATA_KEY_DURATION).toLong() / 1000
+                it.copy(length = time.toInt())
+            }
+            else {
+                it
+            }
+        }
+    }
+
+    class Request(val keyword: String, val page: Int) : Usecase.RequestValues
 }

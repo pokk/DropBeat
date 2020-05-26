@@ -22,13 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.repositories
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.feat.ranking.data.entities.local.DummyEntity
+import taiwan.no.one.feat.ranking.data.stores.LocalStore
+import taiwan.no.one.feat.ranking.data.stores.RemoteStore
+import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal class SearchMusicRepository(
+    private val local: LocalStore,
+    private val remote: RemoteStore
+) : SearchMusicRepo {
+    override suspend fun fetchDummies() = local.getDummies().map(DummyEntity::toModel)
+
+    override suspend fun fetchMusic(keyword: String, page: Int) = remote.getMusic(keyword, page).entity.items
 }

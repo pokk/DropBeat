@@ -22,13 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.presentation
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import android.content.Context
+import org.kodein.di.Kodein
+import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal object PresentationModules : ModuleProvider {
+    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
+    }
 }

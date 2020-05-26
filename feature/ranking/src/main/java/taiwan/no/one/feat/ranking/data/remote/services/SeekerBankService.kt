@@ -22,13 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.remote.services
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.QueryMap
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.ranking.data.remote.configs.SeekerConfig
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
  */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal interface SeekerBankService {
+    @Headers("mock:true",
+             "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
+    @GET(SeekerConfig.API_REQUEST)
+    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoEntity
 }

@@ -22,13 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.domain.usecases
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.ranking.domain.models.Dummy
+import taiwan.no.one.feat.ranking.domain.usecases.music.FetchMusicOneShotCase
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
-}
+internal typealias RetrieveDummyCase = OneShotUsecase<List<Dummy>, RetrieveDummyReq>
+internal typealias RetrieveDummyReq = RetrieveDummyDeferredCase.Request
+
+internal typealias FetchMusicCase = OneShotUsecase<List<SongEntity>, FetchMusicReq>
+internal typealias FetchMusicReq = FetchMusicOneShotCase.Request

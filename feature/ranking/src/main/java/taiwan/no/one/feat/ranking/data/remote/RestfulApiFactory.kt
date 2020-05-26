@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.remote
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.feat.ranking.data.remote.configs.SeekerConfig
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * Factory that creates different implementations of [taiwan.no.one.feat.ranking.data.remote.configs.ApiConfig].
  */
 internal class RestfulApiFactory {
     fun createSeekerConfig() = SeekerConfig()

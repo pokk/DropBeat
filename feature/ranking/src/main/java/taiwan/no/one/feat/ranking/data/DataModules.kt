@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data
+package taiwan.no.one.feat.ranking.data
 
 import android.content.Context
 import org.kodein.di.Kodein
@@ -33,25 +33,24 @@ import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.search.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.search.data.local.configs.BankDatabase
-import taiwan.no.one.feat.search.data.local.services.database.v1.DummyDao
-import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
-import taiwan.no.one.feat.search.data.local.services.json.v1.DummyFile
-import taiwan.no.one.feat.search.data.remote.RestfulApiFactory
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
-import taiwan.no.one.feat.search.data.remote.services.SeekerBankService
-import taiwan.no.one.feat.search.data.repositories.SearchMusicRepository
-import taiwan.no.one.feat.search.data.stores.LocalStore
-import taiwan.no.one.feat.search.data.stores.RemoteStore
-import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
+import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.ranking.data.local.configs.BankDatabase
+import taiwan.no.one.feat.ranking.data.local.services.database.v1.DummyDao
+import taiwan.no.one.feat.ranking.data.local.services.json.v1.DummyFile
+import taiwan.no.one.feat.ranking.data.remote.RestfulApiFactory
+import taiwan.no.one.feat.ranking.data.remote.configs.SeekerConfig
+import taiwan.no.one.feat.ranking.data.remote.services.SeekerBankService
+import taiwan.no.one.feat.ranking.data.repositories.SearchMusicRepository
+import taiwan.no.one.feat.ranking.data.stores.LocalStore
+import taiwan.no.one.feat.ranking.data.stores.RemoteStore
+import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
 
 internal object DataModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance(), instance(), instance()) }
+        bind<LocalStore>() with singleton { LocalStore(instance(), instance()) }
         bind<RemoteStore>() with singleton { RemoteStore(instance()) }
 
         bind<SearchMusicRepo>() with singleton { SearchMusicRepository(instance(), instance()) }
@@ -62,18 +61,17 @@ internal object DataModules : ModuleProvider {
 
         bind<DummyFile>() with singleton { DummyFile(instance()) }
         bind<DummyDao>() with singleton { instance<BankDatabase>().createDummyDao() }
-        bind<SearchHistoryDao>() with singleton { instance<BankDatabase>().createSearchHistoryDao() }
     }
 
     private fun remoteProvide(context: Context) = Kodein.Module("${FEAT_NAME}RemoteModule") {
         bind<SeekerConfig>() with instance(RestfulApiFactory().createSeekerConfig())
 
-        bind<Retrofit>(Constant.TAG_FEAT_SEARCH_RETROFIT) with singleton {
+        bind<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT) with singleton {
             DefaultRetrofitConfig(context, instance<SeekerConfig>().apiBaseUrl).provideRetrofitBuilder().build()
         }
 
         bind<SeekerBankService>() with singleton {
-            instance<Retrofit>(Constant.TAG_FEAT_SEARCH_RETROFIT).create(SeekerBankService::class.java)
+            instance<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT).create(SeekerBankService::class.java)
         }
     }
 }

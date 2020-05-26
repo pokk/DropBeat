@@ -22,13 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.entities.remote
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import com.google.gson.annotations.SerializedName
+import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal data class MusicInfoEntity(
+    val status: String = DEFAULT_STR,
+    @SerializedName("data")
+    val entity: MusicEntity = MusicEntity()
+) {
+    data class MusicEntity(
+        // 🔽 Only Music has.
+        @SerializedName("has_more")
+        val hasMore: Boolean = false,
+        val items: List<SongEntity> = emptyList(),
+        // 🔽 Only Rank has.
+        val timestamp: Double = 0.0,
+        val songs: List<SongEntity> = emptyList()
+    )
 }

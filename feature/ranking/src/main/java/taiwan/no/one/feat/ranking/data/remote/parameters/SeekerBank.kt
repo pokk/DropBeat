@@ -22,13 +22,9 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.remote.parameters
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
-
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal object SeekerBank {
+    const val PARAM_NAME_PAGE_NO = "page_no"
+    const val PARAM_NAME_QUERY = "query"
 }

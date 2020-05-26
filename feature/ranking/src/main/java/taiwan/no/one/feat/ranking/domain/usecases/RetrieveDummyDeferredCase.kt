@@ -22,13 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.domain.usecases
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal class RetrieveDummyDeferredCase(
+    private val searchMusicRepo: SearchMusicRepo
+) : RetrieveDummyCase() {
+    override suspend fun acquireCase(parameter: Request?) = searchMusicRepo.fetchDummies()
+
+    data class Request(val id: Int) : Usecase.RequestValues
 }

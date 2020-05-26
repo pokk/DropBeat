@@ -27,7 +27,7 @@ package taiwan.no.one.feat.search.domain.repositories
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 
 /**
- * This interface will be the similar to [taiwan.no.one.feat.data.contracts.DataStore]
+ * This interface will be the similar to [taiwan.no.one.feat.search.data.contracts.DataStore]
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface HistoryRepository {

@@ -22,13 +22,23 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.domain
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import android.content.Context
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.singleton
+import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicCase
+import taiwan.no.one.feat.ranking.domain.usecases.RetrieveDummyCase
+import taiwan.no.one.feat.ranking.domain.usecases.RetrieveDummyDeferredCase
+import taiwan.no.one.feat.ranking.domain.usecases.music.FetchMusicOneShotCase
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal object DomainModules : ModuleProvider {
+    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
+        bind<RetrieveDummyCase>() with singleton { RetrieveDummyDeferredCase(instance()) }
+        bind<FetchMusicCase>() with singleton { FetchMusicOneShotCase(instance()) }
+    }
 }

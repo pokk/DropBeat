@@ -22,13 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.remote.configs
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.feat.ranking.BuildConfig
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * The configuration of a remote google news api service.
  */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal class SeekerConfig : ApiConfig {
+    companion object {
+        const val API_REQUEST = BuildConfig.SeekSongUriRequest
+
+        // All basic http api url of Search Music.
+        private const val BASE_URL = BuildConfig.SeekSongUriDomain
+    }
+
+    override val apiBaseUrl = BASE_URL
 }

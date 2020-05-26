@@ -22,13 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.domain.repositories
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.ranking.domain.models.Dummy
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * This interface will be the similar to [taiwan.no.one.feat.ranking.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+internal interface SearchMusicRepo : Repository {
+    suspend fun fetchDummies(): List<Dummy>
+
+    suspend fun fetchMusic(keyword: String, page: Int): List<SongEntity>
 }

@@ -22,13 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.remote
+package taiwan.no.one.feat.ranking.data.local.services.database.v1
 
-import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
+import androidx.room.Dao
+import androidx.room.Query
+import taiwan.no.one.core.data.local.room.BaseDao
+import taiwan.no.one.feat.ranking.data.entities.local.DummyEntity
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.search.data.remote.configs.ApiConfig].
+ * Integrated the base [androidx.room.Room] database operations.
+ * Thru [androidx.room.Room] we can just define the interfaces that we want to
+ * access for from a local database.
+ * Using prefix name (get), (insert), (update), (delete)
  */
-internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+@Dao
+internal abstract class DummyDao : BaseDao<DummyEntity> {
+    @Query("""SELECT * FROM table_dummy""")
+    abstract suspend fun getDummies(): List<DummyEntity>
 }
