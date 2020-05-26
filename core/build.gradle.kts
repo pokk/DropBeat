@@ -23,6 +23,7 @@
  */
 
 import config.AndroidConfiguration
+import config.CommonModuleDependency
 import config.annotationDependencies
 import config.coreDependencies
 import config.debugDependencies
@@ -106,7 +107,7 @@ kapt {
 
 dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    listOf(project(":ktx"), project(":device")).forEach(::api)
+    listOf(project(CommonModuleDependency.LIB_KTX), project(CommonModuleDependency.LIB_DEVICE)).forEach(::api)
     coreDependencies()
     annotationDependencies()
     debugDependencies(config.DepEnvDebugApi)
