@@ -22,21 +22,33 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.data.local.services.database.v1
+package taiwan.no.one.feat.ranking.data.entities.remote
 
-import androidx.room.Dao
-import androidx.room.Query
-import taiwan.no.one.core.data.local.room.BaseDao
-import taiwan.no.one.feat.ranking.data.entities.local.DummyEntity
+import com.google.gson.annotations.SerializedName
+import taiwan.no.one.ext.DEFAULT_DOUBLE
+import taiwan.no.one.ext.DEFAULT_INT
+import taiwan.no.one.ext.DEFAULT_STR
 
-/**
- * Integrated the base [androidx.room.Room] database operations.
- * Thru [androidx.room.Room] we can just define the interfaces that we want to
- * access for from a local database.
- * Using prefix name (get), (insert), (update), (delete)
- */
-@Dao
-internal abstract class DummyDao : BaseDao<DummyEntity> {
-    @Query("""SELECT * FROM table_dummy""")
-    abstract suspend fun getDummies(): List<DummyEntity>
+internal data class MusicRankListEntity(
+    @SerializedName("status")
+    val status: String = DEFAULT_STR,
+    @SerializedName("data")
+    val briefRankEntities: List<BriefRankEntity> = emptyList()
+) {
+    internal data class BriefRankEntity(
+        @SerializedName("title")
+        val title: String = DEFAULT_STR,
+        @SerializedName("timestamp")
+        val timestamp: Double = DEFAULT_DOUBLE,
+        @SerializedName("sub_title")
+        val subTitle: String = DEFAULT_STR,
+        @SerializedName("cover_url")
+        val coverUrl: String = DEFAULT_STR,
+        @SerializedName("source_tip")
+        val sourceTip: String = DEFAULT_STR,
+        @SerializedName("type")
+        val type: Int = DEFAULT_INT,
+        @SerializedName("rank_id")
+        val rankId: Int = DEFAULT_INT
+    )
 }

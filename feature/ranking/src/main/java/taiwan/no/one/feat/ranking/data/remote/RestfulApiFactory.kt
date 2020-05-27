@@ -24,11 +24,11 @@
 
 package taiwan.no.one.feat.ranking.data.remote
 
-import taiwan.no.one.feat.ranking.data.remote.configs.SeekerConfig
+import taiwan.no.one.feat.ranking.data.remote.configs.RankingConfig
 
 /**
  * Factory that creates different implementations of [taiwan.no.one.feat.ranking.data.remote.configs.ApiConfig].
  */
 internal class RestfulApiFactory {
-    fun createSeekerConfig() = SeekerConfig()
+    fun createSeekerConfig() = RankingConfig()
 }

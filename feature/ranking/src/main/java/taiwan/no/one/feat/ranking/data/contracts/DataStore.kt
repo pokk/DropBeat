@@ -24,12 +24,22 @@
 
 package taiwan.no.one.feat.ranking.data.contracts
 
+import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
 
 /**
  * This interface will common the all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface DataStore {
-    suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity
+    suspend fun getMusicRanking(rankId: String): MusicInfoEntity
+
+    suspend fun getDetailOfRankings(): MusicRankListEntity
+
+    suspend fun createRankingEntity(entities: List<RankingIdEntity>): Boolean
+
+    suspend fun getRankingEntity(): List<RankingIdEntity>
+
+    suspend fun modifyRankingEntity(id: Int, uri: String, number: Int): Boolean
 }

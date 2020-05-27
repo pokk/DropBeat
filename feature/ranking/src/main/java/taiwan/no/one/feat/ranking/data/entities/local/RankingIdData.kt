@@ -22,21 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.data.remote.services
+package taiwan.no.one.feat.ranking.data.entities.local
 
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.QueryMap
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
-import taiwan.no.one.feat.ranking.data.remote.configs.SeekerConfig
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import taiwan.no.one.ext.DEFAULT_STR
 
-/**
- * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
- * Using prefix name (retrieve), (insert), (replace), (release)
- */
-internal interface SeekerBankService {
-    @Headers("mock:true",
-             "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
-    @GET(SeekerConfig.API_REQUEST)
-    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoEntity
-}
+@Entity(tableName = "table_ranking")
+internal data class RankingIdEntity(
+    @PrimaryKey
+    val id: Int = 0,
+    val title: String = DEFAULT_STR,
+    val updated: String = DEFAULT_STR,
+    @ColumnInfo(name = "top_track_uri")
+    val topTrackUri: String = DEFAULT_STR,
+    @ColumnInfo(name = "track_number")
+    val trackNumber: Int = 0
+)

@@ -22,9 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.domain.models
+package taiwan.no.one.feat.ranking.data.local.services.database.v1
 
-internal data class Dummy(
-    val id: Int,
-    val content: String
-)
+import androidx.room.Dao
+import androidx.room.Query
+import taiwan.no.one.core.data.local.room.BaseDao
+import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+
+@Dao
+internal abstract class RankingDao : BaseDao<RankingIdEntity> {
+    /**
+     * Get all data from the Ranking table.
+     */
+    @Query("SELECT * FROM table_ranking")
+    abstract fun retrieveRankings(): List<RankingIdEntity>
+
+    @Query("UPDATE table_ranking SET top_track_uri=:uri, track_number=:numOfTracks WHERE id=:rankId")
+    abstract fun replaceBy(rankId: Int, uri: String, numOfTracks: Int)
+}

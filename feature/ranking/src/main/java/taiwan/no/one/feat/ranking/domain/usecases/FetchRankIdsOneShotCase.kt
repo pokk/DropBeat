@@ -24,13 +24,13 @@
 
 package taiwan.no.one.feat.ranking.domain.usecases
 
-import taiwan.no.one.core.domain.usecase.Usecase
-import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
-internal class RetrieveDummyDeferredCase(
-    private val searchMusicRepo: SearchMusicRepo
-) : RetrieveDummyCase() {
-    override suspend fun acquireCase(parameter: Request?) = searchMusicRepo.fetchDummies()
+internal class FetchRankIdsOneShotCase(
+    private val repository: RankingRepo
+) : FetchRankIdsCase() {
+    override suspend fun acquireCase(parameter: Request?) = repository.fetchRankings()
 
-    data class Request(val id: Int) : Usecase.RequestValues
+    class Request : RequestValues
 }

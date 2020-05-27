@@ -22,20 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.data.remote.configs
+package taiwan.no.one.feat.ranking.domain.repositories
 
-import taiwan.no.one.feat.ranking.BuildConfig
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
 
 /**
- * The configuration of a remote google news api service.
+ * This interface will be the similar to [taiwan.no.one.feat.ranking.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-internal class SeekerConfig : ApiConfig {
-    companion object {
-        const val API_REQUEST = BuildConfig.SeekSongUriRequest
+internal interface RankingRepo : Repository {
+    suspend fun fetchMusicRanking(rankId: String): List<SongEntity>
 
-        // All basic http api url of Search Music.
-        private const val BASE_URL = BuildConfig.SeekSongUriDomain
-    }
+    suspend fun fetchDetailOfRankings(): List<BriefRankEntity>
 
-    override val apiBaseUrl = BASE_URL
+    suspend fun fetchRankings(): List<RankingIdEntity>
+
+    suspend fun addRankings(params: List<RankingIdEntity>): Boolean
+
+    suspend fun updateRanking(id: Int, uri: String, number: Int): Boolean
 }

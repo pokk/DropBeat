@@ -22,18 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.domain.repositories
+package taiwan.no.one.feat.ranking.data.repositories
 
-import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
-import taiwan.no.one.feat.ranking.domain.models.Dummy
+import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+import taiwan.no.one.feat.ranking.data.stores.LocalStore
+import taiwan.no.one.feat.ranking.data.stores.RemoteStore
+import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
-/**
- * This interface will be the similar to [taiwan.no.one.feat.ranking.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-internal interface SearchMusicRepo : Repository {
-    suspend fun fetchDummies(): List<Dummy>
+internal class RankingRepository(
+    private val local: LocalStore,
+    private val remote: RemoteStore
+) : RankingRepo {
+    override suspend fun fetchMusicRanking(rankId: String) = remote.getMusicRanking(rankId).entity.songs
 
-    suspend fun fetchMusic(keyword: String, page: Int): List<SongEntity>
+    override suspend fun fetchDetailOfRankings() = remote.getDetailOfRankings().briefRankEntities
+
+    override suspend fun fetchRankings() = local.getRankingEntity()
+
+    override suspend fun addRankings(params: List<RankingIdEntity>) = local.createRankingEntity(params)
+
+    override suspend fun updateRanking(id: Int, uri: String, number: Int) = local.modifyRankingEntity(id, uri, number)
 }

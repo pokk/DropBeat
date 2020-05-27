@@ -24,23 +24,25 @@
 
 package taiwan.no.one.feat.ranking.data.stores
 
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
-import taiwan.no.one.feat.ranking.data.remote.parameters.SeekerBank
-import taiwan.no.one.feat.ranking.data.remote.services.SeekerBankService
+import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+import taiwan.no.one.feat.ranking.data.remote.services.RankingMusicService
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct
  * remote service to access the data.
  */
 internal class RemoteStore(
-    private val seekerBankService: SeekerBankService
+    private val rankingMusicService: RankingMusicService
 ) : DataStore {
-    override suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity {
-        val queries = hashMapOf(
-            SeekerBank.PARAM_NAME_QUERY to keyword,
-            SeekerBank.PARAM_NAME_PAGE_NO to page.toString(),
-        )
-        return seekerBankService.retrieveSearchMusic(queries)
-    }
+    override suspend fun getMusicRanking(rankId: String) = rankingMusicService.retrieveMusicRanking(rankId)
+
+    override suspend fun getDetailOfRankings() = rankingMusicService.retrieveDetailOfRankings()
+
+    override suspend fun createRankingEntity(entities: List<RankingIdEntity>) = UnsupportedOperation()
+
+    override suspend fun getRankingEntity() = UnsupportedOperation()
+
+    override suspend fun modifyRankingEntity(id: Int, uri: String, number: Int) = UnsupportedOperation()
 }

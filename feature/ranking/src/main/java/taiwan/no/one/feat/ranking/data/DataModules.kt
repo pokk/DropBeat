@@ -34,44 +34,44 @@ import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.ranking.data.local.configs.BankDatabase
-import taiwan.no.one.feat.ranking.data.local.services.database.v1.DummyDao
+import taiwan.no.one.feat.ranking.data.local.configs.RankingDatabase
+import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 import taiwan.no.one.feat.ranking.data.local.services.json.v1.DummyFile
 import taiwan.no.one.feat.ranking.data.remote.RestfulApiFactory
-import taiwan.no.one.feat.ranking.data.remote.configs.SeekerConfig
-import taiwan.no.one.feat.ranking.data.remote.services.SeekerBankService
-import taiwan.no.one.feat.ranking.data.repositories.SearchMusicRepository
+import taiwan.no.one.feat.ranking.data.remote.configs.RankingConfig
+import taiwan.no.one.feat.ranking.data.remote.services.RankingMusicService
+import taiwan.no.one.feat.ranking.data.repositories.RankingRepository
 import taiwan.no.one.feat.ranking.data.stores.LocalStore
 import taiwan.no.one.feat.ranking.data.stores.RemoteStore
-import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
+import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal object DataModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance(), instance()) }
+        bind<LocalStore>() with singleton { LocalStore(instance()) }
         bind<RemoteStore>() with singleton { RemoteStore(instance()) }
 
-        bind<SearchMusicRepo>() with singleton { SearchMusicRepository(instance(), instance()) }
+        bind<RankingRepo>() with singleton { RankingRepository(instance(), instance()) }
     }
 
     private fun localProvide() = Kodein.Module("${FEAT_NAME}LocalModule") {
-        bind<BankDatabase>() with singleton { BankDatabase.getDatabase(instance()) }
+        bind<RankingDatabase>() with singleton { RankingDatabase.getDatabase(instance()) }
 
         bind<DummyFile>() with singleton { DummyFile(instance()) }
-        bind<DummyDao>() with singleton { instance<BankDatabase>().createDummyDao() }
+        bind<RankingDao>() with singleton { instance<RankingDatabase>().createRankingDao() }
     }
 
     private fun remoteProvide(context: Context) = Kodein.Module("${FEAT_NAME}RemoteModule") {
-        bind<SeekerConfig>() with instance(RestfulApiFactory().createSeekerConfig())
+        bind<RankingConfig>() with instance(RestfulApiFactory().createSeekerConfig())
 
         bind<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT) with singleton {
-            DefaultRetrofitConfig(context, instance<SeekerConfig>().apiBaseUrl).provideRetrofitBuilder().build()
+            DefaultRetrofitConfig(context, instance<RankingConfig>().apiBaseUrl).provideRetrofitBuilder().build()
         }
 
-        bind<SeekerBankService>() with singleton {
-            instance<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT).create(SeekerBankService::class.java)
+        bind<RankingMusicService>() with singleton {
+            instance<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT).create(RankingMusicService::class.java)
         }
     }
 }

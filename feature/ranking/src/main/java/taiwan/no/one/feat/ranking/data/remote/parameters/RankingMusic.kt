@@ -22,24 +22,9 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.data.entities.remote
+package taiwan.no.one.feat.ranking.data.remote.parameters
 
-import com.google.gson.annotations.SerializedName
-import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
-
-internal data class MusicInfoEntity(
-    val status: String = DEFAULT_STR,
-    @SerializedName("data")
-    val entity: MusicEntity = MusicEntity()
-) {
-    internal data class MusicEntity(
-        // 🔽 Only Music has.
-        @SerializedName("has_more")
-        val hasMore: Boolean = false,
-        val items: List<SongEntity> = emptyList(),
-        // 🔽 Only Rank has.
-        val timestamp: Double = 0.0,
-        val songs: List<SongEntity> = emptyList()
-    )
+internal object RankingMusic {
+    const val PARAM_NAME_PAGE_NO = "page_no"
+    const val PARAM_NAME_QUERY = "query"
 }

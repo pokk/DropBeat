@@ -30,24 +30,23 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import taiwan.no.one.core.data.local.room.convert.DateConvert
-import taiwan.no.one.feat.ranking.data.entities.local.DummyEntity
-import taiwan.no.one.feat.ranking.data.local.services.database.v1.DummyDao
+import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 
 /**
  * The access operations to a database.
  */
-@Database(entities = [DummyEntity::class],
+@Database(entities = [RankingIdEntity::class],
           version = 1,
           exportSchema = false)
 @TypeConverters(DateConvert::class)
-internal abstract class BankDatabase : RoomDatabase() {
+internal abstract class RankingDatabase : RoomDatabase() {
     companion object {
-        @Volatile private var INSTANCE: BankDatabase? = null
-        private const val DATABASE_NAME = "music_bank.db"
+        @Volatile private var INSTANCE: RankingDatabase? = null
+        private const val DATABASE_NAME = "music_ranking.db"
 
-        fun getDatabase(context: Context): BankDatabase {
-            val tempInstance =
-                INSTANCE
+        fun getDatabase(context: Context): RankingDatabase {
+            val tempInstance = INSTANCE
 
             if (tempInstance != null) {
                 return tempInstance
@@ -55,7 +54,7 @@ internal abstract class BankDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    BankDatabase::class.java,
+                    RankingDatabase::class.java,
                     DATABASE_NAME
                 ).build()
                 INSTANCE = instance
@@ -65,5 +64,5 @@ internal abstract class BankDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun createDummyDao(): DummyDao
+    abstract fun createRankingDao(): RankingDao
 }

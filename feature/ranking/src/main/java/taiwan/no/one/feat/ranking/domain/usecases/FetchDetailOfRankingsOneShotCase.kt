@@ -22,18 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.data.repositories
+package taiwan.no.one.feat.ranking.domain.usecases
 
-import taiwan.no.one.feat.ranking.data.entities.local.DummyEntity
-import taiwan.no.one.feat.ranking.data.stores.LocalStore
-import taiwan.no.one.feat.ranking.data.stores.RemoteStore
-import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
-internal class SearchMusicRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
-) : SearchMusicRepo {
-    override suspend fun fetchDummies() = local.getDummies().map(DummyEntity::toModel)
+internal class FetchDetailOfRankingsOneShotCase(
+    private val repository: RankingRepo
+) : FetchDetailOfRankingsCase() {
+    override suspend fun acquireCase(parameter: Request?) = repository.fetchDetailOfRankings()
 
-    override suspend fun fetchMusic(keyword: String, page: Int) = remote.getMusic(keyword, page).entity.items
+    class Request : RequestValues
 }

@@ -22,24 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.data.entities.remote
+package taiwan.no.one.feat.ranking.domain.usecases
 
-import com.google.gson.annotations.SerializedName
-import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
-internal data class MusicInfoEntity(
-    val status: String = DEFAULT_STR,
-    @SerializedName("data")
-    val entity: MusicEntity = MusicEntity()
-) {
-    internal data class MusicEntity(
-        // 🔽 Only Music has.
-        @SerializedName("has_more")
-        val hasMore: Boolean = false,
-        val items: List<SongEntity> = emptyList(),
-        // 🔽 Only Rank has.
-        val timestamp: Double = 0.0,
-        val songs: List<SongEntity> = emptyList()
-    )
+internal class FetchMusicRankOneShotCase(
+    private val repository: RankingRepo
+) : FetchMusicRankCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        repository.fetchMusicRanking(rankId)
+    }
+
+    class Request(val rankId: String) : RequestValues
 }

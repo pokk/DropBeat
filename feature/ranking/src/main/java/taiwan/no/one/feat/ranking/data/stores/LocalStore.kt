@@ -24,29 +24,32 @@
 
 package taiwan.no.one.feat.ranking.data.stores
 
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.ranking.BuildConfig
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
-import taiwan.no.one.feat.ranking.data.contracts.sub.DummySubStore
-import taiwan.no.one.feat.ranking.data.entities.local.DummyEntity
-import taiwan.no.one.feat.ranking.data.local.services.database.v1.DummyDao
-import taiwan.no.one.feat.ranking.data.local.services.json.v1.DummyFile
+import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
  * local service(Database/Local file) to access the data.
  */
 internal class LocalStore(
-    private val dummyDao: DummyDao,
-    private val dummyFile: DummyFile
-) : DataStore,
-    DummySubStore {
-    override suspend fun getDummies(): List<DummyEntity> {
-        val dbDummy = dummyDao.getDummies()
-        if (dbDummy.isNotEmpty()) return dbDummy
-        return dummyFile.getDummies()
+    private val rankingDao: RankingDao,
+) : DataStore {
+    override suspend fun getMusicRanking(rankId: String) = UnsupportedOperation()
+
+    override suspend fun getDetailOfRankings() = UnsupportedOperation()
+
+    override suspend fun createRankingEntity(entities: List<RankingIdEntity>) = tryWrapper {
+        rankingDao.insert(*entities.toTypedArray())
     }
 
-    override suspend fun getMusic(keyword: String, page: Int) = TODO()
+    override suspend fun getRankingEntity() = rankingDao.retrieveRankings()
+
+    override suspend fun modifyRankingEntity(id: Int, uri: String, number: Int) = tryWrapper {
+        rankingDao.replaceBy(id, uri, number)
+    }
 
     private suspend fun tryWrapper(tryBlock: suspend () -> Unit): Boolean {
         try {

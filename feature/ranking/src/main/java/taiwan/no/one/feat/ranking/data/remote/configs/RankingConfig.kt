@@ -22,32 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.domain.usecases.music
+package taiwan.no.one.feat.ranking.data.remote.configs
 
-import android.media.MediaMetadataRetriever
-import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
-import taiwan.no.one.core.domain.usecase.Usecase
-import taiwan.no.one.feat.ranking.domain.repositories.SearchMusicRepo
-import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicCase
+import taiwan.no.one.feat.ranking.BuildConfig
 
-internal class FetchMusicOneShotCase(
-    private val searchMusicRepo: SearchMusicRepo
-) : FetchMusicCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        searchMusicRepo.fetchMusic(keyword, page).map {
-            // Fix the track with 0 duration.
-            if (it.length == 0) {
-                val retriever = MediaMetadataRetriever().apply {
-                    setDataSource(it.url, hashMapOf())
-                }
-                val time = retriever.extractMetadata(METADATA_KEY_DURATION).toLong() / 1000
-                it.copy(length = time.toInt())
-            }
-            else {
-                it
-            }
-        }
+/**
+ * The configuration of a remote google news api service.
+ */
+internal class RankingConfig : ApiConfig {
+    companion object {
+        const val API_REQUEST = BuildConfig.RankingUriRequest
+
+        // All basic http api url of Search Music.
+        private const val BASE_URL = BuildConfig.RankingUriDomain
     }
 
-    class Request(val keyword: String, val page: Int) : Usecase.RequestValues
+    override val apiBaseUrl = BASE_URL
 }

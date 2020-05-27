@@ -61,11 +61,11 @@ android {
             isMinifyEnabled = false
 
             buildConfigField("String",
-                             "SeekSongUriDomain",
-                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
+                             "RankingUriDomain",
+                             gradleLocalProperties(rootDir).getProperty("ranking_uri_domain"))
             buildConfigField("String",
-                             "SeekSongUriRequest",
-                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
+                             "RankingUriRequest",
+                             gradleLocalProperties(rootDir).getProperty("ranking_uri_request"))
         }
         getByName("debug") {
             splits.abi.isEnable = false
@@ -78,11 +78,11 @@ android {
             isCrunchPngs = false // Enabled by default for RELEASE build type
 
             buildConfigField("String",
-                             "SeekSongUriDomain",
-                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
+                             "RankingUriDomain",
+                             gradleLocalProperties(rootDir).getProperty("ranking_uri_domain"))
             buildConfigField("String",
-                             "SeekSongUriRequest",
-                             gradleLocalProperties(rootDir).getProperty("seek_song_uri_request"))
+                             "RankingUriRequest",
+                             gradleLocalProperties(rootDir).getProperty("ranking_uri_request"))
         }
     }
     dexOptions {
