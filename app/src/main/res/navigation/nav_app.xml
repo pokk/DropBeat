@@ -29,6 +29,6 @@
     android:id="@+id/navApp"
     app:startDestination="@id/navFeatSearchMusic">
 
-    <include app:graph="@navigation/nav_feat_search_music"/>
+    <include app:graph="@navigation/nav_feat_search"/>
     <include app:graph="@navigation/nav_second"/>
 </navigation>

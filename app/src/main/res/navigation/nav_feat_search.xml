@@ -26,12 +26,15 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navFeatSearchMusic"
     app:startDestination="@id/dummyFragment">
 
     <fragment
         android:id="@+id/dummyFragment"
         android:name="taiwan.no.one.feat.search.presentation.DummyFragment"
-        android:label="Dummy Index">
+        android:label="Dummy Index"
+        app:moduleName="@string/title_feat_search"
+        tools:layout="@layout/fragment_dummy">
     </fragment>
 </navigation>

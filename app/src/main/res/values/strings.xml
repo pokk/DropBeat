@@ -24,6 +24,6 @@
 
 <resources>
     <string name="app_name">dropbeat</string>
-    <string name="title_feat_search">Search</string>
-    <string name="title_feat_ranking">Ranking</string>
+    <string name="title_feat_search">search</string>
+    <string name="title_feat_ranking">ranking</string>
 </resources>
