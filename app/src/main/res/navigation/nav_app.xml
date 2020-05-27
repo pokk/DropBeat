@@ -27,8 +27,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navApp"
-    app:startDestination="@id/navFeatSearchMusic">
+    app:startDestination="@id/navSearch">
 
-    <include app:graph="@navigation/nav_feat_search"/>
-    <include app:graph="@navigation/nav_second"/>
+    <include-dynamic
+        android:id="@+id/navSearch"
+        app:graphResName="nav_search"
+        app:moduleName="search"/>
+    <!--    <include app:graph="@navigation/nav_feat_search"/>-->
+    <!--    <include app:graph="@navigation/nav_second"/>-->
 </navigation>

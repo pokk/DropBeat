@@ -31,9 +31,9 @@ import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
 object FeatureARoute : NaviGraphRouteProvider {
     override lateinit var navGraph: NavGraph
 
-    override val graphName get() = "nav_dummy"
+    override val graphName get() = "nav_search"
 
     override val packageName get() = BuildConfig.APPLICATION_ID
 
-    override val resourceId get() = R.navigation.nav_dummy
+    override val resourceId get() = R.navigation.nav_search
 }

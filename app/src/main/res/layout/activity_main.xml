@@ -37,5 +37,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_feat_search"/>
+        app:navGraph="@navigation/nav_app"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
