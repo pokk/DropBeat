@@ -31,43 +31,12 @@
     android:layout_height="match_parent"
     tools:showPaths="true">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/sivBackdrop"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        app:layout_constraintBottom_toTopOf="@id/vGuideLine"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/roundBottomImageView"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilSearchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/md_two_unit"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@android:drawable/ic_menu_search"
-            android:hint="Enter the name of an artist or a song..."/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <View
-        android:id="@+id/vGuideLine"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        android:layout_marginTop="@dimen/md_two_unit"
-        app:layout_constraintTop_toBottomOf="@id/tilSearchBar"/>
+    <include layout="@layout/merge_tab_search"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtvRecent"
+        style="@style/textview.rotated"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/md_seven_unit"
-        android:layout_marginTop="@dimen/md_four_unit"
-        android:rotation="-90"
         android:text="Recent Search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sivBackdrop"/>

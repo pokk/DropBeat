@@ -22,15 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.presentation
+package taiwan.no.one.feat.search.presentation.fragments
 
-import android.app.Activity
-import android.os.Bundle
-import taiwan.no.one.feat.search.R
+import taiwan.no.one.core.presentation.activity.BaseActivity
+import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
 
-class EntryActivity : Activity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_dummy)
+class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
     }
 }

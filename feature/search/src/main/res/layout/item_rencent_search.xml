@@ -40,14 +40,18 @@
         app:layout_constraintEnd_toStartOf="@id/mtvHistory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@android:drawable/ic_menu_save"/>
+        tools:src="@drawable/ic_recent"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtvHistory"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
         android:layout_marginBottom="15dp"
+        android:fontFamily="monospace"
+        android:lines="1"
+        android:textSize="12.5sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/sivIcon"

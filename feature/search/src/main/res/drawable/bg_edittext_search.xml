@@ -23,24 +23,12 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-
-    <style name="roundBottomImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeBottomLeft">20dp</item>
-        <item name="cornerSizeBottomRight">20dp</item>
-    </style>
-
-    <style name="roundImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_one_half_unit</item>
-    </style>
-
-    <style name="textview.rotated" parent="">
-        <item name="android:layout_height">@dimen/md_ten_unit</item>
-        <item name="android:layout_marginTop">@dimen/md_five_unit</item>
-        <item name="android:fontFamily">monospace</item>
-        <item name="android:rotation">-90</item>
-    </style>
-
-</resources>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white"/>
+            <corners android:radius="@dimen/md_three_unit"/>
+        </shape>
+    </item>
+</layer-list>

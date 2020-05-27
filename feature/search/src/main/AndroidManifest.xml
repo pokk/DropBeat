@@ -43,7 +43,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight"
         tools:ignore="GoogleAppIndexingWarning,MissingApplicationIcon">
-        <activity android:name=".presentation.EntryActivity"/>
     </application>
 </manifest>
 

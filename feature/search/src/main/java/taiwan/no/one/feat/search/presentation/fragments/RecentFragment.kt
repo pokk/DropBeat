@@ -22,16 +22,13 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.presentation
+package taiwan.no.one.feat.search.presentation.fragments
 
-import androidx.fragment.app.viewModels
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.search.databinding.FragmentDummyBinding
-import taiwan.no.one.feat.search.presentation.viewmodels.DummyViewModel
+import taiwan.no.one.feat.search.databinding.FragmentSearchRecentBinding
 
-class DummyFragment : BaseFragment<BaseActivity<*>, FragmentDummyBinding>() {
-    private val vm by viewModels<DummyViewModel> { vmFactory }
+class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {

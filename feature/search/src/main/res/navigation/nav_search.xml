@@ -27,12 +27,32 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/dummyFragment">
+    app:startDestination="@id/indexFragment">
 
     <fragment
-        android:id="@+id/dummyFragment"
-        android:name="taiwan.no.one.feat.search.presentation.DummyFragment"
-        android:label="Dummy Fragment"
-        tools:layout="@layout/fragment_dummy">
+        android:id="@+id/indexFragment"
+        android:name="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
+        android:label="Search Fragment"
+        tools:layout="@layout/fragment_search_index">
+        <action
+            android:id="@+id/action_index_to_recent"
+            app:destination="@id/recentFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/recentFragment"
+        android:name="taiwan.no.one.feat.search.presentation.fragments.RecentFragment"
+        android:label="Recent Fragment"
+        tools:layout="@layout/fragment_search_recent">
+        <action
+            android:id="@+id/action_recent_to_result"
+            app:destination="@id/resultFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="taiwan.no.one.feat.search.presentation.fragments.ResultFragment"
+        android:label="Result Fragment"
+        tools:layout="@layout/item_search_result">
     </fragment>
 </navigation>

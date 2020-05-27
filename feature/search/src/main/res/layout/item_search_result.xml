@@ -34,6 +34,8 @@
         android:id="@+id/mtvNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,17 +43,23 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/sivAlbumThumb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/md_five_unit"
+        android:layout_height="@dimen/md_five_unit"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginVertical="@dimen/md_one_unit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/mtvNumber"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundImageView"
         tools:src="@tools:sample/avatars"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtvArtistName"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@id/mtvAlbumName"
         app:layout_constraintEnd_toStartOf="@id/sivAction"
         app:layout_constraintStart_toEndOf="@id/sivAlbumThumb"
@@ -62,6 +70,10 @@
         android:id="@+id/mtvAlbumName"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/md_two_unit"
+        android:fontFamily="monospace"
+        android:textColor="@color/colorCoralPink"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/sivAlbumThumb"
         app:layout_constraintEnd_toStartOf="@id/sivAction"
         app:layout_constraintStart_toEndOf="@id/sivAlbumThumb"
@@ -72,8 +84,9 @@
         android:id="@+id/sivAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_pause_circle_outline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_media_play"/>
+        app:tint="@color/colorCoralPink"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
