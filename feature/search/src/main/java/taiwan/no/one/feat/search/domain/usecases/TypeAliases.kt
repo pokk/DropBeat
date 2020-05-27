@@ -27,15 +27,10 @@ package taiwan.no.one.feat.search.domain.usecases
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
-import taiwan.no.one.feat.search.domain.models.Dummy
-import taiwan.no.one.feat.search.domain.usecases.RetrieveDummyDeferredCase.Request
 import taiwan.no.one.feat.search.domain.usecases.history.AddOrUpdateHistoryOneShotCase
 import taiwan.no.one.feat.search.domain.usecases.history.DeleteHistoryOneShotCase
 import taiwan.no.one.feat.search.domain.usecases.history.FetchHistoryOneShotCase
 import taiwan.no.one.feat.search.domain.usecases.music.FetchMusicOneShotCase
-
-internal typealias RetrieveDummyCase = OneShotUsecase<List<Dummy>, RetrieveDummyReq>
-internal typealias RetrieveDummyReq = Request
 
 internal typealias FetchMusicCase = OneShotUsecase<List<SongEntity>, FetchMusicReq>
 internal typealias FetchMusicReq = FetchMusicOneShotCase.Request

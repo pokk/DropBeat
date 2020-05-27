@@ -35,12 +35,10 @@ import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.search.FeatModules.FEAT_NAME
 import taiwan.no.one.feat.search.data.local.configs.BankDatabase
-import taiwan.no.one.feat.search.data.local.services.database.v1.DummyDao
 import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
-import taiwan.no.one.feat.search.data.local.services.json.v1.DummyFile
 import taiwan.no.one.feat.search.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
-import taiwan.no.one.feat.search.data.remote.services.SeekerBankService
+import taiwan.no.one.feat.search.data.remote.services.retrofit.v1.SeekerBankService
 import taiwan.no.one.feat.search.data.repositories.SearchMusicRepository
 import taiwan.no.one.feat.search.data.stores.LocalStore
 import taiwan.no.one.feat.search.data.stores.RemoteStore
@@ -51,7 +49,7 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance(), instance(), instance()) }
+        bind<LocalStore>() with singleton { LocalStore(instance()) }
         bind<RemoteStore>() with singleton { RemoteStore(instance()) }
 
         bind<SearchMusicRepo>() with singleton { SearchMusicRepository(instance(), instance()) }
@@ -60,8 +58,6 @@ internal object DataModules : ModuleProvider {
     private fun localProvide() = Kodein.Module("${FEAT_NAME}LocalModule") {
         bind<BankDatabase>() with singleton { BankDatabase.getDatabase(instance()) }
 
-        bind<DummyFile>() with singleton { DummyFile(instance()) }
-        bind<DummyDao>() with singleton { instance<BankDatabase>().createDummyDao() }
         bind<SearchHistoryDao>() with singleton { instance<BankDatabase>().createSearchHistoryDao() }
     }
 

@@ -31,14 +31,23 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicCase
-import taiwan.no.one.feat.ranking.domain.usecases.RetrieveDummyCase
-import taiwan.no.one.feat.ranking.domain.usecases.RetrieveDummyDeferredCase
-import taiwan.no.one.feat.ranking.domain.usecases.music.FetchMusicOneShotCase
+import taiwan.no.one.feat.ranking.domain.usecases.AddRankIdsCase
+import taiwan.no.one.feat.ranking.domain.usecases.AddRankIdsOneShotCase
+import taiwan.no.one.feat.ranking.domain.usecases.FetchDetailOfRankingsCase
+import taiwan.no.one.feat.ranking.domain.usecases.FetchDetailOfRankingsOneShotCase
+import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankCase
+import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankOneShotCase
+import taiwan.no.one.feat.ranking.domain.usecases.FetchRankIdsCase
+import taiwan.no.one.feat.ranking.domain.usecases.FetchRankIdsOneShotCase
+import taiwan.no.one.feat.ranking.domain.usecases.UpdateRankItemCase
+import taiwan.no.one.feat.ranking.domain.usecases.UpdateRankItemOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
-        bind<RetrieveDummyCase>() with singleton { RetrieveDummyDeferredCase(instance()) }
-        bind<FetchMusicCase>() with singleton { FetchMusicOneShotCase(instance()) }
+        bind<FetchMusicRankCase>() with singleton { FetchMusicRankOneShotCase(instance()) }
+        bind<FetchDetailOfRankingsCase>() with singleton { FetchDetailOfRankingsOneShotCase(instance()) }
+        bind<FetchRankIdsCase>() with singleton { FetchRankIdsOneShotCase(instance()) }
+        bind<AddRankIdsCase>() with singleton { AddRankIdsOneShotCase(instance()) }
+        bind<UpdateRankItemCase>() with singleton { UpdateRankItemOneShotCase(instance()) }
     }
 }

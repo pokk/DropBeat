@@ -27,7 +27,7 @@ package taiwan.no.one.feat.ranking.data.stores
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.data.remote.services.RankingMusicService
+import taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1.RankingMusicService
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct

@@ -26,12 +26,8 @@ package taiwan.no.one.feat.search.data.stores
 
 import taiwan.no.one.feat.search.BuildConfig
 import taiwan.no.one.feat.search.data.contracts.DataStore
-import taiwan.no.one.feat.search.data.contracts.sub.DummySubStore
-import taiwan.no.one.feat.search.data.entities.local.DummyEntity
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.feat.search.data.local.services.database.v1.DummyDao
 import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
-import taiwan.no.one.feat.search.data.local.services.json.v1.DummyFile
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -39,16 +35,7 @@ import taiwan.no.one.feat.search.data.local.services.json.v1.DummyFile
  */
 internal class LocalStore(
     private val searchHistoryDao: SearchHistoryDao,
-    private val dummyDao: DummyDao,
-    private val dummyFile: DummyFile
-) : DataStore,
-    DummySubStore {
-    override suspend fun getDummies(): List<DummyEntity> {
-        val dbDummy = dummyDao.getDummies()
-        if (dbDummy.isNotEmpty()) return dbDummy
-        return dummyFile.getDummies()
-    }
-
+) : DataStore {
     override suspend fun getMusic(keyword: String, page: Int) = TODO()
 
     override suspend fun createOrModifySearchHistory(keyword: String) = tryWrapper {

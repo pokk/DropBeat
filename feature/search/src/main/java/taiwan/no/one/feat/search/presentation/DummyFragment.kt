@@ -25,27 +25,21 @@
 package taiwan.no.one.feat.search.presentation
 
 import androidx.fragment.app.viewModels
-import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentDummyBinding
 import taiwan.no.one.feat.search.presentation.viewmodels.DummyViewModel
-import androidx.lifecycle.observe as obs
 
 class DummyFragment : BaseFragment<BaseActivity<*>, FragmentDummyBinding>() {
     private val vm by viewModels<DummyViewModel> { vmFactory }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.dummy.obs(this) {
-            it.onSuccess { logw(it) }
-        }
     }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
-        vm.getDummies()
     }
 }

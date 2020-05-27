@@ -30,7 +30,7 @@ import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.search.data.remote.parameters.SeekerBank
-import taiwan.no.one.feat.search.data.remote.services.SeekerBankService
+import taiwan.no.one.feat.search.data.remote.services.retrofit.v1.SeekerBankService
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct

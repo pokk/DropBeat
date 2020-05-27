@@ -22,19 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.entities.local
+package taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import taiwan.no.one.feat.search.domain.models.Dummy
-import java.util.Date
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Path
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
+import taiwan.no.one.feat.ranking.data.remote.configs.RankingConfig
 
-@Entity(tableName = "table_dummy")
-internal data class DummyEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val content: String,
-    val updated: Date = Date()
-) {
-    fun toModel() = Dummy(id, content)
+/**
+ * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
+ */
+internal interface RankingMusicService {
+    @Headers("mock:true", "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
+    @GET("${RankingConfig.API_REQUEST}/{rank_id}")
+    suspend fun retrieveMusicRanking(@Path("rank_id") rankId: String): MusicInfoEntity
+
+    @Headers("mock:true", "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
+    @GET("${RankingConfig.API_REQUEST}/detail")
+    suspend fun retrieveDetailOfRankings(): MusicRankListEntity
 }

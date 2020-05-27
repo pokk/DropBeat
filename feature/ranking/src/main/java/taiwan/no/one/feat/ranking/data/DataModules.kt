@@ -36,10 +36,9 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
 import taiwan.no.one.feat.ranking.data.local.configs.RankingDatabase
 import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
-import taiwan.no.one.feat.ranking.data.local.services.json.v1.DummyFile
 import taiwan.no.one.feat.ranking.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.ranking.data.remote.configs.RankingConfig
-import taiwan.no.one.feat.ranking.data.remote.services.RankingMusicService
+import taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1.RankingMusicService
 import taiwan.no.one.feat.ranking.data.repositories.RankingRepository
 import taiwan.no.one.feat.ranking.data.stores.LocalStore
 import taiwan.no.one.feat.ranking.data.stores.RemoteStore
@@ -59,7 +58,6 @@ internal object DataModules : ModuleProvider {
     private fun localProvide() = Kodein.Module("${FEAT_NAME}LocalModule") {
         bind<RankingDatabase>() with singleton { RankingDatabase.getDatabase(instance()) }
 
-        bind<DummyFile>() with singleton { DummyFile(instance()) }
         bind<RankingDao>() with singleton { instance<RankingDatabase>().createRankingDao() }
     }
 

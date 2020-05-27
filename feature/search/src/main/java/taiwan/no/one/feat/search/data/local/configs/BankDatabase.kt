@@ -30,15 +30,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import taiwan.no.one.core.data.local.room.convert.DateConvert
-import taiwan.no.one.feat.search.data.entities.local.DummyEntity
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.feat.search.data.local.services.database.v1.DummyDao
 import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
 
 /**
  * The access operations to a database.
  */
-@Database(entities = [DummyEntity::class, SearchHistoryEntity::class],
+@Database(entities = [SearchHistoryEntity::class],
           version = 1,
           exportSchema = false)
 @TypeConverters(DateConvert::class)
@@ -48,8 +46,7 @@ internal abstract class BankDatabase : RoomDatabase() {
         private const val DATABASE_NAME = "music_bank.db"
 
         fun getDatabase(context: Context): BankDatabase {
-            val tempInstance =
-                INSTANCE
+            val tempInstance = INSTANCE
 
             if (tempInstance != null) {
                 return tempInstance
@@ -67,6 +64,5 @@ internal abstract class BankDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun createDummyDao(): DummyDao
     abstract fun createSearchHistoryDao(): SearchHistoryDao
 }

@@ -24,7 +24,6 @@
 
 package taiwan.no.one.feat.search.data.repositories
 
-import taiwan.no.one.feat.search.data.entities.local.DummyEntity
 import taiwan.no.one.feat.search.data.stores.LocalStore
 import taiwan.no.one.feat.search.data.stores.RemoteStore
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
@@ -33,7 +32,5 @@ internal class SearchMusicRepository(
     private val local: LocalStore,
     private val remote: RemoteStore
 ) : SearchMusicRepo {
-    override suspend fun fetchDummies() = local.getDummies().map(DummyEntity::toModel)
-
     override suspend fun fetchMusic(keyword: String, page: Int) = remote.getMusic(keyword, page).entity.items
 }
