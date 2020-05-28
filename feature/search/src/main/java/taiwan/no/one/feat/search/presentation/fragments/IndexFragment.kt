@@ -24,11 +24,14 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
+import androidx.navigation.fragment.findNavController
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
+import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
 
 class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
+    private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -38,5 +41,14 @@ class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>(
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        mergeBinding.mtvTitle.setOnClickListener {
+            findNavController().navigate(IndexFragmentDirections.actionIndexToRecent())
+        }
     }
 }

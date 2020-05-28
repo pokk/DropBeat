@@ -35,7 +35,16 @@
         android:id="@+id/navHostFragment"
         android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bnvNavigator"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_app"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnvNavigator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom_navigation"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

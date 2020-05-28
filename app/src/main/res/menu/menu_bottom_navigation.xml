@@ -23,13 +23,26 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
-    tools:showPaths="true">
-
-    <include layout="@layout/merge_tab_search"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuSearch"
+        android:enabled="true"
+        android:icon="@drawable/ic_cloud"
+        android:title="Search"/>
+    <item
+        android:id="@+id/menuRanking"
+        android:enabled="true"
+        android:icon="@drawable/ic_stars"
+        android:title="Ranking"/>
+    <item
+        android:id="@+id/menuExplore"
+        android:enabled="true"
+        android:icon="@drawable/ic_explore"
+        android:title="Explore"/>
+    <item
+        android:id="@+id/menuMyMusic"
+        android:enabled="true"
+        android:icon="@drawable/ic_library_music"
+        android:title="My Music"/>
+</menu>
