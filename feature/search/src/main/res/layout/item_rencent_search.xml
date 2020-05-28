@@ -27,8 +27,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context="taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryViewHolder">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/sivIcon"
@@ -53,10 +55,22 @@
         android:lines="1"
         android:textSize="12.5sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/sivClose"
         app:layout_constraintStart_toEndOf="@id/sivIcon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/sivClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/mtvHistory"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_close"/>
 
     <View
         android:layout_width="match_parent"

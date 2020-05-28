@@ -22,23 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.presentation
+package taiwan.no.one.core.presentation.recyclerviews
 
-import android.content.Context
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import taiwan.no.one.dropbeat.di.ViewModelEntry
-import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.search.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
-internal object PresentationModules : ModuleProvider {
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
-        bind<ViewModelEntry>().inSet() with provider {
-            RecentViewModel::class.java to RecentViewModel(instance(), instance(), instance())
-        }
-    }
+abstract class ViewHolderBinding<in E : Any, in D : RecyclerView.Adapter<*>>(view: View) : RecyclerView.ViewHolder(view) {
+    abstract fun initView(entity: E, position: Int, adapter: D)
 }

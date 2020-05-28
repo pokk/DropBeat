@@ -22,8 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.presentation.viewmodels
+package taiwan.no.one.feat.search.presentation.recyclerviews.viewholders
 
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import coil.api.loadAny
+import taiwan.no.one.core.presentation.recyclerviews.ViewHolderBinding
+import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
+import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
 
-internal class DummyViewModel : BehindViewModel()
+internal class ResultViewHolder(
+    private val binding: ItemSearchResultBinding
+) : ViewHolderBinding<SongEntity, ResultAdapter>(binding.root) {
+    override fun initView(entity: SongEntity, position: Int, adapter: ResultAdapter) {
+        binding.apply {
+            mtvNumber.text = "#${position + 1}"
+            mtvAlbumName.text = entity.title
+            mtvArtistName.text = entity.artist
+            sivAlbumThumb.loadAny(entity.cdnCoverUrl)
+        }
+        binding.clItem.setOnClickListener {}
+    }
+}

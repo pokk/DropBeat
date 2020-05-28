@@ -22,23 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.presentation
+package taiwan.no.one.feat.search.presentation.recyclerviews.viewholders
 
-import android.content.Context
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import taiwan.no.one.dropbeat.di.ViewModelEntry
-import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.search.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
+import taiwan.no.one.core.presentation.recyclerviews.ViewHolderBinding
+import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
+import taiwan.no.one.feat.search.databinding.ItemRencentSearchBinding
+import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
 
-internal object PresentationModules : ModuleProvider {
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
-        bind<ViewModelEntry>().inSet() with provider {
-            RecentViewModel::class.java to RecentViewModel(instance(), instance(), instance())
-        }
+internal class HistoryViewHolder(
+    private val binding: ItemRencentSearchBinding
+) : ViewHolderBinding<SearchHistoryEntity, HistoryAdapter>(binding.root) {
+    override fun initView(entity: SearchHistoryEntity, position: Int, adapter: HistoryAdapter) {
+        binding.mtvHistory.text = entity.keyword
+        binding.clItem.setOnClickListener { }
     }
 }

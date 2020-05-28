@@ -24,18 +24,33 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.gone
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentSearchRecentBinding
 import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
+import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
+import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
+import androidx.lifecycle.observe as obs
 
 class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
     private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
+    private val vm by viewModels<RecentViewModel> { vmFactory }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
+        vm.histories.obs(this) {
+            it.onSuccess { }.onFailure { }
+        }
+        vm.addOrUpdateResult.obs(this) {
+            it.onSuccess { }.onFailure { }
+        }
+        vm.deleteResult.obs(this) {
+            it.onSuccess { }.onFailure { }
+        }
     }
 
     /**
@@ -43,6 +58,14 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
      */
     override fun viewComponentBinding() {
         mergeBinding.mtvTitle.gone()
+        binding.rvHistories.apply {
+            if (adapter == null) {
+                adapter = HistoryAdapter(emptyList())
+            }
+            if (layoutManager == null) {
+                layoutManager = LinearLayoutManager(requireActivity())
+            }
+        }
     }
 
     /**
