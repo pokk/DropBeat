@@ -34,6 +34,6 @@ internal class HistoryViewHolder(
 ) : ViewHolderBinding<SearchHistoryEntity, HistoryAdapter>(binding.root) {
     override fun initView(entity: SearchHistoryEntity, position: Int, adapter: HistoryAdapter) {
         binding.mtvHistory.text = entity.keyword
-        binding.clItem.setOnClickListener { }
+        binding.clItem.setOnClickListener { adapter.onClickListener?.invoke(entity.keyword) }
     }
 }

@@ -59,6 +59,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/md_two_unit"
+        app:boxBackgroundMode="none"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconMode="custom"
+        app:hintEnabled="false"
         app:layout_constraintBottom_toBottomOf="@id/sivBackdrop"
         app:layout_constraintTop_toBottomOf="@id/mtvTitle">
 
@@ -67,7 +71,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_edittext_search"
-            android:drawableEnd="@drawable/ic_search"
             android:fontFamily="monospace"
             android:hint="Search here"
             android:inputType="text"

@@ -35,6 +35,10 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryV
 internal class HistoryAdapter(
     private val entities: List<SearchHistoryEntity>
 ) : RecyclerView.Adapter<HistoryViewHolder>() {
+    var onClickListener: ((keyword: String) -> Unit)? = null
+        private set
+    private val data by lazy { entities.toMutableList() }
+
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -66,7 +70,7 @@ internal class HistoryAdapter(
      *
      * @return The total number of items in this adapter.
      */
-    override fun getItemCount() = entities.size
+    override fun getItemCount() = data.size
 
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
@@ -90,6 +94,14 @@ internal class HistoryAdapter(
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.initView(entities[position], position, this)
+        holder.initView(data[position], position, this)
+    }
+
+    fun addExtraEntities(entities: List<SearchHistoryEntity>) {
+        data.addAll(entities)
+    }
+
+    fun setOnclickListener(listener: (keyword: String) -> Unit) {
+        onClickListener = listener
     }
 }

@@ -25,7 +25,6 @@
 package taiwan.no.one.feat.search.presentation.fragments
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.gone
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -43,13 +42,17 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.histories.obs(this) {
-            it.onSuccess { }.onFailure { }
+            it.onSuccess {
+                (binding.rvHistories.adapter as? HistoryAdapter)?.addExtraEntities(it)
+            }
         }
         vm.addOrUpdateResult.obs(this) {
-            it.onSuccess { }.onFailure { }
+            it.onSuccess {
+//                findNavController().navigate(RecentFragmentDirections.actionRecentToResult())
+            }
         }
         vm.deleteResult.obs(this) {
-            it.onSuccess { }.onFailure { }
+            it.onSuccess { }
         }
     }
 
@@ -72,8 +75,9 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        mergeBinding.tilSearchBar.setOnClickListener {
-            findNavController().navigate(RecentFragmentDirections.actionRecentToResult())
+        (binding.rvHistories.adapter as? HistoryAdapter)?.setOnclickListener(vm::add)
+        mergeBinding.tilSearchBar.setEndIconOnClickListener {
+            vm.add(mergeBinding.tietSearch.text.toString())
         }
     }
 }

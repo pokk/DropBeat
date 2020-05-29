@@ -28,15 +28,15 @@ import androidx.lifecycle.ViewModelProvider
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.generic.setBinding
-import org.kodein.di.generic.singleton
 import taiwan.no.one.core.presentation.viewmodel.ViewModelFactory
 
 object ContainerModule {
     fun provide() = Kodein.Module("ContainerModule") {
         bind() from setBinding<ViewModelEntry>()
 
-        bind<ViewModelProvider.Factory>() with singleton {
+        bind<ViewModelProvider.Factory>() with provider {
             ViewModelFactory(instance<ViewModelEntries>().toMap().toMutableMap())
         }
     }

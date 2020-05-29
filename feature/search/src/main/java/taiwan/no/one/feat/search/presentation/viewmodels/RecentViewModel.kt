@@ -25,6 +25,8 @@
 package taiwan.no.one.feat.search.presentation.viewmodels
 
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
@@ -33,6 +35,7 @@ import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryReq
 import taiwan.no.one.feat.search.domain.usecases.DeleteHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.DeleteHistoryReq
 import taiwan.no.one.feat.search.domain.usecases.FetchHistoryCase
+import taiwan.no.one.feat.search.domain.usecases.FetchHistoryReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class RecentViewModel(
@@ -44,8 +47,8 @@ internal class RecentViewModel(
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val deleteResult = _deleteResult.toLiveData()
     val addOrUpdateResult = _addOrUpdateResult.toLiveData()
-    val histories = liveData {
-        launchBehind { emit(fetchHistoryCase.execute()) }
+    val histories = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+        emit(fetchHistoryCase.execute(FetchHistoryReq(50)))
     }
 
     fun delete(keyword: String?, entity: SearchHistoryEntity?) = launchBehind {

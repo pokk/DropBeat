@@ -30,6 +30,7 @@
     android:id="@+id/clItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingEnd="@dimen/md_two_unit"
     tools:context="taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryViewHolder">
 
     <com.google.android.material.imageview.ShapeableImageView
