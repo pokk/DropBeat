@@ -24,7 +24,9 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -35,11 +37,14 @@ import androidx.lifecycle.observe as obs
 
 class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding>() {
     private val vm by viewModels<ResultViewModel> { vmFactory }
+    private val args by navArgs<ResultFragmentArgs>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.musics.obs(this) {
-            it.onSuccess { }.onFailure { }
+            it.onSuccess {
+                (binding.rvMusics.adapter as? ResultAdapter)?.addExtraEntities(it)
+            }.onFailure { }
         }
         vm.addOrUpdateResult.obs(this) {
             it.onSuccess { }.onFailure { }
@@ -58,5 +63,14 @@ class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding
                 layoutManager = LinearLayoutManager(requireActivity())
             }
         }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        vm.search(args.keyword)
     }
 }

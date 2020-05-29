@@ -27,4 +27,8 @@ package taiwan.no.one.core.data.remote.interceptor
 object Constant {
     const val CACHE_DAY = 1
     const val HEADER_CACHE_CONTROL = "Cache-Control"
+
+    // NOTE(jieyi): *** the flag query to the local json file or the remote server.
+    //  Turn on the mock mode: "mock:true"; otherwise, set false
+    const val HEADER_MOCK_DATA = "mock:false"
 }

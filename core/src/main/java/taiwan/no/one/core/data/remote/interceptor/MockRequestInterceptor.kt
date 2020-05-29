@@ -41,7 +41,7 @@ class MockRequestInterceptor(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        if (request.header(MOCK) != null) {
+        if (request.header(MOCK) == "true") {
             val filename = request.url.pathSegments.last()
             return Response.Builder()
                 .request(request)

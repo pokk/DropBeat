@@ -39,6 +39,7 @@ import androidx.lifecycle.observe as obs
 class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
     private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
     private val vm by viewModels<RecentViewModel> { vmFactory }
+    private var selectedKeyword: String? = null
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -49,7 +50,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
         }
         vm.addOrUpdateResult.obs(this) {
             it.onSuccess {
-                findNavController().navigate(RecentFragmentDirections.actionRecentToResult())
+                findNavController().navigate(RecentFragmentDirections.actionRecentToResult(selectedKeyword.orEmpty()))
             }
         }
         vm.deleteResult.obs(this) {
@@ -76,8 +77,12 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        (binding.rvHistories.adapter as? HistoryAdapter)?.setOnclickListener { vm.add(it) }
+        (binding.rvHistories.adapter as? HistoryAdapter)?.setOnclickListener {
+            selectedKeyword = it
+            vm.add(it)
+        }
         mergeBinding.tilSearchBar.setEndIconOnClickListener {
+            selectedKeyword = mergeBinding.tietSearch.text.toString()
             vm.add(mergeBinding.tietSearch.text.toString())
         }
     }

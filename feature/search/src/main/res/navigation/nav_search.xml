@@ -54,5 +54,8 @@
         android:name="taiwan.no.one.feat.search.presentation.fragments.ResultFragment"
         android:label="Result Fragment"
         tools:layout="@layout/item_search_result">
+        <argument
+            android:name="keyword"
+            app:argType="string"/>
     </fragment>
 </navigation>
