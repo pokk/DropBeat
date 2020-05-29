@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.search.presentation.fragments
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.gone
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -48,7 +49,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
         }
         vm.addOrUpdateResult.obs(this) {
             it.onSuccess {
-//                findNavController().navigate(RecentFragmentDirections.actionRecentToResult())
+                findNavController().navigate(RecentFragmentDirections.actionRecentToResult())
             }
         }
         vm.deleteResult.obs(this) {
@@ -75,7 +76,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        (binding.rvHistories.adapter as? HistoryAdapter)?.setOnclickListener(vm::add)
+        (binding.rvHistories.adapter as? HistoryAdapter)?.setOnclickListener { vm.add(it) }
         mergeBinding.tilSearchBar.setEndIconOnClickListener {
             vm.add(mergeBinding.tietSearch.text.toString())
         }
