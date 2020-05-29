@@ -24,13 +24,12 @@
 
 package taiwan.no.one.feat.search.data.repositories
 
-import taiwan.no.one.feat.search.data.stores.LocalStore
-import taiwan.no.one.feat.search.data.stores.RemoteStore
+import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
 
 internal class SearchMusicRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
+    private val remote: DataStore,
+    private val local: DataStore
 ) : SearchMusicRepo {
     override suspend fun fetchMusic(keyword: String, page: Int) = remote.getMusic(keyword, page).entity.items
 }

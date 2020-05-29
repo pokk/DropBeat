@@ -34,25 +34,34 @@ import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.search.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.local.configs.BankDatabase
 import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
 import taiwan.no.one.feat.search.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
 import taiwan.no.one.feat.search.data.remote.services.retrofit.v1.SeekerBankService
+import taiwan.no.one.feat.search.data.repositories.HistoryRepository
 import taiwan.no.one.feat.search.data.repositories.SearchMusicRepository
 import taiwan.no.one.feat.search.data.stores.LocalStore
 import taiwan.no.one.feat.search.data.stores.RemoteStore
+import taiwan.no.one.feat.search.domain.repositories.HistoryRepo
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
 
 internal object DataModules : ModuleProvider {
+    private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
+    private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
+
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore(instance()) }
+        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance()) }
+        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
 
-        bind<SearchMusicRepo>() with singleton { SearchMusicRepository(instance(), instance()) }
+        bind<SearchMusicRepo>() with singleton {
+            SearchMusicRepository(instance(TAG_REMOTE_DATA_STORE), instance(TAG_LOCAL_DATA_STORE))
+        }
+        bind<HistoryRepo>() with singleton { HistoryRepository(instance(TAG_LOCAL_DATA_STORE)) }
     }
 
     private fun localProvide() = Kodein.Module("${FEAT_NAME}LocalModule") {

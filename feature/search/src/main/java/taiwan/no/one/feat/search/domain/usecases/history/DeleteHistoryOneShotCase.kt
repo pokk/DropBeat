@@ -26,12 +26,12 @@ package taiwan.no.one.feat.search.domain.usecases.history
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.feat.search.domain.repositories.HistoryRepository
+import taiwan.no.one.feat.search.domain.repositories.HistoryRepo
 import taiwan.no.one.feat.search.domain.usecases.DeleteHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.DeleteHistoryReq
 
 internal class DeleteHistoryOneShotCase(
-    private val repository: HistoryRepository
+    private val repository: HistoryRepo
 ) : DeleteHistoryCase() {
     override suspend fun acquireCase(parameter: DeleteHistoryReq?) = parameter.ensure {
         if (keyword == null && entity == null) return@ensure true

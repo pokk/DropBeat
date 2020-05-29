@@ -25,11 +25,11 @@
 package taiwan.no.one.feat.search.domain.usecases.history
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.feat.search.domain.repositories.HistoryRepository
+import taiwan.no.one.feat.search.domain.repositories.HistoryRepo
 import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryCase
 
 internal class AddOrUpdateHistoryOneShotCase(
-    private val repository: HistoryRepository
+    private val repository: HistoryRepo
 ) : AddOrUpdateHistoryCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         repository.addOrUpdateSearchHistory(keyword)

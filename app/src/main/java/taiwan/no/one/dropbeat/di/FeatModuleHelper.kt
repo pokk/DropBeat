@@ -38,6 +38,7 @@ object FeatModuleHelper {
     }
 
     fun kodeinModules(context: Context) = BuildConfig.FEATURE_MODULE_NAMES
+        .split(",")
         .map { "$featurePackagePrefix.$it.FeatModules" }
         .map {
             try {

@@ -22,18 +22,26 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.domain.repositories
+package taiwan.no.one.feat.search.data.repositories
 
+import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
+import taiwan.no.one.feat.search.domain.repositories.HistoryRepo
 
 /**
- * This interface will be the similar to [taiwan.no.one.feat.search.data.contracts.DataStore]
- * Using prefix name (fetch), (add), (update), (delete), (keep)
+ * The data repository for being responsible for selecting an appropriate data store to access
+ * the data.
+ * Also we need to do [async] & [await] one time for getting the data then transform and wrap to Domain layer.
+ *
+ * @property local from database/file/memory data store.
  */
-internal interface HistoryRepository {
-    suspend fun addOrUpdateSearchHistory(keyword: String): Boolean
+internal class HistoryRepository(
+    private val local: DataStore,
+) : HistoryRepo {
+    override suspend fun addOrUpdateSearchHistory(keyword: String) = local.createOrModifySearchHistory(keyword)
 
-    suspend fun fetchSearchHistories(count: Int): List<SearchHistoryEntity>
+    override suspend fun fetchSearchHistories(count: Int) = local.getSearchHistories(count)
 
-    suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
+    override suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?) =
+        local.removeSearchHistory(keyword, entity)
 }
