@@ -57,7 +57,7 @@ class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding
     override fun viewComponentBinding() {
         binding.rvMusics.apply {
             if (adapter == null) {
-                adapter = ResultAdapter(emptyList())
+                adapter = ResultAdapter()
             }
             if (layoutManager == null) {
                 layoutManager = LinearLayoutManager(requireActivity())

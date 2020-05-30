@@ -43,7 +43,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.histories.obs(this) {
-            (binding.rvHistories.adapter as? HistoryAdapter)?.resetEntities(it)
+            (binding.rvHistories.adapter as? HistoryAdapter)?.data = it
         }
         vm.addOrUpdateResult.obs(this) {
             it.onSuccess {
@@ -62,7 +62,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
         mergeBinding.mtvTitle.gone()
         binding.rvHistories.apply {
             if (adapter == null) {
-                adapter = HistoryAdapter(emptyList())
+                adapter = HistoryAdapter()
             }
             if (layoutManager == null) {
                 layoutManager = LinearLayoutManager(requireActivity())

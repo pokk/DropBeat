@@ -33,7 +33,7 @@ import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder
 
 internal class ResultAdapter(
-    private val entities: List<SongEntity>
+    private val entities: List<SongEntity> = emptyList()
 ) : RecyclerView.Adapter<ResultViewHolder>() {
     var onClickListener: (() -> Unit)? = null
         private set

@@ -27,17 +27,19 @@ package taiwan.no.one.feat.search.presentation.recyclerviews.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import taiwan.no.one.core.presentation.recyclerviews.AutoUpdatable
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.databinding.ItemRencentSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryViewHolder
+import kotlin.properties.Delegates
 
-internal class HistoryAdapter(
-    private val entities: List<SearchHistoryEntity>
-) : RecyclerView.Adapter<HistoryViewHolder>() {
+internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(), AutoUpdatable {
+    var data: List<SearchHistoryEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
+    }
     var onClickListener: ((keyword: String) -> Unit)? = null
         private set
-    private val data by lazy { entities.toMutableList() }
 
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -95,18 +97,6 @@ internal class HistoryAdapter(
      */
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.initView(data[position], position, this)
-    }
-
-    fun addExtraEntities(entities: List<SearchHistoryEntity>) {
-        data.addAll(entities)
-    }
-
-    fun resetEntities(entities: List<SearchHistoryEntity>) {
-        if (data.size != 0) {
-            data.clear()
-        }
-        data.addAll(entities)
-        notifyDataSetChanged()
     }
 
     fun setOnclickListener(listener: (keyword: String) -> Unit) {
