@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.search.data.contracts
 
+import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 
@@ -36,7 +37,7 @@ internal interface DataStore {
 
     suspend fun createOrModifySearchHistory(keyword: String): Boolean
 
-    suspend fun getSearchHistories(count: Int): List<SearchHistoryEntity>
+    fun getSearchHistories(count: Int): Flow<List<SearchHistoryEntity>>
 
     suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
 }

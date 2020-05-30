@@ -27,6 +27,7 @@ package taiwan.no.one.feat.search.data.local.services.database.v1
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import java.util.Date
@@ -52,7 +53,7 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
      * Get all data from the History table.
      */
     @Query("SELECT * FROM table_history ORDER BY updated DESC LIMIT :limit")
-    abstract suspend fun retrieveHistories(limit: Int = 30): List<SearchHistoryEntity>
+    abstract fun retrieveHistories(limit: Int = 30): Flow<List<SearchHistoryEntity>>
 
     /**
      * Get a data with specific [keyword] from the History table

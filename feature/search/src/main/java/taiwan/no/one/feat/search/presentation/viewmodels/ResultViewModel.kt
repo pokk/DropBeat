@@ -24,6 +24,8 @@
 
 package taiwan.no.one.feat.search.presentation.viewmodels
 
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
@@ -42,11 +44,11 @@ internal class ResultViewModel(
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val addOrUpdateResult = _addOrUpdateResult.toLiveData()
 
-    fun search(keyword: String, page: Int = 0) = launchBehind {
-        _musics.postValue(fetchMusicCase.execute(FetchMusicReq(keyword, page)))
+    fun search(keyword: String, page: Int = 0) = viewModelScope.launch {
+        _musics.value = fetchMusicCase.execute(FetchMusicReq(keyword, page))
     }
 
-    fun add(keyword: String) = launchBehind {
-        _addOrUpdateResult.postValue(addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)))
+    fun add(keyword: String) = viewModelScope.launch {
+        _addOrUpdateResult.value = addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword))
     }
 }

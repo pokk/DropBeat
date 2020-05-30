@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.search.domain.repositories
 
+import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 
 /**
@@ -33,7 +34,7 @@ import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 internal interface HistoryRepo {
     suspend fun addOrUpdateSearchHistory(keyword: String): Boolean
 
-    suspend fun fetchSearchHistories(count: Int): List<SearchHistoryEntity>
+    fun fetchSearchHistories(count: Int): Flow<List<SearchHistoryEntity>>
 
     suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
 }

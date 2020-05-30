@@ -24,19 +24,21 @@
 
 package taiwan.no.one.feat.search.domain.usecases
 
+import kotlinx.coroutines.flow.Flow
+import taiwan.no.one.core.domain.usecase.ObserverUsecase
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.domain.usecases.history.AddOrUpdateHistoryOneShotCase
 import taiwan.no.one.feat.search.domain.usecases.history.DeleteHistoryOneShotCase
-import taiwan.no.one.feat.search.domain.usecases.history.FetchHistoryOneShotCase
+import taiwan.no.one.feat.search.domain.usecases.history.FetchHistoryObserverCase
 import taiwan.no.one.feat.search.domain.usecases.music.FetchMusicOneShotCase
 
 internal typealias FetchMusicCase = OneShotUsecase<List<SongEntity>, FetchMusicReq>
 internal typealias FetchMusicReq = FetchMusicOneShotCase.Request
 
-internal typealias FetchHistoryCase = OneShotUsecase<List<SearchHistoryEntity>, FetchHistoryReq>
-internal typealias FetchHistoryReq = FetchHistoryOneShotCase.Request
+internal typealias FetchHistoryCase = ObserverUsecase<Flow<List<SearchHistoryEntity>>, FetchHistoryReq>
+internal typealias FetchHistoryReq = FetchHistoryObserverCase.Request
 internal typealias AddOrUpdateHistoryCase = OneShotUsecase<Boolean, AddOrUpdateHistoryReq>
 internal typealias AddOrUpdateHistoryReq = AddOrUpdateHistoryOneShotCase.Request
 internal typealias DeleteHistoryCase = OneShotUsecase<Boolean, DeleteHistoryReq>

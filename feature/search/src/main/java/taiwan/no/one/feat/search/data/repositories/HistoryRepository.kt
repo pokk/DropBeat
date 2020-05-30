@@ -40,7 +40,7 @@ internal class HistoryRepository(
 ) : HistoryRepo {
     override suspend fun addOrUpdateSearchHistory(keyword: String) = local.createOrModifySearchHistory(keyword)
 
-    override suspend fun fetchSearchHistories(count: Int) = local.getSearchHistories(count)
+    override fun fetchSearchHistories(count: Int) = local.getSearchHistories(count)
 
     override suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?) =
         local.removeSearchHistory(keyword, entity)

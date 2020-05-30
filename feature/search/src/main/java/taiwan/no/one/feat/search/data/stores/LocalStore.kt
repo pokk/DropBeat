@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.search.data.stores
 
+import kotlinx.coroutines.flow.distinctUntilChanged
 import taiwan.no.one.feat.search.BuildConfig
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
@@ -42,7 +43,7 @@ internal class LocalStore(
         searchHistoryDao.insertBy(keyword)
     }
 
-    override suspend fun getSearchHistories(count: Int) = searchHistoryDao.retrieveHistories(count)
+    override fun getSearchHistories(count: Int) = searchHistoryDao.retrieveHistories(count).distinctUntilChanged()
 
     override suspend fun removeSearchHistory(
         keyword: String?,

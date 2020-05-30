@@ -24,9 +24,9 @@
 
 package taiwan.no.one.feat.search.presentation.viewmodels
 
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
@@ -47,15 +47,13 @@ internal class RecentViewModel(
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val deleteResult = _deleteResult.toLiveData()
     val addOrUpdateResult = _addOrUpdateResult.toLiveData()
-    val histories = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-        emit(fetchHistoryCase.execute(FetchHistoryReq(50)))
+    val histories = fetchHistoryCase.execute(FetchHistoryReq(50)).asLiveData()
+
+    fun delete(keyword: String?, entity: SearchHistoryEntity?) = viewModelScope.launch {
+        _deleteResult.value = deleteHistoryCase.execute(DeleteHistoryReq(keyword, entity))
     }
 
-    fun delete(keyword: String?, entity: SearchHistoryEntity?) = launchBehind {
-        _deleteResult.postValue(deleteHistoryCase.execute(DeleteHistoryReq(keyword, entity)))
-    }
-
-    fun add(keyword: String) = launchBehind {
-        _addOrUpdateResult.postValue(addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)))
+    fun add(keyword: String) = viewModelScope.launch {
+        _addOrUpdateResult.value = addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword))
     }
 }

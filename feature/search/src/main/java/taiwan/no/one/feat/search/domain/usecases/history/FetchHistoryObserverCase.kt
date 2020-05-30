@@ -28,10 +28,10 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.search.domain.repositories.HistoryRepo
 import taiwan.no.one.feat.search.domain.usecases.FetchHistoryCase
 
-internal class FetchHistoryOneShotCase(
+internal class FetchHistoryObserverCase(
     private val repository: HistoryRepo
 ) : FetchHistoryCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+    override fun acquireCase(parameter: Request?) = parameter.ensure {
         repository.fetchSearchHistories(count)
     }
 

@@ -24,17 +24,18 @@
 
 package taiwan.no.one.core.domain.usecase
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
+import taiwan.no.one.ext.DEFAULT_STR
 
 /**
  * A base abstract class for wrapping a coroutine [ObserverUsecase] object and do the
  * error handling when an error or cancellation happened.
  */
-abstract class ObserverUsecase<out T : Any, in R : Usecase.RequestValues> : Usecase<R> {
-    abstract suspend fun acquireCase(parameter: R? = null): T
+abstract class ObserverUsecase<T : Any, R : Usecase.RequestValues> : Usecase<R> {
+    abstract fun acquireCase(parameter: R? = null): T
 
-    open suspend fun execute(parameter: R? = null) = withContext(Dispatchers.Default) {
-        runCatching { acquireCase(parameter) }
-    }
+    open fun execute(parameter: R? = null) = acquireCase(parameter)
+
+    protected fun R?.ensure(errorMessage: String = DEFAULT_STR, block: R.() -> T) =
+        this?.run { block() } ?: throw ParameterNotMatchException(errorMessage)
 }

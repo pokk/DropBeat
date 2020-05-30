@@ -101,6 +101,14 @@ internal class HistoryAdapter(
         data.addAll(entities)
     }
 
+    fun resetEntities(entities: List<SearchHistoryEntity>) {
+        if (data.size != 0) {
+            data.clear()
+        }
+        data.addAll(entities)
+        notifyDataSetChanged()
+    }
+
     fun setOnclickListener(listener: (keyword: String) -> Unit) {
         onClickListener = listener
     }
