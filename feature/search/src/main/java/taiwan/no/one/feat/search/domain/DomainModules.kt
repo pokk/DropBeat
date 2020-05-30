@@ -37,13 +37,13 @@ import taiwan.no.one.feat.search.domain.usecases.FetchHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.FetchMusicCase
 import taiwan.no.one.feat.search.domain.usecases.history.AddOrUpdateHistoryOneShotCase
 import taiwan.no.one.feat.search.domain.usecases.history.DeleteHistoryOneShotCase
-import taiwan.no.one.feat.search.domain.usecases.history.FetchHistoryObserverCase
+import taiwan.no.one.feat.search.domain.usecases.history.FetchHistoryObservableCase
 import taiwan.no.one.feat.search.domain.usecases.music.FetchMusicOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
         bind<FetchMusicCase>() with singleton { FetchMusicOneShotCase(instance()) }
-        bind<FetchHistoryCase>() with singleton { FetchHistoryObserverCase(instance()) }
+        bind<FetchHistoryCase>() with singleton { FetchHistoryObservableCase(instance()) }
         bind<AddOrUpdateHistoryCase>() with singleton { AddOrUpdateHistoryOneShotCase(instance()) }
         bind<DeleteHistoryCase>() with singleton { DeleteHistoryOneShotCase(instance()) }
     }

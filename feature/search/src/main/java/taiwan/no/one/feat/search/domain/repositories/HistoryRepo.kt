@@ -32,9 +32,9 @@ import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface HistoryRepo {
-    suspend fun addOrUpdateSearchHistory(keyword: String): Boolean
-
     fun fetchSearchHistories(count: Int): Flow<List<SearchHistoryEntity>>
+
+    suspend fun addOrUpdateSearchHistory(keyword: String): Boolean
 
     suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
 }

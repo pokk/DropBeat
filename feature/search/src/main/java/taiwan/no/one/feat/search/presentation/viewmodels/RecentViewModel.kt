@@ -47,7 +47,7 @@ internal class RecentViewModel(
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val deleteResult = _deleteResult.toLiveData()
     val addOrUpdateResult = _addOrUpdateResult.toLiveData()
-    val histories = fetchHistoryCase.execute(FetchHistoryReq(50)).asLiveData()
+    val histories = fetchHistoryCase.execute(FetchHistoryReq(50)).asLiveData(viewModelScope.coroutineContext)
 
     fun delete(keyword: String?, entity: SearchHistoryEntity?) = viewModelScope.launch {
         _deleteResult.value = deleteHistoryCase.execute(DeleteHistoryReq(keyword, entity))

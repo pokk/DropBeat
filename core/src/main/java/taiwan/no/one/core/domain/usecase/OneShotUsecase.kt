@@ -34,7 +34,7 @@ import taiwan.no.one.ext.DEFAULT_STR
  * error handling when an error or cancellation happened.
  */
 abstract class OneShotUsecase<T : Any, R : Usecase.RequestValues> : Usecase<R> {
-    abstract suspend fun acquireCase(parameter: R? = null): T
+    protected abstract suspend fun acquireCase(parameter: R? = null): T
 
     open suspend fun execute(parameter: R? = null) = withContext(Dispatchers.Default) {
         runCatching { acquireCase(parameter) }

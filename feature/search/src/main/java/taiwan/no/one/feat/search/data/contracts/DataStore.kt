@@ -35,9 +35,9 @@ import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 internal interface DataStore {
     suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity
 
-    suspend fun createOrModifySearchHistory(keyword: String): Boolean
-
     fun getSearchHistories(count: Int): Flow<List<SearchHistoryEntity>>
+
+    suspend fun createOrModifySearchHistory(keyword: String): Boolean
 
     suspend fun removeSearchHistory(keyword: String?, entity: SearchHistoryEntity?): Boolean
 }

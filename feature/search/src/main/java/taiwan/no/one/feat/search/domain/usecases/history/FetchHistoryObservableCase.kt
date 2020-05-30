@@ -22,20 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.domain.usecase
+package taiwan.no.one.feat.search.domain.usecases.history
 
-import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
-import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.search.domain.repositories.HistoryRepo
+import taiwan.no.one.feat.search.domain.usecases.FetchHistoryCase
 
-/**
- * A base abstract class for wrapping a coroutine [ObserverUsecase] object and do the
- * error handling when an error or cancellation happened.
- */
-abstract class ObserverUsecase<T : Any, R : Usecase.RequestValues> : Usecase<R> {
-    abstract fun acquireCase(parameter: R? = null): T
+internal class FetchHistoryObservableCase(
+    private val repository: HistoryRepo
+) : FetchHistoryCase() {
+    override fun acquireCase(parameter: Request?) = parameter.ensure {
+        repository.fetchSearchHistories(count)
+    }
 
-    open fun execute(parameter: R? = null) = acquireCase(parameter)
+    class Request(val count: Int) : RequestValues
 
-    protected fun R?.ensure(errorMessage: String = DEFAULT_STR, block: R.() -> T) =
-        this?.run { block() } ?: throw ParameterNotMatchException(errorMessage)
 }

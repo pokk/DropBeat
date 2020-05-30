@@ -38,9 +38,9 @@ import taiwan.no.one.feat.search.domain.repositories.HistoryRepo
 internal class HistoryRepository(
     private val local: DataStore,
 ) : HistoryRepo {
-    override suspend fun addOrUpdateSearchHistory(keyword: String) = local.createOrModifySearchHistory(keyword)
-
     override fun fetchSearchHistories(count: Int) = local.getSearchHistories(count)
+
+    override suspend fun addOrUpdateSearchHistory(keyword: String) = local.createOrModifySearchHistory(keyword)
 
     override suspend fun deleteSearchHistory(keyword: String?, entity: SearchHistoryEntity?) =
         local.removeSearchHistory(keyword, entity)
