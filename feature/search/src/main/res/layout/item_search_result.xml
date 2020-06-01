@@ -57,7 +57,7 @@
         tools:src="@tools:sample/avatars"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvArtistName"
+        android:id="@+id/mtvAlbumName"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_two_unit"
@@ -70,7 +70,7 @@
         tools:text="@tools:sample/full_names"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvAlbumName"
+        android:id="@+id/mtvArtistName"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_two_unit"
@@ -80,7 +80,7 @@
         app:layout_constraintBottom_toBottomOf="@id/sivAlbumThumb"
         app:layout_constraintEnd_toStartOf="@id/sivAction"
         app:layout_constraintStart_toEndOf="@id/sivAlbumThumb"
-        app:layout_constraintTop_toBottomOf="@id/mtvArtistName"
+        app:layout_constraintTop_toBottomOf="@id/mtvAlbumName"
         tools:text="@tools:sample/full_names"/>
 
     <com.google.android.material.imageview.ShapeableImageView

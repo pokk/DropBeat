@@ -39,11 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
         android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_recent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/mtvHistory"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_recent"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtvHistory"
@@ -67,11 +67,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
         android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/mtvHistory"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_close"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <View
         android:layout_width="match_parent"

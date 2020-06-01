@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.search.presentation.fragments
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.gone
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -44,10 +45,11 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
     override fun bindLiveData() {
         vm.histories.obs(this) {
             (binding.rvHistories.adapter as? HistoryAdapter)?.data = it
+            binding.rvHistories.smoothScrollToPosition(0)
         }
         vm.addOrUpdateResult.obs(this) {
             it.onSuccess {
-//                findNavController().navigate(RecentFragmentDirections.actionRecentToResult(selectedKeyword.orEmpty()))
+                findNavController().navigate(RecentFragmentDirections.actionRecentToResult(selectedKeyword.orEmpty()))
             }
         }
         vm.deleteResult.obs(this) {
