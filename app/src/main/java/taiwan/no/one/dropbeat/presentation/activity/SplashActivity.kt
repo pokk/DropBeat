@@ -24,14 +24,27 @@
 
 package taiwan.no.one.dropbeat.presentation.activity
 
-import androidx.navigation.navArgs
-import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.dropbeat.databinding.ActivitySecondBinding
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.play.core.splitcompat.SplitCompat
+import taiwan.no.one.dropbeat.databinding.ActivitySplashBinding
 
-class SecondActivity : BaseActivity<ActivitySecondBinding>() {
-    private val args by navArgs<SecondActivityArgs>()
+internal class SplashActivity : AppCompatActivity() {
+    private var binding: ActivitySplashBinding? = null
 
-    override fun viewComponentBinding() {
-        binding.tvMsg.text = "This is second Activity ${args.id}"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        SplitCompat.install(this)
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

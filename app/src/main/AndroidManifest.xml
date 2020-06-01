@@ -40,23 +40,26 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:label"
         tools:targetApi="M">
-        <activity android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity">
+        <activity
+            android:name=".presentation.activity.SplashActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.smashks.com"
+                    android:host="www.dropbeat.com"
                     android:pathPattern="/main"
                     android:scheme="http"/>
             </intent-filter>
         </activity>
-        <activity android:name="taiwan.no.one.dropbeat.presentation.activity.SecondActivity"/>
     </application>
 </manifest>

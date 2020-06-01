@@ -23,41 +23,19 @@
   ~ SOFTWARE.
   -->
 
-<navigation
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navSecond"
-    app:startDestination="@id/fragmentSecond">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#123456">
 
-    <fragment
-        android:id="@+id/fragmentSecond"
-        android:name="taiwan.no.one.dropbeat.presentation.fragment.MainFragment"
-        android:label="MainFragment"
-        tools:layout="@layout/activity_second">
-        <action
-            android:id="@+id/action_fragmentSecond_to_activitySecond"
-            app:destination="@id/activitySecond">
-            <argument
-                android:name="id"
-                android:defaultValue="0"
-                app:argType="integer"/>
-        </action>
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="main.park.com/{id}"/>
-    </fragment>
-    <activity
-        android:id="@+id/activitySecond"
-        android:name="taiwan.no.one.dropbeat.presentation.activity.SecondActivity"
-        android:label="Second"
-        tools:layout="@layout/activity_second">
-        <argument
-            android:name="id"
-            android:defaultValue="0"
-            app:argType="integer"/>
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="second.park.com"/>
-    </activity>
-</navigation>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome To DropBeat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
