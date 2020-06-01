@@ -105,7 +105,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
                 requireContext().toggleSoftKeyboard()
                 selectedKeyword = (v as EditText).text.toString()
                 searchMusic()
-                true
+                return@setOnKeyListener true
             }
             false
         }
