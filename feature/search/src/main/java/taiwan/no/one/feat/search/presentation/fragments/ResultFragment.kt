@@ -27,6 +27,7 @@ package taiwan.no.one.feat.search.presentation.fragments
 import android.os.Bundle
 import android.view.ViewStub
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -34,6 +35,7 @@ import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.databinding.FragmentSearchResultBinding
 import taiwan.no.one.feat.search.databinding.StubSearchHasResultBinding
+import taiwan.no.one.feat.search.databinding.StubSearchNoResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.ktx.view.findOptional
@@ -65,17 +67,25 @@ class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding
     }
 
     /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
-    override fun viewComponentBinding() {
+    override fun componentListenersBinding() {
         binding.vsHasResult.setOnInflateListener { _, inflated ->
-            stubHasResultBinding = StubSearchHasResultBinding.bind(inflated)
-            stubHasResultBinding?.rvMusics?.apply {
-                if (adapter == null) {
-                    adapter = ResultAdapter()
+            stubHasResultBinding = StubSearchHasResultBinding.bind(inflated).apply {
+                rvMusics.apply {
+                    if (adapter == null) {
+                        adapter = ResultAdapter()
+                    }
+                    if (layoutManager == null) {
+                        layoutManager = LinearLayoutManager(requireActivity())
+                    }
                 }
-                if (layoutManager == null) {
-                    layoutManager = LinearLayoutManager(requireActivity())
+            }
+        }
+        binding.vsNoResult.setOnInflateListener { _, inflated ->
+            StubSearchNoResultBinding.bind(inflated).apply {
+                btnSearch.setOnClickListener {
+                    findNavController().navigate(ResultFragmentDirections.actionResultToRecent(true))
                 }
             }
         }

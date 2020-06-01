@@ -47,6 +47,10 @@
         <action
             android:id="@+id/action_recent_to_result"
             app:destination="@id/resultFragment"/>
+        <argument
+            android:name="isBackFromResult"
+            android:defaultValue="false"
+            app:argType="boolean"/>
     </fragment>
 
     <fragment
@@ -57,5 +61,10 @@
         <argument
             android:name="keyword"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_result_to_recent"
+            app:destination="@id/recentFragment"
+            app:popUpTo="@id/recentFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

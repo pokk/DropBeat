@@ -28,10 +28,12 @@ import android.view.KeyEvent
 import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.gone
-import com.devrapid.kotlinknifer.toggleSoftKeyboard
+import com.devrapid.kotlinknifer.hideSoftKeyboard
+import com.devrapid.kotlinknifer.showSoftKeyboard
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentSearchRecentBinding
@@ -46,6 +48,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
     private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
     private val vm by viewModels<RecentViewModel> { vmFactory }
     private var selectedKeyword: String? = null
+    private val args by navArgs<RecentFragmentArgs>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -68,6 +71,12 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
      */
     override fun viewComponentBinding() {
         mergeBinding.mtvTitle.gone()
+        if (args.isBackFromResult) {
+            mergeBinding.tietSearch.apply {
+                requestFocus()
+                showSoftKeyboard()
+            }
+        }
         binding.rvHistories.apply {
             if (adapter == null) {
                 adapter = HistoryAdapter()
@@ -87,27 +96,37 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        (binding.rvHistories.adapter as? HistoryAdapter)?.apply {
-            setOnClickListener {
-                selectedKeyword = it
-                searchMusic()
+        binding.apply {
+            (rvHistories.adapter as? HistoryAdapter)?.apply {
+                setOnClickListener {
+                    selectedKeyword = it
+                    searchMusic()
+                }
+                setOnSwipeListener { entity, _ ->
+                    vm.delete(null, entity)
+                }
             }
-            setOnSwipeListener { entity, _ ->
-                vm.delete(null, entity)
+            listOf(clContainer).forEach {
+                it.setOnClickListener { v ->
+                    v.hideSoftKeyboard()
+                }
             }
         }
-        mergeBinding.tilSearchBar.setEndIconOnClickListener {
-            selectedKeyword = mergeBinding.tietSearch.text.toString()
-            vm.add(mergeBinding.tietSearch.text.toString())
-        }
-        mergeBinding.tietSearch.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                requireContext().toggleSoftKeyboard()
-                selectedKeyword = (v as EditText).text.toString()
-                searchMusic()
-                return@setOnKeyListener true
+        mergeBinding.apply {
+            tilSearchBar.setEndIconOnClickListener {
+                selectedKeyword = mergeBinding.tietSearch.text.toString()
+                vm.add(mergeBinding.tietSearch.text.toString())
             }
-            false
+            tietSearch.setOnKeyListener { v, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    v.hideSoftKeyboard()
+                    selectedKeyword = (v as EditText).text.toString()
+                    searchMusic()
+                    return@setOnKeyListener true
+                }
+                false
+
+            }
         }
     }
 
