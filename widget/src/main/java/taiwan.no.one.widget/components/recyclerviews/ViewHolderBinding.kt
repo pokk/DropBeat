@@ -22,24 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.presentation.recyclerviews.viewholders
+package taiwan.no.one.widget.components.recyclerviews
 
-import coil.api.loadAny
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
-import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
-import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
-import taiwan.no.one.widget.components.recyclerviews.ViewHolderBinding
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
-internal class ResultViewHolder(
-    private val binding: ItemSearchResultBinding
-) : ViewHolderBinding<SongEntity, ResultAdapter>(binding.root) {
-    override fun initView(entity: SongEntity, position: Int, adapter: ResultAdapter) {
-        binding.apply {
-            mtvNumber.text = "#${position + 1}"
-            mtvAlbumName.text = entity.title
-            mtvArtistName.text = entity.artist
-            sivAlbumThumb.loadAny(entity.cdnCoverUrl)
-        }
-        binding.clItem.setOnClickListener {}
-    }
+abstract class ViewHolderBinding<in E : Any, in D : RecyclerView.Adapter<*>>(view: View) : RecyclerView.ViewHolder(view) {
+    abstract fun initView(entity: E, position: Int, adapter: D)
 }

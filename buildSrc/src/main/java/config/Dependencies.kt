@@ -69,6 +69,7 @@ fun DependencyHandlerScope.widgetDependencies() {
     kotlinAndroidDependencies(DepEnvImpl)
     commonAndroidxDependencies(DepEnvImpl)
     // Others
+    DepEnvImpl(LibraryDependency.JetPack.RECYCLERVIEW)
     DepEnvImpl(LibraryDependency.JetPack.MATERIAL_DESIGN)
     DepEnvImpl(LibraryDependency.JetPack.CARDVIEW)
     DepEnvImpl(LibraryDependency.JetPack.CONSTRAINT_LAYOUT)

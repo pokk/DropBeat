@@ -39,7 +39,7 @@ internal class LocalStore(
 ) : DataStore {
     override suspend fun getMusic(keyword: String, page: Int) = TODO()
 
-    override fun getSearchHistories(count: Int) = searchHistoryDao.retrieveHistories(count).distinctUntilChanged()
+    override fun getSearchHistories(count: Int) = searchHistoryDao.getHistories(count).distinctUntilChanged()
 
     override suspend fun createOrModifySearchHistory(keyword: String) = tryWrapper {
         searchHistoryDao.insertBy(keyword)
@@ -50,9 +50,9 @@ internal class LocalStore(
         entity: SearchHistoryEntity?
     ) = tryWrapper {
         if (entity != null)
-            searchHistoryDao.update(entity)
+            searchHistoryDao.delete(entity)
         else {
-            searchHistoryDao.releaseBy(keyword.orEmpty())
+            searchHistoryDao.deleteBy(keyword.orEmpty())
         }
     }
 

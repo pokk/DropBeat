@@ -27,14 +27,17 @@ package taiwan.no.one.feat.search.presentation.recyclerviews.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import taiwan.no.one.core.presentation.recyclerviews.AutoUpdatable
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.databinding.ItemRencentSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryViewHolder
+import taiwan.no.one.widget.components.recyclerviews.AutoUpdatable
+import taiwan.no.one.widget.components.recyclerviews.helpers.AdapterItemTouchHelper
 import kotlin.properties.Delegates
 
-internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(), AutoUpdatable {
+internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(), AutoUpdatable, AdapterItemTouchHelper {
+    private var onSwipeListener: ((entity: SearchHistoryEntity, direction: Int) -> Unit)? = null
     var data: List<SearchHistoryEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
         autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
     }
@@ -99,7 +102,17 @@ internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(), AutoU
         holder.initView(data[position], position, this)
     }
 
-    fun setOnclickListener(listener: (keyword: String) -> Unit) {
+    override fun onItemSwiped(position: Int, direction: Int) {
+        onSwipeListener?.invoke(data[position], direction)
+    }
+
+    override fun onItemMoved(fromPosition: Int, toPosition: Int) = UnsupportedOperation()
+
+    fun setOnClickListener(listener: (keyword: String) -> Unit) {
         onClickListener = listener
+    }
+
+    fun setOnSwipeListener(listener: (entity: SearchHistoryEntity, direction: Int) -> Unit) {
+        onSwipeListener = listener
     }
 }

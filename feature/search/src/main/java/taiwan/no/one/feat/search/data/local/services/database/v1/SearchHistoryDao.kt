@@ -32,6 +32,12 @@ import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import java.util.Date
 
+/**
+ * Integrated the base [androidx.room.Room] database operations.
+ * Thru [androidx.room.Room] we can just define the interfaces that we want to
+ * access for from a local database.
+ * Using prefix name (get), (insert), (update), (delete)
+ */
 @Dao
 internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
     /**
@@ -42,7 +48,7 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
      */
     @Transaction
     open suspend fun insertBy(keyword: String) {
-        val history = retrieveHistory(keyword)
+        val history = getHistory(keyword)
         if (history == null)
             insert(SearchHistoryEntity(0, keyword, Date()))
         else
@@ -53,7 +59,7 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
      * Get all data from the History table.
      */
     @Query("SELECT * FROM table_history ORDER BY updated DESC LIMIT :limit")
-    abstract fun retrieveHistories(limit: Int = 30): Flow<List<SearchHistoryEntity>>
+    abstract fun getHistories(limit: Int = 30): Flow<List<SearchHistoryEntity>>
 
     /**
      * Get a data with specific [keyword] from the History table
@@ -62,7 +68,7 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
      * @return SearchHistoryData
      */
     @Query("SELECT * FROM table_history WHERE keyword=:keyword")
-    abstract suspend fun retrieveHistory(keyword: String): SearchHistoryEntity?
+    abstract suspend fun getHistory(keyword: String): SearchHistoryEntity?
 
     /**
      * Delete a specific data by [keyword] from the History table.
@@ -70,5 +76,5 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
      * @param keyword a keyword about artist, track, album, ...etc.
      */
     @Query("DELETE FROM table_history WHERE keyword=:keyword")
-    abstract suspend fun releaseBy(keyword: String)
+    abstract suspend fun deleteBy(keyword: String)
 }

@@ -24,16 +24,22 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
+import android.view.KeyEvent
+import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.gone
+import com.devrapid.kotlinknifer.toggleSoftKeyboard
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentSearchRecentBinding
 import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
+import taiwan.no.one.widget.components.recyclerviews.helpers.AdapterItemTouchHelper
+import taiwan.no.one.widget.components.recyclerviews.helpers.DefaultItemTouchCallback
 import androidx.lifecycle.observe as obs
 
 class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
@@ -53,7 +59,7 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
             }
         }
         vm.deleteResult.obs(this) {
-            it.onSuccess { }
+            it.onSuccess {}
         }
     }
 
@@ -69,6 +75,11 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
             if (layoutManager == null) {
                 layoutManager = LinearLayoutManager(requireActivity())
             }
+            ItemTouchHelper(DefaultItemTouchCallback(0,
+                                                     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                                                     adapter as AdapterItemTouchHelper)).also {
+                it.attachToRecyclerView(this)
+            }
         }
     }
 
@@ -76,13 +87,31 @@ class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        (binding.rvHistories.adapter as? HistoryAdapter)?.setOnclickListener {
-            selectedKeyword = it
-            vm.add(it)
+        (binding.rvHistories.adapter as? HistoryAdapter)?.apply {
+            setOnClickListener {
+                selectedKeyword = it
+                searchMusic()
+            }
+            setOnSwipeListener { entity, _ ->
+                vm.delete(null, entity)
+            }
         }
         mergeBinding.tilSearchBar.setEndIconOnClickListener {
             selectedKeyword = mergeBinding.tietSearch.text.toString()
             vm.add(mergeBinding.tietSearch.text.toString())
         }
+        mergeBinding.tietSearch.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                requireContext().toggleSoftKeyboard()
+                selectedKeyword = (v as EditText).text.toString()
+                searchMusic()
+                true
+            }
+            false
+        }
+    }
+
+    private fun searchMusic() {
+        vm.add(selectedKeyword.orEmpty())
     }
 }
