@@ -27,26 +27,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clItem"
+    android:id="@+id/cl_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingEnd="@dimen/md_two_unit"
     tools:context="taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryViewHolder">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/sivIcon"
+        android:id="@+id/siv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
         android:layout_marginBottom="15dp"
         android:src="@drawable/ic_recent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/mtvHistory"
+        app:layout_constraintEnd_toStartOf="@id/mtv_history"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvHistory"
+        android:id="@+id/mtv_history"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_two_unit"
@@ -56,13 +56,13 @@
         android:lines="1"
         android:textSize="12.5sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/sivClose"
-        app:layout_constraintStart_toEndOf="@id/sivIcon"
+        app:layout_constraintEnd_toStartOf="@id/siv_close"
+        app:layout_constraintStart_toEndOf="@id/siv_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names"/>
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/sivClose"
+        android:id="@+id/siv_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
@@ -70,7 +70,7 @@
         android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/mtvHistory"
+        app:layout_constraintStart_toEndOf="@id/mtv_history"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <View

@@ -25,25 +25,38 @@
 package taiwan.no.one.feat.search.presentation.fragments
 
 import android.os.Bundle
+import android.view.ViewStub
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.databinding.FragmentSearchResultBinding
+import taiwan.no.one.feat.search.databinding.StubSearchHasResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
+import taiwan.no.one.ktx.view.findOptional
 import androidx.lifecycle.observe as obs
 
 class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding>() {
+    private var stubHasResultBinding: StubSearchHasResultBinding? = null
     private val vm by viewModels<ResultViewModel> { vmFactory }
     private val args by navArgs<ResultFragmentArgs>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.musics.obs(this) {
-            it.onSuccess {
-                (binding.rvMusics.adapter as? ResultAdapter)?.addExtraEntities(it)
+        vm.musics.obs(this) { res ->
+            res.onSuccess {
+                if (it.isEmpty()) {
+                    // TODO(jieyi): 6/1/20 it should be => binding.vsNoResult.viewStub?.inflate()
+                    findOptional<ViewStub>(R.id.vs_no_result)?.inflate()
+                }
+                else {
+                    // TODO(jieyi): 6/1/20 it should be => binding.vsHasResult.viewStub?.inflate()
+                    findOptional<ViewStub>(R.id.vs_has_result)?.inflate()
+                    (stubHasResultBinding?.rvMusics?.adapter as? ResultAdapter)?.addExtraEntities(it)
+                }
             }.onFailure { }
         }
         vm.addOrUpdateResult.obs(this) {
@@ -55,12 +68,15 @@ class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
-        binding.rvMusics.apply {
-            if (adapter == null) {
-                adapter = ResultAdapter()
-            }
-            if (layoutManager == null) {
-                layoutManager = LinearLayoutManager(requireActivity())
+        binding.vsHasResult.setOnInflateListener { _, inflated ->
+            stubHasResultBinding = StubSearchHasResultBinding.bind(inflated)
+            stubHasResultBinding?.rvMusics?.apply {
+                if (adapter == null) {
+                    adapter = ResultAdapter()
+                }
+                if (layoutManager == null) {
+                    layoutManager = LinearLayoutManager(requireActivity())
+                }
             }
         }
     }
@@ -72,5 +88,14 @@ class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding
      */
     override fun rendered(savedInstanceState: Bundle?) {
         vm.search(args.keyword)
+    }
+
+    /**
+     * Called when the fragment is no longer in use.  This is called
+     * after [.onStop] and before [.onDetach].
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        stubHasResultBinding = null
     }
 }

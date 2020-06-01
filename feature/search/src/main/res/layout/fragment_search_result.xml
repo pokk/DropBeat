@@ -25,25 +25,24 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="taiwan.no.one.feat.search.presentation.fragments.ResultFragment">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvTitle"
-        style="@style/textview.rotated"
-        android:layout_width="wrap_content"
-        android:text="Search Result"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMusics"
+    <ViewStub
+        android:id="@+id/vs_has_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/md_six_unit"
-        android:overScrollMode="never"
-        tools:listitem="@layout/item_search_result"/>
+        android:inflatedId="@+id/hasResult"
+        android:layout="@layout/stub_search_has_result"
+        tools:visibility="visible"/>
+
+    <ViewStub
+        android:id="@+id/vs_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/noResult"
+        android:layout="@layout/stub_search_no_result"
+        tools:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

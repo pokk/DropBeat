@@ -26,29 +26,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="taiwan.no.one.feat.search.presentation.fragments.RecentFragment"
-    tools:showPaths="true">
-
-    <include layout="@layout/merge_tab_search"/>
+    android:layout_height="match_parent">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_recent"
-        style="@style/textview.rotated"
         android:layout_width="wrap_content"
-        android:text="Recent Search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/siv_backdrop"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_histories"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        android:layout_marginStart="@dimen/md_six_unit"
-        android:overScrollMode="never"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Can't find any music..."
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/siv_backdrop"
-        tools:listitem="@layout/item_rencent_search"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
