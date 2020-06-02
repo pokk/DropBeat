@@ -39,6 +39,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath(config.GradleDependency.SAFE_ARGS)
         classpath(config.GradleDependency.GOOGLE_SERVICE)
+        classpath(config.GradleDependency.CRASHLYTICS)
 //        classpath "org.jacoco:org.jacoco.core:0.8.4"
 //        classpath("io.fabric.tools:gradle:1.31.1")
     }

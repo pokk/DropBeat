@@ -54,6 +54,7 @@ fun DependencyHandlerScope.coreDependencies() {
 fun DependencyHandlerScope.appDependencies() {
     androidxKtxDependencies(DepEnvApi)
     uiDependencies(DepEnvApi)
+    firebaseDependencies(DepEnvApi)
     // Others
     DepEnvApi(LibraryDependency.Firebase.PLAY_CORE)
     DepEnvApi(LibraryDependency.Jieyi.KNIFER)
@@ -144,6 +145,14 @@ fun DependencyHandlerScope.internetDependencies(env: String) {
     env(LibraryDependency.Internet.OKHTTP_INTERCEPTOR)
     env(LibraryDependency.Internet.RETROFIT2)
     env(LibraryDependency.Internet.RETROFIT2_CONVERTER_GSON)
+}
+
+fun DependencyHandlerScope.firebaseDependencies(env: String) {
+    env(LibraryDependency.Firebase.FIREBASE_ANALYTICS)
+    env(LibraryDependency.Firebase.FIREBASE_AUTH)
+    env(LibraryDependency.Firebase.FIREBASE_CRASHLYTICS)
+    env(LibraryDependency.Firebase.FIREBASE_MESSAGING)
+    env(LibraryDependency.Firebase.FIREBASE_DB)
 }
 
 fun DependencyHandlerScope.localDependencies(env: String) {
