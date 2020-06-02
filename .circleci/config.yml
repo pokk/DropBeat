@@ -28,6 +28,9 @@ jobs:
           name: Decode Google Services Key
           command: echo ${GOOGLE_SERVICE} | base64 --decode > ${HOME}/workspace/app/google-services.json
       - run:
+          name: Decode Ranking Resource Key
+          command: echo ${RANKING_RESOURCE} | base64 --decode > ${HOME}/workspace/feature/ranking/src/main/res/values/ranks.xml
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
