@@ -26,16 +26,25 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navApp"
-    app:startDestination="@id/navRank">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/indexFragment">
 
-    <include-dynamic
-        android:id="@+id/navSearch"
-        app:graphResName="nav_search"
-        app:moduleName="search"/>
-
-    <include-dynamic
-        android:id="@+id/navRank"
-        app:graphResName="nav_rank"
-        app:moduleName="ranking"/>
+    <fragment
+        android:id="@+id/indexFragment"
+        android:name="taiwan.no.one.feat.ranking.presentation.fragments.IndexFragment"
+        android:label="IndexFragment"
+        tools:layout="@layout/fragment_ranking_index">
+        <action
+            android:id="@+id/action_indexFragment_to_detailFragment"
+            app:destination="@id/detailFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="taiwan.no.one.feat.ranking.presentation.fragments.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_ranking_detail">
+        <argument
+            android:name="id"
+            app:argType="string"/>
+    </fragment>
 </navigation>

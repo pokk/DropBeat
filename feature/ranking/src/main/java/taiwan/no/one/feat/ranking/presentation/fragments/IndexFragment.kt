@@ -22,23 +22,23 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.presentation
+package taiwan.no.one.feat.ranking.presentation.fragments
 
-import android.content.Context
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import taiwan.no.one.dropbeat.di.ViewModelEntry
-import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
+import androidx.fragment.app.viewModels
+import taiwan.no.one.core.presentation.activity.BaseActivity
+import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.ranking.databinding.FragmentRankingIndexBinding
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
+import androidx.lifecycle.observe as obs
 
-internal object PresentationModules : ModuleProvider {
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
-        bind<ViewModelEntry>().inSet() with provider {
-            RankViewModel::class.java to RankViewModel(instance())
+class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingIndexBinding>() {
+    private val vm by viewModels<RankViewModel> { vmFactory }
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        vm.rankings.obs(this) {
+            it.onSuccess {
+            }
         }
     }
 }

@@ -23,19 +23,11 @@
   ~ SOFTWARE.
   -->
 
-<navigation
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navApp"
-    app:startDestination="@id/navRank">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="taiwan.no.one.feat.ranking.presentation.fragments.DetailFragment">
 
-    <include-dynamic
-        android:id="@+id/navSearch"
-        app:graphResName="nav_search"
-        app:moduleName="search"/>
-
-    <include-dynamic
-        android:id="@+id/navRank"
-        app:graphResName="nav_rank"
-        app:moduleName="ranking"/>
-</navigation>
+</androidx.constraintlayout.widget.ConstraintLayout>
