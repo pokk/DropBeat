@@ -23,4 +23,4 @@
  */
 
 include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking")
+include(":feature:search", ":feature:ranking", "feature:login")

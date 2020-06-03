@@ -38,6 +38,7 @@ object CommonModuleDependency {
     const val LIB_CORE = ":core"
     const val FEAT_SEARCH_MUSIC = "${FEATURE_PREFIX}search"
     const val FEAT_RANKING = "${FEATURE_PREFIX}ranking"
+    const val FEAT_LOGIN = "${FEATURE_PREFIX}login"
 
     fun getAllModules() = CommonModuleDependency::class.memberProperties
         .asSequence()
