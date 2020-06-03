@@ -38,7 +38,7 @@ import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
         bind<ViewModelEntry>().inSet() with provider {
-            RankViewModel::class.java to RankViewModel(instance())
+            RankViewModel::class.java to RankViewModel(instance(), instance())
         }
     }
 }
