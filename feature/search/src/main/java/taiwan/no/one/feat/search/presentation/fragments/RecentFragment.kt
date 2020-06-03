@@ -44,7 +44,7 @@ import taiwan.no.one.widget.components.recyclerviews.helpers.AdapterItemTouchHel
 import taiwan.no.one.widget.components.recyclerviews.helpers.DefaultItemTouchCallback
 import androidx.lifecycle.observe as obs
 
-class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
+internal class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
     private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
     private val vm by viewModels<RecentViewModel> { vmFactory }
     private var selectedKeyword: String? = null

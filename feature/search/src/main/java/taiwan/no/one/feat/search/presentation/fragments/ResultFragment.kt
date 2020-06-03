@@ -41,7 +41,7 @@ import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.ktx.view.findOptional
 import androidx.lifecycle.observe as obs
 
-class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding>() {
+internal class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding>() {
     private var stubHasResultBinding: StubSearchHasResultBinding? = null
     private val vm by viewModels<ResultViewModel> { vmFactory }
     private val args by navArgs<ResultFragmentArgs>()

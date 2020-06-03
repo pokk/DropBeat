@@ -22,16 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.presentation.fragments
 
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
-import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.ranking.databinding.FragmentRankingDetailBinding
-import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
+package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
-internal class DetailFragment : BaseFragment<BaseActivity<*>, FragmentRankingDetailBinding>() {
-    private val vm by viewModels<RankViewModel> { vmFactory }
-    private val args by navArgs<DetailFragmentArgs>()
+import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.logw
+import taiwan.no.one.feat.ranking.databinding.ItemRankTitleBinding
+
+internal class RankTitleViewHolder(private val binding: ItemRankTitleBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun initView() {
+        binding.mtvTitle.post {
+            binding.mtvTitle.layoutParams.height = 40
+            logw(binding.mtvTitle.width, binding.mtvTitle.height)
+        }
+    }
 }

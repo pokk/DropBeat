@@ -25,19 +25,39 @@
 package taiwan.no.one.feat.ranking.presentation.fragments
 
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.MergeAdapter
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingIndexBinding
+import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
+import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankTitleAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 import androidx.lifecycle.observe as obs
 
-class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingIndexBinding>() {
+internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingIndexBinding>() {
     private val vm by viewModels<RankViewModel> { vmFactory }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.rankings.obs(this) {
-            it.onSuccess {
+        vm.rankings.obs(this) { res ->
+            res.onSuccess {
+                ((binding.rvRankings.adapter as? MergeAdapter)?.adapters?.get(1) as? RankAdapter)?.data = it
+            }
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        binding.rvRankings.apply {
+            if (adapter == null) {
+                adapter = MergeAdapter(RankTitleAdapter(), RankAdapter())
+            }
+            if (layoutManager == null) {
+                layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
             }
         }
     }

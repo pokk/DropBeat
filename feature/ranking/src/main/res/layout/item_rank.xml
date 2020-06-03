@@ -23,19 +23,34 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="taiwan.no.one.feat.ranking.presentation.fragments.IndexFragment">
+    android:id="@+id/mcv_card"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_margin="@dimen/md_two_unit"
+    app:cardCornerRadius="@dimen/md_two_unit">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_rankings"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        tools:listitem="@layout/item_rank"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        tools:src="@tools:sample/avatars"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#55000000"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        tools:text="@tools:sample/full_names"/>
+</com.google.android.material.card.MaterialCardView>

@@ -30,7 +30,7 @@ import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
 import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
 
-class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
+internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
