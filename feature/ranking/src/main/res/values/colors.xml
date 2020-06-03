@@ -23,16 +23,6 @@
   ~ SOFTWARE.
   -->
 
-<com.google.android.material.textview.MaterialTextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mtv_title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:fontFamily="monospace"
-    android:text="Ranking"
-    android:textStyle="bold"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:context="taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.RankTitleViewHolder"/>
+<resources>
+    <color name="colorCoralPink">#EC645B</color>
+</resources>

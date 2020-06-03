@@ -24,4 +24,9 @@
   -->
 
 <resources>
+
+    <style name="roundImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/md_one_half_unit</item>
+    </style>
 </resources>

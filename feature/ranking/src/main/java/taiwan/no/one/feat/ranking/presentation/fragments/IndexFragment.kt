@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.ranking.presentation.fragments
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -59,6 +60,15 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingInde
             if (layoutManager == null) {
                 layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
             }
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        ((binding.rvRankings.adapter as? MergeAdapter)?.adapters?.get(1) as? RankAdapter)?.setOnClickListener {
+            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }
 }

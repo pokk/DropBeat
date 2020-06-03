@@ -30,4 +30,9 @@
     android:layout_height="match_parent"
     tools:context="taiwan.no.one.feat.ranking.presentation.fragments.DetailFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_songs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_rank_song"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

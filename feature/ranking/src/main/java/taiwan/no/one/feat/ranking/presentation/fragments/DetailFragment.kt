@@ -24,14 +24,50 @@
 
 package taiwan.no.one.feat.ranking.presentation.fragments
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingDetailBinding
+import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
+import androidx.lifecycle.observe as obs
 
 internal class DetailFragment : BaseFragment<BaseActivity<*>, FragmentRankingDetailBinding>() {
     private val vm by viewModels<RankViewModel> { vmFactory }
     private val args by navArgs<DetailFragmentArgs>()
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        vm.musics.obs(this) { res ->
+            res.onSuccess {
+                (binding.rvSongs.adapter as? SongAdapter)?.addExtraEntities(it)
+            }
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        binding.rvSongs.apply {
+            if (adapter == null) {
+                adapter = SongAdapter()
+            }
+            if (layoutManager == null) {
+                layoutManager = LinearLayoutManager(requireActivity())
+            }
+        }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        vm.getMusics(args.id)
+    }
 }
