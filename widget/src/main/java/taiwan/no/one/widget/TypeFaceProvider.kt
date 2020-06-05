@@ -43,6 +43,6 @@ object TypeFaceProvider {
             typeFaces[fileName] = tempTypeface
         }
 
-        return requireNotNull(tempTypeface)
+        return tempTypeface ?: throw NullPointerException()
     }
 }

@@ -52,11 +52,11 @@ abstract class SilentLiveData<T> : LiveData<T>(), SilentHook<T> {
         val objectWrapperEntry = methodGet.invoke(objectObservers, observer)
         lateinit var objectWrapper: Any
         if (objectWrapperEntry is Map.Entry<*, *>) {
-            objectWrapper = requireNotNull(objectWrapperEntry.value)
+            objectWrapper = objectWrapperEntry.value ?: throw NullPointerException()
         }
         val classObserverWrapper = objectWrapper.javaClass.superclass
         val fieldLastVersion =
-            requireNotNull(classObserverWrapper?.getDeclaredField("mLastVersion")).accessible()
+            (classObserverWrapper?.getDeclaredField("mLastVersion") ?: throw NullPointerException()).accessible()
         // Get LiveData's version.
         val fieldVersion = classLiveData.getDeclaredField("mVersion").accessible()
         val objectVersion = fieldVersion.get(this)

@@ -59,10 +59,9 @@ internal class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResu
                     findOptional<ViewStub>(R.id.vs_has_result)?.inflate()
                     (stubHasResultBinding?.rvMusics?.adapter as? ResultAdapter)?.addExtraEntities(it)
                 }
-            }.onFailure { }
+            }
         }
         vm.addOrUpdateResult.obs(this) {
-            it.onSuccess { }.onFailure { }
         }
     }
 
