@@ -22,13 +22,33 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components.recyclerviews
+package taiwan.no.one.widget.recyclerviews
 
-import android.view.View
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class ViewHolderBinding<in E : Any, in D : RecyclerView.Adapter<*>>(view: View) : RecyclerView.ViewHolder(view) {
-    protected val context by lazy { itemView.context }
+interface AutoUpdatable {
+    fun <T> RecyclerView.Adapter<*>.autoNotify(old: List<T>, new: List<T>, compare: (T, T) -> Boolean) {
+        val diff = DiffUtil.calculateDiff(getDiffUtil(old, new, compare))
+        diff.dispatchUpdatesTo(this)
+    }
 
-    abstract fun initView(entity: E, position: Int, adapter: D)
+    fun <T> getDiffUtil(old: List<T>, new: List<T>, compare: (T, T) -> Boolean) =
+        DefaultDiffUtilCallback(old, new, compare)
+
+    open class DefaultDiffUtilCallback<T>(
+        private val old: List<T>,
+        private val new: List<T>,
+        private val compare: (T, T) -> Boolean
+    ) : DiffUtil.Callback() {
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            compare(old[oldItemPosition], new[newItemPosition])
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            old[oldItemPosition] == new[newItemPosition]
+
+        override fun getOldListSize() = old.size
+
+        override fun getNewListSize() = new.size
+    }
 }

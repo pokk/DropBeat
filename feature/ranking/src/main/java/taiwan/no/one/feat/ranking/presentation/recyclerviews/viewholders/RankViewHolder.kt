@@ -31,7 +31,7 @@ import com.devrapid.kotlinknifer.getDisplayMetrics
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
 import taiwan.no.one.feat.ranking.databinding.ItemRankBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
-import taiwan.no.one.widget.components.recyclerviews.ViewHolderBinding
+import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 import taiwan.no.one.core.R as CoreR
 
 internal class RankViewHolder(

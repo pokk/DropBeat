@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components.popupwindow
+package taiwan.no.one.widget.popupwindow
 
 import android.app.ActionBar.LayoutParams
 import android.content.Context

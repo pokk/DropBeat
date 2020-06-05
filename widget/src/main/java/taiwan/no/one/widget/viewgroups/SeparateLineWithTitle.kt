@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components.viewgroups
+package taiwan.no.one.widget.viewgroups
 
 import FontTextView
 import android.content.Context
@@ -50,6 +50,7 @@ class SeparateLineWithTitle @JvmOverloads constructor(
     //region Components
     private val tvTitle: TextView
     private val vSeparate: View
+
     //endregion
     private val scale by lazy { resources.displayMetrics.density }
 

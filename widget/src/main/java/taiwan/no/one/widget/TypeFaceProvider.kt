@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components
+package taiwan.no.one.widget
 
 import android.content.Context
 import android.graphics.Typeface

@@ -28,7 +28,7 @@ import coil.api.loadAny
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
-import taiwan.no.one.widget.components.recyclerviews.ViewHolderBinding
+import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class ResultViewHolder(
     private val binding: ItemSearchResultBinding

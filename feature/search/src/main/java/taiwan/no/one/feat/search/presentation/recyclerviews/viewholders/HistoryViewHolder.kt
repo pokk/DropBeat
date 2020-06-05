@@ -27,7 +27,7 @@ package taiwan.no.one.feat.search.presentation.recyclerviews.viewholders
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.databinding.ItemRencentSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
-import taiwan.no.one.widget.components.recyclerviews.ViewHolderBinding
+import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class HistoryViewHolder(
     private val binding: ItemRencentSearchBinding

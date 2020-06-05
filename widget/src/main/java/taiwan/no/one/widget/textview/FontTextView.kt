@@ -22,9 +22,31 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components.recyclerviews.helpers
+import android.content.Context
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
+import taiwan.no.one.widget.R
+import taiwan.no.one.widget.TypeFaceProvider
 
-interface AdapterItemTouchHelper {
-    fun onItemSwiped(position: Int, direction: Int)
-    fun onItemMoved(fromPosition: Int, toPosition: Int)
+/**
+ * It's able to set a font from imported resource font.
+ */
+class FontTextView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = android.R.attr.textViewStyle
+) : AppCompatTextView(context, attrs, defStyleAttr) {
+    init {
+        context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {
+            it.getString(R.styleable.FontTextView_textFont)?.let {
+                typeface = TypeFaceProvider.getTypeFace(context, it)
+            }
+        }.recycle()
+
+        includeFontPadding = false
+    }
+
+    fun setFont(fonts: String) {
+        typeface = TypeFaceProvider.getTypeFace(context, fonts)
+    }
 }

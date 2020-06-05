@@ -32,11 +32,13 @@ import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.databinding.ItemRencentSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryViewHolder
-import taiwan.no.one.widget.components.recyclerviews.AutoUpdatable
-import taiwan.no.one.widget.components.recyclerviews.helpers.AdapterItemTouchHelper
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
+import taiwan.no.one.widget.recyclerviews.helpers.AdapterItemTouchHelper
 import kotlin.properties.Delegates
 
-internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(), AutoUpdatable, AdapterItemTouchHelper {
+internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(),
+                                AutoUpdatable,
+                                AdapterItemTouchHelper {
     private var onSwipeListener: ((entity: SearchHistoryEntity, direction: Int) -> Unit)? = null
     var data: List<SearchHistoryEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
         autoNotify(oldValue, newValue) { o, n -> o.id == n.id }

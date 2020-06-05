@@ -22,31 +22,13 @@
  * SOFTWARE.
  */
 
-import android.content.Context
-import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
-import taiwan.no.one.widget.R
-import taiwan.no.one.widget.components.TypeFaceProvider
+package taiwan.no.one.widget.recyclerviews
 
-/**
- * It's able to set a font from imported resource font.
- */
-class FontTextView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = android.R.attr.textViewStyle
-) : AppCompatTextView(context, attrs, defStyleAttr) {
-    init {
-        context.obtainStyledAttributes(attrs, R.styleable.FontTextView, defStyleAttr, 0).also {
-            it.getString(R.styleable.FontTextView_textFont)?.let {
-                typeface = TypeFaceProvider.getTypeFace(context, it)
-            }
-        }.recycle()
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
-        includeFontPadding = false
-    }
+abstract class ViewHolderBinding<in E : Any, in D : RecyclerView.Adapter<*>>(view: View) : RecyclerView.ViewHolder(view) {
+    protected val context by lazy { itemView.context }
 
-    fun setFont(fonts: String) {
-        typeface = TypeFaceProvider.getTypeFace(context, fonts)
-    }
+    abstract fun initView(entity: E, position: Int, adapter: D)
 }

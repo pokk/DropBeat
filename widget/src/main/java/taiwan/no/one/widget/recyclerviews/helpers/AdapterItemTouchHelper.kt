@@ -22,33 +22,9 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components.recyclerviews
+package taiwan.no.one.widget.recyclerviews.helpers
 
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-
-interface AutoUpdatable {
-    fun <T> RecyclerView.Adapter<*>.autoNotify(old: List<T>, new: List<T>, compare: (T, T) -> Boolean) {
-        val diff = DiffUtil.calculateDiff(getDiffUtil(old, new, compare))
-        diff.dispatchUpdatesTo(this)
-    }
-
-    fun <T> getDiffUtil(old: List<T>, new: List<T>, compare: (T, T) -> Boolean) =
-        DefaultDiffUtilCallback(old, new, compare)
-
-    open class DefaultDiffUtilCallback<T>(
-        private val old: List<T>,
-        private val new: List<T>,
-        private val compare: (T, T) -> Boolean
-    ) : DiffUtil.Callback() {
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            compare(old[oldItemPosition], new[newItemPosition])
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            old[oldItemPosition] == new[newItemPosition]
-
-        override fun getOldListSize() = old.size
-
-        override fun getNewListSize() = new.size
-    }
+interface AdapterItemTouchHelper {
+    fun onItemSwiped(position: Int, direction: Int)
+    fun onItemMoved(fromPosition: Int, toPosition: Int)
 }

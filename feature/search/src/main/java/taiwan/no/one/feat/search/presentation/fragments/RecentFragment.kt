@@ -40,8 +40,8 @@ import taiwan.no.one.feat.search.databinding.FragmentSearchRecentBinding
 import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
-import taiwan.no.one.widget.components.recyclerviews.helpers.AdapterItemTouchHelper
-import taiwan.no.one.widget.components.recyclerviews.helpers.DefaultItemTouchCallback
+import taiwan.no.one.widget.recyclerviews.helpers.AdapterItemTouchHelper
+import taiwan.no.one.widget.recyclerviews.helpers.DefaultItemTouchCallback
 import androidx.lifecycle.observe as obs
 
 internal class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {

@@ -28,7 +28,7 @@ import coil.api.loadAny
 import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.ranking.databinding.ItemRankSongBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapter
-import taiwan.no.one.widget.components.recyclerviews.ViewHolderBinding
+import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class SongViewHolder(
     private val binding: ItemRankSongBinding

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components.recyclerviews.helpers
+package taiwan.no.one.widget.recyclerviews.helpers
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

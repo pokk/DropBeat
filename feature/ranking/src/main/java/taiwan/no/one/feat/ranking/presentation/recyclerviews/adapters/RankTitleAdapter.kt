@@ -30,9 +30,10 @@ import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.feat.ranking.R
 import taiwan.no.one.feat.ranking.databinding.ItemRankTitleBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.RankTitleViewHolder
-import taiwan.no.one.widget.components.recyclerviews.AutoUpdatable
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 
-internal class RankTitleAdapter : RecyclerView.Adapter<RankTitleViewHolder>(), AutoUpdatable {
+internal class RankTitleAdapter : RecyclerView.Adapter<RankTitleViewHolder>(),
+                                  AutoUpdatable {
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.

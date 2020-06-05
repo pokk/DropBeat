@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.components.recyclerviews.helpers
+package taiwan.no.one.widget.recyclerviews.helpers
 
 interface ViewItemTouchCallback {
     fun onItemSwiped(position: Int, direction: Int)

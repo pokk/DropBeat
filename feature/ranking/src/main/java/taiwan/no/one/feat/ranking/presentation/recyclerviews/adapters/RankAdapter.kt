@@ -31,10 +31,11 @@ import taiwan.no.one.feat.ranking.R
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
 import taiwan.no.one.feat.ranking.databinding.ItemRankBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.RankViewHolder
-import taiwan.no.one.widget.components.recyclerviews.AutoUpdatable
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 import kotlin.properties.Delegates
 
-internal class RankAdapter : RecyclerView.Adapter<RankViewHolder>(), AutoUpdatable {
+internal class RankAdapter : RecyclerView.Adapter<RankViewHolder>(),
+                             AutoUpdatable {
     var data: List<BriefRankEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
         autoNotify(oldValue, newValue) { o, n -> o.rankId == n.rankId }
     }
