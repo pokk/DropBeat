@@ -25,11 +25,15 @@
 package taiwan.no.one.dropbeat.di
 
 import android.app.Application
+import com.tencent.mmkv.MMKV
 import org.kodein.di.Kodein
 import org.kodein.di.android.x.androidXModule
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.singleton
 
 object Dispatcher {
     fun importIntoApp(app: Application) = Kodein.lazy {
+        bind<MMKV>() with singleton { MMKV.defaultMMKV() }
         import(androidXModule(app))
         import(ContainerModule.provide())
         importAll(FeatModuleHelper.kodeinModules(app))

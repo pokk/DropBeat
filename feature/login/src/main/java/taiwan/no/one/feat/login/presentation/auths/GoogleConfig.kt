@@ -22,20 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.stores
+package taiwan.no.one.feat.login.presentation.auths
 
-import taiwan.no.one.feat.login.data.contracts.DataStore
-import taiwan.no.one.feat.login.data.remote.services.AuthService
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import android.content.Context
+import android.content.Intent
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import taiwan.no.one.dropbeat.R
 
-/**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
- */
-internal class RemoteStore(
-    private val authService: AuthService
-) : DataStore {
-    override suspend fun getLogin(email: String, password: String) = authService.getLogin(email, password)
-
-    override suspend fun getLogin(credential: Credential) = authService.getLogin(credential)
+internal object GoogleConfig {
+    fun getIntent(context: Context): Intent {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        return GoogleSignIn.getClient(context, gso).signInIntent
+    }
 }

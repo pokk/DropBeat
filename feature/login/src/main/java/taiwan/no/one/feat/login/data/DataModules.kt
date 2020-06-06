@@ -25,26 +25,30 @@
 package taiwan.no.one.feat.login.data
 
 import android.content.Context
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.login.data.repositories.RankingRepository
+import taiwan.no.one.feat.login.data.remote.services.AuthService
+import taiwan.no.one.feat.login.data.remote.services.firebase.v1.FirebaseAuthService
+import taiwan.no.one.feat.login.data.repositories.AuthRepository
 import taiwan.no.one.feat.login.data.stores.LocalStore
 import taiwan.no.one.feat.login.data.stores.RemoteStore
-import taiwan.no.one.feat.login.domain.repositories.RankingRepo
+import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
 internal object DataModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore() }
-        bind<RemoteStore>() with singleton { RemoteStore() }
+        bind<LocalStore>() with singleton { LocalStore(instance()) }
+        bind<RemoteStore>() with singleton { RemoteStore(instance()) }
 
-        bind<RankingRepo>() with singleton { RankingRepository(instance(), instance()) }
+        bind<AuthRepo>() with singleton { AuthRepository(instance(), instance()) }
     }
 
     private fun localProvide() = Kodein.Module("${FEAT_NAME}LocalModule") {
@@ -54,5 +58,6 @@ internal object DataModules : ModuleProvider {
     }
 
     private fun remoteProvide(context: Context) = Kodein.Module("${FEAT_NAME}RemoteModule") {
+        bind<AuthService>() with singleton { FirebaseAuthService(Firebase.auth) }
     }
 }

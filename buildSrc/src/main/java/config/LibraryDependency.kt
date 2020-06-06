@@ -56,11 +56,13 @@ object LibraryDependency {
         const val OKHTTP3 = "4.7.2"
         const val JSOUP = "1.12.1"
         const val FIREBASE_DATABASE = "19.3.0"
-        const val FIREBASE_AUTH = "19.3.1"
         const val FIREBASE_MESSAGING = "20.2.0"
         const val FIREBASE_ANALYTICS = "17.4.2"
         const val FIREBASE_CRASHLYTICS = "17.0.0"
         const val FIREBASE_ML = "24.0.3"
+        const val FIREBASE_AUTH = "19.3.1"
+        const val FIREBASE_AUTH_GOOGLE = "18.0.0"
+        const val FIREBASE_AUTH_FACEBOOK = "7.0.0"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
         const val LOTTIE = "3.4.0"
@@ -133,11 +135,13 @@ object LibraryDependency {
     object Firebase {
         const val PLAY_CORE = "com.google.android.play:core:${Version.PLAY_CORE}"
         const val FIREBASE_DB = "com.google.firebase:firebase-database-ktx:${Version.FIREBASE_DATABASE}"
-        const val FIREBASE_AUTH = "com.google.firebase:firebase-auth-ktx:${Version.FIREBASE_AUTH}"
         const val FIREBASE_MESSAGING = "com.google.firebase:firebase-messaging:${Version.FIREBASE_MESSAGING}"
         const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx:${Version.FIREBASE_ANALYTICS}"
         const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics:${Version.FIREBASE_CRASHLYTICS}"
         const val FIREBASE_ML = "com.google.firebase:firebase-ml-vision:${Version.FIREBASE_ML}"
+        const val FIREBASE_AUTH = "com.google.firebase:firebase-auth-ktx:${Version.FIREBASE_AUTH}"
+        const val FIREBASE_AUTH_GOOGLE = "com.google.android.gms:play-services-auth:${Version.FIREBASE_AUTH_GOOGLE}"
+        const val FIREBASE_AUTH_FACEBOOK = "com.facebook.android:facebook-android-sdk:${Version.FIREBASE_AUTH_FACEBOOK}"
     }
 
     object Ui {

@@ -22,8 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.presentation.viewmodels
+package taiwan.no.one.feat.login.domain.repositories
 
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
-internal class RankViewModel : BehindViewModel()
+/**
+ * This interface will be the similar to [taiwan.no.one.feat.ranking.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+internal interface AuthRepo : Repository {
+    suspend fun fetchLogin(email: String, password: String): UserInfoEntity
+
+    suspend fun fetchLogin(
+        token: String,
+        credential: Credential
+    ): UserInfoEntity
+}

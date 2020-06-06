@@ -22,14 +22,15 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "presentation/build.gradle" }}
       - run:
-          name: Decode Local Properties Key
-          command: echo ${LOCAL_PROPERTIES} | base64 --decode > ${HOME}/workspace/local.properties
-      - run:
           name: Decode Google Services Key
           command: echo ${GOOGLE_SERVICE} | base64 --decode > ${HOME}/workspace/app/google-services.json
       - run:
-          name: Decode Ranking Resource Key
-          command: echo ${RANKING_RESOURCE} | base64 --decode > ${HOME}/workspace/feature/ranking/src/main/res/values/ranks.xml
+          name: Decode Enviorment Config Keys
+          command: |
+            echo ${LOCAL_PROPERTIES} | base64 --decode > ${HOME}/workspace/local.properties
+            echo ${RANKING_RESOURCE} | base64 --decode > ${HOME}/workspace/feature/ranking/src/main/res/values/ranks.xml
+            echo ${FACEBOOK_KEYS} | base64 --decode > ${HOME}/workspace/app/src/main/res/values/facebook_key.xml
+            echo ${FACEBOOK_KEYS} | base64 --decode > ${HOME}/workspace/app/src/main/res/values/twitter_key.xml
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies

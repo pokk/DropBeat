@@ -26,6 +26,8 @@ package taiwan.no.one.dropbeat
 
 import android.app.Application
 import android.content.Context
+import com.facebook.FacebookSdk
+import com.tencent.mmkv.MMKV
 import org.kodein.di.KodeinAware
 import taiwan.no.one.dropbeat.di.Dispatcher
 
@@ -40,4 +42,10 @@ class DropBeatApp : Application(), KodeinAware {
     }
 
     override val kodein = Dispatcher.importIntoApp(this)
+
+    override fun onCreate() {
+        super.onCreate()
+        MMKV.initialize(this)
+        FacebookSdk.sdkInitialize(this)
+    }
 }

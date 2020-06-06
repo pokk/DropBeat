@@ -22,12 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.domain.repositories
+package taiwan.no.one.feat.login.data.repositories
 
-import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import taiwan.no.one.feat.login.data.stores.LocalStore
+import taiwan.no.one.feat.login.data.stores.RemoteStore
+import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
-/**
- * This interface will be the similar to [taiwan.no.one.feat.ranking.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-internal interface RankingRepo : Repository
+internal class AuthRepository(
+    private val local: LocalStore,
+    private val remote: RemoteStore
+) : AuthRepo {
+    override suspend fun fetchLogin(email: String, password: String) = remote.getLogin(email, password)
+
+    override suspend fun fetchLogin(token: String, credential: Credential) = remote.getLogin(credential)
+}

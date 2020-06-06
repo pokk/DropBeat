@@ -92,6 +92,7 @@ fun DependencyHandlerScope.kotlinDependencies(env: String) {
 fun DependencyHandlerScope.kotlinAndroidDependencies(env: String) {
     kotlinDependencies(env)
     env(CoreDependency.ANDROID_COROUTINE)
+    env(CoreDependency.GOOGLE_PLAY_COROUTINE)  // might only move the module need.
 }
 
 fun DependencyHandlerScope.androidJetpackDependencies(env: String) {
@@ -149,10 +150,12 @@ fun DependencyHandlerScope.internetDependencies(env: String) {
 
 fun DependencyHandlerScope.firebaseDependencies(env: String) {
     env(LibraryDependency.Firebase.FIREBASE_ANALYTICS)
-    env(LibraryDependency.Firebase.FIREBASE_AUTH)
     env(LibraryDependency.Firebase.FIREBASE_CRASHLYTICS)
     env(LibraryDependency.Firebase.FIREBASE_MESSAGING)
     env(LibraryDependency.Firebase.FIREBASE_DB)
+    env(LibraryDependency.Firebase.FIREBASE_AUTH)
+    env(LibraryDependency.Firebase.FIREBASE_AUTH_GOOGLE)
+    env(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
 }
 
 fun DependencyHandlerScope.localDependencies(env: String) {

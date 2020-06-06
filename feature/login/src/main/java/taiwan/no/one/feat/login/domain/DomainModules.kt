@@ -26,10 +26,16 @@ package taiwan.no.one.feat.login.domain
 
 import android.content.Context
 import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
+import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
+        bind<FetchLoginInfoCase>() with singleton { FetchLoginInfoOneShotCase(instance()) }
     }
 }

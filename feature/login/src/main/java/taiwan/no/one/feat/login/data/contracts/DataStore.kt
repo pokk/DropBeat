@@ -24,8 +24,15 @@
 
 package taiwan.no.one.feat.login.data.contracts
 
+import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+
 /**
  * This interface will common the all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
-internal interface DataStore
+internal interface DataStore {
+    suspend fun getLogin(email: String, password: String): UserInfoEntity
+
+    suspend fun getLogin(credential: Credential): UserInfoEntity
+}

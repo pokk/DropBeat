@@ -26,21 +26,29 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navApp"
-    app:startDestination="@id/navLogin">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/loginFragment">
 
-    <include-dynamic
-        android:id="@+id/navSearch"
-        app:graphResName="nav_search"
-        app:moduleName="search"/>
-
-    <include-dynamic
-        android:id="@+id/navRank"
-        app:graphResName="nav_rank"
-        app:moduleName="ranking"/>
-
-    <include-dynamic
-        android:id="@+id/navLogin"
-        app:graphResName="nav_login"
-        app:moduleName="login"/>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="taiwan.no.one.feat.login.presentation.fragments.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"/>
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="taiwan.no.one.feat.login.presentation.fragments.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"/>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="taiwan.no.one.feat.login.presentation.fragments.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password"/>
 </navigation>

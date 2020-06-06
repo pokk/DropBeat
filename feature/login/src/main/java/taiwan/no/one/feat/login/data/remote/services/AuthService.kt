@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.repositories
+package taiwan.no.one.feat.login.data.remote.services
 
-import taiwan.no.one.feat.login.data.stores.LocalStore
-import taiwan.no.one.feat.login.data.stores.RemoteStore
-import taiwan.no.one.feat.login.domain.repositories.RankingRepo
+import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
-internal class RankingRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
-) : RankingRepo
+internal interface AuthService {
+    suspend fun getLogin(email: String, password: String): UserInfoEntity
+
+    suspend fun getLogin(credential: Credential): UserInfoEntity
+}

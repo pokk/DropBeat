@@ -22,20 +22,27 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.stores
+package taiwan.no.one.feat.login.domain.usecases
 
-import taiwan.no.one.feat.login.data.contracts.DataStore
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
-/**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
- */
-internal class RemoteStore(
+internal class FetchLoginInfoOneShotCase(
     private val authService: AuthService
-) : DataStore {
-    override suspend fun getLogin(email: String, password: String) = authService.getLogin(email, password)
+) : FetchLoginInfoCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        when {
+            email != null && password != null -> authService.getLogin(email, password)
+            credential != null -> authService.getLogin(credential)
+            else -> throw ParameterNotMatchException()
+        }
+    }
 
-    override suspend fun getLogin(credential: Credential) = authService.getLogin(credential)
+    class Request(
+        val email: String? = null,
+        val password: String? = null,
+        val credential: Credential? = null,
+    ) : Usecase.RequestValues
 }

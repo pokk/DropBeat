@@ -22,20 +22,29 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.stores
+package taiwan.no.one.feat.login.presentation.viewmodels
 
-import taiwan.no.one.feat.login.data.contracts.DataStore
-import taiwan.no.one.feat.login.data.remote.services.AuthService
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
+import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoReq
+import taiwan.no.one.ktx.livedata.toLiveData
 
-/**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
- */
-internal class RemoteStore(
-    private val authService: AuthService
-) : DataStore {
-    override suspend fun getLogin(email: String, password: String) = authService.getLogin(email, password)
+internal class LoginViewModel(
+    private val fetchLoginInfoCase: FetchLoginInfoCase
+) : BehindViewModel() {
+    private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
+    val userInfo = _userInfo.toLiveData()
 
-    override suspend fun getLogin(credential: Credential) = authService.getLogin(credential)
+    fun login(email: String, password: String) = viewModelScope.launch {
+        _userInfo.value = fetchLoginInfoCase.execute(FetchLoginInfoReq(email, password))
+    }
+
+    fun login(credential: Credential) = viewModelScope.launch {
+        _userInfo.value = fetchLoginInfoCase.execute(FetchLoginInfoReq(credential = credential))
+    }
 }

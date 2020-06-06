@@ -23,3 +23,9 @@
  */
 
 package taiwan.no.one.feat.login.domain.usecases
+
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+
+internal typealias FetchLoginInfoCase = OneShotUsecase<UserInfoEntity, FetchLoginInfoReq>
+internal typealias FetchLoginInfoReq = FetchLoginInfoOneShotCase.Request

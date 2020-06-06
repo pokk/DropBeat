@@ -22,20 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.stores
+package taiwan.no.one.feat.login.data.entities.remote
 
-import taiwan.no.one.feat.login.data.contracts.DataStore
-import taiwan.no.one.feat.login.data.remote.services.AuthService
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
-
-/**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
- */
-internal class RemoteStore(
-    private val authService: AuthService
-) : DataStore {
-    override suspend fun getLogin(email: String, password: String) = authService.getLogin(email, password)
-
-    override suspend fun getLogin(credential: Credential) = authService.getLogin(credential)
-}
+internal data class UserInfoEntity(
+    val uid: String?,
+    val providerId: String?,
+    val displayName: String?,
+    val photoUrl: String?,
+    val email: String?,
+    val phoneNumber: String?,
+    val isEmailVerified: Boolean?,
+    val userName: String?,
+    val isNewUser: Boolean?
+)

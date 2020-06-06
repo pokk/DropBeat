@@ -22,20 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.stores
+package taiwan.no.one.feat.login.data.remote.services.firebase
 
-import taiwan.no.one.feat.login.data.contracts.DataStore
-import taiwan.no.one.feat.login.data.remote.services.AuthService
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.GoogleAuthProvider
 
-/**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
- */
-internal class RemoteStore(
-    private val authService: AuthService
-) : DataStore {
-    override suspend fun getLogin(email: String, password: String) = authService.getLogin(email, password)
+internal sealed class Credential(val token: String) {
+    internal class Google(token: String) : Credential(token) {
+        override fun getAuthCredential() = GoogleAuthProvider.getCredential(token, null)
+    }
 
-    override suspend fun getLogin(credential: Credential) = authService.getLogin(credential)
+    internal class Facebook(token: String) : Credential(token) {
+        override fun getAuthCredential() = FacebookAuthProvider.getCredential(token)
+    }
+
+    abstract fun getAuthCredential(): AuthCredential
 }
