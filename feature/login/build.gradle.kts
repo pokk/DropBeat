@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import config.AndroidConfiguration
 import config.CommonModuleDependency
 import config.annotationDependencies
+import config.firebaseAuthDependencies
 
 plugins {
     id("com.android.dynamic-feature")
@@ -98,5 +98,6 @@ kapt {
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
+    firebaseAuthDependencies()
     annotationDependencies()
 }
