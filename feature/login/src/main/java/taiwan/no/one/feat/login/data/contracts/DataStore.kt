@@ -35,4 +35,6 @@ internal interface DataStore {
     suspend fun getLogin(email: String, password: String): UserInfoEntity
 
     suspend fun getLogin(credential: Credential): UserInfoEntity
+
+    suspend fun createUser(email: String, password: String): UserInfoEntity
 }

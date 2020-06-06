@@ -39,4 +39,6 @@ internal class LocalStore(
     override suspend fun getLogin(email: String, password: String) = UnsupportedOperation()
 
     override suspend fun getLogin(credential: Credential) = UnsupportedOperation()
+
+    override suspend fun createUser(email: String, password: String) = UnsupportedOperation()
 }

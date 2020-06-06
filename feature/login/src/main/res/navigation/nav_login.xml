@@ -35,10 +35,10 @@
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            android:id="@+id/action_login_to_forgotPassword"
             app:destination="@id/forgotPasswordFragment"/>
         <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
+            android:id="@+id/action_login_to_register"
             app:destination="@id/registerFragment"/>
     </fragment>
     <fragment

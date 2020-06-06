@@ -35,8 +35,7 @@ import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 internal interface AuthRepo : Repository {
     suspend fun fetchLogin(email: String, password: String): UserInfoEntity
 
-    suspend fun fetchLogin(
-        token: String,
-        credential: Credential
-    ): UserInfoEntity
+    suspend fun fetchLogin(token: String, credential: Credential): UserInfoEntity
+
+    suspend fun addUser(email: String, password: String): UserInfoEntity
 }

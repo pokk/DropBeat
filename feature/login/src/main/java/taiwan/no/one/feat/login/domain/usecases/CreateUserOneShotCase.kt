@@ -22,20 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.repositories
+package taiwan.no.one.feat.login.domain.usecases
 
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
-import taiwan.no.one.feat.login.data.stores.LocalStore
-import taiwan.no.one.feat.login.data.stores.RemoteStore
-import taiwan.no.one.feat.login.domain.repositories.AuthRepo
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.feat.login.data.remote.services.AuthService
 
-internal class AuthRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
-) : AuthRepo {
-    override suspend fun fetchLogin(email: String, password: String) = remote.getLogin(email, password)
+internal class CreateUserOneShotCase(
+    private val authService: AuthService
+) : CreateUserCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        authService.getLogin(email, password)
+    }
 
-    override suspend fun fetchLogin(token: String, credential: Credential) = remote.getLogin(credential)
-
-    override suspend fun addUser(email: String, password: String) = remote.createUser(email, password)
+    class Request(val email: String, val password: String) : Usecase.RequestValues
 }

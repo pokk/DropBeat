@@ -24,8 +24,30 @@
 
 package taiwan.no.one.feat.login.presentation.fragments
 
+import android.os.Bundle
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentForgotPasswordBinding
 
-internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentForgotPasswordBinding>()
+internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentForgotPasswordBinding>() {
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        binding.btnReset.setOnClickListener {
+            Firebase.auth.sendPasswordResetEmail(binding.tietEmail.text.toString()).addOnCompleteListener {
+                logw(it.result)
+            }.addOnFailureListener {
+                loge(it)
+            }.addOnCanceledListener {
+                logw("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            }
+        }
+    }
+}

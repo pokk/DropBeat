@@ -38,4 +38,6 @@ internal class RemoteStore(
     override suspend fun getLogin(email: String, password: String) = authService.getLogin(email, password)
 
     override suspend fun getLogin(credential: Credential) = authService.getLogin(credential)
+
+    override suspend fun createUser(email: String, password: String) = authService.createUser(email, password)
 }

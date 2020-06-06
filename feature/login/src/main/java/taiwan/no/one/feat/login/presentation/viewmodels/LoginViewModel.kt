@@ -30,12 +30,15 @@ import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
+import taiwan.no.one.feat.login.domain.usecases.CreateUserReq
 import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
 import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class LoginViewModel(
-    private val fetchLoginInfoCase: FetchLoginInfoCase
+    private val fetchLoginInfoCase: FetchLoginInfoCase,
+    private val createUserCase: CreateUserCase
 ) : BehindViewModel() {
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()
@@ -46,5 +49,9 @@ internal class LoginViewModel(
 
     fun login(credential: Credential) = viewModelScope.launch {
         _userInfo.value = fetchLoginInfoCase.execute(FetchLoginInfoReq(credential = credential))
+    }
+
+    fun register(email: String, password: String) = viewModelScope.launch {
+        _userInfo.value = createUserCase.execute(CreateUserReq(email, password))
     }
 }

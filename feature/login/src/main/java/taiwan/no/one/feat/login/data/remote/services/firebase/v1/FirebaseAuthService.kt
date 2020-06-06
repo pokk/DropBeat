@@ -45,6 +45,15 @@ internal class FirebaseAuthService(
         return extractUserInfoEntity(result)
     }
 
+    override suspend fun createUser(email: String, password: String): UserInfoEntity {
+        val result = auth.createUserWithEmailAndPassword(email, password).asDeferred().await()
+        return extractUserInfoEntity(result)
+    }
+
+    override suspend fun modifyPassword(email: String) {
+        auth.sendPasswordResetEmail(email).asDeferred().await()
+    }
+
     private fun extractUserInfoEntity(result: AuthResult): UserInfoEntity {
         return (result.user to result.additionalUserInfo).let { (user, additionalUserInfo) ->
             UserInfoEntity(

@@ -29,6 +29,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.facebook.CallbackManager
@@ -105,6 +106,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
             it.onSuccess {
                 logw(it)
             }.onFailure {
+                loge(it)
             }
         }
     }
@@ -113,14 +115,23 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        binding.btnLogin.setOnClickListener {
-            vm.login(binding.tietEmail.text.toString(), binding.tietPassword.text.toString())
-        }
-        binding.btnGoogle.setOnClickListener {
-            googleLauncher.launch(GoogleConfig.getIntent(requireContext()))
-        }
-        binding.btnFacebook.setOnClickListener {
-            LoginManager.getInstance().logInWithReadPermissions(this, listOf("email", "public_profile"))
+        binding.apply {
+            btnRegister.setOnClickListener {
+                findNavController().navigate(LoginFragmentDirections.actionLoginToRegister())
+            }
+            btnForgotPassword.setOnClickListener {
+                findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
+            }
+            btnLogin.setOnClickListener {
+                vm.login(binding.tietEmail.text.toString(), binding.tietPassword.text.toString())
+            }
+            btnGoogle.setOnClickListener {
+                googleLauncher.launch(GoogleConfig.getIntent(requireContext()))
+            }
+            btnFacebook.setOnClickListener {
+                LoginManager.getInstance()
+                    .logInWithReadPermissions(this@LoginFragment, listOf("email", "public_profile"))
+            }
         }
     }
 

@@ -24,8 +24,37 @@
 
 package taiwan.no.one.feat.login.presentation.fragments
 
+import androidx.fragment.app.viewModels
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentRegisterBinding
+import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
+import androidx.lifecycle.observe as obs
 
-internal class RegisterFragment : BaseFragment<BaseActivity<*>, FragmentRegisterBinding>()
+internal class RegisterFragment : BaseFragment<BaseActivity<*>, FragmentRegisterBinding>() {
+    private val vm by viewModels<LoginViewModel> { vmFactory }
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        vm.userInfo.obs(this) { res ->
+            res.onSuccess {
+                logw(it)
+            }.onFailure {
+                loge(it)
+            }
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        binding.apply {
+            btnRegister.setOnClickListener {
+                vm.register(tietEmail.text.toString(), tietPassword.text.toString())
+            }
+        }
+    }
+}
