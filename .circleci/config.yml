@@ -30,7 +30,7 @@ jobs:
             echo ${LOCAL_PROPERTIES} | base64 --decode > ${HOME}/workspace/local.properties
             echo ${RANKING_RESOURCE} | base64 --decode > ${HOME}/workspace/feature/ranking/src/main/res/values/ranks.xml
             echo ${FACEBOOK_KEYS} | base64 --decode > ${HOME}/workspace/app/src/main/res/values/facebook_key.xml
-            echo ${FACEBOOK_KEYS} | base64 --decode > ${HOME}/workspace/app/src/main/res/values/twitter_key.xml
+            echo ${TWITTER_KEYS} | base64 --decode > ${HOME}/workspace/app/src/main/res/values/twitter_key.xml
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
