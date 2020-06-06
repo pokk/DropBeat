@@ -34,14 +34,19 @@ import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
 import taiwan.no.one.feat.login.domain.usecases.CreateUserReq
 import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
 import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoReq
+import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordCase
+import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class LoginViewModel(
     private val fetchLoginInfoCase: FetchLoginInfoCase,
-    private val createUserCase: CreateUserCase
+    private val createUserCase: CreateUserCase,
+    private val modifyPasswordCase: ModifyPasswordCase
 ) : BehindViewModel() {
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()
+    private val _resetResp by lazy { ResultLiveData<Boolean>() }
+    val resetResp = _resetResp.toLiveData()
 
     fun login(email: String, password: String) = viewModelScope.launch {
         _userInfo.value = fetchLoginInfoCase.execute(FetchLoginInfoReq(email, password))
@@ -53,5 +58,9 @@ internal class LoginViewModel(
 
     fun register(email: String, password: String) = viewModelScope.launch {
         _userInfo.value = createUserCase.execute(CreateUserReq(email, password))
+    }
+
+    fun resetPassword(email: String) = viewModelScope.launch {
+        _resetResp.value = modifyPasswordCase.execute(ModifyPasswordReq(email))
     }
 }

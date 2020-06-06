@@ -22,21 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.contracts
+package taiwan.no.one.feat.login.domain.usecases
 
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.feat.login.data.remote.services.AuthService
 
-/**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-internal interface DataStore {
-    suspend fun getLogin(email: String, password: String): UserInfoEntity
+internal class ModifyPasswordOneShotCase(
+    private val authService: AuthService
+) : ModifyPasswordCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        authService.modifyPassword(email)
+        true // If there are no errors happened, always will be true.
+    }
 
-    suspend fun getLogin(credential: Credential): UserInfoEntity
-
-    suspend fun createUser(email: String, password: String): UserInfoEntity
-
-    suspend fun modifyPassword(email: String)
+    class Request(val email: String) : Usecase.RequestValues
 }

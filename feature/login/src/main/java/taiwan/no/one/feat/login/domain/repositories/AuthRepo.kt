@@ -38,4 +38,6 @@ internal interface AuthRepo : Repository {
     suspend fun fetchLogin(token: String, credential: Credential): UserInfoEntity
 
     suspend fun addUser(email: String, password: String): UserInfoEntity
+
+    suspend fun updatePassword(email: String)
 }

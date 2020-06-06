@@ -29,6 +29,7 @@ import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 
 internal typealias FetchLoginInfoCase = OneShotUsecase<UserInfoEntity, FetchLoginInfoReq>
 internal typealias FetchLoginInfoReq = FetchLoginInfoOneShotCase.Request
-
 internal typealias CreateUserCase = OneShotUsecase<UserInfoEntity, CreateUserReq>
 internal typealias CreateUserReq = CreateUserOneShotCase.Request
+internal typealias ModifyPasswordCase = OneShotUsecase<Boolean, ModifyPasswordReq>
+internal typealias ModifyPasswordReq = ModifyPasswordOneShotCase.Request

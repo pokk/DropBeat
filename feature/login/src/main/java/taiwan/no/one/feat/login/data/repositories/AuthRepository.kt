@@ -38,4 +38,6 @@ internal class AuthRepository(
     override suspend fun fetchLogin(token: String, credential: Credential) = remote.getLogin(credential)
 
     override suspend fun addUser(email: String, password: String) = remote.createUser(email, password)
+
+    override suspend fun updatePassword(email: String) = remote.modifyPassword(email)
 }

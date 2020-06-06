@@ -24,30 +24,37 @@
 
 package taiwan.no.one.feat.login.presentation.fragments
 
-import android.os.Bundle
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentForgotPasswordBinding
+import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
+import androidx.lifecycle.observe as obs
 
 internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentForgotPasswordBinding>() {
-    /**
-     * Initialize doing some methods or actions here.
-     *
-     * @param savedInstanceState previous status.
-     */
-    override fun rendered(savedInstanceState: Bundle?) {
-        binding.btnReset.setOnClickListener {
-            Firebase.auth.sendPasswordResetEmail(binding.tietEmail.text.toString()).addOnCompleteListener {
-                logw(it.result)
-            }.addOnFailureListener {
+    private val vm by viewModels<LoginViewModel> { vmFactory }
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        vm.resetResp.obs(this) {
+            it.onSuccess {
+                logw(it)
+                findNavController().popBackStack()
+            }.onFailure {
                 loge(it)
-            }.addOnCanceledListener {
-                logw("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             }
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all component listeners here.
+     */
+    override fun componentListenersBinding() {
+        binding.btnReset.setOnClickListener {
+            vm.resetPassword(binding.tietEmail.text.toString())
         }
     }
 }

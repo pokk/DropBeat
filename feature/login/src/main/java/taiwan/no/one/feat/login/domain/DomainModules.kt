@@ -35,10 +35,13 @@ import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
 import taiwan.no.one.feat.login.domain.usecases.CreateUserOneShotCase
 import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
 import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoOneShotCase
+import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordCase
+import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DomainModule") {
         bind<FetchLoginInfoCase>() with singleton { FetchLoginInfoOneShotCase(instance()) }
         bind<CreateUserCase>() with singleton { CreateUserOneShotCase(instance()) }
+        bind<ModifyPasswordCase>() with singleton { ModifyPasswordOneShotCase(instance()) }
     }
 }
