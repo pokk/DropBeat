@@ -22,5 +22,14 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking", "feature:login", "feature:library")
+package taiwan.no.one.feat.library.domain
+
+import android.content.Context
+import org.kodein.di.DI
+import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.feat.library.FeatModules.FEAT_NAME
+
+internal object DomainModules : ModuleProvider {
+    override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
+    }
+}

@@ -22,5 +22,23 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking", "feature:login", "feature:library")
+package taiwan.no.one.feat.library.data.local.services.database.convert
+
+import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
+
+internal class SongListConvert {
+    @TypeConverter
+    fun fromSongsToStr(songs: List<LibraryEntity.SongEntity>?): String? {
+        val type = object : TypeToken<List<LibraryEntity.SongEntity>>() {}.type
+        return Gson().newBuilder().create().toJson(songs, type)
+    }
+
+    @TypeConverter
+    fun fromStrToSongs(songsString: String?): List<LibraryEntity.SongEntity>? {
+        val type = object : TypeToken<List<LibraryEntity.SongEntity>>() {}.type
+        return Gson().newBuilder().create().fromJson(songsString, type)
+    }
+}

@@ -22,5 +22,13 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking", "feature:login", "feature:library")
+package taiwan.no.one.feat.library.data.repositories
+
+import com.google.firebase.firestore.local.LocalStore
+import com.google.firebase.firestore.remote.RemoteStore
+import taiwan.no.one.feat.library.domain.repositories.AuthRepo
+
+internal class AuthRepository(
+    private val local: LocalStore,
+    private val remote: RemoteStore
+) : AuthRepo

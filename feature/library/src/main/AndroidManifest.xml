@@ -22,10 +22,16 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <string name="app_name">dropbeat</string>
-    <string name="title_feat_search">search</string>
-    <string name="title_feat_ranking">ranking</string>
-    <string name="title_feat_login">login</string>
-    <string name="title_feat_library">library</string>
-</resources>
+<manifest
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="taiwan.no.one.feat.library">
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_feat_library">
+        <dist:delivery>
+            <dist:install-time/>
+        </dist:delivery>
+        <dist:fusing dist:include="true"/>
+    </dist:module>
+</manifest>

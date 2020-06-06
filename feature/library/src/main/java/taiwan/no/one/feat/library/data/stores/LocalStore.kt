@@ -22,5 +22,15 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking", "feature:login", "feature:library")
+package taiwan.no.one.feat.library.data.stores
+
+import com.tencent.mmkv.MMKV
+import taiwan.no.one.feat.library.data.contracts.DataStore
+
+/**
+ * The implementation of the local data store. The responsibility is selecting a correct
+ * local service(Database/Local file) to access the data.
+ */
+internal class LocalStore(
+    private val mmkv: MMKV
+) : DataStore

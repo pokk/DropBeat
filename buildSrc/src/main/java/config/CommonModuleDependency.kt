@@ -39,6 +39,7 @@ object CommonModuleDependency {
     const val FEAT_SEARCH_MUSIC = "${FEATURE_PREFIX}search"
     const val FEAT_RANKING = "${FEATURE_PREFIX}ranking"
     const val FEAT_LOGIN = "${FEATURE_PREFIX}login"
+    const val FEAT_LIBRARY = "${FEATURE_PREFIX}library"
 
     fun getAllModules() = CommonModuleDependency::class.memberProperties
         .asSequence()
@@ -52,8 +53,5 @@ object CommonModuleDependency {
         .toMutableSet()
 
     fun getFeatureModuleName() = getDynamicFeatureModules()
-//        .filter { it == FEAT_SEARCH_MUSIC } // Only one will be imported
-//        .map { it.replace(":feature", "") }
         .toMutableSet()
 }
-

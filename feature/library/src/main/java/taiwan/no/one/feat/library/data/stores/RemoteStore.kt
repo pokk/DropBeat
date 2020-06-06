@@ -22,5 +22,12 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search", ":feature:ranking", "feature:login", "feature:library")
+package taiwan.no.one.feat.library.data.stores
+
+import taiwan.no.one.feat.library.data.contracts.DataStore
+
+/**
+ * The implementation of the remote data store. The responsibility is selecting a correct
+ * remote service to access the data.
+ */
+internal class RemoteStore : DataStore
