@@ -22,36 +22,23 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.local.configs
+package taiwan.no.one.feat.login.data.local.services.database.convert
 
-/**
- * The access operations to a database.
- */
-//@Database(entities = [],
-//          version = 1,
-//          exportSchema = false)
-//@TypeConverters(DateConvert::class)
-//internal abstract class RankingDatabase : RoomDatabase() {
-//    companion object {
-//        @Volatile private var INSTANCE: RankingDatabase? = null
-//        private const val DATABASE_NAME = "music_ranking.db"
-//
-//        fun getDatabase(context: Context): RankingDatabase {
-//            val tempInstance = INSTANCE
-//
-//            if (tempInstance != null) {
-//                return tempInstance
-//            }
-//            synchronized(this) {
-//                val instance = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    RankingDatabase::class.java,
-//                    DATABASE_NAME
-//                ).build()
-//                INSTANCE = instance
-//
-//                return instance
-//            }
-//        }
-//    }
-//}
+import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import taiwan.no.one.feat.login.data.entities.local.LibraryEntity
+
+internal class SongListConvert {
+    @TypeConverter
+    fun fromSongsToStr(songs: List<LibraryEntity.SongEntity>?): String? {
+        val type = object : TypeToken<List<LibraryEntity.SongEntity>>() {}.type
+        return Gson().newBuilder().create().toJson(songs, type)
+    }
+
+    @TypeConverter
+    fun fromStrToSongs(songsString: String?): List<LibraryEntity.SongEntity>? {
+        val type = object : TypeToken<List<LibraryEntity.SongEntity>>() {}.type
+        return Gson().newBuilder().create().fromJson(songsString, type)
+    }
+}

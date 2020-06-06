@@ -153,9 +153,11 @@ fun DependencyHandlerScope.firebaseDependencies(env: String) {
     env(LibraryDependency.Firebase.FIREBASE_CRASHLYTICS)
     env(LibraryDependency.Firebase.FIREBASE_MESSAGING)
     env(LibraryDependency.Firebase.FIREBASE_DB)
+    env(LibraryDependency.Firebase.FIREBASE_FIRESTORE)
     env(LibraryDependency.Firebase.FIREBASE_AUTH)
     env(LibraryDependency.Firebase.FIREBASE_AUTH_GOOGLE)
     env(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
+    env("com.google.guava:guava:27.0.1-android") // Because of firestore
 }
 
 fun DependencyHandlerScope.localDependencies(env: String) {

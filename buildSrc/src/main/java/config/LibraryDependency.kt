@@ -56,6 +56,7 @@ object LibraryDependency {
         const val OKHTTP3 = "4.7.2"
         const val JSOUP = "1.12.1"
         const val FIREBASE_DATABASE = "19.3.0"
+        const val FIREBASE_FIRESTORE = "21.4.3"
         const val FIREBASE_MESSAGING = "20.2.0"
         const val FIREBASE_ANALYTICS = "17.4.2"
         const val FIREBASE_CRASHLYTICS = "17.0.0"
@@ -135,6 +136,7 @@ object LibraryDependency {
     object Firebase {
         const val PLAY_CORE = "com.google.android.play:core:${Version.PLAY_CORE}"
         const val FIREBASE_DB = "com.google.firebase:firebase-database-ktx:${Version.FIREBASE_DATABASE}"
+        const val FIREBASE_FIRESTORE = "com.google.firebase:firebase-firestore-ktx:${Version.FIREBASE_FIRESTORE}"
         const val FIREBASE_MESSAGING = "com.google.firebase:firebase-messaging:${Version.FIREBASE_MESSAGING}"
         const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx:${Version.FIREBASE_ANALYTICS}"
         const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics:${Version.FIREBASE_CRASHLYTICS}"

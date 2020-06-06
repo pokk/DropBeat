@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.login.presentation.fragments
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
@@ -56,5 +57,18 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
         binding.btnReset.setOnClickListener {
             vm.resetPassword(binding.tietEmail.text.toString())
         }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+//        Firebase.firestore.collection("users")
+//            .document(Firebase.auth.currentUser?.uid.orEmpty())
+//            .addSnapshotListener(requireActivity()) { documentSnapshot, firebaseFirestoreException ->
+//                logw(documentSnapshot?.data)
+//            }
     }
 }
