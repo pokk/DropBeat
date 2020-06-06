@@ -38,7 +38,7 @@ import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
 internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
         bind<ViewModelEntry>().inSet() with provider {
-            LoginViewModel::class.java to LoginViewModel(instance(), instance())
+            LoginViewModel::class.java to LoginViewModel(instance(), instance(), instance())
         }
     }
 }
