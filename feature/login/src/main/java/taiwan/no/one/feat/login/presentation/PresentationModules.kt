@@ -25,18 +25,18 @@
 package taiwan.no.one.feat.login.presentation
 
 import android.content.Context
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.inSet
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.inSet
+import org.kodein.di.instance
+import org.kodein.di.provider
 import taiwan.no.one.dropbeat.di.ViewModelEntry
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.FeatModules.FEAT_NAME
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
 
 internal object PresentationModules : ModuleProvider {
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}PreziModule") {
+    override fun provide(context: Context) = DI.Module("${FEAT_NAME}PreziModule") {
         bind<ViewModelEntry>().inSet() with provider {
             LoginViewModel::class.java to LoginViewModel(instance(), instance(), instance())
         }

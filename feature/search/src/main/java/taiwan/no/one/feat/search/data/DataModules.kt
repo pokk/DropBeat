@@ -25,10 +25,10 @@
 package taiwan.no.one.feat.search.data
 
 import android.content.Context
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
@@ -51,7 +51,7 @@ internal object DataModules : ModuleProvider {
     private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
     private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
 
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
+    override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
@@ -64,13 +64,13 @@ internal object DataModules : ModuleProvider {
         bind<HistoryRepo>() with singleton { HistoryRepository(instance(TAG_LOCAL_DATA_STORE)) }
     }
 
-    private fun localProvide() = Kodein.Module("${FEAT_NAME}LocalModule") {
+    private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
         bind<BankDatabase>() with singleton { BankDatabase.getDatabase(instance()) }
 
         bind<SearchHistoryDao>() with singleton { instance<BankDatabase>().createSearchHistoryDao() }
     }
 
-    private fun remoteProvide(context: Context) = Kodein.Module("${FEAT_NAME}RemoteModule") {
+    private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
         bind<SeekerConfig>() with instance(RestfulApiFactory().createSeekerConfig())
 
         bind<Retrofit>(Constant.TAG_FEAT_SEARCH_RETROFIT) with singleton {

@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.ranking
 
 import android.content.Context
-import org.kodein.di.Kodein
+import org.kodein.di.DI
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.ranking.data.DataModules
 import taiwan.no.one.feat.ranking.domain.DomainModules
@@ -34,7 +34,7 @@ import taiwan.no.one.feat.ranking.presentation.PresentationModules
 object FeatModules : ModuleProvider {
     internal const val FEAT_NAME = "Ranking"
 
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}Module") {
+    override fun provide(context: Context) = DI.Module("${FEAT_NAME}Module") {
         import(DataModules.provide(context))
         import(DomainModules.provide(context))
         import(PresentationModules.provide(context))

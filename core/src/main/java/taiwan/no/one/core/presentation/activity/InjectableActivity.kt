@@ -26,19 +26,19 @@ package taiwan.no.one.core.presentation.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.kodein.di.KodeinAware
-import org.kodein.di.KodeinTrigger
-import org.kodein.di.android.kodein
-import org.kodein.di.android.retainedKodein
+import org.kodein.di.DIAware
+import org.kodein.di.DITrigger
+import org.kodein.di.android.di
+import org.kodein.di.android.retainedDI
 import taiwan.no.one.core.BuildConfig
 
-abstract class InjectableActivity : AppCompatActivity(), KodeinAware {
-    override val kodein by retainedKodein { extend(parentKodein) }
-    override val kodeinTrigger = if (BuildConfig.DEBUG) KodeinTrigger() else super.kodeinTrigger
-    private val parentKodein by kodein()
+abstract class InjectableActivity : AppCompatActivity(), DIAware {
+    override val di by retainedDI { extend(parentDi) }
+    override val diTrigger = if (BuildConfig.DEBUG) DITrigger() else super.diTrigger
+    private val parentDi by di()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        kodeinTrigger?.trigger()
+        diTrigger?.trigger()
     }
 }

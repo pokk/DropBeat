@@ -136,7 +136,6 @@ fun DependencyHandlerScope.androidxUiDependencies(env: String) {
 }
 
 fun DependencyHandlerScope.diDependencies(env: String) {
-    env(LibraryDependency.Di.KODEIN_JVM)
     env(LibraryDependency.Di.KODEIN_CORE)
     env(LibraryDependency.Di.KODEIN_ANDROID_X)
 }

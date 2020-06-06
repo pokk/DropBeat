@@ -34,7 +34,7 @@ import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
-import org.kodein.di.generic.instance
+import org.kodein.di.instance
 import java.lang.reflect.ParameterizedType
 
 /**

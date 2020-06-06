@@ -25,10 +25,10 @@
 package taiwan.no.one.feat.ranking.data
 
 import android.content.Context
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
@@ -45,7 +45,7 @@ import taiwan.no.one.feat.ranking.data.stores.RemoteStore
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal object DataModules : ModuleProvider {
-    override fun provide(context: Context) = Kodein.Module("${FEAT_NAME}DataModule") {
+    override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
@@ -55,13 +55,13 @@ internal object DataModules : ModuleProvider {
         bind<RankingRepo>() with singleton { RankingRepository(instance(), instance()) }
     }
 
-    private fun localProvide() = Kodein.Module("${FEAT_NAME}LocalModule") {
+    private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
         bind<RankingDatabase>() with singleton { RankingDatabase.getDatabase(instance()) }
 
         bind<RankingDao>() with singleton { instance<RankingDatabase>().createRankingDao() }
     }
 
-    private fun remoteProvide(context: Context) = Kodein.Module("${FEAT_NAME}RemoteModule") {
+    private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
         bind<RankingConfig>() with instance(RestfulApiFactory().createSeekerConfig())
 
         bind<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT) with singleton {

@@ -38,7 +38,7 @@ object LibraryDependency {
         const val CONSTRAINTLAYOUT = "2.0.0-beta6"
         const val COORDINATORLAYOUT = "1.1.0"
         const val AAC_LIFECYCLE = "2.3.0-alpha03"
-        const val KODEIN = "6.5.5"
+        const val KODEIN = "7.0.0"
         const val KTX = "1.4.0-alpha01"
         const val ACTIVITY_KTX = "1.2.0-alpha05"
         const val FRAGMENT_KTX = "1.3.0-alpha05"
@@ -120,8 +120,7 @@ object LibraryDependency {
     }
 
     object Di {
-        const val KODEIN_JVM = "org.kodein.di:kodein-di-generic-jvm:${Version.KODEIN}"
-        const val KODEIN_CORE = "org.kodein.di:kodein-di-core-jvm:${Version.KODEIN}"
+        const val KODEIN_CORE = "org.kodein.di:kodein-di:${Version.KODEIN}"
         const val KODEIN_ANDROID_X = "org.kodein.di:kodein-di-framework-android-x:${Version.KODEIN}"
     }
 

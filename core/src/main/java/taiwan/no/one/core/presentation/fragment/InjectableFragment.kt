@@ -26,17 +26,17 @@ package taiwan.no.one.core.presentation.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import org.kodein.di.KodeinAware
-import org.kodein.di.KodeinTrigger
-import org.kodein.di.android.x.kodein
+import org.kodein.di.DIAware
+import org.kodein.di.DITrigger
+import org.kodein.di.android.x.di
 import taiwan.no.one.core.BuildConfig
 
-abstract class InjectableFragment : Fragment(), KodeinAware {
-    override val kodein by kodein()
-    override val kodeinTrigger = if (BuildConfig.DEBUG) KodeinTrigger() else super.kodeinTrigger
+abstract class InjectableFragment : Fragment(), DIAware {
+    override val di by di()
+    override val diTrigger = if (BuildConfig.DEBUG) DITrigger() else super.diTrigger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        kodeinTrigger?.trigger()
+        diTrigger?.trigger()
     }
 }
