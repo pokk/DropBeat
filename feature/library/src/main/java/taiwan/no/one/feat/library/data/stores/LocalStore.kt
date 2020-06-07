@@ -26,11 +26,44 @@ package taiwan.no.one.feat.library.data.stores
 
 import com.tencent.mmkv.MMKV
 import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
+import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
  * local service(Database/Local file) to access the data.
  */
 internal class LocalStore(
-    private val mmkv: MMKV
-) : DataStore
+    private val mmkv: MMKV,
+    private val playlistDao: PlaylistDao,
+    private val songDao: SongDao,
+) : DataStore {
+    override suspend fun getMusics() = songDao.getMusics()
+
+    override suspend fun createOrModifyLocalMusic(): Boolean {
+        TODO("Not yet implemented")
+//        return songDao.insertBy()
+    }
+
+    override suspend fun removeLocalMusic(id: Int) = songDao.deleteBy(id)
+
+    override suspend fun getPlaylists() = playlistDao.getPlaylists()
+
+    override suspend fun getPlaylist(playlistId: Int) = playlistDao.getPlaylist(playlistId)
+
+    override suspend fun getTheNewestPlaylist() = playlistDao.getLatestPlaylist()
+
+    override suspend fun createPlaylist(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun modifyPlaylist(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun modifyCountOfPlaylist(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removePlaylist(playlistId: Int) = playlistDao.deleteBy(playlistId)
+}

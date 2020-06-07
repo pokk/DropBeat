@@ -24,8 +24,31 @@
 
 package taiwan.no.one.feat.library.data.contracts
 
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+
 /**
  * This interface will common the all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
-internal interface DataStore
+internal interface DataStore {
+    suspend fun getMusics(): List<SongEntity>
+
+    suspend fun createOrModifyLocalMusic(): Boolean
+
+    suspend fun removeLocalMusic(id: Int)
+
+    suspend fun getPlaylists(): List<PlayListEntity>
+
+    suspend fun getPlaylist(playlistId: Int): PlayListEntity
+
+    suspend fun getTheNewestPlaylist(): PlayListEntity
+
+    suspend fun createPlaylist(): Boolean
+
+    suspend fun modifyPlaylist(): Boolean
+
+    suspend fun modifyCountOfPlaylist(): Boolean
+
+    suspend fun removePlaylist(playlistId: Int)
+}

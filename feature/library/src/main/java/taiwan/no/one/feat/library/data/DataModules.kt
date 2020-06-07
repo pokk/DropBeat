@@ -34,10 +34,10 @@ import taiwan.no.one.feat.library.FeatModules.FEAT_NAME
 import taiwan.no.one.feat.library.data.local.configs.MusicLibraryDatabase
 import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
 import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
-import taiwan.no.one.feat.library.data.repositories.AuthRepository
+import taiwan.no.one.feat.library.data.repositories.PlaylistRepository
 import taiwan.no.one.feat.library.data.stores.LocalStore
 import taiwan.no.one.feat.library.data.stores.RemoteStore
-import taiwan.no.one.feat.library.domain.repositories.AuthRepo
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal object DataModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
@@ -47,7 +47,7 @@ internal object DataModules : ModuleProvider {
         bind<LocalStore>() with singleton { LocalStore(instance()) }
         bind<RemoteStore>() with singleton { RemoteStore() }
 
-        bind<AuthRepo>() with singleton { AuthRepository(instance(), instance()) }
+        bind<PlaylistRepo>() with singleton { PlaylistRepository(instance(), instance()) }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {

@@ -22,13 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.repositories
+package taiwan.no.one.feat.library.domain.usecases
 
-import com.google.firebase.firestore.local.LocalStore
-import com.google.firebase.firestore.remote.RemoteStore
-import taiwan.no.one.feat.library.domain.repositories.AuthRepo
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
-internal class AuthRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
-) : AuthRepo
+internal class FetchPlaylistOneShotCase(
+    private val repository: PlaylistRepo
+) : FetchPlaylistCase() {
+    override suspend fun acquireCase(parameter: FetchPlaylistReq?) = parameter.ensure {
+        repository.fetchPlaylist()
+    }
+
+    class Request : RequestValues
+}

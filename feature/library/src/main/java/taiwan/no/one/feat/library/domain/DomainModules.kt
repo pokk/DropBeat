@@ -26,10 +26,25 @@ package taiwan.no.one.feat.library.domain
 
 import android.content.Context
 import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.library.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.AddPlaylistOneShotCase
+import taiwan.no.one.feat.library.domain.usecases.DeletePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.DeletePlaylistOneShotCase
+import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistOneShotCase
+import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
+        bind<FetchPlaylistCase>() with singleton { FetchPlaylistOneShotCase(instance()) }
+        bind<AddPlaylistCase>() with singleton { AddPlaylistOneShotCase(instance()) }
+        bind<UpdatePlaylistCase>() with singleton { UpdatePlaylistOneShotCase(instance()) }
+        bind<DeletePlaylistCase>() with singleton { DeletePlaylistOneShotCase(instance()) }
     }
 }

@@ -22,33 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.stores
+package taiwan.no.one.feat.library.domain.usecases
 
-import taiwan.no.one.ext.exceptions.UnsupportedOperation
-import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
-/**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
- */
-internal class RemoteStore : DataStore {
-    override suspend fun getMusics() = UnsupportedOperation()
+internal class AddPlaylistOneShotCase(
+    private val repository: PlaylistRepo
+) : AddPlaylistCase() {
+    override suspend fun acquireCase(parameter: AddPlaylistReq?) = parameter.ensure {
+        repository.addPlaylist()
+        true
+    }
 
-    override suspend fun createOrModifyLocalMusic() = UnsupportedOperation()
-
-    override suspend fun removeLocalMusic(id: Int) = UnsupportedOperation()
-
-    override suspend fun getPlaylists() = UnsupportedOperation()
-
-    override suspend fun getPlaylist(playlistId: Int) = UnsupportedOperation()
-
-    override suspend fun getTheNewestPlaylist() = UnsupportedOperation()
-
-    override suspend fun createPlaylist() = UnsupportedOperation()
-
-    override suspend fun modifyPlaylist() = UnsupportedOperation()
-
-    override suspend fun modifyCountOfPlaylist() = UnsupportedOperation()
-
-    override suspend fun removePlaylist(playlistId: Int) = UnsupportedOperation()
+    class Request : RequestValues
 }

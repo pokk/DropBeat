@@ -26,16 +26,16 @@ package taiwan.no.one.feat.login.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
-import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
 internal class FetchLoginInfoOneShotCase(
-    private val authService: AuthService
+    private val repository: AuthRepo
 ) : FetchLoginInfoCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         when {
-            email != null && password != null -> authService.getLogin(email, password)
-            credential != null -> authService.getLogin(credential)
+            email != null && password != null -> repository.fetchLogin(email, password)
+            credential != null -> repository.fetchLogin(credential)
             else -> throw ParameterNotMatchException()
         }
     }

@@ -22,12 +22,33 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.domain.repositories
+package taiwan.no.one.feat.library.data.repositories
 
-import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.library.data.stores.LocalStore
+import taiwan.no.one.feat.library.data.stores.RemoteStore
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
-/**
- * This interface will be the similar to [taiwan.no.one.feat.ranking.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-internal interface AuthRepo : Repository
+internal class PlaylistRepository(
+    private val local: LocalStore,
+    private val remote: RemoteStore
+) : PlaylistRepo {
+    override suspend fun fetchMusics() = local.getMusics()
+
+    override suspend fun addOrUpdateLocalMusic() = local.createOrModifyLocalMusic()
+
+    override suspend fun deleteMusic() = TODO() // local.removePlaylist()
+
+    override suspend fun fetchPlaylists() = local.getPlaylists()
+
+    override suspend fun fetchTheNewestPlaylist() = local.getTheNewestPlaylist()
+
+    override suspend fun fetchPlaylist() = local.getPlaylist(1)
+
+    override suspend fun addPlaylist() = local.createPlaylist()
+
+    override suspend fun updatePlaylist() = local.modifyPlaylist()
+
+    override suspend fun updateCountOfPlaylist() = local.modifyCountOfPlaylist()
+
+    override suspend fun deletePlaylist() = TODO() // local.removePlaylist()
+}

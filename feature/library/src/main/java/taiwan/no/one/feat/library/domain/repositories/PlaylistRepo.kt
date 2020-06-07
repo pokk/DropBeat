@@ -22,33 +22,34 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.stores
+package taiwan.no.one.feat.library.domain.repositories
 
-import taiwan.no.one.ext.exceptions.UnsupportedOperation
-import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 
 /**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
+ * This interface will be the similar to [taiwan.no.one.feat.library.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-internal class RemoteStore : DataStore {
-    override suspend fun getMusics() = UnsupportedOperation()
+internal interface PlaylistRepo : Repository {
+    suspend fun fetchMusics(): List<SongEntity>
 
-    override suspend fun createOrModifyLocalMusic() = UnsupportedOperation()
+    suspend fun addOrUpdateLocalMusic(): Boolean
 
-    override suspend fun removeLocalMusic(id: Int) = UnsupportedOperation()
+    suspend fun deleteMusic(): Boolean
 
-    override suspend fun getPlaylists() = UnsupportedOperation()
+    suspend fun fetchPlaylists(): List<PlayListEntity>
 
-    override suspend fun getPlaylist(playlistId: Int) = UnsupportedOperation()
+    suspend fun fetchTheNewestPlaylist(): PlayListEntity
 
-    override suspend fun getTheNewestPlaylist() = UnsupportedOperation()
+    suspend fun fetchPlaylist(): PlayListEntity
 
-    override suspend fun createPlaylist() = UnsupportedOperation()
+    suspend fun addPlaylist(): Boolean
 
-    override suspend fun modifyPlaylist() = UnsupportedOperation()
+    suspend fun updatePlaylist(): Boolean
 
-    override suspend fun modifyCountOfPlaylist() = UnsupportedOperation()
+    suspend fun updateCountOfPlaylist(): Boolean
 
-    override suspend fun removePlaylist(playlistId: Int) = UnsupportedOperation()
+    suspend fun deletePlaylist(): Boolean
 }
