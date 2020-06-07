@@ -26,8 +26,10 @@ package taiwan.no.one.feat.library.data.local.services.database.v1
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
+import java.util.Date
 
 /**
  * Integrated the base [androidx.room.Room] database operations.
@@ -37,22 +39,22 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
  */
 @Dao
 internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
-//    /**
-//     * Insert a data if there's the same data inside the database, it will be replaced.
-//     *
-//     * @param newData
-//     */
-//    @Transaction
-//    open fun insertBy(newData: LibraryEntity.SongEntity, addOrMinus: Boolean) {
-//        val existMusic = retrieveMusic(newData.trackName, newData.artistName)
-//        var updatedData = newData
-//        // Update the download date if the data isn't download information.
-//        if (!newData.hasOwn || (newData.hasOwn && existMusic?.hasOwn == true))
-//            updatedData = newData.copy(downloaded = Date(0),
-//                                       lastListen = if (!updatedData.hasOwn)
-//                                           updatedData.lastListen
-//                                       else
-//                                           existMusic?.lastListen ?: updatedData.lastListen)
+    /**
+     * Insert a data if there's the same data inside the database, it will be replaced.
+     *
+     * @param newData
+     */
+    @Transaction
+    open suspend fun insertBy(newData: LibraryEntity.SongEntity, addOrMinus: Boolean) {
+        val existMusic = getMusic(newData.title, newData.artist)
+        var updatedData = newData
+        // Update the download date if the data isn't download information.
+        if (!newData.hasOwn || (newData.hasOwn && existMusic?.hasOwn == true))
+            updatedData = newData.copy(downloadedAt = Date(0),
+                                       lastListenAt = if (!updatedData.hasOwn)
+                                           updatedData.lastListenAt
+                                       else
+                                           existMusic?.lastListenAt ?: updatedData.lastListenAt)
 //        if (existMusic == null)
 //            insert(updatedData)
 //        else {
@@ -83,21 +85,21 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
 //                    DEFAULT_STR
 //                }
 //                else
-//                    updatedData.localTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.localTrackUri
-//            replace(existMusic.copy(hasOwn = updatedData.hasOwn.takeIf { it } ?: existMusic.hasOwn,
-//                                    remoteTrackUri = updatedData.remoteTrackUri.takeIf { it != DEFAULT_STR } ?: existMusic.remoteTrackUri,
-//                                    localTrackUri = localTrackUri,
+//                    updatedData.localUri.takeIf { it != DEFAULT_STR } ?: existMusic.localUri
+//            update(existMusic.copy(hasOwn = updatedData.hasOwn.takeIf { it } ?: existMusic.hasOwn,
+//                                    uri = updatedData.uri.takeIf { it != DEFAULT_STR } ?: existMusic.uri,
+//                                    localUri = localTrackUri,
 //                                    coverUri = updatedData.coverUri.takeIf { it != DEFAULT_STR } ?: existMusic.coverUri,
 //                                    playlistList = playlist,
-//                                    lastListen = updatedData.lastListen))
+//                                   lastListenAt = updatedData.lastListenAt))
 //        }
-//    }
+    }
 
     /**
      * Get all data from the local music table.
      */
     @Query("SELECT * FROM table_song")
-    abstract suspend fun retrieveMusics(): List<LibraryEntity.SongEntity>
+    abstract suspend fun getMusics(): List<LibraryEntity.SongEntity>
 
     /**
      * Get one data from the local music table.
@@ -106,7 +108,7 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
      * @param artist
      */
     @Query("SELECT * FROM table_song WHERE title=:track AND artist=:artist")
-    abstract suspend fun retrieveMusic(track: String, artist: String): LibraryEntity.SongEntity?
+    abstract suspend fun getMusic(track: String, artist: String): LibraryEntity.SongEntity?
 
     /**
      * Remove a music from local music table.
@@ -114,5 +116,5 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
      * @param id local music's id.
      */
     @Query("DELETE FROM table_song WHERE id=:id")
-    abstract suspend fun releaseBy(id: Int)
+    abstract suspend fun deleteBy(id: Int)
 }

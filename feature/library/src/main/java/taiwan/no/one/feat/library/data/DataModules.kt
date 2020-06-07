@@ -31,6 +31,9 @@ import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.library.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.library.data.local.configs.MusicLibraryDatabase
+import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
+import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 import taiwan.no.one.feat.library.data.repositories.AuthRepository
 import taiwan.no.one.feat.library.data.stores.LocalStore
 import taiwan.no.one.feat.library.data.stores.RemoteStore
@@ -48,9 +51,10 @@ internal object DataModules : ModuleProvider {
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
-//        bind<RankingDatabase>() with singleton { RankingDatabase.getDatabase(instance()) }
+        bind<MusicLibraryDatabase>() with singleton { MusicLibraryDatabase.getDatabase(instance()) }
 
-//        bind<RankingDao>() with singleton { instance<RankingDatabase>().createRankingDao() }
+        bind<PlaylistDao>() with singleton { instance<MusicLibraryDatabase>().createPlaylistDao() }
+        bind<SongDao>() with singleton { instance<MusicLibraryDatabase>().createSongDao() }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
