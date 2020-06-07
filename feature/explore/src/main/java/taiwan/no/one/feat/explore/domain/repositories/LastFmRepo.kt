@@ -22,65 +22,61 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.contracts
+package taiwan.no.one.feat.explore.domain.repositories
 
+import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistSimilarEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopAlbumInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity.ArtistPhotoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TagTopArtistEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopAlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTagInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackSimilarEntity
 
 /**
- * This interface will common the all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
+ * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-internal interface DataStore {
-    //region Album Data
-    suspend fun getAlbumInfo(): AlbumInfoEntity
+internal interface LastFmRepo : Repository {
+    //region AlbumEntity
+    suspend fun fetchAlbum(): AlbumInfoEntity.AlbumEntity
     //endregion
 
-    //region Artist Data
-    suspend fun getArtistInfo(): ArtistInfoEntity
+    //region ArtistEntity
+    suspend fun fetchArtist(): ArtistInfoEntity.ArtistEntity
 
-    suspend fun getArtistTopAlbum(): ArtistTopAlbumInfoEntity
+    suspend fun fetchArtistTopAlbum(): CommonLastFmEntity.TopAlbumsEntity
 
-    suspend fun getArtistTopTrack(): ArtistTopTrackInfoEntity
+    suspend fun fetchArtistTopTrack(): ArtistTopTrackInfoEntity.TracksWithStreamableEntity
 
-    suspend fun getSimilarArtistInfo(): ArtistSimilarEntity
+    suspend fun fetchSimilarArtistInfo(): TopArtistInfoEntity.ArtistsEntity
 
-    suspend fun getArtistPhotosInfo(): ArtistPhotosEntity
+    suspend fun fetchArtistPhotoInfo(): List<ArtistPhotoEntity>
     //endregion
 
-    //region Track Data
-    suspend fun getTrackInfo(): TrackInfoEntity
+    //region TrackEntity
+    suspend fun fetchTrack(): TrackInfoEntity.TrackEntity
 
-    suspend fun getSimilarTrackInfo(): TrackSimilarEntity
+    suspend fun fetchSimilarTrackInfo(): TopTrackInfoEntity.TracksEntity
     //endregion
 
     //region Chart
-    suspend fun getChartTopTrack(): TopTrackInfoEntity
+    suspend fun fetchChartTopTrack(): TopTrackInfoEntity.TracksEntity
 
-    suspend fun getChartTopArtist(): TopArtistInfoEntity
+    suspend fun fetchChartTopArtist(): TopArtistInfoEntity.ArtistsEntity
 
-    suspend fun getChartTopTag(): TopTagInfoEntity
+    suspend fun fetchChartTopTag(): CommonLastFmEntity.TagsEntity
     //endregion
 
-    //region Tag Data
-    suspend fun getTagInfo(): TagInfoEntity
+    //region TagEntity
+    suspend fun fetchTag(): TagInfoEntity.TagEntity
 
-    suspend fun getTagTopAlbum(): TopAlbumInfoEntity
+    suspend fun fetchTagTopAlbum(): CommonLastFmEntity.TopAlbumsEntity
 
-    suspend fun getTagTopArtist(): TagTopArtistEntity
+    suspend fun fetchTagTopArtist(): TopArtistInfoEntity.ArtistsEntity
 
-    suspend fun getTagTopTrack(): TopTrackInfoEntity
+    suspend fun fetchTagTopTrack(): TopTrackInfoEntity.TracksEntity
     //endregion
 }

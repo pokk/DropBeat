@@ -22,10 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.explore.data.remote.configs
 
-object Constant {
-    const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
-    const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
-    const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"
+/**
+ * The configuration of a remote google news api service.
+ */
+internal class LastFmConfig : ApiConfig {
+    companion object {
+        const val API_REQUEST = "/2.0/"
+
+        // All basic http api url of Search Music.
+        private const val BASE_URL = "http://ws.audioscrobbler.com"
+    }
+
+    override val apiBaseUrl = BASE_URL
 }

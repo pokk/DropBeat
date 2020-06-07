@@ -22,10 +22,8 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.explore.data.entities.remote
 
-object Constant {
-    const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
-    const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
-    const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"
-}
+internal data class TagTopTrackInfoEntity(
+    val tracks: TopTrackInfoEntity.TracksEntity
+)

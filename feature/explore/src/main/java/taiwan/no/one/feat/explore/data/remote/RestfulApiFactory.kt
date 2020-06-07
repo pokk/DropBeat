@@ -24,9 +24,11 @@
 
 package taiwan.no.one.feat.explore.data.remote
 
+import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
+
 /**
  * Factory that creates different implementations of [taiwan.no.one.feat.ranking.data.remote.configs.ApiConfig].
  */
 internal class RestfulApiFactory {
-//    fun createSeekerConfig() = RankingConfig()
+    fun createLastFmConfig() = LastFmConfig()
 }

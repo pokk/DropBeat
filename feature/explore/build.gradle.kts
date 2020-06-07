@@ -98,4 +98,5 @@ kapt {
 dependencies {
     implementation(project(CommonModuleDependency.APP))
     annotationDependencies()
+    implementation(config.LibraryDependency.Tool.JSOUP)
 }

@@ -22,10 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.explore.data.entities.remote
 
-object Constant {
-    const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
-    const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
-    const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"
+import taiwan.no.one.ext.DEFAULT_STR
+
+internal data class ArtistPhotosEntity(
+    val photos: List<ArtistPhotoEntity> = emptyList(),
+    val hasNext: Boolean = false
+) {
+    internal data class ArtistPhotoEntity(
+        val url: String = DEFAULT_STR,
+        val hashCode: String = DEFAULT_STR
+    )
 }

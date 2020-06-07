@@ -22,13 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.repositories
+package taiwan.no.one.feat.explore.data.entities.remote
 
-import taiwan.no.one.feat.explore.data.stores.LocalStore
-import taiwan.no.one.feat.explore.data.stores.RemoteStore
-import taiwan.no.one.feat.explore.domain.repositories.PlaylistRepo
+import com.google.gson.annotations.SerializedName
 
-internal class PlaylistRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
-) : PlaylistRepo
+internal data class ArtistTopAlbumInfoEntity(
+    @SerializedName("topalbums")
+    val topAlbums: CommonLastFmEntity.TopAlbumsEntity
+)

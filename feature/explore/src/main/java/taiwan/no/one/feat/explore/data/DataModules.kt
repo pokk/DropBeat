@@ -29,12 +29,19 @@ import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
+import retrofit2.Retrofit
+import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
+import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.explore.data.repositories.PlaylistRepository
+import taiwan.no.one.feat.explore.data.remote.RestfulApiFactory
+import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
+import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
+import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
+import taiwan.no.one.feat.explore.data.repositories.LastFmRepository
 import taiwan.no.one.feat.explore.data.stores.LocalStore
 import taiwan.no.one.feat.explore.data.stores.RemoteStore
-import taiwan.no.one.feat.explore.domain.repositories.PlaylistRepo
+import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal object DataModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
@@ -42,14 +49,26 @@ internal object DataModules : ModuleProvider {
         import(remoteProvide(context))
 
         bind<LocalStore>() with singleton { LocalStore(instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore() }
+        bind<RemoteStore>() with singleton { RemoteStore(instance(), instance()) }
 
-        bind<PlaylistRepo>() with singleton { PlaylistRepository(instance(), instance()) }
+        bind<LastFmRepo>() with singleton { LastFmRepository(instance(), instance()) }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
+        bind<LastFmConfig>() with instance(RestfulApiFactory().createLastFmConfig())
+
+        bind<Retrofit>(Constant.TAG_FEAT_EXPLORE_RETROFIT) with singleton {
+            DefaultRetrofitConfig(context, instance<LastFmConfig>().apiBaseUrl).provideRetrofitBuilder().build()
+        }
+
+        bind<LastFmService>() with singleton {
+            instance<Retrofit>(Constant.TAG_FEAT_EXPLORE_RETROFIT).create(LastFmService::class.java)
+        }
+        bind<LastFmExtraService>() with singleton {
+            instance<Retrofit>(Constant.TAG_FEAT_EXPLORE_RETROFIT).create(LastFmExtraService::class.java)
+        }
     }
 }

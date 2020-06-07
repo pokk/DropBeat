@@ -22,10 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
 
-object Constant {
-    const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
-    const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
-    const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
+
+/**
+ * We will implement those them by [org.jsoup.Jsoup] because we can't use api from
+ * lastfm.
+ * Using prefix name (retrieve), (insert), (replace), (release)
+ */
+internal interface LastFmExtraService {
+    suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
 }

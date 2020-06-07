@@ -25,9 +25,44 @@
 package taiwan.no.one.feat.explore.data.stores
 
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
+import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct
  * remote service to access the data.
  */
-internal class RemoteStore : DataStore
+internal class RemoteStore(
+    private val lastFmService: LastFmService,
+    private val lastFmExtraService: LastFmExtraService
+) : DataStore {
+    override suspend fun getAlbumInfo() = lastFmService.retrieveAlbumInfo(TODO())
+
+    override suspend fun getArtistInfo() = lastFmService.retrieveArtistInfo(TODO())
+
+    override suspend fun getArtistTopAlbum() = lastFmService.retrieveArtistTopAlbum(TODO())
+
+    override suspend fun getArtistTopTrack() = lastFmService.retrieveArtistTopTrack(TODO())
+
+    override suspend fun getSimilarArtistInfo() = lastFmService.retrieveSimilarArtistInfo(TODO())
+
+    override suspend fun getArtistPhotosInfo() = lastFmExtraService.retrieveArtistPhotosInfo(TODO(), TODO())
+
+    override suspend fun getTrackInfo() = lastFmService.retrieveTrackInfo(TODO())
+
+    override suspend fun getSimilarTrackInfo() = lastFmService.retrieveSimilarTrackInfo(TODO())
+
+    override suspend fun getChartTopTrack() = lastFmService.retrieveChartTopTrack(TODO())
+
+    override suspend fun getChartTopArtist() = lastFmService.retrieveChartTopArtist(TODO())
+
+    override suspend fun getChartTopTag() = lastFmService.retrieveChartTopTag(TODO())
+
+    override suspend fun getTagInfo() = lastFmService.retrieveTagInfo(TODO())
+
+    override suspend fun getTagTopAlbum() = lastFmService.retrieveTagTopAlbum(TODO())
+
+    override suspend fun getTagTopArtist() = lastFmService.retrieveTagTopArtist(TODO())
+
+    override suspend fun getTagTopTrack() = lastFmService.retrieveTagTopTrack(TODO())
+}

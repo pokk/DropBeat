@@ -22,10 +22,28 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
 
-object Constant {
-    const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
-    const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
-    const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"
+import org.jsoup.Jsoup
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
+
+internal class LastFmExtraImpl : LastFmExtraService {
+    companion object {
+        private const val LASTFM_DOMAIN = "https://www.last.fm/music/"
+        private const val LASTFM_IMAGE_REQUEST = "/+images?"
+
+        private const val LASTFM_IMAGE_URL = "https://lastfm-img2.akamaized.net/i/u/770x0/%s.jpg"
+    }
+
+    override suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity {
+        val doc = Jsoup.connect("$LASTFM_DOMAIN$artistName$LASTFM_IMAGE_REQUEST?page=$page").get()
+
+        val hasNext = doc.select("li.pagination-next").select("a").toString().isNotBlank()
+        val photos = doc.select("ul.image-list").select("li")
+            .map { it.select("img.image-list-image").attr("src") }
+            .map { it.split("/").last() }
+            .map { ArtistPhotosEntity.ArtistPhotoEntity(LASTFM_IMAGE_URL.format(it), it) }
+
+        return ArtistPhotosEntity(photos, hasNext)
+    }
 }

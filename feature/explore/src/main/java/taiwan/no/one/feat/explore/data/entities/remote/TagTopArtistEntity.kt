@@ -22,12 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.domain.repositories
+package taiwan.no.one.feat.explore.data.entities.remote
 
-import taiwan.no.one.core.domain.repository.Repository
+import com.google.gson.annotations.SerializedName
 
-/**
- * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-internal interface PlaylistRepo : Repository
+internal data class TagTopArtistEntity(
+    @SerializedName("topartists")
+    val topArtists: TopArtistInfoEntity.ArtistsEntity
+)

@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.data.stores
 
 import com.tencent.mmkv.MMKV
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 
 /**
@@ -33,4 +34,34 @@ import taiwan.no.one.feat.explore.data.contracts.DataStore
  */
 internal class LocalStore(
     private val mmkv: MMKV,
-) : DataStore
+) : DataStore {
+    override suspend fun getAlbumInfo() = UnsupportedOperation()
+
+    override suspend fun getArtistInfo() = UnsupportedOperation()
+
+    override suspend fun getArtistTopAlbum() = UnsupportedOperation()
+
+    override suspend fun getArtistTopTrack() = UnsupportedOperation()
+
+    override suspend fun getSimilarArtistInfo() = UnsupportedOperation()
+
+    override suspend fun getArtistPhotosInfo() = UnsupportedOperation()
+
+    override suspend fun getTrackInfo() = UnsupportedOperation()
+
+    override suspend fun getSimilarTrackInfo() = UnsupportedOperation()
+
+    override suspend fun getChartTopTrack() = UnsupportedOperation()
+
+    override suspend fun getChartTopArtist() = UnsupportedOperation()
+
+    override suspend fun getChartTopTag() = UnsupportedOperation()
+
+    override suspend fun getTagInfo() = UnsupportedOperation()
+
+    override suspend fun getTagTopAlbum() = UnsupportedOperation()
+
+    override suspend fun getTagTopArtist() = UnsupportedOperation()
+
+    override suspend fun getTagTopTrack() = UnsupportedOperation()
+}
