@@ -22,11 +22,10 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+package taiwan.no.one.feat.explore.data.contracts
+
+/**
+ * This interface will common the all data stores.
+ * Using prefix name (get), (create), (modify), (remove), (store)
+ */
+internal interface DataStore

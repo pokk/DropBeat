@@ -22,11 +22,18 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+package taiwan.no.one.feat.player
+
+import androidx.navigation.NavGraph
+import taiwan.no.one.dropbeat.BuildConfig
+import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
+
+object FeatureARoute : NaviGraphRouteProvider {
+    override lateinit var navGraph: NavGraph
+
+    override val graphName get() = TODO()
+
+    override val packageName get() = BuildConfig.APPLICATION_ID
+
+    override val resourceId get() = TODO()
+}

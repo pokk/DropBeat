@@ -22,11 +22,22 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+package taiwan.no.one.feat.player.presentation
+
+import android.content.Context
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.inSet
+import org.kodein.di.provider
+import taiwan.no.one.dropbeat.di.ViewModelEntry
+import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.feat.player.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.player.presentation.viewmodels.LoginViewModel
+
+internal object PresentationModules : ModuleProvider {
+    override fun provide(context: Context) = DI.Module("${FEAT_NAME}PreziModule") {
+        bind<ViewModelEntry>().inSet() with provider {
+            LoginViewModel::class.java to LoginViewModel()
+        }
+    }
+}

@@ -22,11 +22,21 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+package taiwan.no.one.feat.setting
+
+import android.content.Context
+import org.kodein.di.DI
+import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.feat.setting.data.DataModules
+import taiwan.no.one.feat.setting.domain.DomainModules
+import taiwan.no.one.feat.setting.presentation.PresentationModules
+
+object FeatModules : ModuleProvider {
+    internal const val FEAT_NAME = "setting"
+
+    override fun provide(context: Context) = DI.Module("${FEAT_NAME}Module") {
+        import(DataModules.provide(context))
+        import(DomainModules.provide(context))
+        import(PresentationModules.provide(context))
+    }
+}

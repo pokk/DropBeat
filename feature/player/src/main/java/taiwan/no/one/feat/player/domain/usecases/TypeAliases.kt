@@ -22,11 +22,4 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+package taiwan.no.one.feat.player.domain.usecases

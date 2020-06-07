@@ -36,10 +36,15 @@ object CommonModuleDependency {
     const val LIB_WIDGET = ":widget"
     const val LIB_DEVICE = ":device"
     const val LIB_CORE = ":core"
+
+    // feature module name
     const val FEAT_SEARCH_MUSIC = "${FEATURE_PREFIX}search"
     const val FEAT_RANKING = "${FEATURE_PREFIX}ranking"
     const val FEAT_LOGIN = "${FEATURE_PREFIX}login"
     const val FEAT_LIBRARY = "${FEATURE_PREFIX}library"
+    const val FEAT_EXPLORE = "${FEATURE_PREFIX}explore"
+    const val FEAT_PLAYER = "${FEATURE_PREFIX}player"
+    const val FEAT_SETTING = "${FEATURE_PREFIX}setting"
 
     fun getAllModules() = CommonModuleDependency::class.memberProperties
         .asSequence()

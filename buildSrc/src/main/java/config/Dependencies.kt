@@ -80,7 +80,6 @@ fun DependencyHandlerScope.widgetDependencies() {
 }
 
 fun DependencyHandlerScope.firebaseAuthDependencies() {
-    DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH)
     DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_GOOGLE)
     DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
 }
@@ -159,8 +158,9 @@ fun DependencyHandlerScope.firebaseDependencies(env: String) {
     env(LibraryDependency.Firebase.FIREBASE_MESSAGING)
     env(LibraryDependency.Firebase.FIREBASE_DB)
     env(LibraryDependency.Firebase.FIREBASE_FIRESTORE)
+    env("com.google.guava:guava:27.0.1-android") // For fixing firestore dependency error
+    env(LibraryDependency.Firebase.FIREBASE_AUTH)
     env(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
-    env("com.google.guava:guava:27.0.1-android") // Because of firestore
 }
 
 fun DependencyHandlerScope.localDependencies(env: String) {

@@ -22,11 +22,10 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+package taiwan.no.one.feat.explore.presentation.fragments
+
+import taiwan.no.one.core.presentation.activity.BaseActivity
+import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.explore.databinding.FragmentIndexBinding
+
+internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>()

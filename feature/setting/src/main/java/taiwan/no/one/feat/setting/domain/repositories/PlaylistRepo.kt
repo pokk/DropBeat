@@ -22,11 +22,12 @@
  * SOFTWARE.
  */
 
-include(":app", ":ktx", ":ext", ":widget", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+package taiwan.no.one.feat.setting.domain.repositories
+
+import taiwan.no.one.core.domain.repository.Repository
+
+/**
+ * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+internal interface PlaylistRepo : Repository
