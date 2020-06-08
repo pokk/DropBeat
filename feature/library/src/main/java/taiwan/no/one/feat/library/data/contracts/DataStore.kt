@@ -48,9 +48,9 @@ internal interface DataStore {
 
     suspend fun createPlaylist(playlist: PlayListEntity)
 
-    suspend fun modifyPlaylist(playlistId: Int)
+    suspend fun modifyPlaylist(playlist: PlayListEntity)
 
     suspend fun modifyCountOfPlaylist()
 
-    suspend fun removePlaylist(playlistId: Int)
+    suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?)
 }

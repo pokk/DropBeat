@@ -41,7 +41,8 @@ internal class PlaylistRepository(
     override suspend fun addMusicToPlaylist(song: SongEntity, playlistId: Int) =
         local.createMusicToPlaylist(song, playlistId)
 
-    override suspend fun deleteMusic(playlistId: Int) = local.removePlaylist(playlistId)
+    override suspend fun deleteMusic(playlistId: Int?, playlist: PlayListEntity?) =
+        local.removePlaylist(playlistId, playlist)
 
     override suspend fun fetchPlaylists() = local.getPlaylists()
 
@@ -49,7 +50,8 @@ internal class PlaylistRepository(
 
     override suspend fun addPlaylist(playlist: PlayListEntity) = local.createPlaylist(playlist)
 
-    override suspend fun updatePlaylist(playlistId: Int) = local.modifyPlaylist(playlistId)
+    override suspend fun updatePlaylist(playlist: PlayListEntity) = local.modifyPlaylist(playlist)
 
-    override suspend fun deletePlaylist(playlistId: Int, entity: PlayListEntity) = local.removePlaylist(playlistId)
+    override suspend fun deletePlaylist(playlistId: Int?, playlist: PlayListEntity?) =
+        local.removePlaylist(playlistId, playlist)
 }

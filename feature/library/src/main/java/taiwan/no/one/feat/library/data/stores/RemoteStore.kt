@@ -50,9 +50,9 @@ internal class RemoteStore : DataStore {
 
     override suspend fun createPlaylist(playlist: PlayListEntity): Unit = UnsupportedOperation()
 
-    override suspend fun modifyPlaylist(playlistId: Int) = UnsupportedOperation()
+    override suspend fun modifyPlaylist(playlist: PlayListEntity) = UnsupportedOperation()
 
     override suspend fun modifyCountOfPlaylist() = UnsupportedOperation()
 
-    override suspend fun removePlaylist(playlistId: Int) = UnsupportedOperation()
+    override suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?) = UnsupportedOperation()
 }

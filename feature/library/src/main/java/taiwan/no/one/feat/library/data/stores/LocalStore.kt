@@ -58,9 +58,14 @@ internal class LocalStore(
 
     override suspend fun createPlaylist(playlist: PlayListEntity) = playlistDao.insert(playlist)
 
-    override suspend fun modifyPlaylist(playlistId: Int) = TODO()
+    override suspend fun modifyPlaylist(playlist: PlayListEntity) = playlistDao.update(playlist)
 
     override suspend fun modifyCountOfPlaylist() = TODO()
 
-    override suspend fun removePlaylist(playlistId: Int) = playlistDao.deleteBy(playlistId)
+    override suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?) {
+        if (playlist != null)
+            playlistDao.delete(playlist)
+        if (playlistId != null)
+            playlistDao.deleteBy(playlistId)
+    }
 }

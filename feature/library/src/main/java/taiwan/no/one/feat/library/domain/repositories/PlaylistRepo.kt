@@ -39,7 +39,7 @@ internal interface PlaylistRepo : Repository {
 
     suspend fun addMusicToPlaylist(song: SongEntity, playlistId: Int)
 
-    suspend fun deleteMusic(playlistId: Int)
+    suspend fun deleteMusic(playlistId: Int?, playlist: PlayListEntity?)
 
     suspend fun fetchPlaylists(): List<PlayListEntity>
 
@@ -47,7 +47,7 @@ internal interface PlaylistRepo : Repository {
 
     suspend fun addPlaylist(playlist: PlayListEntity)
 
-    suspend fun updatePlaylist(playlistId: Int)
+    suspend fun updatePlaylist(playlist: PlayListEntity)
 
-    suspend fun deletePlaylist(playlistId: Int, playlist: PlayListEntity)
+    suspend fun deletePlaylist(playlistId: Int?, playlist: PlayListEntity?)
 }
