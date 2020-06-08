@@ -22,10 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.presentation.fragments
+package taiwan.no.one.feat.library.data.local.services.database.convert
 
-import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.library.databinding.FragmentIndexBinding
+import androidx.room.TypeConverter
 
-internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>()
+internal class IdListConvert {
+    companion object {
+        private const val SEPARATOR = ","
+    }
+
+    @TypeConverter
+    fun fromIdsToStr(ids: List<Int>?): String {
+        return ids?.joinToString(SEPARATOR).orEmpty()
+    }
+
+    @TypeConverter
+    fun fromStrToIds(idsString: String?) = idsString?.split(SEPARATOR)?.map(String::toInt).orEmpty()
+}

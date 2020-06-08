@@ -31,7 +31,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import taiwan.no.one.core.data.local.room.convert.DateConvert
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
-import taiwan.no.one.feat.library.data.local.services.database.convert.SongListConvert
+import taiwan.no.one.feat.library.data.local.services.database.convert.IdListConvert
 import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
 import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 
@@ -41,7 +41,7 @@ import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 @Database(entities = [LibraryEntity.PlayListEntity::class, LibraryEntity.SongEntity::class],
           version = 1,
           exportSchema = false)
-@TypeConverters(DateConvert::class, SongListConvert::class)
+@TypeConverters(DateConvert::class, IdListConvert::class)
 internal abstract class MusicLibraryDatabase : RoomDatabase() {
     companion object {
         @Volatile private var INSTANCE: MusicLibraryDatabase? = null

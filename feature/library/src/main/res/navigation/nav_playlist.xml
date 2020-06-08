@@ -26,26 +26,12 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navApp"
-    app:startDestination="@id/navPlaylist">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/playlistFragment">
 
-    <include-dynamic
-        android:id="@+id/navSearch"
-        app:graphResName="nav_search"
-        app:moduleName="search"/>
-
-    <include-dynamic
-        android:id="@+id/navRank"
-        app:graphResName="nav_rank"
-        app:moduleName="ranking"/>
-
-    <include-dynamic
-        android:id="@+id/navLogin"
-        app:graphResName="nav_login"
-        app:moduleName="login"/>
-
-    <include-dynamic
-        android:id="@+id/navPlaylist"
-        app:graphResName="nav_playlist"
-        app:moduleName="library"/>
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
+        android:label="PlaylistFragment"
+        tools:layout="@layout/fragment_playlist"/>
 </navigation>

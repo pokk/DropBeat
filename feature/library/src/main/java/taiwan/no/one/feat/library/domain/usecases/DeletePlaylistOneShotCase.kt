@@ -31,7 +31,7 @@ internal class DeletePlaylistOneShotCase(
     private val repository: PlaylistRepo
 ) : DeletePlaylistCase() {
     override suspend fun acquireCase(parameter: DeletePlaylistReq?) = parameter.ensure {
-        repository.deletePlaylist()
+        repository.deletePlaylist(TODO(), TODO())
         true
     }
 

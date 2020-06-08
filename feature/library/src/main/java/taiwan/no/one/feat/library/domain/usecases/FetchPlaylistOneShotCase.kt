@@ -30,9 +30,7 @@ import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 internal class FetchPlaylistOneShotCase(
     private val repository: PlaylistRepo
 ) : FetchPlaylistCase() {
-    override suspend fun acquireCase(parameter: FetchPlaylistReq?) = parameter.ensure {
-        repository.fetchPlaylist()
-    }
+    override suspend fun acquireCase(parameter: FetchPlaylistReq?) = repository.fetchPlaylists()
 
     class Request : RequestValues
 }

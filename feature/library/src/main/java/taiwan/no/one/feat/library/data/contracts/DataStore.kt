@@ -32,11 +32,13 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface DataStore {
-    suspend fun getMusics(): List<SongEntity>
+    suspend fun getMusics(playlistId: Int): List<SongEntity>
 
-    suspend fun createOrModifyLocalMusic(): Boolean
+    suspend fun createMusics(songs: List<SongEntity>)
 
-    suspend fun removeLocalMusic(id: Int)
+    suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int)
+
+    suspend fun removeMusic(id: Int)
 
     suspend fun getPlaylists(): List<PlayListEntity>
 
@@ -44,11 +46,11 @@ internal interface DataStore {
 
     suspend fun getTheNewestPlaylist(): PlayListEntity
 
-    suspend fun createPlaylist(): Boolean
+    suspend fun createPlaylist(playlist: PlayListEntity)
 
-    suspend fun modifyPlaylist(): Boolean
+    suspend fun modifyPlaylist(playlistId: Int)
 
-    suspend fun modifyCountOfPlaylist(): Boolean
+    suspend fun modifyCountOfPlaylist()
 
     suspend fun removePlaylist(playlistId: Int)
 }

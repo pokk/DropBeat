@@ -24,6 +24,8 @@
 
 package taiwan.no.one.feat.library.data.repositories
 
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.data.stores.LocalStore
 import taiwan.no.one.feat.library.data.stores.RemoteStore
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
@@ -32,23 +34,22 @@ internal class PlaylistRepository(
     private val local: LocalStore,
     private val remote: RemoteStore
 ) : PlaylistRepo {
-    override suspend fun fetchMusics() = local.getMusics()
+    override suspend fun fetchMusics(playlistId: Int) = local.getMusics(playlistId)
 
-    override suspend fun addOrUpdateLocalMusic() = local.createOrModifyLocalMusic()
+    override suspend fun addMusics(songs: List<SongEntity>) = local.createMusics(songs)
 
-    override suspend fun deleteMusic() = TODO() // local.removePlaylist()
+    override suspend fun addMusicToPlaylist(song: SongEntity, playlistId: Int) =
+        local.createMusicToPlaylist(song, playlistId)
+
+    override suspend fun deleteMusic(playlistId: Int) = local.removePlaylist(playlistId)
 
     override suspend fun fetchPlaylists() = local.getPlaylists()
 
     override suspend fun fetchTheNewestPlaylist() = local.getTheNewestPlaylist()
 
-    override suspend fun fetchPlaylist() = local.getPlaylist(1)
+    override suspend fun addPlaylist(playlist: PlayListEntity) = local.createPlaylist(playlist)
 
-    override suspend fun addPlaylist() = local.createPlaylist()
+    override suspend fun updatePlaylist(playlistId: Int) = local.modifyPlaylist(playlistId)
 
-    override suspend fun updatePlaylist() = local.modifyPlaylist()
-
-    override suspend fun updateCountOfPlaylist() = local.modifyCountOfPlaylist()
-
-    override suspend fun deletePlaylist() = TODO() // local.removePlaylist()
+    override suspend fun deletePlaylist(playlistId: Int, entity: PlayListEntity) = local.removePlaylist(playlistId)
 }

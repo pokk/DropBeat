@@ -25,15 +25,16 @@
 package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class AddPlaylistOneShotCase(
     private val repository: PlaylistRepo
 ) : AddPlaylistCase() {
     override suspend fun acquireCase(parameter: AddPlaylistReq?) = parameter.ensure {
-        repository.addPlaylist()
+        repository.addPlaylist(playlist)
         true
     }
 
-    class Request : RequestValues
+    class Request(val playlist: PlayListEntity) : RequestValues
 }

@@ -22,8 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.presentation.viewmodels
+package taiwan.no.one.core.data.local.room
 
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import androidx.room.ColumnInfo
+import java.util.Date
 
-internal class LoginViewModel : BehindViewModel()
+data class TimeEntity(
+    @ColumnInfo(name = "created_at")
+    val createdAt: Date = Date(),
+    @ColumnInfo(name = "updated_at")
+    val updatedAt: Date = Date(),
+)

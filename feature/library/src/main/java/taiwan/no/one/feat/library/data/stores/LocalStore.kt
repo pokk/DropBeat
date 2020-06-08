@@ -26,6 +26,8 @@ package taiwan.no.one.feat.library.data.stores
 
 import com.tencent.mmkv.MMKV
 import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
 import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 
@@ -38,32 +40,27 @@ internal class LocalStore(
     private val playlistDao: PlaylistDao,
     private val songDao: SongDao,
 ) : DataStore {
-    override suspend fun getMusics() = songDao.getMusics()
+    override suspend fun getMusics(playlistId: Int) = songDao.getMusics()
 
-    override suspend fun createOrModifyLocalMusic(): Boolean {
-        TODO("Not yet implemented")
-//        return songDao.insertBy()
+    override suspend fun createMusics(songs: List<SongEntity>) = songDao.insert(*songs.toTypedArray())
+
+    override suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int) = TODO()
+
+    override suspend fun removeMusic(id: Int) = songDao.deleteBy(id)
+
+    override suspend fun getPlaylists() = playlistDao.getPlaylists().apply {
+        map { it.songs = it.songIds.let { songDao.getMusics(it) } }
     }
-
-    override suspend fun removeLocalMusic(id: Int) = songDao.deleteBy(id)
-
-    override suspend fun getPlaylists() = playlistDao.getPlaylists()
 
     override suspend fun getPlaylist(playlistId: Int) = playlistDao.getPlaylist(playlistId)
 
     override suspend fun getTheNewestPlaylist() = playlistDao.getLatestPlaylist()
 
-    override suspend fun createPlaylist(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override suspend fun createPlaylist(playlist: PlayListEntity) = playlistDao.insert(playlist)
 
-    override suspend fun modifyPlaylist(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override suspend fun modifyPlaylist(playlistId: Int) = TODO()
 
-    override suspend fun modifyCountOfPlaylist(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override suspend fun modifyCountOfPlaylist() = TODO()
 
     override suspend fun removePlaylist(playlistId: Int) = playlistDao.deleteBy(playlistId)
 }

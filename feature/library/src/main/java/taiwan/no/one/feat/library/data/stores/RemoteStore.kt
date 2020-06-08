@@ -26,17 +26,21 @@ package taiwan.no.one.feat.library.data.stores
 
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct
  * remote service to access the data.
  */
 internal class RemoteStore : DataStore {
-    override suspend fun getMusics() = UnsupportedOperation()
+    override suspend fun getMusics(playlistId: Int) = UnsupportedOperation()
 
-    override suspend fun createOrModifyLocalMusic() = UnsupportedOperation()
+    override suspend fun createMusics(songs: List<SongEntity>) = UnsupportedOperation()
 
-    override suspend fun removeLocalMusic(id: Int) = UnsupportedOperation()
+    override suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int) = UnsupportedOperation()
+
+    override suspend fun removeMusic(id: Int) = UnsupportedOperation()
 
     override suspend fun getPlaylists() = UnsupportedOperation()
 
@@ -44,9 +48,9 @@ internal class RemoteStore : DataStore {
 
     override suspend fun getTheNewestPlaylist() = UnsupportedOperation()
 
-    override suspend fun createPlaylist() = UnsupportedOperation()
+    override suspend fun createPlaylist(playlist: PlayListEntity): Unit = UnsupportedOperation()
 
-    override suspend fun modifyPlaylist() = UnsupportedOperation()
+    override suspend fun modifyPlaylist(playlistId: Int) = UnsupportedOperation()
 
     override suspend fun modifyCountOfPlaylist() = UnsupportedOperation()
 

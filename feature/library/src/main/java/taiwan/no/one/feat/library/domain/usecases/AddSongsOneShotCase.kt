@@ -22,23 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.local.services.database.convert
+package taiwan.no.one.feat.library.domain.usecases
 
-import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
-internal class SongListConvert {
-    @TypeConverter
-    fun fromSongsToStr(songs: List<LibraryEntity.SongEntity>?): String? {
-        val type = object : TypeToken<List<LibraryEntity.SongEntity>>() {}.type
-        return Gson().newBuilder().create().toJson(songs, type)
+internal class AddSongsOneShotCase(
+    private val repository: PlaylistRepo
+) : AddSongsCase() {
+    override suspend fun acquireCase(parameter: AddSongReq?) = parameter.ensure {
+        repository.addMusics(songs)
+        true
     }
 
-    @TypeConverter
-    fun fromStrToSongs(songsString: String?): List<LibraryEntity.SongEntity>? {
-        val type = object : TypeToken<List<LibraryEntity.SongEntity>>() {}.type
-        return Gson().newBuilder().create().fromJson(songsString, type)
-    }
+    class Request(val songs: List<SongEntity>) : RequestValues
 }

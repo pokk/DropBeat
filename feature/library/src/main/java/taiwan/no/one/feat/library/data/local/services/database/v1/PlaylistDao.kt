@@ -27,7 +27,6 @@ package taiwan.no.one.feat.library.data.local.services.database.v1
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import java.util.Date
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
@@ -75,8 +74,7 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         if (name == DEFAULT_STR && trackNumber == DEFAULT_INT) return
         val playlist = getPlaylist(id)
         val newPlaylist = playlist.copy(name = name.takeIf { it != DEFAULT_STR } ?: playlist.name,
-                                        count = trackNumber.takeIf { it >= 0 } ?: playlist.count,
-                                        updatedAt = Date())
+                                        count = trackNumber.takeIf { it >= 0 } ?: playlist.count)
         update(newPlaylist)
     }
 

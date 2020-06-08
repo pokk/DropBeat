@@ -25,11 +25,14 @@
 package taiwan.no.one.feat.library.data.entities.local
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.util.Date
+import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_STR
+import java.util.Date
 
 internal data class LibraryEntity(
     val count: Int,
@@ -40,13 +43,24 @@ internal data class LibraryEntity(
         @PrimaryKey(autoGenerate = true)
         val id: Int = 0, // For the room database
         val name: String = DEFAULT_STR,
-        val songs: List<SongEntity>,
+        @ColumnInfo(name = "song_ids")
+        val songIds: List<Int> = emptyList(),
         val count: Int = 0,
-        @ColumnInfo(name = "created_at")
-        val createdAt: Date = Date(),
-        @ColumnInfo(name = "updated_at")
-        val updatedAt: Date = Date(),
-    )
+        @Embedded
+        val time: TimeEntity = TimeEntity()
+    ) {
+        @Ignore
+        var songs: List<SongEntity> = emptyList()
+
+        override fun toString() = """
+            id: $id,
+            name: $name,
+            songIds: $songIds,
+            count: $count,
+            time: $time,
+            songs: $songs
+        """.trimIndent()
+    }
 
     @Entity(tableName = "table_song", indices = [Index("title", "artist", unique = true)])
     internal data class SongEntity(
@@ -58,8 +72,8 @@ internal data class LibraryEntity(
         @ColumnInfo(name = "cover_uri")
         val coverUri: String = DEFAULT_STR,
         val duration: Int = 0,
-        @ColumnInfo(name = "created_at")
-        val createdAt: Date = Date(),
+        @Embedded
+        val time: TimeEntity = TimeEntity(),
         // ↓↓↓ If downloaded ↓↓↓
         val hasOwn: Boolean = false,
         @ColumnInfo(name = "local_uri")

@@ -33,23 +33,21 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface PlaylistRepo : Repository {
-    suspend fun fetchMusics(): List<SongEntity>
+    suspend fun fetchMusics(playlistId: Int): List<SongEntity>
 
-    suspend fun addOrUpdateLocalMusic(): Boolean
+    suspend fun addMusics(songs: List<SongEntity>)
 
-    suspend fun deleteMusic(): Boolean
+    suspend fun addMusicToPlaylist(song: SongEntity, playlistId: Int)
+
+    suspend fun deleteMusic(playlistId: Int)
 
     suspend fun fetchPlaylists(): List<PlayListEntity>
 
     suspend fun fetchTheNewestPlaylist(): PlayListEntity
 
-    suspend fun fetchPlaylist(): PlayListEntity
+    suspend fun addPlaylist(playlist: PlayListEntity)
 
-    suspend fun addPlaylist(): Boolean
+    suspend fun updatePlaylist(playlistId: Int)
 
-    suspend fun updatePlaylist(): Boolean
-
-    suspend fun updateCountOfPlaylist(): Boolean
-
-    suspend fun deletePlaylist(): Boolean
+    suspend fun deletePlaylist(playlistId: Int, playlist: PlayListEntity)
 }

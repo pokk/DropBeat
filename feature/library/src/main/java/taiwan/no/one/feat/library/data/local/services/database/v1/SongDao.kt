@@ -27,9 +27,9 @@ package taiwan.no.one.feat.library.data.local.services.database.v1
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import java.util.Date
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
+import java.util.Date
 
 /**
  * Integrated the base [androidx.room.Room] database operations.
@@ -46,7 +46,7 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
      */
     @Transaction
     open suspend fun insertBy(newData: LibraryEntity.SongEntity, addOrMinus: Boolean) {
-        val existMusic = getMusic(newData.title, newData.artist)
+        val existMusic = getMusics(newData.title, newData.artist)
         var updatedData = newData
         // Update the download date if the data isn't download information.
         if (!newData.hasOwn || (newData.hasOwn && existMusic?.hasOwn == true))
@@ -104,11 +104,19 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
     /**
      * Get one data from the local music table.
      *
+     * @param ids List<Int>
+     */
+    @Query("SELECT * FROM table_song WHERE id IN (:ids)")
+    abstract suspend fun getMusics(ids: List<Int>): List<LibraryEntity.SongEntity>
+
+    /**
+     * Get one data from the local music table.
+     *
      * @param track
      * @param artist
      */
     @Query("SELECT * FROM table_song WHERE title=:track AND artist=:artist")
-    abstract suspend fun getMusic(track: String, artist: String): LibraryEntity.SongEntity?
+    abstract suspend fun getMusics(track: String, artist: String): LibraryEntity.SongEntity?
 
     /**
      * Remove a music from local music table.
