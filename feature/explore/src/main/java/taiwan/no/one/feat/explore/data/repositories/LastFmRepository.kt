@@ -32,33 +32,34 @@ internal class LastFmRepository(
     private val local: LocalStore,
     private val remote: RemoteStore
 ) : LastFmRepo {
-    override suspend fun fetchAlbum() = remote.getAlbumInfo().album ?: throw Exception()
+    override suspend fun fetchAlbum(mbid: String) = remote.getAlbumInfo(mbid).album ?: throw Exception()
 
-    override suspend fun fetchArtist() = remote.getArtistInfo().artist ?: throw Exception()
+    override suspend fun fetchArtist(mbid: String) = remote.getArtistInfo(mbid).artist ?: throw Exception()
 
-    override suspend fun fetchArtistTopAlbum() = remote.getArtistTopAlbum().topAlbums
+    override suspend fun fetchArtistTopAlbum(mbid: String) = remote.getArtistTopAlbum(mbid).topAlbums
 
-    override suspend fun fetchArtistTopTrack() = remote.getArtistTopTrack().topTracks
+    override suspend fun fetchArtistTopTrack(mbid: String) = remote.getArtistTopTrack(mbid).topTracks
 
-    override suspend fun fetchSimilarArtistInfo() = remote.getSimilarArtistInfo().similarArtist
+    override suspend fun fetchSimilarArtistInfo(mbid: String) = remote.getSimilarArtistInfo(mbid).similarArtist
 
-    override suspend fun fetchArtistPhotoInfo() = remote.getArtistPhotosInfo().photos
+    override suspend fun fetchArtistPhotoInfo(artistName: String, page: Int) =
+        remote.getArtistPhotosInfo(artistName, page).photos
 
-    override suspend fun fetchTrack() = remote.getTrackInfo().track ?: throw Exception()
+    override suspend fun fetchTrack(mbid: String) = remote.getTrackInfo(mbid).track ?: throw Exception()
 
-    override suspend fun fetchSimilarTrackInfo() = remote.getSimilarTrackInfo().similarTracks
+    override suspend fun fetchSimilarTrackInfo(mbid: String) = remote.getSimilarTrackInfo(mbid).similarTracks
 
-    override suspend fun fetchChartTopTrack() = remote.getChartTopTrack().track
+    override suspend fun fetchChartTopTrack(page: Int, limit: Int) = remote.getChartTopTrack(page, limit).track
 
-    override suspend fun fetchChartTopArtist() = remote.getChartTopArtist().artists
+    override suspend fun fetchChartTopArtist(page: Int, limit: Int) = remote.getChartTopArtist(page, limit).artists
 
-    override suspend fun fetchChartTopTag() = remote.getChartTopTag().tag
+    override suspend fun fetchChartTopTag(page: Int, limit: Int) = remote.getChartTopTag(page, limit).tag
 
-    override suspend fun fetchTag() = remote.getTagInfo().tag
+    override suspend fun fetchTag(mbid: String) = remote.getTagInfo(mbid).tag
 
-    override suspend fun fetchTagTopAlbum() = remote.getTagTopAlbum().albums
+    override suspend fun fetchTagTopAlbum(mbid: String) = remote.getTagTopAlbum(mbid).albums
 
-    override suspend fun fetchTagTopArtist() = remote.getTagTopArtist().topArtists
+    override suspend fun fetchTagTopArtist(mbid: String) = remote.getTagTopArtist(mbid).topArtists
 
-    override suspend fun fetchTagTopTrack() = remote.getTagTopTrack().track
+    override suspend fun fetchTagTopTrack(mbid: String) = remote.getTagTopTrack(mbid).track
 }

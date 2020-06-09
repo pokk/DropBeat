@@ -41,42 +41,42 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity
  */
 internal interface LastFmRepo : Repository {
     //region AlbumEntity
-    suspend fun fetchAlbum(): AlbumInfoEntity.AlbumEntity
+    suspend fun fetchAlbum(mbid: String): AlbumInfoEntity.AlbumEntity
     //endregion
 
     //region ArtistEntity
-    suspend fun fetchArtist(): ArtistInfoEntity.ArtistEntity
+    suspend fun fetchArtist(mbid: String): ArtistInfoEntity.ArtistEntity
 
-    suspend fun fetchArtistTopAlbum(): CommonLastFmEntity.TopAlbumsEntity
+    suspend fun fetchArtistTopAlbum(mbid: String): CommonLastFmEntity.TopAlbumsEntity
 
-    suspend fun fetchArtistTopTrack(): ArtistTopTrackInfoEntity.TracksWithStreamableEntity
+    suspend fun fetchArtistTopTrack(mbid: String): ArtistTopTrackInfoEntity.TracksWithStreamableEntity
 
-    suspend fun fetchSimilarArtistInfo(): TopArtistInfoEntity.ArtistsEntity
+    suspend fun fetchSimilarArtistInfo(mbid: String): TopArtistInfoEntity.ArtistsEntity
 
-    suspend fun fetchArtistPhotoInfo(): List<ArtistPhotoEntity>
+    suspend fun fetchArtistPhotoInfo(artistName: String, page: Int): List<ArtistPhotoEntity>
     //endregion
 
     //region TrackEntity
-    suspend fun fetchTrack(): TrackInfoEntity.TrackEntity
+    suspend fun fetchTrack(mbid: String): TrackInfoEntity.TrackEntity
 
-    suspend fun fetchSimilarTrackInfo(): TopTrackInfoEntity.TracksEntity
+    suspend fun fetchSimilarTrackInfo(mbid: String): TopTrackInfoEntity.TracksEntity
     //endregion
 
     //region Chart
-    suspend fun fetchChartTopTrack(): TopTrackInfoEntity.TracksEntity
+    suspend fun fetchChartTopTrack(page: Int, limit: Int): TopTrackInfoEntity.TracksEntity
 
-    suspend fun fetchChartTopArtist(): TopArtistInfoEntity.ArtistsEntity
+    suspend fun fetchChartTopArtist(page: Int, limit: Int): TopArtistInfoEntity.ArtistsEntity
 
-    suspend fun fetchChartTopTag(): CommonLastFmEntity.TagsEntity
+    suspend fun fetchChartTopTag(page: Int, limit: Int): CommonLastFmEntity.TagsEntity
     //endregion
 
     //region TagEntity
-    suspend fun fetchTag(): TagInfoEntity.TagEntity
+    suspend fun fetchTag(mbid: String): TagInfoEntity.TagEntity
 
-    suspend fun fetchTagTopAlbum(): CommonLastFmEntity.TopAlbumsEntity
+    suspend fun fetchTagTopAlbum(mbid: String): CommonLastFmEntity.TopAlbumsEntity
 
-    suspend fun fetchTagTopArtist(): TopArtistInfoEntity.ArtistsEntity
+    suspend fun fetchTagTopArtist(mbid: String): TopArtistInfoEntity.ArtistsEntity
 
-    suspend fun fetchTagTopTrack(): TopTrackInfoEntity.TracksEntity
+    suspend fun fetchTagTopTrack(mbid: String): TopTrackInfoEntity.TracksEntity
     //endregion
 }

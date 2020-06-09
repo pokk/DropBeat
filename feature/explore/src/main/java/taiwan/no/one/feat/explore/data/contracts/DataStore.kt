@@ -45,42 +45,43 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackSimilarEntity
  */
 internal interface DataStore {
     //region Album Data
-    suspend fun getAlbumInfo(): AlbumInfoEntity
+    suspend fun getAlbumInfo(mbid: String): AlbumInfoEntity
     //endregion
 
     //region Artist Data
-    suspend fun getArtistInfo(): ArtistInfoEntity
+    suspend fun getArtistInfo(mbid: String): ArtistInfoEntity
 
-    suspend fun getArtistTopAlbum(): ArtistTopAlbumInfoEntity
+    suspend fun getArtistTopAlbum(mbid: String): ArtistTopAlbumInfoEntity
 
-    suspend fun getArtistTopTrack(): ArtistTopTrackInfoEntity
+    suspend fun getArtistTopTrack(mbid: String): ArtistTopTrackInfoEntity
 
-    suspend fun getSimilarArtistInfo(): ArtistSimilarEntity
+    suspend fun getSimilarArtistInfo(mbid: String): ArtistSimilarEntity
 
-    suspend fun getArtistPhotosInfo(): ArtistPhotosEntity
+    suspend fun getArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
     //endregion
 
     //region Track Data
-    suspend fun getTrackInfo(): TrackInfoEntity
+    suspend fun getTrackInfo(mbid: String): TrackInfoEntity
 
-    suspend fun getSimilarTrackInfo(): TrackSimilarEntity
+    suspend fun getSimilarTrackInfo(mbid: String): TrackSimilarEntity
     //endregion
 
     //region Chart
-    suspend fun getChartTopTrack(): TopTrackInfoEntity
+    suspend fun getChartTopTrack(page: Int, limit: Int): TopTrackInfoEntity
 
-    suspend fun getChartTopArtist(): TopArtistInfoEntity
+    suspend fun getChartTopArtist(page: Int, limit: Int): TopArtistInfoEntity
 
-    suspend fun getChartTopTag(): TopTagInfoEntity
+    suspend fun getChartTopTag(page: Int, limit: Int): TopTagInfoEntity
     //endregion
 
     //region Tag Data
-    suspend fun getTagInfo(): TagInfoEntity
+    suspend fun getTagInfo(mbid: String): TagInfoEntity
 
-    suspend fun getTagTopAlbum(): TopAlbumInfoEntity
+    suspend fun getTagTopAlbum(mbid: String): TopAlbumInfoEntity
 
-    suspend fun getTagTopArtist(): TagTopArtistEntity
+    suspend fun getTagTopArtist(mbid: String): TagTopArtistEntity
 
-    suspend fun getTagTopTrack(): TopTrackInfoEntity
+    suspend fun getTagTopTrack(mbid: String): TopTrackInfoEntity
+
     //endregion
 }

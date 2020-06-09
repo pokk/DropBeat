@@ -49,7 +49,7 @@ internal object DataModules : ModuleProvider {
         import(remoteProvide(context))
 
         bind<LocalStore>() with singleton { LocalStore(instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore(instance(), instance()) }
+        bind<RemoteStore>() with singleton { RemoteStore(instance(), instance(), context) }
 
         bind<LastFmRepo>() with singleton { LastFmRepository(instance(), instance()) }
     }
