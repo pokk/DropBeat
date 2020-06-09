@@ -50,7 +50,5 @@ internal interface DataStore {
 
     suspend fun modifyPlaylist(playlist: PlayListEntity)
 
-    suspend fun modifyCountOfPlaylist()
-
     suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?)
 }

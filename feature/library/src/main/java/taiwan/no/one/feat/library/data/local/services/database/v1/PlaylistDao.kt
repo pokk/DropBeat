@@ -70,7 +70,8 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
      * @param name
      * @param trackNumber
      */
-    @Transaction open suspend fun updateBy(id: Int, name: String = DEFAULT_STR, trackNumber: Int = DEFAULT_INT) {
+    @Transaction
+    open suspend fun updateBy(id: Int, name: String = DEFAULT_STR, trackNumber: Int = DEFAULT_INT) {
         if (name == DEFAULT_STR && trackNumber == DEFAULT_INT) return
         val playlist = getPlaylist(id)
         val newPlaylist = playlist.copy(name = name.takeIf { it != DEFAULT_STR } ?: playlist.name,
