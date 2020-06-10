@@ -155,6 +155,7 @@ fun DependencyHandlerScope.internetDependencies(env: String) {
 fun DependencyHandlerScope.firebaseDependencies(env: String) {
     env(LibraryDependency.Firebase.FIREBASE_ANALYTICS)
     env(LibraryDependency.Firebase.FIREBASE_CRASHLYTICS)
+    env(LibraryDependency.Firebase.FIREBASE_CONFIG)
     env(LibraryDependency.Firebase.FIREBASE_MESSAGING)
     env(LibraryDependency.Firebase.FIREBASE_DB)
     env(LibraryDependency.Firebase.FIREBASE_FIRESTORE)

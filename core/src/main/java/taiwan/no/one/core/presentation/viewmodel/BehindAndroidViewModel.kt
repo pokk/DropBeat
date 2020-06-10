@@ -27,12 +27,14 @@ package taiwan.no.one.core.presentation.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 abstract class BehindAndroidViewModel(application: Application) : AndroidViewModel(application) {
+    protected val context get() = getApplication<Application>()
+
     inline fun launchBehind(
         context: CoroutineContext = Dispatchers.Default,
         crossinline block: suspend CoroutineScope.() -> Unit

@@ -26,21 +26,29 @@ package taiwan.no.one.dropbeat.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe as obs
 import com.google.android.play.core.splitcompat.SplitCompat
 import taiwan.no.one.dropbeat.databinding.ActivitySplashBinding
+import taiwan.no.one.dropbeat.presentation.viewmodels.SplashViewModel
 
 internal class SplashActivity : AppCompatActivity() {
     private var binding: ActivitySplashBinding? = null
+    private val vm by viewModels<SplashViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        vm.configs.obs(this) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+
         SplitCompat.install(this)
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        vm.getConfigs()
     }
 
     override fun onDestroy() {
