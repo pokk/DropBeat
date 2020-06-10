@@ -28,6 +28,7 @@ import android.app.Application
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.tencent.mmkv.MMKV
 import java.util.concurrent.TimeUnit
 import taiwan.no.one.core.presentation.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
@@ -41,13 +42,21 @@ internal class SplashViewModel(
     private val _configs by lazy { ResultLiveData<Boolean>() }
     val configs = _configs.toLiveData()
 
+    // TODO(jieyiwu): 6/10/20 Those should move to data layer.
     fun getConfigs() = Firebase.remoteConfig.apply {
         setConfigSettingsAsync(remoteConfigSettings {
             minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else TimeUnit.HOURS.toSeconds(6)
         })
         setDefaultsAsync(R.xml.remote_config_defaults)
         fetchAndActivate().addOnCompleteListener {
-            _configs.value = if (it.isSuccessful) Result.success(true) else Result.failure(IllegalArgumentException())
+            _configs.value = if (it.isSuccessful) {
+                MMKV.defaultMMKV().putString(context.getString(R.string.config_lastfm_key),
+                                             getString(context.getString(R.string.config_lastfm_key)))
+                Result.success(true)
+            }
+            else {
+                Result.failure(IllegalArgumentException())
+            }
         }
     }
 }
