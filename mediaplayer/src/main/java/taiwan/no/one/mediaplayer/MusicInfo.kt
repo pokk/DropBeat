@@ -22,10 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.player.presentation.fragments
+package taiwan.no.one.mediaplayer
 
-import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.player.databinding.FragmentIndexBinding
-
-internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>()
+data class MusicInfo(
+    val title: String,
+    val artist: String,
+    val uri: String,
+    val duration: Int,
+)

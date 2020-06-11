@@ -79,6 +79,12 @@ fun DependencyHandlerScope.widgetDependencies() {
 //    DepEnvImpl(Deps.Widget.quickDialog)
 }
 
+fun DependencyHandlerScope.mediaDependencies() {
+    kotlinAndroidDependencies(DepEnvImpl)
+    commonAndroidxDependencies(DepEnvImpl)
+    DepEnvImpl(LibraryDependency.Media.EXOPLAYER_CORE)
+}
+
 fun DependencyHandlerScope.firebaseAuthDependencies() {
     DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_GOOGLE)
     DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)

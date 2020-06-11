@@ -32,12 +32,12 @@ import org.kodein.di.provider
 import taiwan.no.one.dropbeat.di.ViewModelEntry
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.player.FeatModules.FEAT_NAME
-import taiwan.no.one.feat.player.presentation.viewmodels.LoginViewModel
+import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
 
 internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}PreziModule") {
         bind<ViewModelEntry>().inSet() with provider {
-            LoginViewModel::class.java to LoginViewModel()
+            PlayerViewModel::class.java to PlayerViewModel()
         }
     }
 }

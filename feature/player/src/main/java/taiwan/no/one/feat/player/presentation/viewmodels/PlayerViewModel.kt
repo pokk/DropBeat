@@ -26,4 +26,4 @@ package taiwan.no.one.feat.player.presentation.viewmodels
 
 import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
 
-internal class LoginViewModel : BehindViewModel()
+internal class PlayerViewModel : BehindViewModel()

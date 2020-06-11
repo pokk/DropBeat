@@ -34,6 +34,7 @@ object CommonModuleDependency {
     const val LIB_PURE_EXT = ":ext"
     const val LIB_KTX = ":ktx"
     const val LIB_WIDGET = ":widget"
+    const val LIB_MEDIA_PLAYER = ":mediaplayer"
     const val LIB_DEVICE = ":device"
     const val LIB_CORE = ":core"
 

@@ -65,6 +65,7 @@ object LibraryDependency {
         const val FIREBASE_AUTH = "19.3.1"
         const val FIREBASE_AUTH_GOOGLE = "18.0.0"
         const val FIREBASE_AUTH_FACEBOOK = "7.0.0"
+        const val EXOPLAYER = "2.11.5"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
         const val LOTTIE = "3.4.0"
@@ -145,6 +146,10 @@ object LibraryDependency {
         const val FIREBASE_AUTH = "com.google.firebase:firebase-auth-ktx:${Version.FIREBASE_AUTH}"
         const val FIREBASE_AUTH_GOOGLE = "com.google.android.gms:play-services-auth:${Version.FIREBASE_AUTH_GOOGLE}"
         const val FIREBASE_AUTH_FACEBOOK = "com.facebook.android:facebook-android-sdk:${Version.FIREBASE_AUTH_FACEBOOK}"
+    }
+
+    object Media {
+        const val EXOPLAYER_CORE = "com.google.android.exoplayer:exoplayer-core:${Version.EXOPLAYER}"
     }
 
     object Ui {

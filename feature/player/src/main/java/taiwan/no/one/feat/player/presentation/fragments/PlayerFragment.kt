@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-include(":app", ":ktx", ":ext", ":widget", ":mediaplayer", ":device", ":core")
-include(":feature:search",
-        ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+
+package taiwan.no.one.feat.player.presentation.fragments
+
+import taiwan.no.one.core.presentation.activity.BaseActivity
+import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.player.databinding.FragmentIndexBinding
+
+internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>()

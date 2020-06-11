@@ -86,7 +86,7 @@ subprojects {
                 plugin("java-library")
                 plugin("kotlin")
             }
-            "widget", "ktx", "device", "core" -> {
+            "widget", "ktx", "device", "core", "mediaplayer" -> {
                 plugin("com.android.library")
                 plugin("kotlin-android")
             }
