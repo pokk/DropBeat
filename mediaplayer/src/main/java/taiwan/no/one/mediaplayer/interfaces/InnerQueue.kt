@@ -24,14 +24,7 @@
 
 package taiwan.no.one.mediaplayer.interfaces
 
-import java.util.LinkedList
-
 internal interface InnerQueue<T> {
-    /**
-     * This is the real queue we need.
-     */
-    val queue: LinkedList<T>
-
     /** Size of the playlist. */
     val size: Int
 

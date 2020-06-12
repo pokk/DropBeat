@@ -24,7 +24,8 @@
 
 package taiwan.no.one.mediaplayer.interfaces
 
-import taiwan.no.one.mediaplayer.MusicPlayerState
+import taiwan.no.one.mediaplayer.MusicInfo
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.Default
 
 interface MusicPlayer {
     sealed class Mode {
@@ -34,34 +35,39 @@ interface MusicPlayer {
         object Shuffle : Mode()
     }
 
+    sealed class State {
+        object Standby : State()
+        object Play : State()
+        object Pause : State()
+    }
+
     /** The current is paying state or not. */
     val isPlaying: Boolean
 
-    /** Current playing track's uri. */
-    val curPlayingUri: String
+    /** Current playing track's information. */
+    val curPlayingUri: MusicInfo
 
     /** Current playing mode for the playlist. */
-    val playingMode: Mode
+    var mode: Mode
 
+    /**
+     * The function is used to get the current state of the music player.
+     *
+     * @return [Standby]: the music player is waiting for the music.
+     *  [Play]: the music player is playing.
+     *  [Pause]: the music player is pausing.
+     */
+    fun getPlayerState(): State
+
+    //region Player Action
     /**
      * Start playing a music.
-     * This function will play the music which is specified with an URI.
-     * If the [uri] is blank string, the function is also about play the music, but when
-     * the music is playing, executing this function will pause the music.
+     * The function is also about play the music, but when the music is playing, executing this
+     * function will pause the music.
      * If the music is pausing, executing this function will resume the music.
      * If playing is failed, the function returns false.
-     *
-     * @param uri the uri of a track.
      */
-    fun play(uri: String = ""): Boolean
-
-    /**
-     * Start playing a music according to the playlist index.
-     *
-     * @param index
-     * @return
-     */
-    fun play(index: Int): Boolean
+    fun play(): Boolean
 
     /**
      * Stop playing the music.
@@ -87,6 +93,12 @@ interface MusicPlayer {
      * Play the previous track from the playlist.
      */
     fun previous()
+    //endregion
+
+    /**
+     * seek the play time when the music is playing
+     */
+    fun seekTo(sec: Int)
 
     /**
      * Clear all tracks from the playlist.
@@ -99,43 +111,17 @@ interface MusicPlayer {
      * @param list
      * @return
      */
-    fun addToPlaylist(list: List<String>): Boolean
+    fun appendPlaylist(list: List<MusicInfo>): Boolean
 
     /**
      * Clear original list playlist has then add a new track [list] into the playlist.
      *
      * @param list
      */
-    fun replacePlaylist(list: List<String>)
-
-    /**
-     * Set the repeat mode: normal play, repeat one music, repeat the whole playlist
-     */
-    fun setPlayMode(mode: Mode)
-
-    /**
-     * seek the play time when the music is playing
-     */
-    fun seekTo(sec: Int)
-
-    /**
-     * The function is used to get the current state of the music player.
-     *
-     * @return [taiwan.no.one.mediaplayer.MusicPlayerState.Standby]: the music player is waiting for the music.
-     *  [taiwan.no.one.mediaplayer.MusicPlayerState.Play]: the music player is playing.
-     *  [taiwan.no.one.mediaplayer.MusicPlayerState.Pause]: the music player is pausing.
-     */
-    fun getPlayerState(): MusicPlayerState
+    fun replacePlaylist(list: List<MusicInfo>)
 
     /**
      * The function is used to set up an event listener which monitor the activity of music player.
      */
 //    fun setEventListener(listener: PlayerEventListener?)
-
-    /**
-     * The function is used to write the media file to local storage if the music player get the complete file.
-     *
-     * @return false is that writing file unsuccessful, otherwise, is that writing file successful.
-     */
-    fun writeToFile(url: String, filePath: String? = null): Boolean
 }

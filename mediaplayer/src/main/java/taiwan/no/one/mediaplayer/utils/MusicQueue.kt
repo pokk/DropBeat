@@ -28,11 +28,19 @@ import java.util.LinkedList
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.interfaces.InnerQueue
 
+/**
+ * It is a playing queue when a media player plays a song, it could get a sequence song from
+ * this data structure.
+ *
+ * @property current MusicInfo?
+ * @property iterator MutableListIterator<MusicInfo>?
+ * @property queue LinkedList<MusicInfo>
+ * @property size Int
+ */
 internal class MusicQueue : InnerQueue<MusicInfo> {
     var current: MusicInfo? = null
     private var iterator: MutableListIterator<MusicInfo>? = null
-
-    override val queue by lazy { LinkedList<MusicInfo>() }
+    private val queue by lazy { LinkedList<MusicInfo>() }
 
     override val size get() = queue.size
 
