@@ -24,8 +24,54 @@
 
 package taiwan.no.one.feat.player.presentation.fragments
 
+import android.os.Bundle
+import android.widget.Toast
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.player.databinding.FragmentIndexBinding
+import taiwan.no.one.mediaplayer.MusicInfo
+import taiwan.no.one.mediaplayer.SimpleMusicPlayer
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.RepeatAll
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.RepeatOne
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.Shuffle
 
-internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>()
+internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>() {
+    val player = SimpleMusicPlayer.getInstance()
+
+    override fun componentListenersBinding() {
+        binding.btnPlay.setOnClickListener { player.play() }
+        binding.btnClear.setOnClickListener { player.clearPlaylist() }
+        binding.btnStop.setOnClickListener { player.stop() }
+        binding.btnNext.setOnClickListener { player.next() }
+        binding.btnPrevious.setOnClickListener { player.previous() }
+        binding.btnPause.setOnClickListener { player.pause() }
+        binding.btnShuffle.setOnClickListener { player.mode = Shuffle }
+        binding.btnRepeatAll.setOnClickListener { player.mode = RepeatAll }
+        binding.btnRepeatOne.setOnClickListener { player.mode = RepeatOne }
+        binding.btnCurrent.setOnClickListener {
+            Toast.makeText(requireActivity(), player.curPlayingInfo?.title.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun rendered(savedInstanceState: Bundle?) {
+        val playlist = listOf(
+            MusicInfo("title1",
+                      "artist1",
+                      "http://cdn.musicappserver.com/music/1d/2b52438d2f91cb61814dff8a1c73a8.mp3",
+                      983),
+            MusicInfo("title2",
+                      "artist2",
+                      "http://cdn.musicappserver.com/music/b1/4acbbb3567c3c35b33305a07dc693c.mp3",
+                      224),
+            MusicInfo("title3",
+                      "artist3",
+                      "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
+                      360),
+            MusicInfo("title4",
+                      "artist4",
+                      "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
+                      368),
+        )
+        player.replacePlaylist(playlist)
+    }
+}

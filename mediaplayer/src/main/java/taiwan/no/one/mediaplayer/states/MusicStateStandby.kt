@@ -22,69 +22,26 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.mediaplayer.interfaces
+package taiwan.no.one.mediaplayer.states
 
-internal interface InnerQueue<T> {
-    /** Size of the playlist. */
-    val size: Int
+import com.google.android.exoplayer2.ExoPlayer
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 
-    val currentItem: T?
+internal class MusicStateStandby(player: ExoPlayer) : MusicState(player) {
+    override val state = Standby
 
-    /**
-     * Set the current to the next item.
-     *
-     * @return
-     */
-    fun goNext(): T?
+    override fun play(): MusicState {
+        player.playWhenReady = true
+        return MusicStatePlay(player)
+    }
 
-    /**
-     * Set the current to the previous item
-     *
-     * @return
-     */
-    fun goPrevious(): T?
+    override fun pause() = this
 
-    /**
-     * Reset the current object to the first of the list.
-     *
-     * @return
-     */
-    fun resetCurrentToBegin()
+    override fun next() = this
 
-    /**
-     * Append a list of objs into the playlist.
-     *
-     * @param objs List<T>
-     * @return Boolean
-     */
-    fun enqueue(objs: List<T>): Boolean
+    override fun previous() = this
 
-    /**
-     * Append an item into the playlist.
-     *
-     * @param obj
-     * @return
-     */
-    fun enqueue(obj: T): Boolean
-
-    /**
-     * Clean the queue and add a new list into.
-     *
-     * @param objs
-     * @return
-     */
-    fun reset(objs: List<T>): Boolean
-
-    /**
-     * Clean the queue and add a new object into.
-     *
-     * @param obj
-     * @return
-     */
-    fun reset(obj: T): Boolean
-
-    /**
-     * Clear the while playlist.
-     */
-    fun clear()
+    override fun resetPlaylist(): MusicState {
+        return this
+    }
 }

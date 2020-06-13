@@ -24,15 +24,16 @@
 
 package taiwan.no.one.mediaplayer.interfaces
 
+import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.Player
 import taiwan.no.one.mediaplayer.MusicInfo
-import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.Default
 
 interface MusicPlayer {
-    sealed class Mode {
-        object Default : Mode() // Sequence play
-        object RepeatOne : Mode()
-        object RepeatAll : Mode()
-        object Shuffle : Mode()
+    enum class Mode(val value: Int) {
+        Default(Player.REPEAT_MODE_OFF), // Sequence play
+        RepeatOne(Player.REPEAT_MODE_ONE),
+        RepeatAll(Player.REPEAT_MODE_ALL),
+        Shuffle(Player.REPEAT_MODE_ALL);
     }
 
     sealed class State {
@@ -45,7 +46,10 @@ interface MusicPlayer {
     val isPlaying: Boolean
 
     /** Current playing track's information. */
-    val curPlayingUri: MusicInfo
+    val curPlayingInfo: MusicInfo?
+
+    /** Current track position of second */
+    val curTrackSec: Long
 
     /** Current playing mode for the playlist. */
     var mode: Mode
@@ -57,7 +61,7 @@ interface MusicPlayer {
      *  [Play]: the music player is playing.
      *  [Pause]: the music player is pausing.
      */
-    fun getPlayerState(): State
+    fun getState(): State
 
     //region Player Action
     /**
@@ -98,7 +102,7 @@ interface MusicPlayer {
     /**
      * seek the play time when the music is playing
      */
-    fun seekTo(sec: Int)
+    fun seekTo(sec: Int): Boolean
 
     /**
      * Clear all tracks from the playlist.
@@ -123,5 +127,5 @@ interface MusicPlayer {
     /**
      * The function is used to set up an event listener which monitor the activity of music player.
      */
-//    fun setEventListener(listener: PlayerEventListener?)
+    fun setPlayerEventCallback(callback: PlayerCallback?)
 }

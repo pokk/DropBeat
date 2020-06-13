@@ -37,12 +37,15 @@ import taiwan.no.one.mediaplayer.interfaces.InnerQueue
  * @property queue LinkedList<MusicInfo>
  * @property size Int
  */
+@Deprecated("Using the ExoPlayer build-in playlist.")
 internal class MusicQueue : InnerQueue<MusicInfo> {
-    var current: MusicInfo? = null
+    private var current: MusicInfo? = null
     private var iterator: MutableListIterator<MusicInfo>? = null
     private val queue by lazy { LinkedList<MusicInfo>() }
 
     override val size get() = queue.size
+
+    override val currentItem get() = current
 
     override fun goNext() =
         iterator?.takeIf { it.hasNext() }?.next()?.also { current = it } // set back the current variable

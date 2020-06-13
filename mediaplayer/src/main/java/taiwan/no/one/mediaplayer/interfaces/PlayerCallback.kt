@@ -24,67 +24,11 @@
 
 package taiwan.no.one.mediaplayer.interfaces
 
-internal interface InnerQueue<T> {
-    /** Size of the playlist. */
-    val size: Int
+import com.google.android.exoplayer2.ExoPlaybackException
+import taiwan.no.one.mediaplayer.MusicInfo
 
-    val currentItem: T?
+interface PlayerCallback {
+    fun onTrackChanged(music: MusicInfo)
 
-    /**
-     * Set the current to the next item.
-     *
-     * @return
-     */
-    fun goNext(): T?
-
-    /**
-     * Set the current to the previous item
-     *
-     * @return
-     */
-    fun goPrevious(): T?
-
-    /**
-     * Reset the current object to the first of the list.
-     *
-     * @return
-     */
-    fun resetCurrentToBegin()
-
-    /**
-     * Append a list of objs into the playlist.
-     *
-     * @param objs List<T>
-     * @return Boolean
-     */
-    fun enqueue(objs: List<T>): Boolean
-
-    /**
-     * Append an item into the playlist.
-     *
-     * @param obj
-     * @return
-     */
-    fun enqueue(obj: T): Boolean
-
-    /**
-     * Clean the queue and add a new list into.
-     *
-     * @param objs
-     * @return
-     */
-    fun reset(objs: List<T>): Boolean
-
-    /**
-     * Clean the queue and add a new object into.
-     *
-     * @param obj
-     * @return
-     */
-    fun reset(obj: T): Boolean
-
-    /**
-     * Clear the while playlist.
-     */
-    fun clear()
+    fun onErrorCallback(error: ExoPlaybackException)
 }

@@ -22,32 +22,35 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat
+package taiwan.no.one.mediaplayer.states
 
-import android.app.Application
-import android.content.Context
-import com.facebook.FacebookSdk
-import com.tencent.mmkv.MMKV
-import org.kodein.di.DIAware
-import taiwan.no.one.dropbeat.di.Dispatcher
-import taiwan.no.one.mediaplayer.SimpleMusicPlayer
+import com.google.android.exoplayer2.ExoPlayer
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Play
 
-class DropBeatApp : Application(), DIAware {
-    companion object {
-        lateinit var appContext: Context
-            private set
+internal class MusicStatePlay(player: ExoPlayer) : MusicState(player) {
+    override val state = Play
+
+    override fun play(): MusicState {
+        player.playWhenReady = false
+        return MusicStatePause(player)
     }
 
-    init {
-        appContext = this
+    override fun pause(): MusicState {
+        player.playWhenReady = false
+        return MusicStatePause(player)
     }
 
-    override val di = Dispatcher.importIntoApp(this)
+    override fun next(): MusicState {
+        player.next()
+        return this
+    }
 
-    override fun onCreate() {
-        super.onCreate()
-        MMKV.initialize(this)
-        SimpleMusicPlayer.initialize(this)
-        FacebookSdk.sdkInitialize(this)
+    override fun previous(): MusicState {
+        player.previous()
+        return this
+    }
+
+    override fun resetPlaylist(): MusicState {
+        return this
     }
 }

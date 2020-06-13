@@ -23,9 +23,69 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="play"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stop"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pause"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="previous"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clear"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_shuffle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="shuffle"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_repeat_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="repeat all"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_repeat_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="repeat one"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="current"/>
+</androidx.appcompat.widget.LinearLayoutCompat>
