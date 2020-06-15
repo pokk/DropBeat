@@ -26,10 +26,58 @@ package taiwan.no.one.feat.explore.domain
 
 import android.content.Context
 import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.explore.domain.usecases.FetchAlbumCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchAlbumOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistPhotoCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistPhotoOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistTopAlbumCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistTopAlbumOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistTopTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistTopTrackOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTagCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTagOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchSimilarArtistCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchSimilarArtistOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchSimilarTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchSimilarTrackOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopAlbumCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopAlbumOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopArtistCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopArtistOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTrackOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
+        bind<FetchAlbumCase>() with singleton { FetchAlbumOneShotCase(instance()) }
+        bind<FetchArtistCase>() with singleton { FetchArtistOneShotCase(instance()) }
+        bind<FetchArtistPhotoCase>() with singleton { FetchArtistPhotoOneShotCase(instance()) }
+        bind<FetchArtistTopAlbumCase>() with singleton { FetchArtistTopAlbumOneShotCase(instance()) }
+        bind<FetchArtistTopTrackCase>() with singleton { FetchArtistTopTrackOneShotCase(instance()) }
+        bind<FetchChartTopArtistCase>() with singleton { FetchChartTopArtistOneShotCase(instance()) }
+        bind<FetchChartTopTagCase>() with singleton { FetchChartTopTagOneShotCase(instance()) }
+        bind<FetchChartTopTrackCase>() with singleton { FetchChartTopTrackOneShotCase(instance()) }
+        bind<FetchSimilarArtistCase>() with singleton { FetchSimilarArtistOneShotCase(instance()) }
+        bind<FetchSimilarTrackCase>() with singleton { FetchSimilarTrackOneShotCase(instance()) }
+        bind<FetchTagCase>() with singleton { FetchTagOneShotCase(instance()) }
+        bind<FetchTagTopAlbumCase>() with singleton { FetchTagTopAlbumOneShotCase(instance()) }
+        bind<FetchTagTopArtistCase>() with singleton { FetchTagTopArtistOneShotCase(instance()) }
+        bind<FetchTagTopTrackCase>() with singleton { FetchTagTopTrackOneShotCase(instance()) }
+        bind<FetchTrackCase>() with singleton { FetchTrackOneShotCase(instance()) }
     }
 }
