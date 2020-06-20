@@ -22,22 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat
+package taiwan.no.one.dropbeat.startup
 
-import android.app.Application
 import android.content.Context
-import org.kodein.di.DIAware
-import taiwan.no.one.dropbeat.di.Dispatcher
+import androidx.startup.Initializer
+import com.tencent.mmkv.MMKV
 
-class DropBeatApp : Application(), DIAware {
-    companion object {
-        lateinit var appContext: Context
-            private set
+internal class MmkvInitializer : Initializer<Unit> {
+    override fun create(context: Context) {
+        MMKV.initialize(context)
     }
 
-    init {
-        appContext = this
-    }
-
-    override val di = Dispatcher.importIntoApp(this)
+    override fun dependencies() = emptyList<Class<out Initializer<*>>>()
 }

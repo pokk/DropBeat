@@ -188,7 +188,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
             if (!trackGroups.isEmpty) {
                 curPlayingInfo?.let {
                     callback?.onTrackChanged(it)
-                } ?: throw NullPointerException("Can't find the current playing music information.")
+                }
             }
         }
 

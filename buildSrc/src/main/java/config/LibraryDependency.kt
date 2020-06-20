@@ -33,6 +33,7 @@ object LibraryDependency {
         const val ANDROIDX = "1.0.0"
         const val ANNOTATION = "1.2.0-alpha01"
         const val APPCOMPAT = "1.3.0-alpha01"
+        const val APP_STARTUP = "1.0.0-alpha01"
         const val CARDVIEW = ANDROIDX
         const val RECYCLERVIEW = "1.2.0-alpha03"
         const val CONSTRAINTLAYOUT = "2.0.0-beta7"
@@ -86,6 +87,7 @@ object LibraryDependency {
     object JetPack {
         const val MATERIAL_DESIGN = "com.google.android.material:material:${Version.MATERIAL}"
         const val APPCOMPAT = "androidx.appcompat:appcompat:${Version.APPCOMPAT}"
+        const val APP_STARTUP = "androidx.startup:startup-runtime:${Version.APP_STARTUP}"
         const val ANNOT = "androidx.annotation:annotation:${Version.ANNOTATION}"
         const val RECYCLERVIEW = "androidx.recyclerview:recyclerview:${Version.RECYCLERVIEW}"
         const val CARDVIEW = "androidx.cardview:cardview:${Version.CARDVIEW}"

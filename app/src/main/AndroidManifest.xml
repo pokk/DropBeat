@@ -65,5 +65,23 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id"/>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="taiwan.no.one.dropbeat.DropBeatApp.androidx-startup"
+            android:exported="false"
+            tools:node="merge"
+            tools:replace="android:authorities">
+
+            <meta-data
+                android:name="taiwan.no.one.dropbeat.startup.MmkvInitializer"
+                android:value="androidx.startup"/>
+            <meta-data
+                android:name="taiwan.no.one.dropbeat.startup.MusicInitializer"
+                android:value="androidx.startup"/>
+            <meta-data
+                android:name="taiwan.no.one.dropbeat.startup.FacebookInitializer"
+                android:value="androidx.startup"/>
+        </provider>
     </application>
 </manifest>

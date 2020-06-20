@@ -55,6 +55,7 @@ fun DependencyHandlerScope.appDependencies() {
     androidxKtxDependencies(DepEnvApi)
     uiDependencies(DepEnvApi)
     firebaseDependencies(DepEnvApi)
+    DepEnvImpl(LibraryDependency.JetPack.APP_STARTUP)
     // Others
     DepEnvApi(LibraryDependency.Firebase.PLAY_CORE)
     DepEnvApi(LibraryDependency.Jieyi.KNIFER)
