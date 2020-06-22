@@ -24,7 +24,6 @@
 
 package taiwan.no.one.mediaplayer.interfaces
 
-import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 import taiwan.no.one.mediaplayer.MusicInfo
 
