@@ -238,6 +238,7 @@ formatting:
   ImportOrdering:
     active: true
     autoCorrect: true
+    layout: 'idea'
   Indentation:
     active: false
     autoCorrect: true
@@ -306,9 +307,12 @@ formatting:
   SpacingAroundDot:
     active: true
     autoCorrect: true
-  SpacingAroundKeyword:
+  SpacingAroundDoubleColon:
     active: false
-    autoCorrect: false
+    autoCorrect: true
+  SpacingAroundKeyword:
+    active: true
+    autoCorrect: true
   SpacingAroundOperators:
     active: true
     autoCorrect: true
@@ -316,6 +320,12 @@ formatting:
     active: true
     autoCorrect: true
   SpacingAroundRangeOperator:
+    active: true
+    autoCorrect: true
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: true
+    autoCorrect: true
+  SpacingBetweenDeclarationsWithComments:
     active: true
     autoCorrect: true
   StringTemplate:
@@ -357,6 +367,7 @@ naming:
     functionPattern: '([a-z][a-zA-Z0-9]*)|(`.*`)'
     excludeClassPattern: '$^'
     ignoreOverridden: true
+    ignoreAnnotated: ['Composable']
   FunctionParameterNaming:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
@@ -366,6 +377,9 @@ naming:
   InvalidPackageDeclaration:
     active: true
     rootPackage: ''
+  IsPropertyNaming:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
@@ -431,6 +445,10 @@ potential-bugs:
     active: true
   HasPlatformType:
     active: true
+  IgnoredReturnValue:
+    active: false
+    restrictToAnnotatedMethods: true
+    returnValueAnnotations: ['*.CheckReturnValue', '*.CheckResult']
   ImplicitDefaultLocale:
     active: false
   InvalidRange:
@@ -497,7 +515,7 @@ style:
     forbiddenPatterns: ''
   ForbiddenMethodCall:
     active: false
-    methods: []
+    methods: ['kotlin.io.println', 'kotlin.io.print']
   ForbiddenPublicDataClass:
     active: false
     ignorePackages: ['*.internal', '*.internal.*']
