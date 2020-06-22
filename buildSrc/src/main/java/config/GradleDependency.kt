@@ -39,5 +39,6 @@ object GradleDependency {
     const val GOOGLE_SERVICE = "com.google.gms:google-services:${Version.GOOGLE_SERVICE}"
     const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics-gradle:${Version.CRASHLYTICS}"
     const val DETEKT = "io.gitlab.arturbosch.detekt"
+    const val DETEKT_FORMAT = "io.gitlab.arturbosch.detekt:detekt-formatting:${Version.DETEKT}"
     const val GRADLE_VERSION_UPDATER = "com.github.ben-manes.versions"
 }

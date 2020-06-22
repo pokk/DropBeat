@@ -76,6 +76,10 @@ plugins {
     id(config.GradleDependency.GRADLE_VERSION_UPDATER).version(config.GradleDependency.Version.VERSION_UPDATER)
 }
 
+dependencies {
+    detektPlugins(config.GradleDependency.DETEKT_FORMAT)
+}
+
 allprojects {
     repositories {
         google()
@@ -129,6 +133,7 @@ subprojects {
     val detektVersion = config.GradleDependency.Version.DETEKT
     detekt {
         toolVersion = detektVersion
+        failFast = true
         debug = true
         parallel = true
         input = files("src/main/java", "src/main/kotlin")
@@ -138,6 +143,7 @@ subprojects {
     }
 
     tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+        jvmTarget = "1.8"
         exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
     }
     //endregion

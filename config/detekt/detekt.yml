@@ -328,6 +328,12 @@ formatting:
   SpacingBetweenDeclarationsWithComments:
     active: true
     autoCorrect: true
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: true
+    autoCorrect: true
+  SpacingBetweenDeclarationsWithComments:
+    active: true
+    autoCorrect: true
   StringTemplate:
     active: true
     autoCorrect: true
@@ -377,9 +383,10 @@ naming:
   InvalidPackageDeclaration:
     active: true
     rootPackage: ''
-  IsPropertyNaming:
-    active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  # Doesn't work for now
+  #  IsPropertyNaming:
+  #    active: true
+  #    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
