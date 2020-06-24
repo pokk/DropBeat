@@ -30,7 +30,7 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.explore.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.explore.FeatModules.Companion.FEAT_NAME
 import taiwan.no.one.feat.explore.domain.usecases.FetchAlbumCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchAlbumOneShotCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchArtistCase

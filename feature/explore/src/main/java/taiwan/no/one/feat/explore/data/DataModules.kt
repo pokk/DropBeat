@@ -33,7 +33,7 @@ import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.explore.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.explore.FeatModules.Companion.FEAT_NAME
 import taiwan.no.one.feat.explore.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService

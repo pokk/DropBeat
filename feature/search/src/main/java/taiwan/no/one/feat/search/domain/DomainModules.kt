@@ -30,7 +30,7 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.search.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.search.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.DeleteHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.FetchHistoryCase

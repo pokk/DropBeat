@@ -59,8 +59,6 @@ android {
                 arguments["room.expandProjection"] = "true"
             }
         }
-        buildConfigField("FEATURE_MODULE_NAMES",
-                         CommonModuleDependency.getFeatureModuleName().map { it.replace(":feature:", "feat.") }.toSet())
     }
     buildTypes {
         getByName("release") {

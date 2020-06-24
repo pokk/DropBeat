@@ -32,7 +32,7 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.login.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.login.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.v1.FirebaseAuthService
 import taiwan.no.one.feat.login.data.repositories.AuthRepository

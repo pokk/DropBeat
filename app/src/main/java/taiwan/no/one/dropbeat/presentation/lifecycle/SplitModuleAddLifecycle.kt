@@ -32,8 +32,6 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
-import taiwan.no.one.dropbeat.di.FeatModuleHelper
-import taiwan.no.one.dropbeat.provider.NaviGraphRouteProvider
 
 class SplitModuleAddLifecycle(
     private val context: Context,
@@ -44,11 +42,9 @@ class SplitModuleAddLifecycle(
         SplitInstallRequest.newBuilder().apply { modules.forEach { addModule(it) } }.build()
     }
     private val listener by lazy {
-        val dummyRoute = "${FeatModuleHelper.featurePackagePrefix}.featSearchMusic.FeatureARoute"
         SplitInstallStateUpdatedListener {
             when (it.status()) {
                 SplitInstallSessionStatus.INSTALLED -> {
-                    val route = Class.forName(dummyRoute).kotlin.objectInstance as? NaviGraphRouteProvider
                 }
             }
         }
@@ -56,8 +52,10 @@ class SplitModuleAddLifecycle(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun registerListener() {
-        manager.registerListener(listener)
-        manager.startInstall(request)
+        manager.run {
+            registerListener(listener)
+            startInstall(request)
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)

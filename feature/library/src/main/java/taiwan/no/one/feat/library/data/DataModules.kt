@@ -30,7 +30,7 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.library.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.library.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.library.data.local.configs.MusicLibraryDatabase
 import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
 import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao

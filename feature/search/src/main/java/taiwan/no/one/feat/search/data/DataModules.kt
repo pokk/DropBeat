@@ -33,7 +33,7 @@ import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.search.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.search.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.local.configs.BankDatabase
 import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao

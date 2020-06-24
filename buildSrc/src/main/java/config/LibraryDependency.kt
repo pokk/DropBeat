@@ -56,6 +56,7 @@ object LibraryDependency {
         const val RETROFIT2 = "2.9.0"
         const val OKHTTP3 = "4.7.2"
         const val JSOUP = "1.13.1"
+        const val AUTO_SERVICE = "1.0-rc7"
         const val FIREBASE_DATABASE = "19.3.1"
         const val FIREBASE_FIRESTORE = "21.4.3"
         const val FIREBASE_MESSAGING = "20.2.1"
@@ -81,7 +82,9 @@ object LibraryDependency {
     object Tool {
         const val GSON = "com.google.code.gson:gson:${Version.GSON}"
         const val JSOUP = "org.jsoup:jsoup:${Version.JSOUP}"
-//    const val CLOUDINARY = "com.cloudinary:cloudinary-android:${Version.cloudinary}"
+
+        //    const val CLOUDINARY = "com.cloudinary:cloudinary-android:${Version.cloudinary}"
+        const val AUTO_SERVICE = "com.google.auto.service:auto-service:${Version.AUTO_SERVICE}"
     }
 
     object JetPack {

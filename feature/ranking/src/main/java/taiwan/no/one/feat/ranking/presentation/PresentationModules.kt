@@ -32,7 +32,7 @@ import org.kodein.di.instance
 import org.kodein.di.provider
 import taiwan.no.one.dropbeat.di.ViewModelEntry
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.ranking.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.ranking.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 
 internal object PresentationModules : ModuleProvider {

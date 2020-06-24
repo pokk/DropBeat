@@ -25,14 +25,18 @@
 package taiwan.no.one.feat.explore
 
 import android.content.Context
+import com.google.auto.service.AutoService
 import org.kodein.di.DI
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.data.DataModules
 import taiwan.no.one.feat.explore.domain.DomainModules
 import taiwan.no.one.feat.explore.presentation.PresentationModules
 
-object FeatModules : ModuleProvider {
-    internal const val FEAT_NAME = "explore"
+@AutoService(ModuleProvider::class)
+class FeatModules : ModuleProvider {
+    companion object {
+        internal const val FEAT_NAME = "explore"
+    }
 
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}Module") {
         import(DataModules.provide(context))

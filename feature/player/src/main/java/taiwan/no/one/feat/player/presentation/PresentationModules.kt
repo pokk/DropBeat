@@ -31,7 +31,7 @@ import org.kodein.di.inSet
 import org.kodein.di.provider
 import taiwan.no.one.dropbeat.di.ViewModelEntry
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.player.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.player.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
 
 internal object PresentationModules : ModuleProvider {

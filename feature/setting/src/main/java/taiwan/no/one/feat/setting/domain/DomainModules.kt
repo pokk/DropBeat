@@ -27,7 +27,7 @@ package taiwan.no.one.feat.setting.domain
 import android.content.Context
 import org.kodein.di.DI
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.setting.FeatModules.FEAT_NAME
+import taiwan.no.one.feat.setting.FeatModules.Constant.FEAT_NAME
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {

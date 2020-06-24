@@ -25,14 +25,18 @@
 package taiwan.no.one.feat.ranking
 
 import android.content.Context
+import com.google.auto.service.AutoService
 import org.kodein.di.DI
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.ranking.data.DataModules
 import taiwan.no.one.feat.ranking.domain.DomainModules
 import taiwan.no.one.feat.ranking.presentation.PresentationModules
 
-object FeatModules : ModuleProvider {
-    internal const val FEAT_NAME = "Ranking"
+@AutoService(ModuleProvider::class)
+class FeatModules : ModuleProvider {
+    companion object Constant {
+        internal const val FEAT_NAME = "Ranking"
+    }
 
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}Module") {
         import(DataModules.provide(context))

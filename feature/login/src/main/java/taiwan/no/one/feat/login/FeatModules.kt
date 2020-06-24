@@ -25,14 +25,18 @@
 package taiwan.no.one.feat.login
 
 import android.content.Context
+import com.google.auto.service.AutoService
 import org.kodein.di.DI
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.data.DataModules
 import taiwan.no.one.feat.login.domain.DomainModules
 import taiwan.no.one.feat.login.presentation.PresentationModules
 
-object FeatModules : ModuleProvider {
-    internal const val FEAT_NAME = "Login"
+@AutoService(ModuleProvider::class)
+class FeatModules : ModuleProvider {
+    companion object Constant {
+        internal const val FEAT_NAME = "Login"
+    }
 
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}Module") {
         import(DataModules.provide(context))

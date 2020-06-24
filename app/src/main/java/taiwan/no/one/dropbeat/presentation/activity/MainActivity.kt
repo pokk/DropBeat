@@ -27,11 +27,11 @@ package taiwan.no.one.dropbeat.presentation.activity
 import android.content.Context
 import android.content.res.Configuration
 import com.google.android.play.core.splitcompat.SplitCompat
+import java.util.Locale
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.databinding.ActivityMainBinding
 import taiwan.no.one.dropbeat.presentation.lifecycle.SplitModuleAddLifecycle
-import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     init {

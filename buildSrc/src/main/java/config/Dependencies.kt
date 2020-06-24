@@ -38,6 +38,7 @@ const val DepEnvKapt = "kapt"
 fun DependencyHandlerScope.annotationDependencies() {
     DepEnvKapt(LibraryDependency.Database.ROOM_ANNOTATION)
     DepEnvKapt(LibraryDependency.JetPack.LIFECYCLE_COMPILER)
+    DepEnvKapt(LibraryDependency.Tool.AUTO_SERVICE)
 }
 
 fun DependencyHandlerScope.coreDependencies() {
@@ -55,7 +56,6 @@ fun DependencyHandlerScope.appDependencies() {
     androidxKtxDependencies(DepEnvApi)
     uiDependencies(DepEnvApi)
     firebaseDependencies(DepEnvApi)
-    DepEnvImpl(LibraryDependency.JetPack.APP_STARTUP)
     // Others
     DepEnvApi(LibraryDependency.Firebase.PLAY_CORE)
     DepEnvApi(LibraryDependency.Jieyi.KNIFER)
@@ -70,6 +70,8 @@ fun DependencyHandlerScope.ktxDependencies() {
 fun DependencyHandlerScope.widgetDependencies() {
     kotlinAndroidDependencies(DepEnvImpl)
     commonAndroidxDependencies(DepEnvImpl)
+    // Auto Service
+    DepEnvApi(LibraryDependency.Tool.AUTO_SERVICE)
     // Others
     DepEnvImpl(LibraryDependency.JetPack.RECYCLERVIEW)
     DepEnvImpl(LibraryDependency.JetPack.MATERIAL_DESIGN)
@@ -131,6 +133,7 @@ fun DependencyHandlerScope.androidxKtxDependencies(env: String) {
     env(LibraryDependency.AndroidKtx.NAVIGATION_FRAGMENT_KTX)
     env(LibraryDependency.AndroidKtx.NAVIGATION_UI_KTX)
     env(LibraryDependency.AndroidKtx.WORKER_KTX)
+    env(LibraryDependency.JetPack.APP_STARTUP)
 }
 
 fun DependencyHandlerScope.commonAndroidxDependencies(env: String) {
