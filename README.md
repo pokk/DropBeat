@@ -14,13 +14,35 @@
 
 # System Overview
 
-### Module Dependency Graph
+## Module Dependency Graph
 
 ![Module Dependency Graph](https://user-images.githubusercontent.com/5198104/85551371-e7c64a80-b65c-11ea-9396-5537c8d22b21.png)
 
-### Architecture of each module
+## Architecture of each module
 
-![Feature Module Architecture](https://user-images.githubusercontent.com/5198104/85554605-0aa62e00-b660-11ea-92d2-e4331eba1e72.png)
+We still would like to use the clean architecture with the dynamic feature so the mixed patteren happened here.
+
+There are so many strict rules in the origin clean architecture, eg. an object on the **presentation layer** can't access a class on the **data layer**, each layer has their own data classes, the mapper classes, ...etc.
+
+If keeping the rules here, this project will be a hugh project and only one maintainer is me 😢. This project is still keeping the basic rules but we need to have a compromise with those features. 
+
+![Feature Module Architecture](https://user-images.githubusercontent.com/5198104/85557159-7e493a80-b662-11ea-84e8-fc2e16198b21.png)
+
+### Detail of Presentation Layer
+
+- Activity/Fragment:
+- ViewModel:
+
+### Detail of Domain Layer
+
+- OneShot UseCase:
+- Observable UseCase:
+
+### Detail of Data Layer
+
+- Repository:
+- 3 Layer Cache:
+- Data Model:
 
 # Licence
 
