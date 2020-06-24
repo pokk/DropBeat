@@ -12,6 +12,16 @@
 # Introduction
 
 
+# System Overview
+
+### Module Dependency Graph
+
+![Module Dependency Graph](https://user-images.githubusercontent.com/5198104/85551371-e7c64a80-b65c-11ea-9396-5537c8d22b21.png)
+
+### Architecture of each module
+
+![Feature Module Architecture](https://user-images.githubusercontent.com/5198104/85554605-0aa62e00-b660-11ea-92d2-e4331eba1e72.png)
+
 # Licence
 
 ```
