@@ -38,18 +38,18 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun View.clicks() = callbackFlow {
+fun View.clicks(): Flow<Unit> = callbackFlow {
     setOnClickListener {
-        offer(it)
+        offer(Unit)
     }
     awaitClose { setOnClickListener(null) }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-fun View.setDebounceClicks(scope: CoroutineScope, timeoutMillis: Long = 300, action: suspend (View) -> Unit) =
+fun View.setDebounceClicks(scope: CoroutineScope, timeoutMillis: Long = 300, action: suspend (Unit) -> Unit) =
     clicks().debounce(timeoutMillis).onEach(action).launchIn(scope)
 
-fun <T> Flow<T>.throttleFirst(windowDuration: Long) = flow {
+fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
     var lastEmissionTime = 0L
     collect { upstream ->
         val currentTime = System.currentTimeMillis()
