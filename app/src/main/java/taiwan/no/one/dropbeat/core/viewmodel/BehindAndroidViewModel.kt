@@ -22,17 +22,27 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.presentation.viewmodel
+package taiwan.no.one.dropbeat.core.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.di
 
-abstract class BehindViewModel : ViewModel() {
-    inline fun launchBehind(
+abstract class BehindAndroidViewModel(application: Application) : AndroidViewModel(application), DIAware {
+    /**
+     * A DI Aware class must be within reach of a [DI] object.
+     */
+    override val di by di()
+    protected val context get() = getApplication<Application>()
+
+    protected inline fun launchBehind(
         context: CoroutineContext = Dispatchers.Default,
         crossinline block: suspend CoroutineScope.() -> Unit
     ) = viewModelScope.launch(context) { block() }

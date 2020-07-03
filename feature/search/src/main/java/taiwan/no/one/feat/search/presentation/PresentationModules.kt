@@ -26,23 +26,10 @@ package taiwan.no.one.feat.search.presentation
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.inSet
-import org.kodein.di.instance
-import org.kodein.di.provider
-import taiwan.no.one.dropbeat.di.ViewModelEntry
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.search.FeatModules.Constant.FEAT_NAME
-import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
-import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 
 internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}PreziModule") {
-        bind<ViewModelEntry>().inSet() with provider {
-            RecentViewModel::class.java to RecentViewModel(instance(), instance(), instance())
-        }
-        bind<ViewModelEntry>().inSet() with provider {
-            ResultViewModel::class.java to ResultViewModel(instance(), instance())
-        }
     }
 }

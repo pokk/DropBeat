@@ -35,7 +35,6 @@ object Dispatcher {
     fun importIntoApp(app: Application) = DI.lazy {
         bind<MMKV>() with singleton { MMKV.defaultMMKV() }
         import(androidXModule(app))
-        import(ContainerModule.provide())
         importAll(FeatModuleHelper.kodeinModules(app))
     }
 }

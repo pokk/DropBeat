@@ -111,6 +111,7 @@ fun DependencyHandlerScope.kotlinAndroidDependencies(env: String) {
 
 fun DependencyHandlerScope.androidJetpackDependencies(env: String) {
     env(LibraryDependency.JetPack.APPCOMPAT)
+    env(LibraryDependency.JetPack.LIFECYCLE_SAVEDSTATE)
     env(LibraryDependency.JetPack.LIFECYCLE_SERVICE)
     env(LibraryDependency.JetPack.LIFECYCLE_PROCESS)
     env(LibraryDependency.JetPack.NAVIGATION_DYNAMIC_FEATURE)
@@ -151,7 +152,6 @@ fun DependencyHandlerScope.androidxUiDependencies(env: String) {
 }
 
 fun DependencyHandlerScope.diDependencies(env: String) {
-    env(LibraryDependency.Di.KODEIN_CORE)
     env(LibraryDependency.Di.KODEIN_ANDROID_X)
 }
 

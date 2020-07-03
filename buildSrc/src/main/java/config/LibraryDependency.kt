@@ -96,7 +96,8 @@ object LibraryDependency {
         const val CARDVIEW = "androidx.cardview:cardview:${Version.CARDVIEW}"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Version.CONSTRAINTLAYOUT}"
         const val COORDINATOR_LAYOUT = "androidx.coordinatorlayout:coordinatorlayout:${Version.COORDINATORLAYOUT}"
-        const val LIFECYCLE_COMPILER = "androidx.lifecycle:lifecycle-compiler:${Version.AAC_LIFECYCLE}"
+        const val LIFECYCLE_SAVEDSTATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.AAC_LIFECYCLE}"
+        const val LIFECYCLE_COMPILER = "androidx.lifecycle:lifecycle-common-java8:${Version.AAC_LIFECYCLE}"
         const val LIFECYCLE_SERVICE = "androidx.lifecycle:lifecycle-service:${Version.AAC_LIFECYCLE}"
         const val LIFECYCLE_PROCESS = "androidx.lifecycle:lifecycle-process:${Version.AAC_LIFECYCLE}"
         const val NAVIGATION_DYNAMIC_FEATURE =
@@ -127,7 +128,6 @@ object LibraryDependency {
     }
 
     object Di {
-        const val KODEIN_CORE = "org.kodein.di:kodein-di:${Version.KODEIN}"
         const val KODEIN_ANDROID_X = "org.kodein.di:kodein-di-framework-android-x:${Version.KODEIN}"
     }
 

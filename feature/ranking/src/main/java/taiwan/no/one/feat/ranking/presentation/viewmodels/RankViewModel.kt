@@ -27,18 +27,18 @@ package taiwan.no.one.feat.ranking.presentation.viewmodels
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.ranking.domain.usecases.FetchDetailOfRankingsCase
 import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankCase
 import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class RankViewModel(
-    private val fetchDetailOfRankingsCase: FetchDetailOfRankingsCase,
-    private val fetchMusicRankCase: FetchMusicRankCase,
-) : BehindViewModel() {
+internal class RankViewModel : BehindViewModel() {
+    private val fetchDetailOfRankingsCase by instance<FetchDetailOfRankingsCase>()
+    private val fetchMusicRankCase by instance<FetchMusicRankCase>()
     val rankings = liveData { emit(fetchDetailOfRankingsCase.execute()) }
     private val _musics by lazy { ResultLiveData<List<SongEntity>>() }
     val musics = _musics.toLiveData()

@@ -22,9 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.dropbeat.core.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-typealias ViewModelEntry = Pair<Class<out ViewModel>, ViewModel>
-typealias ViewModelEntries = Set<ViewModelEntry>
+abstract class BehindViewModel : InjectableViewModel() {
+    protected inline fun launchBehind(
+        context: CoroutineContext = Dispatchers.Default,
+        crossinline block: suspend CoroutineScope.() -> Unit
+    ) = viewModelScope.launch(context) { block() }
+}

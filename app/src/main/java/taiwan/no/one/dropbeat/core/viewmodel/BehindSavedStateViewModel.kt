@@ -22,22 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.dropbeat.core.viewmodel
 
-import androidx.lifecycle.ViewModelProvider
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.instance
-import org.kodein.di.provider
-import org.kodein.di.setBinding
-import taiwan.no.one.core.presentation.viewmodel.ViewModelFactory
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-object ContainerModule {
-    fun provide() = DI.Module("ContainerModule") {
-        bind() from setBinding<ViewModelEntry>()
+abstract class BehindSavedStateViewModel : InjectableViewModel() {
+    protected abstract val handle: SavedStateHandle
 
-        bind<ViewModelProvider.Factory>() with provider {
-            ViewModelFactory(instance<ViewModelEntries>().toMap().toMutableMap())
-        }
-    }
+    protected inline fun launchBehind(
+        context: CoroutineContext = Dispatchers.Default,
+        crossinline block: suspend CoroutineScope.() -> Unit
+    ) = viewModelScope.launch(context) { block() }
 }

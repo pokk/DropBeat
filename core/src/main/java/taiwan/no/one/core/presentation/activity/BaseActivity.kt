@@ -26,23 +26,17 @@ package taiwan.no.one.core.presentation.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.activity.viewModels
 import androidx.annotation.UiThread
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import java.lang.reflect.ParameterizedType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
-import org.kodein.di.instance
-import java.lang.reflect.ParameterizedType
 
 /**
  * The basic activity is for the normal activity that prepares all necessary variables or functions.
  */
 abstract class BaseActivity<out V : ViewBinding> : LoadableActivity(), CoroutineScope by MainScope() {
-    /** Provide the viewmodel factory to create a viewmodel */
-    val vmFactory: ViewModelProvider.Factory by instance()
     protected val binding by viewBinding()
 
     //region Activity lifecycle
@@ -95,9 +89,6 @@ abstract class BaseActivity<out V : ViewBinding> : LoadableActivity(), Coroutine
      */
     @UiThread
     protected open fun uninit() = Unit
-
-    @UiThread
-    protected inline fun <reified VM : ViewModel> viewModel() = viewModels<VM> { vmFactory }
 
     @Suppress("UNCHECKED_CAST")
     @UiThread

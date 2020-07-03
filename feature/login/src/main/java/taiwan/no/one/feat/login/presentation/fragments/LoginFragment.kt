@@ -29,6 +29,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
@@ -48,10 +49,9 @@ import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.databinding.FragmentLoginBinding
 import taiwan.no.one.feat.login.presentation.auths.GoogleConfig
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
-import androidx.lifecycle.observe as obs
 
 internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBinding>() {
-    private val vm by viewModels<LoginViewModel> { vmFactory }
+    private val vm by viewModels<LoginViewModel>()
 
     //region Third-party Authorization
     // Google

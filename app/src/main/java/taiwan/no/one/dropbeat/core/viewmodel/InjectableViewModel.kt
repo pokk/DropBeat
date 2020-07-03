@@ -22,8 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.setting.presentation.viewmodels
+package taiwan.no.one.dropbeat.core.viewmodel
 
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import androidx.lifecycle.ViewModel
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import taiwan.no.one.dropbeat.DropBeatApp
 
-internal class LoginViewModel : BehindViewModel()
+abstract class InjectableViewModel : ViewModel(), DIAware {
+    /**
+     * A DI Aware class must be within reach of a [DI] object.
+     */
+    override val di by di(DropBeatApp.appContext)
+}

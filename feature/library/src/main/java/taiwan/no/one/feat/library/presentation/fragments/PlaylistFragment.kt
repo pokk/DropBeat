@@ -26,6 +26,7 @@ package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe as obs
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
@@ -35,10 +36,9 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEnti
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
-import androidx.lifecycle.observe as obs
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
-    private val vm by viewModels<PlaylistViewModel> { vmFactory }
+    private val vm by viewModels<PlaylistViewModel>()
 
     override fun bindLiveData() {
         vm.resPlaylist.obs(this) {

@@ -26,8 +26,9 @@ package taiwan.no.one.feat.login.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
@@ -38,11 +39,10 @@ import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordCase
 import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class LoginViewModel(
-    private val fetchLoginInfoCase: FetchLoginInfoCase,
-    private val createUserCase: CreateUserCase,
-    private val modifyPasswordCase: ModifyPasswordCase
-) : BehindViewModel() {
+internal class LoginViewModel : BehindViewModel() {
+    private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
+    private val createUserCase by instance<CreateUserCase>()
+    private val modifyPasswordCase by instance<ModifyPasswordCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()
     private val _resetResp by lazy { ResultLiveData<Boolean>() }

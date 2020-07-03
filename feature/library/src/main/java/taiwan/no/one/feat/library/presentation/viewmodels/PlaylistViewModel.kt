@@ -27,8 +27,9 @@ package taiwan.no.one.feat.library.presentation.viewmodels
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
@@ -39,16 +40,13 @@ import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class PlaylistViewModel(
-    private val addPlaylistCase: AddPlaylistCase,
-    private val fetchPlaylistCase: FetchPlaylistCase,
-    private val updatePlaylistCase: UpdatePlaylistCase,
-    private val addSongsCase: AddSongsCase,
-) : BehindViewModel() {
-    val playlist = liveData(viewModelScope.coroutineContext) {
-        emit(fetchPlaylistCase.execute())
-    }
+internal class PlaylistViewModel : BehindViewModel() {
+    private val addPlaylistCase by instance<AddPlaylistCase>()
+    private val fetchPlaylistCase by instance<FetchPlaylistCase>()
+    private val updatePlaylistCase by instance<UpdatePlaylistCase>()
+    private val addSongsCase by instance<AddSongsCase>()
     private val _resPlaylist by lazy { ResultLiveData<Boolean>() }
+    val playlist = liveData(viewModelScope.coroutineContext) { emit(fetchPlaylistCase.execute()) }
     val resPlaylist = _resPlaylist.toLiveData()
 
     fun createPlaylist(playlist: PlayListEntity) = viewModelScope.launch {

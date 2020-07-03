@@ -27,6 +27,7 @@ package taiwan.no.one.feat.search.presentation.fragments
 import android.view.KeyEvent
 import android.widget.EditText
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -42,11 +43,10 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdap
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.widget.recyclerviews.helpers.AdapterItemTouchHelper
 import taiwan.no.one.widget.recyclerviews.helpers.DefaultItemTouchCallback
-import androidx.lifecycle.observe as obs
 
 internal class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
     private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
-    private val vm by viewModels<RecentViewModel> { vmFactory }
+    private val vm by viewModels<RecentViewModel>()
     private var selectedKeyword: String? = null
     private val args by navArgs<RecentFragmentArgs>()
 
@@ -125,7 +125,6 @@ internal class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRece
                     return@setOnKeyListener true
                 }
                 false
-
             }
         }
     }

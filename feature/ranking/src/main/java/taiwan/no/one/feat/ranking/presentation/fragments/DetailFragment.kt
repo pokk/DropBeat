@@ -26,6 +26,7 @@ package taiwan.no.one.feat.ranking.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -33,10 +34,9 @@ import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingDetailBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
-import androidx.lifecycle.observe as obs
 
 internal class DetailFragment : BaseFragment<BaseActivity<*>, FragmentRankingDetailBinding>() {
-    private val vm by viewModels<RankViewModel> { vmFactory }
+    private val vm by viewModels<RankViewModel>()
     private val args by navArgs<DetailFragmentArgs>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */

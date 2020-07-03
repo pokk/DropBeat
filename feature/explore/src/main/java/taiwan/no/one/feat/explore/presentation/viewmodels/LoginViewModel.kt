@@ -24,6 +24,6 @@
 
 package taiwan.no.one.feat.explore.presentation.viewmodels
 
-import taiwan.no.one.core.presentation.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 
 internal class LoginViewModel : BehindViewModel()
