@@ -47,7 +47,7 @@ For the local database, once the data we are observing is changed, the obserable
 - 3 Layer Cache:
 We would like to have a cache system. One path is for fetching data from the remote server; another path is for the local database.
 
-![Cache Strategy](https://user-images.githubusercontent.com/5198104/86508099-4f785480-be18-11ea-89bf-d78e5e3bdab7.png)
+![Cache Strategy](https://user-images.githubusercontent.com/5198104/86508600-383b6600-be1c-11ea-8cc1-259930d5820b.png)
 - Data Model:
 
 # Licence
