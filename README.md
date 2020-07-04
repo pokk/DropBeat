@@ -32,16 +32,22 @@ If keeping the rules here, this project will be a hugh project and only one main
 
 - Activity/Fragment:
 - ViewModel:
+It handles the view state and data, and the view logic. Also, it helps a view to connect a usecase. Three types of them, **ViewModel**, **AndroidViewModel**, **SavedStateViewModel** will be used.
 
 ### Detail of Domain Layer
 
 - OneShot UseCase:
+Basically, this is one time fetching, just send a request and get a response, eg. normal restful api request.
 - Observable UseCase:
+For the local database, once the data we are observing is changed, the obserable usecase will keep receiving the changing until the observing finishes.
 
 ### Detail of Data Layer
 
 - Repository:
 - 3 Layer Cache:
+We would like to have a cache system. One path is for fetching data from the remote server; another path is for the local database.
+
+![Cache Strategy](https://user-images.githubusercontent.com/5198104/86508099-4f785480-be18-11ea-89bf-d78e5e3bdab7.png)
 - Data Model:
 
 # Licence
