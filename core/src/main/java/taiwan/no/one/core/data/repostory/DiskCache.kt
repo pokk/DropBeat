@@ -22,27 +22,6 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.data.repositories
+package taiwan.no.one.core.data.repostory
 
-import taiwan.no.one.core.data.repostory.LayerCaching
-import taiwan.no.one.feat.search.data.contracts.DataStore
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
-import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
-
-internal class SearchMusicRepository(
-    private val remote: DataStore,
-    private val local: DataStore
-) : SearchMusicRepo {
-    //    override suspend fun fetchMusic(keyword: String, page: Int) = remote.getMusic(keyword, page).entity.items
-
-    override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<List<SongEntity>>() {
-        override suspend fun saveCallResult(data: List<SongEntity>) {
-        }
-
-        override suspend fun shouldFetch(data: List<SongEntity>?) = true
-
-        override suspend fun loadFromLocal() = local.getMusic(keyword, page).entity.items
-
-        override suspend fun createCall() = remote.getMusic(keyword, page).entity.items
-    }.value()
-}
+interface DiskCache

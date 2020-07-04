@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import taiwan.no.one.feat.search.BuildConfig
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
+import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
 
 /**
@@ -37,7 +38,7 @@ import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDa
 internal class LocalStore(
     private val searchHistoryDao: SearchHistoryDao,
 ) : DataStore {
-    override suspend fun getMusic(keyword: String, page: Int) = TODO()
+    override suspend fun getMusic(keyword: String, page: Int) = MusicInfoEntity()
 
     override fun getSearchHistories(count: Int) = searchHistoryDao.getHistories(count).distinctUntilChanged()
 
@@ -49,8 +50,9 @@ internal class LocalStore(
         keyword: String?,
         entity: SearchHistoryEntity?
     ) = tryWrapper {
-        if (entity != null)
+        if (entity != null) {
             searchHistoryDao.delete(entity)
+        }
         else {
             searchHistoryDao.deleteBy(keyword.orEmpty())
         }

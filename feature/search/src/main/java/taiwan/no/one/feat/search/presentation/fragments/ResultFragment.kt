@@ -31,6 +31,7 @@ import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.loge
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.R
@@ -59,6 +60,8 @@ internal class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResu
                     findOptional<ViewStub>(R.id.vs_has_result)?.inflate()
                     (stubHasResultBinding?.rvMusics?.adapter as? ResultAdapter)?.addExtraEntities(it)
                 }
+            }.onFailure {
+                loge(it)
             }
         }
         vm.addOrUpdateResult.obs(this) {

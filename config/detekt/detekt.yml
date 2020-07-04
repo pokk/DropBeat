@@ -311,8 +311,8 @@ formatting:
     active: false
     autoCorrect: true
   SpacingAroundKeyword:
-    active: true
-    autoCorrect: true
+    active: false
+    autoCorrect: false
   SpacingAroundOperators:
     active: true
     autoCorrect: true
