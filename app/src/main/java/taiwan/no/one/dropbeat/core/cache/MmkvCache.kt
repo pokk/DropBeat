@@ -22,6 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.data.repostory
+package taiwan.no.one.dropbeat.core.cache
 
-interface MemoryCache
+import com.google.gson.GsonBuilder
+import com.tencent.mmkv.MMKV
+import taiwan.no.one.core.data.repostory.cache.local.DiskCache
+
+class MmkvCache(
+    private val mmkv: MMKV
+) : DiskCache {
+    private val gson by lazy { GsonBuilder().create() }
+
+    override fun <RT> get(key: String, classOf: Class<RT>): RT? {
+        val value = mmkv.getString(key, null) ?: return null
+        return gson.fromJson(value, classOf)
+    }
+
+    override fun put(key: String, value: Any?) {
+        if (value == null) return
+        mmkv.putString(key, gson.toJson(value))
+    }
+}

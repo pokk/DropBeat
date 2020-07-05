@@ -22,20 +22,6 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.core.data.repostory.cache.local
 
-import android.app.Application
-import com.tencent.mmkv.MMKV
-import org.kodein.di.DI
-import org.kodein.di.android.x.androidXModule
-import org.kodein.di.bind
-import org.kodein.di.singleton
-
-object Dispatcher {
-    fun importIntoApp(app: Application) = DI.lazy {
-        bind<MMKV>() with singleton { MMKV.defaultMMKV() }
-        import(androidXModule(app))
-        import(CacheModule.provide())
-        importAll(FeatModuleHelper.kodeinModules(app))
-    }
-}
+interface DiskCache : Caching

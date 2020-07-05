@@ -22,20 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.dropbeat.core.cache
 
-import android.app.Application
-import com.tencent.mmkv.MMKV
-import org.kodein.di.DI
-import org.kodein.di.android.x.androidXModule
-import org.kodein.di.bind
-import org.kodein.di.singleton
+import androidx.collection.LruCache
+import com.google.gson.GsonBuilder
+import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 
-object Dispatcher {
-    fun importIntoApp(app: Application) = DI.lazy {
-        bind<MMKV>() with singleton { MMKV.defaultMMKV() }
-        import(androidXModule(app))
-        import(CacheModule.provide())
-        importAll(FeatModuleHelper.kodeinModules(app))
+class LruMemoryCache(
+    private val lruCache: LruCache<String, String>
+) : MemoryCache {
+    private val gson by lazy { GsonBuilder().create() }
+
+    override fun <RT> get(key: String, classOf: Class<RT>): RT? {
+        val value = lruCache.get(key) ?: return null
+        return gson.fromJson(value, classOf)
+    }
+
+    override fun put(key: String, value: Any?) {
+        if (value == null) return
+        val str = gson.toJson(value)
+        lruCache.put(key, str)
     }
 }

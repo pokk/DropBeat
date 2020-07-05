@@ -22,26 +22,39 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.data.repostory
+package taiwan.no.one.core.data.repostory.cache.local
 
-abstract class LayerCaching<RT> {
-    suspend fun value(): RT {
-        val dbSource = loadFromLocal()
+import java.lang.reflect.ParameterizedType
+
+abstract class LocalCaching<RT>(
+    private val memoryCache: MemoryCache,
+    private val diskCache: DiskCache,
+) {
+    protected abstract val key: String
+    private val classOf by lazy {
+        // OPTIMIZE(jieyi): 7/5/20 Need to find a good way to fix this reflection.
+        (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<RT>
+    }
+
+    inline fun convertToKey(vararg keys: Any) = keys.toList().joinToString()
+
+    suspend fun value(): RT? {
+        val dbSource = loadFromCache()
         return if (dbSource == null || shouldFetch(dbSource)) {
-            fetchFromRemote()
+            fetchFromDisk()
         }
         else {
             dbSource
         }
     }
 
-    private suspend fun fetchFromRemote() = createCall().apply { saveCallResult(this) }
+    protected open suspend fun saveCallResult(data: RT?) = memoryCache.put(key, data)
 
-    protected abstract suspend fun saveCallResult(data: RT)
+    protected open suspend fun loadFromCache() = memoryCache.get(key, classOf)
+
+    protected open suspend fun createCall() = diskCache.get(key, classOf)
 
     protected abstract suspend fun shouldFetch(data: RT?): Boolean
 
-    protected abstract suspend fun loadFromLocal(): RT?
-
-    protected abstract suspend fun createCall(): RT
+    private suspend fun fetchFromDisk() = createCall().apply { saveCallResult(this) }
 }

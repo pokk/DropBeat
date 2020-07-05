@@ -24,18 +24,22 @@
 
 package taiwan.no.one.dropbeat.di
 
-import android.app.Application
+import androidx.collection.lruCache
 import com.tencent.mmkv.MMKV
 import org.kodein.di.DI
-import org.kodein.di.android.x.androidXModule
 import org.kodein.di.bind
+import org.kodein.di.instance
 import org.kodein.di.singleton
+import org.kodein.di.with
+import taiwan.no.one.core.data.repostory.cache.local.DiskCache
+import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
+import taiwan.no.one.dropbeat.core.cache.LruMemoryCache
+import taiwan.no.one.dropbeat.core.cache.MmkvCache
 
-object Dispatcher {
-    fun importIntoApp(app: Application) = DI.lazy {
-        bind<MMKV>() with singleton { MMKV.defaultMMKV() }
-        import(androidXModule(app))
-        import(CacheModule.provide())
-        importAll(FeatModuleHelper.kodeinModules(app))
+object CacheModule {
+    fun provide() = DI.Module("Cache Module") {
+        constant("cacheSize") with 40
+        bind<DiskCache>() with singleton { MmkvCache(MMKV.defaultMMKV()) }
+        bind<MemoryCache>() with singleton { LruMemoryCache(lruCache(instance("cacheSize"))) }
     }
 }

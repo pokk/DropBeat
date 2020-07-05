@@ -55,7 +55,7 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance()) }
+        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance(), instance(), instance()) }
         bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
 
         bind<SearchMusicRepo>() with singleton {

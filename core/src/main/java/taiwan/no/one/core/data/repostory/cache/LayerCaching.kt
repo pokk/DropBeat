@@ -22,6 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.data.repostory
+package taiwan.no.one.core.data.repostory.cache
 
-interface DiskCache
+abstract class LayerCaching<RT> {
+    suspend fun value() = try {
+        val dbSource = loadFromLocal()
+        if (dbSource == null || shouldFetch(dbSource)) fetchFromRemote() else dbSource
+    }
+    catch (e: Exception) {
+        fetchFromRemote()
+    }
+
+    private suspend fun fetchFromRemote() = createCall().apply { saveCallResult(this) }
+
+    protected abstract suspend fun saveCallResult(data: RT)
+
+    protected abstract suspend fun shouldFetch(data: RT?): Boolean
+
+    protected abstract suspend fun loadFromLocal(): RT?
+
+    protected abstract suspend fun createCall(): RT
+}

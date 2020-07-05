@@ -26,17 +26,8 @@ package taiwan.no.one.dropbeat.di
 
 import android.content.Context
 import java.util.ServiceLoader
-import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 
 object FeatModuleHelper {
-    // Will get the string "taiwan.no.one.".
-    val featurePackagePrefix by lazy {
-        BuildConfig.APPLICATION_ID
-            .split(".")
-            .dropLast(1)
-            .joinToString(".")
-    }
-
     fun kodeinModules(context: Context) = ServiceLoader.load(ModuleProvider::class.java).map { it.provide(context) }
 }
