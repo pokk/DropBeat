@@ -22,18 +22,11 @@
  * SOFTWARE.
  */
 
-package config
+package taiwan.no.one.core.exceptions
 
-object CoreDependency {
-    object Version {
-        const val KOTLIN = "1.4-M3"
-        const val KOTLIN_COROUTINE = "1.3.7-1.4-M3"
-    }
-
-    const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Version.KOTLIN}"
-    const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect:${Version.KOTLIN}"
-    const val KOTLIN_COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.KOTLIN_COROUTINE}"
-    const val ANDROID_COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.KOTLIN_COROUTINE}"
-    const val GOOGLE_PLAY_COROUTINE =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Version.KOTLIN_COROUTINE}"
+class NotFoundException : Exception {
+    constructor() : super()
+    constructor(msg: String) : super(msg)
+    constructor(msg: String, throwable: Throwable) : super(msg, throwable)
+    constructor(throwable: Throwable) : super(throwable)
 }

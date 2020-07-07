@@ -24,10 +24,16 @@
 
 package taiwan.no.one.core.data.repostory.cache
 
+import taiwan.no.one.core.exceptions.NotFoundException
+
 abstract class LayerCaching<RT> {
     suspend fun value() = try {
         val dbSource = loadFromLocal()
         if (dbSource == null || shouldFetch(dbSource)) fetchFromRemote() else dbSource
+    }
+    catch (notFoundException: NotFoundException) {
+        // If can't find from the cache or the local persistence, will throw the [notfoundexception].
+        fetchFromRemote()
     }
     catch (e: Exception) {
         fetchFromRemote()

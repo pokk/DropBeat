@@ -25,6 +25,7 @@
 package taiwan.no.one.core.data.repostory.cache.local
 
 import java.lang.reflect.ParameterizedType
+import taiwan.no.one.core.exceptions.NotFoundException
 
 abstract class LocalCaching<RT>(
     private val memoryCache: MemoryCache,
@@ -38,10 +39,10 @@ abstract class LocalCaching<RT>(
 
     inline fun convertToKey(vararg keys: Any) = keys.toList().joinToString()
 
-    suspend fun value(): RT? {
+    suspend fun value(): RT {
         val dbSource = loadFromCache()
         return if (dbSource == null || shouldFetch(dbSource)) {
-            fetchFromDisk()
+            fetchFromDisk() ?: throw NotFoundException()
         }
         else {
             dbSource
