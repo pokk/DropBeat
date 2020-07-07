@@ -186,6 +186,7 @@ exceptions:
     active: false
   ThrowingExceptionsWithoutMessageOrCause:
     active: false
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     exceptions:
       - IllegalArgumentException
       - IllegalStateException
@@ -328,12 +329,6 @@ formatting:
   SpacingBetweenDeclarationsWithComments:
     active: true
     autoCorrect: true
-  SpacingBetweenDeclarationsWithAnnotations:
-    active: true
-    autoCorrect: true
-  SpacingBetweenDeclarationsWithComments:
-    active: true
-    autoCorrect: true
   StringTemplate:
     active: true
     autoCorrect: true
@@ -383,10 +378,6 @@ naming:
   InvalidPackageDeclaration:
     active: true
     rootPackage: ''
-  # Doesn't work for now
-  #  IsPropertyNaming:
-  #    active: true
-  #    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
@@ -458,6 +449,9 @@ potential-bugs:
     returnValueAnnotations: ['*.CheckReturnValue', '*.CheckResult']
   ImplicitDefaultLocale:
     active: false
+  ImplicitUnitReturnType:
+    active: false
+    allowExplicitReturnType: true
   InvalidRange:
     active: true
   IteratorHasNextCallsNextMethod:
