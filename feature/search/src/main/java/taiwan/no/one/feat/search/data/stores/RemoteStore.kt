@@ -49,6 +49,8 @@ internal class RemoteStore(
         return seekerBankService.retrieveSearchMusic(queries)
     }
 
+    override suspend fun createMusic(keyword: String, page: Int, music: MusicInfoEntity) = UnsupportedOperation()
+
     override fun getSearchHistories(count: Int) = UnsupportedOperation()
 
     override suspend fun createOrModifySearchHistory(keyword: String) = UnsupportedOperation()

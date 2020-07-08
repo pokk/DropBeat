@@ -22,30 +22,6 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.data.repostory.cache
+package taiwan.no.one.core.data.repostory.cache.local
 
-import taiwan.no.one.core.exceptions.NotFoundException
-
-abstract class LayerCaching<RT> {
-    suspend fun value() = try {
-        val dbSource = loadFromLocal()
-        if (dbSource == null || shouldFetch(dbSource)) fetchFromRemote() else dbSource
-    }
-    catch (notFoundException: NotFoundException) {
-        // If can't find from the cache or the local persistence, will throw the [NotFoundException].
-        fetchFromRemote()
-    }
-    catch (e: Exception) {
-        fetchFromRemote()
-    }
-
-    private suspend fun fetchFromRemote() = createCall().apply { saveCallResult(this) }
-
-    protected abstract suspend fun saveCallResult(data: RT)
-
-    protected abstract suspend fun shouldFetch(data: RT): Boolean
-
-    protected abstract suspend fun loadFromLocal(): RT?
-
-    protected abstract suspend fun createCall(): RT
-}
+inline fun convertToKey(vararg keys: Any) = keys.toList().joinToString()

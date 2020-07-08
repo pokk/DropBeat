@@ -25,6 +25,6 @@
 package taiwan.no.one.core.data.repostory.cache.local
 
 interface Caching {
-    fun <RT> get(key: String, classOf: Class<RT>): RT?
+    fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>?
     fun put(key: String, value: Any?)
 }

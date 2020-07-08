@@ -26,6 +26,7 @@ package taiwan.no.one.dropbeat.core.cache
 
 import com.google.gson.GsonBuilder
 import com.tencent.mmkv.MMKV
+import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 
 class MmkvCache(
@@ -33,13 +34,17 @@ class MmkvCache(
 ) : DiskCache {
     private val gson by lazy { GsonBuilder().create() }
 
-    override fun <RT> get(key: String, classOf: Class<RT>): RT? {
-        val value = mmkv.getString(key, null) ?: return null
-        return gson.fromJson(value, classOf)
+    override fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>? {
+        val set = mmkv.getStringSet(key, null)?.iterator() ?: return null
+        val timestamp = set.next().toLong()
+        return timestamp to gson.fromJson(set.next(), classOf)
     }
 
     override fun put(key: String, value: Any?) {
         if (value == null) return
-        mmkv.putString(key, gson.toJson(value))
+        // [0]: timestamp
+        // [1]: value
+        val set = mutableSetOf(Date().time.toString(), gson.toJson(value))
+        mmkv.putStringSet(key, set)
     }
 }

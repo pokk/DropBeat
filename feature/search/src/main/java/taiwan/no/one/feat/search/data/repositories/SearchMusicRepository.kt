@@ -26,21 +26,22 @@ package taiwan.no.one.feat.search.data.repositories
 
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.feat.search.data.contracts.DataStore
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
 
 internal class SearchMusicRepository(
     private val remote: DataStore,
     private val local: DataStore
 ) : SearchMusicRepo {
-    override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<List<SongEntity>>() {
-        override suspend fun saveCallResult(data: List<SongEntity>) {
+    override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<MusicInfoEntity>() {
+        override suspend fun saveCallResult(data: MusicInfoEntity) {
+            local.createMusic(keyword, page, data)
         }
 
-        override suspend fun shouldFetch(data: List<SongEntity>?) = true
+        override suspend fun shouldFetch(data: MusicInfoEntity) = false
 
-        override suspend fun loadFromLocal() = local.getMusic(keyword, page).entity.items
+        override suspend fun loadFromLocal() = local.getMusic(keyword, page)
 
-        override suspend fun createCall() = remote.getMusic(keyword, page).entity.items
-    }.value()
+        override suspend fun createCall() = remote.getMusic(keyword, page)
+    }.value().entity.items
 }

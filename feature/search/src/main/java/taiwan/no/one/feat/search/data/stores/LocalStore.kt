@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 import taiwan.no.one.core.data.repostory.cache.local.LocalCaching
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
+import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.feat.search.BuildConfig
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
@@ -43,13 +44,16 @@ internal class LocalStore(
     private val mmkvCache: DiskCache,
     private val lruMemoryCache: MemoryCache,
 ) : DataStore {
-    //    override suspend fun getMusic(keyword: String, page: Int) = MusicInfoEntity()
     override suspend fun getMusic(keyword: String, page: Int) =
         object : LocalCaching<MusicInfoEntity>(lruMemoryCache, mmkvCache) {
             override val key get() = convertToKey(keyword, page)
-
-            override suspend fun shouldFetch(data: MusicInfoEntity?) = true
         }.value()
+
+    override suspend fun createMusic(keyword: String, page: Int, music: MusicInfoEntity): Boolean {
+        mmkvCache.put(convertToKey(keyword, page), music)
+        lruMemoryCache.put(convertToKey(keyword, page), music)
+        return true
+    }
 
     override fun getSearchHistories(count: Int) = searchHistoryDao.getHistories(count).distinctUntilChanged()
 
