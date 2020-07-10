@@ -57,7 +57,7 @@
 
     <!--region Global action-->
     <action
-        android:id="@+id/actionToLoadingDialog"
+        android:id="@+id/actionGlobalToLoadingDialog"
         app:destination="@id/loadingDialogFragment"/>
     <dialog
         android:id="@+id/loadingDialogFragment"
