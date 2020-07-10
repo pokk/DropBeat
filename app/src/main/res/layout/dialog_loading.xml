@@ -23,46 +23,20 @@
   ~ SOFTWARE.
   -->
 
-<navigation
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navApp"
-    app:startDestination="@id/navSearch">
+    android:id="@+id/cl_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <include-dynamic
-        android:id="@+id/navSearch"
-        app:graphResName="nav_search"
-        app:moduleName="search"/>
-
-    <include-dynamic
-        android:id="@+id/navRank"
-        app:graphResName="nav_rank"
-        app:moduleName="ranking"/>
-
-    <include-dynamic
-        android:id="@+id/navLogin"
-        app:graphResName="nav_login"
-        app:moduleName="login"/>
-
-    <include-dynamic
-        android:id="@+id/navPlaylist"
-        app:graphResName="nav_playlist"
-        app:moduleName="library"/>
-
-    <include-dynamic
-        android:id="@+id/navPlayer"
-        app:graphResName="nav_player"
-        app:moduleName="player"/>
-
-    <!--region Global action-->
-    <action
-        android:id="@+id/actionToLoadingDialog"
-        app:destination="@id/loadingDialogFragment"/>
-    <dialog
-        android:id="@+id/loadingDialogFragment"
-        android:name="taiwan.no.one.dropbeat.presentation.fragment.LoadingDialogFragment"
-        android:label="LoadingDialogFragment"
-        tools:layout="@layout/dialog_loading"/>
-    <!--endregion-->
-</navigation>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
