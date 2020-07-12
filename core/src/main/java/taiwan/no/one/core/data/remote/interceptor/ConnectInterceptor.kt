@@ -45,7 +45,7 @@ class ConnectInterceptor(
          *  we initialize the request and change its header depending on whether
          *  the device is connected to Internet or not.
          */
-        request = if (hasNetwork(context) == true) {
+        request = if (hasNetwork(context)) {
             /**
              *  If there is Internet, get the cache that was stored 5 seconds ago.
              *  If the cache is older than 5 seconds, then discard it,
