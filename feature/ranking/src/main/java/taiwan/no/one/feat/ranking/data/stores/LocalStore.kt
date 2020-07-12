@@ -56,8 +56,9 @@ internal class LocalStore(
             tryBlock()
         }
         catch (e: Exception) {
-            if (BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG) {
                 e.printStackTrace()
+            }
             return false
         }
         return true

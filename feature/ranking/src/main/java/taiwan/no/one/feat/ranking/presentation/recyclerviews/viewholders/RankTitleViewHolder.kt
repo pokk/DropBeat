@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-
 package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
 import androidx.recyclerview.widget.RecyclerView

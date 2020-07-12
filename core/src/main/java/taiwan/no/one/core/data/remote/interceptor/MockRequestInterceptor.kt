@@ -49,7 +49,7 @@ class MockRequestInterceptor(private val context: Context) : Interceptor {
                 .message("")
                 .code(200)
                 .body(context.readFileFromAssets("$BASE_PATH/$filename.json")
-                          .replace("\\n *".toRegex(), "")  // remove the new line and spaces after new line.
+                          .replace("\\n *".toRegex(), "") // remove the new line and spaces after new line.
                           .toResponseBody(JSON_MEDIA_TYPE))
                 .build()
         }

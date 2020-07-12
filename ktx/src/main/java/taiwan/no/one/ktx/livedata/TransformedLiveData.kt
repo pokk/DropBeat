@@ -44,8 +44,9 @@ abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHoo
             beSilent(observer)
         }
         catch (e: Exception) {
-            if (BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG) {
                 e.printStackTrace()
+            }
         }
     }
 

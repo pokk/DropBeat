@@ -33,16 +33,6 @@ import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
 
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
-    override fun bindLiveData() {
-    }
-
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
-    override fun viewComponentBinding() {
-    }
-
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */

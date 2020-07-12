@@ -82,7 +82,7 @@ class TooltipWindow(context: Context) {
         // For cases if anchor is near screen border, you need to take care of
         // direction as well to show left, right, above or below of anchor view
         val positionX = anchorRect.centerX() - contentViewWidth / 2
-        val positionY = anchorRect.bottom + (contentViewHeight / 3)
+        val positionY = anchorRect.bottom + contentViewHeight / 3
 
         tipWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, positionX, positionY)
     }

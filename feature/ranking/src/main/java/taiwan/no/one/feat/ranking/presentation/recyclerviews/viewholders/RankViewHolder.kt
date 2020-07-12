@@ -22,24 +22,23 @@
  * SOFTWARE.
  */
 
-
 package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
 import coil.api.loadAny
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.getDisplayMetrics
+import taiwan.no.one.core.R as CoreR
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
 import taiwan.no.one.feat.ranking.databinding.ItemRankBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
-import taiwan.no.one.core.R as CoreR
 
 internal class RankViewHolder(
     private val binding: ItemRankBinding
 ) : ViewHolderBinding<BriefRankEntity, RankAdapter>(binding.root) {
     override fun initView(entity: BriefRankEntity, position: Int, adapter: RankAdapter) {
         val newWidth =
-            (context.getDisplayMetrics().widthPixels / 2) - context.getDimen(CoreR.dimen.md_two_unit).toInt() * 2
+            context.getDisplayMetrics().widthPixels / 2 - context.getDimen(CoreR.dimen.md_two_unit).toInt() * 2
         binding.mcvCard.layoutParams.apply {
             width = newWidth
             height = newWidth

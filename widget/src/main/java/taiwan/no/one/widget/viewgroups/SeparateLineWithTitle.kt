@@ -24,7 +24,6 @@
 
 package taiwan.no.one.widget.viewgroups
 
-import FontTextView
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -33,6 +32,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import taiwan.no.one.widget.R
+import taiwan.no.one.widget.textview.FontTextView
 
 class SeparateLineWithTitle @JvmOverloads constructor(
     context: Context,

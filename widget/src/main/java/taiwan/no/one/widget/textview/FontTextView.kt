@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+package taiwan.no.one.widget.textview
+
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView

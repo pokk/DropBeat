@@ -82,6 +82,5 @@ internal interface DataStore {
     suspend fun getTagTopArtist(mbid: String): TagTopArtistEntity
 
     suspend fun getTagTopTrack(mbid: String): TopTrackInfoEntity
-
     //endregion
 }

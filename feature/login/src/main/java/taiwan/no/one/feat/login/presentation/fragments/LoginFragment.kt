@@ -81,7 +81,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
             vm.login(Credential.Facebook(loginResult.accessToken.token))
         }
 
-        override fun onCancel() {}
+        override fun onCancel() = Unit
 
         override fun onError(exception: FacebookException) {
             loge(exception)

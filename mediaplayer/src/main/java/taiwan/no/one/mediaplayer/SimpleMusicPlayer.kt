@@ -53,7 +53,6 @@ import taiwan.no.one.mediaplayer.states.MusicStateStandby
 
 class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     companion object {
-        private const val TAG = "ExoPlayerWrapper"
         private const val NAME = "LocalExoPlayer"
         private const val SECOND_UNIT = 1000
 

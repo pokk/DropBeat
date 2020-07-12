@@ -37,8 +37,9 @@ abstract class SilentLiveData<T> : LiveData<T>(), SilentHook<T> {
             beSilent(observer)
         }
         catch (e: Exception) {
-            if (BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG) {
                 e.printStackTrace()
+            }
         }
     }
 
