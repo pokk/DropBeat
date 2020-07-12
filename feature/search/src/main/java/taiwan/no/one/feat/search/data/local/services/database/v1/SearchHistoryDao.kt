@@ -27,10 +27,10 @@ package taiwan.no.one.feat.search.data.local.services.database.v1
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import java.util.Date
 import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
-import java.util.Date
 
 /**
  * Integrated the base [androidx.room.Room] database operations.
@@ -49,10 +49,12 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
     @Transaction
     open suspend fun insertBy(keyword: String) {
         val history = getHistory(keyword)
-        if (history == null)
+        if (history == null) {
             insert(SearchHistoryEntity(0, keyword, Date()))
-        else
+        }
+        else {
             update(history.copy(updated = Date()))
+        }
     }
 
     /**

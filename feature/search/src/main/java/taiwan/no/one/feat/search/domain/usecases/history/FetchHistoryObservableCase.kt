@@ -36,5 +36,4 @@ internal class FetchHistoryObservableCase(
     }
 
     class Request(val count: Int) : RequestValues
-
 }
