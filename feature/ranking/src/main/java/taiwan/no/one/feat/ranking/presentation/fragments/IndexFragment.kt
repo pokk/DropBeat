@@ -27,7 +27,7 @@ package taiwan.no.one.feat.ranking.presentation.fragments
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.MergeAdapter
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -44,7 +44,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingInde
     override fun bindLiveData() {
         vm.rankings.obs(this) { res ->
             res.onSuccess {
-                ((binding.rvRankings.adapter as? MergeAdapter)?.adapters?.get(1) as? RankAdapter)?.data = it
+                ((binding.rvRankings.adapter as? ConcatAdapter)?.adapters?.get(1) as? RankAdapter)?.data = it
             }
         }
     }
@@ -55,7 +55,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingInde
     override fun viewComponentBinding() {
         binding.rvRankings.apply {
             if (adapter == null) {
-                adapter = MergeAdapter(RankTitleAdapter(), RankAdapter())
+                adapter = ConcatAdapter(RankTitleAdapter(), RankAdapter())
             }
             if (layoutManager == null) {
                 layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
@@ -67,7 +67,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingInde
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        ((binding.rvRankings.adapter as? MergeAdapter)?.adapters?.get(1) as? RankAdapter)?.setOnClickListener {
+        ((binding.rvRankings.adapter as? ConcatAdapter)?.adapters?.get(1) as? RankAdapter)?.setOnClickListener {
             findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }
