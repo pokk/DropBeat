@@ -35,7 +35,7 @@
         android:id="@+id/rv_rankings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        tools:listitem="@layout/item_rank"/>
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_rank"
+        tools:spanCount="2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
