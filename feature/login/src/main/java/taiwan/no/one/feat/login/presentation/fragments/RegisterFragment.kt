@@ -25,13 +25,13 @@
 package taiwan.no.one.feat.login.presentation.fragments
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe as obs
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentRegisterBinding
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
+import taiwan.no.one.ktx.livedata.obs
 
 internal class RegisterFragment : BaseFragment<BaseActivity<*>, FragmentRegisterBinding>() {
     private val vm by viewModels<LoginViewModel>()

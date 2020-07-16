@@ -32,7 +32,6 @@ internal class RankTitleViewHolder(private val binding: ItemRankTitleBinding) : 
     fun initView() {
         binding.mtvTitle.post {
             binding.mtvTitle.layoutParams.height = 40
-            logw(binding.mtvTitle.width, binding.mtvTitle.height)
         }
     }
 }

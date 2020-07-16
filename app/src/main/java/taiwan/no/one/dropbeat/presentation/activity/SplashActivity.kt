@@ -28,10 +28,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe as obs
 import com.google.android.play.core.splitcompat.SplitCompat
 import taiwan.no.one.dropbeat.databinding.ActivitySplashBinding
 import taiwan.no.one.dropbeat.presentation.viewmodels.SplashViewModel
+import taiwan.no.one.ktx.livedata.obs
 
 internal class SplashActivity : AppCompatActivity() {
     private var binding: ActivitySplashBinding? = null

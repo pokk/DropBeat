@@ -26,7 +26,6 @@ package taiwan.no.one.feat.login.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
@@ -34,6 +33,7 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentForgotPasswordBinding
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
+import taiwan.no.one.ktx.livedata.obs
 
 internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentForgotPasswordBinding>() {
     private val vm by viewModels<LoginViewModel>()

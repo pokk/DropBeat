@@ -101,7 +101,7 @@ android {
         options.jvmTarget = JavaVersion.VERSION_1_8.toString()
         languageVersion = "1.4"
     }
-    viewBinding.isEnabled = true
+    buildFeatures.viewBinding = true
 }
 
 kapt {

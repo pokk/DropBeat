@@ -24,11 +24,18 @@
 
 package taiwan.no.one.ktx.livedata
 
+import androidx.annotation.MainThread
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.observe as CoroutineObserve
 
 inline fun <reified T> MutableLiveData<T>.toLiveData() = this as LiveData<T>
 
 inline fun <reified T> SafeMutableLiveData<T>.toLiveData() = this as SafeLiveData<T>
 
 inline fun <reified T> SilentMutableLiveData<T>.toLiveData() = this as SilentLiveData<T>
+
+@MainThread
+inline fun <T> LiveData<T>.obs(owner: LifecycleOwner, crossinline onChanged: (T) -> Unit) =
+    CoroutineObserve(owner, onChanged)

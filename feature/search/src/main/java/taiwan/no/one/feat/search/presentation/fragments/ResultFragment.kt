@@ -27,7 +27,6 @@ package taiwan.no.one.feat.search.presentation.fragments
 import android.os.Bundle
 import android.view.ViewStub
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +39,7 @@ import taiwan.no.one.feat.search.databinding.StubSearchHasResultBinding
 import taiwan.no.one.feat.search.databinding.StubSearchNoResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
+import taiwan.no.one.ktx.livedata.obs
 import taiwan.no.one.ktx.view.findOptional
 
 internal class ResultFragment : BaseFragment<BaseActivity<*>, FragmentSearchResultBinding>() {

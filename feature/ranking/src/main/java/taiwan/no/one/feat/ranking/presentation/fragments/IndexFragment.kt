@@ -25,7 +25,6 @@
 package taiwan.no.one.feat.ranking.presentation.fragments
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +35,7 @@ import taiwan.no.one.feat.ranking.databinding.FragmentRankingIndexBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankTitleAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
+import taiwan.no.one.ktx.livedata.obs
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingIndexBinding>() {
     private val vm by viewModels<RankViewModel>()

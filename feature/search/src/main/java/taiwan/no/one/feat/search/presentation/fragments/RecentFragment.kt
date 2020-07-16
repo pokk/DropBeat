@@ -27,7 +27,6 @@ package taiwan.no.one.feat.search.presentation.fragments
 import android.view.KeyEvent
 import android.widget.EditText
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe as obs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -41,6 +40,7 @@ import taiwan.no.one.feat.search.databinding.FragmentSearchRecentBinding
 import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
+import taiwan.no.one.ktx.livedata.obs
 import taiwan.no.one.widget.recyclerviews.helpers.AdapterItemTouchHelper
 import taiwan.no.one.widget.recyclerviews.helpers.DefaultItemTouchCallback
 
