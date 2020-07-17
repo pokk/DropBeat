@@ -24,6 +24,8 @@
 
 package taiwan.no.one.feat.explore.data.remote.configs
 
+import taiwan.no.one.core.data.remote.config.ApiConfig
+
 /**
  * The configuration of a remote google news api service.
  */

@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.search.data.remote.configs
 
+import taiwan.no.one.core.data.remote.config.ApiConfig
 import taiwan.no.one.feat.search.BuildConfig
 
 /**

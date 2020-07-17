@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.remote.configs
+package taiwan.no.one.core.data.remote.config
 
 /**
  * Interface of the setting of the difference http configurations.
  */
-internal interface ApiConfig {
+interface ApiConfig {
     /**
      * Obtain the base http url.
      *
