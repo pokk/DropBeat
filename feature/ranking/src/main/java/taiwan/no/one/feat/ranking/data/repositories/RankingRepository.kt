@@ -24,16 +24,49 @@
 
 package taiwan.no.one.feat.ranking.data.repositories
 
+import android.content.Context
+import taiwan.no.one.core.data.repostory.cache.LayerCaching
+import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.ranking.data.stores.LocalStore
 import taiwan.no.one.feat.ranking.data.stores.RemoteStore
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
+import java.util.Date
 
 internal class RankingRepository(
     private val local: LocalStore,
     private val remote: RemoteStore
 ) : RankingRepo {
-    override suspend fun fetchMusicRanking(rankId: String) = remote.getMusicRanking(rankId).entity.songs
+    companion object Constant {
+        private const val EXPIRED_DURATION = 360000 // 60 * 60 * 1000 = an hour
+    }
+
+    override suspend fun fetchMusicRanking(rankId: String) = object : LayerCaching<MusicInfoEntity>() {
+        // OPTIMIZE(Jieyi): 7/21/20 it might be extracted.
+        override var timestamp
+            get() = DropBeatApp.appContext
+                .getSharedPreferences("timestamp", Context.MODE_PRIVATE)
+                .getLong(convertToKey(rankId), 0L)
+            set(value) {
+                DropBeatApp.appContext
+                    .getSharedPreferences("timestamp", Context.MODE_PRIVATE)
+                    .edit()
+                    .putLong(convertToKey(rankId), value)
+                    .apply()
+            }
+
+        override suspend fun saveCallResult(data: MusicInfoEntity) {
+            local.createMusicRanking(rankId, data)
+        }
+
+        override suspend fun shouldFetch(data: MusicInfoEntity) = Date().time - timestamp > EXPIRED_DURATION
+
+        override suspend fun loadFromLocal() = local.getMusicRanking(rankId)
+
+        override suspend fun createCall() = remote.getMusicRanking(rankId)
+    }.value().entity.songs
 
     override suspend fun fetchDetailOfRankings() = remote.getDetailOfRankings().briefRankEntities
 

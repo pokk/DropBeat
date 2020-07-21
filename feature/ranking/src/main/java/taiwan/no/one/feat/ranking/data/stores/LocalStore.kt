@@ -24,10 +24,16 @@
 
 package taiwan.no.one.feat.ranking.data.stores
 
+import taiwan.no.one.core.data.repostory.cache.local.DiskCache
+import taiwan.no.one.core.data.repostory.cache.local.LocalCaching
+import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
+import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.ranking.BuildConfig
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
 import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 
 /**
@@ -36,10 +42,23 @@ import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
  */
 internal class LocalStore(
     private val rankingDao: RankingDao,
+    private val mmkvCache: DiskCache,
+    private val lruMemoryCache: MemoryCache,
 ) : DataStore {
-    override suspend fun getMusicRanking(rankId: String) = UnsupportedOperation()
+    override suspend fun getMusicRanking(rankId: String) =
+        object : LocalCaching<MusicInfoEntity>(lruMemoryCache, mmkvCache) {
+            override val key get() = convertToKey(rankId)
+        }.value()
+
+    override suspend fun createMusicRanking(rankId: String, entity: MusicInfoEntity): Boolean {
+        mmkvCache.put(convertToKey(rankId), entity)
+        lruMemoryCache.put(convertToKey(rankId), entity)
+        return true
+    }
 
     override suspend fun getDetailOfRankings() = UnsupportedOperation()
+
+    override suspend fun createDetailOfRankings(entity: MusicRankListEntity) = TODO()
 
     override suspend fun createRankingEntity(entities: List<RankingIdEntity>) = tryWrapper {
         rankingDao.insert(*entities.toTypedArray())

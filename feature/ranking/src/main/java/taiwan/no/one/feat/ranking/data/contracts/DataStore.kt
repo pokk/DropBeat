@@ -35,7 +35,11 @@ import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
 internal interface DataStore {
     suspend fun getMusicRanking(rankId: String): MusicInfoEntity
 
+    suspend fun createMusicRanking(rankId: String, entity: MusicInfoEntity): Boolean
+
     suspend fun getDetailOfRankings(): MusicRankListEntity
+
+    suspend fun createDetailOfRankings(entity: MusicRankListEntity): Boolean
 
     suspend fun createRankingEntity(entities: List<RankingIdEntity>): Boolean
 
