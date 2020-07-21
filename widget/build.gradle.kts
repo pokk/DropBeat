@@ -62,6 +62,7 @@ android {
         options.jvmTarget = JavaVersion.VERSION_1_8.toString()
         languageVersion = "1.4"
     }
+    buildFeatures.viewBinding = true
 }
 
 dependencies {

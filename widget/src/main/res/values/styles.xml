@@ -24,15 +24,6 @@
   -->
 
 <resources>
-    <!--region Dialog-->
-    <style name="Dialog"/>
-
-    <style name="Dialog.Fragment.Animation" parent="Dialog">
-        <item name="android:windowEnterAnimation">@anim/dialog_loading_enter</item>
-        <item name="android:windowExitAnimation">@anim/dialog_loading_exit</item>
-    </style>
-    <!--endregion-->
-
     <!--region Popup Window-->
     <style name="PopupWindow.Animation" parent="">
         <item name="android:windowEnterAnimation">@anim/popup_showing</item>

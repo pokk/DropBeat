@@ -26,7 +26,7 @@
 <set
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="@integer/anim_dialog_duration"
-    android:shareInterpolator="@anim/music_easing_interpolator">
+    android:shareInterpolator="@anim/easing_interpolator">
     <scale
         android:fromXScale="1.0"
         android:fromYScale="1.0"

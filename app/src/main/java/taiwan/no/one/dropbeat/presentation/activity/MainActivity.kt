@@ -26,14 +26,18 @@ package taiwan.no.one.dropbeat.presentation.activity
 
 import android.content.Context
 import android.content.res.Configuration
+import androidx.navigation.findNavController
 import com.google.android.play.core.splitcompat.SplitCompat
-import java.util.Locale
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.R
 import taiwan.no.one.dropbeat.databinding.ActivityMainBinding
 import taiwan.no.one.dropbeat.presentation.lifecycle.SplitModuleAddLifecycle
+import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+    private val navigator by lazy { findNavController(R.id.nav_host_fragment) }
+
     init {
         SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featSearchMusic"))
     }
@@ -43,5 +47,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val ctx = newBase?.createConfigurationContext(config)
         super.attachBaseContext(ctx)
         SplitCompat.install(this)
+    }
+
+    override fun showLoading() {
+        navigator.navigate(R.id.action_global_to_loading_dialog)
+    }
+
+    override fun hideLoading() {
+        navigator.navigateUp()
+    }
+
+    override fun showError(message: String) {
+        navigator.navigate(R.id.action_global_to_error_dialog)
     }
 }

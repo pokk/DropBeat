@@ -27,8 +27,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
@@ -42,6 +41,5 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/lottie_loading"
-        app:lottie_scale="0.1"
-        />
+        app:lottie_scale="0.1"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

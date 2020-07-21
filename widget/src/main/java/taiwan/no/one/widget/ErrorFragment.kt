@@ -22,50 +22,29 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.presentation.fragment
+package taiwan.no.one.widget
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
-import com.devrapid.kotlinknifer.displayPixels
-import taiwan.no.one.dropbeat.databinding.DialogLoadingBinding
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import taiwan.no.one.widget.databinding.FragmentErrorBinding
 
-class LoadingDialogFragment : DialogFragment() {
-    companion object Constant {
-        private const val WIDTH_RATIO = 0.7
-        private const val HEIGHT_RATIO = 0.6
-    }
-
-    private lateinit var binding: DialogLoadingBinding
+class ErrorFragment : Fragment() {
+    private lateinit var binding: FragmentErrorBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DialogLoadingBinding.inflate(inflater, container, false)
+        binding = FragmentErrorBinding.inflate(inflater)
         return binding.root
     }
 
-    /**
-     * Called immediately after [.onCreateView]
-     * has returned, but before any saved state has been restored in to the view.
-     * This gives subclasses a chance to initialize themselves once
-     * they know their view hierarchy has been completely created.  The fragment's
-     * view hierarchy is not however attached to its parent at this point.
-     * @param view The View returned by [.onCreateView].
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
-     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val (displayWidth, displayHeight) = requireActivity().displayPixels()
-        // Change the outer layout size
-        binding.clParent.apply {
-            post {
-                layoutParams.apply {
-                    width = (displayWidth * WIDTH_RATIO).toInt()
-                    height = (displayHeight * HEIGHT_RATIO).toInt()
-                }
-            }
+
+        binding.btnTry.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 }

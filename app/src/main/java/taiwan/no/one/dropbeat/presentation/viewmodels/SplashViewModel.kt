@@ -29,12 +29,12 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.tencent.mmkv.MMKV
-import java.util.concurrent.TimeUnit
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.R
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.ktx.livedata.toLiveData
+import java.util.concurrent.TimeUnit
 
 internal class SplashViewModel(
     application: Application

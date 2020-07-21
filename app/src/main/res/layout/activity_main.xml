@@ -32,17 +32,17 @@
     tools:context=".presentation.activity.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navHostFragment"
+        android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/bnvNavigator"
+        app:layout_constraintBottom_toTopOf="@id/bnv_navigator"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_app"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnvNavigator"
+        android:id="@+id/bnv_navigator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

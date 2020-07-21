@@ -35,11 +35,11 @@ import androidx.annotation.UiThread
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
-import java.lang.reflect.ParameterizedType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import taiwan.no.one.core.presentation.activity.BaseActivity
+import java.lang.reflect.ParameterizedType
 
 /**
  * The basic fragment is for the normal activity that prepares all necessary variables or functions.

@@ -57,12 +57,20 @@
 
     <!--region Global action-->
     <action
-        android:id="@+id/actionGlobalToLoadingDialog"
-        app:destination="@id/loadingDialogFragment"/>
+        android:id="@+id/action_global_to_loading_dialog"
+        app:destination="@id/loading_dialog_fragment"/>
     <dialog
-        android:id="@+id/loadingDialogFragment"
-        android:name="taiwan.no.one.dropbeat.presentation.fragment.LoadingDialogFragment"
+        android:id="@+id/loading_dialog_fragment"
+        android:name="taiwan.no.one.widget.dialog.LoadingDialogFragment"
         android:label="LoadingDialogFragment"
         tools:layout="@layout/dialog_loading"/>
+    <action
+        android:id="@+id/action_global_to_error_dialog"
+        app:destination="@id/error_fragment"/>
+    <fragment
+        android:id="@+id/error_fragment"
+        android:name="taiwan.no.one.widget.ErrorFragment"
+        android:label="ErrorFragment"
+        tools:layout="@layout/fragment_error"/>
     <!--endregion-->
 </navigation>

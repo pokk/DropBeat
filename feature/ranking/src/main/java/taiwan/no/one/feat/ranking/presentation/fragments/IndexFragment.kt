@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.ranking.presentation.fragments
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -40,11 +41,21 @@ import taiwan.no.one.ktx.livedata.obs
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingIndexBinding>() {
     private val vm by viewModels<RankViewModel>()
 
+    init {
+        lifecycleScope.launchWhenCreated {
+            parent.showLoading()
+        }
+    }
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.rankings.obs(this) { res ->
             res.onSuccess {
                 ((binding.rvRankings.adapter as? ConcatAdapter)?.adapters?.get(1) as? RankAdapter)?.data = it
+                parent.hideLoading()
+            }.onFailure {
+                parent.hideLoading()
+                parent.showError(it.message.toString())
             }
         }
     }

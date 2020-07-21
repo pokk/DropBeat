@@ -28,10 +28,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+    <taiwan.no.one.widget.textview.FontTextView
         android:id="@+id/ftv_dialog_title"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
@@ -43,10 +42,9 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+    <taiwan.no.one.widget.textview.FontTextView
         android:id="@+id/ftv_dialog_subtitle"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
@@ -55,8 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ftv_dialog_title"
-        tools:text="@tools:sample/lorem[20]"
-        />
+        tools:text="@tools:sample/lorem[20]"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_playlist_name"
@@ -66,15 +63,13 @@
         android:layout_marginEnd="@dimen/md_two_unit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ftv_dialog_subtitle"
-        >
+        app:layout_constraintTop_toBottomOf="@id/ftv_dialog_subtitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_playlist_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Please input playlist name"
-            />
+            android:hint="Please input playlist name"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -90,8 +85,7 @@
         app:iconTint="@color/selector_button_borderless_text_color"
         app:layout_constraintEnd_toStartOf="@id/btn_ok"
         app:layout_constraintTop_toBottomOf="@id/til_playlist_name"
-        app:rippleColor="@null"
-        />
+        app:rippleColor="@null"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_ok"
@@ -107,6 +101,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_playlist_name"
-        app:rippleColor="@null"
-        />
+        app:rippleColor="@null"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

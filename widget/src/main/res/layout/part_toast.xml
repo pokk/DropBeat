@@ -33,16 +33,14 @@
     android:layout_margin="@dimen/md_one_unit"
     app:cardBackgroundColor="@color/shark"
     app:cardCornerRadius="@dimen/md_one_half_unit"
-    app:cardElevation="@dimen/md_one_half_unit"
-    >
+    app:cardElevation="@dimen/md_one_half_unit">
 
-    <com.no1.taiwan.stationmusicfm.widget.components.textview.FontTextView
+    <taiwan.no.one.widget.textview.FontTextView
         android:id="@+id/ftv_toast_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/md_two_unit"
         android:textColor="@android:color/white"
-        tools:text="This is toast msg!!"
-        />
+        tools:text="This is toast msg!!"/>
 </androidx.cardview.widget.CardView>
 
