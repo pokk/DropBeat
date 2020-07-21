@@ -22,10 +22,29 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.ktx.livedata
+package taiwan.no.one.widget.fragment
 
-import androidx.lifecycle.Observer
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import taiwan.no.one.widget.databinding.FragmentErrorBinding
 
-interface SilentHook<T> {
-    fun beSilent(observer: Observer<in T>)
+class ErrorFragment : Fragment() {
+    private lateinit var binding: FragmentErrorBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentErrorBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnTry.setOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
 }

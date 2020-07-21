@@ -35,7 +35,7 @@
     app:cardCornerRadius="@dimen/md_one_half_unit"
     app:cardElevation="@dimen/md_one_half_unit">
 
-    <taiwan.no.one.widget.textview.FontTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/ftv_toast_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

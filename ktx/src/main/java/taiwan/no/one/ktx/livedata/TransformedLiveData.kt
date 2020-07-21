@@ -25,53 +25,14 @@
 package taiwan.no.one.ktx.livedata
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.devrapid.kotlinshaver.accessible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import taiwan.no.one.ktx.BuildConfig
 
-abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S>, SilentHook<T> {
+abstract class TransformedLiveData<S, T> : LiveData<T>(), Observer<S> {
     protected abstract val source: LiveData<S>
-
-    //region The Code comes from [SilentLiveData].
-    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
-        super.observe(owner, observer)
-        try {
-            beSilent(observer)
-        }
-        catch (e: Exception) {
-            if (BuildConfig.DEBUG) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    override fun beSilent(observer: Observer<in T>) {
-        // Get wrapper's version.
-        val classLiveData = LiveData::class.java
-        val fieldObservers = classLiveData.getDeclaredField("mObservers").accessible()
-        val objectObservers = fieldObservers.get(this)
-        val classObservers = objectObservers.javaClass
-        val methodGet = classObservers.getDeclaredMethod("get", Any::class.java).accessible()
-        val objectWrapperEntry = methodGet.invoke(objectObservers, observer)
-        lateinit var objectWrapper: Any
-        if (objectWrapperEntry is Map.Entry<*, *>) {
-            objectWrapper = objectWrapperEntry.value ?: throw NullPointerException()
-        }
-        val classObserverWrapper = objectWrapper.javaClass.superclass
-        val fieldLastVersion =
-            (classObserverWrapper?.getDeclaredField("mLastVersion") ?: throw NullPointerException()).accessible()
-        // Get LiveData's version.
-        val fieldVersion = classLiveData.getDeclaredField("mVersion").accessible()
-        val objectVersion = fieldVersion.get(this)
-        // Set wrapper's version.
-        fieldLastVersion.set(objectWrapper, objectVersion)
-    }
-    //endregion
 
     override fun onActive() = source.observeForever(this)
 

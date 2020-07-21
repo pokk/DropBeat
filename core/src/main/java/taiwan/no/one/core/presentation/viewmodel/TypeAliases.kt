@@ -26,8 +26,6 @@ package taiwan.no.one.core.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import taiwan.no.one.ktx.livedata.SafeMutableLiveData
-import taiwan.no.one.ktx.livedata.SilentMutableLiveData
 
 typealias ResultLiveData<T> = MutableLiveData<Result<T>>
 typealias ResultSafeLiveData<T> = SafeMutableLiveData<Result<T>>
-typealias ResultSilentLiveData<T> = SilentMutableLiveData<Result<T>>
