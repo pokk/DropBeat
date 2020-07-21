@@ -27,6 +27,7 @@ package taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
+import retrofit2.http.QueryMap
 import taiwan.no.one.core.data.remote.interceptor.Constant
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
@@ -39,9 +40,12 @@ import taiwan.no.one.feat.ranking.data.remote.configs.RankingConfig
 internal interface RankingMusicService {
     @Headers(Constant.HEADER_MOCK_DATA, "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
     @GET("${RankingConfig.API_REQUEST}/{rank_id}")
-    suspend fun retrieveMusicRanking(@Path("rank_id") rankId: String): MusicInfoEntity
+    suspend fun retrieveMusicRanking(
+        @Path("rank_id") rankId: String,
+        @QueryMap queries: Map<String, String>
+    ): MusicInfoEntity
 
     @Headers(Constant.HEADER_MOCK_DATA, "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
     @GET("${RankingConfig.API_REQUEST}/detail")
-    suspend fun retrieveDetailOfRankings(): MusicRankListEntity
+    suspend fun retrieveDetailOfRankings(@QueryMap queries: Map<String, String>): MusicRankListEntity
 }

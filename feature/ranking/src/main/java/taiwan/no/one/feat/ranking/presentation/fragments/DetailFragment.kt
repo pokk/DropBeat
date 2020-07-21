@@ -28,14 +28,14 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.presentation.activity.MainActivity
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingDetailBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 import taiwan.no.one.ktx.livedata.obs
 
-internal class DetailFragment : BaseFragment<BaseActivity<*>, FragmentRankingDetailBinding>() {
+internal class DetailFragment : BaseFragment<MainActivity, FragmentRankingDetailBinding>() {
     private val vm by viewModels<RankViewModel>()
     private val args by navArgs<DetailFragmentArgs>()
 
@@ -44,6 +44,9 @@ internal class DetailFragment : BaseFragment<BaseActivity<*>, FragmentRankingDet
         vm.musics.obs(this) { res ->
             res.onSuccess {
                 (binding.rvSongs.adapter as? SongAdapter)?.addExtraEntities(it)
+                parent.hideLoading()
+            }.onFailure {
+                parent.showError(it.message.toString())
             }
         }
     }
@@ -69,5 +72,6 @@ internal class DetailFragment : BaseFragment<BaseActivity<*>, FragmentRankingDet
      */
     override fun rendered(savedInstanceState: Bundle?) {
         vm.getMusics(args.id)
+        parent.showLoading()
     }
 }

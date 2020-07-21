@@ -30,15 +30,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.presentation.activity.MainActivity
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingIndexBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankTitleAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 import taiwan.no.one.ktx.livedata.obs
 
-internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingIndexBinding>() {
+internal class IndexFragment : BaseFragment<MainActivity, FragmentRankingIndexBinding>() {
     private val vm by viewModels<RankViewModel>()
 
     init {
@@ -54,7 +54,6 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentRankingInde
                 ((binding.rvRankings.adapter as? ConcatAdapter)?.adapters?.get(1) as? RankAdapter)?.data = it
                 parent.hideLoading()
             }.onFailure {
-                parent.hideLoading()
                 parent.showError(it.message.toString())
             }
         }

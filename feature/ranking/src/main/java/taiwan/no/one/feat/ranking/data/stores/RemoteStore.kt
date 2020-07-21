@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.ranking.data.stores
 
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
+import taiwan.no.one.feat.ranking.BuildConfig
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1.RankingMusicService
@@ -36,9 +37,14 @@ import taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1.RankingMusicS
 internal class RemoteStore(
     private val rankingMusicService: RankingMusicService
 ) : DataStore {
-    override suspend fun getMusicRanking(rankId: String) = rankingMusicService.retrieveMusicRanking(rankId)
+    private val basicQuery
+        get() = hashMapOf(
+            BuildConfig.SearchMusicQuery1 to BuildConfig.SearchMusicParameter1,
+        )
 
-    override suspend fun getDetailOfRankings() = rankingMusicService.retrieveDetailOfRankings()
+    override suspend fun getMusicRanking(rankId: String) = rankingMusicService.retrieveMusicRanking(rankId, basicQuery)
+
+    override suspend fun getDetailOfRankings() = rankingMusicService.retrieveDetailOfRankings(basicQuery)
 
     override suspend fun createRankingEntity(entities: List<RankingIdEntity>) = UnsupportedOperation()
 

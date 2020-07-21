@@ -39,6 +39,7 @@ import taiwan.no.one.ktx.livedata.toLiveData
 internal class RankViewModel : BehindViewModel() {
     private val fetchDetailOfRankingsCase by instance<FetchDetailOfRankingsCase>()
     private val fetchMusicRankCase by instance<FetchMusicRankCase>()
+
     val rankings = liveData { emit(fetchDetailOfRankingsCase.execute()) }
     private val _musics by lazy { ResultLiveData<List<SongEntity>>() }
     val musics = _musics.toLiveData()

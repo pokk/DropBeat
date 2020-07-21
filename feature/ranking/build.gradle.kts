@@ -64,6 +64,12 @@ android {
             buildConfigField("String",
                              "RankingUriRequest",
                              gradleLocalProperties(rootDir).getProperty("ranking_uri_request"))
+            buildConfigField("String",
+                             "SearchMusicQuery1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_query_1"))
+            buildConfigField("String",
+                             "SearchMusicParameter1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_1"))
         }
         getByName("debug") {
             splits.abi.isEnable = false
@@ -81,6 +87,12 @@ android {
             buildConfigField("String",
                              "RankingUriRequest",
                              gradleLocalProperties(rootDir).getProperty("ranking_uri_request"))
+            buildConfigField("String",
+                             "SearchMusicQuery1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_query_1"))
+            buildConfigField("String",
+                             "SearchMusicParameter1",
+                             gradleLocalProperties(rootDir).getProperty("seek_song_param_1"))
         }
     }
     dexOptions {
