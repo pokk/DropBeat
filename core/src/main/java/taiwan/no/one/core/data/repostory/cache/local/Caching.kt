@@ -25,6 +25,10 @@
 package taiwan.no.one.core.data.repostory.cache.local
 
 interface Caching {
+    companion object Constant {
+        const val TIME_STAMP = "timestamp"
+    }
+
     fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>?
     fun put(key: String, value: Any?)
 }

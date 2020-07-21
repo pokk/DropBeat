@@ -25,17 +25,28 @@
 package taiwan.no.one.core.data.repostory.cache
 
 import taiwan.no.one.core.exceptions.NotFoundException
+import java.util.Date
 
 abstract class LayerCaching<RT> {
+    protected open var timestamp = 0L
+
     suspend fun value() = try {
         val dbSource = loadFromLocal()
-        if (dbSource == null || shouldFetch(dbSource)) fetchFromRemote() else dbSource
+        if (dbSource == null || shouldFetch(dbSource)) {
+            timestamp = Date().time
+            fetchFromRemote()
+        }
+        else {
+            dbSource
+        }
     }
     catch (notFoundException: NotFoundException) {
         // If can't find from the cache or the local persistence, will throw the [NotFoundException].
+        timestamp = Date().time
         fetchFromRemote()
     }
     catch (e: Exception) {
+        timestamp = Date().time
         fetchFromRemote()
     }
 

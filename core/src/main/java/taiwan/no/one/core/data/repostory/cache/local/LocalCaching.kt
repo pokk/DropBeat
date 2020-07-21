@@ -24,9 +24,9 @@
 
 package taiwan.no.one.core.data.repostory.cache.local
 
+import taiwan.no.one.core.exceptions.NotFoundException
 import java.lang.reflect.ParameterizedType
 import java.util.Date
-import taiwan.no.one.core.exceptions.NotFoundException
 
 abstract class LocalCaching<RT>(
     private val memoryCache: MemoryCache,
@@ -47,6 +47,7 @@ abstract class LocalCaching<RT>(
 
     suspend fun value(): RT {
         val dataSource = loadFromCache()
+        timestamp = dataSource?.first ?: 0L
         return if (dataSource == null || shouldFetch(dataSource.second)) {
             fetchFromDisk()?.second ?: throw NotFoundException()
         }

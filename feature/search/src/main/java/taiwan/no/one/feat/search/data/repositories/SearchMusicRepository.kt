@@ -24,21 +24,42 @@
 
 package taiwan.no.one.feat.search.data.repositories
 
+import android.content.Context.MODE_PRIVATE
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
+import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
+import java.util.Date
 
 internal class SearchMusicRepository(
     private val remote: DataStore,
     private val local: DataStore
 ) : SearchMusicRepo {
+    companion object Constant {
+        private const val EXPIRED_DURATION = 360000 // 60 * 60 * 1000 = an hour
+    }
+
     override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<MusicInfoEntity>() {
+        // OPTIMIZE(Jieyi): 7/21/20 it might be extracted.
+        override var timestamp
+            get() = DropBeatApp.appContext
+                .getSharedPreferences("timestamp", MODE_PRIVATE)
+                .getLong(convertToKey(keyword, page), 0L)
+            set(value) {
+                DropBeatApp.appContext
+                    .getSharedPreferences("timestamp", MODE_PRIVATE)
+                    .edit()
+                    .putLong(convertToKey(keyword, page), value)
+                    .apply()
+            }
+
         override suspend fun saveCallResult(data: MusicInfoEntity) {
             local.createMusic(keyword, page, data)
         }
 
-        override suspend fun shouldFetch(data: MusicInfoEntity) = false
+        override suspend fun shouldFetch(data: MusicInfoEntity) = Date().time - timestamp > EXPIRED_DURATION
 
         override suspend fun loadFromLocal() = local.getMusic(keyword, page)
 
