@@ -25,6 +25,8 @@
 package taiwan.no.one.dropbeat.di
 
 object Constant {
+    const val TAG_FEAT_REPO_SHARED_PREFS = "repo shared preferences"
+
     const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
     const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
     const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"

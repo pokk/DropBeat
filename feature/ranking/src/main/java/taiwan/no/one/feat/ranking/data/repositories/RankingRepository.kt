@@ -28,16 +28,15 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
-import taiwan.no.one.feat.ranking.data.stores.LocalStore
-import taiwan.no.one.feat.ranking.data.stores.RemoteStore
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 import java.util.Date
 
 internal class RankingRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore,
+    private val local: DataStore,
+    private val remote: DataStore,
     private val sp: SharedPreferences,
 ) : RankingRepo {
     companion object Constant {

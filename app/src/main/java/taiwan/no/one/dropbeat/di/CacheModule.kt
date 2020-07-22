@@ -37,6 +37,7 @@ import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 import taiwan.no.one.dropbeat.core.cache.LruMemoryCache
 import taiwan.no.one.dropbeat.core.cache.MmkvCache
+import taiwan.no.one.dropbeat.di.Constant.TAG_FEAT_REPO_SHARED_PREFS
 
 object CacheModule {
     private const val TAG_CACHE_SIZE = "cache size"
@@ -47,7 +48,7 @@ object CacheModule {
 
         bind<DiskCache>() with singleton { MmkvCache(MMKV.defaultMMKV()) }
         bind<MemoryCache>() with singleton { LruMemoryCache(lruCache(instance(TAG_CACHE_SIZE))) }
-        bind<SharedPreferences>(TAG_REPO_SHARED_PREFS) with singleton {
+        bind<SharedPreferences>(TAG_FEAT_REPO_SHARED_PREFS) with singleton {
             context.getSharedPreferences(TAG_REPO_SHARED_PREFS, Context.MODE_PRIVATE)
         }
     }

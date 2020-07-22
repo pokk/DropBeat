@@ -32,8 +32,10 @@ import org.kodein.di.singleton
 import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
+import taiwan.no.one.dropbeat.di.Constant.TAG_FEAT_REPO_SHARED_PREFS
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.ranking.FeatModules.Constant.FEAT_NAME
+import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.local.configs.RankingDatabase
 import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 import taiwan.no.one.feat.ranking.data.remote.RestfulApiFactory
@@ -45,14 +47,21 @@ import taiwan.no.one.feat.ranking.data.stores.RemoteStore
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal object DataModules : ModuleProvider {
+    private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
+    private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
+
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance(), instance(), instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore(instance()) }
+        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance(), instance(), instance()) }
+        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
 
-        bind<RankingRepo>() with singleton { RankingRepository(instance(), instance()) }
+        bind<RankingRepo>() with singleton {
+            RankingRepository(instance(TAG_LOCAL_DATA_STORE),
+                              instance(TAG_REMOTE_DATA_STORE),
+                              instance(TAG_FEAT_REPO_SHARED_PREFS))
+        }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
