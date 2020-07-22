@@ -32,7 +32,7 @@ object GradleDependency {
         const val GOOGLE_SERVICE = "4.3.3"
         const val CRASHLYTICS = "2.2.0"
         const val DETEKT = "1.10.0"
-        const val VERSION_UPDATER = "0.28.0"
+        const val VERSION_UPDATER = "0.29.0"
     }
 
     const val SAFE_ARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.SAFE_ARGS}"
