@@ -24,6 +24,8 @@
 
 package taiwan.no.one.dropbeat.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.collection.lruCache
 import com.tencent.mmkv.MMKV
 import org.kodein.di.DI
@@ -37,9 +39,16 @@ import taiwan.no.one.dropbeat.core.cache.LruMemoryCache
 import taiwan.no.one.dropbeat.core.cache.MmkvCache
 
 object CacheModule {
-    fun provide() = DI.Module("Cache Module") {
-        constant("cacheSize") with 40
+    private const val TAG_CACHE_SIZE = "cache size"
+    private const val TAG_REPO_SHARED_PREFS = "repo timestamp shared preferences"
+
+    fun provide(context: Context) = DI.Module("Cache Module") {
+        constant(TAG_CACHE_SIZE) with 40
+
         bind<DiskCache>() with singleton { MmkvCache(MMKV.defaultMMKV()) }
-        bind<MemoryCache>() with singleton { LruMemoryCache(lruCache(instance("cacheSize"))) }
+        bind<MemoryCache>() with singleton { LruMemoryCache(lruCache(instance(TAG_CACHE_SIZE))) }
+        bind<SharedPreferences>(TAG_REPO_SHARED_PREFS) with singleton {
+            context.getSharedPreferences(TAG_REPO_SHARED_PREFS, Context.MODE_PRIVATE)
+        }
     }
 }

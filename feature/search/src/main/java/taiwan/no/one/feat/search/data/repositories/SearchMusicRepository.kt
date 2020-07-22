@@ -24,10 +24,10 @@
 
 package taiwan.no.one.feat.search.data.repositories
 
-import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
-import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
@@ -35,24 +35,18 @@ import java.util.Date
 
 internal class SearchMusicRepository(
     private val remote: DataStore,
-    private val local: DataStore
+    private val local: DataStore,
+    private val sp: SharedPreferences,
 ) : SearchMusicRepo {
     companion object Constant {
         private const val EXPIRED_DURATION = 360000 // 60 * 60 * 1000 = an hour
     }
 
     override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<MusicInfoEntity>() {
-        // OPTIMIZE(Jieyi): 7/21/20 it might be extracted.
         override var timestamp
-            get() = DropBeatApp.appContext
-                .getSharedPreferences("timestamp", MODE_PRIVATE)
-                .getLong(convertToKey(keyword, page), 0L)
+            get() = sp.getLong(convertToKey(keyword, page), 0L)
             set(value) {
-                DropBeatApp.appContext
-                    .getSharedPreferences("timestamp", MODE_PRIVATE)
-                    .edit()
-                    .putLong(convertToKey(keyword, page), value)
-                    .apply()
+                sp.edit { putLong(convertToKey(keyword, page), value) }
             }
 
         override suspend fun saveCallResult(data: MusicInfoEntity) {

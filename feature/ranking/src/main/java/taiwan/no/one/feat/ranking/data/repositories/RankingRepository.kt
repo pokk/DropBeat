@@ -24,10 +24,10 @@
 
 package taiwan.no.one.feat.ranking.data.repositories
 
-import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
-import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.ranking.data.stores.LocalStore
@@ -37,24 +37,18 @@ import java.util.Date
 
 internal class RankingRepository(
     private val local: LocalStore,
-    private val remote: RemoteStore
+    private val remote: RemoteStore,
+    private val sp: SharedPreferences,
 ) : RankingRepo {
     companion object Constant {
         private const val EXPIRED_DURATION = 360000 // 60 * 60 * 1000 = an hour
     }
 
     override suspend fun fetchMusicRanking(rankId: String) = object : LayerCaching<MusicInfoEntity>() {
-        // OPTIMIZE(Jieyi): 7/21/20 it might be extracted.
         override var timestamp
-            get() = DropBeatApp.appContext
-                .getSharedPreferences("timestamp", Context.MODE_PRIVATE)
-                .getLong(convertToKey(rankId), 0L)
+            get() = sp.getLong(convertToKey(rankId), 0L)
             set(value) {
-                DropBeatApp.appContext
-                    .getSharedPreferences("timestamp", Context.MODE_PRIVATE)
-                    .edit()
-                    .putLong(convertToKey(rankId), value)
-                    .apply()
+                sp.edit { putLong(convertToKey(rankId), value) }
             }
 
         override suspend fun saveCallResult(data: MusicInfoEntity) {
