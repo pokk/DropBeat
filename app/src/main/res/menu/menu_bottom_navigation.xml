@@ -26,23 +26,18 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menuSearch"
+        android:id="@+id/menu_music"
         android:enabled="true"
-        android:icon="@drawable/ic_cloud"
+        android:icon="@drawable/ic_music"
+        android:title="Music"/>
+    <item
+        android:id="@+id/menu_search"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
         android:title="Search"/>
     <item
-        android:id="@+id/menuRanking"
+        android:id="@+id/menu_folder"
         android:enabled="true"
-        android:icon="@drawable/ic_stars"
-        android:title="Ranking"/>
-    <item
-        android:id="@+id/menuExplore"
-        android:enabled="true"
-        android:icon="@drawable/ic_explore"
-        android:title="Explore"/>
-    <item
-        android:id="@+id/menuMyMusic"
-        android:enabled="true"
-        android:icon="@drawable/ic_library_music"
-        android:title="My Music"/>
+        android:icon="@drawable/ic_folder"
+        android:title="Folder"/>
 </menu>

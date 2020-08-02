@@ -23,30 +23,15 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.activity.MainActivity">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/bnv_navigator"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_app"/>
-
-    <taiwan.no.one.dropbeat.presentation.BottomNavigationViewWithIndicator
-        android:id="@+id/bnv_navigator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/md_eight_unit"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_bottom_navigation"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <path
+        android:fillColor="#262345"
+        android:fillType="evenOdd"
+        android:pathData="M15.2954 3.35001C14.3675 3.3478 13.4995 3.80842 12.9813 4.57817L11.6544 6.55001H5.66165C4.12532 6.55001 2.87988 7.79545 2.87988 9.33178V17.8682C2.87988 19.4046 4.12532 20.65 5.66165 20.65H18.3393C19.8756 20.65 21.121 19.4046 21.121 17.8682V6.13178C21.121 4.59545 19.8756 3.35001 18.3393 3.35001H15.2954ZM19.8211 6.13177V6.97707C19.3921 6.70653 18.884 6.55 18.3393 6.55H15.3182C14.9592 6.55 14.6682 6.84102 14.6682 7.2C14.6682 7.55899 14.9592 7.85 15.3182 7.85H18.3393C19.1577 7.85 19.8211 8.51341 19.8211 9.33176V17.8682C19.8211 18.6866 19.1577 19.35 18.3393 19.35H5.6617C4.84334 19.35 4.17993 18.6866 4.17993 17.8682V9.33176C4.17993 8.51341 4.84334 7.85 5.6617 7.85H12.0005C12.2169 7.85 12.419 7.74237 12.5398 7.56289L14.0598 5.30406C14.336 4.89398 14.7985 4.64865 15.2929 4.65L15.2946 4.65H18.3393C19.1577 4.65 19.8211 5.31341 19.8211 6.13177Z"/>
+</vector>
