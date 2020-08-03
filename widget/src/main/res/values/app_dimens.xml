@@ -23,28 +23,25 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:showIn="@layout/fragment_search_result">
+<resources>
+    <!-- Default Title Header -->
+    <dimen name="title_header_1">34sp</dimen>
+    <dimen name="title_header_2">22sp</dimen>
+    <dimen name="title_header_3">17sp</dimen>
+    <dimen name="title_header_4">15sp</dimen>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_title"
-        style="@style/textview.rotated"
-        android:layout_width="wrap_content"
-        android:text="Search Result"
-        android:textSize="@dimen/title_header_3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <!-- Default Button -->
+    <dimen name="button_text_1">17sp</dimen>
+    <dimen name="button_text_2">13sp</dimen>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_musics"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/md_six_unit"
-        android:overScrollMode="never"
-        tools:listitem="@layout/item_search_result"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Default Caption -->
+    <dimen name="caption_text_1">12sp</dimen>
+    <dimen name="caption_text_2">11sp</dimen>
+
+    <!-- Default Body -->
+    <dimen name="body_text_1">15sp</dimen>
+    <dimen name="body_text_2">13sp</dimen>
+
+    <!-- Default Small Text -->
+    <dimen name="text_small">11sp</dimen>
+</resources>

@@ -37,7 +37,6 @@
         android:id="@+id/mtv_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +60,6 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_two_unit"
-        android:fontFamily="monospace"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@id/mtv_album_name"
         app:layout_constraintEnd_toStartOf="@id/siv_action"
@@ -74,8 +72,6 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_two_unit"
-        android:fontFamily="monospace"
-        android:textColor="@color/colorCoralPink"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/siv_album_thumb"
         app:layout_constraintEnd_toStartOf="@id/siv_action"
@@ -89,6 +85,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorCoralPink"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

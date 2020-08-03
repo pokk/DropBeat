@@ -28,16 +28,19 @@ import androidx.navigation.fragment.findNavController
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
-import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
+import taiwan.no.one.feat.search.databinding.MergeSearchComponentBinding
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
-    private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
+    private val mergeBinding by lazy { MergeSearchComponentBinding.bind(binding.root) }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        mergeBinding.mtvTitle.setOnClickListener {
+        mergeBinding.tilSearchBar.setOnClickListener {
+            findNavController().navigate(IndexFragmentDirections.actionIndexToRecent())
+        }
+        mergeBinding.tietSearch.setOnClickListener {
             findNavController().navigate(IndexFragmentDirections.actionIndexToRecent())
         }
     }

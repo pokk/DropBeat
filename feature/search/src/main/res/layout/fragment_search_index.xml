@@ -32,5 +32,5 @@
     tools:context="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
     tools:showPaths="true">
 
-    <include layout="@layout/merge_tab_search"/>
+    <include layout="@layout/merge_layout_index_search"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

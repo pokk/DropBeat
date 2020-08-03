@@ -31,13 +31,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.showSoftKeyboard
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.databinding.FragmentSearchRecentBinding
-import taiwan.no.one.feat.search.databinding.MergeTabSearchBinding
+import taiwan.no.one.feat.search.databinding.MergeSearchComponentBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.ktx.livedata.obs
@@ -45,7 +44,7 @@ import taiwan.no.one.widget.recyclerviews.helpers.AdapterItemTouchHelper
 import taiwan.no.one.widget.recyclerviews.helpers.DefaultItemTouchCallback
 
 internal class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRecentBinding>() {
-    private val mergeBinding by lazy { MergeTabSearchBinding.bind(binding.root) }
+    private val mergeBinding by lazy { MergeSearchComponentBinding.bind(binding.root) }
     private val vm by viewModels<RecentViewModel>()
     private var selectedKeyword: String? = null
     private val args by navArgs<RecentFragmentArgs>()
@@ -70,7 +69,6 @@ internal class RecentFragment : BaseFragment<BaseActivity<*>, FragmentSearchRece
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     override fun viewComponentBinding() {
-        mergeBinding.mtvTitle.gone()
         if (args.isBackFromResult) {
             mergeBinding.tietSearch.apply {
                 requestFocus()

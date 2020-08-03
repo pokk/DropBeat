@@ -23,28 +23,31 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:showIn="@layout/fragment_search_result">
+    tools:showIn="@layout/fragment_search_index">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"
-        style="@style/textview.rotated"
-        android:layout_width="wrap_content"
-        android:text="Search Result"
-        android:textSize="@dimen/title_header_3"
-        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Text.Header.One"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:text="Search"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_musics"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_backdrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/md_six_unit"
-        android:overScrollMode="never"
-        tools:listitem="@layout/item_search_result"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="106dp"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:background="@color/colorDarkGrayBlue"
+        app:layout_constraintTop_toBottomOf="@id/mtv_title"
+        app:shapeAppearanceOverlay="@style/roundSearchImageView"/>
+
+    <include layout="@layout/merge_search_component"/>
+</merge>

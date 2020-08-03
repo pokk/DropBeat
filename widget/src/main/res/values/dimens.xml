@@ -53,27 +53,6 @@
 
     <dimen name="one_dp">1dp</dimen>
 
-    <!-- Default Title Header -->
-    <dimen name="title_header_1">34sp</dimen>
-    <dimen name="title_header_2">22sp</dimen>
-    <dimen name="title_header_3">17sp</dimen>
-    <dimen name="title_header_4">15sp</dimen>
-
-    <!-- Default Button -->
-    <dimen name="button_text_1">17sp</dimen>
-    <dimen name="button_text_2">13sp</dimen>
-
-    <!-- Default Caption -->
-    <dimen name="caption_text_1">12sp</dimen>
-    <dimen name="caption_text_2">11sp</dimen>
-
-    <!-- Default Body -->
-    <dimen name="body_text_1">15sp</dimen>
-    <dimen name="body_text_2">13sp</dimen>
-
-    <!-- Default Small Text -->
-    <dimen name="text_small">11sp</dimen>
-
     <!-- Default Corner Radius -->
     <dimen name="fragment_dialog_corner_radius">8dp</dimen>
 </resources>

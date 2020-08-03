@@ -52,7 +52,6 @@
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
         android:layout_marginBottom="15dp"
-        android:fontFamily="monospace"
         android:lines="1"
         android:textSize="12.5sp"
         app:layout_constraintBottom_toBottomOf="parent"

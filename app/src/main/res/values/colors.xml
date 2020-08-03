@@ -24,7 +24,13 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <!-- Theme Colors -->
+    <color name="colorPrimary">#465180</color>
+    <color name="colorPrimaryDark">#262345</color>
+    <color name="colorAccent">#FF5735</color>
+    <color name="colorSecondary">#E8BCD3</color>
+    <color name="colorText">#FFFFFF</color>
+
+    <!-- Others -->
+    <color name="colorTextHint">#BCBAC6</color>
 </resources>

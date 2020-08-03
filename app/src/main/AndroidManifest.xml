@@ -36,13 +36,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:label"
         tools:targetApi="M">
-        <activity
-            android:name=".presentation.activity.SplashActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        <activity android:name=".presentation.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -50,7 +48,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity">
+        <activity
+            android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>

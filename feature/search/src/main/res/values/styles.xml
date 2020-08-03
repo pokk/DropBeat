@@ -24,8 +24,23 @@
   -->
 
 <resources>
+    <!--region Base TextInputLayout theme. -->
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <!-- For the cursor and the cursor pointer -->
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+    <!--endregion-->
 
+    <!--region Shape ImageView -->
     <style name="roundBottomImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">@dimen/md_five_unit</item>
+        <item name="cornerSizeBottomRight">@dimen/md_five_unit</item>
+    </style>
+
+    <style name="roundSearchImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/md_five_unit</item>
     </style>
@@ -34,11 +49,12 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/md_one_half_unit</item>
     </style>
+    <!--endregion-->
 
     <style name="textview.rotated" parent="">
-        <item name="android:layout_height">@dimen/md_ten_unit</item>
+        <item name="android:layout_height">112dp</item>
         <item name="android:layout_marginTop">@dimen/md_five_unit</item>
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColor">@color/colorText</item>
         <item name="android:rotation">-90</item>
     </style>
 

@@ -35,7 +35,6 @@
         android:id="@+id/mtv_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
         android:text="Can't find any music..."
         app:layout_constraintBottom_toTopOf="@id/btn_search"
         app:layout_constraintEnd_toEndOf="parent"

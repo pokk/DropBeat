@@ -33,7 +33,7 @@
     tools:context="taiwan.no.one.feat.search.presentation.fragments.RecentFragment"
     tools:showPaths="true">
 
-    <include layout="@layout/merge_tab_search"/>
+    <include layout="@layout/merge_layout_recent_search"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_recent"

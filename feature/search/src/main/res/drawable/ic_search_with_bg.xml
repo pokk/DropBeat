@@ -23,28 +23,24 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:showIn="@layout/fragment_search_result">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_title"
-        style="@style/textview.rotated"
-        android:layout_width="wrap_content"
-        android:text="Search Result"
-        android:textSize="@dimen/title_header_3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_musics"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/md_six_unit"
-        android:overScrollMode="never"
-        tools:listitem="@layout/item_search_result"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <size
+                android:width="58dp"
+                android:height="58dp"/>
+            <solid android:color="@color/colorSecondary"/>
+            <corners
+                android:bottomLeftRadius="@dimen/md_two_unit"
+                android:bottomRightRadius="@dimen/md_two_unit"
+                android:topLeftRadius="@dimen/md_two_unit"
+                android:topRightRadius="@dimen/md_two_unit"/>
+        </shape>
+    </item>
+    <item
+        android:width="24dp"
+        android:height="24dp"
+        android:drawable="@drawable/ic_search"
+        android:gravity="center"/>
+</layer-list>

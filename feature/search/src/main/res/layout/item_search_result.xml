@@ -33,25 +33,12 @@
     android:paddingEnd="@dimen/md_two_unit"
     tools:context="taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="#1"/>
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_album_thumb"
-        android:layout_width="@dimen/md_five_unit"
-        android:layout_height="@dimen/md_five_unit"
-        android:layout_marginHorizontal="@dimen/md_two_unit"
-        android:layout_marginVertical="@dimen/md_one_unit"
+        android:layout_width="@dimen/md_four_unit"
+        android:layout_height="@dimen/md_four_unit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/mtv_number"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundImageView"
         tools:src="@tools:sample/avatars"/>
@@ -61,10 +48,10 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_two_unit"
-        android:fontFamily="monospace"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/caption_text_1"
         app:layout_constraintBottom_toTopOf="@id/mtv_album_name"
-        app:layout_constraintEnd_toStartOf="@id/siv_action"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/siv_album_thumb"
         app:layout_constraintTop_toTopOf="@id/siv_album_thumb"
         tools:text="@tools:sample/full_names"/>
@@ -74,22 +61,11 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_two_unit"
-        android:fontFamily="monospace"
-        android:textColor="@color/colorCoralPink"
-        android:textSize="12sp"
+        android:textColor="@color/colorSecondary"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@id/siv_album_thumb"
-        app:layout_constraintEnd_toStartOf="@id/siv_action"
+        app:layout_constraintEnd_toEndOf="@id/mtv_album_name"
         app:layout_constraintStart_toEndOf="@id/siv_album_thumb"
         app:layout_constraintTop_toBottomOf="@id/mtv_album_name"
         tools:text="@tools:sample/full_names"/>
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/siv_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_pause_circle_outline"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorCoralPink"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
