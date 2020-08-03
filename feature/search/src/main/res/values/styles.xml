@@ -27,8 +27,7 @@
 
     <style name="roundBottomImageView" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeBottomLeft">20dp</item>
-        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSize">@dimen/md_five_unit</item>
     </style>
 
     <style name="roundImageView" parent="">

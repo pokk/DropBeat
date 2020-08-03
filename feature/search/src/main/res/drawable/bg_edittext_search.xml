@@ -28,7 +28,7 @@
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@android:color/white"/>
-            <corners android:radius="@dimen/md_three_unit"/>
+            <corners android:radius="@dimen/md_three_half_unit"/>
         </shape>
     </item>
 </layer-list>

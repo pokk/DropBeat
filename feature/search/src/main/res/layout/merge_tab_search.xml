@@ -29,60 +29,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/fragment_search_index">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_title"
+        style="@style/Text.Header.One"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:text="Search"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_backdrop"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
+        android:layout_height="106dp"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
         android:background="@color/colorDarkGrayBlue"
-        app:layout_constraintBottom_toTopOf="@id/v_guide_line"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mtv_title"
         app:shapeAppearanceOverlay="@style/roundBottomImageView"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/md_two_unit"
-        android:layout_marginTop="@dimen/md_four_unit"
-        android:layout_marginEnd="@dimen/md_two_unit"
-        android:fontFamily="monospace"
-        android:text="Search"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/til_search_bar"
-        app:layout_constraintTop_toTopOf="@id/siv_backdrop"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_search_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
         android:layout_margin="@dimen/md_two_unit"
         app:boxBackgroundMode="none"
         app:endIconDrawable="@drawable/ic_search"
         app:endIconMode="custom"
         app:hintEnabled="false"
         app:layout_constraintBottom_toBottomOf="@id/siv_backdrop"
-        app:layout_constraintTop_toBottomOf="@id/mtv_title">
+        app:layout_constraintEnd_toEndOf="@id/siv_backdrop"
+        app:layout_constraintStart_toStartOf="@id/siv_backdrop"
+        app:layout_constraintTop_toTopOf="@id/siv_backdrop">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/bg_edittext_search"
             android:fontFamily="monospace"
             android:hint="Search here"
             android:inputType="text"
             android:paddingHorizontal="@dimen/md_two_unit"
             android:paddingVertical="@dimen/md_one_unit"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/body_text_1"/>
     </com.google.android.material.textfield.TextInputLayout>
-
-    <View
-        android:id="@+id/v_guide_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        android:layout_marginTop="@dimen/md_two_unit"
-        app:layout_constraintTop_toBottomOf="@id/til_search_bar"/>
 </merge>

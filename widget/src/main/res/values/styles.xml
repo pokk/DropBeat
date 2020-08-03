@@ -24,6 +24,17 @@
   -->
 
 <resources>
+
+    <!--region Header-->
+    <style name="Text.Header.One" parent="">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/title_header_1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--endregion-->
+
     <!--region Popup Window-->
     <style name="PopupWindow.Animation" parent="">
         <item name="android:windowEnterAnimation">@anim/popup_showing</item>

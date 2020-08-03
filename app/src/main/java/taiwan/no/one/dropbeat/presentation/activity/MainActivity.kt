@@ -26,7 +26,9 @@ package taiwan.no.one.dropbeat.presentation.activity
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Bundle
 import androidx.navigation.findNavController
+import com.devrapid.kotlinknifer.changeStatusBarColor
 import com.google.android.play.core.splitcompat.SplitCompat
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.DropBeatApp
@@ -47,6 +49,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val ctx = newBase?.createConfigurationContext(config)
         super.attachBaseContext(ctx)
         SplitCompat.install(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        changeStatusBarColor(0, 0f)
     }
 
     override fun showLoading() {

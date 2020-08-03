@@ -28,10 +28,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.annotation.UiThread
 import androidx.viewbinding.ViewBinding
-import java.lang.reflect.ParameterizedType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import java.lang.reflect.ParameterizedType
 
 /**
  * The basic activity is for the normal activity that prepares all necessary variables or functions.
