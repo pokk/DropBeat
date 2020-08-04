@@ -30,14 +30,14 @@
     android:id="@+id/cl_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/md_two_unit"
-    tools:context="taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder">
+    tools:context="taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder"
+    tools:showIn="@layout/fragment_search_index">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_album_thumb"
         android:layout_width="@dimen/md_four_unit"
         android:layout_height="@dimen/md_four_unit"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/md_zero_unit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundImageView"
@@ -47,7 +47,7 @@
         android:id="@+id/mtv_album_name"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/md_two_unit"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
         android:textColor="@color/colorText"
         android:textSize="@dimen/caption_text_1"
         app:layout_constraintBottom_toTopOf="@id/mtv_album_name"
@@ -60,12 +60,11 @@
         android:id="@+id/mtv_artist_name"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/md_two_unit"
         android:textColor="@color/colorSecondary"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@id/siv_album_thumb"
         app:layout_constraintEnd_toEndOf="@id/mtv_album_name"
-        app:layout_constraintStart_toEndOf="@id/siv_album_thumb"
+        app:layout_constraintStart_toStartOf="@id/mtv_album_name"
         app:layout_constraintTop_toBottomOf="@id/mtv_album_name"
         tools:text="@tools:sample/full_names"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

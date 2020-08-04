@@ -29,22 +29,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:showIn="@layout/fragment_search_result">
+    tools:showIn="@layout/fragment_search_index">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"
-        style="@style/textview.rotated"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_ten_unit"
+        android:gravity="fill_vertical"
+        android:rotation="-90"
         android:text="Search Result"
         android:textSize="@dimen/title_header_3"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/g_line"
+        app:layout_constraintStart_toStartOf="@id/g_line"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_musics"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/md_zero_unit"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/md_six_unit"
         android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/g_line_recyclerview"
         tools:listitem="@layout/item_search_result"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="31dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_line_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="62dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

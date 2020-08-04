@@ -37,11 +37,5 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        mergeBinding.tilSearchBar.setOnClickListener {
-            findNavController().navigate(IndexFragmentDirections.actionIndexToRecent())
-        }
-        mergeBinding.tietSearch.setOnClickListener {
-            findNavController().navigate(IndexFragmentDirections.actionIndexToRecent())
-        }
     }
 }
