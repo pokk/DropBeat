@@ -23,17 +23,97 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.motion.widget.MotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_main"
+    app:layoutDescription="@xml/fragment_search_index_scene"
     tools:context="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
     tools:showPaths="true">
 
-    <include layout="@layout/merge_layout_index_search"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_title"
+        style="@style/Text.Header.One"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:text="Search"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:id="@+id/v_header"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        android:background="@color/colorDarkGrayBlue"
+        app:layout_constraintBottom_toTopOf="@id/siv_backdrop"
+        app:layout_constraintEnd_toEndOf="@id/g_line_end"
+        app:layout_constraintStart_toStartOf="@id/g_line_start"
+        app:layout_constraintTop_toTopOf="@id/siv_backdrop"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_backdrop"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="106dp"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:background="@color/colorDarkGrayBlue"
+        app:layout_constraintEnd_toEndOf="@id/g_line_end"
+        app:layout_constraintStart_toStartOf="@id/g_line_start"
+        app:layout_constraintTop_toBottomOf="@id/mtv_title"
+        app:shapeAppearanceOverlay="@style/roundSearchImageView"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_search_bar"
+        style="@style/TextInputLayoutAppearance"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_margin="@dimen/md_two_unit"
+        app:boxBackgroundMode="none"
+        app:endIconDrawable="@drawable/ic_search_with_bg"
+        app:endIconMode="custom"
+        app:endIconTint="@null"
+        app:endIconTintMode="multiply"
+        app:hintEnabled="false"
+        app:layout_constraintBottom_toBottomOf="@id/siv_backdrop"
+        app:layout_constraintEnd_toEndOf="@id/siv_backdrop"
+        app:layout_constraintStart_toStartOf="@id/siv_backdrop"
+        app:layout_constraintTop_toTopOf="@id/siv_backdrop">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edittext_search"
+            android:hint="Search here"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/md_two_unit"
+            android:paddingVertical="@dimen/md_one_unit"
+            android:textSize="@dimen/body_text_1"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_line_status_bar_gap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/md_three_unit"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_line_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/md_two_unit"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_line_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/md_two_unit"/>
 
     <ViewStub
         android:id="@+id/vs_has_result"
@@ -54,4 +134,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/siv_backdrop"
         tools:visibility="visible"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
