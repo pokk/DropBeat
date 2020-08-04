@@ -49,21 +49,29 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="@dimen/md_zero_unit"
         android:background="@color/colorDarkGrayBlue"
-        app:layout_constraintBottom_toTopOf="@id/siv_backdrop"
+        app:layout_constraintBottom_toTopOf="@id/sov_backdrop"
         app:layout_constraintEnd_toEndOf="@id/g_line_end"
         app:layout_constraintStart_toStartOf="@id/g_line_start"
-        app:layout_constraintTop_toTopOf="@id/siv_backdrop"/>
+        app:layout_constraintTop_toTopOf="@id/sov_backdrop"/>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/siv_backdrop"
+    <com.github.florent37.shapeofview.shapes.RoundRectView
+        android:id="@+id/sov_backdrop"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="106dp"
         android:layout_marginTop="@dimen/md_two_unit"
-        android:background="@color/colorDarkGrayBlue"
         app:layout_constraintEnd_toEndOf="@id/g_line_end"
         app:layout_constraintStart_toStartOf="@id/g_line_start"
         app:layout_constraintTop_toBottomOf="@id/mtv_title"
-        app:shapeAppearanceOverlay="@style/roundSearchImageView"/>
+        app:shape_roundRect_bottomLeftRadius="@dimen/md_five_unit"
+        app:shape_roundRect_bottomRightRadius="@dimen/md_five_unit"
+        app:shape_roundRect_topLeftRadius="@dimen/md_five_unit"
+        app:shape_roundRect_topRightRadius="@dimen/md_five_unit">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorDarkGrayBlue"/>
+    </com.github.florent37.shapeofview.shapes.RoundRectView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_search_bar"
@@ -77,10 +85,10 @@
         app:endIconTint="@null"
         app:endIconTintMode="multiply"
         app:hintEnabled="false"
-        app:layout_constraintBottom_toBottomOf="@id/siv_backdrop"
-        app:layout_constraintEnd_toEndOf="@id/siv_backdrop"
-        app:layout_constraintStart_toStartOf="@id/siv_backdrop"
-        app:layout_constraintTop_toTopOf="@id/siv_backdrop">
+        app:layout_constraintBottom_toBottomOf="@id/sov_backdrop"
+        app:layout_constraintEnd_toEndOf="@id/sov_backdrop"
+        app:layout_constraintStart_toStartOf="@id/sov_backdrop"
+        app:layout_constraintTop_toTopOf="@id/sov_backdrop">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_search"
@@ -122,7 +130,7 @@
         android:inflatedId="@+id/hasResult"
         android:layout="@layout/stub_search_has_result"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/siv_backdrop"
+        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"
         tools:visibility="visible"/>
 
     <ViewStub
@@ -132,6 +140,6 @@
         android:inflatedId="@+id/noResult"
         android:layout="@layout/stub_search_no_result"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/siv_backdrop"
+        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"
         tools:visibility="visible"/>
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -32,10 +32,24 @@
         motion:constraintSetStart="@id/expanded"
         motion:duration="1000">
         <KeyFrameSet>
+            <KeyAttribute
+                motion:framePosition="40"
+                motion:motionTarget="@id/sov_backdrop">
+                <CustomAttribute
+                    motion:attributeName="topLeftRadiusDp"
+                    motion:customFloatValue="0"/>
+                <CustomAttribute
+                    motion:attributeName="topRightRadiusDp"
+                    motion:customFloatValue="0"/>
+            </KeyAttribute>
+            <KeyAttribute
+                motion:framePosition="40"
+                motion:motionTarget="@id/v_header">
+            </KeyAttribute>
         </KeyFrameSet>
         <OnSwipe
             motion:dragDirection="dragUp"
-            motion:touchAnchorId="@id/siv_backdrop"/>
+            motion:touchAnchorId="@id/sov_backdrop"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/expanded">
@@ -51,18 +65,25 @@
             android:id="@+id/v_header"
             android:layout_width="@dimen/md_zero_unit"
             android:layout_height="@dimen/md_zero_unit"
-            motion:layout_constraintBottom_toTopOf="@id/siv_backdrop"
+            motion:layout_constraintBottom_toTopOf="@id/sov_backdrop"
             motion:layout_constraintEnd_toEndOf="@id/g_line_end"
             motion:layout_constraintStart_toStartOf="@id/g_line_start"
-            motion:layout_constraintTop_toTopOf="@id/siv_backdrop"/>
+            motion:layout_constraintTop_toTopOf="@id/sov_backdrop"/>
         <Constraint
-            android:id="@+id/siv_backdrop"
+            android:id="@+id/sov_backdrop"
             android:layout_width="@dimen/md_zero_unit"
             android:layout_height="106dp"
             android:layout_marginTop="@dimen/md_two_unit"
             motion:layout_constraintEnd_toEndOf="@id/g_line_end"
             motion:layout_constraintStart_toStartOf="@id/g_line_start"
-            motion:layout_constraintTop_toBottomOf="@id/mtv_title"/>
+            motion:layout_constraintTop_toBottomOf="@id/mtv_title">
+            <CustomAttribute
+                motion:attributeName="topLeftRadiusDp"
+                motion:customFloatValue="40"/>
+            <CustomAttribute
+                motion:attributeName="topRightRadiusDp"
+                motion:customFloatValue="40"/>
+        </Constraint>
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/collapsed">
@@ -75,16 +96,23 @@
             android:id="@+id/v_header"
             android:layout_width="@dimen/md_zero_unit"
             android:layout_height="@dimen/md_zero_unit"
-            motion:layout_constraintBottom_toTopOf="@id/siv_backdrop"
+            motion:layout_constraintBottom_toTopOf="@id/sov_backdrop"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent"/>
         <Constraint
-            android:id="@+id/siv_backdrop"
+            android:id="@+id/sov_backdrop"
             android:layout_width="@dimen/md_zero_unit"
             android:layout_height="106dp"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toTopOf="@id/g_line_status_bar_gap"/>
+            motion:layout_constraintTop_toTopOf="@id/g_line_status_bar_gap">
+            <CustomAttribute
+                motion:attributeName="topLeftRadiusDp"
+                motion:customFloatValue="0"/>
+            <CustomAttribute
+                motion:attributeName="topRightRadiusDp"
+                motion:customFloatValue="0"/>
+        </Constraint>
     </ConstraintSet>
 </MotionScene>

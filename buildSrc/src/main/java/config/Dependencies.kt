@@ -181,8 +181,8 @@ fun DependencyHandlerScope.localDependencies(env: String) {
 
 fun DependencyHandlerScope.uiDependencies(env: String) {
     env(LibraryDependency.Ui.LOTTIE)
+    env(LibraryDependency.Ui.SHAPE_OF_VIEW)
     env(LibraryDependency.Jieyi.ARV)
-    env(LibraryDependency.Jieyi.QUICK_DIALOG)
 }
 
 fun DependencyHandlerScope.debugDependencies(env: String) {

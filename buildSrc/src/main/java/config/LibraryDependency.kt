@@ -27,7 +27,6 @@ package config
 object LibraryDependency {
     object Version {
         const val ARV = "1.0.16"
-        const val QUICK_DIALOG = "1.0.7"
         const val KINFER = "2.1.19"
         const val MATERIAL = "1.3.0-alpha02"
         const val ANDROIDX = "1.0.0"
@@ -76,14 +75,12 @@ object LibraryDependency {
     object Jieyi {
         const val KNIFER = "com.devrapid.jieyi:kotlinknifer:${Version.KINFER}"
         const val ARV = "com.devrapid.jieyi:adaptiverecyclerview:${Version.ARV}"
-        const val QUICK_DIALOG = "com.devrapid.jieyi:dialogbuilder:${Version.QUICK_DIALOG}"
     }
 
     object Tool {
         const val GSON = "com.google.code.gson:gson:${Version.GSON}"
         const val JSOUP = "org.jsoup:jsoup:${Version.JSOUP}"
 
-        //    const val CLOUDINARY = "com.cloudinary:cloudinary-android:${Version.cloudinary}"
         const val AUTO_SERVICE = "com.google.auto.service:auto-service:${Version.AUTO_SERVICE}"
     }
 
