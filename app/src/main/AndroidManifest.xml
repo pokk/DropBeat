@@ -49,7 +49,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity">
+            android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>

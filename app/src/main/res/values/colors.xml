@@ -33,4 +33,5 @@
 
     <!-- Others -->
     <color name="colorTextHint">#BCBAC6</color>
+    <color name="colorDarkGrayBlue">#383676</color>
 </resources>

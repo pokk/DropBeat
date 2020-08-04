@@ -53,6 +53,8 @@
 
     <dimen name="one_dp">1dp</dimen>
 
+    <dimen name="status_bar_height">24dp</dimen>
+
     <!-- Default Corner Radius -->
     <dimen name="fragment_dialog_corner_radius">8dp</dimen>
 </resources>
