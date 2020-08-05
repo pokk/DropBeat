@@ -22,6 +22,13 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.data.repostory.cache.local
+package taiwan.no.one.ktx.recyclerview
 
-inline fun convertToKey(vararg keys: Any) = keys.toList().joinToString("@#$%")
+import androidx.recyclerview.widget.RecyclerView
+
+operator fun RecyclerView.contains(itemDecoration: RecyclerView.ItemDecoration): Boolean {
+    repeat(itemDecorationCount) {
+        if (getItemDecorationAt(it) == itemDecoration) return true
+    }
+    return false
+}

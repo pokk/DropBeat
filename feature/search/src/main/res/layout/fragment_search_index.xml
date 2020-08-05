@@ -27,6 +27,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_main"
@@ -34,6 +35,7 @@
     tools:context="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
     tools:showPaths="true">
 
+    <!--region Top Search Components-->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"
         style="@style/Text.Header.One"
@@ -124,24 +126,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/md_two_unit"/>
+    <!--endregion-->
 
-    <ViewStub
-        android:id="@+id/vs_has_result"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        android:inflatedId="@+id/hasResult"
-        android:layout="@layout/stub_search_has_result"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"
-        tools:visibility="visible"/>
+    <include layout="@layout/merge_search_has_result"/>
 
-    <ViewStub
-        android:id="@+id/vs_no_result"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/md_zero_unit"
-        android:inflatedId="@+id/noResult"
-        android:layout="@layout/stub_search_no_result"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"
-        tools:visibility="visible"/>
+    <!--    <ViewStub-->
+    <!--        android:id="@+id/vs_has_result"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/md_zero_unit"-->
+    <!--        android:inflatedId="@+id/hasResult"-->
+    <!--        android:layout="@layout/stub_search_has_result"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"-->
+    <!--        tools:visibility="visible"/>-->
+
+    <!--    <ViewStub-->
+    <!--        android:id="@+id/vs_no_result"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/md_zero_unit"-->
+    <!--        android:inflatedId="@+id/noResult"-->
+    <!--        android:layout="@layout/stub_search_no_result"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"-->
+    <!--        tools:visibility="visible"/>-->
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -23,13 +23,11 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:background="@drawable/bg_main">
+    tools:showIn="@layout/fragment_search_index">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_rv_title"
@@ -38,19 +36,21 @@
         android:layout_marginTop="@dimen/md_ten_unit"
         android:gravity="fill_vertical"
         android:rotation="-90"
-        android:text="Search Result"
+        android:text="Search Result "
         android:textSize="@dimen/title_header_3"
         app:layout_constraintEnd_toEndOf="@id/g_line_title"
         app:layout_constraintStart_toStartOf="@id/g_line_title"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_musics"
         android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
         android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/g_line_recyclerview"
+        app:layout_constraintTop_toBottomOf="@id/sov_backdrop"
         tools:listitem="@layout/item_search_result"/>
 
     <androidx.constraintlayout.widget.Guideline
@@ -66,4 +66,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="62dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

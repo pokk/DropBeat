@@ -24,18 +24,121 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
-import androidx.navigation.fragment.findNavController
+import android.view.KeyEvent
+import android.widget.EditText
+import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.devrapid.kotlinknifer.hideSoftKeyboard
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
-import taiwan.no.one.feat.search.databinding.MergeSearchComponentBinding
+import taiwan.no.one.feat.search.databinding.MergeSearchHasResultBinding
+import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
+import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
+import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
+import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
+import taiwan.no.one.ktx.livedata.obs
+import taiwan.no.one.ktx.recyclerview.contains
+import taiwan.no.one.widget.R as WidgetR
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
-    private val mergeBinding by lazy { MergeSearchComponentBinding.bind(binding.root) }
+    private val mergeBinding by lazy { MergeSearchHasResultBinding.bind(binding.root) }
+    private val vm by viewModels<RecentViewModel>()
+    private val searchVm by viewModels<ResultViewModel>()
+    private val searchHistoryAdapter by lazy { HistoryAdapter() }
+    private val musicAdapter by lazy { ResultAdapter() }
+    private val musicItemDecoration by lazy {
+        VerticalItemDecorator(resources.getDimension(WidgetR.dimen.md_three_unit).toInt(), 0)
+    }
+    private val rvMusics get() = mergeBinding.rvMusics
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        vm.histories.obs(this) {
+            logw(it)
+            if (it.isEmpty()) {
+                // TODO(Jieyi): 8/5/20 The action needs to be confirmed again.
+            }
+            else {
+                searchHistoryAdapter.data = it
+                rvMusics.smoothScrollToPosition(0)
+                // Remove the item decoration
+                if (musicItemDecoration !in rvMusics) return@obs
+                rvMusics.removeItemDecoration(musicItemDecoration)
+            }
+        }
+        searchVm.musics.obs(this) { res ->
+            res.onSuccess {
+                if (it.isEmpty()) {
+                    loge("result is empty")
+                }
+                else {
+                    musicAdapter.addExtraEntities(it)
+                    rvMusics.adapter = musicAdapter
+                    // Add the item decoration
+                    if (musicItemDecoration in rvMusics) return@onSuccess
+                    rvMusics.addItemDecoration(musicItemDecoration)
+                }
+            }.onFailure {
+                loge(it)
+            }
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        mergeBinding.mtvRvTitle.doOnPreDraw {
+            val halfWidth = it.width / 2
+            // anchor 3 is top margin, it didn't define inside setMargin
+            binding.layoutParent.getConstraintSet(R.id.expanded)?.setMargin(R.id.mtv_rv_title, 3, halfWidth)
+        }
+    }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
+        rvMusics.apply {
+            if (adapter == null) {
+                adapter = searchHistoryAdapter
+            }
+            if (layoutManager == null) {
+                layoutManager = LinearLayoutManager(requireActivity())
+            }
+        }
+        searchHistoryAdapter.setOnClickListener(::clickedOnHistoryItem)
+        binding.apply {
+            // Click the search icon
+            tilSearchBar.setEndIconOnClickListener {
+                searchMusic(tietSearch.text.toString())
+            }
+            // Hit the enter key on the soft keyword or the physical keyboard
+            tietSearch.setOnKeyListener { v, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    searchMusic((v as EditText).text.toString())
+                    return@setOnKeyListener true
+                }
+                false
+            }
+        }
+    }
+
+    private fun searchMusic(keyword: String) {
+        vm.add(keyword)
+        searchVm.search(keyword)
+        // post action for hiding the soft keyboard.
+        view?.hideSoftKeyboard()
+    }
+
+    private fun clickedOnHistoryItem(keyword: String) {
+        searchMusic(keyword)
     }
 }
