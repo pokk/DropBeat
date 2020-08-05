@@ -48,8 +48,10 @@
         android:id="@+id/v_header"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="66dp"
         android:background="@color/colorDarkGrayBlue"
-        app:layout_constraintBottom_toTopOf="@id/sov_backdrop"
+        app:layout_constraintBottom_toBottomOf="@id/sov_backdrop"
         app:layout_constraintEnd_toEndOf="@id/g_line_end"
         app:layout_constraintStart_toStartOf="@id/g_line_start"
         app:layout_constraintTop_toTopOf="@id/sov_backdrop"/>
