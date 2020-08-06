@@ -33,38 +33,5 @@
         android:id="@+id/indexFragment"
         android:name="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
         android:label="Search Fragment"
-        tools:layout="@layout/fragment_search_index">
-        <action
-            android:id="@+id/action_index_to_recent"
-            app:destination="@id/recentFragment"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/recentFragment"
-        android:name="taiwan.no.one.feat.search.presentation.fragments.RecentFragment"
-        android:label="Recent Fragment"
-        tools:layout="@layout/fragment_search_recent">
-        <action
-            android:id="@+id/action_recent_to_result"
-            app:destination="@id/resultFragment"/>
-        <argument
-            android:name="isBackFromResult"
-            android:defaultValue="false"
-            app:argType="boolean"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/resultFragment"
-        android:name="taiwan.no.one.feat.search.presentation.fragments.ResultFragment"
-        android:label="Result Fragment"
-        tools:layout="@layout/item_search_result">
-        <argument
-            android:name="keyword"
-            app:argType="string"/>
-        <action
-            android:id="@+id/action_result_to_recent"
-            app:destination="@id/recentFragment"
-            app:popUpTo="@id/recentFragment"
-            app:popUpToInclusive="true"/>
-    </fragment>
+        tools:layout="@layout/fragment_search_index"/>
 </navigation>
