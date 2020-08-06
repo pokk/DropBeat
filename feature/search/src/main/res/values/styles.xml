@@ -50,12 +50,4 @@
         <item name="cornerSize">@dimen/md_one_half_unit</item>
     </style>
     <!--endregion-->
-
-    <style name="textview.rotated" parent="">
-        <item name="android:layout_height">112dp</item>
-        <item name="android:layout_marginTop">@dimen/md_five_unit</item>
-        <item name="android:textColor">@color/colorText</item>
-        <item name="android:rotation">-90</item>
-    </style>
-
 </resources>

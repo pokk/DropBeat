@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
-        android:text="Search"
+        android:text="@string/fragment_title"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <View
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_edittext_search"
-            android:hint="Search here"
+            android:hint="@string/hint_search_bar"
             android:inputType="text"
             android:paddingHorizontal="@dimen/md_two_unit"
             android:paddingVertical="@dimen/md_one_unit"

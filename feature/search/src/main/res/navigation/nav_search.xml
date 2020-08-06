@@ -32,6 +32,6 @@
     <fragment
         android:id="@+id/indexFragment"
         android:name="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
-        android:label="Search Fragment"
+        android:label="@string/fragment_title"
         tools:layout="@layout/fragment_search_index"/>
 </navigation>
