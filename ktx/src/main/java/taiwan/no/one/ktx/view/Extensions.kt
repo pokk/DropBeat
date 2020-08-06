@@ -25,6 +25,8 @@
 package taiwan.no.one.ktx.view
 
 import android.view.View
+import android.widget.TextView
+import androidx.core.widget.doAfterTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -39,10 +41,14 @@ import kotlinx.coroutines.flow.onEach
 
 @OptIn(ExperimentalCoroutinesApi::class)
 fun View.clicks(): Flow<Unit> = callbackFlow {
-    setOnClickListener {
-        offer(Unit)
-    }
+    setOnClickListener { offer(Unit) }
     awaitClose { setOnClickListener(null) }
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+fun TextView.afterTextChanges() = callbackFlow {
+    val textWatcher = doAfterTextChanged { offer(it) }
+    awaitClose { removeTextChangedListener(textWatcher) }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)

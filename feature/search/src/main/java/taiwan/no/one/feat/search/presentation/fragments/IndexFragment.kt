@@ -28,11 +28,15 @@ import android.view.KeyEvent
 import android.widget.EditText
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.R
@@ -44,6 +48,7 @@ import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.ktx.livedata.obs
 import taiwan.no.one.ktx.recyclerview.contains
+import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.R as WidgetR
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
@@ -79,7 +84,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 }
                 else {
                     musicAdapter.addExtraEntities(it)
-                    rvMusics.adapter = musicAdapter
+                    displaySearchResultDataList()
                     // Add the item decoration
                     if (musicItemDecoration in rvMusics) return@onSuccess
                     rvMusics.addItemDecoration(musicItemDecoration)
@@ -128,6 +133,11 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 }
                 false
             }
+            tietSearch.afterTextChanges().debounce(300).onEach {
+                if (it.isNullOrBlank()) {
+                    displayHistoryDataList()
+                }
+            }.launchIn(lifecycleScope)
         }
     }
 
@@ -139,6 +149,17 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun clickedOnHistoryItem(keyword: String) {
+        binding.tietSearch.setText(keyword)
         searchMusic(keyword)
+    }
+
+    private fun displayHistoryDataList() {
+        rvMusics.adapter = searchHistoryAdapter
+        mergeBinding.mtvRvTitle.text = "History Search "
+    }
+
+    private fun displaySearchResultDataList() {
+        rvMusics.adapter = musicAdapter
+        mergeBinding.mtvRvTitle.text = "Search Result "
     }
 }
