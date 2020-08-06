@@ -29,17 +29,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="taiwan.no.one.feat.login.presentation.fragments.LoginFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:text="Login / Sign Up"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <!--region Topper Custom Login-->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_top_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/barrier_bottom_login"
+        app:layout_constraintTop_toBottomOf="@id/mtv_title"
+        app:shapeAppearanceOverlay="@style/roundLoginTopBackdropImageView"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_search_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_four_unit"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/til_password"
+        app:layout_constraintTop_toTopOf="@id/til_email"
+        app:shapeAppearanceOverlay="@style/roundLoginImageView"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/md_two_unit"
+        android:layout_marginHorizontal="@dimen/md_four_unit"
+        android:layout_marginTop="@dimen/md_four_unit"
         app:boxBackgroundMode="none"
         app:endIconMode="custom"
         app:hintEnabled="false"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/mtv_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_email"
@@ -52,21 +85,32 @@
             android:textSize="14sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <View
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/one_dp"
+        android:layout_marginHorizontal="@dimen/md_one_unit"
+        android:background="@color/pale_grey"
+        app:layout_constraintBottom_toBottomOf="@id/siv_search_backdrop"
+        app:layout_constraintEnd_toEndOf="@id/siv_search_backdrop"
+        app:layout_constraintStart_toStartOf="@id/siv_search_backdrop"
+        app:layout_constraintTop_toTopOf="@id/siv_search_backdrop"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_password"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/md_two_unit"
         app:boxBackgroundMode="none"
         app:endIconMode="custom"
         app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@id/til_email"
+        app:layout_constraintStart_toStartOf="@id/til_email"
         app:layout_constraintTop_toBottomOf="@id/til_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="Your Password"
             android:inputType="text"
             android:paddingHorizontal="@dimen/md_two_unit"
             android:paddingVertical="@dimen/md_one_unit"
@@ -74,56 +118,71 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
-        android:text="Login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_password"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
-        android:text="Google"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_password"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_facebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
-        android:text="Facebook"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_twitter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
-        android:text="Twitter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_google"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_forgot_password"
+        style="@style/Widget.App.Material.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
         android:text="Forgot Password"
+        android:textColor="@color/grapefruit"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/siv_search_backdrop"
+        app:layout_constraintTop_toBottomOf="@id/til_password"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        style="@style/Widget.App.Material.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_four_unit"
+        android:text="Login"
+        app:cornerRadius="@dimen/md_two_unit"
+        app:layout_constraintTop_toBottomOf="@id/btn_forgot_password"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_bottom_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:barrierMargin="@dimen/md_button_gap_two_unit"
+        app:constraint_referenced_ids="btn_login"/>
+    <!--endregion-->
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_bot_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/barrier_top_sns_login"
+        app:layout_constraintVertical_bias="1.0"
+        app:shapeAppearanceOverlay="@style/roundLoginBottomBackdropImageView"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/md_three_unit"
+        app:layout_constraintBottom_toTopOf="@+id/btn_continue_sns"
+        tools:itemCount="4"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:orientation="horizontal"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/btn_continue_sns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginBottom="@dimen/md_five_unit"
+        android:gravity="center"
+        android:text="Continue with SNS Account"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_top_sns_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:barrierMargin="-24dp"
+        app:constraint_referenced_ids="rv_sns"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

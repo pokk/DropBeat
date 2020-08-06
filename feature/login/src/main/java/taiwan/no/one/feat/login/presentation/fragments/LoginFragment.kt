@@ -102,13 +102,13 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.userInfo.obs(this) {
-            it.onSuccess {
-                logw(it)
-            }.onFailure {
-                loge(it)
-            }
-        }
+//        vm.userInfo.obs(this) {
+//            it.onSuccess {
+//                logw(it)
+//            }.onFailure {
+//                loge(it)
+//            }
+//        }
     }
 
     /**
@@ -116,32 +116,30 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
      */
     override fun componentListenersBinding() {
         binding.apply {
-            btnRegister.setOnClickListener {
-                findNavController().navigate(LoginFragmentDirections.actionLoginToRegister())
-            }
-            btnForgotPassword.setOnClickListener {
-                findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
-            }
-            btnLogin.setOnClickListener {
-                vm.login(binding.tietEmail.text.toString(), binding.tietPassword.text.toString())
-            }
-            btnGoogle.setOnClickListener {
-                googleLauncher.launch(GoogleConfig.getIntent(requireContext()))
-            }
-            btnFacebook.setOnClickListener {
-                LoginManager.getInstance()
-                    .logInWithReadPermissions(this@LoginFragment, listOf("email", "public_profile"))
-            }
+//            btnRegister.setOnClickListener {
+//                findNavController().navigate(LoginFragmentDirections.actionLoginToRegister())
+//            }
+//            btnForgotPassword.setOnClickListener {
+//                findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
+//            }
+//            btnLogin.setOnClickListener {
+//                vm.login(binding.tietEmail.text.toString(), binding.tietPassword.text.toString())
+//            }
+//            btnGoogle.setOnClickListener {
+//                googleLauncher.launch(GoogleConfig.getIntent(requireContext()))
+//            }
+//            btnFacebook.setOnClickListener {
+//                LoginManager.getInstance()
+//                    .logInWithReadPermissions(this@LoginFragment, listOf("email", "public_profile"))
+//            }
         }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        logw(Firebase.auth.currentUser?.uid)
-
-        binding.btnTwitter.setOnClickListener {
-            val provider = OAuthProvider.newBuilder("twitter.com")
-            provider.addCustomParameter("lang", "en")
-        }
+//        binding.btnTwitter.setOnClickListener {
+//            val provider = OAuthProvider.newBuilder("twitter.com")
+//            provider.addCustomParameter("lang", "en")
+//        }
     }
 
     override fun onDetach() {
