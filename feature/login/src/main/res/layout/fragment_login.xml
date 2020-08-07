@@ -166,6 +166,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_continue_sns"
         tools:itemCount="4"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_sns_login"
         tools:orientation="horizontal"/>
 
     <com.google.android.material.textview.MaterialTextView
