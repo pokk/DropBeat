@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_player">
+
+    <!--region Music Option Controllers-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_favorite"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_heart"
+        app:layout_constraintBottom_toBottomOf="@id/btn_video"
+        app:layout_constraintEnd_toStartOf="@+id/btn_video"
+        app:layout_constraintStart_toStartOf="@id/g_controller_start"
+        app:layout_constraintTop_toTopOf="@id/btn_video"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_video"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginBottom="@dimen/md_two_unit"
+        app:icon="@drawable/ic_cast"
+        app:layout_constraintBottom_toTopOf="@+id/slider_music"
+        app:layout_constraintEnd_toStartOf="@id/btn_add_playlist"
+        app:layout_constraintStart_toEndOf="@id/btn_favorite"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_playlist"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_add_playlist"
+        app:layout_constraintBottom_toBottomOf="@id/btn_video"
+        app:layout_constraintEnd_toEndOf="@id/g_controller_end"
+        app:layout_constraintStart_toEndOf="@+id/btn_video"
+        app:layout_constraintTop_toTopOf="@id/btn_video"/>
+    <!--endregion-->
+
+    <!--region Music Progress-->
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_music"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/md_five_unit"
+        app:layout_constraintBottom_toTopOf="@+id/btn_play"
+        app:layout_constraintEnd_toEndOf="@id/mtv_duration"
+        app:layout_constraintStart_toStartOf="@id/mtv_current_time"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1:30"
+        app:layout_constraintStart_toStartOf="@id/g_controller_start"
+        app:layout_constraintTop_toBottomOf="@id/slider_music"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3:23"
+        app:layout_constraintBottom_toBottomOf="@id/mtv_current_time"
+        app:layout_constraintEnd_toEndOf="@id/g_controller_end"/>
+    <!--endregion-->
+
+    <!--region Bottom Buttons-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_shuffle"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_shuffle"
+        app:layout_constraintBottom_toBottomOf="@id/btn_play"
+        app:layout_constraintEnd_toStartOf="@id/btn_previous"
+        app:layout_constraintStart_toStartOf="@id/g_controller_start"
+        app:layout_constraintTop_toTopOf="@id/btn_play"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_previous"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/btn_play"
+        app:layout_constraintEnd_toStartOf="@id/btn_play"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/btn_shuffle"
+        app:layout_constraintTop_toTopOf="@id/btn_play"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_play"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_width="@dimen/md_nine_unit"
+        android:layout_height="@dimen/md_nine_unit"
+        android:layout_marginBottom="@dimen/md_four_unit"
+        android:backgroundTint="@color/grapefruit"
+        app:cornerRadius="@dimen/md_six_unit"
+        app:icon="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_next"
+        app:layout_constraintStart_toEndOf="@id/btn_previous"
+        app:layout_constraintVertical_bias="1.0"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:icon="@drawable/ic_next"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_play"
+        app:layout_constraintEnd_toStartOf="@id/btn_repeat"
+        app:layout_constraintStart_toEndOf="@id/btn_play"
+        app:layout_constraintTop_toTopOf="@id/btn_play"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_repeat"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_repeat"
+        app:layout_constraintBottom_toBottomOf="@id/btn_play"
+        app:layout_constraintEnd_toEndOf="@id/g_controller_end"
+        app:layout_constraintStart_toEndOf="@id/btn_next"
+        app:layout_constraintTop_toTopOf="@id/btn_play"/>
+    <!--endregion-->
+</merge>

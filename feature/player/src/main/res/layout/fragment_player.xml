@@ -28,72 +28,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_player_background">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_lyrics"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginBottom="@dimen/md_three_unit"
+        android:background="#7f000000"
+        app:layout_constraintBottom_toTopOf="@id/btn_video"
+        app:layout_constraintTop_toTopOf="@id/barrier_lyric"
+        app:shapeAppearanceOverlay="@style/roundLyric"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_three_unit"
+        app:layout_constraintBottom_toBottomOf="@id/siv_lyrics"
+        app:layout_constraintEnd_toEndOf="@id/siv_lyrics"
+        app:layout_constraintStart_toStartOf="@id/siv_lyrics"
+        app:layout_constraintTop_toTopOf="@id/siv_lyrics"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_lyric"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_album"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_ten_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        app:layout_constraintBottom_toTopOf="@id/btn_video"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+        app:layout_constraintVertical_bias="0.0"
+        app:shapeAppearanceOverlay="@style/roundLyric"
         tools:src="@tools:sample/avatars"/>
 
-    <!--region Music Progress-->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_current_time"
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_lyric"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1:30"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/siv_album"/>
+        app:barrierDirection="bottom"
+        app:barrierMargin="-40dp"
+        app:constraint_referenced_ids="siv_album"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_duration"
+    <include layout="@layout/merge_player_controller"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_controller_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3:23"
-        app:layout_constraintBottom_toBottomOf="@id/mtv_current_time"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/md_six_half_unit"/>
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider_music"
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/mtv_duration"
-        app:layout_constraintStart_toStartOf="@id/mtv_current_time"
-        app:layout_constraintTop_toBottomOf="@id/mtv_current_time"/>
-    <!--endregion-->
-
-    <!--region Bottom Buttons-->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_previous"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_controller_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="previous"
-        app:layout_constraintBottom_toBottomOf="@id/btn_play"
-        app:layout_constraintEnd_toStartOf="@id/btn_play"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="play"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_next"
-        app:layout_constraintStart_toEndOf="@id/btn_previous"
-        app:layout_constraintTop_toBottomOf="@+id/slider_music"
-        app:layout_constraintVertical_bias="1.0"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="next"
-        app:layout_constraintBottom_toBottomOf="@id/btn_play"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_play"/>
-    <!--endregion-->
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/md_six_half_unit"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,7 +48,7 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
-        android:background="@color/dark_gray_blue"
+        android:background="@color/dark_slate_blue"
         app:layout_constraintBottom_toBottomOf="@id/barrier_bottom_login"
         app:layout_constraintTop_toBottomOf="@id/mtv_title"
         app:shapeAppearanceOverlay="@style/roundLoginTopBackdropImageView"/>
@@ -120,7 +120,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_forgot_password"
-        style="@style/Widget.App.Material.TextButton"
+        style="@style/Taiwan.No.One.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password"
@@ -131,7 +131,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
-        style="@style/Widget.App.Material.Button"
+        style="@style/Taiwan.No.One.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_four_unit"
@@ -152,7 +152,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_two_unit"
-        android:background="@color/dark_gray_blue"
+        android:background="@color/dark_slate_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrier_top_sns_login"
         app:layout_constraintVertical_bias="1.0"

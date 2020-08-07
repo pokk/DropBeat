@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ MIT License
   ~
@@ -22,27 +23,15 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/dusk</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/coral</item>
-        <item name="android:textColor">@color/colorText</item>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
 
-        <!-- Customized font -->
-        <item name="fontFamily">monospace</item>
-        <item name="android:fontFamily">monospace</item>
-    </style>
-
-    <style name="Taiwan.No.One.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-    </style>
-
-    <style name="Taiwan.No.One.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textStyle">bold</item>
-        <item name="android:minHeight">@dimen/md_button_height_56dp</item>
-        <item name="backgroundTint">@color/grapefruit</item>
-        <item name="cornerRadius">@dimen/md_two_unit</item>
-    </style>
-</resources>
+    <path
+        android:fillColor="#262345"
+        android:fillType="evenOdd"
+        android:pathData="M8 7C7.44772 7 7 7.44772 7 8V16C7 16.5523 7.44772 17 8 17C8.55228 17 9 16.5523 9 16V8C9 7.44772 8.55228 7 8 7ZM16 7C15.4477 7 15 7.44772 15 8V16C15 16.5523 15.4477 17 16 17C16.5523 17 17 16.5523 17 16V8C17 7.44772 16.5523 7 16 7Z"/>
+</vector>

@@ -52,7 +52,7 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="66dp"
-        android:background="@color/color_dark_gray_blue"
+        android:background="@color/pastel_pink"
         app:layout_constraintBottom_toBottomOf="@id/sov_backdrop"
         app:layout_constraintEnd_toEndOf="@id/g_line_end"
         app:layout_constraintStart_toStartOf="@id/g_line_start"
@@ -74,7 +74,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_dark_gray_blue"/>
+            android:background="@color/dark_slate_blue"/>
     </com.github.florent37.shapeofview.shapes.RoundRectView>
 
     <com.google.android.material.textfield.TextInputLayout

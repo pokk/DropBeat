@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ MIT License
   ~
@@ -22,27 +23,19 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/dusk</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/coral</item>
-        <item name="android:textColor">@color/colorText</item>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorPrimaryDark"/>
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/bg_item_top_oval"
+        android:gravity="top|start"/>
+    <item
+        android:drawable="@drawable/bg_item_mid_rectangle"
+        android:gravity="top|end"
+        android:top="225dp"/>
+</layer-list>
 
-        <!-- Customized font -->
-        <item name="fontFamily">monospace</item>
-        <item name="android:fontFamily">monospace</item>
-    </style>
-
-    <style name="Taiwan.No.One.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-    </style>
-
-    <style name="Taiwan.No.One.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textStyle">bold</item>
-        <item name="android:minHeight">@dimen/md_button_height_56dp</item>
-        <item name="backgroundTint">@color/grapefruit</item>
-        <item name="cornerRadius">@dimen/md_two_unit</item>
-    </style>
-</resources>
