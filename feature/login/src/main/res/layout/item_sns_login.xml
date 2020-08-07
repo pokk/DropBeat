@@ -30,5 +30,4 @@
     style="@style/Widget.App.Material.Button"
     android:layout_width="@dimen/md_seven_unit"
     android:layout_height="@dimen/md_button_height_56dp"
-    app:cornerRadius="@dimen/md_two_unit"
     tools:icon="@drawable/ic_facebook"/>

@@ -45,7 +45,7 @@
         android:id="@+id/bnv_navigator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorDarkGrayBlue"
+        android:background="@color/dark_gray_blue"
         android:minHeight="@dimen/md_eight_unit"
         app:itemIconTint="@android:color/white"
         app:labelVisibilityMode="unlabeled"

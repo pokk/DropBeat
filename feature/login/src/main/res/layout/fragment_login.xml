@@ -48,7 +48,7 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
-        android:background="@color/colorPrimary"
+        android:background="@color/dark_gray_blue"
         app:layout_constraintBottom_toBottomOf="@id/barrier_bottom_login"
         app:layout_constraintTop_toBottomOf="@id/mtv_title"
         app:shapeAppearanceOverlay="@style/roundLoginTopBackdropImageView"/>
@@ -100,6 +100,7 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         app:boxBackgroundMode="none"
+        app:endIconDrawable="@drawable/ic_visibility_off"
         app:endIconMode="custom"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="@id/til_email"
@@ -135,7 +136,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_four_unit"
         android:text="Login"
-        app:cornerRadius="@dimen/md_two_unit"
         app:layout_constraintTop_toBottomOf="@id/btn_forgot_password"/>
 
     <androidx.constraintlayout.widget.Barrier
@@ -152,7 +152,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_two_unit"
-        android:background="@color/colorPrimary"
+        android:background="@color/dark_gray_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrier_top_sns_login"
         app:layout_constraintVertical_bias="1.0"

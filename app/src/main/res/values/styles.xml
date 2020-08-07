@@ -26,9 +26,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/dusk</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/coral</item>
         <item name="android:textColor">@color/colorText</item>
 
         <!-- Customized font -->
@@ -43,5 +43,6 @@
         <item name="android:textStyle">bold</item>
         <item name="android:minHeight">@dimen/md_button_height_56dp</item>
         <item name="backgroundTint">@color/grapefruit</item>
+        <item name="cornerRadius">@dimen/md_two_unit</item>
     </style>
 </resources>

@@ -25,17 +25,17 @@
 
 <resources>
     <!-- Theme Colors -->
-    <color name="colorPrimary">#465180</color>
+    <color name="dusk">#465180</color>
     <color name="colorPrimaryDark">#262345</color>
-    <color name="colorAccent">#FF5735</color>
-    <color name="colorSecondary">#E8BCD3</color>
+    <color name="coral">#FF5735</color>
+    <color name="pastel_pink">#E8BCD3</color>
     <color name="colorText">#FFFFFF</color>
 
     <!-- Others -->
     <color name="grapefruit">#FF5753</color>
     <color name="pale_grey">#F4F6FC</color>
 
-    <color name="colorTextHint">#BCBAC6</color>
-    <color name="colorDarkGrayBlue">#383676</color>
+    <color name="silver">#BCBAC6</color>
+    <color name="dark_gray_blue">#383676</color>
 </resources>
 

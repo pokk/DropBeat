@@ -27,9 +27,9 @@
     <!--region Base TextInputLayout theme. -->
     <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
         <!-- For the cursor and the cursor pointer -->
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/coral</item>
+        <item name="colorControlActivated">@color/coral</item>
+        <item name="colorControlHighlight">@color/coral</item>
     </style>
     <!--endregion-->
 
