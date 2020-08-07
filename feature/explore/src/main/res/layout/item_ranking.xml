@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/fragment_index">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="#1"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_album_thumb"
+        android:layout_width="@dimen/md_four_unit"
+        android:layout_height="@dimen/md_four_unit"
+        android:layout_marginStart="@dimen/md_two_unit"
+        app:layout_constraintBottom_toBottomOf="@id/mtv_number"
+        app:layout_constraintStart_toEndOf="@id/mtv_number"
+        app:layout_constraintTop_toTopOf="@id/mtv_number"
+        tools:src="@tools:sample/avatars"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_album_name"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/caption_text_1"
+        app:layout_constraintBottom_toTopOf="@id/mtv_album_name"
+        app:layout_constraintEnd_toStartOf="@id/btn_option"
+        app:layout_constraintStart_toEndOf="@id/siv_album_thumb"
+        app:layout_constraintTop_toTopOf="@id/siv_album_thumb"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_artist_name"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pastel_pink"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/siv_album_thumb"
+        app:layout_constraintEnd_toEndOf="@id/mtv_album_name"
+        app:layout_constraintStart_toStartOf="@id/mtv_album_name"
+        app:layout_constraintTop_toBottomOf="@id/mtv_album_name"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_option"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

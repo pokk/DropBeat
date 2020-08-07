@@ -23,10 +23,15 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-
-    <style name="roundLyric" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_three_half_unit</item>
-    </style>
-</resources>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@color/colorPrimaryDark"/>
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/bg_item_top_oval_blur"
+        android:gravity="top|start"/>
+</layer-list>

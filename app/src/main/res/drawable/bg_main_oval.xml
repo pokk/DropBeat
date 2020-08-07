@@ -27,11 +27,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid
-                android:color="@color/colorPrimaryDark"/>
+            <solid android:color="@color/colorPrimaryDark"/>
         </shape>
     </item>
     <item
         android:drawable="@drawable/bg_item_top_oval"
         android:gravity="top|start"/>
 </layer-list>
+
