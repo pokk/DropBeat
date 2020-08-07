@@ -65,13 +65,12 @@ class TooltipWindow(context: Context) {
         anchor.getLocationOnScreen(screenPos)
 
         // Get rect for anchor view
-        val anchorRect =
-            Rect(
-                screenPos[0],
-                screenPos[1],
-                screenPos[0] + anchor.width,
-                screenPos[1] + anchor.height
-            )
+        val anchorRect = Rect(
+            screenPos[0],
+            screenPos[1],
+            screenPos[0] + anchor.width,
+            screenPos[1] + anchor.height
+        )
 
         // Call view measure to calculate how big your view should be.
         contentView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
