@@ -28,11 +28,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mcv_music"
-    android:layout_width="100dp"
+    android:layout_width="@dimen/card_explore_width"
     android:layout_height="@dimen/md_eight_unit"
+    android:layout_margin="@dimen/md_one_unit"
     app:cardCornerRadius="@dimen/md_one_unit"
     app:cardElevation="@dimen/md_one_unit"
-    tools:showIn="@layout/fragment_explore">
+    tools:showIn="@layout/fragment_part_explore">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_thumbnail"
@@ -40,6 +41,11 @@
         android:layout_height="match_parent"
         android:scaleType="center"
         tools:src="@tools:sample/avatars"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_card_blur"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"

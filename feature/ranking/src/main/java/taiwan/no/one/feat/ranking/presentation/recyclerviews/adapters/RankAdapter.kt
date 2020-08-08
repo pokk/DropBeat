@@ -29,7 +29,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.feat.ranking.R
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
-import taiwan.no.one.feat.ranking.databinding.ItemRankBinding
+import taiwan.no.one.feat.ranking.databinding.ItemExploreBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.RankViewHolder
 import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 import kotlin.properties.Delegates
@@ -65,8 +65,8 @@ internal class RankAdapter : RecyclerView.Adapter<RankViewHolder>(),
      * @see .onBindViewHolder
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
-        .inflate(R.layout.item_rank, parent, false)
-        .let { RankViewHolder(ItemRankBinding.bind(it)) }
+        .inflate(R.layout.item_explore, parent, false)
+        .let { RankViewHolder(ItemExploreBinding.bind(it)) }
 
     /**
      * Returns the total number of items in the data set held by the adapter.

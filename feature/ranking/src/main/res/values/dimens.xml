@@ -23,18 +23,6 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="taiwan.no.one.feat.ranking.presentation.fragments.IndexFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_rankings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_rank"
-        tools:spanCount="2"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<resources>
+    <dimen name="card_explore_width">100dp</dimen>
+</resources>

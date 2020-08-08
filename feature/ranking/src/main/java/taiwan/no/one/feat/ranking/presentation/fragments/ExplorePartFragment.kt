@@ -25,9 +25,6 @@
 package taiwan.no.one.feat.ranking.presentation.fragments
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -40,11 +37,11 @@ import taiwan.no.one.ktx.livedata.obs
 class ExplorePartFragment : BaseFragment<MainActivity, FragmentPartExploreBinding>() {
     private val vm by viewModels<RankViewModel>()
 
-    init {
-        lifecycleScope.launchWhenCreated {
-            parent.showLoading()
-        }
-    }
+//    init {
+//        lifecycleScope.launchWhenCreated {
+//            parent.showLoading()
+//        }
+//    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -76,7 +73,7 @@ class ExplorePartFragment : BaseFragment<MainActivity, FragmentPartExploreBindin
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        ((binding.rvMusics.adapter as? ConcatAdapter)?.adapters?.get(1) as? RankAdapter)?.setOnClickListener {
+        (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener {
 //            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }
