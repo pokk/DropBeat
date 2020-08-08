@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.ranking.presentation.fragments
 
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.presentation.activity.MainActivity
@@ -64,7 +64,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
                 adapter = RankAdapter()
             }
             if (layoutManager == null) {
-                layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.HORIZONTAL, false)
+                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
         }
     }

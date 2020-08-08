@@ -52,7 +52,7 @@
         android:layout_marginTop="@dimen/md_five_unit"
         android:gravity="fill_vertical"
         android:rotation="-90"
-        android:text="Explore"
+        android:text="Ranking"
         android:textSize="@dimen/title_header_3"
         app:layout_constraintEnd_toEndOf="@id/g_line_title"
         app:layout_constraintStart_toStartOf="@id/g_line_title"
@@ -67,8 +67,7 @@
         app:layout_constraintStart_toEndOf="@id/g_line_recyclerview"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="5"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_explore"
-        tools:orientation="horizontal"
-        tools:spanCount="2"/>
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_trend"
+        tools:orientation="horizontal"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

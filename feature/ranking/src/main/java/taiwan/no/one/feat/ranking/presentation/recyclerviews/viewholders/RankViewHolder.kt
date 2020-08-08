@@ -25,13 +25,13 @@
 package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
 import coil.api.loadAny
+import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
-import taiwan.no.one.feat.ranking.databinding.ItemExploreBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class RankViewHolder(
-    private val binding: ItemExploreBinding
+    private val binding: ItemTrendBinding
 ) : ViewHolderBinding<BriefRankEntity, RankAdapter>(binding.root) {
     override fun initView(entity: BriefRankEntity, position: Int, adapter: RankAdapter) {
         binding.apply {

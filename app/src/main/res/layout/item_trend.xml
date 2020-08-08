@@ -71,10 +71,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/md_two_unit"
+            android:textColor="@color/pastel_pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/mtv_title"
             app:layout_constraintStart_toStartOf="@id/mtv_title"
-            tools:text="@tools:sample/lorem"/>
+            tools:text="@tools:sample/lorem[0]"/>
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier_top"

@@ -28,8 +28,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:background="@color/colorPrimaryDark">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/g_line_title"
@@ -52,22 +51,10 @@
         android:layout_marginTop="@dimen/md_five_unit"
         android:gravity="fill_vertical"
         android:rotation="-90"
+        android:text="Ranking"
         android:textSize="@dimen/title_header_3"
         app:layout_constraintEnd_toEndOf="@id/g_line_title"
         app:layout_constraintStart_toStartOf="@id/g_line_title"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Ranking"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mtv_more"
-        style="@style/Taiwan.No.One.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/md_two_unit"
-        android:text="View all"
-        android:textColor="?colorAccent"
-        android:textSize="@dimen/button_text_2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -77,7 +64,10 @@
         android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/g_line_recyclerview"
-        app:layout_constraintTop_toBottomOf="@id/mtv_more"
-        tools:itemCount="4"
-        tools:listitem="@layout/item_type_of_music"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="5"
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_explore"
+        tools:orientation="horizontal"
+        tools:spanCount="2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

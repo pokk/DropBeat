@@ -68,8 +68,8 @@
             app:layout_constraintTop_toBottomOf="@id/include_playlist"/>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_explore"
-            android:name="taiwan.no.one.feat.ranking.presentation.fragments.ExplorePartFragment"
+            android:id="@+id/frag_ranking"
+            android:name="taiwan.no.one.feat.ranking.presentation.fragments.RankingFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/md_five_unit"
