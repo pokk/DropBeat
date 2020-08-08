@@ -33,11 +33,11 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
-import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
+import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.livedata.obs
 
-internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
+internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
 
     override fun bindLiveData() {

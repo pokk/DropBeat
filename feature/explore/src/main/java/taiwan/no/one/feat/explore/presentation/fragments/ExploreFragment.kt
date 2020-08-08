@@ -26,6 +26,18 @@ package taiwan.no.one.feat.explore.presentation.fragments
 
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.explore.databinding.FragmentIndexBinding
+import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 
-internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>()
+internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+        super.bindLiveData()
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+    }
+}

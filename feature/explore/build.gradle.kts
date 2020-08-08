@@ -97,6 +97,7 @@ kapt {
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
+    implementation(project(CommonModuleDependency.FEAT_RANKING))
     annotationDependencies()
     implementation(config.LibraryDependency.Tool.JSOUP)
 }

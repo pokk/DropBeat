@@ -32,7 +32,7 @@
     android:layout_height="@dimen/md_eight_unit"
     app:cardCornerRadius="@dimen/md_one_unit"
     app:cardElevation="@dimen/md_one_unit"
-    tools:showIn="@layout/fragment_index">
+    tools:showIn="@layout/fragment_explore">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_thumbnail"

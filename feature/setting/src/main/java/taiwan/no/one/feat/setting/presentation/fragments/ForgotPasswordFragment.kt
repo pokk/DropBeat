@@ -26,6 +26,6 @@ package taiwan.no.one.feat.setting.presentation.fragments
 
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.setting.databinding.FragmentIndexBinding
+import taiwan.no.one.feat.setting.databinding.FragmentSettingBinding
 
-internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>()
+internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentSettingBinding>()
