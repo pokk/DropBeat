@@ -23,15 +23,33 @@
   ~ SOFTWARE.
   -->
 
-<navigation
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/playlistFragment">
+    android:id="@+id/ll_other"
+    style="@style/Taiwan.No.One.Setting.Block.Layout"
+    app:layout_constraintTop_toBottomOf="@id/ll_sync"
+    tools:showIn="@layout/fragment_setting">
 
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
-        android:label="PlaylistFragment"
-        tools:layout="@layout/fragment_my_page"/>
-</navigation>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Other"/>
+
+    <include
+        android:id="@+id/include_policy"
+        layout="@layout/item_column_next"/>
+
+    <include
+        android:id="@+id/include_coffee_to_me"
+        layout="@layout/item_column_next"/>
+
+    <include
+        android:id="@+id/include_star"
+        layout="@layout/item_column_next"/>
+
+    <include
+        android:id="@+id/include_feedback"
+        layout="@layout/item_column_next"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

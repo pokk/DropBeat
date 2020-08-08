@@ -23,15 +23,25 @@
   ~ SOFTWARE.
   -->
 
-<navigation
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/playlistFragment">
+    android:id="@+id/ll_music"
+    style="@style/Taiwan.No.One.Setting.Block.Layout"
+    app:layout_constraintTop_toBottomOf="@id/ll_app"
+    tools:showIn="@layout/fragment_setting">
 
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
-        android:label="PlaylistFragment"
-        tools:layout="@layout/fragment_my_page"/>
-</navigation>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Music"/>
+
+    <include
+        android:id="@+id/include_quality"
+        layout="@layout/item_column_next"/>
+
+    <include
+        android:id="@+id/include_auto_mv"
+        layout="@layout/item_column_toggle"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -23,15 +23,15 @@
   ~ SOFTWARE.
   -->
 
-<navigation
+<vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/playlistFragment">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
 
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
-        android:label="PlaylistFragment"
-        tools:layout="@layout/fragment_my_page"/>
-</navigation>
+    <path
+        android:fillColor="#262345"
+        android:fillType="evenOdd"
+        android:pathData="M7.98745 12.9965C8.67086 12.3131 8.67086 11.205 7.98745 10.5216C7.30403 9.83818 6.19599 9.83818 5.51258 10.5216C4.82916 11.205 4.82916 12.3131 5.51258 12.9965C6.19599 13.6799 7.30403 13.6799 7.98745 12.9965ZM13.2374 10.5216C13.9209 11.205 13.9209 12.3131 13.2374 12.9965C12.554 13.6799 11.446 13.6799 10.7626 12.9965C10.0792 12.3131 10.0792 11.205 10.7626 10.5216C11.446 9.83818 12.554 9.83818 13.2374 10.5216ZM18.4874 10.5216C19.1708 11.205 19.1708 12.3131 18.4874 12.9965C17.804 13.6799 16.696 13.6799 16.0125 12.9965C15.3291 12.3131 15.3291 11.205 16.0125 10.5216C16.696 9.83818 17.804 9.83818 18.4874 10.5216Z"/>
+</vector>

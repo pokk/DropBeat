@@ -29,54 +29,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:showIn="@layout/fragment_index">
+    tools:showIn="@layout/fragment_setting">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/g_line_title"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="31dp"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/g_line_recyclerview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="62dp"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_explore_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_five_unit"
-        android:gravity="fill_vertical"
-        android:rotation="-90"
-        android:textSize="@dimen/title_header_3"
-        app:layout_constraintEnd_toEndOf="@id/g_line_title"
-        app:layout_constraintStart_toStartOf="@id/g_line_title"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Playlist"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mtv_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/md_two_unit"
-        android:text="View all"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_music"
+        android:tint="@color/grapefruit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_musics"
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
-        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/s_switch"
+        app:layout_constraintStart_toEndOf="@id/siv_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem[1]"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/s_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/g_line_recyclerview"
-        app:layout_constraintTop_toBottomOf="@id/mtv_more"
-        tools:itemCount="4"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_trend"
-        tools:orientation="horizontal"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@
     android:layout_height="136dp"
     app:cardCornerRadius="@dimen/md_one_unit"
     app:cardElevation="@dimen/md_one_unit"
-    tools:showIn="@layout/fragment_index">
+    tools:showIn="@layout/include_layout_trend">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

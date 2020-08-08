@@ -23,9 +23,21 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_sync"
+    style="@style/Taiwan.No.One.Setting.Block.Layout"
+    app:layout_constraintTop_toBottomOf="@id/ll_music"
+    tools:showIn="@layout/fragment_setting">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sync"/>
+
+    <include
+        android:id="@+id/include_sync"
+        layout="@layout/item_column_sync"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

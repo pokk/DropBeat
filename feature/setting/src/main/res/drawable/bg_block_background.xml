@@ -23,15 +23,12 @@
   ~ SOFTWARE.
   -->
 
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/playlistFragment">
-
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
-        android:label="PlaylistFragment"
-        tools:layout="@layout/fragment_my_page"/>
-</navigation>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/dark_slate_blue"/>
+            <corners android:radius="@dimen/md_two_unit"/>
+        </shape>
+    </item>
+</layer-list>

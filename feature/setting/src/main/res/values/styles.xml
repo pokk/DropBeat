@@ -23,9 +23,14 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<resources>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <style name="Taiwan.No.One.Setting.Block.Layout" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_block_background</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/md_two_unit</item>
+        <item name="android:layout_marginTop">@dimen/md_four_unit</item>
+    </style>
+</resources>
