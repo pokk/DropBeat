@@ -29,12 +29,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.presentation.activity.MainActivity
-import taiwan.no.one.feat.ranking.databinding.FragmentPartExploreBinding
+import taiwan.no.one.feat.ranking.databinding.FragmentRankingBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 import taiwan.no.one.ktx.livedata.obs
 
-class ExplorePartFragment : BaseFragment<MainActivity, FragmentPartExploreBinding>() {
+class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
     private val vm by viewModels<RankViewModel>()
 
 //    init {
@@ -74,6 +74,7 @@ class ExplorePartFragment : BaseFragment<MainActivity, FragmentPartExploreBindin
      */
     override fun componentListenersBinding() {
         (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener {
+
 //            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }
