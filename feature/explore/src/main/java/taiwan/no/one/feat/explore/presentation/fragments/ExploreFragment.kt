@@ -24,14 +24,39 @@
 
 package taiwan.no.one.feat.explore.presentation.fragments
 
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
+import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
+import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
+import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
+import taiwan.no.one.ktx.livedata.obs
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
+    private val vm by viewModels<ExploreViewModel>()
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         super.bindLiveData()
+        vm.topTags.obs(this) { res ->
+            res.onSuccess {
+                binding.includeExplore.rvMusics.adapter = ExploreAdapter(it.tags.orEmpty())
+            }.onFailure { }
+        }
+        vm.topArtists.obs(this) { res ->
+            res.onSuccess {
+                binding.includeTopTrack.rvMusics.adapter = TopChartAdapter(it.artists)
+            }
+        }
+        vm.topTracks.obs(this) { res ->
+            res.onSuccess {
+                binding.includeTopArtist.rvMusics.adapter = TopChartAdapter(it.tracks)
+            }
+        }
     }
 
     /**
@@ -39,5 +64,20 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
      */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        binding.includeExplore.rvMusics.apply {
+            if (layoutManager == null) {
+                layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.HORIZONTAL, false)
+            }
+        }
+        binding.includeTopTrack.rvMusics.apply {
+            if (layoutManager == null) {
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+        }
+        binding.includeTopTrack.rvMusics.apply {
+            if (layoutManager == null) {
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+        }
     }
 }

@@ -28,7 +28,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/fragment_explore">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/g_line_title"
@@ -51,7 +52,7 @@
         android:layout_marginTop="@dimen/md_five_unit"
         android:gravity="fill_vertical"
         android:rotation="-90"
-        android:text="Ranking"
+        android:text="Explore"
         android:textSize="@dimen/title_header_3"
         app:layout_constraintEnd_toEndOf="@id/g_line_title"
         app:layout_constraintStart_toStartOf="@id/g_line_title"

@@ -24,6 +24,31 @@
 
 package taiwan.no.one.feat.explore.presentation.viewmodels
 
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.liveData
+import org.kodein.di.instance
+import taiwan.no.one.dropbeat.core.viewmodel.BehindSavedStateViewModel
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistReq
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTagCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTagReq
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackReq
 
-internal class ExploreViewModel : BehindViewModel()
+internal class ExploreViewModel(
+    override val handle: SavedStateHandle
+) : BehindSavedStateViewModel() {
+    private val fetchChartTopTagCase by instance<FetchChartTopTagCase>()
+    private val fetchChartTopTrackCase by instance<FetchChartTopTrackCase>()
+    private val fetchChartTopArtistCase by instance<FetchChartTopArtistCase>()
+
+    val topTags = liveData {
+        emit(fetchChartTopTagCase.execute(FetchChartTopTagReq(0, 10)))
+    }
+    val topTracks = liveData {
+        emit(fetchChartTopTrackCase.execute(FetchChartTopTrackReq(0, 10)))
+    }
+    val topArtists = liveData {
+        emit(fetchChartTopArtistCase.execute(FetchChartTopArtistReq(0, 10)))
+    }
+}

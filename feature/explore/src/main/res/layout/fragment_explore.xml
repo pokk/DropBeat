@@ -51,17 +51,9 @@
             android:layout_marginTop="@dimen/md_five_unit"
             app:layout_constraintTop_toBottomOf="@id/mtv_title"/>
 
-        <!--        <include-->
-        <!--            android:id="@+id/include_explore"-->
-        <!--            layout="@layout/include_layout_explore"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/md_five_unit"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/include_playlist"/>-->
-
         <include
-            android:id="@+id/include_rank"
-            layout="@layout/include_layout_ranking"
+            android:id="@+id/include_explore"
+            layout="@layout/include_layout_explore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/md_five_unit"
@@ -74,6 +66,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/md_five_unit"
             android:tag="part_explore"
-            app:layout_constraintTop_toBottomOf="@id/include_rank"/>
+            app:layout_constraintTop_toBottomOf="@id/include_explore"/>
+
+        <include
+            android:id="@+id/include_top_track"
+            layout="@layout/include_layout_ranking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_five_unit"
+            app:layout_constraintTop_toBottomOf="@id/frag_ranking"/>
+
+        <include
+            android:id="@+id/include_top_artist"
+            layout="@layout/include_layout_ranking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_five_unit"
+            app:layout_constraintTop_toBottomOf="@id/include_top_track"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
