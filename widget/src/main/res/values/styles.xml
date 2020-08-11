@@ -41,6 +41,16 @@
     </style>
     <!--endregion-->
 
+    <style name="roundFullOneHalfUnit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/md_one_half_unit</item>
+    </style>
+
+    <style name="roundFullOneUnit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/md_one_unit</item>
+    </style>
+
     <style name="roundFullTwoUnit" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/md_two_unit</item>
@@ -54,10 +64,5 @@
     <style name="roundFullFiveUnit" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/md_five_unit</item>
-    </style>
-
-    <style name="roundFullOneHalfUnit" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_one_half_unit</item>
     </style>
 </resources>

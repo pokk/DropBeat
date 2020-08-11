@@ -52,7 +52,8 @@
             android:layout_margin="@dimen/md_one_unit"
             android:background="#b2000000"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrier_top"/>
+            app:layout_constraintTop_toBottomOf="@id/barrier_top"
+            app:shapeAppearanceOverlay="@style/roundFullOneUnit"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mtv_title"
