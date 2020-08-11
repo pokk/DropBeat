@@ -45,14 +45,14 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.rankings.obs(this) { res ->
-            res.onSuccess {
-                (binding.rvMusics.adapter as? RankAdapter)?.data = it
-                parent.hideLoading()
-            }.onFailure {
-                parent.showError(it.message.toString())
-            }
-        }
+//        vm.rankings.obs(this) { res ->
+//            res.onSuccess {
+//                (binding.rvMusics.adapter as? RankAdapter)?.data = it
+//                parent.hideLoading()
+//            }.onFailure {
+//                parent.showError(it.message.toString())
+//            }
+//        }
     }
 
     /**

@@ -47,7 +47,7 @@ internal class TopChartViewHolder(
     private fun initTrackType(entity: TrackEntity) {
         binding.apply {
             mtvArtistName.text = entity.artist?.name.orEmpty()
-            mtvAlbumName.text = entity.album?.name.orEmpty()
+            mtvAlbumName.text = entity.name.orEmpty()
             sivAlbumThumb.loadAny(entity.images?.get(0)?.text.orEmpty())
         }
     }
