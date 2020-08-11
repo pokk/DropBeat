@@ -40,7 +40,7 @@ internal class TopChartViewHolder(
             is ArtistEntity -> initArtistType(entity)
         }
         binding.apply {
-            mtvNumber.text = position.toString()
+            mtvNumber.text = (position + 1).toString()
         }
     }
 

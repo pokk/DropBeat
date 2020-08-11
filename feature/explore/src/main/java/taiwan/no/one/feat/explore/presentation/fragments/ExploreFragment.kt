@@ -24,20 +24,29 @@
 
 package taiwan.no.one.feat.explore.presentation.fragments
 
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.livedata.obs
+import taiwan.no.one.ktx.view.find
+import taiwan.no.one.dropbeat.R as AppR
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
     private val vm by viewModels<ExploreViewModel>()
+
+    // NOTE(Jieyi): 8/11/20 Because of some reasons, viewbinding can't use for `include` xml from other modules
+    private val includeTopTrack by lazy { find<ConstraintLayout>(R.id.include_top_track) }
+    private val includeTopArtist by lazy { find<ConstraintLayout>(R.id.include_top_artist) }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -49,12 +58,13 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topArtists.obs(this) { res ->
             res.onSuccess {
-                binding.includeTopTrack.rvMusics.adapter = TopChartAdapter(it.artists)
+                includeTopArtist.find<RecyclerView>(AppR.id.rv_musics).adapter =
+                    TopChartAdapter(it.artists.subList(0, 4))
             }
         }
         vm.topTracks.obs(this) { res ->
             res.onSuccess {
-                binding.includeTopArtist.rvMusics.adapter = TopChartAdapter(it.tracks)
+                includeTopTrack.find<RecyclerView>(AppR.id.rv_musics).adapter = TopChartAdapter(it.tracks.subList(0, 4))
             }
         }
     }
@@ -69,15 +79,21 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.HORIZONTAL, false)
             }
         }
-        binding.includeTopTrack.rvMusics.apply {
-            if (layoutManager == null) {
-                layoutManager = LinearLayoutManager(requireContext())
+        includeTopArtist.apply {
+            find<RecyclerView>(AppR.id.rv_musics).apply {
+                if (layoutManager == null) {
+                    layoutManager = LinearLayoutManager(requireContext())
+                }
             }
+            find<TextView>(AppR.id.mtv_explore_title).text = "TopArtist"
         }
-        binding.includeTopTrack.rvMusics.apply {
-            if (layoutManager == null) {
-                layoutManager = LinearLayoutManager(requireContext())
+        includeTopTrack.apply {
+            find<RecyclerView>(AppR.id.rv_musics).apply {
+                if (layoutManager == null) {
+                    layoutManager = LinearLayoutManager(requireContext())
+                }
             }
+            find<TextView>(AppR.id.mtv_explore_title).text = "TopTrack"
         }
     }
 }
