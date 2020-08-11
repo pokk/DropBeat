@@ -40,4 +40,24 @@
         <item name="android:windowEnterAnimation">@anim/popup_showing</item>
     </style>
     <!--endregion-->
+
+    <style name="roundFullTwoUnit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/md_two_unit</item>
+    </style>
+
+    <style name="roundFullThreeHalfUnit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/md_three_half_unit</item>
+    </style>
+
+    <style name="roundFullFiveUnit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/md_five_unit</item>
+    </style>
+
+    <style name="roundFullOneHalfUnit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/md_one_half_unit</item>
+    </style>
 </resources>

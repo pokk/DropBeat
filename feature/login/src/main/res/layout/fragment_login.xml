@@ -51,7 +51,7 @@
         android:background="@color/dark_slate_blue"
         app:layout_constraintBottom_toBottomOf="@id/barrier_bottom_login"
         app:layout_constraintTop_toBottomOf="@id/mtv_title"
-        app:shapeAppearanceOverlay="@style/roundLoginTopBackdropImageView"/>
+        app:shapeAppearanceOverlay="@style/roundFullFiveUnit"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_search_backdrop"
@@ -61,7 +61,7 @@
         android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/til_password"
         app:layout_constraintTop_toTopOf="@id/til_email"
-        app:shapeAppearanceOverlay="@style/roundLoginImageView"/>
+        app:shapeAppearanceOverlay="@style/roundFullTwoUnit"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"

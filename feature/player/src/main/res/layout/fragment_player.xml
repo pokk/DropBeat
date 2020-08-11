@@ -47,7 +47,7 @@
         android:background="#7f000000"
         app:layout_constraintBottom_toTopOf="@id/btn_video"
         app:layout_constraintTop_toTopOf="@id/barrier_lyric"
-        app:shapeAppearanceOverlay="@style/roundLyric"/>
+        app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="@dimen/md_zero_unit"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mtv_artist"
         app:layout_constraintVertical_bias="0.0"
-        app:shapeAppearanceOverlay="@style/roundLyric"
+        app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"
         tools:src="@tools:sample/avatars"/>
 
     <androidx.constraintlayout.widget.Barrier

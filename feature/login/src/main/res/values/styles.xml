@@ -25,19 +25,9 @@
 
 <resources>
 
-    <style name="roundLoginTopBackdropImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_five_unit</item>
-    </style>
-
     <style name="roundLoginBottomBackdropImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">@dimen/md_five_unit</item>
         <item name="cornerSizeTopLeft">@dimen/md_five_unit</item>
-    </style>
-
-    <style name="roundLoginImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_two_unit</item>
     </style>
 </resources>

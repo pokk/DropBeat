@@ -32,22 +32,4 @@
         <item name="colorControlHighlight">@color/coral</item>
     </style>
     <!--endregion-->
-
-    <!--region Shape ImageView -->
-    <style name="roundBottomImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeBottomLeft">@dimen/md_three_half_unit</item>
-        <item name="cornerSizeBottomRight">@dimen/md_three_half_unit</item>
-    </style>
-
-    <style name="roundSearchImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_five_unit</item>
-    </style>
-
-    <style name="roundImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_one_half_unit</item>
-    </style>
-    <!--endregion-->
 </resources>

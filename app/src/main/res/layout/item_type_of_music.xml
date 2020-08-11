@@ -49,6 +49,7 @@
         app:layout_constraintBottom_toBottomOf="@id/mtv_number"
         app:layout_constraintStart_toEndOf="@id/mtv_number"
         app:layout_constraintTop_toTopOf="@id/mtv_number"
+        app:shapeAppearanceOverlay="@style/roundFullOneHalfUnit"
         tools:src="@tools:sample/avatars"/>
 
     <com.google.android.material.textview.MaterialTextView

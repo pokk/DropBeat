@@ -24,9 +24,4 @@
   -->
 
 <resources>
-
-    <style name="roundLyric" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/md_three_half_unit</item>
-    </style>
 </resources>
