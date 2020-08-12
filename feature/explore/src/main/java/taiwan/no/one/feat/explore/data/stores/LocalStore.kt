@@ -47,6 +47,8 @@ internal class LocalStore(
 
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) = UnsupportedOperation()
 
+    override suspend fun getArtistMoreInfo(artistName: String) = UnsupportedOperation()
+
     override suspend fun getTrackInfo(mbid: String) = UnsupportedOperation()
 
     override suspend fun getSimilarTrackInfo(mbid: String) = UnsupportedOperation()

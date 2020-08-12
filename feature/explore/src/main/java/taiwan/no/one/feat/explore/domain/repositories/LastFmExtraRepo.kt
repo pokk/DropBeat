@@ -22,18 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
+package taiwan.no.one.feat.explore.domain.repositories
 
+import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity.ArtistPhotoEntity
 
 /**
- * We will implement those them by [org.jsoup.Jsoup] because we can't use api from
- * lastfm.
- * Using prefix name (retrieve), (insert), (replace), (release)
+ * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-internal interface LastFmExtraService {
-    suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
+internal interface LastFmExtraRepo : Repository {
+    suspend fun fetchArtistPhotoInfo(artistName: String, page: Int): List<ArtistPhotoEntity>
 
-    suspend fun retrieveArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
+    suspend fun fetchArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
 }

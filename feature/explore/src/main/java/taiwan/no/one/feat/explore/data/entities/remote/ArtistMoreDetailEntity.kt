@@ -22,18 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
+package taiwan.no.one.feat.explore.data.entities.remote
 
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 
-/**
- * We will implement those them by [org.jsoup.Jsoup] because we can't use api from
- * lastfm.
- * Using prefix name (retrieve), (insert), (replace), (release)
- */
-internal interface LastFmExtraService {
-    suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
-
-    suspend fun retrieveArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
-}
+internal data class ArtistMoreDetailEntity(
+    val coverPhotoUrl: String,
+    val popularTrackThisWeek: TrackEntity,
+)

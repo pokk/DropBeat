@@ -49,6 +49,6 @@ internal class ExploreViewModel(
         emit(fetchChartTopTrackCase.execute(FetchChartTopTrackReq(0, 10)))
     }
     val topArtists = liveData {
-        emit(fetchChartTopArtistCase.execute(FetchChartTopArtistReq(0, 10)))
+        emit(fetchChartTopArtistCase.execute(FetchChartTopArtistReq(0, 10, 4)))
     }
 }

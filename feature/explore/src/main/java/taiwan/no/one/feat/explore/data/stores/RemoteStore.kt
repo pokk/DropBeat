@@ -60,6 +60,9 @@ internal class RemoteStore(
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) =
         lastFmExtraService.retrieveArtistPhotosInfo(artistName, page)
 
+    override suspend fun getArtistMoreInfo(artistName: String) =
+        lastFmExtraService.retrieveArtistMoreDetail(artistName)
+
     override suspend fun getTrackInfo(mbid: String) =
         lastFmService.retrieveTrackInfo(infoQuery(Constants.LASTFM_PARAM_TRACK_INFO, mbid))
 

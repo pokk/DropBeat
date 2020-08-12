@@ -25,10 +25,11 @@
 package taiwan.no.one.feat.explore.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal class FetchArtistPhotoOneShotCase(
-    private val repository: LastFmRepo
+    private val repository: LastFmExtraRepo
 ) : FetchArtistPhotoCase() {
     override suspend fun acquireCase(parameter: FetchArtistPhotoReq?) = parameter.ensure {
         repository.fetchArtistPhotoInfo(artistName, page)

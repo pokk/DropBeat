@@ -25,7 +25,9 @@
 package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
 
 import org.jsoup.Jsoup
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 
 internal class LastFmExtraImpl : LastFmExtraService {
     companion object {
@@ -45,5 +47,19 @@ internal class LastFmExtraImpl : LastFmExtraService {
             .map { ArtistPhotosEntity.ArtistPhotoEntity(LASTFM_IMAGE_URL.format(it), it) }
 
         return ArtistPhotosEntity(photos, hasNext)
+    }
+
+    override suspend fun retrieveArtistMoreDetail(artistName: String): ArtistMoreDetailEntity {
+        val doc = Jsoup.connect("$LASTFM_DOMAIN$artistName").get()
+        val trackEntity = TrackEntity(null)
+
+        val photo = doc.select("div.header-new-background-image").attr("content")
+        doc.select("h3.artist-header-featured-items-item-name")[1].apply {
+            trackEntity.name = text()
+            trackEntity.url = "https://www.last.fm${select("a").attr("href")}"
+        }
+        trackEntity.listeners = doc.select("p.artist-header-featured-items-item-listeners").text()
+
+        return ArtistMoreDetailEntity(photo, trackEntity)
     }
 }

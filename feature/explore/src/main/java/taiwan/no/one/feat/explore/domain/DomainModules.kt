@@ -69,7 +69,7 @@ internal object DomainModules : ModuleProvider {
         bind<FetchArtistPhotoCase>() with singleton { FetchArtistPhotoOneShotCase(instance()) }
         bind<FetchArtistTopAlbumCase>() with singleton { FetchArtistTopAlbumOneShotCase(instance()) }
         bind<FetchArtistTopTrackCase>() with singleton { FetchArtistTopTrackOneShotCase(instance()) }
-        bind<FetchChartTopArtistCase>() with singleton { FetchChartTopArtistOneShotCase(instance()) }
+        bind<FetchChartTopArtistCase>() with singleton { FetchChartTopArtistOneShotCase(instance(), instance()) }
         bind<FetchChartTopTagCase>() with singleton { FetchChartTopTagOneShotCase(instance()) }
         bind<FetchChartTopTrackCase>() with singleton { FetchChartTopTrackOneShotCase(instance()) }
         bind<FetchSimilarArtistCase>() with singleton { FetchSimilarArtistOneShotCase(instance()) }

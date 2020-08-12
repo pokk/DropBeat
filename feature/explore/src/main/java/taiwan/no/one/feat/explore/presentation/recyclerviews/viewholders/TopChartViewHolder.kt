@@ -26,8 +26,8 @@ package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
 import coil.api.loadAny
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
@@ -35,10 +35,8 @@ internal class TopChartViewHolder(
     private val binding: ItemTypeOfMusicBinding
 ) : ViewHolderBinding<Any, TopChartAdapter>(binding.root) {
     override fun initView(entity: Any, position: Int, adapter: TopChartAdapter) {
-        when (entity) {
-            is TrackEntity -> initTrackType(entity)
-            is ArtistEntity -> initArtistType(entity)
-        }
+        (entity as? TrackEntity)?.let(::initTrackType)
+        (entity as? ArtistWithMoreDetailEntity)?.let(::initArtistType)
         binding.apply {
             mtvNumber.text = (position + 1).toString()
         }
@@ -52,10 +50,13 @@ internal class TopChartViewHolder(
         }
     }
 
-    private fun initArtistType(entity: ArtistEntity) {
+    private fun initArtistType(entity: ArtistWithMoreDetailEntity) {
         binding.apply {
-            mtvArtistName.text = entity.name.orEmpty()
-            sivAlbumThumb.loadAny(entity.images?.get(0)?.text.orEmpty())
+            mtvArtistName.text = entity.first.name.orEmpty()
+            entity.second?.apply {
+                mtvAlbumName.text = popularTrackThisWeek.name.orEmpty()
+                sivAlbumThumb.loadAny(coverPhotoUrl)
+            }
         }
     }
 }

@@ -27,12 +27,16 @@ package taiwan.no.one.feat.explore.domain.usecases
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity.ArtistPhotoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity
+
+internal typealias ArtistWithMoreDetailEntity = Pair<ArtistInfoEntity.ArtistEntity, ArtistMoreDetailEntity?>
+internal typealias ArtistWithMoreDetailEntities = List<ArtistWithMoreDetailEntity>
 
 internal typealias FetchAlbumCase = OneShotUsecase<AlbumInfoEntity.AlbumEntity, FetchAlbumReq>
 internal typealias FetchAlbumReq = FetchAlbumOneShotCase.Request
@@ -44,7 +48,7 @@ internal typealias FetchArtistTopAlbumCase = OneShotUsecase<CommonLastFmEntity.T
 internal typealias FetchArtistTopAlbumReq = FetchArtistTopAlbumOneShotCase.Request
 internal typealias FetchArtistTopTrackCase = OneShotUsecase<TopTrackInfoEntity.TracksEntity, FetchArtistTopTrackReq>
 internal typealias FetchArtistTopTrackReq = FetchArtistTopTrackOneShotCase.Request
-internal typealias FetchChartTopArtistCase = OneShotUsecase<TopArtistInfoEntity.ArtistsEntity, FetchChartTopArtistReq>
+internal typealias FetchChartTopArtistCase = OneShotUsecase<ArtistWithMoreDetailEntities, FetchChartTopArtistReq>
 internal typealias FetchChartTopArtistReq = FetchChartTopArtistOneShotCase.Request
 internal typealias FetchChartTopTagCase = OneShotUsecase<CommonLastFmEntity.TagsEntity, FetchChartTopTagReq>
 internal typealias FetchChartTopTagReq = FetchChartTopTagOneShotCase.Request

@@ -26,6 +26,7 @@ package taiwan.no.one.feat.explore.data.contracts
 
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistSimilarEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopAlbumInfoEntity
@@ -58,6 +59,8 @@ internal interface DataStore {
     suspend fun getSimilarArtistInfo(mbid: String): ArtistSimilarEntity
 
     suspend fun getArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
+
+    suspend fun getArtistMoreInfo(artistName: String): ArtistMoreDetailEntity
     //endregion
 
     //region Track Data

@@ -34,24 +34,36 @@ import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Companion.FEAT_NAME
+import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
+import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraImpl
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
+import taiwan.no.one.feat.explore.data.repositories.LastFmExtraRepository
 import taiwan.no.one.feat.explore.data.repositories.LastFmRepository
 import taiwan.no.one.feat.explore.data.stores.LocalStore
 import taiwan.no.one.feat.explore.data.stores.RemoteStore
+import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal object DataModules : ModuleProvider {
+    private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
+    private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
+
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore(instance(), instance(), context) }
+        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance()) }
+        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance(), instance(), context) }
 
-        bind<LastFmRepo>() with singleton { LastFmRepository(instance(), instance()) }
+        bind<LastFmRepo>() with singleton {
+            LastFmRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+        }
+        bind<LastFmExtraRepo>() with singleton {
+            LastFmExtraRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+        }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
@@ -67,8 +79,6 @@ internal object DataModules : ModuleProvider {
         bind<LastFmService>() with singleton {
             instance<Retrofit>(Constant.TAG_FEAT_EXPLORE_RETROFIT).create(LastFmService::class.java)
         }
-        bind<LastFmExtraService>() with singleton {
-            instance<Retrofit>(Constant.TAG_FEAT_EXPLORE_RETROFIT).create(LastFmExtraService::class.java)
-        }
+        bind<LastFmExtraService>() with singleton { LastFmExtraImpl() }
     }
 }

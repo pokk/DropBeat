@@ -30,6 +30,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.loge
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.explore.R
@@ -58,8 +59,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topArtists.obs(this) { res ->
             res.onSuccess {
-                includeTopArtist.find<RecyclerView>(AppR.id.rv_musics).adapter =
-                    TopChartAdapter(it.artists.subList(0, 4))
+                includeTopArtist.find<RecyclerView>(AppR.id.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
+            }.onFailure {
+                loge(it)
             }
         }
         vm.topTracks.obs(this) { res ->

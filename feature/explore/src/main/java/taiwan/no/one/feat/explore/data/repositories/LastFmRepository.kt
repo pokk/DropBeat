@@ -24,13 +24,12 @@
 
 package taiwan.no.one.feat.explore.data.repositories
 
-import taiwan.no.one.feat.explore.data.stores.LocalStore
-import taiwan.no.one.feat.explore.data.stores.RemoteStore
+import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal class LastFmRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
+    private val local: DataStore,
+    private val remote: DataStore
 ) : LastFmRepo {
     override suspend fun fetchAlbum(mbid: String) = remote.getAlbumInfo(mbid).album ?: throw Exception()
 
@@ -41,9 +40,6 @@ internal class LastFmRepository(
     override suspend fun fetchArtistTopTrack(mbid: String) = remote.getArtistTopTrack(mbid).topTracks
 
     override suspend fun fetchSimilarArtistInfo(mbid: String) = remote.getSimilarArtistInfo(mbid).similarArtist
-
-    override suspend fun fetchArtistPhotoInfo(artistName: String, page: Int) =
-        remote.getArtistPhotosInfo(artistName, page).photos
 
     override suspend fun fetchTrack(mbid: String) = remote.getTrackInfo(mbid).track ?: throw Exception()
 
