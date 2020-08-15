@@ -5,7 +5,7 @@
     <enableFormatting>true</enableFormatting>
     <buildUponDefaultConfig>true</buildUponDefaultConfig>
     <enableAllRules>true</enableAllRules>
-    <rulesPath>$PROJECT_DIR$/../JurassicPark/config/detekt/detekt.yml</rulesPath>
-    <baselinePath>$PROJECT_DIR$/../JurassicPark/config/detekt/baseline.xml</baselinePath>
+    <rulesPath>$PROJECT_DIR$/config/detekt/detekt.yml</rulesPath>
+    <baselinePath>$PROJECT_DIR$/config/detekt/baseline.xml</baselinePath>
   </component>
 </project>
