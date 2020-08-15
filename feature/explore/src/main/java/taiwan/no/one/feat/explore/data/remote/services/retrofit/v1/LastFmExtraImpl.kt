@@ -31,14 +31,15 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEnti
 
 internal class LastFmExtraImpl : LastFmExtraService {
     companion object {
-        private const val LASTFM_DOMAIN = "https://www.last.fm/music/"
+        private const val LASTFM_DOMAIN_URL = "https://www.last.fm"
+        private const val LASTFM_DOMAIN_MUSIC = "$LASTFM_DOMAIN_URL/music/"
         private const val LASTFM_IMAGE_REQUEST = "/+images?"
 
         private const val LASTFM_IMAGE_URL = "https://lastfm-img2.akamaized.net/i/u/770x0/%s.jpg"
     }
 
     override suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity {
-        val doc = Jsoup.connect("$LASTFM_DOMAIN$artistName$LASTFM_IMAGE_REQUEST?page=$page").get()
+        val doc = Jsoup.connect("$LASTFM_DOMAIN_MUSIC$artistName$LASTFM_IMAGE_REQUEST?page=$page").get()
 
         val hasNext = doc.select("li.pagination-next").select("a").toString().isNotBlank()
         val photos = doc.select("ul.image-list").select("li")
@@ -50,13 +51,13 @@ internal class LastFmExtraImpl : LastFmExtraService {
     }
 
     override suspend fun retrieveArtistMoreDetail(artistName: String): ArtistMoreDetailEntity {
-        val doc = Jsoup.connect("$LASTFM_DOMAIN$artistName").get()
+        val doc = Jsoup.connect("$LASTFM_DOMAIN_MUSIC$artistName").get()
         val trackEntity = TrackEntity(null)
 
         val photo = doc.select("div.header-new-background-image").attr("content")
         doc.select("h3.artist-header-featured-items-item-name")[1].apply {
             trackEntity.name = text()
-            trackEntity.url = "https://www.last.fm${select("a").attr("href")}"
+            trackEntity.url = "${LASTFM_DOMAIN_URL}${select("a").attr("href")}"
         }
         trackEntity.listeners = doc.select("p.artist-header-featured-items-item-listeners").text()
 
