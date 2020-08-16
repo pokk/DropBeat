@@ -46,7 +46,9 @@ internal class TopChartViewHolder(
         binding.apply {
             mtvArtistName.text = entity.artist?.name.orEmpty()
             mtvAlbumName.text = entity.name.orEmpty()
-            sivAlbumThumb.loadAny(entity.images?.get(0)?.text.orEmpty())
+            sivAlbumThumb.loadAny(
+                (entity.images?.find { it.size == "cover" }?.text ?: entity.images?.get(0)?.text).orEmpty()
+            )
         }
     }
 

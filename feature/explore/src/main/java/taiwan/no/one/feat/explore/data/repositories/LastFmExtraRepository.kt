@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.data.repositories
 
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
 
 internal class LastFmExtraRepository(
@@ -35,4 +36,7 @@ internal class LastFmExtraRepository(
         remote.getArtistPhotosInfo(artistName, page).photos
 
     override suspend fun fetchArtistMoreDetail(artistName: String) = remote.getArtistMoreInfo(artistName)
+
+    override suspend fun fetchTrackCover(trackUrl: String, trackEntity: TrackEntity) =
+        remote.getTrackCover(trackUrl, trackEntity)
 }

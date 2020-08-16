@@ -28,6 +28,7 @@ import android.content.Context
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.Constants
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
 
@@ -68,6 +69,9 @@ internal class RemoteStore(
 
     override suspend fun getSimilarTrackInfo(mbid: String) =
         lastFmService.retrieveSimilarTrackInfo(infoQuery(Constants.LASTFM_PARAM_TRACK_GET_SIMILAR, mbid))
+
+    override suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity) =
+        lastFmExtraService.retrieveTrackCover(trackUrl, trackEntity)
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
         lastFmService.retrieveChartTopTrack(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_TRACKS, page, limit))

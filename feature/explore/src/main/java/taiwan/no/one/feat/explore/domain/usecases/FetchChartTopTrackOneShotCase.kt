@@ -25,14 +25,23 @@
 package taiwan.no.one.feat.explore.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal class FetchChartTopTrackOneShotCase(
-    private val repository: LastFmRepo
+    private val repository: LastFmRepo,
+    private val extraRepo: LastFmExtraRepo,
 ) : FetchChartTopTrackCase() {
     override suspend fun acquireCase(parameter: FetchChartTopTrackReq?) = parameter.ensure {
-        repository.fetchChartTopTrack(page, limit)
+        repository.fetchChartTopTrack(page, limit).apply {
+            // Override the tracks
+            tracks.mapIndexed { index, trackEntity ->
+                takeIf { index < moreDetailRange }
+                    ?.let { trackEntity.url }
+                    ?.let { extraRepo.fetchTrackCover(it, trackEntity) } ?: trackEntity
+            }
+        }
     }
 
-    class Request(val page: Int, val limit: Int) : RequestValues
+    class Request(val page: Int, val limit: Int, val moreDetailRange: Int = 0) : RequestValues
 }

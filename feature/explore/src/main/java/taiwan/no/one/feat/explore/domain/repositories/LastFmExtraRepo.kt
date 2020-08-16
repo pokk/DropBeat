@@ -27,6 +27,7 @@ package taiwan.no.one.feat.explore.domain.repositories
 import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity.ArtistPhotoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 
 /**
  * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
@@ -36,4 +37,6 @@ internal interface LastFmExtraRepo : Repository {
     suspend fun fetchArtistPhotoInfo(artistName: String, page: Int): List<ArtistPhotoEntity>
 
     suspend fun fetchArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
+
+    suspend fun fetchTrackCover(trackUrl: String, trackEntity: TrackEntity): TrackEntity
 }

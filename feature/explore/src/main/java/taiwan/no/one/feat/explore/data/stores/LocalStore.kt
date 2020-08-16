@@ -27,6 +27,7 @@ package taiwan.no.one.feat.explore.data.stores
 import com.tencent.mmkv.MMKV
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -52,6 +53,8 @@ internal class LocalStore(
     override suspend fun getTrackInfo(mbid: String) = UnsupportedOperation()
 
     override suspend fun getSimilarTrackInfo(mbid: String) = UnsupportedOperation()
+
+    override suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity) = UnsupportedOperation()
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) = UnsupportedOperation()
 

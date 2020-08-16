@@ -38,6 +38,7 @@ import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTagInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackSimilarEntity
 
 /**
@@ -67,6 +68,8 @@ internal interface DataStore {
     suspend fun getTrackInfo(mbid: String): TrackInfoEntity
 
     suspend fun getSimilarTrackInfo(mbid: String): TrackSimilarEntity
+
+    suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity): TrackEntity
     //endregion
 
     //region Chart

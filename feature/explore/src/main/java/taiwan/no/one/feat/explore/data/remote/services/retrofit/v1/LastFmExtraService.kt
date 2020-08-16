@@ -26,6 +26,7 @@ package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
 
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 
 /**
  * We will implement those them by [org.jsoup.Jsoup] because we can't use api from
@@ -36,4 +37,6 @@ internal interface LastFmExtraService {
     suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
 
     suspend fun retrieveArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
+
+    suspend fun retrieveTrackCover(url: String, trackEntity: TrackEntity): TrackEntity
 }
