@@ -53,7 +53,7 @@ object LibraryDependency {
         const val PLAY_CORE = "1.8.0"
         const val COIL = "0.11.0"
         const val RETROFIT2 = "2.9.0"
-        const val OKHTTP3 = "4.8.0"
+        const val OKHTTP3 = "4.8.1"
         const val JSOUP = "1.13.1"
         const val AUTO_SERVICE = "1.0-rc7"
         const val FIREBASE_ANALYTICS = "17.4.4"
