@@ -80,6 +80,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_option"
         style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
         app:icon="@drawable/ic_menu"
         app:iconTint="?colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"

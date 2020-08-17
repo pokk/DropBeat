@@ -30,6 +30,7 @@
     android:id="@+id/mcv_music"
     android:layout_width="136dp"
     android:layout_height="136dp"
+    android:layout_marginEnd="@dimen/md_two_unit"
     app:cardCornerRadius="@dimen/md_one_unit"
     app:cardElevation="@dimen/md_one_unit"
     tools:showIn="@layout/include_layout_trend">

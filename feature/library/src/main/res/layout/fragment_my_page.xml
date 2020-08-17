@@ -48,6 +48,7 @@
             layout="@layout/include_layout_ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_five_unit"
             app:layout_constraintTop_toBottomOf="@id/include_playlist"/>
 
         <include
@@ -55,6 +56,7 @@
             layout="@layout/include_layout_ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_five_unit"
             app:layout_constraintTop_toBottomOf="@id/include_favorite"/>
 
         <include
@@ -62,6 +64,7 @@
             layout="@layout/include_layout_ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_five_unit"
             app:layout_constraintTop_toBottomOf="@id/include_download"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
