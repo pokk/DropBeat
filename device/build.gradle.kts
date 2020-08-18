@@ -61,7 +61,6 @@ android {
         // If we don't, it does not work: "unresolved reference: jvmTarget"
         val options = this as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
         options.jvmTarget = JavaVersion.VERSION_1_8.toString()
-        languageVersion = "1.4"
     }
 }
 
