@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
-import coil.api.loadAny
+import coil.loadAny
 import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.ranking.databinding.ItemRankSongBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapter

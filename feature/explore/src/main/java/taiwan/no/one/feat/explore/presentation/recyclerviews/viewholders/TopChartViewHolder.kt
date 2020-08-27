@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
-import coil.api.loadAny
+import coil.loadAny
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity

@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.search.presentation.recyclerviews.viewholders
 
-import coil.api.loadAny
+import coil.loadAny
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
