@@ -31,14 +31,13 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentRegisterBinding
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
-import taiwan.no.one.ktx.livedata.obs
 
 internal class RegisterFragment : BaseFragment<BaseActivity<*>, FragmentRegisterBinding>() {
     private val vm by viewModels<LoginViewModel>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.userInfo.obs(this) { res ->
+        vm.userInfo.observe(this) { res ->
             res.onSuccess {
                 logw(it)
             }.onFailure {

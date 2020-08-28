@@ -32,7 +32,6 @@ import taiwan.no.one.dropbeat.presentation.activity.MainActivity
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
-import taiwan.no.one.ktx.livedata.obs
 
 class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
     private val vm by viewModels<RankViewModel>()
@@ -45,7 +44,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.rankings.obs(this) { res ->
+        vm.rankings.observe(this) { res ->
             res.onSuccess {
                 (binding.rvMusics.adapter as? RankAdapter)?.data = it
                 parent.hideLoading()
@@ -74,7 +73,6 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
      */
     override fun componentListenersBinding() {
         (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener {
-
 //            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }

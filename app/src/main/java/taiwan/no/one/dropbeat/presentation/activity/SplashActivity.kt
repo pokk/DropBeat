@@ -31,7 +31,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitcompat.SplitCompat
 import taiwan.no.one.dropbeat.databinding.ActivitySplashBinding
 import taiwan.no.one.dropbeat.presentation.viewmodels.SplashViewModel
-import taiwan.no.one.ktx.livedata.obs
 
 internal class SplashActivity : AppCompatActivity() {
     private var binding: ActivitySplashBinding? = null
@@ -42,7 +41,7 @@ internal class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        vm.configs.obs(this) {
+        vm.configs.observe(this) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

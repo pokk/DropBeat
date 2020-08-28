@@ -29,9 +29,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -39,16 +37,11 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.OAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.databinding.FragmentLoginBinding
-import taiwan.no.one.feat.login.presentation.auths.GoogleConfig
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
-import taiwan.no.one.ktx.livedata.obs
 
 internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBinding>() {
     private val vm by viewModels<LoginViewModel>()
@@ -102,7 +95,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-//        vm.userInfo.obs(this) {
+//        vm.userInfo.observe(this) {
 //            it.onSuccess {
 //                logw(it)
 //            }.onFailure {
@@ -115,7 +108,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-        binding.apply {
+//        binding.apply {
 //            btnRegister.setOnClickListener {
 //                findNavController().navigate(LoginFragmentDirections.actionLoginToRegister())
 //            }
@@ -132,7 +125,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 //                LoginManager.getInstance()
 //                    .logInWithReadPermissions(this@LoginFragment, listOf("email", "public_profile"))
 //            }
-        }
+//        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

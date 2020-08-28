@@ -46,7 +46,6 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdap
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
-import taiwan.no.one.ktx.livedata.obs
 import taiwan.no.one.ktx.recyclerview.contains
 import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.R as WidgetR
@@ -64,7 +63,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.histories.obs(this) {
+        vm.histories.observe(this) {
             logw(it)
             if (it.isEmpty()) {
                 // TODO(Jieyi): 8/5/20 The action needs to be confirmed again.
@@ -73,11 +72,11 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 searchHistoryAdapter.data = it
                 rvMusics.smoothScrollToPosition(0)
                 // Remove the item decoration
-                if (musicItemDecoration !in rvMusics) return@obs
+                if (musicItemDecoration !in rvMusics) return@observe
                 rvMusics.removeItemDecoration(musicItemDecoration)
             }
         }
-        searchVm.musics.obs(this) { res ->
+        searchVm.musics.observe(this) { res ->
             res.onSuccess {
                 if (it.isEmpty()) {
                     loge("result is empty")

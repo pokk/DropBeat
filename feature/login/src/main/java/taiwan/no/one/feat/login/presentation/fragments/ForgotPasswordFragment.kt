@@ -33,14 +33,13 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentForgotPasswordBinding
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
-import taiwan.no.one.ktx.livedata.obs
 
 internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentForgotPasswordBinding>() {
     private val vm by viewModels<LoginViewModel>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-        vm.resetResp.obs(this) {
+        vm.resetResp.observe(this) {
             it.onSuccess {
                 logw(it)
                 findNavController().popBackStack()

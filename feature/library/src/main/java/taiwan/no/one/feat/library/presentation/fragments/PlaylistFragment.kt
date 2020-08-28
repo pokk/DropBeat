@@ -35,20 +35,19 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEnti
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
-import taiwan.no.one.ktx.livedata.obs
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
 
     override fun bindLiveData() {
-        vm.resPlaylist.obs(this) {
+        vm.resPlaylist.observe(this) {
             it.onSuccess {
                 logw(it)
             }.onFailure {
                 loge(it)
             }
         }
-        vm.playlist.obs(this) {
+        vm.playlist.observe(this) {
             it.onSuccess {
                 logd(it)
             }.onFailure {
