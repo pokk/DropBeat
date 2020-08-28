@@ -44,8 +44,8 @@ import java.lang.reflect.ParameterizedType
 /**
  * The basic fragment is for the normal activity that prepares all necessary variables or functions.
  */
-abstract class BaseFragment<out A : BaseActivity<*>, out V : ViewBinding> : LoadableFragment(),
-                                                                            CoroutineScope by MainScope() {
+abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : LoadableFragment(),
+                                                                        CoroutineScope by MainScope() {
     @Suppress("UNCHECKED_CAST")
     protected val parent
         // If there's no parent, forcing crashing the app.
@@ -58,7 +58,8 @@ abstract class BaseFragment<out A : BaseActivity<*>, out V : ViewBinding> : Load
 //            .changeColor(getColor(R.color.colorPrimaryTextV1))
         android.R.drawable.arrow_down_float
     }
-    protected val binding by viewBinding()
+    private var _binding: V? = null
+    protected val binding get() = checkNotNull(_binding) { "The View Binding is null!" }
     private lateinit var localInflater: LayoutInflater
 
     //        private val actionTitle by extra<String>(COMMON_TITLE)
@@ -102,6 +103,7 @@ abstract class BaseFragment<out A : BaseActivity<*>, out V : ViewBinding> : Load
             // Clone the inflater using the ContextThemeWrapper
             inflater.cloneInContext(contextThemeWrapper)
         } ?: inflater
+        _binding = viewBinding()
 
         return binding.root
     }
@@ -119,6 +121,11 @@ abstract class BaseFragment<out A : BaseActivity<*>, out V : ViewBinding> : Load
         componentListenersBinding()
         // Action for customizing.
         rendered(savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDetach() {
@@ -219,11 +226,12 @@ abstract class BaseFragment<out A : BaseActivity<*>, out V : ViewBinding> : Load
     @Suppress("UNCHECKED_CAST")
     @UiThread
     /** Using reflection to get dynamic view binding name. */
-    private fun viewBinding() = lazy {
+    private fun viewBinding(): V {
         /** [ViewBinding] is the second (index: 1) in the generic declare. */
         val viewBindingConcreteClass =
             (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<*>
         val inflateMethod = viewBindingConcreteClass.getMethod("inflate", LayoutInflater::class.java)
-        inflateMethod.invoke(null, layoutInflater) as V
+
+        return inflateMethod.invoke(null, layoutInflater) as V
     }
 }

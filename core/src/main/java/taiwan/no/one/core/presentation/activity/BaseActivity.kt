@@ -37,13 +37,15 @@ import java.lang.reflect.ParameterizedType
  * The basic activity is for the normal activity that prepares all necessary variables or functions.
  */
 abstract class BaseActivity<out V : ViewBinding> : LoadableActivity(), CoroutineScope by MainScope() {
-    protected val binding by viewBinding()
+    private var _binding: V? = null
+    protected val binding get() = checkNotNull(_binding) { "The View Binding is null!" }
 
     //region Activity lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Pre-set the view components.
         preSetContentView()
+        _binding = viewBinding()
         setContentView(binding.root)
         // Post-set the view components.
         viewComponentBinding()
@@ -53,6 +55,7 @@ abstract class BaseActivity<out V : ViewBinding> : LoadableActivity(), Coroutine
 
     override fun onDestroy() {
         super.onDestroy()
+
         uninit()
         cancel() // cancel is extension on CoroutineScope
     }
@@ -93,11 +96,11 @@ abstract class BaseActivity<out V : ViewBinding> : LoadableActivity(), Coroutine
     @Suppress("UNCHECKED_CAST")
     @UiThread
     /** Using reflection to get dynamic view binding name. */
-    private fun viewBinding() = lazy {
+    private fun viewBinding(): V {
         /** [ViewBinding] is the first (index: 0) in the generic declare. */
         val viewBindingConcreteClass =
             (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
         val inflateMethod = viewBindingConcreteClass.getMethod("inflate", LayoutInflater::class.java)
-        inflateMethod.invoke(null, layoutInflater) as V
+        return inflateMethod.invoke(null, layoutInflater) as V
     }
 }
