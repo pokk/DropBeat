@@ -95,8 +95,6 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Keep the instance data.
-        retainInstance = true
         localInflater = customTheme()?.let {
             // Create ContextThemeWrapper from the original Activity Context with the custom theme
             val contextThemeWrapper = ContextThemeWrapper(activity, it)

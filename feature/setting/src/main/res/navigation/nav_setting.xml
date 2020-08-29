@@ -23,33 +23,16 @@
   ~ SOFTWARE.
   -->
 
-<androidx.core.widget.NestedScrollView
+<navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    tools:context=".presentation.fragments.SettingFragment">
+    android:id="@+id/setting_graph"
+    app:startDestination="@id/settingFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/md_two_unit">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Setting"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <include layout="@layout/merge_setting_app_block"/>
-
-        <include layout="@layout/merge_setting_music_block"/>
-
-        <include layout="@layout/merge_setting_sync"/>
-
-        <include layout="@layout/merge_setting_other_block"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="taiwan.no.one.feat.setting.presentation.fragments.SettingFragment"
+        android:label="FragmentSetting"
+        tools:layout="@layout/fragment_setting"/>
+</navigation>

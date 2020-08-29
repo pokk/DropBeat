@@ -27,11 +27,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/playlistFragment">
+    app:startDestination="@id/myHomeFragment">
 
     <fragment
-        android:id="@+id/playlistFragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
-        android:label="PlaylistFragment"
-        tools:layout="@layout/fragment_my_page"/>
+        android:id="@+id/myHomeFragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.MyHomeFragment"
+        tools:layout="@layout/fragment_my_page">
+        <action
+            android:id="@+id/action_myHome_to_login_graph"
+            app:destination="@id/login_graph"/>
+        <action
+            android:id="@+id/action_myHome_to_setting_graph"
+            app:destination="@id/setting_graph"/>
+    </fragment>
+
+    <include app:graph="@navigation/nav_login"/>
+    <include app:graph="@navigation/nav_setting"/>
 </navigation>
