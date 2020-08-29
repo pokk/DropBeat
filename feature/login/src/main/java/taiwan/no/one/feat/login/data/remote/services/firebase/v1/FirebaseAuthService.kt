@@ -26,7 +26,6 @@ package taiwan.no.one.feat.login.data.remote.services.firebase.v1
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
