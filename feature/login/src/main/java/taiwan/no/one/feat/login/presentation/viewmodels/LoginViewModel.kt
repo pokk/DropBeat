@@ -24,8 +24,6 @@
 
 package taiwan.no.one.feat.login.presentation.viewmodels
 
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
@@ -48,19 +46,19 @@ internal class LoginViewModel : BehindViewModel() {
     private val _resetResp by lazy { ResultLiveData<Boolean>() }
     val resetResp = _resetResp.toLiveData()
 
-    fun login(email: String, password: String) = viewModelScope.launch {
-        _userInfo.value = fetchLoginInfoCase.execute(FetchLoginInfoReq(email, password))
+    fun login(email: String, password: String) = launchBehind {
+        _userInfo.postValue(fetchLoginInfoCase.execute(FetchLoginInfoReq(email, password)))
     }
 
-    fun login(credential: Credential) = viewModelScope.launch {
+    fun login(credential: Credential) = launchBehind {
         _userInfo.value = fetchLoginInfoCase.execute(FetchLoginInfoReq(credential = credential))
     }
 
-    fun register(email: String, password: String) = viewModelScope.launch {
+    fun register(email: String, password: String) = launchBehind {
         _userInfo.value = createUserCase.execute(CreateUserReq(email, password))
     }
 
-    fun resetPassword(email: String) = viewModelScope.launch {
+    fun resetPassword(email: String) = launchBehind {
         _resetResp.value = modifyPasswordCase.execute(ModifyPasswordReq(email))
     }
 }

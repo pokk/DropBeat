@@ -43,7 +43,7 @@ abstract class BehindAndroidViewModel(application: Application) : AndroidViewMod
     protected val context get() = getApplication<Application>()
 
     protected inline fun launchBehind(
-        context: CoroutineContext = Dispatchers.Default,
-        crossinline block: suspend CoroutineScope.() -> Unit
+        context: CoroutineContext = Dispatchers.IO,
+        crossinline block: suspend CoroutineScope.() -> Unit,
     ) = viewModelScope.launch(context) { block() }
 }

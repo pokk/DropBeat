@@ -29,7 +29,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -95,20 +97,26 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
-//        vm.userInfo.observe(this) {
-//            it.onSuccess {
-//                logw(it)
-//            }.onFailure {
-//                loge(it)
-//            }
-//        }
+        vm.userInfo.observe(this) {
+            it.onSuccess {
+                logw(it)
+            }.onFailure {
+                loge(it)
+            }
+        }
     }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
      */
     override fun componentListenersBinding() {
-//        binding.apply {
+        binding.apply {
+            btnForgotPassword.setOnClickListener {
+                findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
+            }
+            btnLogin.setOnClickListener {
+                vm.login(tietEmail.text.toString(), tietPassword.text.toString())
+            }
 //            btnRegister.setOnClickListener {
 //                findNavController().navigate(LoginFragmentDirections.actionLoginToRegister())
 //            }
@@ -125,7 +133,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 //                LoginManager.getInstance()
 //                    .logInWithReadPermissions(this@LoginFragment, listOf("email", "public_profile"))
 //            }
-//        }
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

@@ -32,7 +32,7 @@ import kotlin.coroutines.CoroutineContext
 
 abstract class BehindViewModel : InjectableViewModel() {
     protected inline fun launchBehind(
-        context: CoroutineContext = Dispatchers.Default,
-        crossinline block: suspend CoroutineScope.() -> Unit
+        context: CoroutineContext = Dispatchers.IO,
+        crossinline block: suspend CoroutineScope.() -> Unit,
     ) = viewModelScope.launch(context) { block() }
 }

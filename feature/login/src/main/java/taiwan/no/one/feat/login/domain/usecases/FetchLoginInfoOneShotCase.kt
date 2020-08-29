@@ -30,7 +30,7 @@ import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
 internal class FetchLoginInfoOneShotCase(
-    private val repository: AuthRepo
+    private val repository: AuthRepo,
 ) : FetchLoginInfoCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         when {

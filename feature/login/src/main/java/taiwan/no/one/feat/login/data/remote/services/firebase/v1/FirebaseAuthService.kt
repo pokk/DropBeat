@@ -33,10 +33,10 @@ import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
 internal class FirebaseAuthService(
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
 ) : AuthService {
     override suspend fun getLogin(email: String, password: String): UserInfoEntity {
-        val result = auth.signInWithEmailAndPassword(email, password).asDeferred().await()
+        val result = auth.signInWithEmailAndPassword(email, password).await()
         return extractUserInfoEntity(result)
     }
 
@@ -46,27 +46,27 @@ internal class FirebaseAuthService(
     }
 
     override suspend fun createUser(email: String, password: String): UserInfoEntity {
-        val result = auth.createUserWithEmailAndPassword(email, password).asDeferred().await()
+        val result = auth.createUserWithEmailAndPassword(email, password).await()
         return extractUserInfoEntity(result)
     }
 
     override suspend fun modifyPassword(email: String) {
-        auth.sendPasswordResetEmail(email).asDeferred().await()
+        auth.sendPasswordResetEmail(email).await()
     }
 
     private fun extractUserInfoEntity(result: AuthResult): UserInfoEntity {
-        return (result.user to result.additionalUserInfo).let { (user, additionalUserInfo) ->
-            UserInfoEntity(
-                user?.uid,
-                user?.providerId,
-                user?.displayName,
-                user?.photoUrl?.toString(),
-                user?.email,
-                user?.phoneNumber,
-                user?.isEmailVerified,
-                additionalUserInfo?.username,
-                additionalUserInfo?.isNewUser
-            )
-        }
+        val user = result.user
+        val additionalUserInfo = result.additionalUserInfo
+        return UserInfoEntity(
+            user?.uid,
+            user?.providerId,
+            user?.displayName,
+            user?.photoUrl?.toString(),
+            user?.email,
+            user?.phoneNumber,
+            user?.isEmailVerified,
+            additionalUserInfo?.username,
+            additionalUserInfo?.isNewUser
+        )
     }
 }
