@@ -32,14 +32,16 @@ import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
 import taiwan.no.one.feat.login.domain.usecases.CreateUserReq
 import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
-import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoReq
+import taiwan.no.one.feat.login.domain.usecases.LoginCase
+import taiwan.no.one.feat.login.domain.usecases.LoginReq
 import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordCase
 import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class LoginViewModel : BehindViewModel() {
-    private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
+    private val loginCase by instance<LoginCase>()
     private val createUserCase by instance<CreateUserCase>()
+    private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
     private val modifyPasswordCase by instance<ModifyPasswordCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()
@@ -47,18 +49,22 @@ internal class LoginViewModel : BehindViewModel() {
     val resetResp = _resetResp.toLiveData()
 
     fun login(email: String, password: String) = launchBehind {
-        _userInfo.postValue(fetchLoginInfoCase.execute(FetchLoginInfoReq(email, password)))
+        _userInfo.postValue(loginCase.execute(LoginReq(email, password)))
     }
 
     fun login(credential: Credential) = launchBehind {
-        _userInfo.value = fetchLoginInfoCase.execute(FetchLoginInfoReq(credential = credential))
+        _userInfo.postValue(loginCase.execute(LoginReq(credential = credential)))
     }
 
     fun register(email: String, password: String) = launchBehind {
-        _userInfo.value = createUserCase.execute(CreateUserReq(email, password))
+        _userInfo.postValue(createUserCase.execute(CreateUserReq(email, password)))
     }
 
     fun resetPassword(email: String) = launchBehind {
-        _resetResp.value = modifyPasswordCase.execute(ModifyPasswordReq(email))
+        _resetResp.postValue(modifyPasswordCase.execute(ModifyPasswordReq(email)))
+    }
+
+    fun getUserInfo() = launchBehind {
+        _userInfo.postValue(fetchLoginInfoCase.execute())
     }
 }

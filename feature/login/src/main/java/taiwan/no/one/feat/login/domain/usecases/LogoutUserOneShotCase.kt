@@ -25,22 +25,15 @@
 package taiwan.no.one.feat.login.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.domain.repositories.PrivacyRepo
 
-internal class FetchLoginInfoOneShotCase(
-    private val privacyRepository: PrivacyRepo,
-) : FetchLoginInfoCase() {
-    override suspend fun acquireCase(parameter: Request?): UserInfoEntity {
-        val entity = privacyRepository.fetchLoginInfo()
-        if (entity.uid.isNullOrEmpty()) throw Exception()
-        return entity
+internal class LogoutUserOneShotCase(
+    private val repository: PrivacyRepo,
+) : LogoutCase() {
+    override suspend fun acquireCase(parameter: Request?): Boolean {
+        val info = repository.fetchLoginInfo()
+        return info.uid?.let { repository.deleteLoginInfo(it) } ?: false
     }
 
-    class Request(
-        val email: String? = null,
-        val password: String? = null,
-        val credential: Credential? = null,
-    ) : Usecase.RequestValues
+    class Request : Usecase.RequestValues
 }
