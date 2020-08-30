@@ -100,6 +100,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
         vm.userInfo.observe(this) {
             it.onSuccess {
                 logw(it)
+                findNavController().navigateUp()
             }.onFailure {
                 loge(it)
             }

@@ -22,15 +22,22 @@
  * SOFTWARE.
  */
 
-package config
+package taiwan.no.one.dropbeat
 
-object DebugDependency {
-    private object Version {
-        const val STEHO = "1.5.1"
-        const val DEBUG_DB = "1.0.6"
+import android.app.Application
+import android.content.Context
+import org.kodein.di.DIAware
+import taiwan.no.one.dropbeat.di.Dispatcher
+
+class DropBeatApp : Application(), DIAware {
+    companion object {
+        lateinit var appContext: Context
+            private set
     }
 
-    const val STEHO = "com.facebook.stetho:stetho:${Version.STEHO}"
-    const val STEHO_INTERCEPTOR = "com.facebook.stetho:stetho-okhttp3:${Version.STEHO}"
-    const val DEBUG_DB = "com.amitshekhar.android:debug-db:${Version.DEBUG_DB}"
+    init {
+        appContext = this
+    }
+
+    override val di = Dispatcher.importIntoApp(this)
 }
