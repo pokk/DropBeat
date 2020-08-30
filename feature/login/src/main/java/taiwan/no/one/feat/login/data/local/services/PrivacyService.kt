@@ -22,32 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.stores
+package taiwan.no.one.feat.login.data.local.services
 
-import taiwan.no.one.ext.exceptions.UnsupportedOperation
-import taiwan.no.one.feat.login.data.contracts.DataStore
 import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
-import taiwan.no.one.feat.login.data.local.services.PrivacyService
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
 /**
- * The implementation of the local data store. The responsibility is selecting a correct
- * local service(Database/Local file) to access the data.
+ * Thru a local cache mechanism, we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
  */
-internal class LocalStore(
-    private val mmkvService: PrivacyService,
-) : DataStore {
-    override suspend fun getLogin(email: String, password: String) = UnsupportedOperation()
+internal interface PrivacyService {
+    suspend fun retrieveLoginInfo(): UserInfoEntity
 
-    override suspend fun getLogin(credential: Credential) = UnsupportedOperation()
+    suspend fun insertLoginInfo(entity: UserInfoEntity): Boolean
 
-    override suspend fun createUser(email: String, password: String) = UnsupportedOperation()
-
-    override suspend fun modifyPassword(email: String) = UnsupportedOperation()
-
-    override suspend fun getLoginInfo() = mmkvService.retrieveLoginInfo()
-
-    override suspend fun createLoginInfo(entity: UserInfoEntity) = mmkvService.insertLoginInfo(entity)
-
-    override suspend fun removeLoginInfo(uid: String) = mmkvService.releaseLoginInfo(uid)
+    suspend fun releaseLoginInfo(uid: String): Boolean
 }

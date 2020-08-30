@@ -24,14 +24,13 @@
 
 package taiwan.no.one.feat.login.data.repositories
 
+import taiwan.no.one.feat.login.data.contracts.DataStore
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
-import taiwan.no.one.feat.login.data.stores.LocalStore
-import taiwan.no.one.feat.login.data.stores.RemoteStore
 import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
 internal class AuthRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
+    private val local: DataStore,
+    private val remote: DataStore,
 ) : AuthRepo {
     override suspend fun fetchLogin(email: String, password: String) = remote.getLogin(email, password)
 

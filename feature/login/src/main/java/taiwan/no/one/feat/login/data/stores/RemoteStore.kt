@@ -24,7 +24,9 @@
 
 package taiwan.no.one.feat.login.data.stores
 
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.login.data.contracts.DataStore
+import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
@@ -33,7 +35,7 @@ import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
  * remote service to access the data.
  */
 internal class RemoteStore(
-    private val authService: AuthService
+    private val authService: AuthService,
 ) : DataStore {
     override suspend fun getLogin(email: String, password: String) = authService.getLogin(email, password)
 
@@ -42,4 +44,10 @@ internal class RemoteStore(
     override suspend fun createUser(email: String, password: String) = authService.createUser(email, password)
 
     override suspend fun modifyPassword(email: String) = authService.modifyPassword(email)
+
+    override suspend fun getLoginInfo() = UnsupportedOperation()
+
+    override suspend fun createLoginInfo(entity: UserInfoEntity) = UnsupportedOperation()
+
+    override suspend fun removeLoginInfo(uid: String) = UnsupportedOperation()
 }

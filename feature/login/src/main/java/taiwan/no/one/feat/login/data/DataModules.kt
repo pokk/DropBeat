@@ -33,28 +33,39 @@ import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.FeatModules.Constant.FEAT_NAME
+import taiwan.no.one.feat.login.data.contracts.DataStore
+import taiwan.no.one.feat.login.data.local.services.PrivacyService
+import taiwan.no.one.feat.login.data.local.services.v1.MmkvService
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.v1.FirebaseAuthService
 import taiwan.no.one.feat.login.data.repositories.AuthRepository
+import taiwan.no.one.feat.login.data.repositories.PrivacyRepository
 import taiwan.no.one.feat.login.data.stores.LocalStore
 import taiwan.no.one.feat.login.data.stores.RemoteStore
 import taiwan.no.one.feat.login.domain.repositories.AuthRepo
+import taiwan.no.one.feat.login.domain.repositories.PrivacyRepo
 
 internal object DataModules : ModuleProvider {
+    private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
+    private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
+
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore(instance()) }
+        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance()) }
+        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
 
-        bind<AuthRepo>() with singleton { AuthRepository(instance(), instance()) }
+        bind<AuthRepo>() with singleton {
+            AuthRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+        }
+        bind<PrivacyRepo>() with singleton {
+            PrivacyRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+        }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
-//        bind<RankingDatabase>() with singleton { RankingDatabase.getDatabase(instance()) }
-
-//        bind<RankingDao>() with singleton { instance<RankingDatabase>().createRankingDao() }
+        bind<PrivacyService>() with singleton { MmkvService(instance(), instance()) }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {

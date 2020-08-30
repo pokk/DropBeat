@@ -39,4 +39,10 @@ internal interface DataStore {
     suspend fun createUser(email: String, password: String): UserInfoEntity
 
     suspend fun modifyPassword(email: String)
+
+    suspend fun getLoginInfo(): UserInfoEntity
+
+    suspend fun createLoginInfo(entity: UserInfoEntity): Boolean
+
+    suspend fun removeLoginInfo(uid: String): Boolean
 }

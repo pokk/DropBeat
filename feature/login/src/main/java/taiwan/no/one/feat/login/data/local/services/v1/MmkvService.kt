@@ -22,32 +22,33 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.stores
+package taiwan.no.one.feat.login.data.local.services.v1
 
-import taiwan.no.one.ext.exceptions.UnsupportedOperation
-import taiwan.no.one.feat.login.data.contracts.DataStore
+import com.google.gson.Gson
+import com.tencent.mmkv.MMKV
 import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 import taiwan.no.one.feat.login.data.local.services.PrivacyService
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
-/**
- * The implementation of the local data store. The responsibility is selecting a correct
- * local service(Database/Local file) to access the data.
- */
-internal class LocalStore(
-    private val mmkvService: PrivacyService,
-) : DataStore {
-    override suspend fun getLogin(email: String, password: String) = UnsupportedOperation()
+internal class MmkvService(
+    private val mmkv: MMKV,
+    private val gson: Gson,
+) : PrivacyService {
+    companion object Constant {
+        private const val CODE_LOGIN_INFO = "user login info"
+    }
 
-    override suspend fun getLogin(credential: Credential) = UnsupportedOperation()
+    override suspend fun retrieveLoginInfo(): UserInfoEntity {
+        val infoString = mmkv.getString(CODE_LOGIN_INFO, null) ?: throw NullPointerException()
+        return gson.fromJson(infoString, UserInfoEntity::class.java)
+    }
 
-    override suspend fun createUser(email: String, password: String) = UnsupportedOperation()
+    override suspend fun insertLoginInfo(entity: UserInfoEntity): Boolean {
+        val infoString = gson.toJson(entity)
+        return mmkv.encode(CODE_LOGIN_INFO, infoString)
+    }
 
-    override suspend fun modifyPassword(email: String) = UnsupportedOperation()
-
-    override suspend fun getLoginInfo() = mmkvService.retrieveLoginInfo()
-
-    override suspend fun createLoginInfo(entity: UserInfoEntity) = mmkvService.insertLoginInfo(entity)
-
-    override suspend fun removeLoginInfo(uid: String) = mmkvService.releaseLoginInfo(uid)
+    override suspend fun releaseLoginInfo(uid: String): Boolean {
+        mmkv.removeValueForKey(CODE_LOGIN_INFO)
+        return true
+    }
 }
