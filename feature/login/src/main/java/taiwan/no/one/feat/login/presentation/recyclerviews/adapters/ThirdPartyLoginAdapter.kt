@@ -34,6 +34,9 @@ import taiwan.no.one.feat.login.presentation.recyclerviews.viewholders.ThirdPart
 internal class ThirdPartyLoginAdapter(
     private val snsIcons: List<Int>,
 ) : RecyclerView.Adapter<ThirdPartyLoginViewHolder>() {
+    var listener: ((Int) -> Unit)? = null
+        private set
+
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -90,4 +93,8 @@ internal class ThirdPartyLoginAdapter(
      * @return The total number of items in this adapter.
      */
     override fun getItemCount() = snsIcons.size
+
+    fun setOnClickListener(block: ((Int) -> Unit)?) {
+        listener = block
+    }
 }

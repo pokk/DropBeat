@@ -34,6 +34,7 @@ internal class ThirdPartyLoginViewHolder(
     override fun initView(entity: Int, position: Int, adapter: ThirdPartyLoginAdapter) {
         binding.btnSns.apply {
             setIconResource(entity)
+            setOnClickListener { adapter.listener?.invoke(entity) }
         }
     }
 }
