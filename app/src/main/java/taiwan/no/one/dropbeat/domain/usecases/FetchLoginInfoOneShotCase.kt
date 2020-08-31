@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.domain.usecases
+package taiwan.no.one.dropbeat.domain.usecases
 
+import android.net.wifi.hotspot2.pps.Credential
 import taiwan.no.one.core.domain.usecase.Usecase
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
-import taiwan.no.one.feat.login.domain.repositories.PrivacyRepo
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
+import taiwan.no.one.dropbeat.domain.repositories.PrivacyRepo
 
 internal class FetchLoginInfoOneShotCase(
     private val privacyRepository: PrivacyRepo,

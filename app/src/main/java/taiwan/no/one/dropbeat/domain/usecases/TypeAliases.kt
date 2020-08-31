@@ -22,33 +22,10 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.local.services.v1
+package taiwan.no.one.dropbeat.domain.usecases
 
-import com.google.gson.Gson
-import com.tencent.mmkv.MMKV
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
-import taiwan.no.one.feat.login.data.local.services.PrivacyService
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 
-internal class MmkvService(
-    private val mmkv: MMKV,
-    private val gson: Gson,
-) : PrivacyService {
-    companion object Constant {
-        private const val CODE_LOGIN_INFO = "user login info"
-    }
-
-    override suspend fun retrieveLoginInfo(): UserInfoEntity {
-        val infoString = mmkv.getString(CODE_LOGIN_INFO, null) ?: throw NullPointerException()
-        return gson.fromJson(infoString, UserInfoEntity::class.java)
-    }
-
-    override suspend fun insertLoginInfo(entity: UserInfoEntity): Boolean {
-        val infoString = gson.toJson(entity)
-        return mmkv.encode(CODE_LOGIN_INFO, infoString)
-    }
-
-    override suspend fun releaseLoginInfo(uid: String): Boolean {
-        mmkv.removeValueForKey(CODE_LOGIN_INFO)
-        return true
-    }
-}
+internal typealias FetchLoginInfoCase = OneShotUsecase<UserInfoEntity, FetchLoginInfoReq>
+internal typealias FetchLoginInfoReq = FetchLoginInfoOneShotCase.Request

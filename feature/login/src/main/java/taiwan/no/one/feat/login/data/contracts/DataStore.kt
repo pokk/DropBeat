@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.login.data.contracts
 
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
 /**
@@ -36,13 +36,9 @@ internal interface DataStore {
 
     suspend fun getLogin(credential: Credential): UserInfoEntity
 
+    suspend fun getLogout(): Boolean
+
     suspend fun createUser(email: String, password: String): UserInfoEntity
 
     suspend fun modifyPassword(email: String)
-
-    suspend fun getLoginInfo(): UserInfoEntity
-
-    suspend fun createLoginInfo(entity: UserInfoEntity): Boolean
-
-    suspend fun removeLoginInfo(uid: String): Boolean
 }

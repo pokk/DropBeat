@@ -22,19 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.domain.repositories
+package taiwan.no.one.dropbeat.data.stores
 
-import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.dropbeat.data.contracts.DataStore
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 
 /**
- * This interface will be the similar to [taiwan.no.one.feat.login.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
+ * The implementation of the local data store. The responsibility is selecting a correct
+ * local service(Database/Local file) to access the data.
  */
-internal interface PrivacyRepo : Repository {
-    suspend fun fetchLoginInfo(): UserInfoEntity
+internal class RemoteStore : DataStore {
+    override suspend fun getLoginInfo() = UnsupportedOperation()
 
-    suspend fun keepLoginInfo(entity: UserInfoEntity): Boolean
+    override suspend fun createLoginInfo(entity: UserInfoEntity) = UnsupportedOperation()
 
-    suspend fun deleteLoginInfo(uid: String): Boolean
+    override suspend fun removeLoginInfo(uid: String) = UnsupportedOperation()
 }

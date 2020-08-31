@@ -24,9 +24,7 @@
 
 package taiwan.no.one.feat.login.data.stores
 
-import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.login.data.contracts.DataStore
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
@@ -41,13 +39,9 @@ internal class RemoteStore(
 
     override suspend fun getLogin(credential: Credential) = authService.getLogin(credential)
 
+    override suspend fun getLogout() = authService.getLogout()
+
     override suspend fun createUser(email: String, password: String) = authService.createUser(email, password)
 
     override suspend fun modifyPassword(email: String) = authService.modifyPassword(email)
-
-    override suspend fun getLoginInfo() = UnsupportedOperation()
-
-    override suspend fun createLoginInfo(entity: UserInfoEntity) = UnsupportedOperation()
-
-    override suspend fun removeLoginInfo(uid: String) = UnsupportedOperation()
 }

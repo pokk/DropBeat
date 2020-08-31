@@ -22,18 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.local.services
+package taiwan.no.one.dropbeat.domain
 
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import android.content.Context
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
+import taiwan.no.one.dropbeat.BuildConfig
+import taiwan.no.one.dropbeat.domain.usecases.FetchLoginInfoCase
+import taiwan.no.one.dropbeat.domain.usecases.FetchLoginInfoOneShotCase
+import taiwan.no.one.dropbeat.provider.ModuleProvider
 
-/**
- * Thru a local cache mechanism, we can just define the interfaces which we want to access for.
- * Using prefix name (retrieve), (insert), (replace), (release)
- */
-internal interface PrivacyService {
-    suspend fun retrieveLoginInfo(): UserInfoEntity
-
-    suspend fun insertLoginInfo(entity: UserInfoEntity): Boolean
-
-    suspend fun releaseLoginInfo(uid: String): Boolean
+internal object DomainModules : ModuleProvider {
+    override fun provide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID}DomainModule") {
+        bind<FetchLoginInfoCase>() with singleton { FetchLoginInfoOneShotCase(instance()) }
+    }
 }

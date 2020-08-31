@@ -26,28 +26,20 @@ package taiwan.no.one.feat.login.data.stores
 
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.login.data.contracts.DataStore
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
-import taiwan.no.one.feat.login.data.local.services.PrivacyService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
  * local service(Database/Local file) to access the data.
  */
-internal class LocalStore(
-    private val mmkvService: PrivacyService,
-) : DataStore {
+internal class LocalStore : DataStore {
     override suspend fun getLogin(email: String, password: String) = UnsupportedOperation()
 
     override suspend fun getLogin(credential: Credential) = UnsupportedOperation()
 
+    override suspend fun getLogout() = UnsupportedOperation()
+
     override suspend fun createUser(email: String, password: String) = UnsupportedOperation()
 
     override suspend fun modifyPassword(email: String) = UnsupportedOperation()
-
-    override suspend fun getLoginInfo() = mmkvService.retrieveLoginInfo()
-
-    override suspend fun createLoginInfo(entity: UserInfoEntity) = mmkvService.insertLoginInfo(entity)
-
-    override suspend fun removeLoginInfo(uid: String) = mmkvService.releaseLoginInfo(uid)
 }

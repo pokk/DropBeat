@@ -33,8 +33,6 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
 import taiwan.no.one.feat.login.domain.usecases.CreateUserOneShotCase
-import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
-import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoOneShotCase
 import taiwan.no.one.feat.login.domain.usecases.LoginCase
 import taiwan.no.one.feat.login.domain.usecases.LoginOneShotCase
 import taiwan.no.one.feat.login.domain.usecases.LogoutCase
@@ -45,8 +43,7 @@ import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordOneShotCase
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
         bind<LoginCase>() with singleton { LoginOneShotCase(instance(), instance()) }
-        bind<LogoutCase>() with singleton { LogoutUserOneShotCase(instance()) }
-        bind<FetchLoginInfoCase>() with singleton { FetchLoginInfoOneShotCase(instance()) }
+        bind<LogoutCase>() with singleton { LogoutUserOneShotCase(instance(), instance()) }
         bind<CreateUserCase>() with singleton { CreateUserOneShotCase(instance()) }
         bind<ModifyPasswordCase>() with singleton { ModifyPasswordOneShotCase(instance()) }
     }

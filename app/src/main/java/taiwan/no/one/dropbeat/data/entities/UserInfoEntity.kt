@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.entities.remote
+package taiwan.no.one.dropbeat.data.entities
 
-internal data class UserInfoEntity(
+data class UserInfoEntity(
     val uid: String?,
     val providerId: String?,
     val displayName: String?,
@@ -33,5 +33,5 @@ internal data class UserInfoEntity(
     val phoneNumber: String?,
     val isEmailVerified: Boolean?,
     val userName: String?,
-    val isNewUser: Boolean?
+    val isNewUser: Boolean?,
 )

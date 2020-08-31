@@ -26,9 +26,9 @@ package taiwan.no.one.feat.login.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
+import taiwan.no.one.dropbeat.domain.repositories.PrivacyRepo
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.domain.repositories.AuthRepo
-import taiwan.no.one.feat.login.domain.repositories.PrivacyRepo
 
 internal class LoginOneShotCase(
     private val repository: AuthRepo,

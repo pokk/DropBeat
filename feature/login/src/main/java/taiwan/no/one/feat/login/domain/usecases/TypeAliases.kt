@@ -25,14 +25,12 @@
 package taiwan.no.one.feat.login.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 
 internal typealias LoginCase = OneShotUsecase<UserInfoEntity, LoginReq>
 internal typealias LoginReq = LoginOneShotCase.Request
 internal typealias LogoutCase = OneShotUsecase<Boolean, LogoutReq>
 internal typealias LogoutReq = LogoutUserOneShotCase.Request
-internal typealias FetchLoginInfoCase = OneShotUsecase<UserInfoEntity, FetchLoginInfoReq>
-internal typealias FetchLoginInfoReq = FetchLoginInfoOneShotCase.Request
 internal typealias CreateUserCase = OneShotUsecase<UserInfoEntity, CreateUserReq>
 internal typealias CreateUserReq = CreateUserOneShotCase.Request
 internal typealias ModifyPasswordCase = OneShotUsecase<Boolean, ModifyPasswordReq>

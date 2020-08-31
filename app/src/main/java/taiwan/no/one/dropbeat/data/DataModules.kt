@@ -22,45 +22,39 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data
+package taiwan.no.one.dropbeat.data
 
 import android.content.Context
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
+import taiwan.no.one.dropbeat.BuildConfig
+import taiwan.no.one.dropbeat.data.contracts.DataStore
+import taiwan.no.one.dropbeat.data.repositories.PrivacyRepository
+import taiwan.no.one.dropbeat.data.stores.LocalStore
+import taiwan.no.one.dropbeat.data.stores.RemoteStore
+import taiwan.no.one.dropbeat.domain.repositories.PrivacyRepo
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.login.FeatModules.Constant.FEAT_NAME
-import taiwan.no.one.feat.login.data.contracts.DataStore
-import taiwan.no.one.feat.login.data.remote.services.AuthService
-import taiwan.no.one.feat.login.data.remote.services.firebase.v1.FirebaseAuthService
-import taiwan.no.one.feat.login.data.repositories.AuthRepository
-import taiwan.no.one.feat.login.data.stores.LocalStore
-import taiwan.no.one.feat.login.data.stores.RemoteStore
-import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
 internal object DataModules : ModuleProvider {
-    private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
-    private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
+    private const val TAG_LOCAL_DATA_STORE = "${BuildConfig.APPLICATION_ID} local data store"
+    private const val TAG_REMOTE_DATA_STORE = "${BuildConfig.APPLICATION_ID} remote data store"
 
-    override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
+    override fun provide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID} DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore() }
-        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
+        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance()) }
+        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore() }
+    }
 
-        bind<AuthRepo>() with singleton {
-            AuthRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+    private fun localProvide() = DI.Module("${BuildConfig.APPLICATION_ID}LocalModule") {
+        bind<PrivacyRepo>() with singleton {
+            PrivacyRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
         }
     }
 
-    private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
-    }
-
-    private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
-        bind<AuthService>() with singleton { FirebaseAuthService(Firebase.auth) }
+    private fun remoteProvide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID}RemoteModule") {
     }
 }

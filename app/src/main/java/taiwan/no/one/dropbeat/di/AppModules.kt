@@ -22,23 +22,16 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.remote.services
+package taiwan.no.one.dropbeat.di
 
-import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import android.content.Context
+import org.kodein.di.DI
+import taiwan.no.one.dropbeat.data.DataModules
+import taiwan.no.one.dropbeat.domain.DomainModules
 
-/**
- * This interface will be the same as all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-internal interface AuthService {
-    suspend fun getLogin(email: String, password: String): UserInfoEntity
-
-    suspend fun getLogin(credential: Credential): UserInfoEntity
-
-    suspend fun getLogout(): Boolean
-
-    suspend fun createUser(email: String, password: String): UserInfoEntity
-
-    suspend fun modifyPassword(email: String)
+object AppModules {
+    fun provide(context: Context) = DI.Module("App Module") {
+        import(DataModules.provide(context))
+        import(DomainModules.provide(context))
+    }
 }

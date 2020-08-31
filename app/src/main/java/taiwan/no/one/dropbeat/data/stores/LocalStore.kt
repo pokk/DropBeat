@@ -22,23 +22,22 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.remote.services
+package taiwan.no.one.dropbeat.data.stores
 
+import taiwan.no.one.dropbeat.data.contracts.DataStore
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import taiwan.no.one.dropbeat.data.local.services.PrivacyService
 
 /**
- * This interface will be the same as all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
+ * The implementation of the local data store. The responsibility is selecting a correct
+ * local service(Database/Local file) to access the data.
  */
-internal interface AuthService {
-    suspend fun getLogin(email: String, password: String): UserInfoEntity
+internal class LocalStore(
+    private val mmkvService: PrivacyService,
+) : DataStore {
+    override suspend fun getLoginInfo() = mmkvService.retrieveLoginInfo()
 
-    suspend fun getLogin(credential: Credential): UserInfoEntity
+    override suspend fun createLoginInfo(entity: UserInfoEntity) = mmkvService.insertLoginInfo(entity)
 
-    suspend fun getLogout(): Boolean
-
-    suspend fun createUser(email: String, password: String): UserInfoEntity
-
-    suspend fun modifyPassword(email: String)
+    override suspend fun removeLoginInfo(uid: String) = mmkvService.releaseLoginInfo(uid)
 }

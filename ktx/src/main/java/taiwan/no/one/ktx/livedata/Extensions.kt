@@ -33,7 +33,3 @@ import androidx.lifecycle.observe as CoroutineObserve
 inline fun <reified T> MutableLiveData<T>.toLiveData() = this as LiveData<T>
 
 inline fun <reified T> SafeMutableLiveData<T>.toLiveData() = this as SafeLiveData<T>
-
-@MainThread
-inline fun <T> LiveData<T>.obs(owner: LifecycleOwner, crossinline onChanged: (T) -> Unit) =
-    CoroutineObserve(owner, onChanged)

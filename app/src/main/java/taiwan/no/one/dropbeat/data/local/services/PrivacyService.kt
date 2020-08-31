@@ -22,23 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.remote.services
+package taiwan.no.one.dropbeat.data.local.services
 
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
 /**
- * This interface will be the same as all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
+ * Thru a local cache mechanism, we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
  */
-internal interface AuthService {
-    suspend fun getLogin(email: String, password: String): UserInfoEntity
+internal interface PrivacyService {
+    suspend fun retrieveLoginInfo(): UserInfoEntity
 
-    suspend fun getLogin(credential: Credential): UserInfoEntity
+    suspend fun insertLoginInfo(entity: UserInfoEntity): Boolean
 
-    suspend fun getLogout(): Boolean
-
-    suspend fun createUser(email: String, password: String): UserInfoEntity
-
-    suspend fun modifyPassword(email: String)
+    suspend fun releaseLoginInfo(uid: String): Boolean
 }

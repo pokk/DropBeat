@@ -39,6 +39,7 @@ object Dispatcher {
         bind<Gson>() with singleton { GsonBuilder().create() }
         import(androidXModule(app))
         import(CacheModule.provide(app))
+        import(AppModules.provide(app))
         importAll(FeatModuleHelper.kodeinModules(app))
     }
 }

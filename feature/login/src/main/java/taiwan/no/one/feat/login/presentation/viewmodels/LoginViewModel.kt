@@ -27,11 +27,10 @@ package taiwan.no.one.feat.login.presentation.viewmodels
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
 import taiwan.no.one.feat.login.domain.usecases.CreateUserReq
-import taiwan.no.one.feat.login.domain.usecases.FetchLoginInfoCase
 import taiwan.no.one.feat.login.domain.usecases.LoginCase
 import taiwan.no.one.feat.login.domain.usecases.LoginReq
 import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordCase
@@ -41,7 +40,6 @@ import taiwan.no.one.ktx.livedata.toLiveData
 internal class LoginViewModel : BehindViewModel() {
     private val loginCase by instance<LoginCase>()
     private val createUserCase by instance<CreateUserCase>()
-    private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
     private val modifyPasswordCase by instance<ModifyPasswordCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()
@@ -62,9 +60,5 @@ internal class LoginViewModel : BehindViewModel() {
 
     fun resetPassword(email: String) = launchBehind {
         _resetResp.postValue(modifyPasswordCase.execute(ModifyPasswordReq(email)))
-    }
-
-    fun getUserInfo() = launchBehind {
-        _userInfo.postValue(fetchLoginInfoCase.execute())
     }
 }

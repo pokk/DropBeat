@@ -22,23 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.data.remote.services
+package taiwan.no.one.dropbeat.presentation.viewmodels
 
+import org.kodein.di.instance
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
-import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import taiwan.no.one.dropbeat.domain.usecases.FetchLoginInfoCase
+import taiwan.no.one.ktx.livedata.toLiveData
 
-/**
- * This interface will be the same as all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-internal interface AuthService {
-    suspend fun getLogin(email: String, password: String): UserInfoEntity
+class PrivacyViewModel : BehindViewModel() {
+    private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
+    private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
+    private val userInfo = _userInfo.toLiveData()
 
-    suspend fun getLogin(credential: Credential): UserInfoEntity
-
-    suspend fun getLogout(): Boolean
-
-    suspend fun createUser(email: String, password: String): UserInfoEntity
-
-    suspend fun modifyPassword(email: String)
+    fun getUserInfo() = launchBehind {
+        _userInfo.postValue(fetchLoginInfoCase.execute())
+    }
 }

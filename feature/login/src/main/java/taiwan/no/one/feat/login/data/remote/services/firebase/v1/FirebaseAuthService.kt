@@ -27,7 +27,7 @@ package taiwan.no.one.feat.login.data.remote.services.firebase.v1
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
@@ -42,6 +42,11 @@ internal class FirebaseAuthService(
     override suspend fun getLogin(credential: Credential): UserInfoEntity {
         val result = auth.signInWithCredential(credential.getAuthCredential()).await()
         return extractUserInfoEntity(result)
+    }
+
+    override suspend fun getLogout(): Boolean {
+        auth.signOut()
+        return true
     }
 
     override suspend fun createUser(email: String, password: String): UserInfoEntity {

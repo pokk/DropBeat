@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.login.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.feat.login.data.entities.remote.UserInfoEntity
+import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
 /**
@@ -36,6 +36,8 @@ internal interface AuthRepo : Repository {
     suspend fun fetchLogin(email: String, password: String): UserInfoEntity
 
     suspend fun fetchLogin(credential: Credential): UserInfoEntity
+
+    suspend fun fetchLogout(): Boolean
 
     suspend fun addUser(email: String, password: String): UserInfoEntity
 

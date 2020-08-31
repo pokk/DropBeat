@@ -27,6 +27,7 @@ package taiwan.no.one.dropbeat.presentation.activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.devrapid.kotlinknifer.changeStatusBarColor
 import com.google.android.play.core.splitcompat.SplitCompat
@@ -35,9 +36,11 @@ import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.R
 import taiwan.no.one.dropbeat.databinding.ActivityMainBinding
 import taiwan.no.one.dropbeat.presentation.lifecycle.SplitModuleAddLifecycle
+import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+    private val vm by viewModels<PrivacyViewModel>()
     private val navigator by lazy { findNavController(R.id.nav_host_fragment) }
 
     init {
@@ -54,6 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeStatusBarColor(0, 0f)
+        vm.getUserInfo()
     }
 
     override fun showLoading() {
