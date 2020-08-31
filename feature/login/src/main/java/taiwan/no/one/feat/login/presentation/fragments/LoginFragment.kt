@@ -30,6 +30,9 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.facebook.CallbackManager
@@ -41,12 +44,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.login.R
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.databinding.FragmentLoginBinding
+import taiwan.no.one.feat.login.presentation.recyclerviews.adapters.ThirdPartyLoginAdapter
+import taiwan.no.one.feat.login.presentation.recyclerviews.decorators.SnsItemDecorator
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
+import taiwan.no.one.widget.R as WidgetR
 
 internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBinding>() {
     private val vm by viewModels<LoginViewModel>()
+    private val snsAdapter by lazy { ThirdPartyLoginAdapter(snsList) }
+    private val snsList by lazy {
+        listOf(R.drawable.ic_facebook,
+               R.drawable.ic_google,
+               R.drawable.ic_twitter,
+               R.drawable.ic_instagram)
+    }
 
     //region Third-party Authorization
     // Google
@@ -103,6 +117,24 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                 findNavController().navigateUp()
             }.onFailure {
                 loge(it)
+            }
+        }
+    }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        binding.rvSns.apply {
+            if (adapter == null) {
+                adapter = snsAdapter
+            }
+            if (layoutManager == null) {
+                layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
+            }
+            if (itemDecorationCount <= 1) {
+                addItemDecoration(SnsItemDecorator(getDimen(WidgetR.dimen.md_two_unit).toInt()))
             }
         }
     }

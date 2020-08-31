@@ -184,6 +184,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:barrierMargin="-24dp"
+        app:barrierMargin="-16dp"
         app:constraint_referenced_ids="rv_sns"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
