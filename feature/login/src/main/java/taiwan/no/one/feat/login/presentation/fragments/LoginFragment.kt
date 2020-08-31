@@ -53,7 +53,7 @@ import taiwan.no.one.feat.login.presentation.auths.GoogleConfig
 import taiwan.no.one.feat.login.presentation.recyclerviews.adapters.ThirdPartyLoginAdapter
 import taiwan.no.one.feat.login.presentation.recyclerviews.decorators.SnsItemDecorator
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
-import taiwan.no.one.widget.R as WidgetR
+import taiwan.no.one.widget.WidgetResDimen
 
 internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBinding>() {
     private val vm by viewModels<LoginViewModel>()
@@ -141,7 +141,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                 layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
             }
             if (itemDecorationCount <= 1) {
-                addItemDecoration(SnsItemDecorator(getDimen(WidgetR.dimen.md_two_unit).toInt()))
+                addItemDecoration(SnsItemDecorator(getDimen(WidgetResDimen.md_two_unit).toInt()))
             }
         }
     }

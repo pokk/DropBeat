@@ -33,13 +33,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.loge
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.view.find
-import taiwan.no.one.dropbeat.R as AppR
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
     private val vm by viewModels<ExploreViewModel>()
@@ -58,14 +58,15 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
-                includeTopArtist.find<RecyclerView>(AppR.id.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
+                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
             }.onFailure {
                 loge(it)
             }
         }
         vm.topTracks.observe(this) { res ->
             res.onSuccess {
-                includeTopTrack.find<RecyclerView>(AppR.id.rv_musics).adapter = TopChartAdapter(it.tracks.subList(0, 4))
+                includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
+                    TopChartAdapter(it.tracks.subList(0, 4))
             }
         }
     }
@@ -81,20 +82,20 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             }
         }
         includeTopArtist.apply {
-            find<RecyclerView>(AppR.id.rv_musics).apply {
+            find<RecyclerView>(AppResId.rv_musics).apply {
                 if (layoutManager == null) {
                     layoutManager = LinearLayoutManager(requireContext())
                 }
             }
-            find<TextView>(AppR.id.mtv_explore_title).text = "TopArtist"
+            find<TextView>(AppResId.mtv_explore_title).text = "TopArtist"
         }
         includeTopTrack.apply {
-            find<RecyclerView>(AppR.id.rv_musics).apply {
+            find<RecyclerView>(AppResId.rv_musics).apply {
                 if (layoutManager == null) {
                     layoutManager = LinearLayoutManager(requireContext())
                 }
             }
-            find<TextView>(AppR.id.mtv_explore_title).text = "TopTrack"
+            find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"
         }
     }
 }

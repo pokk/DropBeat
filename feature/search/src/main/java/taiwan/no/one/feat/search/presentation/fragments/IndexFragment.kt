@@ -48,7 +48,7 @@ import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.ktx.recyclerview.contains
 import taiwan.no.one.ktx.view.afterTextChanges
-import taiwan.no.one.widget.R as WidgetR
+import taiwan.no.one.widget.WidgetResDimen
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     private val mergeBinding by lazy { MergeSearchHasResultBinding.bind(binding.root) }
@@ -57,7 +57,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private val searchHistoryAdapter by lazy { HistoryAdapter() }
     private val musicAdapter by lazy { ResultAdapter() }
     private val musicItemDecoration by lazy {
-        VerticalItemDecorator(resources.getDimension(WidgetR.dimen.md_three_unit).toInt(), 0)
+        VerticalItemDecorator(resources.getDimension(WidgetResDimen.md_three_unit).toInt(), 0)
     }
     private val rvMusics get() = mergeBinding.rvMusics
 

@@ -37,8 +37,8 @@ import androidx.core.view.doOnPreDraw
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import taiwan.no.one.dropbeat.R
+import taiwan.no.one.widget.WidgetResDimen
 import java.lang.Math.abs
-import taiwan.no.one.widget.R as WidgetR
 
 class BottomNavigationViewWithIndicator :
     BottomNavigationView, BottomNavigationView.OnNavigationItemSelectedListener {
@@ -57,8 +57,8 @@ class BottomNavigationViewWithIndicator :
         color = ContextCompat.getColor(context, R.color.coral)
     }
 
-    private val bottomOffset = resources.getDimension(WidgetR.dimen.md_zero_unit)
-    private val defaultSize = resources.getDimension(WidgetR.dimen.md_one_half_unit)
+    private val bottomOffset = resources.getDimension(WidgetResDimen.md_zero_unit)
+    private val defaultSize = resources.getDimension(WidgetResDimen.md_one_half_unit)
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
