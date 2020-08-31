@@ -24,15 +24,26 @@
 
 package taiwan.no.one.feat.library.presentation.fragments
 
+import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.devrapid.kotlinknifer.gone
+import com.devrapid.kotlinshaver.isNotNull
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
+    private val privacyVm by activityViewModels<PrivacyViewModel>()
     private var _mergeTopControllerBinding: MergeTopControllerBinding? = null
     private val mergeTopControllerBinding get() = checkNotNull(_mergeTopControllerBinding)
+    private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
+
+    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun bindLiveData() {
+    }
 
     /**
      * For separating the huge function code in [rendered]. Initialize all view components here.
@@ -53,6 +64,18 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             btnSetting.setOnClickListener {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToSettingGraph())
             }
+        }
+    }
+
+    /**
+     * Initialize doing some methods or actions here.
+     *
+     * @param savedInstanceState previous status.
+     */
+    override fun rendered(savedInstanceState: Bundle?) {
+        userEntity?.takeIf { it.uid.isNotNull() }?.let {
+            mergeTopControllerBinding.mtvTitle.text = it.displayName
+            mergeTopControllerBinding.btnLogin.gone()
         }
     }
 }

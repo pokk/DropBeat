@@ -34,7 +34,7 @@ import taiwan.no.one.ktx.livedata.toLiveData
 class PrivacyViewModel : BehindViewModel() {
     private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
-    private val userInfo = _userInfo.toLiveData()
+    val userInfo = _userInfo.toLiveData()
 
     fun getUserInfo() = launchBehind {
         _userInfo.postValue(fetchLoginInfoCase.execute())

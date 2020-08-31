@@ -31,6 +31,8 @@ import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.data.contracts.DataStore
+import taiwan.no.one.dropbeat.data.local.services.PrivacyService
+import taiwan.no.one.dropbeat.data.local.services.v1.MmkvService
 import taiwan.no.one.dropbeat.data.repositories.PrivacyRepository
 import taiwan.no.one.dropbeat.data.stores.LocalStore
 import taiwan.no.one.dropbeat.data.stores.RemoteStore
@@ -53,6 +55,7 @@ internal object DataModules : ModuleProvider {
         bind<PrivacyRepo>() with singleton {
             PrivacyRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
         }
+        bind<PrivacyService>() with singleton { MmkvService(instance(), instance()) }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID}RemoteModule") {
