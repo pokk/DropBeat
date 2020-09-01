@@ -28,10 +28,12 @@ import android.content.Context
 import org.kodein.di.DI
 import taiwan.no.one.dropbeat.data.DataModules
 import taiwan.no.one.dropbeat.domain.DomainModules
+import taiwan.no.one.dropbeat.presentation.PresentationModules
 
 object AppModules {
     fun provide(context: Context) = DI.Module("App Module") {
         import(DataModules.provide(context))
         import(DomainModules.provide(context))
+        import(PresentationModules.provide(context))
     }
 }

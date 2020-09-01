@@ -25,9 +25,12 @@
 package taiwan.no.one.dropbeat.di
 
 import android.content.Context
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import java.util.ServiceLoader
 
 object FeatModuleHelper {
     fun kodeinModules(context: Context) = ServiceLoader.load(ModuleProvider::class.java).map { it.provide(context) }
+
+    fun methodsProvider() = ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first()
 }

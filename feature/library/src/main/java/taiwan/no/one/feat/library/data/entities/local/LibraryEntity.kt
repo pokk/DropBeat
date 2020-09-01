@@ -36,7 +36,7 @@ import java.util.Date
 
 internal data class LibraryEntity(
     val count: Int,
-    val playlists: List<PlayListEntity>
+    val playlists: List<PlayListEntity>,
 ) {
     @Entity(tableName = "table_playlist", indices = [Index("name", unique = true)])
     internal data class PlayListEntity(
@@ -47,7 +47,7 @@ internal data class LibraryEntity(
         val songIds: List<Int> = emptyList(),
         val count: Int = 0,
         @Embedded
-        val time: TimeEntity = TimeEntity()
+        val time: TimeEntity = TimeEntity(),
     ) {
         @Ignore
         var songs: List<SongEntity> = emptyList()

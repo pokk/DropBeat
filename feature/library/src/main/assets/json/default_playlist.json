@@ -1,0 +1,14 @@
+[
+    {
+        "id" : 1,
+        "name" : "Downloaded"
+    },
+    {
+        "id" : 2,
+        "name" : "Favorite"
+    },
+    {
+        "id" : 3,
+        "name" : "Uncategory"
+    }
+]

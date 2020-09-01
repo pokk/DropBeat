@@ -28,13 +28,27 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.devrapid.kotlinknifer.logw
 import com.google.android.play.core.splitcompat.SplitCompat
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 import taiwan.no.one.dropbeat.databinding.ActivitySplashBinding
+import taiwan.no.one.dropbeat.presentation.PresentationModules
 import taiwan.no.one.dropbeat.presentation.viewmodels.SplashViewModel
 
-internal class SplashActivity : AppCompatActivity() {
+internal class SplashActivity : AppCompatActivity(), DIAware {
+    /**
+     * A DI Aware class must be within reach of a [DI] object.
+     */
+    override val di by di()
     private var binding: ActivitySplashBinding? = null
     private val vm by viewModels<SplashViewModel>()
+    private val workManager by instance<WorkManager>()
+    private val worker by instance<OneTimeWorkRequest>(PresentationModules.TAG_WORKER_INIT_DATA)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,16 +56,28 @@ internal class SplashActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         vm.configs.observe(this) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
         }
 
         SplitCompat.install(this)
+
+        workManager.getWorkInfoByIdLiveData(worker.id).observe(this) {
+            if (!it.state.isFinished) {
+                return@observe
+            }
+            logw("Initialization has been finished")
+            launchApp()
+        }
+        workManager.enqueue(worker)
         vm.getConfigs()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    private fun launchApp() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

@@ -29,9 +29,9 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class AddSongsOneShotCase(
-    private val repository: PlaylistRepo
+    private val repository: PlaylistRepo,
 ) : AddSongsCase() {
-    override suspend fun acquireCase(parameter: AddSongReq?) = parameter.ensure {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         repository.addMusics(songs)
         true
     }

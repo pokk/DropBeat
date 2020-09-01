@@ -22,19 +22,8 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.domain.usecases
+package taiwan.no.one.dropbeat.provider
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
-import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
-
-internal class AddPlaylistOneShotCase(
-    private val repository: PlaylistRepo,
-) : AddPlaylistCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addPlaylist(playlist)
-        true
-    }
-
-    class Request(val playlist: PlayListEntity) : RequestValues
+interface LibraryMethodsProvider {
+    suspend fun createDefaultPlaylists(): Boolean
 }

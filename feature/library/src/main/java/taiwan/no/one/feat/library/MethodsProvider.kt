@@ -22,38 +22,41 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.presentation.viewmodels
+package taiwan.no.one.feat.library
 
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import com.google.auto.service.AutoService
+import com.google.gson.Gson
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 import org.kodein.di.instance
-import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
-import taiwan.no.one.feat.library.domain.usecases.AddSongReq
-import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
-import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
-import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
-import taiwan.no.one.ktx.livedata.toLiveData
+import java.io.BufferedReader
 
-internal class PlaylistViewModel : BehindViewModel() {
+@AutoService(LibraryMethodsProvider::class)
+class MethodsProvider : LibraryMethodsProvider, DIAware {
+    /**
+     * A DI Aware class must be within reach of a [DI] object.
+     */
+    override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
+    private val gson by instance<Gson>()
     private val addPlaylistCase by instance<AddPlaylistCase>()
-    private val fetchPlaylistCase by instance<FetchPlaylistCase>()
-    private val updatePlaylistCase by instance<UpdatePlaylistCase>()
-    private val addSongsCase by instance<AddSongsCase>()
-    private val _resPlaylist by lazy { ResultLiveData<Boolean>() }
-    val playlist = liveData(viewModelScope.coroutineContext) { emit(fetchPlaylistCase.execute()) }
-    val resPlaylist = _resPlaylist.toLiveData()
 
-    fun createPlaylist(playlist: PlayListEntity) = viewModelScope.launch {
-        _resPlaylist.value = addPlaylistCase.execute(AddPlaylistReq(playlist))
-    }
-
-    fun createSongs(songs: List<SongEntity>) = viewModelScope.launch {
-        _resPlaylist.value = addSongsCase.execute(AddSongReq(songs))
+    override suspend fun createDefaultPlaylists(): Boolean {
+        val json = DropBeatApp.appContext.assets.open("json/default_playlist.json").use {
+            it.bufferedReader().use(BufferedReader::readText)
+        }
+        val list = gson.fromJson(json, Array<PlayListEntity>::class.java).toList()
+        val ids = list.map(PlayListEntity::id)
+        val names = list.map(PlayListEntity::name)
+        ids.zip(names)
+            .map { (id, name) -> PlayListEntity(id, name) }
+            .forEach {
+                addPlaylistCase.execute(AddPlaylistReq(it))
+            }
+        return true
     }
 }

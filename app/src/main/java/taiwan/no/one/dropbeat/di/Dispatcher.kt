@@ -25,19 +25,14 @@
 package taiwan.no.one.dropbeat.di
 
 import android.app.Application
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.tencent.mmkv.MMKV
 import org.kodein.di.DI
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.bind
-import org.kodein.di.singleton
 
 object Dispatcher {
     fun importIntoApp(app: Application) = DI.lazy {
-        bind<MMKV>() with singleton { MMKV.defaultMMKV() }
-        bind<Gson>() with singleton { GsonBuilder().create() }
         import(androidXModule(app))
+        import(UtilModules.provide(app))
+        import(UtilModules.provideUi())
         import(CacheModule.provide(app))
         import(AppModules.provide(app))
         importAll(FeatModuleHelper.kodeinModules(app))

@@ -22,19 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.domain.usecases
+package taiwan.no.one.dropbeat.presentation
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
-import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
+import android.content.Context
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.singleton
+import taiwan.no.one.dropbeat.BuildConfig
+import taiwan.no.one.dropbeat.presentation.services.workers.CreateDefaultPlaylistWorker
+import taiwan.no.one.dropbeat.provider.ModuleProvider
 
-internal class AddPlaylistOneShotCase(
-    private val repository: PlaylistRepo,
-) : AddPlaylistCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addPlaylist(playlist)
-        true
+internal object PresentationModules : ModuleProvider {
+    const val TAG_WORKER_INIT_DATA = "worker for initializing"
+
+    override fun provide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID} PreziModule") {
+        bind<OneTimeWorkRequest>(TAG_WORKER_INIT_DATA) with singleton {
+            OneTimeWorkRequestBuilder<CreateDefaultPlaylistWorker>().build()
+        }
     }
-
-    class Request(val playlist: PlayListEntity) : RequestValues
 }

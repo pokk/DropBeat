@@ -28,9 +28,9 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class FetchPlaylistOneShotCase(
-    private val repository: PlaylistRepo
+    private val repository: PlaylistRepo,
 ) : FetchPlaylistCase() {
-    override suspend fun acquireCase(parameter: FetchPlaylistReq?) = repository.fetchPlaylists()
+    override suspend fun acquireCase(parameter: Request?) = repository.fetchPlaylists()
 
     class Request : RequestValues
 }

@@ -28,9 +28,9 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class UpdatePlaylistOneShotCase(
-    private val repository: PlaylistRepo
+    private val repository: PlaylistRepo,
 ) : UpdatePlaylistCase() {
-    override suspend fun acquireCase(parameter: UpdatePlaylistReq?) = parameter.ensure {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         TODO()
         true
     }
