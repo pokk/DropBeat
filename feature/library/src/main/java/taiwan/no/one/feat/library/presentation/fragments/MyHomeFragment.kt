@@ -30,19 +30,24 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.isNotNull
+import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
+import java.lang.ref.WeakReference
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private var _mergeTopControllerBinding: MergeTopControllerBinding? = null
@@ -53,14 +58,36 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
     private val privacyVm by activityViewModels<PrivacyViewModel>()
     private val vm by viewModels<MyHomeViewModel>()
+    private val linearLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()))
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
                 logw(it)
+                vm.extractMainPlaylist(it)
             }.onFailure {
                 loge(it)
+            }
+        }
+        vm.downloaded.observe(this) {
+            includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
+                if (adapter == null) {
+                }
+                if (layoutManager == null) {
+                    layoutManager = linearLayoutManager()
+                }
+            }
+        }
+        vm.favorites.observe(this) {
+            includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
+                if (adapter == null) {
+                }
+                if (layoutManager == null) {
+                    layoutManager = linearLayoutManager()
+                }
             }
         }
     }
