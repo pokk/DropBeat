@@ -41,6 +41,8 @@ internal interface PlaylistRepo : Repository {
 
     suspend fun deleteMusic(playlistId: Int?, playlist: PlayListEntity?)
 
+    suspend fun fetchPlaylist(playlistId: Int): PlayListEntity
+
     suspend fun fetchPlaylists(): List<PlayListEntity>
 
     suspend fun fetchTheNewestPlaylist(): PlayListEntity

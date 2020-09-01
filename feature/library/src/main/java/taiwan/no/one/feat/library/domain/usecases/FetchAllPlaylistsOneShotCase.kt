@@ -22,21 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.local.services.database.convert
+package taiwan.no.one.feat.library.domain.usecases
 
-import androidx.room.TypeConverter
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
-internal class IdListConvert {
-    companion object {
-        private const val SEPARATOR = ","
-    }
+internal class FetchAllPlaylistsOneShotCase(
+    private val repository: PlaylistRepo,
+) : FetchAllPlaylistsCase() {
+    override suspend fun acquireCase(parameter: Request?) = repository.fetchPlaylists()
 
-    @TypeConverter
-    fun fromIdsToStr(ids: List<Int>?): String {
-        return ids?.joinToString(SEPARATOR).orEmpty()
-    }
-
-    @TypeConverter
-    fun fromStrToIds(idsString: String?) =
-        idsString?.takeIf(String::isNotEmpty)?.split(SEPARATOR)?.map(String::toInt).orEmpty()
+    class Request : RequestValues
 }

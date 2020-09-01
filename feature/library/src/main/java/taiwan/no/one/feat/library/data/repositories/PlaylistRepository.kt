@@ -32,7 +32,7 @@ import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class PlaylistRepository(
     private val local: LocalStore,
-    private val remote: RemoteStore
+    private val remote: RemoteStore,
 ) : PlaylistRepo {
     override suspend fun fetchMusics(playlistId: Int) = local.getMusics(playlistId)
 
@@ -43,6 +43,8 @@ internal class PlaylistRepository(
 
     override suspend fun deleteMusic(playlistId: Int?, playlist: PlayListEntity?) =
         local.removePlaylist(playlistId, playlist)
+
+    override suspend fun fetchPlaylist(playlistId: Int) = local.getPlaylist(playlistId)
 
     override suspend fun fetchPlaylists() = local.getPlaylists()
 

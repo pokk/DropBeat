@@ -44,7 +44,7 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance(), instance(), instance()) }
+        bind<LocalStore>() with singleton { LocalStore(instance(), instance()) }
         bind<RemoteStore>() with singleton { RemoteStore() }
 
         bind<PlaylistRepo>() with singleton { PlaylistRepository(instance(), instance()) }

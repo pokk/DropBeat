@@ -28,8 +28,11 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.gone
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinshaver.isNotNull
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -38,19 +41,28 @@ import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
+import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
-    private val privacyVm by activityViewModels<PrivacyViewModel>()
     private var _mergeTopControllerBinding: MergeTopControllerBinding? = null
     private val mergeTopControllerBinding get() = checkNotNull(_mergeTopControllerBinding)
     private val includeFavorite by lazy { find<ConstraintLayout>(R.id.include_favorite) }
     private val includeDownloaded by lazy { find<ConstraintLayout>(R.id.include_download) }
     private val includeHistory by lazy { find<ConstraintLayout>(R.id.include_history) }
     private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
+    private val privacyVm by activityViewModels<PrivacyViewModel>()
+    private val vm by viewModels<MyHomeViewModel>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
+        vm.playlists.observe(this) { res ->
+            res.onSuccess {
+                logw(it)
+            }.onFailure {
+                loge(it)
+            }
+        }
     }
 
     /**
@@ -88,5 +100,6 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             mergeTopControllerBinding.mtvTitle.text = it.displayName
             mergeTopControllerBinding.btnLogin.gone()
         }
+        vm.getAllPlaylists()
     }
 }

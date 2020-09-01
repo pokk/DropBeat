@@ -24,7 +24,6 @@
 
 package taiwan.no.one.feat.library.data.stores
 
-import com.tencent.mmkv.MMKV
 import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
@@ -36,7 +35,6 @@ import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
  * local service(Database/Local file) to access the data.
  */
 internal class LocalStore(
-    private val mmkv: MMKV,
     private val playlistDao: PlaylistDao,
     private val songDao: SongDao,
 ) : DataStore {
@@ -49,10 +47,12 @@ internal class LocalStore(
     override suspend fun removeMusic(id: Int) = songDao.deleteBy(id)
 
     override suspend fun getPlaylists() = playlistDao.getPlaylists().apply {
-        map { it.songs = it.songIds.let { songDao.getMusics(it) } }
+        map { it.songs = songDao.getMusics(it.songIds) }
     }
 
-    override suspend fun getPlaylist(playlistId: Int) = playlistDao.getPlaylist(playlistId)
+    override suspend fun getPlaylist(playlistId: Int) = playlistDao.getPlaylist(playlistId).apply {
+        songs = songDao.getMusics(songIds)
+    }
 
     override suspend fun getTheNewestPlaylist() = playlistDao.getLatestPlaylist()
 
@@ -61,9 +61,11 @@ internal class LocalStore(
     override suspend fun modifyPlaylist(playlist: PlayListEntity) = playlistDao.update(playlist)
 
     override suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?) {
-        if (playlist != null)
+        if (playlist != null) {
             playlistDao.delete(playlist)
-        if (playlistId != null)
+        }
+        if (playlistId != null) {
             playlistDao.deleteBy(playlistId)
+        }
     }
 }

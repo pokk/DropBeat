@@ -24,6 +24,20 @@
 
 package taiwan.no.one.feat.library.presentation.viewmodels
 
+import org.kodein.di.instance
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
+import taiwan.no.one.ktx.livedata.toLiveData
 
-class MyHomeViewModel : BehindViewModel()
+internal class MyHomeViewModel : BehindViewModel() {
+    private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
+
+    private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
+    val playlists = _playlists.toLiveData()
+
+    fun getAllPlaylists() = launchBehind {
+        _playlists.postValue(fetchAllPlaylistsCase.execute())
+    }
+}
