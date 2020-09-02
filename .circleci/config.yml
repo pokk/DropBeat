@@ -39,9 +39,9 @@ jobs:
           paths:
             - ~/.gradlew
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "presentation/build.gradle" }}
-      - run:
-          name: Run Unit Tests
-          command: ./gradlew test
+      #      - run:
+      #          name: Run Unit Tests
+      #          command: ./gradlew test
       - run:
           name: Assemble Debug APK
           command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
