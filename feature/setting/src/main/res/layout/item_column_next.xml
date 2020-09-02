@@ -42,16 +42,17 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_title"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/s_switch"
+        app:layout_constraintEnd_toStartOf="@id/btn_next"
         app:layout_constraintStart_toEndOf="@id/siv_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/lorem"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/s_switch"
+        android:id="@+id/btn_next"
         style="@style/Taiwan.No.One.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

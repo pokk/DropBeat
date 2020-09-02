@@ -24,8 +24,53 @@
 
 package taiwan.no.one.feat.setting.presentation.fragments
 
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.button.MaterialButton
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.setting.R
 import taiwan.no.one.feat.setting.databinding.FragmentSettingBinding
+import taiwan.no.one.feat.setting.databinding.MergeSettingAppBlockBinding
+import taiwan.no.one.ktx.view.find
 
-internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBinding>()
+internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBinding>() {
+    private val mergeAppBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
+    private val mergeMusicBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
+    private val mergeSyncBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
+    private val mergeOtherBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
+
+    /**
+     * For separating the huge function code in [rendered]. Initialize all view components here.
+     */
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        // Set the Text
+        listOf(
+            // App Block
+            find<ConstraintLayout>(R.id.include_sleep_timer) to "Sleeping Timer",
+            find<ConstraintLayout>(R.id.include_lock_screen) to "Lockscreen Player",
+            find<ConstraintLayout>(R.id.include_offline) to "Play offline music only",
+            find<ConstraintLayout>(R.id.include_notification_player) to "Notification Player",
+            // Music Block
+            find<ConstraintLayout>(R.id.include_quality) to "Quality of Music",
+            find<ConstraintLayout>(R.id.include_auto_mv) to "Auto Show MV Auto",
+            // Other Block
+            find<ConstraintLayout>(R.id.include_policy) to "Policy",
+            find<ConstraintLayout>(R.id.include_coffee_to_me) to "Buy Me a Coffee",
+            find<ConstraintLayout>(R.id.include_star) to "5 Start in Store",
+            find<ConstraintLayout>(R.id.include_feedback) to "Feedback",
+        ).forEach { (viewGroup, text) ->
+            viewGroup.find<TextView>(R.id.mtv_title).text = text
+        }
+        // Set the Icons
+        listOf(
+            find<ConstraintLayout>(R.id.include_quality),
+            find(R.id.include_policy),
+            find(R.id.include_coffee_to_me),
+            find(R.id.include_star),
+            find(R.id.include_feedback),
+        ).forEach { it.find<MaterialButton>(R.id.btn_next).apply { setIconResource(R.drawable.ic_chevron_right) } }
+        find<ConstraintLayout>(R.id.include_quality).find<MaterialButton>(R.id.btn_next).text = "Auto"
+    }
+}

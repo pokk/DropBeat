@@ -23,34 +23,37 @@
   ~ SOFTWARE.
   -->
 
-<androidx.appcompat.widget.LinearLayoutCompat
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_app"
-    style="@style/Taiwan.No.One.Setting.Block.Layout"
-    android:layout_marginTop="@dimen/md_two_unit"
-    app:layout_constraintTop_toBottomOf="@id/mtv_title"
     tools:showIn="@layout/fragment_setting">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="APP"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_app"
+        style="@style/Taiwan.No.One.Setting.Block.Layout"
+        android:layout_marginTop="@dimen/md_two_unit"
+        app:layout_constraintTop_toBottomOf="@id/mtv_title">
 
-    <include
-        android:id="@+id/include_sleep_timer"
-        layout="@layout/item_column_toggle"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="APP"/>
 
-    <include
-        android:id="@+id/include_lock_screen"
-        layout="@layout/item_column_toggle"/>
+        <include
+            android:id="@+id/include_sleep_timer"
+            layout="@layout/item_column_toggle"/>
 
-    <include
-        android:id="@+id/include_offline"
-        layout="@layout/item_column_toggle"/>
+        <include
+            android:id="@+id/include_lock_screen"
+            layout="@layout/item_column_toggle"/>
 
-    <include
-        android:id="@+id/include_notification_player"
-        layout="@layout/item_column_toggle"/>
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <include
+            android:id="@+id/include_offline"
+            layout="@layout/item_column_toggle"/>
+
+        <include
+            android:id="@+id/include_notification_player"
+            layout="@layout/item_column_toggle"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</merge>

@@ -23,33 +23,38 @@
   ~ SOFTWARE.
   -->
 
-<androidx.appcompat.widget.LinearLayoutCompat
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_other"
-    style="@style/Taiwan.No.One.Setting.Block.Layout"
-    app:layout_constraintTop_toBottomOf="@id/ll_sync"
     tools:showIn="@layout/fragment_setting">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Other"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_other"
+        style="@style/Taiwan.No.One.Setting.Block.Layout"
+        android:layout_marginBottom="@dimen/md_four_unit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_sync">
 
-    <include
-        android:id="@+id/include_policy"
-        layout="@layout/item_column_next"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other"/>
 
-    <include
-        android:id="@+id/include_coffee_to_me"
-        layout="@layout/item_column_next"/>
+        <include
+            android:id="@+id/include_policy"
+            layout="@layout/item_column_next"/>
 
-    <include
-        android:id="@+id/include_star"
-        layout="@layout/item_column_next"/>
+        <include
+            android:id="@+id/include_coffee_to_me"
+            layout="@layout/item_column_next"/>
 
-    <include
-        android:id="@+id/include_feedback"
-        layout="@layout/item_column_next"/>
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <include
+            android:id="@+id/include_star"
+            layout="@layout/item_column_next"/>
+
+        <include
+            android:id="@+id/include_feedback"
+            layout="@layout/item_column_next"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</merge>
