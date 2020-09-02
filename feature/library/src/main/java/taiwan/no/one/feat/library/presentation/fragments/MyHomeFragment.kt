@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -45,6 +46,7 @@ import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
+import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
 import java.lang.ref.WeakReference
@@ -73,8 +75,12 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             }
         }
         vm.downloaded.observe(this) {
+            if (it.songs.isEmpty()) {
+                includeDownloaded.find<TextView>(AppResId.mtv_no_music).visible()
+            }
             includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
                 if (adapter == null) {
+                    adapter = PlaylistAdapter(it.songs)
                 }
                 if (layoutManager == null) {
                     layoutManager = linearLayoutManager()
@@ -82,8 +88,12 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             }
         }
         vm.favorites.observe(this) {
+            if (it.songs.isEmpty()) {
+                includeFavorite.find<TextView>(AppResId.mtv_no_music).visible()
+            }
             includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
                 if (adapter == null) {
+                    adapter = PlaylistAdapter(it.songs)
                 }
                 if (layoutManager == null) {
                     layoutManager = linearLayoutManager()
@@ -98,7 +108,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         _mergeTopControllerBinding = MergeTopControllerBinding.bind(binding.root)
-        includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite Music"
+        includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite"
         includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
         includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
     }

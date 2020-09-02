@@ -27,12 +27,12 @@ package taiwan.no.one.feat.explore.presentation.recyclerviews.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import taiwan.no.one.dropbeat.R
+import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChartViewHolder
 
 internal class TopChartAdapter(
-    private val itemList: List<Any>
+    private val itemList: List<Any>,
 ) : RecyclerView.Adapter<TopChartViewHolder>() {
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -58,7 +58,7 @@ internal class TopChartAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_type_of_music, parent, false)
+            .inflate(AppResLayout.item_type_of_music, parent, false)
             .let { TopChartViewHolder(ItemTypeOfMusicBinding.bind(it)) }
 
     /**

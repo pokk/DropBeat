@@ -22,7 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat
+package taiwan.no.one.feat.library.presentation.recyclerviews.viewholders
 
-typealias AppResId = R.id
-typealias AppResLayout = R.layout
+import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
+import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
+import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+
+internal class PlaylistViewHolder(
+    private val binding: ItemTypeOfMusicBinding,
+) : ViewHolderBinding<Any, PlaylistAdapter>(binding.root) {
+    override fun initView(entity: Any, position: Int, adapter: PlaylistAdapter) {
+    }
+}

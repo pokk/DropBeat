@@ -22,26 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters
+package taiwan.no.one.feat.library.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.AppResLayout
-import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
-import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.RankViewHolder
-import taiwan.no.one.widget.recyclerviews.AutoUpdatable
-import kotlin.properties.Delegates
+import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.PlaylistViewHolder
 
-internal class RankAdapter : RecyclerView.Adapter<RankViewHolder>(),
-                             AutoUpdatable {
-    var data: List<BriefRankEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.rankId == n.rankId }
-    }
-    var onClickListener: ((rankId: Int) -> Unit)? = null
-        private set
-
+internal class PlaylistAdapter(
+    private val list: List<SongEntity>,
+) : RecyclerView.Adapter<PlaylistViewHolder>() {
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -64,16 +57,10 @@ internal class RankAdapter : RecyclerView.Adapter<RankViewHolder>(),
      * @see .getItemViewType
      * @see .onBindViewHolder
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
-        .inflate(AppResLayout.item_trend, parent, false)
-        .let { RankViewHolder(ItemTrendBinding.bind(it)) }
-
-    /**
-     * Returns the total number of items in the data set held by the adapter.
-     *
-     * @return The total number of items in this adapter.
-     */
-    override fun getItemCount() = data.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        LayoutInflater.from(parent.context)
+            .inflate(AppResLayout.item_type_of_music, parent, false)
+            .let { PlaylistViewHolder(ItemTypeOfMusicBinding.bind(it)) }
 
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
@@ -96,11 +83,13 @@ internal class RankAdapter : RecyclerView.Adapter<RankViewHolder>(),
      * item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: RankViewHolder, position: Int) {
-        holder.initView(data[position], position, this)
-    }
+    override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
+        holder.initView(list[position], position, this)
 
-    fun setOnClickListener(listener: (rankId: Int) -> Unit) {
-        onClickListener = listener
-    }
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return The total number of items in this adapter.
+     */
+    override fun getItemCount() = list.size
 }
