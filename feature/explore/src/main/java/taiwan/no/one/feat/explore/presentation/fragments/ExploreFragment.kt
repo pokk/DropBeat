@@ -78,13 +78,13 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         super.viewComponentBinding()
         binding.includeExplore.rvMusics.apply {
             if (layoutManager == null) {
-                layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.HORIZONTAL, false)
+                layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
             }
         }
         includeTopArtist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
                 if (layoutManager == null) {
-                    layoutManager = LinearLayoutManager(requireContext())
+                    layoutManager = LinearLayoutManager(requireActivity())
                 }
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopArtist"
@@ -92,7 +92,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         includeTopTrack.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
                 if (layoutManager == null) {
-                    layoutManager = LinearLayoutManager(requireContext())
+                    layoutManager = LinearLayoutManager(requireActivity())
                 }
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"

@@ -63,7 +63,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
                 adapter = RankAdapter()
             }
             if (layoutManager == null) {
-                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
             }
         }
     }
@@ -73,6 +73,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
      */
     override fun componentListenersBinding() {
         (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener {
+
 //            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }
