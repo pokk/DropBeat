@@ -78,27 +78,13 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             if (it.songs.isEmpty()) {
                 includeDownloaded.find<TextView>(AppResId.mtv_no_music).visible()
             }
-            includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
-                if (adapter == null) {
-                    adapter = PlaylistAdapter(it.songs)
-                }
-                if (layoutManager == null) {
-                    layoutManager = linearLayoutManager()
-                }
-            }
+            (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
         }
         vm.favorites.observe(this) {
             if (it.songs.isEmpty()) {
                 includeFavorite.find<TextView>(AppResId.mtv_no_music).visible()
             }
-            includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
-                if (adapter == null) {
-                    adapter = PlaylistAdapter(it.songs)
-                }
-                if (layoutManager == null) {
-                    layoutManager = linearLayoutManager()
-                }
-            }
+            (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
         }
     }
 
@@ -111,6 +97,22 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite"
         includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
         includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
+        includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
+            if (adapter == null) {
+                adapter = PlaylistAdapter()
+            }
+            if (layoutManager == null) {
+                layoutManager = linearLayoutManager()
+            }
+        }
+        includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
+            if (adapter == null) {
+                adapter = PlaylistAdapter()
+            }
+            if (layoutManager == null) {
+                layoutManager = linearLayoutManager()
+            }
+        }
     }
 
     /**

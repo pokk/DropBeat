@@ -39,8 +39,16 @@
         <action
             android:id="@+id/action_myHome_to_setting_graph"
             app:destination="@id/setting_graph"/>
+        <action
+            android:id="@+id/action_myHome_to_playlist"
+            app:destination="@id/playlistFragment"/>
     </fragment>
 
     <include app:graph="@navigation/nav_login"/>
     <include app:graph="@navigation/nav_setting"/>
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist"/>
 </navigation>

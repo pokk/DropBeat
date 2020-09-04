@@ -38,7 +38,6 @@ import taiwan.no.one.feat.library.domain.usecases.AddSongReq
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
-import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class PlaylistViewModel : BehindViewModel() {
     private val addPlaylistCase by instance<AddPlaylistCase>()
@@ -47,7 +46,6 @@ internal class PlaylistViewModel : BehindViewModel() {
     private val addSongsCase by instance<AddSongsCase>()
     private val _resPlaylist by lazy { ResultLiveData<Boolean>() }
     val playlist = liveData(viewModelScope.coroutineContext) { emit(fetchPlaylistCase.execute()) }
-    val resPlaylist = _resPlaylist.toLiveData()
 
     fun createPlaylist(playlist: PlayListEntity) = viewModelScope.launch {
         _resPlaylist.value = addPlaylistCase.execute(AddPlaylistReq(playlist))

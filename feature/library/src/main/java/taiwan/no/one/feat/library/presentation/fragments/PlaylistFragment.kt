@@ -26,51 +26,45 @@ package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import com.devrapid.kotlinknifer.logd
-import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
-import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
+import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
+import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
+import taiwan.no.one.ktx.view.find
+import java.lang.ref.WeakReference
 
-internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
+internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
+    private val playlistAdapter by lazy { PlaylistAdapter() }
+    private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
 
     override fun bindLiveData() {
-        vm.resPlaylist.observe(this) {
-            it.onSuccess {
-                logw(it)
+        vm.playlist.observe(this) { res ->
+            res.onSuccess {
+                (find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
             }.onFailure {
-                loge(it)
             }
         }
-        vm.playlist.observe(this) {
-            it.onSuccess {
-                logd(it)
-            }.onFailure {
-                loge(it)
+    }
+
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        find<RecyclerView>(AppResId.rv_musics).apply {
+            if (adapter == null) {
+                adapter = playlistAdapter
+            }
+            if (layoutManager == null) {
+                layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
             }
         }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        val playlist = PlayListEntity(0, "playlist1", emptyList(), 3)
-        val musics = listOf(
-            SongEntity(1, "song1", "artist1", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(2, "song2", "artist2", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(3, "song3", "artist3", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(4, "song4", "artist4", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(5, "song5", "artist5", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(6, "song6", "artist6", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(7, "song7", "artist7", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(8, "song8", "artist8", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(9, "song9", "artist9", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-            SongEntity(10, "song10", "artist10", "xxxxxxxxxxxxxxx", "xxxxxxxxxxxxx", 100),
-        )
-//        vm.createPlaylist(playlist)
-//        vm.createSongs(musics)
     }
 }

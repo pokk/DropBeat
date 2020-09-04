@@ -31,10 +31,14 @@ import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.PlaylistViewHolder
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
+import kotlin.properties.Delegates
 
-internal class PlaylistAdapter(
-    private val list: List<SongEntity>,
-) : RecyclerView.Adapter<PlaylistViewHolder>() {
+internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), AutoUpdatable {
+    var data: List<SongEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
+    }
+
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -84,12 +88,12 @@ internal class PlaylistAdapter(
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
-        holder.initView(list[position], position, this)
+        holder.initView(data[position], position, this)
 
     /**
      * Returns the total number of items in the data set held by the adapter.
      *
      * @return The total number of items in this adapter.
      */
-    override fun getItemCount() = list.size
+    override fun getItemCount() = data.size
 }
