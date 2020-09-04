@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
@@ -125,6 +126,15 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             }
             btnSetting.setOnClickListener {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToSettingGraph())
+            }
+        }
+        listOf(
+            includeFavorite.find<Button>(AppResId.mtv_more) to 1,
+            includeDownloaded.find<Button>(AppResId.mtv_more) to 0,
+            includeHistory.find<Button>(AppResId.mtv_more) to 2,
+        ).forEach { (button, id) ->
+            button.setOnClickListener {
+                findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(id))
             }
         }
     }

@@ -26,6 +26,7 @@ package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.kodein.di.factory
@@ -43,6 +44,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     private val vm by viewModels<PlaylistViewModel>()
     private val playlistAdapter by lazy { PlaylistAdapter() }
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
+    private val navArgs by navArgs<PlaylistFragmentArgs>()
 
     override fun bindLiveData() {
         vm.playlist.observe(this) { res ->
@@ -66,5 +68,6 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
+        vm.getSongs(navArgs.playlistId)
     }
 }

@@ -50,5 +50,9 @@
         android:id="@+id/playlistFragment"
         android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
         android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist"/>
+        tools:layout="@layout/fragment_playlist">
+        <argument
+            android:name="playlistId"
+            app:argType="integer"/>
+    </fragment>
 </navigation>
