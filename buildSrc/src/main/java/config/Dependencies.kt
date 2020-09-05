@@ -74,6 +74,7 @@ fun DependencyHandlerScope.widgetDependencies() {
     DepEnvApi(LibraryDependency.Tool.AUTO_SERVICE)
     // Others
     DepEnvImpl(LibraryDependency.JetPack.RECYCLERVIEW)
+    DepEnvImpl(LibraryDependency.JetPack.PAGING)
     DepEnvImpl(LibraryDependency.JetPack.MATERIAL_DESIGN)
     DepEnvImpl(LibraryDependency.JetPack.CARDVIEW)
     DepEnvImpl(LibraryDependency.JetPack.CONSTRAINT_LAYOUT)
@@ -116,6 +117,7 @@ fun DependencyHandlerScope.androidJetpackDependencies(env: String) {
     env(LibraryDependency.JetPack.LIFECYCLE_PROCESS)
     env(LibraryDependency.JetPack.NAVIGATION_DYNAMIC_FEATURE)
     env(LibraryDependency.JetPack.RECYCLERVIEW)
+    env(LibraryDependency.JetPack.PAGING)
 }
 
 fun DependencyHandlerScope.commonKtxDependencies(env: String) {
@@ -146,6 +148,7 @@ fun DependencyHandlerScope.commonAndroidxDependencies(env: String) {
 fun DependencyHandlerScope.androidxUiDependencies(env: String) {
     env(LibraryDependency.JetPack.MATERIAL_DESIGN)
     env(LibraryDependency.JetPack.RECYCLERVIEW)
+    env(LibraryDependency.JetPack.PAGING)
     env(LibraryDependency.JetPack.CARDVIEW)
     env(LibraryDependency.JetPack.COORDINATOR_LAYOUT)
     env(LibraryDependency.JetPack.CONSTRAINT_LAYOUT)

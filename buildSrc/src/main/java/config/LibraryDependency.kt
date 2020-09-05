@@ -35,6 +35,7 @@ object LibraryDependency {
         const val APP_STARTUP = "1.0.0-alpha03"
         const val CARDVIEW = ANDROIDX
         const val RECYCLERVIEW = "1.2.0-alpha05"
+        const val PAGING = "3.0.0-alpha06"
         const val CONSTRAINTLAYOUT = "2.0.1"
         const val COORDINATORLAYOUT = "1.1.0"
         const val AAC_LIFECYCLE = "2.3.0-alpha07"
@@ -51,7 +52,7 @@ object LibraryDependency {
         const val MMKV = "1.2.2"
         const val GSON = "2.8.6"
         const val PLAY_CORE = "1.8.0"
-        const val COIL = "1.0.0-rc1"
+        const val COIL = "1.0.0-rc2"
         const val RETROFIT2 = "2.9.0"
         const val OKHTTP3 = "4.8.1"
         const val JSOUP = "1.13.1"
@@ -69,7 +70,7 @@ object LibraryDependency {
         const val EXOPLAYER = "2.11.8"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
-        const val LOTTIE = "3.4.1"
+        const val LOTTIE = "3.4.2"
     }
 
     object Jieyi {
@@ -90,6 +91,7 @@ object LibraryDependency {
         const val APP_STARTUP = "androidx.startup:startup-runtime:${Version.APP_STARTUP}"
         const val ANNOT = "androidx.annotation:annotation:${Version.ANNOTATION}"
         const val RECYCLERVIEW = "androidx.recyclerview:recyclerview:${Version.RECYCLERVIEW}"
+        const val PAGING = "androidx.paging:paging-runtime:${Version.PAGING}"
         const val CARDVIEW = "androidx.cardview:cardview:${Version.CARDVIEW}"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Version.CONSTRAINTLAYOUT}"
         const val COORDINATOR_LAYOUT = "androidx.coordinatorlayout:coordinatorlayout:${Version.COORDINATORLAYOUT}"
