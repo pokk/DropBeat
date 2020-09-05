@@ -25,17 +25,25 @@
 package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.visible
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.feat.library.R
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
+import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
@@ -46,15 +54,17 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     private val playlistAdapter by lazy { PlaylistAdapter() }
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
     private val navArgs by navArgs<PlaylistFragmentArgs>()
+    private val noSongsBinding by lazy { StubNoSongsBinding.bind(binding.root) }
 
     override fun bindLiveData() {
         vm.playlist.observe(this) { res ->
             res.onSuccess {
-                (find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
-                binding.apply {
-                    mtvTitle.text = it.name
-                    val duration = it.songs.fold(0) { acc, song -> acc + song.duration }
-                    mtvSubtitle.text = "${it.songs.size} Songs・$duration min・30 mins ago played"
+                binding.mtvTitle.text = it.name
+                if (it.songs.isEmpty()) {
+                    displayNoSongs()
+                }
+                else {
+                    displaySongs(it)
                 }
             }.onFailure {
                 loge(it)
@@ -62,8 +72,14 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         }
     }
 
-    override fun viewComponentBinding() {
-        super.viewComponentBinding()
+    override fun rendered(savedInstanceState: Bundle?) {
+        vm.getSongs(navArgs.playlistId)
+    }
+
+    private fun displaySongs(playlist: PlayListEntity) {
+        find<View>(R.id.include_favorite).visible()
+        // Set the recycler view.
+        val songs = playlist.songs
         find<RecyclerView>(AppResId.rv_musics).apply {
             if (adapter == null) {
                 adapter = playlistAdapter
@@ -71,10 +87,23 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             if (layoutManager == null) {
                 layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
             }
+            (adapter as? PlaylistAdapter)?.data = songs
         }
+        // Set the section title.
+        find<TextView>(AppResId.mtv_explore_title).text = "All Songs"
+        // Hide the view more button.
+        find<View>(AppResId.btn_more).gone()
+        val duration = songs.fold(0) { acc, song -> acc + song.duration }
+        // Set the visibility for this fragment.
+        binding.mtvSubtitle.text = "${songs.size} Songs・$duration min・30 mins ago played"
+        binding.btnPlayAll.visible()
     }
 
-    override fun rendered(savedInstanceState: Bundle?) {
-        vm.getSongs(navArgs.playlistId)
+    private fun displayNoSongs() {
+        binding.vsNoSongs.takeIf { !it.isVisible }?.inflate()
+        noSongsBinding.btnSearch.setOnClickListener {
+            // Go to the search page.
+        }
+        binding.mtvSubtitle.text = "0 Songs"
     }
 }

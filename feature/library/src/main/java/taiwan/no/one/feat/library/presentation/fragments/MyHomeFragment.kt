@@ -129,9 +129,9 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             }
         }
         listOf(
-            includeFavorite.find<Button>(AppResId.mtv_more) to 2,
-            includeDownloaded.find<Button>(AppResId.mtv_more) to 1,
-            includeHistory.find<Button>(AppResId.mtv_more) to 3,
+            includeFavorite.find<Button>(AppResId.btn_more) to 2,
+            includeDownloaded.find<Button>(AppResId.btn_more) to 1,
+            includeHistory.find<Button>(AppResId.btn_more) to 3,
         ).forEach { (button, id) ->
             button.setOnClickListener {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(id))

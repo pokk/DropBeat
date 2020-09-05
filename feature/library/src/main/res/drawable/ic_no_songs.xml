@@ -1,0 +1,44 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="76dp"
+    android:height="69dp"
+    android:viewportWidth="76"
+    android:viewportHeight="69">
+    <path
+        android:fillColor="#FCCE1E"
+        android:pathData="M58.5,51.5m-17.5,0a17.5,17.5 0,1 1,35 0a17.5,17.5 0,1 1,-35 0"/>
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M27,15L55,15A8,8 0,0 1,63 23L63,51A8,8 0,0 1,55 59L27,59A8,8 0,0 1,19 51L19,23A8,8 0,0 1,27 15z"/>
+    <path
+        android:fillColor="#FF5753"
+        android:fillType="evenOdd"
+        android:pathData="M34.6995,31C34.3132,31 34,31.3132 34,31.6995C34,32.0858 34.3132,32.3989 34.6995,32.3989H41.694C42.0803,32.3989 42.3934,32.0858 42.3934,31.6995C42.3934,31.3132 42.0803,31 41.694,31H34.6995ZM34.6995,34.7978C34.3132,34.7978 34,35.111 34,35.4973C34,35.8836 34.3132,36.1967 34.6995,36.1967H41.694C42.0803,36.1967 42.3934,35.8836 42.3934,35.4973C42.3934,35.111 42.0803,34.7978 41.694,34.7978H34.6995ZM34,39.2951C34,38.9088 34.3132,38.5956 34.6995,38.5956H38.8962C39.2825,38.5956 39.5956,38.9088 39.5956,39.2951C39.5956,39.6814 39.2825,39.9946 38.8962,39.9946H34.6995C34.3132,39.9946 34,39.6814 34,39.2951ZM46.1912,36.4972V38.5956H48.2896C48.6759,38.5956 48.9891,38.9088 48.9891,39.2951C48.9891,39.6814 48.6759,39.9945 48.2896,39.9945H46.1912V42.0929C46.1912,42.4792 45.8781,42.7924 45.4918,42.7924C45.1055,42.7924 44.7924,42.4792 44.7924,42.0929V39.9945H42.694C42.3077,39.9945 41.9945,39.6814 41.9945,39.2951C41.9945,38.9088 42.3077,38.5956 42.694,38.5956H44.7924V36.4972C44.7924,36.111 45.1055,35.7978 45.4918,35.7978C45.8781,35.7978 46.1912,36.111 46.1912,36.4972Z"/>
+    <path
+        android:fillColor="#FF5753"
+        android:pathData="M28.9429,37.8966C29.4381,37.652 29.6412,37.0523 29.3966,36.5571L25.4106,28.4879C25.166,27.9928 24.5663,27.7896 24.0712,28.0342C23.576,28.2788 23.3729,28.8785 23.6175,29.3737L27.1606,36.5463L19.9879,40.0894C19.4928,40.334 19.2897,40.9337 19.5343,41.4289C19.7789,41.924 20.3786,42.1272 20.8737,41.8826L28.9429,37.8966ZM0.5121,0.845C-0.8861,9.7584 2.8565,29.3701 28.1792,37.9471L28.8208,36.0529C4.5435,27.8299 1.2194,9.2416 2.488,1.155L0.5121,0.845Z"/>
+</vector>
