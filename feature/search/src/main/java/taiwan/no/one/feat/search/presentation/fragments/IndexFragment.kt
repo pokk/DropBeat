@@ -37,6 +37,7 @@ import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorato
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.kodein.di.instance
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.R
@@ -49,6 +50,7 @@ import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.ktx.recyclerview.contains
 import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.WidgetResDimen
+import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     private val mergeBinding by lazy { MergeSearchHasResultBinding.bind(binding.root) }
@@ -60,6 +62,12 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         VerticalItemDecorator(resources.getDimension(WidgetResDimen.md_three_unit).toInt(), 0)
     }
     private val rvMusics get() = mergeBinding.rvMusics
+    private val loadMoreListener by instance<LinearLoadMoreScrollListener>()
+
+    override fun onDetach() {
+        super.onDetach()
+        loadMoreListener.fetchMoreBlock = null
+    }
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -138,13 +146,24 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 }
             }.launchIn(lifecycleScope)
         }
+        if (loadMoreListener.fetchMoreBlock == null) {
+            loadMoreListener.fetchMoreBlock = ::getMoreMusics
+        }
     }
 
     private fun searchMusic(keyword: String) {
         vm.add(keyword)
-        searchVm.search(keyword)
+        musicAdapter.clear()
+        searchVm.search(keyword, 0)
         // post action for hiding the soft keyboard.
         view?.hideSoftKeyboard()
+    }
+
+    private fun getMoreMusics() {
+        searchVm.apply {
+            goNextPage()
+            search()
+        }
     }
 
     private fun clickedOnHistoryItem(keyword: String) {
@@ -153,12 +172,20 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun displayHistoryDataList() {
-        rvMusics.adapter = searchHistoryAdapter
+        musicAdapter.clear()
+        rvMusics.apply {
+            adapter = searchHistoryAdapter
+            removeOnScrollListener(loadMoreListener)
+        }
         mergeBinding.mtvRvTitle.text = "History Search "
     }
 
     private fun displaySearchResultDataList() {
-        rvMusics.adapter = musicAdapter
+        rvMusics.apply {
+            adapter = musicAdapter
+            addOnScrollListener(loadMoreListener)
+        }
+
         mergeBinding.mtvRvTitle.text = "Search Result "
     }
 }

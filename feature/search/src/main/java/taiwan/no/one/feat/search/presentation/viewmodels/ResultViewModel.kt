@@ -43,12 +43,23 @@ internal class ResultViewModel : BehindViewModel() {
     val musics = _musics.toLiveData()
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val addOrUpdateResult = _addOrUpdateResult.toLiveData()
+    private var curKeyword = ""
+    private var curPage = 0
 
-    fun search(keyword: String, page: Int = 0) = viewModelScope.launch {
-        _musics.value = fetchMusicCase.execute(FetchMusicReq(keyword, page))
+    fun search(keyword: String? = null, page: Int = -1) = viewModelScope.launch {
+        if (keyword != null) {
+            curKeyword = keyword
+        }
+        if (page >= 0) {
+            curPage = page
+        }
+        if (curKeyword.isBlank()) return@launch
+        _musics.value = fetchMusicCase.execute(FetchMusicReq(curKeyword, curPage))
     }
 
     fun add(keyword: String) = viewModelScope.launch {
         _addOrUpdateResult.value = addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword))
     }
+
+    fun goNextPage() = curPage++
 }

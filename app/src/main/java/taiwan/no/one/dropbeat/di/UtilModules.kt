@@ -38,7 +38,9 @@ import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.factory
 import org.kodein.di.instance
+import org.kodein.di.provider
 import org.kodein.di.singleton
+import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 import java.lang.ref.WeakReference
 
 object UtilModules {
@@ -66,6 +68,7 @@ object UtilModules {
         bind<StaggeredGridLayoutManager>() with factory { params: LayoutManagerParams ->
             StaggeredGridLayoutManager(params.spanCount, params.orientation)
         }
+        bind<LinearLoadMoreScrollListener>() with provider { LinearLoadMoreScrollListener() }
     }
 
     data class LayoutManagerParams(
