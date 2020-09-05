@@ -29,6 +29,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.loge
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -50,7 +51,13 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         vm.playlist.observe(this) { res ->
             res.onSuccess {
                 (find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
+                binding.apply {
+                    mtvTitle.text = it.name
+                    val duration = it.songs.fold(0) { acc, song -> acc + song.duration }
+                    mtvSubtitle.text = "${it.songs.size} Songs・$duration min・30 mins ago played"
+                }
             }.onFailure {
+                loge(it)
             }
         }
     }
