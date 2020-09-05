@@ -31,9 +31,9 @@ import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapte
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class SongViewHolder(
-    private val binding: ItemRankSongBinding
+    private val binding: ItemRankSongBinding,
 ) : ViewHolderBinding<SongEntity, SongAdapter>(binding.root) {
-    override fun initView(entity: SongEntity, position: Int, adapter: SongAdapter) {
+    override fun initView(entity: SongEntity, adapter: SongAdapter) {
         binding.apply {
             mtvNumber.text = "#${position + 1}"
             mtvAlbumName.text = entity.title

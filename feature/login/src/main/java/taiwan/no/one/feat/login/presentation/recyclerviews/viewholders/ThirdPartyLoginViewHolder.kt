@@ -31,7 +31,7 @@ import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 internal class ThirdPartyLoginViewHolder(
     private val binding: ItemSnsLoginBinding,
 ) : ViewHolderBinding<Int, ThirdPartyLoginAdapter>(binding.root) {
-    override fun initView(entity: Int, position: Int, adapter: ThirdPartyLoginAdapter) {
+    override fun initView(entity: Int, adapter: ThirdPartyLoginAdapter) {
         binding.btnSns.apply {
             setIconResource(entity)
             setOnClickListener { adapter.listener?.invoke(entity) }

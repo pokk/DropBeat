@@ -28,9 +28,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class ViewHolderBinding<in E : Any, in D : RecyclerView.Adapter<*>>(
-    view: View
+    view: View,
 ) : RecyclerView.ViewHolder(view) {
     protected val context by lazy { itemView.context }
 
-    abstract fun initView(entity: E, position: Int, adapter: D)
+    abstract fun initView(entity: E, adapter: D)
 }

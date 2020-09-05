@@ -83,7 +83,7 @@ internal class TopChartAdapter(
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: TopChartViewHolder, position: Int) =
-        holder.initView(itemList[position], position, this)
+        holder.initView(itemList[position], this)
 
     /**
      * Returns the total number of items in the data set held by the adapter.

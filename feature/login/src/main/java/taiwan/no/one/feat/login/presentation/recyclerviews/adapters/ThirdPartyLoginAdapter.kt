@@ -85,7 +85,7 @@ internal class ThirdPartyLoginAdapter(
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ThirdPartyLoginViewHolder, position: Int) =
-        holder.initView(snsIcons[position], position, this)
+        holder.initView(snsIcons[position], this)
 
     /**
      * Returns the total number of items in the data set held by the adapter.

@@ -28,6 +28,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="taiwan.no.one.dropbeat">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name="taiwan.no.one.dropbeat.DropBeatApp"
         android:allowBackup="true"

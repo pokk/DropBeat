@@ -24,8 +24,12 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
+import android.app.DownloadManager
+import android.app.DownloadManager.Request
+import android.os.Environment
 import android.view.KeyEvent
 import android.widget.EditText
+import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -41,6 +45,7 @@ import org.kodein.di.instance
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.search.R
+import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
 import taiwan.no.one.feat.search.databinding.MergeSearchHasResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
@@ -63,6 +68,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
     private val rvMusics get() = mergeBinding.rvMusics
     private val loadMoreListener by instance<LinearLoadMoreScrollListener>()
+    private val downloadManager by instance<DownloadManager>()
 
     override fun onDetach() {
         super.onDetach()
@@ -127,6 +133,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             }
         }
         searchHistoryAdapter.setOnClickListener(::clickedOnHistoryItem)
+        musicAdapter.setOnClickListener(::clickedOnSongItem)
         binding.apply {
             // Click the search icon
             tilSearchBar.setEndIconOnClickListener {
@@ -164,6 +171,16 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             goNextPage()
             search()
         }
+    }
+
+    private fun clickedOnSongItem(song: SongEntity) {
+        val request = Request(song.url.toUri()).apply {
+            setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${song.artist}_${song.title}.mp3")
+            setAllowedNetworkTypes(Request.NETWORK_MOBILE or Request.NETWORK_WIFI)
+            setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            setTitle(song.title)
+        }
+        downloadManager.enqueue(request)
     }
 
     private fun clickedOnHistoryItem(keyword: String) {

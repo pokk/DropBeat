@@ -30,9 +30,9 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdap
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class HistoryViewHolder(
-    private val binding: ItemRencentSearchBinding
+    private val binding: ItemRencentSearchBinding,
 ) : ViewHolderBinding<SearchHistoryEntity, HistoryAdapter>(binding.root) {
-    override fun initView(entity: SearchHistoryEntity, position: Int, adapter: HistoryAdapter) {
+    override fun initView(entity: SearchHistoryEntity, adapter: HistoryAdapter) {
         binding.mtvHistory.text = entity.keyword
         binding.clItem.setOnClickListener { adapter.onClickListener?.invoke(entity.keyword) }
     }

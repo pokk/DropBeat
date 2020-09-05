@@ -33,7 +33,7 @@ import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.ExploreViewHolder
 
 internal class ExploreAdapter(
-    private val itemList: List<TagEntity>
+    private val itemList: List<TagEntity>,
 ) : RecyclerView.Adapter<ExploreViewHolder>() {
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -83,7 +83,7 @@ internal class ExploreAdapter(
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) =
-        holder.initView(itemList[position], position, this)
+        holder.initView(itemList[position], this)
 
     /**
      * Returns the total number of items in the data set held by the adapter.

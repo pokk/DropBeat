@@ -88,7 +88,7 @@ internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), Aut
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
-        holder.initView(data[position], position, this)
+        holder.initView(data[position], this)
 
     /**
      * Returns the total number of items in the data set held by the adapter.

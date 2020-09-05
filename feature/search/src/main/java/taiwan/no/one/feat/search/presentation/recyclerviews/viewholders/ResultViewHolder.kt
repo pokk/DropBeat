@@ -31,14 +31,16 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapt
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class ResultViewHolder(
-    private val binding: ItemSearchResultBinding
+    private val binding: ItemSearchResultBinding,
 ) : ViewHolderBinding<SongEntity, ResultAdapter>(binding.root) {
-    override fun initView(entity: SongEntity, position: Int, adapter: ResultAdapter) {
+    override fun initView(entity: SongEntity, adapter: ResultAdapter) {
         binding.apply {
             mtvAlbumName.text = entity.title
             mtvArtistName.text = entity.artist
             sivAlbumThumb.loadAny(entity.cdnCoverUrl)
         }
-        binding.clItem.setOnClickListener {}
+        binding.clItem.setOnClickListener {
+            adapter.onClickListener?.invoke(entity)
+        }
     }
 }

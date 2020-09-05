@@ -30,9 +30,9 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAda
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class ExploreViewHolder(
-    private val binding: ItemExploreBinding
+    private val binding: ItemExploreBinding,
 ) : ViewHolderBinding<TagEntity, ExploreAdapter>(binding.root) {
-    override fun initView(entity: TagEntity, position: Int, adapter: ExploreAdapter) {
+    override fun initView(entity: TagEntity, adapter: ExploreAdapter) {
         binding.apply {
             mtvTitle.text = entity.name
         }

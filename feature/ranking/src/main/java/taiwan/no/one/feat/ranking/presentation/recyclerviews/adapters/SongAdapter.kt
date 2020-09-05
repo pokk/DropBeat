@@ -33,7 +33,7 @@ import taiwan.no.one.feat.ranking.databinding.ItemRankSongBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.SongViewHolder
 
 internal class SongAdapter(
-    private val entities: List<SongEntity> = emptyList()
+    private val entities: List<SongEntity> = emptyList(),
 ) : RecyclerView.Adapter<SongViewHolder>() {
     var onClickListener: (() -> Unit)? = null
         private set
@@ -94,7 +94,7 @@ internal class SongAdapter(
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        holder.initView(data[position], position, this)
+        holder.initView(data[position], this)
     }
 
     fun addExtraEntities(entities: List<SongEntity>) {

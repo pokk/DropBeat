@@ -97,7 +97,7 @@ internal class RankAdapter : RecyclerView.Adapter<RankViewHolder>(),
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: RankViewHolder, position: Int) {
-        holder.initView(data[position], position, this)
+        holder.initView(data[position], this)
     }
 
     fun setOnClickListener(listener: (rankId: Int) -> Unit) {

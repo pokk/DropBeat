@@ -35,7 +35,7 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultVi
 internal class ResultAdapter(
     private val entities: List<SongEntity> = emptyList(),
 ) : RecyclerView.Adapter<ResultViewHolder>() {
-    var onClickListener: (() -> Unit)? = null
+    var onClickListener: ((SongEntity) -> Unit)? = null
         private set
     private val data by lazy { entities.toMutableList() }
 
@@ -94,7 +94,11 @@ internal class ResultAdapter(
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
-        holder.initView(data[position], position, this)
+        holder.initView(data[position], this)
+    }
+
+    fun setOnClickListener(block: (songEntity: SongEntity) -> Unit) {
+        onClickListener = block
     }
 
     fun addExtraEntities(entities: List<SongEntity>) {

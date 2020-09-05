@@ -31,6 +31,6 @@ import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 internal class PlaylistViewHolder(
     private val binding: ItemTypeOfMusicBinding,
 ) : ViewHolderBinding<Any, PlaylistAdapter>(binding.root) {
-    override fun initView(entity: Any, position: Int, adapter: PlaylistAdapter) {
+    override fun initView(entity: Any, adapter: PlaylistAdapter) {
     }
 }

@@ -31,9 +31,9 @@ import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapte
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class RankViewHolder(
-    private val binding: ItemTrendBinding
+    private val binding: ItemTrendBinding,
 ) : ViewHolderBinding<BriefRankEntity, RankAdapter>(binding.root) {
-    override fun initView(entity: BriefRankEntity, position: Int, adapter: RankAdapter) {
+    override fun initView(entity: BriefRankEntity, adapter: RankAdapter) {
         binding.apply {
             mtvTitle.text = entity.title
             sivThumbnail.loadAny(entity.coverUrl)

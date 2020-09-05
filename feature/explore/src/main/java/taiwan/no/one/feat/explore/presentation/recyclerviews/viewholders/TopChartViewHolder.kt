@@ -32,9 +32,9 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAd
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class TopChartViewHolder(
-    private val binding: ItemTypeOfMusicBinding
+    private val binding: ItemTypeOfMusicBinding,
 ) : ViewHolderBinding<Any, TopChartAdapter>(binding.root) {
-    override fun initView(entity: Any, position: Int, adapter: TopChartAdapter) {
+    override fun initView(entity: Any, adapter: TopChartAdapter) {
         (entity as? TrackEntity)?.let(::initTrackType)
         (entity as? ArtistWithMoreDetailEntity)?.let(::initArtistType)
         binding.apply {

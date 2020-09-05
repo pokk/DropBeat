@@ -101,7 +101,7 @@ internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(),
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.initView(data[position], position, this)
+        holder.initView(data[position], this)
     }
 
     override fun onItemSwiped(position: Int, direction: Int) {
