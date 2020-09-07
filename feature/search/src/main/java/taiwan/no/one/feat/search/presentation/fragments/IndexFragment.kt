@@ -177,8 +177,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         val request = Request(song.url.toUri()).apply {
             setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${song.artist}_${song.title}.mp3")
             setAllowedNetworkTypes(Request.NETWORK_MOBILE or Request.NETWORK_WIFI)
-            setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            setTitle(song.title)
+            setTitle(song.artist + " -- " + song.title)
         }
         downloadManager.enqueue(request)
     }
