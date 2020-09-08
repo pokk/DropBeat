@@ -29,10 +29,14 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
 
-internal class CreateDefaultPlaylistWorker(
+internal class AddSongToDatabaseWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
+    companion object Constant {
+        const val PARAM_STREAM_DATA = "songs streaming data"
+    }
+
     /**
      * A suspending method to do your work.  This function runs on the coroutine context specified
      * by [coroutineContext].
@@ -45,7 +49,8 @@ internal class CreateDefaultPlaylistWorker(
      * dependent work will not execute if you return [ListenableWorker.Result.failure]
      */
     override suspend fun doWork(): Result {
-        val res = FeatModuleHelper.methodsProvider().createDefaultPlaylists()
+        val stream = inputData.getString(PARAM_STREAM_DATA) ?: return Result.failure()
+        val res = FeatModuleHelper.methodsProvider().downloadTrack(stream)
         return if (res) Result.success() else Result.failure()
     }
 }

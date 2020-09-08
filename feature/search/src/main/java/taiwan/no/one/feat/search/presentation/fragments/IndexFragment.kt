@@ -24,9 +24,6 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
-import android.app.DownloadManager
-import android.app.DownloadManager.Request
-import android.os.Environment
 import android.view.KeyEvent
 import android.widget.EditText
 import androidx.core.net.toUri
@@ -44,6 +41,7 @@ import kotlinx.coroutines.flow.onEach
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.core.helpers.DownloadHelper
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
@@ -52,6 +50,7 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdap
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
+import taiwan.no.one.feat.search.presentation.viewmodels.SongViewModel
 import taiwan.no.one.ktx.recyclerview.contains
 import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.WidgetResDimen
@@ -61,6 +60,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private val mergeBinding by lazy { MergeSearchHasResultBinding.bind(binding.root) }
     private val vm by viewModels<RecentViewModel>()
     private val searchVm by viewModels<ResultViewModel>()
+    private val songVm by viewModels<SongViewModel>()
     private val searchHistoryAdapter by lazy { HistoryAdapter() }
     private val musicAdapter by lazy { ResultAdapter() }
     private val musicItemDecoration by lazy {
@@ -68,7 +68,6 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
     private val rvMusics get() = mergeBinding.rvMusics
     private val loadMoreListener by instance<LinearLoadMoreScrollListener>()
-    private val downloadManager by instance<DownloadManager>()
 
     override fun onDetach() {
         super.onDetach()
@@ -174,12 +173,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun clickedOnSongItem(song: SongEntity) {
-        val request = Request(song.url.toUri()).apply {
-            setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${song.artist}_${song.title}.mp3")
-            setAllowedNetworkTypes(Request.NETWORK_MOBILE or Request.NETWORK_WIFI)
-            setTitle(song.artist + " -- " + song.title)
-        }
-        downloadManager.enqueue(request)
+        val filename = "${song.artist} - ${song.title}"
+        DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
     }
 
     private fun clickedOnHistoryItem(keyword: String) {

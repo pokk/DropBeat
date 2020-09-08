@@ -43,7 +43,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:label"
         tools:targetApi="M">
-        <activity android:name=".presentation.activity.SplashActivity">
+        <activity android:name=".presentation.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="taiwan.no.one.dropbeat.presentation.activity.MainActivity"
+            android:name="taiwan.no.one.dropbeat.presentation.activities.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -65,7 +65,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".services.DownloadReceiver">
+        <receiver android:name="taiwan.no.one.dropbeat.presentation.services.DownloadReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
             </intent-filter>

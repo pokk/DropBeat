@@ -22,18 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.services
+package taiwan.no.one.dropbeat.presentation.services
 
 import android.app.DownloadManager
 import android.app.DownloadManager.Query
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat.getSystemService
-import com.devrapid.kotlinknifer.logw
+import android.widget.Toast
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import org.kodein.di.DI
 import org.kodein.di.DIAware
+import org.kodein.di.factory
+import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.presentation.PresentationModules
+import taiwan.no.one.dropbeat.presentation.services.workers.AddSongToDatabaseWorker
 
 internal class DownloadReceiver : BroadcastReceiver(), DIAware {
     /**
@@ -79,16 +85,27 @@ internal class DownloadReceiver : BroadcastReceiver(), DIAware {
      * @param intent The Intent being received.
      */
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (context == null) return
         val action = intent?.action ?: return
-        val downloadManager = getSystemService(context, DownloadManager::class.java) ?: return
+        val downloadManager = context?.getSystemService(DownloadManager::class.java) ?: return
+
         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE == action) {
             val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             val cursor = downloadManager.query(Query().setFilterById(downloadId))
             if (cursor.moveToFirst()) {
                 val title = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE))
-                logw(title)
+                val songsStream = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_DESCRIPTION))
+
+                Toast.makeText(context, "Finished downloading $title", Toast.LENGTH_SHORT).show()
+                addSongsAndFavoriteList(songsStream)
             }
         }
+    }
+
+    private fun addSongsAndFavoriteList(songsStream: String) {
+        val data = Data.Builder().putString(AddSongToDatabaseWorker.PARAM_STREAM_DATA, songsStream).build()
+        val workManager by instance<WorkManager>()
+        val worker: (Data) -> OneTimeWorkRequest by factory(PresentationModules.TAG_WORKER_ADD_SONG)
+
+//        workManager.beginWith(worker(data)).then().enqueue()
     }
 }

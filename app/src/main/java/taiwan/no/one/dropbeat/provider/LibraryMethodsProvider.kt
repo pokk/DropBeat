@@ -26,4 +26,8 @@ package taiwan.no.one.dropbeat.provider
 
 interface LibraryMethodsProvider {
     suspend fun createDefaultPlaylists(): Boolean
+
+    suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
+
+    suspend fun downloadTrack(songStream: String): Boolean
 }

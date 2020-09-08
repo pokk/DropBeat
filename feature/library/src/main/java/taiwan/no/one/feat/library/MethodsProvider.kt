@@ -34,6 +34,8 @@ import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
+import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
+import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
 import java.io.BufferedReader
 
 @AutoService(LibraryMethodsProvider::class)
@@ -44,8 +46,10 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val gson by instance<Gson>()
     private val addPlaylistCase by instance<AddPlaylistCase>()
+    private val addSongsCase by instance<AddSongsCase>()
 
     override suspend fun createDefaultPlaylists(): Boolean {
+        // TODO(jieyi): 9/8/20 it should be only provide a method.
         val json = DropBeatApp.appContext.assets.open("json/default_playlist.json").use {
             it.bufferedReader().use(BufferedReader::readText)
         }
@@ -57,6 +61,15 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
             .forEach {
                 addPlaylistCase.execute(AddPlaylistReq(it))
             }
+        return true
+    }
+
+    override suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean {
+        TODO()
+    }
+
+    override suspend fun downloadTrack(songsStream: String): Boolean {
+        addSongsCase.execute(AddSongsReq(songsStream = songsStream))
         return true
     }
 }

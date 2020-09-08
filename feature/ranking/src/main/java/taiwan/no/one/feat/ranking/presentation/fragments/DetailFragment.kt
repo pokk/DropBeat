@@ -29,7 +29,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.dropbeat.presentation.activity.MainActivity
+import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingDetailBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel

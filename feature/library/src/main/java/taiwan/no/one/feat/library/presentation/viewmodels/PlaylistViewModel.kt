@@ -33,7 +33,7 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEnti
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
-import taiwan.no.one.feat.library.domain.usecases.AddSongReq
+import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistReq
@@ -58,6 +58,6 @@ internal class PlaylistViewModel : BehindViewModel() {
     }
 
     fun createSongs(songs: List<SongEntity>) = viewModelScope.launch {
-        _resPlaylist.value = addSongsCase.execute(AddSongReq(songs))
+        _resPlaylist.value = addSongsCase.execute(AddSongsReq(songs))
     }
 }

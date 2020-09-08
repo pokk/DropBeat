@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.presentation.activity
+package taiwan.no.one.dropbeat.presentation.activities
 
 import android.content.Context
 import android.content.res.Configuration

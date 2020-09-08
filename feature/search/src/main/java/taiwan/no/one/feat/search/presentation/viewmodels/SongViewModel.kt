@@ -22,30 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.presentation.services.workers
+package taiwan.no.one.feat.search.presentation.viewmodels
 
-import android.content.Context
-import androidx.work.CoroutineWorker
-import androidx.work.WorkerParameters
-import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import com.google.gson.Gson
+import org.kodein.di.instance
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 
-internal class CreateDefaultPlaylistWorker(
-    context: Context,
-    params: WorkerParameters,
-) : CoroutineWorker(context, params) {
-    /**
-     * A suspending method to do your work.  This function runs on the coroutine context specified
-     * by [coroutineContext].
-     * <p>
-     * A CoroutineWorker is given a maximum of ten minutes to finish its execution and return a
-     * [ListenableWorker.Result].  After this time has expired, the worker will be signalled to
-     * stop.
-     *
-     * @return The [ListenableWorker.Result] of the result of the background work; note that
-     * dependent work will not execute if you return [ListenableWorker.Result.failure]
-     */
-    override suspend fun doWork(): Result {
-        val res = FeatModuleHelper.methodsProvider().createDefaultPlaylists()
-        return if (res) Result.success() else Result.failure()
-    }
+internal class SongViewModel : BehindViewModel() {
+    private val gson by instance<Gson>()
+
+    fun songToStream(song: SongEntity) = gson.toJson(listOf(song))
+
+    fun songToStream(song: List<SongEntity>) = gson.toJson(song)
 }

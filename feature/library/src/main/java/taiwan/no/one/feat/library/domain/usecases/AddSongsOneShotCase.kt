@@ -24,17 +24,39 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
+import com.devrapid.kotlinknifer.loge
+import com.google.gson.Gson
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import org.kodein.di.instance
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class AddSongsOneShotCase(
     private val repository: PlaylistRepo,
-) : AddSongsCase() {
+) : AddSongsCase(), DIAware {
+    /**
+     * A DI Aware class must be within reach of a [DI] object.
+     */
+    override val di by di(DropBeatApp.appContext)
+
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addMusics(songs)
+        val list = songs ?: run {
+            val gson by instance<Gson>()
+            try {
+                gson.fromJson(songsStream, Array<SongEntity>::class.java).toList()
+            }
+            catch (e: Exception) {
+                loge(e)
+                return@ensure false
+            }
+        }
+        repository.addMusics(list)
         true
     }
 
-    class Request(val songs: List<SongEntity>) : RequestValues
+    class Request(val songs: List<SongEntity>? = null, val songsStream: String? = null) : RequestValues
 }

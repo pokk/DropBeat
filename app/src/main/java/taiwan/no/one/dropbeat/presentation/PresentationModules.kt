@@ -25,21 +25,28 @@
 package taiwan.no.one.dropbeat.presentation
 
 import android.content.Context
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import org.kodein.di.DI
 import org.kodein.di.bind
+import org.kodein.di.factory
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.BuildConfig
+import taiwan.no.one.dropbeat.presentation.services.workers.AddSongToDatabaseWorker
 import taiwan.no.one.dropbeat.presentation.services.workers.CreateDefaultPlaylistWorker
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 
 internal object PresentationModules : ModuleProvider {
     const val TAG_WORKER_INIT_DATA = "worker for initializing"
+    const val TAG_WORKER_ADD_SONG = "worker for adding a song to the database"
 
     override fun provide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID} PreziModule") {
         bind<OneTimeWorkRequest>(TAG_WORKER_INIT_DATA) with singleton {
             OneTimeWorkRequestBuilder<CreateDefaultPlaylistWorker>().build()
+        }
+        bind<OneTimeWorkRequest>(TAG_WORKER_ADD_SONG) with factory { params: Data ->
+            OneTimeWorkRequestBuilder<AddSongToDatabaseWorker>().setInputData(params).build()
         }
     }
 }
