@@ -24,10 +24,15 @@
 
 package taiwan.no.one.dropbeat.provider
 
+import androidx.annotation.WorkerThread
+
 interface LibraryMethodsProvider {
+    @WorkerThread
     suspend fun createDefaultPlaylists(): Boolean
 
+    @WorkerThread
     suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
 
-    suspend fun downloadTrack(songStream: String): Boolean
+    @WorkerThread
+    suspend fun downloadTrack(songsStream: String): Boolean
 }

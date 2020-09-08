@@ -27,6 +27,7 @@ package taiwan.no.one.dropbeat.presentation.services.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import org.json.JSONArray
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
 
 internal class AddSongToDatabaseWorker(
@@ -35,6 +36,7 @@ internal class AddSongToDatabaseWorker(
 ) : CoroutineWorker(context, params) {
     companion object Constant {
         const val PARAM_STREAM_DATA = "songs streaming data"
+        const val PARAM_FILE_PATH = "song file local path"
     }
 
     /**
@@ -50,7 +52,28 @@ internal class AddSongToDatabaseWorker(
      */
     override suspend fun doWork(): Result {
         val stream = inputData.getString(PARAM_STREAM_DATA) ?: return Result.failure()
-        val res = FeatModuleHelper.methodsProvider().downloadTrack(stream)
+        val localPath = inputData.getStringArray(PARAM_FILE_PATH) ?: return Result.failure()
+        val res = FeatModuleHelper.methodsProvider().downloadTrack(addAdditionInfo(stream, localPath))
         return if (res) Result.success() else Result.failure()
+    }
+
+    private fun addAdditionInfo(songStreams: String, path: Array<String>): String {
+        // Do modify the string for mapping the song entity to local database entity column.
+        val newStream = songStreams.replace("\"length\"", "\"duration\"")
+            .replace("\"url\"", "\"uri\"")
+            .replace("\"cdn_coverURL\"", "\"cover_uri\"")
+        // Add extra information only for the local song entity into the json string data.
+        return buildString {
+            append('[')
+            val jsonArray = JSONArray(newStream)
+            repeat(jsonArray.length()) {
+                append(buildString {
+                    append(jsonArray[it].toString())
+                    insert(1, "\"has_own\":true,")
+                    insert(1, "\"local_uri\":\"${path[it]}\",")
+                })
+            }
+            append(']')
+        }
     }
 }

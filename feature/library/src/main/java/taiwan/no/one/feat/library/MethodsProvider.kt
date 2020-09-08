@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.library
 
+import androidx.annotation.WorkerThread
 import com.google.auto.service.AutoService
 import com.google.gson.Gson
 import org.kodein.di.DI

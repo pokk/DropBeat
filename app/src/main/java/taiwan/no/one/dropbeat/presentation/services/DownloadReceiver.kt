@@ -33,6 +33,7 @@ import android.widget.Toast
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import com.devrapid.kotlinknifer.logw
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.factory
@@ -90,22 +91,27 @@ internal class DownloadReceiver : BroadcastReceiver(), DIAware {
 
         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE == action) {
             val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            val cursor = downloadManager.query(Query().setFilterById(downloadId))
-            if (cursor.moveToFirst()) {
-                val title = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE))
-                val songsStream = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_DESCRIPTION))
+            downloadManager.query(Query().setFilterById(downloadId)).use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val title = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE))
+                    val songsStream = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_DESCRIPTION))
+                    val localUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI))
 
-                Toast.makeText(context, "Finished downloading $title", Toast.LENGTH_SHORT).show()
-                addSongsAndFavoriteList(songsStream)
+                    Toast.makeText(context, "Finished downloading $title", Toast.LENGTH_SHORT).show()
+                    addSongsAndFavoriteList(songsStream, localUri)
+                }
             }
         }
     }
 
-    private fun addSongsAndFavoriteList(songsStream: String) {
-        val data = Data.Builder().putString(AddSongToDatabaseWorker.PARAM_STREAM_DATA, songsStream).build()
+    private fun addSongsAndFavoriteList(songsStream: String, localUri: String) {
+        val data = Data.Builder()
+            .putString(AddSongToDatabaseWorker.PARAM_STREAM_DATA, songsStream)
+            .putStringArray(AddSongToDatabaseWorker.PARAM_FILE_PATH, arrayOf(localUri))
+            .build()
         val workManager by instance<WorkManager>()
         val worker: (Data) -> OneTimeWorkRequest by factory(PresentationModules.TAG_WORKER_ADD_SONG)
 
-//        workManager.beginWith(worker(data)).then().enqueue()
+        workManager.beginWith(worker(data)).enqueue()
     }
 }

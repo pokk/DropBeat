@@ -75,6 +75,7 @@ internal data class LibraryEntity(
         @Embedded
         val time: TimeEntity = TimeEntity(),
         // ↓↓↓ If downloaded ↓↓↓
+        @ColumnInfo(name = "has_own")
         val hasOwn: Boolean = false,
         @ColumnInfo(name = "local_uri")
         val localUri: String = DEFAULT_STR,
