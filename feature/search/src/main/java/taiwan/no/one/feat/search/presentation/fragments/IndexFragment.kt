@@ -31,6 +31,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
@@ -39,9 +40,11 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.kodein.di.instance
+import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.DownloadHelper
+import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
@@ -55,6 +58,7 @@ import taiwan.no.one.ktx.recyclerview.contains
 import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
+import java.lang.ref.WeakReference
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     private val mergeBinding by lazy { MergeSearchHasResultBinding.bind(binding.root) }
@@ -68,13 +72,18 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
     private val rvMusics get() = mergeBinding.rvMusics
     private val loadMoreListener by instance<LinearLoadMoreScrollListener>()
+    private val linearLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()))
+    }
 
     override fun onDetach() {
         super.onDetach()
         loadMoreListener.fetchMoreBlock = null
     }
 
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    // TODO(jieyi): 9/9/20 1. if no result from the remote server.
+    //  2. the request calls should be cancelled after changing to the history adapter.
+    //  3. loading view should implement.
     override fun bindLiveData() {
         vm.histories.observe(this) {
             logw(it)
@@ -84,6 +93,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             else {
                 searchHistoryAdapter.data = it
                 rvMusics.smoothScrollToPosition(0)
+                enableMotionWhenScrollable(rvMusics)
                 // Remove the item decoration
                 if (musicItemDecoration !in rvMusics) return@observe
                 rvMusics.removeItemDecoration(musicItemDecoration)
@@ -93,23 +103,23 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             res.onSuccess {
                 if (it.isEmpty()) {
                     loge("result is empty")
+                    disableMotion()
                 }
                 else {
                     musicAdapter.addExtraEntities(it)
                     displaySearchResultDataList()
+                    enableMotionWhenScrollable(rvMusics)
                     // Add the item decoration
                     if (musicItemDecoration in rvMusics) return@onSuccess
                     rvMusics.addItemDecoration(musicItemDecoration)
                 }
+                hideLoading()
             }.onFailure {
                 loge(it)
             }
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         mergeBinding.mtvRvTitle.doOnPreDraw {
@@ -119,16 +129,13 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all component listeners here.
-     */
     override fun componentListenersBinding() {
         rvMusics.apply {
             if (adapter == null) {
                 adapter = searchHistoryAdapter
             }
             if (layoutManager == null) {
-                layoutManager = LinearLayoutManager(requireActivity())
+                layoutManager = linearLayoutManager()
             }
         }
         searchHistoryAdapter.setOnClickListener(::clickedOnHistoryItem)
@@ -158,6 +165,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun searchMusic(keyword: String) {
+        showLoading()
         vm.add(keyword)
         musicAdapter.clear()
         searchVm.search(keyword, 0)
@@ -198,5 +206,26 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
 
         mergeBinding.mtvRvTitle.text = "Search Result "
+    }
+
+    private fun disableMotion() {
+        binding.layoutParent.getTransition(R.id.transition_search_scene).apply {
+            if (isEnabled) {
+                setEnable(false)
+            }
+        }
+    }
+
+    private fun enableMotion() {
+        binding.layoutParent.getTransition(R.id.transition_search_scene).apply {
+            if (!isEnabled) {
+                setEnable(true)
+            }
+        }
+    }
+
+    private fun enableMotionWhenScrollable(recyclerView: RecyclerView) {
+        // down = 1; up = -1
+        if (recyclerView.canScrollVertically(-1)) enableMotion() else disableMotion()
     }
 }

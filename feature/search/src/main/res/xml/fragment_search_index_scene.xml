@@ -28,6 +28,7 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
+        android:id="@+id/transition_search_scene"
         motion:constraintSetEnd="@id/collapsed"
         motion:constraintSetStart="@id/expanded"
         motion:duration="1000">
