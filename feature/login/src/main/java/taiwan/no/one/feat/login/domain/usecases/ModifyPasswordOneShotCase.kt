@@ -28,12 +28,12 @@ import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 
 internal class ModifyPasswordOneShotCase(
-    private val authService: AuthService
+    private val authService: AuthService,
 ) : ModifyPasswordCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         authService.modifyPassword(email)
         true // If there are no errors happened, always will be true.
     }
 
-    class Request(val email: String) : Usecase.RequestValues
+    data class Request(val email: String) : Usecase.RequestValues
 }

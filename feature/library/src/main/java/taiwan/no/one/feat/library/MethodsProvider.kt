@@ -24,49 +24,37 @@
 
 package taiwan.no.one.feat.library
 
-import androidx.annotation.WorkerThread
 import com.google.auto.service.AutoService
-import com.google.gson.Gson
-import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
-import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
-import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
-import java.io.BufferedReader
+import taiwan.no.one.feat.library.domain.usecases.CreateDefaultPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
 
 @AutoService(LibraryMethodsProvider::class)
 class MethodsProvider : LibraryMethodsProvider, DIAware {
-    /**
-     * A DI Aware class must be within reach of a [DI] object.
-     */
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
-    private val gson by instance<Gson>()
-    private val addPlaylistCase by instance<AddPlaylistCase>()
+    private val createDefaultPlaylistCase by instance<CreateDefaultPlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
+    private val updatePlaylistCase by instance<UpdatePlaylistCase>()
 
     override suspend fun createDefaultPlaylists(): Boolean {
-        // TODO(jieyi): 9/8/20 it should be only provide a method.
-        val json = DropBeatApp.appContext.assets.open("json/default_playlist.json").use {
-            it.bufferedReader().use(BufferedReader::readText)
-        }
-        val list = gson.fromJson(json, Array<PlayListEntity>::class.java).toList()
-        val ids = list.map(PlayListEntity::id)
-        val names = list.map(PlayListEntity::name)
-        ids.zip(names)
-            .map { (id, name) -> PlayListEntity(id, name) }
-            .forEach {
-                addPlaylistCase.execute(AddPlaylistReq(it))
-            }
+        createDefaultPlaylistCase.execute()
         return true
     }
 
     override suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean {
-        TODO()
+        updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, songIds = listOf(songId), isAddSongs = true))
+        return true
+    }
+
+    override suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean {
+        updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, songsPaths = listOf(songLocalPath), isAddSongs = true))
+        return true
     }
 
     override suspend fun downloadTrack(songsStream: String): Boolean {

@@ -26,14 +26,63 @@ package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
+import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
 internal class UpdatePlaylistOneShotCase(
-    private val repository: PlaylistRepo,
+    private val playlistRepository: PlaylistRepo,
+    private val songRepository: SongRepo,
 ) : UpdatePlaylistCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        TODO()
+        val oldPlaylist = playlistRepository.fetchPlaylist(playlistId!!)
+        val set = oldPlaylist.songIds.toSet()
+        val songIds = getSongIds(this)
+        val ids = when {
+            // Add new song ids.
+            isAddSongs == true && isRemoveSongs != true -> oldPlaylist.songIds.toMutableList()
+                .apply {
+                    // Check the id has already been in the list.
+                    songIds.forEach {
+                        // If the song id is not in the list, add id into the new list.
+                        if (!set.contains(it)) {
+                            add(it)
+                        }
+                    }
+                }
+            // Remove song ids.
+            isAddSongs != true && isRemoveSongs == true -> oldPlaylist.songIds.toMutableList()
+                .apply {
+                    // Check the id has already been in the list.
+                    songIds.forEach {
+                        // If the song id is in the list, remove id into the new list.
+                        if (set.contains(it)) {
+                            remove(it)
+                        }
+                    }
+                }
+            else -> oldPlaylist.songIds
+        }
+        val newPlaylist = oldPlaylist.copy(
+            name = name ?: oldPlaylist.name,
+            songIds = ids,
+            count = ids.size
+        )
+        playlistRepository.updatePlaylist(newPlaylist)
         true
     }
 
-    class Request : RequestValues
+    private suspend fun getSongIds(request: UpdatePlaylistReq): List<Int> {
+        if (request.songIds != null) {
+            return request.songIds
+        }
+        return request.songsPaths?.map { songRepository.getMusic(it).id } ?: throw NullPointerException()
+    }
+
+    data class Request(
+        val playlistId: Int?,
+        val name: String? = null,
+        val songIds: List<Int>? = null,
+        val songsPaths: List<String>? = null,
+        val isAddSongs: Boolean? = null,
+        val isRemoveSongs: Boolean? = null,
+    ) : RequestValues
 }

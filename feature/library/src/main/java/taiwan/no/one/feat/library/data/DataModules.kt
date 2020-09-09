@@ -31,23 +31,34 @@ import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.library.FeatModules.Constant.FEAT_NAME
+import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.local.configs.MusicLibraryDatabase
 import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
 import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 import taiwan.no.one.feat.library.data.repositories.PlaylistRepository
+import taiwan.no.one.feat.library.data.repositories.SongRepository
 import taiwan.no.one.feat.library.data.stores.LocalStore
 import taiwan.no.one.feat.library.data.stores.RemoteStore
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
+import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
 internal object DataModules : ModuleProvider {
+    private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
+    private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
+
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<LocalStore>() with singleton { LocalStore(instance(), instance()) }
-        bind<RemoteStore>() with singleton { RemoteStore() }
+        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance(), instance()) }
+        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore() }
 
-        bind<PlaylistRepo>() with singleton { PlaylistRepository(instance(), instance()) }
+        bind<PlaylistRepo>() with singleton {
+            PlaylistRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+        }
+        bind<SongRepo>() with singleton {
+            SongRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+        }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {

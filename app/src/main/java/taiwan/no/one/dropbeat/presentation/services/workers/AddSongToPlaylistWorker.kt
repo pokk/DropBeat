@@ -22,18 +22,30 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.domain.usecases
+package taiwan.no.one.dropbeat.presentation.services.workers
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
+import android.content.Context
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import taiwan.no.one.dropbeat.di.FeatModuleHelper
 
-internal class AddRankIdsOneShotCase(
-    private val repository: RankingRepo,
-) : AddRankIdsCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addRankings(entities)
+internal class AddSongToPlaylistWorker(
+    context: Context,
+    params: WorkerParameters,
+) : CoroutineWorker(context, params) {
+    companion object Constant {
+        const val PARAM_PLAYLIST_ID = "playlist id"
+        const val PARAM_SONG_PATH = "song path"
     }
 
-    data class Request(val entities: List<RankingIdEntity>) : RequestValues
+    override suspend fun doWork(): Result {
+        val (playlistId, songPath) = inputData.run {
+            getInt(PARAM_PLAYLIST_ID, -1) to getString(PARAM_SONG_PATH)
+        }
+        if (playlistId == -1 || songPath == null) {
+            return Result.failure()
+        }
+        val res = FeatModuleHelper.methodsProvider().addSongToPlaylist(songPath, playlistId)
+        return if (res) Result.success() else Result.failure()
+    }
 }

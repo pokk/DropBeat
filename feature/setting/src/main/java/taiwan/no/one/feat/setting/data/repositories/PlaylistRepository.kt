@@ -24,11 +24,10 @@
 
 package taiwan.no.one.feat.setting.data.repositories
 
-import taiwan.no.one.feat.setting.data.stores.LocalStore
-import taiwan.no.one.feat.setting.data.stores.RemoteStore
+import taiwan.no.one.feat.setting.data.contracts.DataStore
 import taiwan.no.one.feat.setting.domain.repositories.PlaylistRepo
 
 internal class PlaylistRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore
+    private val local: DataStore,
+    private val remote: DataStore,
 ) : PlaylistRepo

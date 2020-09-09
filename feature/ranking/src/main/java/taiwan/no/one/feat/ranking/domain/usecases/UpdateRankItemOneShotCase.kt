@@ -28,11 +28,11 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal class UpdateRankItemOneShotCase(
-    private val repository: RankingRepo
+    private val repository: RankingRepo,
 ) : UpdateRankItemCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         repository.updateRanking(id, uri, number)
     }
 
-    class Request(val id: Int, val uri: String, val number: Int) : RequestValues
+    data class Request(val id: Int, val uri: String, val number: Int) : RequestValues
 }

@@ -22,18 +22,27 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.domain.usecases
+package taiwan.no.one.feat.library.domain.usecases
 
+import taiwan.no.one.core.data.extensions.parseObjectFromJson
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
+import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
-internal class AddRankIdsOneShotCase(
-    private val repository: RankingRepo,
-) : AddRankIdsCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addRankings(entities)
+internal class CreateDefaultPlaylistOneShotCase(
+    private val repository: PlaylistRepo,
+) : CreateDefaultPlaylistCase() {
+    override suspend fun acquireCase(parameter: Request?): Boolean {
+        val list = DropBeatApp.appContext
+                       .parseObjectFromJson<List<PlayListEntity>>("json/default_playlist.json") ?: throw Exception()
+        val ids = list.map(PlayListEntity::id)
+        val names = list.map(PlayListEntity::name)
+        ids.zip(names)
+            .map { (id, name) -> PlayListEntity(id, name) }
+            .forEach { repository.addPlaylist(it) }
+        return true
     }
 
-    data class Request(val entities: List<RankingIdEntity>) : RequestValues
+    class Request : RequestValues
 }

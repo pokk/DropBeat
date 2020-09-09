@@ -25,7 +25,7 @@
 package taiwan.no.one.dropbeat.domain.usecases
 
 import android.net.wifi.hotspot2.pps.Credential
-import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.dropbeat.domain.repositories.PrivacyRepo
 
@@ -38,9 +38,9 @@ internal class FetchLoginInfoOneShotCase(
         return entity
     }
 
-    class Request(
+    data class Request(
         val email: String? = null,
         val password: String? = null,
         val credential: Credential? = null,
-    ) : Usecase.RequestValues
+    ) : RequestValues
 }

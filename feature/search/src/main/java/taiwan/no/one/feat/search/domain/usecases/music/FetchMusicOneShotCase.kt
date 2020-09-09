@@ -31,7 +31,7 @@ import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
 import taiwan.no.one.feat.search.domain.usecases.FetchMusicCase
 
 internal class FetchMusicOneShotCase(
-    private val searchMusicRepo: SearchMusicRepo
+    private val searchMusicRepo: SearchMusicRepo,
 ) : FetchMusicCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         searchMusicRepo.fetchMusic(keyword, page).map {
@@ -49,5 +49,5 @@ internal class FetchMusicOneShotCase(
         }
     }
 
-    class Request(val keyword: String, val page: Int) : Usecase.RequestValues
+    data class Request(val keyword: String, val page: Int) : Usecase.RequestValues
 }

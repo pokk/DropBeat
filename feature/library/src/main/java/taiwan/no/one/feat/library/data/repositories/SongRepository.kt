@@ -22,18 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.domain.usecases
+package taiwan.no.one.feat.library.data.repositories
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
+import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
-internal class AddRankIdsOneShotCase(
-    private val repository: RankingRepo,
-) : AddRankIdsCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addRankings(entities)
-    }
-
-    data class Request(val entities: List<RankingIdEntity>) : RequestValues
+internal class SongRepository(
+    private val local: DataStore,
+    private val remote: DataStore,
+) : SongRepo {
+    override suspend fun getMusic(songPath: String) = local.getMusic(songPath)
 }

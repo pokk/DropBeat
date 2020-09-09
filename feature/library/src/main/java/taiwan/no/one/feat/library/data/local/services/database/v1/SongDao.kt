@@ -60,6 +60,9 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
         }
     }
 
+    @Query("SELECT * FROM table_song WHERE local_uri=:path")
+    abstract suspend fun getMusic(path: String): LibraryEntity.SongEntity
+
     /**
      * Get all data from the local music table.
      */

@@ -28,7 +28,7 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal class FetchDetailOfRankingsOneShotCase(
-    private val repository: RankingRepo
+    private val repository: RankingRepo,
 ) : FetchDetailOfRankingsCase() {
     override suspend fun acquireCase(parameter: Request?) = repository.fetchDetailOfRankings()
 

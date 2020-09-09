@@ -28,11 +28,11 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal class FetchMusicRankOneShotCase(
-    private val repository: RankingRepo
+    private val repository: RankingRepo,
 ) : FetchMusicRankCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         repository.fetchMusicRanking(rankId)
     }
 
-    class Request(val rankId: String) : RequestValues
+    data class Request(val rankId: String) : RequestValues
 }

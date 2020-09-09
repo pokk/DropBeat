@@ -43,5 +43,5 @@ internal class FetchChartTopTrackOneShotCase(
         }
     }
 
-    class Request(val page: Int, val limit: Int, val moreDetailRange: Int = 0) : RequestValues
+    data class Request(val page: Int, val limit: Int, val moreDetailRange: Int = 0) : RequestValues
 }

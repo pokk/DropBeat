@@ -28,11 +28,11 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal class FetchSimilarTrackOneShotCase(
-    private val repository: LastFmRepo
+    private val repository: LastFmRepo,
 ) : FetchSimilarTrackCase() {
     override suspend fun acquireCase(parameter: FetchSimilarTrackReq?) = parameter.ensure {
         repository.fetchSimilarTrackInfo(mbid)
     }
 
-    class Request(val mbid: String) : RequestValues
+    data class Request(val mbid: String) : RequestValues
 }

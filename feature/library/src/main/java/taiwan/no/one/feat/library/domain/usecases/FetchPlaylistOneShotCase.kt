@@ -34,5 +34,5 @@ internal class FetchPlaylistOneShotCase(
         repository.fetchPlaylist(playlistId)
     }
 
-    class Request(val playlistId: Int) : RequestValues
+    data class Request(val playlistId: Int) : RequestValues
 }

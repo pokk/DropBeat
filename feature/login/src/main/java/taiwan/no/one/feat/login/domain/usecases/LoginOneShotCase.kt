@@ -44,7 +44,7 @@ internal class LoginOneShotCase(
         entity
     }
 
-    class Request(
+    data class Request(
         val email: String? = null,
         val password: String? = null,
         val credential: Credential? = null,

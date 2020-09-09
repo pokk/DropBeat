@@ -34,5 +34,8 @@ interface LibraryMethodsProvider {
     suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
 
     @WorkerThread
+    suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean
+
+    @WorkerThread
     suspend fun downloadTrack(songsStream: String): Boolean
 }

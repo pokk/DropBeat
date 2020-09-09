@@ -39,3 +39,6 @@ internal typealias DeletePlaylistCase = OneShotUsecase<Boolean, DeletePlaylistRe
 internal typealias DeletePlaylistReq = DeletePlaylistOneShotCase.Request
 internal typealias AddSongsCase = OneShotUsecase<Boolean, AddSongsReq>
 internal typealias AddSongsReq = AddSongsOneShotCase.Request
+
+internal typealias CreateDefaultPlaylistCase = OneShotUsecase<Boolean, CreateDefaultPlaylistReq>
+internal typealias CreateDefaultPlaylistReq = CreateDefaultPlaylistOneShotCase.Request

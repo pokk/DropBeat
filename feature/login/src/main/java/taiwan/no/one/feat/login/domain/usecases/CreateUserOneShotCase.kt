@@ -28,11 +28,11 @@ import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 
 internal class CreateUserOneShotCase(
-    private val authService: AuthService
+    private val authService: AuthService,
 ) : CreateUserCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         authService.getLogin(email, password)
     }
 
-    class Request(val email: String, val password: String) : Usecase.RequestValues
+    data class Request(val email: String, val password: String) : Usecase.RequestValues
 }

@@ -24,15 +24,14 @@
 
 package taiwan.no.one.feat.library.data.repositories
 
+import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
-import taiwan.no.one.feat.library.data.stores.LocalStore
-import taiwan.no.one.feat.library.data.stores.RemoteStore
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class PlaylistRepository(
-    private val local: LocalStore,
-    private val remote: RemoteStore,
+    private val local: DataStore,
+    private val remote: DataStore,
 ) : PlaylistRepo {
     override suspend fun fetchMusics(playlistId: Int) = local.getMusics(playlistId)
 

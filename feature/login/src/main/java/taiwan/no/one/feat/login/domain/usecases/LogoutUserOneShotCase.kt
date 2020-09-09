@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.login.domain.usecases
 
-import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.dropbeat.domain.repositories.PrivacyRepo
 import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
@@ -40,5 +40,5 @@ internal class LogoutUserOneShotCase(
         return info.uid?.let { privacyRepository.deleteLoginInfo(it) } ?: false
     }
 
-    class Request : Usecase.RequestValues
+    class Request : RequestValues
 }

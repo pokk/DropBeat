@@ -26,6 +26,7 @@ package taiwan.no.one.dropbeat
 
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.Stetho
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import taiwan.no.one.dropbeat.di.Dispatcher
@@ -42,4 +43,9 @@ class DropBeatApp : Application(), DIAware {
     }
 
     override val di = Dispatcher.importIntoApp(this)
+
+    override fun onCreate() {
+        super.onCreate()
+        Stetho.initializeWithDefaults(this)
+    }
 }

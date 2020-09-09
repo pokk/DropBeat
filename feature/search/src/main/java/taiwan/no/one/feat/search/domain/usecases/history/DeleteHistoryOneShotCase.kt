@@ -31,12 +31,12 @@ import taiwan.no.one.feat.search.domain.usecases.DeleteHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.DeleteHistoryReq
 
 internal class DeleteHistoryOneShotCase(
-    private val repository: HistoryRepo
+    private val repository: HistoryRepo,
 ) : DeleteHistoryCase() {
     override suspend fun acquireCase(parameter: DeleteHistoryReq?) = parameter.ensure {
         if (keyword == null && entity == null) return@ensure true
         repository.deleteSearchHistory(keyword, entity)
     }
 
-    class Request(val keyword: String?, val entity: SearchHistoryEntity?) : RequestValues
+    data class Request(val keyword: String?, val entity: SearchHistoryEntity?) : RequestValues
 }

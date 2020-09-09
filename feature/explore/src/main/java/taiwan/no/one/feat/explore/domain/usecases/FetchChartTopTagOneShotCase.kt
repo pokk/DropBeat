@@ -28,11 +28,11 @@ import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal class FetchChartTopTagOneShotCase(
-    private val repository: LastFmRepo
+    private val repository: LastFmRepo,
 ) : FetchChartTopTagCase() {
     override suspend fun acquireCase(parameter: FetchChartTopTagReq?) = parameter.ensure {
         repository.fetchChartTopTag(page, limit)
     }
 
-    class Request(val page: Int, val limit: Int) : RequestValues
+    data class Request(val page: Int, val limit: Int) : RequestValues
 }

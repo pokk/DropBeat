@@ -33,7 +33,6 @@ import android.widget.Toast
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
-import com.devrapid.kotlinknifer.logw
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.factory
@@ -41,6 +40,7 @@ import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.presentation.PresentationModules
 import taiwan.no.one.dropbeat.presentation.services.workers.AddSongToDatabaseWorker
+import taiwan.no.one.dropbeat.presentation.services.workers.AddSongToPlaylistWorker
 
 internal class DownloadReceiver : BroadcastReceiver(), DIAware {
     /**
@@ -105,13 +105,21 @@ internal class DownloadReceiver : BroadcastReceiver(), DIAware {
     }
 
     private fun addSongsAndFavoriteList(songsStream: String, localUri: String) {
-        val data = Data.Builder()
+        val dbData = Data.Builder()
             .putString(AddSongToDatabaseWorker.PARAM_STREAM_DATA, songsStream)
             .putStringArray(AddSongToDatabaseWorker.PARAM_FILE_PATH, arrayOf(localUri))
             .build()
+        val playlistData = Data.Builder()
+            .putInt(AddSongToPlaylistWorker.PARAM_PLAYLIST_ID, 1) // Download id is 1.
+            .putString(AddSongToPlaylistWorker.PARAM_SONG_PATH, localUri)
+            .build()
         val workManager by instance<WorkManager>()
-        val worker: (Data) -> OneTimeWorkRequest by factory(PresentationModules.TAG_WORKER_ADD_SONG)
+        val dbWorker: (Data) -> OneTimeWorkRequest by factory(PresentationModules.TAG_WORKER_ADD_SONG_TO_DB)
+        val playlistWorker: (Data) -> OneTimeWorkRequest by factory(PresentationModules.TAG_WORKER_ADD_SONG_TO_PLAYLIST)
 
-        workManager.beginWith(worker(data)).enqueue()
+        workManager
+            .beginWith(dbWorker(dbData))
+            .then(playlistWorker(playlistData))
+            .enqueue()
     }
 }

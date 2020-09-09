@@ -36,5 +36,5 @@ internal class AddPlaylistOneShotCase(
         true
     }
 
-    class Request(val playlist: PlayListEntity) : RequestValues
+    data class Request(val playlist: PlayListEntity) : RequestValues
 }

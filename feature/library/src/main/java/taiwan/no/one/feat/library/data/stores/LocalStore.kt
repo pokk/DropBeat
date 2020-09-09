@@ -38,7 +38,12 @@ internal class LocalStore(
     private val playlistDao: PlaylistDao,
     private val songDao: SongDao,
 ) : DataStore {
-    override suspend fun getMusics(playlistId: Int) = songDao.getMusics()
+    override suspend fun getMusic(path: String) = songDao.getMusic(path)
+
+    override suspend fun getMusics(playlistId: Int): List<SongEntity> {
+        val playlist = playlistDao.getPlaylist(playlistId)
+        return songDao.getMusics(playlist.songIds)
+    }
 
     override suspend fun createMusics(songs: List<SongEntity>) = songDao.insert(*songs.toTypedArray())
 
@@ -56,7 +61,7 @@ internal class LocalStore(
 
     override suspend fun getTheNewestPlaylist() = playlistDao.getLatestPlaylist()
 
-    override suspend fun createPlaylist(playlist: PlayListEntity) = playlistDao.insert(playlist)
+    override suspend fun createPlaylist(playlist: PlayListEntity) = playlistDao.insertIfNotExist(playlist)
 
     override suspend fun modifyPlaylist(playlist: PlayListEntity) = playlistDao.update(playlist)
 
