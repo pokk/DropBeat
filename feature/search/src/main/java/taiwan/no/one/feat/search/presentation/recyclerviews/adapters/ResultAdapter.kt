@@ -31,13 +31,15 @@ import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
+import kotlin.properties.Delegates
 
-internal class ResultAdapter(
-    private val entities: List<SongEntity> = emptyList(),
-) : RecyclerView.Adapter<ResultViewHolder>() {
+internal class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>(), AutoUpdatable {
     var onClickListener: ((SongEntity) -> Unit)? = null
         private set
-    private val data by lazy { entities.toMutableList() }
+    var data: List<SongEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { o, n -> o.url == n.url }
+    }
 
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -102,11 +104,12 @@ internal class ResultAdapter(
     }
 
     fun addExtraEntities(entities: List<SongEntity>) {
-        data.addAll(entities)
-        notifyDataSetChanged()
+        data = data.toMutableList().apply {
+            addAll(entities)
+        }
     }
 
     fun clear() {
-        data.clear()
+        data = emptyList()
     }
 }

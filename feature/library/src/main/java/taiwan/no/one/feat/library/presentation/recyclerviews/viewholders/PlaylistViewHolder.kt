@@ -24,13 +24,22 @@
 
 package taiwan.no.one.feat.library.presentation.recyclerviews.viewholders
 
+import coil.loadAny
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class PlaylistViewHolder(
     private val binding: ItemTypeOfMusicBinding,
-) : ViewHolderBinding<Any, PlaylistAdapter>(binding.root) {
-    override fun initView(entity: Any, adapter: PlaylistAdapter) {
+) : ViewHolderBinding<SongEntity, PlaylistAdapter>(binding.root) {
+    override fun initView(entity: SongEntity, adapter: PlaylistAdapter) {
+        binding.apply {
+            mtvNumber.text = "#${absoluteAdapterPosition + 1}"
+            sivAlbumThumb.loadAny(entity.coverUri)
+            mtvAlbumName.text = entity.title
+            mtvArtistName.text = entity.artist
+            btnOption.setOnClickListener { }
+        }
     }
 }
