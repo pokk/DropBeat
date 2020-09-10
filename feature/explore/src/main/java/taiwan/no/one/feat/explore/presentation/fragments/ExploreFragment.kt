@@ -45,8 +45,8 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val vm by viewModels<ExploreViewModel>()
 
     // NOTE(Jieyi): 8/11/20 Because of some reasons, viewbinding can't use for `include` xml from other modules
-    private val includeTopTrack by lazy { find<ConstraintLayout>(R.id.include_top_track) }
-    private val includeTopArtist by lazy { find<ConstraintLayout>(R.id.include_top_artist) }
+    private val includeTopTrack get() = find<ConstraintLayout>(R.id.include_top_track)
+    private val includeTopArtist get() = find<ConstraintLayout>(R.id.include_top_artist)
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {

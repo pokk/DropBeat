@@ -55,9 +55,9 @@ import java.lang.ref.WeakReference
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private var _mergeTopControllerBinding: MergeTopControllerBinding? = null
     private val mergeTopControllerBinding get() = checkNotNull(_mergeTopControllerBinding)
-    private val includeFavorite by lazy { find<ConstraintLayout>(R.id.include_favorite) }
-    private val includeDownloaded by lazy { find<ConstraintLayout>(R.id.include_download) }
-    private val includeHistory by lazy { find<ConstraintLayout>(R.id.include_history) }
+    private val includeFavorite get() = find<ConstraintLayout>(R.id.include_favorite)
+    private val includeDownloaded get() = find<ConstraintLayout>(R.id.include_download)
+    private val includeHistory get() = find<ConstraintLayout>(R.id.include_history)
     private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
     private val privacyVm by activityViewModels<PrivacyViewModel>()
     private val vm by viewModels<MyHomeViewModel>()
@@ -79,13 +79,19 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             if (it.songs.isEmpty()) {
                 includeDownloaded.find<TextView>(AppResId.mtv_no_music).visible()
             }
-            (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
+            else {
+                (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
+                    .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+            }
         }
         vm.favorites.observe(this) {
             if (it.songs.isEmpty()) {
                 includeFavorite.find<TextView>(AppResId.mtv_no_music).visible()
             }
-            (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
+            else {
+                (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
+                    .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+            }
         }
     }
 
@@ -96,6 +102,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         super.viewComponentBinding()
         _mergeTopControllerBinding = MergeTopControllerBinding.bind(binding.root)
         includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite"
+        logw(includeDownloaded)
         includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
         includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
         includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {

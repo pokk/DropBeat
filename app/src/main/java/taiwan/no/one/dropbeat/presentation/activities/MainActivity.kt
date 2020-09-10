@@ -41,7 +41,7 @@ import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val vm by viewModels<PrivacyViewModel>()
-    private val navigator by lazy { findNavController(R.id.nav_host_fragment) }
+    private val navigator get() = findNavController(R.id.nav_host_fragment)
 
     init {
         SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featSearchMusic"))
