@@ -43,8 +43,9 @@ internal class ResultViewModel : BehindViewModel() {
     val musics = _musics.toLiveData()
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val addOrUpdateResult = _addOrUpdateResult.toLiveData()
-    private var curKeyword = ""
     private var curPage = 0
+    var curKeyword = ""
+        private set
 
     fun search(keyword: String? = null, page: Int = -1) = viewModelScope.launch {
         if (keyword != null) {

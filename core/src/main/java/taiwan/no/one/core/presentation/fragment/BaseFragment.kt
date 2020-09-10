@@ -38,6 +38,7 @@ import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import taiwan.no.one.core.presentation.LoadView
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import java.lang.reflect.ParameterizedType
 
@@ -131,6 +132,18 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
         cancel() // cancel is extension on CoroutineScope
     }
 
+    //endregion
+
+    //region Loading
+    override fun showLoading() = (requireActivity() as LoadView).showLoading()
+
+    override fun hideLoading() = (requireActivity() as LoadView).hideLoading()
+
+    override fun showRetry() = (requireActivity() as LoadView).showRetry()
+
+    override fun hideRetry() = (requireActivity() as LoadView).hideRetry()
+
+    override fun showError(message: String) = (requireActivity() as LoadView).showError(message)
     //endregion
 
     //region Customized methods

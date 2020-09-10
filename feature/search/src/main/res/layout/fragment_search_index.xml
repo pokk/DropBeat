@@ -130,6 +130,21 @@
 
     <include layout="@layout/merge_search_has_result"/>
 
+    <include layout="@layout/merge_search_has_no_result"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/g_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="mtv_rv_title,rv_musics,g_line_title,g_line_recyclerview"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/g_no_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="mtv_no_result,btn_clear"
+        tools:visibility="visible"/>
     <!--    <ViewStub-->
     <!--        android:id="@+id/vs_has_result"-->
     <!--        android:layout_width="match_parent"-->

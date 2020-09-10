@@ -32,10 +32,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import com.devrapid.kotlinknifer.visible
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.debounce
@@ -50,6 +52,7 @@ import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
+import taiwan.no.one.feat.search.databinding.MergeSearchHasNoResultBinding
 import taiwan.no.one.feat.search.databinding.MergeSearchHasResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
@@ -64,6 +67,7 @@ import java.lang.ref.WeakReference
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     private val mergeBinding by lazy { MergeSearchHasResultBinding.bind(binding.root) }
+    private val mergeNoResultBinding by lazy { MergeSearchHasNoResultBinding.bind(binding.root) }
     private val vm by viewModels<RecentViewModel>()
     private val searchVm by viewModels<ResultViewModel>()
     private val songVm by viewModels<SongViewModel>()
@@ -93,18 +97,19 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             else {
                 searchHistoryAdapter.data = it
                 rvMusics.smoothScrollToPosition(0)
-                enableMotionWhenScrollable(rvMusics)
             }
         }
         searchVm.musics.observe(this) { res ->
             res.onSuccess {
                 if (it.isEmpty()) {
-                    loge("result is empty")
-                    disableMotion()
+                    binding.gNoResult.visible()
+                    binding.gResult.gone()
+                    mergeNoResultBinding.mtvNoResult.text = "no \"${searchVm.curKeyword}\" result"
                 }
                 else {
+                    binding.gNoResult.gone()
+                    binding.gResult.visible()
                     musicAdapter.addExtraEntities(it)
-                    enableMotionWhenScrollable(rvMusics)
                 }
                 hideLoading()
             }.onFailure {
@@ -153,12 +158,16 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 }
             }.launchIn(lifecycleScope)
         }
+        mergeNoResultBinding.btnClear.setOnClickListener {
+            binding.tietSearch.text?.clear()
+        }
         if (loadMoreListener.fetchMoreBlock == null) {
             loadMoreListener.fetchMoreBlock = ::getMoreMusics
         }
     }
 
     private fun searchMusic(keyword: String) {
+        showLoading()
         vm.add(keyword)
         jobs += searchVm.search(keyword, 0)
         setAndDisplaySearchResult()
