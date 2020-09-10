@@ -48,10 +48,15 @@ class LinearLoadMoreScrollListener : RecyclerView.OnScrollListener() {
             isLoading = false
             previousTotal = totalItemCount
         }
-        if (!isLoading && totalItemCount - visibleItemCount <= firstVisibleItem + VISIBLE_THRESHOLD) {
+        if (!isLoading && totalItemCount - VISIBLE_THRESHOLD <= firstVisibleItem + visibleItemCount) {
             // End has been reached
             fetchMoreBlock?.invoke()
             isLoading = true
         }
+    }
+
+    fun reset() {
+        isLoading = true
+        previousTotal = 0
     }
 }

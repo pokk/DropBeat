@@ -36,6 +36,8 @@ import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -75,15 +77,13 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
+    private val jobs = mutableListOf<Job>()
 
     override fun onDetach() {
         super.onDetach()
         loadMoreListener.fetchMoreBlock = null
     }
 
-    // TODO(jieyi): 9/9/20 1. if no result from the remote server.
-    //  2. the request calls should be cancelled after changing to the history adapter.
-    //  3. loading view should implement.
     override fun bindLiveData() {
         vm.histories.observe(this) {
             logw(it)
@@ -94,9 +94,6 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 searchHistoryAdapter.data = it
                 rvMusics.smoothScrollToPosition(0)
                 enableMotionWhenScrollable(rvMusics)
-                // Remove the item decoration
-                if (musicItemDecoration !in rvMusics) return@observe
-                rvMusics.removeItemDecoration(musicItemDecoration)
             }
         }
         searchVm.musics.observe(this) { res ->
@@ -107,11 +104,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 }
                 else {
                     musicAdapter.addExtraEntities(it)
-                    displaySearchResultDataList()
                     enableMotionWhenScrollable(rvMusics)
-                    // Add the item decoration
-                    if (musicItemDecoration in rvMusics) return@onSuccess
-                    rvMusics.addItemDecoration(musicItemDecoration)
                 }
                 hideLoading()
             }.onFailure {
@@ -127,9 +120,6 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             // anchor 3 is top margin, it didn't define inside setMargin
             binding.layoutParent.getConstraintSet(R.id.expanded)?.setMargin(R.id.mtv_rv_title, 3, halfWidth)
         }
-    }
-
-    override fun componentListenersBinding() {
         rvMusics.apply {
             if (adapter == null) {
                 adapter = searchHistoryAdapter
@@ -137,7 +127,11 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
             }
+            addOnScrollListener(loadMoreListener)
         }
+    }
+
+    override fun componentListenersBinding() {
         searchHistoryAdapter.setOnClickListener(::clickedOnHistoryItem)
         musicAdapter.setOnClickListener(::clickedOnSongItem)
         binding.apply {
@@ -155,7 +149,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             }
             tietSearch.afterTextChanges().debounce(300).onEach {
                 if (it.isNullOrBlank()) {
-                    displayHistoryDataList()
+                    setAndDisplayHistory()
                 }
             }.launchIn(lifecycleScope)
         }
@@ -165,46 +159,55 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun searchMusic(keyword: String) {
-        showLoading()
         vm.add(keyword)
-        musicAdapter.clear()
-        searchVm.search(keyword, 0)
-        // post action for hiding the soft keyboard.
-        view?.hideSoftKeyboard()
+        jobs += searchVm.search(keyword, 0)
+        setAndDisplaySearchResult()
     }
 
     private fun getMoreMusics() {
+        if (rvMusics.adapter != musicAdapter) return
         searchVm.apply {
             goNextPage()
-            search()
+            jobs += search()
         }
     }
 
-    private fun clickedOnSongItem(song: SongEntity) {
-        val filename = "${song.artist} - ${song.title}"
-        DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
-    }
-
-    private fun clickedOnHistoryItem(keyword: String) {
-        binding.tietSearch.setText(keyword)
-        searchMusic(keyword)
-    }
-
-    private fun displayHistoryDataList() {
-        musicAdapter.clear()
+    private fun setAndDisplayHistory() {
+        // 1. Pre-handle and finish the music adapter's process.
+        cancelJobs()
+        if (musicAdapter.data.isNotEmpty()) {
+            musicAdapter.clear()
+        }
+        // Remove the item decoration.
+        if (musicItemDecoration in rvMusics) {
+            rvMusics.removeItemDecoration(musicItemDecoration)
+        }
+        // 2. Set the adapter for displaying the history.
         rvMusics.apply {
-            adapter = searchHistoryAdapter
-            removeOnScrollListener(loadMoreListener)
+            if (adapter != searchHistoryAdapter) {
+                adapter = searchHistoryAdapter
+            }
         }
         mergeBinding.mtvRvTitle.text = "History Search "
     }
 
-    private fun displaySearchResultDataList() {
-        rvMusics.apply {
-            adapter = musicAdapter
-            addOnScrollListener(loadMoreListener)
+    private fun setAndDisplaySearchResult() {
+        // 1. Pre-process the setting of the result recyclerview.
+        musicAdapter.clear()
+        // Post-action for hiding the soft keyboard.
+        view?.hideSoftKeyboard()
+        // Add the item decoration.
+        if (musicItemDecoration !in rvMusics) {
+            rvMusics.addItemDecoration(musicItemDecoration)
         }
-
+        // Reset the status.
+        loadMoreListener.reset()
+        // 2. Set the adapter for displaying the result.
+        rvMusics.apply {
+            if (adapter != musicAdapter) {
+                adapter = musicAdapter
+            }
+        }
         mergeBinding.mtvRvTitle.text = "Search Result "
     }
 
@@ -227,5 +230,20 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private fun enableMotionWhenScrollable(recyclerView: RecyclerView) {
         // down = 1; up = -1
         if (recyclerView.canScrollVertically(-1)) enableMotion() else disableMotion()
+    }
+
+    private fun cancelJobs() {
+        jobs.forEach { it.cancel("The history adapter is displaying now.") }
+        jobs.clear()
+    }
+
+    private fun clickedOnSongItem(song: SongEntity) {
+        val filename = "${song.artist} - ${song.title}"
+        DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
+    }
+
+    private fun clickedOnHistoryItem(keyword: String) {
+        binding.tietSearch.setText(keyword)
+        searchMusic(keyword)
     }
 }
