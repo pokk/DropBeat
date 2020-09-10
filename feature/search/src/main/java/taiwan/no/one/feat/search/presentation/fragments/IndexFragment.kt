@@ -32,8 +32,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.hideSoftKeyboard
+import com.devrapid.kotlinknifer.invisible
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
@@ -103,11 +103,11 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             res.onSuccess {
                 if (it.isEmpty()) {
                     binding.gNoResult.visible()
-                    binding.gResult.gone()
+                    binding.gResult.invisible()
                     mergeNoResultBinding.mtvNoResult.text = "no \"${searchVm.curKeyword}\" result"
                 }
                 else {
-                    binding.gNoResult.gone()
+                    binding.gNoResult.invisible()
                     binding.gResult.visible()
                     musicAdapter.addExtraEntities(it)
                 }
