@@ -39,6 +39,7 @@ import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.core.helpers.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
@@ -95,7 +96,8 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         find<View>(AppResId.btn_more).gone()
         val duration = songs.fold(0) { acc, song -> acc + song.duration }
         // Set the visibility for this fragment.
-        binding.mtvSubtitle.text = "${songs.size} Songs・$duration min・30 mins ago played"
+        binding.mtvSubtitle.text =
+            "${songs.size} Songs・${StringUtil.buildDurationTime(duration.toLong())}・30 mins ago played"
         binding.btnPlayAll.visible()
     }
 
