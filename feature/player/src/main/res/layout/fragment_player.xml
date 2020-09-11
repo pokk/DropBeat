@@ -31,18 +31,48 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_player_background">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_close"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginStart="@dimen/md_two_unit"
+        app:icon="@drawable/ic_down_close"
+        app:layout_constraintEnd_toStartOf="@id/btn_option"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_option"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        app:icon="@drawable/ic_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_close"
+        app:layout_constraintTop_toTopOf="@id/btn_close"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_track"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
         tools:text="@tools:sample/full_names"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_lyrics"
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginBottom="@dimen/md_three_unit"
         android:background="#7f000000"
         app:layout_constraintBottom_toTopOf="@id/btn_video"
@@ -70,7 +100,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+        app:layout_constraintTop_toBottomOf="@id/mtv_track"
         app:layout_constraintVertical_bias="0.0"
         app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"
         tools:src="@tools:sample/avatars"/>

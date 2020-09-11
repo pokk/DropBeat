@@ -25,32 +25,28 @@
 package taiwan.no.one.feat.player.presentation.fragments
 
 import android.os.Bundle
-import android.widget.Toast
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.player.databinding.FragmentIndexBinding
+import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
-import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.RepeatAll
-import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.RepeatOne
-import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.Shuffle
 
-internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentIndexBinding>() {
+internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     val player = SimpleMusicPlayer.getInstance()
 
     override fun componentListenersBinding() {
-        binding.btnPlay.setOnClickListener { player.play() }
-        binding.btnClear.setOnClickListener { player.clearPlaylist() }
-        binding.btnStop.setOnClickListener { player.stop() }
-        binding.btnNext.setOnClickListener { player.next() }
-        binding.btnPrevious.setOnClickListener { player.previous() }
-        binding.btnPause.setOnClickListener { player.pause() }
-        binding.btnShuffle.setOnClickListener { player.mode = Shuffle }
-        binding.btnRepeatAll.setOnClickListener { player.mode = RepeatAll }
-        binding.btnRepeatOne.setOnClickListener { player.mode = RepeatOne }
-        binding.btnCurrent.setOnClickListener {
-            Toast.makeText(requireActivity(), player.curPlayingInfo?.title.toString(), Toast.LENGTH_SHORT).show()
-        }
+//        binding.btnPlay.setOnClickListener { player.play() }
+//        binding.btnClear.setOnClickListener { player.clearPlaylist() }
+//        binding.btnStop.setOnClickListener { player.stop() }
+//        binding.btnNext.setOnClickListener { player.next() }
+//        binding.btnPrevious.setOnClickListener { player.previous() }
+//        binding.btnPause.setOnClickListener { player.pause() }
+//        binding.btnShuffle.setOnClickListener { player.mode = Shuffle }
+//        binding.btnRepeatAll.setOnClickListener { player.mode = RepeatAll }
+//        binding.btnRepeatOne.setOnClickListener { player.mode = RepeatOne }
+//        binding.btnCurrent.setOnClickListener {
+//            Toast.makeText(requireActivity(), player.curPlayingInfo?.title.toString(), Toast.LENGTH_SHORT).show()
+//        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
