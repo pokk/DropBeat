@@ -144,6 +144,10 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(id))
             }
         }
+        (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.setOnClickListener {
+        }
+        (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.setOnClickListener {
+        }
     }
 
     /**

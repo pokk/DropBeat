@@ -38,6 +38,10 @@ internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), Aut
     var data: List<SongEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
         autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
     }
+    var clickListener: ((SongEntity) -> Unit)? = null
+        private set
+    var optionListener: (() -> Unit)? = null
+        private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
@@ -48,4 +52,12 @@ internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), Aut
         holder.initView(data[position], this)
 
     override fun getItemCount() = data.size
+
+    fun setOnClickListener(listener: (SongEntity) -> Unit) {
+        clickListener = listener
+    }
+
+    fun setOptionClickListener(listener: () -> Unit) {
+        optionListener = listener
+    }
 }

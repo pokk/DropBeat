@@ -39,7 +39,8 @@ internal class PlaylistViewHolder(
             sivAlbumThumb.loadAny(entity.coverUri)
             mtvAlbumName.text = entity.title
             mtvArtistName.text = entity.artist
-            btnOption.setOnClickListener { }
+            btnOption.setOnClickListener { adapter.optionListener?.invoke() }
+            root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }
 }

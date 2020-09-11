@@ -73,6 +73,10 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         }
     }
 
+    override fun componentListenersBinding() {
+        playlistAdapter.setOnClickListener {}
+    }
+
     override fun rendered(savedInstanceState: Bundle?) {
         vm.getSongs(navArgs.playlistId)
     }
