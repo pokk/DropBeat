@@ -23,13 +23,14 @@
   ~ SOFTWARE.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.motion.widget.MotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_player_background">
+    android:background="@drawable/bg_player_background"
+    app:layoutDescription="@xml/fragment_player_scene">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_close"
@@ -80,6 +81,7 @@
         app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_lyric"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_three_unit"
@@ -128,4 +130,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/md_six_half_unit"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
