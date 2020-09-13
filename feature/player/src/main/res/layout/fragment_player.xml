@@ -36,7 +36,8 @@
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/com_facebook_button_background_color"/>
+        android:background="@color/com_facebook_button_background_color"
+        tools:layout_editor_absoluteX="80dp"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_artist"
@@ -146,4 +147,15 @@
         app:icon="@drawable/ic_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/siv_album"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slide_mini_progress"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@id/cl_container"
+        app:layout_constraintEnd_toEndOf="@id/cl_container"
+        app:layout_constraintStart_toStartOf="@id/cl_container"
+        app:layout_constraintTop_toTopOf="@id/cl_container"/>
 </androidx.constraintlayout.motion.widget.MotionLayout>

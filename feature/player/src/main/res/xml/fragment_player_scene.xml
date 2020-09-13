@@ -49,12 +49,23 @@
                 motion:motionTarget="@id/btn_mini_option"/>
             <KeyAttribute
                 android:alpha="0"
+                motion:framePosition="40"
+                motion:motionTarget="@id/slide_mini_progress"/>
+            <KeyAttribute
+                android:alpha="0"
                 motion:framePosition="60"
                 motion:motionTarget="@id/btn_close"/>
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="60"
                 motion:motionTarget="@id/btn_option"/>
+            <KeyAttribute
+                motion:framePosition="40"
+                motion:motionTarget="@id/cl_container">
+                <CustomAttribute
+                    motion:attributeName="backgroundColor"
+                    motion:customColorValue="@android:color/transparent"/>
+            </KeyAttribute>
         </KeyFrameSet>
     </Transition>
 
@@ -99,7 +110,13 @@
         <Constraint
             android:id="@+id/cl_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            motion:layout_editor_absoluteX="80dp"
+            motion:layout_editor_absoluteY="0dp">
+            <CustomAttribute
+                motion:attributeName="backgroundColor"
+                motion:customColorValue="@android:color/transparent"/>
+        </Constraint>
         <Constraint
             android:id="@+id/siv_lyrics"
             android:layout_width="match_parent"
@@ -117,6 +134,9 @@
         <Constraint android:id="@+id/btn_option">
             <PropertySet android:alpha="1"/>
         </Constraint>
+        <Constraint android:id="@+id/slide_mini_progress">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/mini_player_end">
@@ -124,7 +144,11 @@
             android:id="@+id/cl_container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/md_eight_unit"
-            motion:layout_constraintBottom_toBottomOf="parent"/>
+            motion:layout_constraintBottom_toBottomOf="parent">
+            <CustomAttribute
+                motion:attributeName="backgroundColor"
+                motion:customColorValue="@color/dusty_gray"/>
+        </Constraint>
         <Constraint
             android:id="@+id/mtv_artist"
             android:layout_width="@dimen/md_zero_unit"
@@ -190,6 +214,9 @@
         </Constraint>
         <Constraint android:id="@+id/btn_option">
             <PropertySet android:alpha="0"/>
+        </Constraint>
+        <Constraint android:id="@+id/slide_mini_progress">
+            <PropertySet android:alpha="1"/>
         </Constraint>
     </ConstraintSet>
 

@@ -25,8 +25,6 @@
 package taiwan.no.one.feat.player.presentation.fragments
 
 import android.os.Bundle
-import android.view.Gravity
-import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
@@ -52,8 +50,6 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        logw(Gravity.CENTER)
-
         val playlist = listOf(
             MusicInfo("title1",
                       "artist1",
