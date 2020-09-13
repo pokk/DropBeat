@@ -28,20 +28,187 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
+        motion:constraintSetEnd="@+id/mini_player_end"
+        motion:constraintSetStart="@+id/mini_player_start">
+        <OnSwipe
+            motion:dragDirection="dragDown"
+            motion:touchAnchorId="@+id/cl_container"/>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="40"
+                motion:motionTarget="@id/btn_mini_play"/>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="40"
+                motion:motionTarget="@id/btn_mini_next"/>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="40"
+                motion:motionTarget="@id/btn_mini_option"/>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@id/btn_close"/>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@id/btn_option"/>
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/mini_player_start">
+        <Constraint
+            android:id="@+id/siv_album"
+            android:layout_width="@dimen/md_zero_unit"
+            android:layout_height="@dimen/md_zero_unit"
+            android:layout_marginStart="@dimen/md_ten_unit"
+            android:layout_marginTop="@dimen/md_two_unit"
+            android:layout_marginEnd="@dimen/md_ten_unit"
+            motion:layout_constraintBottom_toTopOf="@id/btn_video"
+            motion:layout_constraintDimensionRatio="1:1"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/mtv_track"
+            motion:layout_constraintVertical_bias="0.0"/>
+        <Constraint
+            android:id="@+id/mtv_track"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_two_unit"
+            motion:layout_constraintTop_toBottomOf="@id/mtv_artist"/>
+        <Constraint
+            android:id="@+id/mtv_artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/md_two_unit"
+            motion:layout_constraintTop_toTopOf="parent"/>
+        <Constraint
+            android:id="@+id/btn_mini_play">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/btn_mini_next">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/btn_mini_option">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/cl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <Constraint
+            android:id="@+id/siv_lyrics"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_zero_unit"
+            android:layout_marginStart="@dimen/md_two_unit"
+            android:layout_marginEnd="@dimen/md_two_unit"
+            android:layout_marginBottom="@dimen/md_five_unit"
+            motion:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
+            motion:layout_constraintTop_toBottomOf="@id/siv_album">
+            <PropertySet android:alpha="1"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_close">
+            <PropertySet android:alpha="1"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_option">
+            <PropertySet android:alpha="1"/>
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/mini_player_end">
+        <Constraint
+            android:id="@+id/cl_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_eight_unit"
+            motion:layout_constraintBottom_toBottomOf="parent"/>
+        <Constraint
+            android:id="@+id/mtv_artist"
+            android:layout_width="@dimen/md_zero_unit"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/md_two_unit"
+            android:layout_marginEnd="@dimen/md_two_unit"
+            motion:layout_constraintBottom_toTopOf="@id/mtv_track"
+            motion:layout_constraintEnd_toStartOf="@id/btn_mini_option"
+            motion:layout_constraintStart_toEndOf="@id/siv_album"
+            motion:layout_constraintTop_toTopOf="@id/cl_container"
+            motion:layout_constraintVertical_chainStyle="packed"/>
+        <Constraint
+            android:id="@+id/mtv_track"
+            android:layout_width="@dimen/md_zero_unit"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@id/cl_container"
+            motion:layout_constraintEnd_toEndOf="@id/mtv_artist"
+            motion:layout_constraintStart_toStartOf="@id/mtv_artist"
+            motion:layout_constraintTop_toBottomOf="@id/mtv_artist"/>
+        <Constraint
+            android:id="@+id/btn_mini_play"
+            android:layout_width="@dimen/md_five_unit"
+            android:layout_height="@dimen/md_five_unit"
+            motion:layout_constraintBottom_toBottomOf="@id/siv_album"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/siv_album">
+            <PropertySet android:alpha="1"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_next">
+            <PropertySet android:alpha="1"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_option">
+            <PropertySet android:alpha="1"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/siv_album"
+            android:layout_width="@dimen/md_four_unit"
+            android:layout_height="@dimen/md_zero_unit"
+            android:layout_marginStart="@dimen/md_two_unit"
+            motion:layout_constraintBottom_toBottomOf="@id/cl_container"
+            motion:layout_constraintDimensionRatio="1:1"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/cl_container"/>
+        <Constraint
+            android:id="@+id/siv_lyrics"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_zero_unit"
+            android:layout_marginBottom="@dimen/md_three_unit"
+            motion:layout_constraintBottom_toTopOf="@id/btn_video"
+            motion:layout_constraintTop_toBottomOf="@id/siv_album">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/nsv_scrolling"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/md_zero_unit"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toBottomOf="parent">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_close">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_option">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+    </ConstraintSet>
+
+    <!--region Click Lyric Motion-->
+    <Transition
+        motion:constraintSetEnd="@+id/lyric_expand_end"
+        motion:constraintSetStart="@id/lyric_expand_start"
         motion:duration="250">
         <OnClick motion:targetId="@+id/siv_lyrics"/>
     </Transition>
 
     <Transition
-        motion:constraintSetEnd="@+id/start"
-        motion:constraintSetStart="@+id/end"
+        motion:constraintSetEnd="@+id/lyric_expand_start"
+        motion:constraintSetStart="@+id/lyric_expand_end"
         motion:duration="250">
         <OnClick motion:targetId="@+id/siv_album"/>
     </Transition>
 
-    <ConstraintSet android:id="@+id/start">
+    <ConstraintSet android:id="@+id/lyric_expand_start">
         <!-- FIXME(Jieyi): 2020/9/12 top to bottom is not correct, it should be constraint by a barrier -->
         <Constraint
             android:id="@+id/siv_lyrics"
@@ -67,7 +234,7 @@
             motion:layout_constraintVertical_bias="0.0"/>
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet android:id="@+id/lyric_expand_end">
         <Constraint
             android:id="@+id/siv_lyrics"
             android:layout_width="match_parent"
@@ -90,4 +257,5 @@
             motion:layout_constraintTop_toBottomOf="@id/mtv_track"
             motion:layout_constraintVertical_bias="0.0"/>
     </ConstraintSet>
+    <!--endregion-->
 </MotionScene>

@@ -32,6 +32,32 @@
     android:background="@drawable/bg_player_background"
     app:layoutDescription="@xml/fragment_player_scene">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/com_facebook_button_background_color"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:gravity="center"
+        android:text="Jieyi Wu"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_track"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:gravity="center"
+        android:text="My Big DiDi"
+        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+        tools:text="@tools:sample/full_names"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_close"
         style="@style/Taiwan.No.One.Button.IconOnly"
@@ -40,7 +66,7 @@
         app:layout_constraintEnd_toStartOf="@id/btn_option"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/cl_container"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_option"
@@ -51,24 +77,6 @@
         app:layout_constraintStart_toEndOf="@id/btn_close"
         app:layout_constraintTop_toTopOf="@id/btn_close"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_artist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/full_names"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_track"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
-        tools:text="@tools:sample/full_names"/>
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_lyrics"
         android:layout_width="match_parent"
@@ -76,7 +84,7 @@
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginBottom="@dimen/md_three_unit"
         android:background="#7f000000"
-        app:layout_constraintBottom_toTopOf="@id/btn_video"
+        app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
         app:layout_constraintTop_toTopOf="@id/barrier_lyric"
         app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"/>
 
@@ -98,6 +106,7 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_ten_unit"
         android:layout_marginTop="@dimen/md_two_unit"
+        android:src="@color/grapefruit"
         app:layout_constraintBottom_toTopOf="@id/btn_video"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,17 +126,24 @@
 
     <include layout="@layout/merge_player_controller"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/g_controller_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/md_six_half_unit"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_mini_option"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_shuffle"
+        app:layout_constraintEnd_toStartOf="@id/btn_mini_next"
+        app:layout_constraintTop_toTopOf="@id/btn_mini_play"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/g_controller_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/md_six_half_unit"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_mini_next"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_next"
+        app:layout_constraintEnd_toStartOf="@id/btn_mini_play"
+        app:layout_constraintTop_toTopOf="@id/btn_mini_play"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_mini_play"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/siv_album"/>
 </androidx.constraintlayout.motion.widget.MotionLayout>
