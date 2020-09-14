@@ -35,10 +35,10 @@ import taiwan.no.one.feat.setting.databinding.MergeSettingAppBlockBinding
 import taiwan.no.one.ktx.view.find
 
 internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBinding>() {
-    private val mergeAppBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
-    private val mergeMusicBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
-    private val mergeSyncBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
-    private val mergeOtherBlock by lazy { MergeSettingAppBlockBinding.bind(binding.root) }
+    private val mergeAppBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
+    private val mergeMusicBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
+    private val mergeSyncBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
+    private val mergeOtherBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
 
     /**
      * For separating the huge function code in [rendered]. Initialize all view components here.

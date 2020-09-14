@@ -66,8 +66,8 @@ import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 import java.lang.ref.WeakReference
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
-    private val mergeBinding by lazy { MergeSearchHasResultBinding.bind(binding.root) }
-    private val mergeNoResultBinding by lazy { MergeSearchHasNoResultBinding.bind(binding.root) }
+    private val mergeBinding get() = MergeSearchHasResultBinding.bind(binding.root)
+    private val mergeNoResultBinding get() = MergeSearchHasNoResultBinding.bind(binding.root)
     private val vm by viewModels<RecentViewModel>()
     private val searchVm by viewModels<ResultViewModel>()
     private val songVm by viewModels<SongViewModel>()

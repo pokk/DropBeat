@@ -96,7 +96,8 @@
             android:layout_marginTop="@dimen/md_two_unit"
             motion:layout_constraintTop_toTopOf="parent"/>
         <Constraint
-            android:id="@+id/btn_mini_play">
+            android:id="@+id/btn_mini_play"
+            android:layout_marginEnd="@dimen/md_two_unit">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
@@ -178,6 +179,7 @@
             android:id="@+id/btn_mini_play"
             android:layout_width="@dimen/md_five_unit"
             android:layout_height="@dimen/md_five_unit"
+            android:layout_marginEnd="@dimen/md_two_unit"
             motion:layout_constraintBottom_toBottomOf="@id/siv_album"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toTopOf="@id/siv_album">

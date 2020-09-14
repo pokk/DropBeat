@@ -101,7 +101,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         val duration = songs.fold(0) { acc, song -> acc + song.duration }
         // Set the visibility for this fragment.
         binding.mtvSubtitle.text =
-            "${songs.size} Songs・${StringUtil.buildDurationTime(duration.toLong())}・30 mins ago played"
+            "${songs.size} Songs・${StringUtil.buildDurationToTime(duration.toLong())}・30 mins ago played"
         binding.btnPlayAll.visible()
     }
 

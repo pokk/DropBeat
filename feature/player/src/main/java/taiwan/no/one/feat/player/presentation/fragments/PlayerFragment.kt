@@ -24,68 +24,115 @@
 
 package taiwan.no.one.feat.player.presentation.fragments
 
-import android.os.Bundle
+import com.devrapid.kotlinknifer.getDrawable
+import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.player.R
+import taiwan.no.one.dropbeat.core.helpers.StringUtil
+import taiwan.no.one.feat.player.R.drawable
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
+import taiwan.no.one.mediaplayer.exceptions.PlaybackException
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
+import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 
 internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
+    private val merge get() = MergePlayerControllerBinding.bind(binding.root)
+    private val isPlaying get() = player.isPlaying
+    private val playerCallback = object : PlayerCallback {
+        override fun onTrackChanged(music: MusicInfo) {
+            logw(music)
+        }
+
+        override fun onPlayState(isPlaying: Boolean) {
+            // Change the icon.
+            switchPlayIcon()
+        }
+
+        override fun onTrackCurrentPosition(second: Long) {
+            logw("current time", second)
+        }
+
+        override fun onErrorCallback(error: PlaybackException) {
+            loge(error)
+        }
+    }
     val player = SimpleMusicPlayer.getInstance()
+    val playlist = listOf(
+        MusicInfo("title1",
+                  "artist1",
+                  "http://cdn.musicappserver.com/music/1d/2b52438d2f91cb61814dff8a1c73a8.mp3",
+                  368),
+        MusicInfo("title2",
+                  "artist2",
+                  "http://cdn.musicappserver.com/music/b1/4acbbb3567c3c35b33305a07dc693c.mp3",
+                  224),
+        MusicInfo("title3",
+                  "artist3",
+                  "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
+                  360),
+        MusicInfo("title4",
+                  "artist4",
+                  "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
+                  368),
+    )
+
+    init {
+        player.replacePlaylist(playlist)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player.setPlayerEventCallback(null)
+    }
+
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        binding.apply {
+            (player.curPlayingInfo ?: playlist.first()).also {
+                mtvArtist.text = it.artist
+                mtvTrack.text = it.title
+                merge.mtvDuration.text = StringUtil.buildDurationToDigitalTime(it.duration.toLong())
+            }
+        }
+        switchPlayIcon()
+    }
 
     override fun componentListenersBinding() {
-//        binding.btnPlay.setOnClickListener { player.play() }
-//        binding.btnClear.setOnClickListener { player.clearPlaylist() }
-//        binding.btnStop.setOnClickListener { player.stop() }
-//        binding.btnNext.setOnClickListener { player.next() }
-//        binding.btnPrevious.setOnClickListener { player.previous() }
-//        binding.btnPause.setOnClickListener { player.pause() }
-//        binding.btnShuffle.setOnClickListener { player.mode = Shuffle }
-//        binding.btnRepeatAll.setOnClickListener { player.mode = RepeatAll }
-//        binding.btnRepeatOne.setOnClickListener { player.mode = RepeatOne }
-//        binding.btnCurrent.setOnClickListener {
-//            Toast.makeText(requireActivity(), player.curPlayingInfo?.title.toString(), Toast.LENGTH_SHORT).show()
-//        }
-        binding.btnMiniPlay.setOnClickListener {
-            logw("????????????????????????")
-        }
-        MergePlayerControllerBinding.bind(binding.root).btnFavorite.setOnClickListener {
-            binding.mlParent.apply {
-                setTransition(R.id.transition_collapse_lyric)
-                transitionToEnd()
+        binding.apply {
+            btnMiniPlay.setOnClickListener { handlePlayAction() }
+            btnMiniNext.setOnClickListener { player.next() }
+            btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
+            sivAlbum.setOnClickListener {
+                logw("??????????????????????????????????????????")
             }
         }
-        MergePlayerControllerBinding.bind(binding.root).btnVideo.setOnClickListener {
-            binding.mlParent.apply {
-                setTransition(R.id.transition_expand_lyric)
-                transitionToEnd()
-            }
+        merge.apply {
+            btnFavorite.setOnClickListener { handleFavorite() }
+            btnVideo.setOnClickListener {}
+            btnPlay.setOnClickListener { handlePlayAction() }
+            btnNext.setOnClickListener { player.next() }
+            btnPrevious.setOnClickListener { player.previous() }
+            btnShuffle.setOnClickListener { player.mode = Mode.Shuffle }
+            btnRepeat.setOnClickListener { player.mode = Mode.RepeatAll }
+        }
+        player.setPlayerEventCallback(playerCallback)
+    }
+
+    private fun switchPlayIcon() {
+        listOf(merge.btnPlay, binding.btnMiniPlay).forEach { btn ->
+            btn.icon = getDrawable(if (isPlaying) drawable.ic_pause else drawable.ic_play)
         }
     }
 
-    override fun rendered(savedInstanceState: Bundle?) {
-        val playlist = listOf(
-            MusicInfo("title1",
-                      "artist1",
-                      "http://cdn.musicappserver.com/music/1d/2b52438d2f91cb61814dff8a1c73a8.mp3",
-                      983),
-            MusicInfo("title2",
-                      "artist2",
-                      "http://cdn.musicappserver.com/music/b1/4acbbb3567c3c35b33305a07dc693c.mp3",
-                      224),
-            MusicInfo("title3",
-                      "artist3",
-                      "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
-                      360),
-            MusicInfo("title4",
-                      "artist4",
-                      "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
-                      368),
-        )
-        player.replacePlaylist(playlist)
+    private fun handlePlayAction() {
+        // Switch the player action.
+        if (isPlaying) player.pause() else player.play()
+    }
+
+    private fun handleFavorite() {
     }
 }

@@ -27,10 +27,17 @@ package taiwan.no.one.dropbeat.core.helpers
 import taiwan.no.one.ext.utils.TimeUtils
 
 object StringUtil {
-    fun buildDurationTime(duration: Long) = buildString {
+    fun buildDurationToTime(duration: Long) = buildString {
         val (hour, min, sec) = TimeUtils.durationToTime(duration)
         if (hour > 0) append(hour).append(" hours ")
         if (min > 0) append(min).append(" mins ")
         append(sec).append(" secs")
+    }
+
+    fun buildDurationToDigitalTime(duration: Long) = buildString {
+        val (hour, min, sec) = TimeUtils.durationToTime(duration)
+        if (hour > 0) append("%02d".format(hour)).append(":")
+        if (min > 0) append("%02d".format(min)).append(":")
+        append("%02d".format(sec))
     }
 }

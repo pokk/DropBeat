@@ -141,6 +141,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_mini_play"
         style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
         app:icon="@drawable/ic_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/siv_album"/>
