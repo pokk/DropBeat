@@ -22,17 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.mediaplayer.interfaces
+package taiwan.no.one.mediaplayer.exceptions
 
-import taiwan.no.one.mediaplayer.MusicInfo
-import taiwan.no.one.mediaplayer.exceptions.PlaybackException
-
-interface PlayerCallback {
-    fun onTrackChanged(music: MusicInfo)
-
-    fun onPlayState(isPlaying: Boolean)
-
-    fun onTrackCurrentPosition(second: Long)
-
-    fun onErrorCallback(error: PlaybackException)
+class PlaybackException : Exception {
+    constructor() : super()
+    constructor(msg: String) : super(msg)
+    constructor(msg: String, throwable: Throwable) : super(msg, throwable)
+    constructor(throwable: Throwable) : super(throwable)
 }

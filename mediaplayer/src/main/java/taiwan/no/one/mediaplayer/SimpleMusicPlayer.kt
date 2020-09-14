@@ -40,8 +40,17 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import kotlin.properties.Delegates
-import kotlin.random.Random
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.Default
@@ -50,11 +59,13 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.mediaplayer.states.MusicState
 import taiwan.no.one.mediaplayer.states.MusicStateStandby
+import kotlin.properties.Delegates
+import kotlin.random.Random
 
 class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     companion object {
         private const val NAME = "LocalExoPlayer"
-        private const val SECOND_UNIT = 1000
+        private const val SECOND_UNIT = 1000L
 
         @Volatile
         private var INSTANCE: SimpleMusicPlayer? = null
@@ -72,7 +83,8 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     }
 
     private lateinit var playerState: MusicState
-    private var isPlayerPlaying = false
+    private lateinit var timerJob: Job
+    private lateinit var timer: ReceiveChannel<Unit>
     private var callback: PlayerCallback? = null
     private val exoPlayer by lazy {
         SimpleExoPlayer.Builder(context).build().apply {
@@ -84,7 +96,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     private val playlist by lazy { mutableListOf<MusicInfo>() }
     private val queue by lazy { ConcatenatingMediaSource() }
     private val curPlayingIndex get() = exoPlayer.currentWindowIndex
-    override val isPlaying get() = isPlayerPlaying
+    override val isPlaying get() = exoPlayer.isPlaying
     override val curPlayingInfo get() = playlist.find { exoPlayer.currentTag == it.uri }
     override val curTrackSec get() = exoPlayer.currentPosition / SECOND_UNIT
     override var mode: Mode by Delegates.observable(Default) { _, oldMode, newMode ->
@@ -172,7 +184,8 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     }
 
     internal inner class MusicEventListener : Player.EventListener {
-        override fun onPlayerError(error: ExoPlaybackException) = callback?.onErrorCallback(error) ?: Unit
+        override fun onPlayerError(error: ExoPlaybackException) =
+            callback?.onErrorCallback(PlaybackException(error)) ?: Unit
 
         override fun onLoadingChanged(isLoading: Boolean) = Unit
 
@@ -195,8 +208,37 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
             // TODO(jieyiwu): 6/13/20 The real state change should be here!
         }
 
+        @OptIn(ObsoleteCoroutinesApi::class, ExperimentalCoroutinesApi::class)
         override fun onIsPlayingChanged(isPlaying: Boolean) {
-            isPlayerPlaying = isPlaying
+            if (isPlaying) {
+                // Send the callback function each second when the player is playing.
+                val (playingS, playingMs) = getTimeOfTrack()
+                // Just in the case, for the first second, should send individual because the timer
+                // always starts from 1s.
+                if (playingS == 0L) {
+                    callback?.onTrackCurrentPosition(0)
+                }
+                // Raise a global coroutine for receiving the tick.
+                timerJob = CoroutineScope(Dispatchers.Default).launch {
+                    timer = ticker(SECOND_UNIT, SECOND_UNIT - playingMs)
+                    timer.consumeEach {
+                        val (s, ms) = withContext(Dispatchers.Main) { getTimeOfTrack() }
+                        // The ms time is not always correct so we do need to round the ms.
+                        callback?.onTrackCurrentPosition(if (ms > 800) s + 1 else s)
+                    }
+                }
+            }
+            else {
+                // If it's not playing, job and timer should be cancelled.
+                if (::timerJob.isInitialized && ::timer.isInitialized) {
+                    timerJob.cancel()
+                    timer.cancel()
+                }
+            }
+            callback?.onPlayState(isPlaying)
         }
+
+        private fun getTimeOfTrack() =
+            exoPlayer.currentPosition / SECOND_UNIT to exoPlayer.currentPosition % SECOND_UNIT
     }
 }
