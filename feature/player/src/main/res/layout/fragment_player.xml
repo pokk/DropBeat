@@ -27,17 +27,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ml_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_player_background"
     app:layoutDescription="@xml/fragment_player_scene">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/com_facebook_button_background_color"
-        tools:layout_editor_absoluteX="80dp"/>
+        app:shapeAppearanceOverlay="@style/roundTopFourUnit"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_artist"
@@ -45,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
         android:gravity="center"
-        android:text="Jieyi Wu"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names"/>
 
@@ -55,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
         android:gravity="center"
-        android:text="My Big DiDi"
         app:layout_constraintTop_toBottomOf="@id/mtv_artist"
         tools:text="@tools:sample/full_names"/>
 
@@ -107,7 +105,6 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_ten_unit"
         android:layout_marginTop="@dimen/md_two_unit"
-        android:src="@color/grapefruit"
         app:layout_constraintBottom_toTopOf="@id/btn_video"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -157,5 +154,8 @@
         app:layout_constraintBottom_toTopOf="@id/cl_container"
         app:layout_constraintEnd_toEndOf="@id/cl_container"
         app:layout_constraintStart_toStartOf="@id/cl_container"
-        app:layout_constraintTop_toTopOf="@id/cl_container"/>
+        app:layout_constraintTop_toTopOf="@id/cl_container"
+        app:thumbColor="@android:color/transparent"
+        app:thumbElevation="0dp"
+        app:trackColorActive="@color/grapefruit"/>
 </androidx.constraintlayout.motion.widget.MotionLayout>

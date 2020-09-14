@@ -25,9 +25,12 @@
 package taiwan.no.one.feat.player.presentation.fragments
 
 import android.os.Bundle
+import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
+import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
 
@@ -47,6 +50,21 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
 //        binding.btnCurrent.setOnClickListener {
 //            Toast.makeText(requireActivity(), player.curPlayingInfo?.title.toString(), Toast.LENGTH_SHORT).show()
 //        }
+        binding.btnMiniPlay.setOnClickListener {
+            logw("????????????????????????")
+        }
+        MergePlayerControllerBinding.bind(binding.root).btnFavorite.setOnClickListener {
+            binding.mlParent.apply {
+                setTransition(R.id.transition_collapse_lyric)
+                transitionToEnd()
+            }
+        }
+        MergePlayerControllerBinding.bind(binding.root).btnVideo.setOnClickListener {
+            binding.mlParent.apply {
+                setTransition(R.id.transition_expand_lyric)
+                transitionToEnd()
+            }
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

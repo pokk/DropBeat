@@ -24,4 +24,10 @@
   -->
 
 <resources>
+
+    <style name="roundTopFourUnit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/md_four_unit</item>
+        <item name="cornerSizeTopRight">@dimen/md_four_unit</item>
+    </style>
 </resources>

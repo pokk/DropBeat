@@ -97,15 +97,21 @@
             motion:layout_constraintTop_toTopOf="parent"/>
         <Constraint
             android:id="@+id/btn_mini_play">
-            <PropertySet android:alpha="0"/>
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
         </Constraint>
         <Constraint
             android:id="@+id/btn_mini_next">
-            <PropertySet android:alpha="0"/>
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
         </Constraint>
         <Constraint
             android:id="@+id/btn_mini_option">
-            <PropertySet android:alpha="0"/>
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
         </Constraint>
         <Constraint
             android:id="@+id/cl_container"
@@ -175,13 +181,19 @@
             motion:layout_constraintBottom_toBottomOf="@id/siv_album"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintTop_toTopOf="@id/siv_album">
-            <PropertySet android:alpha="1"/>
+            <PropertySet
+                android:alpha="1"
+                android:visibility="visible"/>
         </Constraint>
         <Constraint android:id="@+id/btn_mini_next">
-            <PropertySet android:alpha="1"/>
+            <PropertySet
+                android:alpha="1"
+                android:visibility="visible"/>
         </Constraint>
         <Constraint android:id="@+id/btn_mini_option">
-            <PropertySet android:alpha="1"/>
+            <PropertySet
+                android:alpha="1"
+                android:visibility="visible"/>
         </Constraint>
         <Constraint
             android:id="@+id/siv_album"
@@ -222,6 +234,7 @@
 
     <!--region Click Lyric Motion-->
     <Transition
+        android:id="@+id/transition_expand_lyric"
         motion:constraintSetEnd="@+id/lyric_expand_end"
         motion:constraintSetStart="@id/lyric_expand_start"
         motion:duration="250">
@@ -229,6 +242,7 @@
     </Transition>
 
     <Transition
+        android:id="@+id/transition_collapse_lyric"
         motion:constraintSetEnd="@+id/lyric_expand_start"
         motion:constraintSetStart="@+id/lyric_expand_end"
         motion:duration="250">
@@ -244,7 +258,7 @@
             android:layout_marginStart="@dimen/md_two_unit"
             android:layout_marginEnd="@dimen/md_two_unit"
             android:layout_marginBottom="@dimen/md_three_unit"
-            motion:layout_constraintBottom_toTopOf="@id/btn_video"
+            motion:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
             motion:layout_constraintTop_toBottomOf="@id/siv_album"/>
         <Constraint
             android:id="@+id/siv_album"
@@ -270,7 +284,7 @@
             android:layout_marginTop="@dimen/md_five_unit"
             android:layout_marginEnd="@dimen/md_three_unit"
             android:layout_marginBottom="@dimen/md_three_unit"
-            motion:layout_constraintBottom_toTopOf="@id/btn_video"
+            motion:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
             motion:layout_constraintTop_toBottomOf="@id/mtv_track"/>
         <Constraint
             android:id="@+id/siv_album"
