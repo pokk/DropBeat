@@ -24,16 +24,20 @@
 
 package taiwan.no.one.feat.player.presentation.fragments
 
+import android.view.MotionEvent
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.constraintlayout.motion.widget.MotionLayout
 import coil.loadAny
 import com.devrapid.kotlinknifer.getDrawable
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.google.android.material.slider.Slider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
+import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
@@ -157,12 +161,64 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             btnMiniPlay.setOnClickListener { handlePlayAction() }
             btnMiniNext.setOnClickListener { player.next() }
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
-            sivAlbum.setOnContextClickListener {
-                logw("??????????????????????????????????????????")
-                true
-            }
             sliderMiniProgress.clearOnSliderTouchListeners()
             sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
+            sivAlbum.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                    }
+                    MotionEvent.ACTION_DOWN -> {
+                        binding.mlParent.apply {
+                            setTransition(R.id.transition_expand_lyric)
+                            transitionToEnd()
+                        }
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                    }
+                }
+                true
+            }
+            sivLyrics.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                    }
+                    MotionEvent.ACTION_DOWN -> {
+                        binding.mlParent.apply {
+                            setTransition(R.id.transition_expand_lyric)
+                            transitionToStart()
+                        }
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                    }
+                }
+                true
+            }
+            binding.mlParent.setTransitionListener(object : MotionLayout.TransitionListener {
+                override fun onTransitionStarted(motionLayout: MotionLayout, startId: Int, endId: Int) {
+                    logd(R.id.transition_expand_lyric)
+                }
+
+                override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
+                    if (currentId == R.id.lyric_expand_start || currentId == R.id.lyric_expand_end) {
+                        // TODO(jieyi): 9/15/20 change to the drag animation.
+                        motionLayout.setTransition(R.id.transition_mini_player)
+                    }
+                }
+
+                override fun onTransitionChange(
+                    motionLayout: MotionLayout,
+                    startId: Int,
+                    endId: Int,
+                    progress: Float,
+                ) = Unit
+
+                override fun onTransitionTrigger(
+                    motionLayout: MotionLayout,
+                    triggerId: Int,
+                    positive: Boolean,
+                    progress: Float,
+                ) = Unit
+            })
         }
         merge.apply {
             btnFavorite.setOnClickListener { handleFavorite() }

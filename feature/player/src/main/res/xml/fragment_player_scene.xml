@@ -28,6 +28,7 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
+        android:id="@+id/transition_mini_player"
         motion:constraintSetEnd="@+id/mini_player_end"
         motion:constraintSetStart="@+id/mini_player_start">
         <OnSwipe
@@ -157,7 +158,7 @@
             android:layout_height="@dimen/md_zero_unit"
             android:layout_marginStart="@dimen/md_two_unit"
             android:layout_marginEnd="@dimen/md_two_unit"
-            android:layout_marginBottom="@dimen/md_five_unit"
+            android:layout_marginBottom="@dimen/md_three_unit"
             motion:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
             motion:layout_constraintTop_toBottomOf="@id/siv_album">
             <PropertySet android:alpha="1"/>
@@ -279,15 +280,6 @@
         motion:constraintSetEnd="@+id/lyric_expand_end"
         motion:constraintSetStart="@id/lyric_expand_start"
         motion:duration="250">
-        <OnClick motion:targetId="@+id/siv_lyrics"/>
-    </Transition>
-
-    <Transition
-        android:id="@+id/transition_collapse_lyric"
-        motion:constraintSetEnd="@+id/lyric_expand_start"
-        motion:constraintSetStart="@+id/lyric_expand_end"
-        motion:duration="250">
-        <OnClick motion:targetId="@+id/siv_album"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/lyric_expand_start">

@@ -30,8 +30,10 @@
     android:id="@+id/ml_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/fragment_player_scene">
+    app:layoutDescription="@xml/fragment_player_scene"
+    tools:context=".presentation.fragments.PlayerFragment">
 
+    <!--region Mini Player Background-->
     <com.github.florent37.shapeofview.shapes.RoundRectView
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
@@ -59,6 +61,7 @@
             android:layout_height="match_parent"
             android:background="@color/dusty_gray"/>
     </com.github.florent37.shapeofview.shapes.RoundRectView>
+    <!--endregion-->
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_artist"
@@ -145,6 +148,7 @@
 
     <include layout="@layout/merge_player_controller"/>
 
+    <!--region Mini Player Components-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_mini_option"
         style="@style/Taiwan.No.One.Button.IconOnly"
@@ -180,4 +184,5 @@
         app:thumbColor="@android:color/transparent"
         app:thumbElevation="0dp"
         app:trackColorActive="@color/grapefruit"/>
+    <!--endregion-->
 </androidx.constraintlayout.motion.widget.MotionLayout>
