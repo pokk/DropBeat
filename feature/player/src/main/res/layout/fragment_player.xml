@@ -105,6 +105,8 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_ten_unit"
         android:layout_marginTop="@dimen/md_two_unit"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toTopOf="@id/btn_video"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"

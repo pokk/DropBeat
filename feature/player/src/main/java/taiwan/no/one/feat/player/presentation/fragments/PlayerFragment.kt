@@ -26,6 +26,7 @@ package taiwan.no.one.feat.player.presentation.fragments
 
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import coil.loadAny
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
@@ -49,11 +50,7 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     private val playerCallback = object : PlayerCallback {
         override fun onTrackChanged(music: MusicInfo) {
             logw(music)
-            merge.apply {
-                logw(player.curDuration)
-                mtvDuration.text = StringUtil.buildDurationToDigitalTime(music.duration.toLong())
-                mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(0L)
-            }
+            setMusicInfo(music)
         }
 
         override fun onPlayState(isPlaying: Boolean) {
@@ -102,22 +99,38 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     }
     val player = SimpleMusicPlayer.getInstance()
     val playlist = listOf(
-        MusicInfo("title1",
-                  "artist1",
-                  "http://cdn.musicappserver.com/music/1d/2b52438d2f91cb61814dff8a1c73a8.mp3",
-                  196),
-        MusicInfo("title2",
-                  "artist2",
-                  "http://cdn.musicappserver.com/music/b1/4acbbb3567c3c35b33305a07dc693c.mp3",
-                  335),
-        MusicInfo("title3",
-                  "artist3",
-                  "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
-                  226),
-        MusicInfo("title4",
-                  "artist4",
-                  "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
-                  183),
+        MusicInfo(
+            "title1",
+            "artist1",
+            "http://cdn.musicappserver.com/music/1d/2b52438d2f91cb61814dff8a1c73a8.mp3",
+            196,
+            "https://cdn.musicappserver.com/image/88/ac2349d19d307f5c0f2228fa746cac.jpg",
+            "",
+        ),
+        MusicInfo(
+            "title2",
+            "artist2",
+            "http://cdn.musicappserver.com/music/b1/4acbbb3567c3c35b33305a07dc693c.mp3",
+            335,
+            "https://cdn.musicappserver.com/image/b1/3aa841c31193804b81b11be6c364b4.jpg",
+            "",
+        ),
+        MusicInfo(
+            "title3",
+            "artist3",
+            "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
+            226,
+            "https://cdn.musicappserver.com/image/1d/2b52438d2f91cb61814dff8a1c73a8.jpg",
+            "",
+        ),
+        MusicInfo(
+            "title4",
+            "artist4",
+            "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
+            183,
+            "https://cdn.musicappserver.com/image/4c/1b5f29b91a5a438b2c424102e8e5ab.jpg",
+            "",
+        ),
     )
 
     init {
@@ -132,11 +145,7 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         binding.apply {
-            (player.curPlayingInfo ?: playlist.first()).also {
-                mtvArtist.text = it.artist
-                mtvTrack.text = it.title
-            }
-            merge.mtvDuration.text = StringUtil.buildDurationToDigitalTime(player.curDuration)
+            (player.curPlayingInfo ?: playlist.first()).also(this@PlayerFragment::setMusicInfo)
             merge.mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(player.curTrackSec)
             setProgress(player.curTrackSec / player.curDuration.toFloat())
         }
@@ -148,8 +157,9 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             btnMiniPlay.setOnClickListener { handlePlayAction() }
             btnMiniNext.setOnClickListener { player.next() }
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
-            sivAlbum.setOnClickListener {
+            sivAlbum.setOnContextClickListener {
                 logw("??????????????????????????????????????????")
+                true
             }
             sliderMiniProgress.clearOnSliderTouchListeners()
             sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
@@ -179,6 +189,18 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     }
 
     private fun handleFavorite() {
+    }
+
+    private fun setMusicInfo(music: MusicInfo) {
+        binding.apply {
+            sivAlbum.loadAny(music.thumbUri.takeIf { it.isNotBlank() } ?: "")
+            mtvArtist.text = music.artist
+            mtvTrack.text = music.title
+        }
+        merge.apply {
+            mtvDuration.text = StringUtil.buildDurationToDigitalTime(music.duration.toLong())
+            mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(0L)
+        }
     }
 
     private fun setProgress(progress: Float) {

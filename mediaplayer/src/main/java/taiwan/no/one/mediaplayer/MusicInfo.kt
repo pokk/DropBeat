@@ -29,4 +29,6 @@ data class MusicInfo(
     val artist: String,
     val uri: String,
     val duration: Int,
+    val thumbUri: String,
+    val lyricUri: String,
 )
