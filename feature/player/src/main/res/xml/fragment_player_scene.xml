@@ -32,7 +32,7 @@
         motion:constraintSetStart="@+id/mini_player_start">
         <OnSwipe
             motion:dragDirection="dragDown"
-            motion:touchAnchorId="@+id/cl_container"/>
+            motion:touchAnchorId="@+id/cl_mini_container"/>
 
         <KeyFrameSet>
             <KeyAttribute
@@ -60,16 +60,53 @@
                 motion:framePosition="60"
                 motion:motionTarget="@id/btn_option"/>
             <KeyAttribute
-                motion:framePosition="40"
+                motion:framePosition="50"
                 motion:motionTarget="@id/cl_container">
                 <CustomAttribute
-                    motion:attributeName="backgroundColor"
-                    motion:customColorValue="@android:color/transparent"/>
+                    motion:attributeName="topLeftRadiusDp"
+                    motion:customFloatValue="0"/>
+                <CustomAttribute
+                    motion:attributeName="topRightRadiusDp"
+                    motion:customFloatValue="0"/>
             </KeyAttribute>
+            <KeyAttribute
+                motion:framePosition="50"
+                motion:motionTarget="@id/cl_mini_container">
+                <CustomAttribute
+                    motion:attributeName="topLeftRadiusDp"
+                    motion:customFloatValue="0"/>
+                <CustomAttribute
+                    motion:attributeName="topRightRadiusDp"
+                    motion:customFloatValue="0"/>
+            </KeyAttribute>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="40"
+                motion:motionTarget="@id/cl_mini_container"/>
         </KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/mini_player_start">
+        <Constraint
+            android:id="@+id/cl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <CustomAttribute
+                motion:attributeName="topLeftRadiusDp"
+                motion:customFloatValue="0"/>
+            <CustomAttribute
+                motion:attributeName="topRightRadiusDp"
+                motion:customFloatValue="0"/>
+        </Constraint>
+        <Constraint android:id="@+id/cl_mini_container">
+            <PropertySet android:alpha="0"/>
+            <CustomAttribute
+                motion:attributeName="topLeftRadiusDp"
+                motion:customFloatValue="0"/>
+            <CustomAttribute
+                motion:attributeName="topRightRadiusDp"
+                motion:customFloatValue="0"/>
+        </Constraint>
         <Constraint
             android:id="@+id/siv_album"
             android:layout_width="@dimen/md_zero_unit"
@@ -115,16 +152,6 @@
                 android:visibility="gone"/>
         </Constraint>
         <Constraint
-            android:id="@+id/cl_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            motion:layout_editor_absoluteX="80dp"
-            motion:layout_editor_absoluteY="0dp">
-            <CustomAttribute
-                motion:attributeName="backgroundColor"
-                motion:customColorValue="@android:color/transparent"/>
-        </Constraint>
-        <Constraint
             android:id="@+id/siv_lyrics"
             android:layout_width="match_parent"
             android:layout_height="@dimen/md_zero_unit"
@@ -153,8 +180,20 @@
             android:layout_height="@dimen/md_eight_unit"
             motion:layout_constraintBottom_toBottomOf="parent">
             <CustomAttribute
-                motion:attributeName="backgroundColor"
-                motion:customColorValue="@color/dusty_gray"/>
+                motion:attributeName="topLeftRadiusDp"
+                motion:customFloatValue="24"/>
+            <CustomAttribute
+                motion:attributeName="topRightRadiusDp"
+                motion:customFloatValue="24"/>
+        </Constraint>
+        <Constraint android:id="@+id/cl_mini_container">
+            <PropertySet android:alpha="1"/>
+            <CustomAttribute
+                motion:attributeName="topLeftRadiusDp"
+                motion:customFloatValue="24"/>
+            <CustomAttribute
+                motion:attributeName="topRightRadiusDp"
+                motion:customFloatValue="24"/>
         </Constraint>
         <Constraint
             android:id="@+id/mtv_artist"

@@ -30,14 +30,35 @@
     android:id="@+id/ml_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_player_background"
     app:layoutDescription="@xml/fragment_player_scene">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <com.github.florent37.shapeofview.shapes.RoundRectView
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:shapeAppearanceOverlay="@style/roundTopFourUnit"/>
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/v_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_player_background"/>
+    </com.github.florent37.shapeofview.shapes.RoundRectView>
+
+    <com.github.florent37.shapeofview.shapes.RoundRectView
+        android:id="@+id/cl_mini_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="@id/cl_container"
+        app:layout_constraintTop_toTopOf="@id/cl_container"
+        tools:alpha="1">
+
+        <View
+            android:id="@+id/v_mini_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dusty_gray"/>
+    </com.github.florent37.shapeofview.shapes.RoundRectView>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_artist"
@@ -105,8 +126,6 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_marginHorizontal="@dimen/md_ten_unit"
         android:layout_marginTop="@dimen/md_two_unit"
-        android:clickable="true"
-        android:focusable="true"
         app:layout_constraintBottom_toTopOf="@id/btn_video"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
