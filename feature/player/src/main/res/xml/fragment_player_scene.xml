@@ -50,7 +50,7 @@
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="40"
-                motion:motionTarget="@id/slide_mini_progress"/>
+                motion:motionTarget="@id/slider_mini_progress"/>
             <KeyAttribute
                 android:alpha="0"
                 motion:framePosition="60"
@@ -141,7 +141,7 @@
         <Constraint android:id="@+id/btn_option">
             <PropertySet android:alpha="1"/>
         </Constraint>
-        <Constraint android:id="@+id/slide_mini_progress">
+        <Constraint android:id="@+id/slider_mini_progress">
             <PropertySet android:alpha="0"/>
         </Constraint>
     </ConstraintSet>
@@ -229,7 +229,7 @@
         <Constraint android:id="@+id/btn_option">
             <PropertySet android:alpha="0"/>
         </Constraint>
-        <Constraint android:id="@+id/slide_mini_progress">
+        <Constraint android:id="@+id/slider_mini_progress">
             <PropertySet android:alpha="1"/>
         </Constraint>
     </ConstraintSet>

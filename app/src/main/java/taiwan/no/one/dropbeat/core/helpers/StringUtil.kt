@@ -37,7 +37,7 @@ object StringUtil {
     fun buildDurationToDigitalTime(duration: Long) = buildString {
         val (hour, min, sec) = TimeUtils.durationToTime(duration)
         if (hour > 0) append("%02d".format(hour)).append(":")
-        if (min > 0) append("%02d".format(min)).append(":")
+        append("%02d".format(min)).append(":")
         append("%02d".format(sec))
     }
 }

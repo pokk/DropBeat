@@ -46,10 +46,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
@@ -99,6 +99,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     override val isPlaying get() = exoPlayer.isPlaying
     override val curPlayingInfo get() = playlist.find { exoPlayer.currentTag == it.uri }
     override val curTrackSec get() = exoPlayer.currentPosition / SECOND_UNIT
+    override val curDuration get() = exoPlayer.duration / SECOND_UNIT
     override var mode: Mode by Delegates.observable(Default) { _, oldMode, newMode ->
         if (oldMode == Shuffle && newMode != Shuffle) {
             // reset the timeline of the player
@@ -143,7 +144,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
         if (playerState.state == Standby) {
             return false
         }
-        exoPlayer.seekTo(sec.times(SECOND_UNIT).toLong())
+        exoPlayer.seekTo(sec.times(SECOND_UNIT))
         return true
     }
 
@@ -219,10 +220,10 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
                     callback?.onTrackCurrentPosition(0)
                 }
                 // Raise a global coroutine for receiving the tick.
-                timerJob = CoroutineScope(Dispatchers.Default).launch {
+                timerJob = CoroutineScope(Dispatchers.Main).launch {
                     timer = ticker(SECOND_UNIT, SECOND_UNIT - playingMs)
-                    timer.consumeEach {
-                        val (s, ms) = withContext(Dispatchers.Main) { getTimeOfTrack() }
+                    timer.consumeAsFlow().collect {
+                        val (s, ms) = getTimeOfTrack()
                         // The ms time is not always correct so we do need to round the ms.
                         callback?.onTrackCurrentPosition(if (ms > 800) s + 1 else s)
                     }

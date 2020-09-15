@@ -50,6 +50,9 @@ interface MusicPlayer {
     /** Current track position of second */
     val curTrackSec: Long
 
+    /** Current track's duration of second */
+    val curDuration: Long
+
     /** Current playing mode for the playlist. */
     var mode: Mode
 

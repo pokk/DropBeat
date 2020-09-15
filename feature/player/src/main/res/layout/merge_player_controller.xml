@@ -74,19 +74,25 @@
             <!--endregion-->
 
             <!--region Music Progress-->
-            <com.google.android.material.slider.Slider
+            <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/slider_music"
                 android:layout_width="@dimen/md_zero_unit"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/md_five_unit"
+                android:padding="@dimen/md_zero_unit"
+                android:progressBackgroundTint="@android:color/white"
+                android:progressBackgroundTintMode="screen"
+                android:thumb="@drawable/ic_ticker"
                 app:layout_constraintBottom_toTopOf="@id/btn_play"
                 app:layout_constraintEnd_toEndOf="@id/mtv_duration"
-                app:layout_constraintStart_toStartOf="@id/mtv_current_time"/>
+                app:layout_constraintStart_toStartOf="@id/mtv_current_time"
+                tools:progress="10"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/mtv_current_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/md_one_half_unit"
                 android:text="1:30"
                 app:layout_constraintStart_toStartOf="@id/g_controller_start"
                 app:layout_constraintTop_toBottomOf="@id/slider_music"/>
@@ -97,7 +103,8 @@
                 android:layout_height="wrap_content"
                 android:text="3:23"
                 app:layout_constraintBottom_toBottomOf="@id/mtv_current_time"
-                app:layout_constraintEnd_toEndOf="@id/g_controller_end"/>
+                app:layout_constraintEnd_toEndOf="@id/g_controller_end"
+                app:layout_constraintTop_toTopOf="@id/mtv_current_time"/>
             <!--endregion-->
 
             <!--region Bottom Buttons-->

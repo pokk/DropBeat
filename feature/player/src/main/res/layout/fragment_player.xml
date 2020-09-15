@@ -147,7 +147,7 @@
         app:layout_constraintTop_toTopOf="@id/siv_album"/>
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/slide_mini_progress"
+        android:id="@+id/slider_mini_progress"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_two_unit"

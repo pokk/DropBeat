@@ -24,9 +24,12 @@
 
 package taiwan.no.one.feat.player.presentation.fragments
 
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.google.android.material.slider.Slider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
@@ -40,11 +43,17 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 
 internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
+    private var isTouchingSlider = false
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
     private val isPlaying get() = player.isPlaying
     private val playerCallback = object : PlayerCallback {
         override fun onTrackChanged(music: MusicInfo) {
             logw(music)
+            merge.apply {
+                logw(player.curDuration)
+                mtvDuration.text = StringUtil.buildDurationToDigitalTime(music.duration.toLong())
+                mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(0L)
+            }
         }
 
         override fun onPlayState(isPlaying: Boolean) {
@@ -53,11 +62,42 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
         }
 
         override fun onTrackCurrentPosition(second: Long) {
-            logw("current time", second)
+            merge.apply {
+                if (!isTouchingSlider) {
+                    mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(second)
+                    setProgress(second / player.curDuration.toFloat())
+                }
+            }
         }
 
         override fun onErrorCallback(error: PlaybackException) {
             loge(error)
+        }
+    }
+    private val sliderTouchListener = object : Slider.OnSliderTouchListener {
+        override fun onStartTrackingTouch(slider: Slider) {
+            isTouchingSlider = true
+        }
+
+        override fun onStopTrackingTouch(slider: Slider) {
+            player.seekTo((slider.value * player.curDuration).toInt())
+            isTouchingSlider = false
+        }
+    }
+    private val seekBarChangeListener = object : OnSeekBarChangeListener {
+        override fun onStartTrackingTouch(seekBar: SeekBar) {
+            isTouchingSlider = true
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar) {
+            player.seekTo((seekBar.progress / 100f * player.curDuration).toInt())
+            isTouchingSlider = false
+        }
+
+        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+            if (!isTouchingSlider) return
+            merge.mtvCurrentTime.text =
+                StringUtil.buildDurationToDigitalTime((progress * player.curDuration / 100f).toLong())
         }
     }
     val player = SimpleMusicPlayer.getInstance()
@@ -65,19 +105,19 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
         MusicInfo("title1",
                   "artist1",
                   "http://cdn.musicappserver.com/music/1d/2b52438d2f91cb61814dff8a1c73a8.mp3",
-                  368),
+                  196),
         MusicInfo("title2",
                   "artist2",
                   "http://cdn.musicappserver.com/music/b1/4acbbb3567c3c35b33305a07dc693c.mp3",
-                  224),
+                  335),
         MusicInfo("title3",
                   "artist3",
                   "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
-                  360),
+                  226),
         MusicInfo("title4",
                   "artist4",
                   "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
-                  368),
+                  183),
     )
 
     init {
@@ -95,8 +135,10 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             (player.curPlayingInfo ?: playlist.first()).also {
                 mtvArtist.text = it.artist
                 mtvTrack.text = it.title
-                merge.mtvDuration.text = StringUtil.buildDurationToDigitalTime(it.duration.toLong())
             }
+            merge.mtvDuration.text = StringUtil.buildDurationToDigitalTime(player.curDuration)
+            merge.mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(player.curTrackSec)
+            setProgress(player.curTrackSec / player.curDuration.toFloat())
         }
         switchPlayIcon()
     }
@@ -109,6 +151,8 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             sivAlbum.setOnClickListener {
                 logw("??????????????????????????????????????????")
             }
+            sliderMiniProgress.clearOnSliderTouchListeners()
+            sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
         }
         merge.apply {
             btnFavorite.setOnClickListener { handleFavorite() }
@@ -118,6 +162,7 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             btnPrevious.setOnClickListener { player.previous() }
             btnShuffle.setOnClickListener { player.mode = Mode.Shuffle }
             btnRepeat.setOnClickListener { player.mode = Mode.RepeatAll }
+            sliderMusic.setOnSeekBarChangeListener(seekBarChangeListener)
         }
         player.setPlayerEventCallback(playerCallback)
     }
@@ -134,5 +179,10 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     }
 
     private fun handleFavorite() {
+    }
+
+    private fun setProgress(progress: Float) {
+        merge.sliderMusic.progress = (progress * 100).toInt()
+        binding.sliderMiniProgress.value = progress
     }
 }
