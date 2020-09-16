@@ -183,6 +183,7 @@
         app:layout_constraintTop_toTopOf="@id/cl_container"
         app:thumbColor="@android:color/transparent"
         app:thumbElevation="0dp"
-        app:trackColorActive="@color/grapefruit"/>
+        app:trackColorActive="@color/grapefruit"
+        app:trackColorInactive="@android:color/white"/>
     <!--endregion-->
 </androidx.constraintlayout.motion.widget.MotionLayout>

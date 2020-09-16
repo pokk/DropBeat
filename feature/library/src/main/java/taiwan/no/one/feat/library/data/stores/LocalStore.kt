@@ -24,6 +24,8 @@
 
 package taiwan.no.one.feat.library.data.stores
 
+import taiwan.no.one.core.exceptions.NotFoundException
+import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
 import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
@@ -38,7 +40,13 @@ internal class LocalStore(
     private val playlistDao: PlaylistDao,
     private val songDao: SongDao,
 ) : DataStore {
-    override suspend fun getMusic(path: String) = songDao.getMusic(path)
+    override suspend fun getMusic(remoteUri: String?, localUri: String?) = when {
+        remoteUri != null -> songDao.getMusicByRemote(remoteUri)
+                             ?: throw NotFoundException("Couldn't find the track by the remote uri path.")
+        localUri != null -> songDao.getMusicByLocal(localUri)
+                            ?: throw NotFoundException("Couldn't find the track by the local uri path.")
+        else -> throw ParameterNotMatchException()
+    }
 
     override suspend fun getMusics(playlistId: Int): List<SongEntity> {
         val playlist = playlistDao.getPlaylist(playlistId)

@@ -32,7 +32,7 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface DataStore {
-    suspend fun getMusic(path: String): SongEntity
+    suspend fun getMusic(remoteUri: String? = null, localUri: String? = null): SongEntity
 
     suspend fun getMusics(playlistId: Int): List<SongEntity>
 

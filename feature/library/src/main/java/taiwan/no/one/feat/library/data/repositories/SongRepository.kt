@@ -31,5 +31,5 @@ internal class SongRepository(
     private val local: DataStore,
     private val remote: DataStore,
 ) : SongRepo {
-    override suspend fun getMusic(songPath: String) = local.getMusic(songPath)
+    override suspend fun getMusic(remoteUri: String?, localUri: String?) = local.getMusic(remoteUri, localUri)
 }

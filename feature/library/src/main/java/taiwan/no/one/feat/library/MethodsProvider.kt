@@ -29,9 +29,12 @@ import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
 import taiwan.no.one.feat.library.domain.usecases.CreateDefaultPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.FetchSongCase
+import taiwan.no.one.feat.library.domain.usecases.FetchSongReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
 
@@ -41,6 +44,7 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     private val createDefaultPlaylistCase by instance<CreateDefaultPlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
+    private val fetchSongCase by instance<FetchSongCase>()
 
     override suspend fun createDefaultPlaylists(): Boolean {
         createDefaultPlaylistCase.execute()
@@ -61,4 +65,8 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
         addSongsCase.execute(AddSongsReq(songsStream = songsStream))
         return true
     }
+
+    override suspend fun hasOwnTrack(uri: String) = fetchSongCase.execute(FetchSongReq(uri)).map(SongEntity::hasOwn)
+
+    override suspend fun isFavoriteTrack(uri: String) = TODO()
 }

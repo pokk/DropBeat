@@ -31,5 +31,5 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface SongRepo {
-    suspend fun getMusic(songPath: String): SongEntity
+    suspend fun getMusic(remoteUri: String? = null, localUri: String? = null): SongEntity
 }

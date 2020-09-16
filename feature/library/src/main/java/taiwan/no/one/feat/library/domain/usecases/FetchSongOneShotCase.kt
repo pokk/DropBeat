@@ -22,26 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.provider
+package taiwan.no.one.feat.library.domain.usecases
 
-import androidx.annotation.WorkerThread
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
-interface LibraryMethodsProvider {
-    @WorkerThread
-    suspend fun createDefaultPlaylists(): Boolean
+internal class FetchSongOneShotCase(
+    private val repository: SongRepo,
+) : FetchSongCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        repository.getMusic(uri, null)
+    }
 
-    @WorkerThread
-    suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun downloadTrack(songsStream: String): Boolean
-
-    @WorkerThread
-    suspend fun hasOwnTrack(uri: String): Result<Boolean>
-
-    @WorkerThread
-    suspend fun isFavoriteTrack(uri: String): Boolean
+    data class Request(
+        val uri: String,
+    ) : RequestValues
 }

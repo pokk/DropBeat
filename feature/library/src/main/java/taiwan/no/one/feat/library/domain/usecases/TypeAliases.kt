@@ -26,6 +26,7 @@ package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 
 internal typealias FetchPlaylistCase = OneShotUsecase<PlayListEntity, FetchPlaylistReq>
 internal typealias FetchPlaylistReq = FetchPlaylistOneShotCase.Request
@@ -37,6 +38,9 @@ internal typealias UpdatePlaylistCase = OneShotUsecase<Boolean, UpdatePlaylistRe
 internal typealias UpdatePlaylistReq = UpdatePlaylistOneShotCase.Request
 internal typealias DeletePlaylistCase = OneShotUsecase<Boolean, DeletePlaylistReq>
 internal typealias DeletePlaylistReq = DeletePlaylistOneShotCase.Request
+
+internal typealias FetchSongCase = OneShotUsecase<SongEntity, FetchSongReq>
+internal typealias FetchSongReq = FetchSongOneShotCase.Request
 internal typealias AddSongsCase = OneShotUsecase<Boolean, AddSongsReq>
 internal typealias AddSongsReq = AddSongsOneShotCase.Request
 

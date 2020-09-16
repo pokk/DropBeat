@@ -43,6 +43,8 @@ import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsOneShotCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistOneShotCase
+import taiwan.no.one.feat.library.domain.usecases.FetchSongCase
+import taiwan.no.one.feat.library.domain.usecases.FetchSongOneShotCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistOneShotCase
 
@@ -53,6 +55,7 @@ internal object DomainModules : ModuleProvider {
         bind<AddPlaylistCase>() with singleton { AddPlaylistOneShotCase(instance()) }
         bind<UpdatePlaylistCase>() with singleton { UpdatePlaylistOneShotCase(instance(), instance()) }
         bind<DeletePlaylistCase>() with singleton { DeletePlaylistOneShotCase(instance()) }
+        bind<FetchSongCase>() with singleton { FetchSongOneShotCase(instance()) }
         bind<AddSongsCase>() with singleton { AddSongsOneShotCase(instance()) }
 
         bind<CreateDefaultPlaylistCase>() with singleton { CreateDefaultPlaylistOneShotCase(instance()) }
