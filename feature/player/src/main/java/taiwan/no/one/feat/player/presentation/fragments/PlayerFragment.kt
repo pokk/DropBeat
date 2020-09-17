@@ -28,29 +28,39 @@ import android.view.MotionEvent
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.google.android.material.slider.Slider
+import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
+import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
+import taiwan.no.one.feat.player.presentation.popups.PlaylistPopupWindow
+import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
 import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
+import java.lang.ref.WeakReference
 
 internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     private var isTouchingSlider = false
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
     private val isPlaying get() = player.isPlaying
+    private val linearLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()))
+    }
     private val playerCallback = object : PlayerCallback {
         override fun onTrackChanged(music: MusicInfo) {
             logw(music)
@@ -228,6 +238,7 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             btnPrevious.setOnClickListener { player.previous() }
             btnShuffle.setOnClickListener { player.mode = Mode.Shuffle }
             btnRepeat.setOnClickListener { player.mode = Mode.RepeatAll }
+            btnAddPlaylist.setOnClickListener { popupPlaylist() }
             sliderMusic.setOnSeekBarChangeListener(seekBarChangeListener)
         }
         player.setPlayerEventCallback(playerCallback)
@@ -245,6 +256,18 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     }
 
     private fun handleFavorite() {
+    }
+
+    private fun popupPlaylist() {
+        PlaylistPopupWindow(requireActivity()).builder {
+            logw(it.rvPlaylist.adapter)
+            it.rvPlaylist.adapter = PlaylistAdapter(listOf(
+                SimplePlaylistEntity(0, "123", listOf(), ""),
+                SimplePlaylistEntity(1, "321", listOf(), ""),
+                SimplePlaylistEntity(2, "444", listOf(), ""),
+            ))
+            it.rvPlaylist.layoutManager = linearLayoutManager()
+        }.anchorOn(merge.btnAddPlaylist).popup()
     }
 
     private fun setMusicInfo(music: MusicInfo) {

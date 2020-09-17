@@ -71,6 +71,11 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
         return true
     }
 
+    override suspend fun removeSongFromPlaylist(songId: Int, playlistId: Int): Boolean {
+        updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, songIds = listOf(songId), isAddSongs = false))
+        return true
+    }
+
     override suspend fun downloadTrack(songsStream: String): Boolean {
         addSongsCase.execute(AddSongsReq(songsStream = songsStream))
         return true

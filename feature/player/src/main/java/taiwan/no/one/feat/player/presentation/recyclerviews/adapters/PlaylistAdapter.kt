@@ -22,36 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.provider
+package taiwan.no.one.feat.player.presentation.recyclerviews.adapters
 
-import androidx.annotation.WorkerThread
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.feat.player.R
+import taiwan.no.one.feat.player.databinding.ItemPlaylistBinding
+import taiwan.no.one.feat.player.presentation.recyclerviews.viewholders.PlaylistViewHolder
 
-interface LibraryMethodsProvider {
-    @WorkerThread
-    suspend fun createDefaultPlaylists(): Boolean
+internal class PlaylistAdapter(
+    private val playlists: List<SimplePlaylistEntity>,
+) : RecyclerView.Adapter<PlaylistViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        LayoutInflater.from(parent.context).inflate(R.layout.item_playlist, parent, false)
+            .let { PlaylistViewHolder(ItemPlaylistBinding.bind(it)) }
 
-    @WorkerThread
-    suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
+    override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
+        holder.initView(playlists[position], this)
 
-    @WorkerThread
-    suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun removeSongFromPlaylist(songId: Int, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun downloadTrack(songsStream: String): Boolean
-
-    @WorkerThread
-    suspend fun hasOwnTrack(uri: String): Result<Boolean>
-
-    @WorkerThread
-    suspend fun isFavoriteTrack(uri: String, playlistId: Int): Result<Boolean>
-
-    @WorkerThread
-    suspend fun getPlaylists(): Result<List<SimplePlaylistEntity>>
-
-    @WorkerThread
-    suspend fun createPlaylist(name: String): Result<Boolean>
+    override fun getItemCount() = playlists.size
 }

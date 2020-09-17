@@ -22,36 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.provider
+package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
 
-import androidx.annotation.WorkerThread
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.feat.player.databinding.ItemPlaylistBinding
+import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
+import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
-interface LibraryMethodsProvider {
-    @WorkerThread
-    suspend fun createDefaultPlaylists(): Boolean
-
-    @WorkerThread
-    suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun removeSongFromPlaylist(songId: Int, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun downloadTrack(songsStream: String): Boolean
-
-    @WorkerThread
-    suspend fun hasOwnTrack(uri: String): Result<Boolean>
-
-    @WorkerThread
-    suspend fun isFavoriteTrack(uri: String, playlistId: Int): Result<Boolean>
-
-    @WorkerThread
-    suspend fun getPlaylists(): Result<List<SimplePlaylistEntity>>
-
-    @WorkerThread
-    suspend fun createPlaylist(name: String): Result<Boolean>
+internal class PlaylistViewHolder(
+    private val binding: ItemPlaylistBinding,
+) : ViewHolderBinding<SimplePlaylistEntity, PlaylistAdapter>(binding.root) {
+    override fun initView(entity: SimplePlaylistEntity, adapter: PlaylistAdapter) {
+        binding.apply {
+            mtvTitle.text = entity.name
+            mtvSubtitle.text = "${entity.songIds.size} songs"
+        }
+    }
 }
