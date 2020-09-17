@@ -56,6 +56,7 @@ import java.lang.ref.WeakReference
 
 internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     private var isTouchingSlider = false
+    private var hasClicked = false
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
     private val isPlaying get() = player.isPlaying
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
@@ -176,14 +177,17 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             sivAlbum.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_UP -> {
-                    }
-                    MotionEvent.ACTION_DOWN -> {
+                        if (!hasClicked) return@setOnTouchListener true
                         binding.mlParent.apply {
                             setTransition(R.id.transition_expand_lyric)
                             transitionToEnd()
                         }
                     }
+                    MotionEvent.ACTION_DOWN -> {
+                        hasClicked = true
+                    }
                     MotionEvent.ACTION_MOVE -> {
+                        hasClicked = false
                     }
                 }
                 true
@@ -191,14 +195,17 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             sivLyrics.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_UP -> {
-                    }
-                    MotionEvent.ACTION_DOWN -> {
+                        if (!hasClicked) return@setOnTouchListener true
                         binding.mlParent.apply {
                             setTransition(R.id.transition_expand_lyric)
                             transitionToStart()
                         }
                     }
+                    MotionEvent.ACTION_DOWN -> {
+                        hasClicked = true
+                    }
                     MotionEvent.ACTION_MOVE -> {
+                        hasClicked = false
                     }
                 }
                 true
