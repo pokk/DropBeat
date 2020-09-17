@@ -22,33 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.provider
+package taiwan.no.one.feat.library.domain.usecases
 
-import androidx.annotation.WorkerThread
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
+import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
-interface LibraryMethodsProvider {
-    @WorkerThread
-    suspend fun createDefaultPlaylists(): Boolean
+internal class FetchIsInThePlaylistOneShotCase(
+    private val repository: PlaylistRepo,
+    private val songRepository: SongRepo,
+) : FetchIsInThePlaylistCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        val id = if (trackUri != null) songRepository.getMusic(trackUri).id else trackId ?: -1
+        val playlist = repository.fetchPlaylist(playlistId)
+        id in playlist.songIds
+    }
 
-    @WorkerThread
-    suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun downloadTrack(songsStream: String): Boolean
-
-    @WorkerThread
-    suspend fun hasOwnTrack(uri: String): Result<Boolean>
-
-    @WorkerThread
-    suspend fun isFavoriteTrack(uri: String, playlistId: Int): Result<Boolean>
-
-    @WorkerThread
-    suspend fun getPlaylists(): Result<List<SimplePlaylistEntity>>
-
-    @WorkerThread
-    suspend fun createPlaylist(name: String): Result<Boolean>
+    data class Request(
+        val trackId: Int? = null,
+        val trackUri: String? = null,
+        val playlistId: Int,
+    ) : RequestValues
 }

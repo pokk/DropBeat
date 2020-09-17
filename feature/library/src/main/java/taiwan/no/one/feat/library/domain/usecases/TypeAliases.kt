@@ -41,6 +41,8 @@ internal typealias DeletePlaylistReq = DeletePlaylistOneShotCase.Request
 
 internal typealias FetchSongCase = OneShotUsecase<SongEntity, FetchSongReq>
 internal typealias FetchSongReq = FetchSongOneShotCase.Request
+internal typealias FetchIsInThePlaylistCase = OneShotUsecase<Boolean, FetchIsInThePlaylistReq>
+internal typealias FetchIsInThePlaylistReq = FetchIsInThePlaylistOneShotCase.Request
 internal typealias AddSongsCase = OneShotUsecase<Boolean, AddSongsReq>
 internal typealias AddSongsReq = AddSongsOneShotCase.Request
 

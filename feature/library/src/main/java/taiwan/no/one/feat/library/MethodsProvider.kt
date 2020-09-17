@@ -28,11 +28,18 @@ import com.google.auto.service.AutoService
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
 import taiwan.no.one.feat.library.domain.usecases.CreateDefaultPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
+import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.FetchSongCase
 import taiwan.no.one.feat.library.domain.usecases.FetchSongReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
@@ -43,8 +50,11 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val createDefaultPlaylistCase by instance<CreateDefaultPlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
+    private val addPlaylistCase by instance<AddPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
+    private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
     private val fetchSongCase by instance<FetchSongCase>()
+    private val fetchIsInThePlaylistCase by instance<FetchIsInThePlaylistCase>()
 
     override suspend fun createDefaultPlaylists(): Boolean {
         createDefaultPlaylistCase.execute()
@@ -68,5 +78,14 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
 
     override suspend fun hasOwnTrack(uri: String) = fetchSongCase.execute(FetchSongReq(uri)).map(SongEntity::hasOwn)
 
-    override suspend fun isFavoriteTrack(uri: String) = TODO()
+    override suspend fun isFavoriteTrack(uri: String, playlistId: Int) =
+        fetchIsInThePlaylistCase.execute(FetchIsInThePlaylistReq(null, uri, playlistId))
+
+    override suspend fun getPlaylists() = fetchAllPlaylistsCase.execute()
+        .map { list ->
+            list.map { SimplePlaylistEntity(it.id, it.name, it.songIds, "") }
+        }
+
+    override suspend fun createPlaylist(name: String): Result<Boolean> =
+        addPlaylistCase.execute(AddPlaylistReq(PlayListEntity(name = name)))
 }

@@ -22,33 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.provider
+package taiwan.no.one.dropbeat.data.entities
 
-import androidx.annotation.WorkerThread
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
-
-interface LibraryMethodsProvider {
-    @WorkerThread
-    suspend fun createDefaultPlaylists(): Boolean
-
-    @WorkerThread
-    suspend fun addSongToPlaylist(songId: Int, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean
-
-    @WorkerThread
-    suspend fun downloadTrack(songsStream: String): Boolean
-
-    @WorkerThread
-    suspend fun hasOwnTrack(uri: String): Result<Boolean>
-
-    @WorkerThread
-    suspend fun isFavoriteTrack(uri: String, playlistId: Int): Result<Boolean>
-
-    @WorkerThread
-    suspend fun getPlaylists(): Result<List<SimplePlaylistEntity>>
-
-    @WorkerThread
-    suspend fun createPlaylist(name: String): Result<Boolean>
-}
+/**
+ * [SimplePlaylistEntity] is for global usage and it only keeps brief information.
+ */
+data class SimplePlaylistEntity(
+    val id: Int,
+    val name: String,
+    val songIds: List<Int>,
+    val thumbUri: String,
+)
