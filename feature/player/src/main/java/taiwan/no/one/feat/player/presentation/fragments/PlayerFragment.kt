@@ -24,10 +24,12 @@
 
 package taiwan.no.one.feat.player.presentation.fragments
 
+import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
 import com.devrapid.kotlinknifer.getDrawable
@@ -39,7 +41,6 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
@@ -47,6 +48,7 @@ import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
 import taiwan.no.one.feat.player.presentation.popups.PlaylistPopupWindow
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
+import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
 import taiwan.no.one.mediaplayer.exceptions.PlaybackException
@@ -57,6 +59,7 @@ import java.lang.ref.WeakReference
 internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     private var isTouchingSlider = false
     private var hasClicked = false
+    private val vm by viewModels<PlayerViewModel>()
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
     private val isPlaying get() = player.isPlaying
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
@@ -251,6 +254,10 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
         player.setPlayerEventCallback(playerCallback)
     }
 
+    override fun rendered(savedInstanceState: Bundle?) {
+        vm.getPlaylists()
+    }
+
     private fun switchPlayIcon() {
         listOf(merge.btnPlay, binding.btnMiniPlay).forEach { btn ->
             btn.icon = getDrawable(if (isPlaying) drawable.ic_pause else drawable.ic_play)
@@ -267,12 +274,7 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
 
     private fun popupPlaylist() {
         PlaylistPopupWindow(requireActivity()).builder {
-            logw(it.rvPlaylist.adapter)
-            it.rvPlaylist.adapter = PlaylistAdapter(listOf(
-                SimplePlaylistEntity(0, "123", listOf(), ""),
-                SimplePlaylistEntity(1, "321", listOf(), ""),
-                SimplePlaylistEntity(2, "444", listOf(), ""),
-            ))
+            it.rvPlaylist.adapter = PlaylistAdapter(vm.playlists.value?.getOrNull().orEmpty())
             it.rvPlaylist.layoutManager = linearLayoutManager()
         }.anchorOn(merge.btnAddPlaylist).popup()
     }

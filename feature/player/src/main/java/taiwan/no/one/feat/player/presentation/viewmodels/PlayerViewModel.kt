@@ -24,6 +24,28 @@
 
 package taiwan.no.one.feat.player.presentation.viewmodels
 
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class PlayerViewModel : BehindViewModel()
+internal class PlayerViewModel : BehindViewModel() {
+    private val libraryProvider get() = FeatModuleHelper.methodsProvider()
+    private val _playlists by lazy { ResultLiveData<List<SimplePlaylistEntity>>() }
+    val playlists = _playlists.toLiveData()
+    private val _isFavorite by lazy { ResultLiveData<Boolean>() }
+    val isFavorite = _isFavorite.toLiveData()
+
+    fun download(uri: String) = launchBehind { libraryProvider.downloadTrack(uri) }
+
+    fun addFavorite() = launchBehind {}
+
+    fun removeFavorite() = launchBehind {}
+
+    fun isFavorite(uri: String) = launchBehind { _isFavorite.postValue(libraryProvider.isFavoriteTrack(uri, 2)) }
+
+    fun getPlaylists() = launchBehind { _playlists.postValue(libraryProvider.getPlaylists()) }
+
+    fun createPlaylist(name: String) = launchBehind { libraryProvider.createPlaylist(name) }
+}
