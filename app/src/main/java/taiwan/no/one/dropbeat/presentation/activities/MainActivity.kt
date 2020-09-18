@@ -28,7 +28,8 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.changeStatusBarColor
 import com.google.android.play.core.splitcompat.SplitCompat
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -41,7 +42,8 @@ import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val vm by viewModels<PrivacyViewModel>()
-    private val navigator get() = findNavController(R.id.nav_host_fragment)
+    private val navigator
+        get() = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
 
     init {
         SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featSearchMusic"))
@@ -54,9 +56,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         SplitCompat.install(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun preSetContentView() {
         changeStatusBarColor(0, 0f)
+    }
+
+    override fun viewComponentBinding() {
+        binding.bnvNavigator.setupWithNavController(navigator)
+    }
+
+    override fun init(savedInstanceState: Bundle?) {
         vm.getUserInfo()
     }
 

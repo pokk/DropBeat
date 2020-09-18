@@ -26,17 +26,17 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_music"
+        android:id="@+id/nav_explore"
         android:enabled="true"
         android:icon="@drawable/ic_music"
         android:title="Music"/>
     <item
-        android:id="@+id/menu_search"
+        android:id="@+id/nav_search"
         android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="Search"/>
     <item
-        android:id="@+id/menu_folder"
+        android:id="@+id/nav_playlist"
         android:enabled="true"
         android:icon="@drawable/ic_folder"
         android:title="Folder"/>
