@@ -55,7 +55,8 @@ internal class LocalStore(
 
     override suspend fun createMusics(songs: List<SongEntity>) = songDao.insert(*songs.toTypedArray())
 
-    override suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int) = TODO()
+    override suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int) =
+        playlistDao.updateBy(playlistId, listOf(song.id))
 
     override suspend fun removeMusic(id: Int) = songDao.deleteBy(id)
 

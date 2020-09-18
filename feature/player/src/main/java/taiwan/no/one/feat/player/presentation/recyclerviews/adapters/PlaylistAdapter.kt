@@ -35,6 +35,9 @@ import taiwan.no.one.feat.player.presentation.recyclerviews.viewholders.Playlist
 internal class PlaylistAdapter(
     private val playlists: List<SimplePlaylistEntity>,
 ) : RecyclerView.Adapter<PlaylistViewHolder>() {
+    var onClickListener: ((entity: SimplePlaylistEntity) -> Unit)? = null
+        private set
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).inflate(R.layout.item_playlist, parent, false)
             .let { PlaylistViewHolder(ItemPlaylistBinding.bind(it)) }
@@ -43,4 +46,8 @@ internal class PlaylistAdapter(
         holder.initView(playlists[position], this)
 
     override fun getItemCount() = playlists.size
+
+    fun setOnClickListener(listener: (entity: SimplePlaylistEntity) -> Unit) {
+        onClickListener = listener
+    }
 }

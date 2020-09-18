@@ -35,8 +35,6 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 internal interface PlaylistRepo : Repository {
     suspend fun fetchMusics(playlistId: Int): List<SongEntity>
 
-    suspend fun addMusics(songs: List<SongEntity>)
-
     suspend fun addMusicToPlaylist(song: SongEntity, playlistId: Int)
 
     suspend fun deleteMusic(playlistId: Int?, playlist: PlayListEntity?)

@@ -33,6 +33,8 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.library.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistOneShotCase
+import taiwan.no.one.feat.library.domain.usecases.AddSongsAndPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.AddSongsAndPlaylistOneShotCase
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.AddSongsOneShotCase
 import taiwan.no.one.feat.library.domain.usecases.CreateDefaultPlaylistCase
@@ -60,7 +62,7 @@ internal object DomainModules : ModuleProvider {
         bind<FetchSongCase>() with singleton { FetchSongOneShotCase(instance()) }
         bind<FetchIsInThePlaylistCase>() with singleton { FetchIsInThePlaylistOneShotCase(instance(), instance()) }
         bind<AddSongsCase>() with singleton { AddSongsOneShotCase(instance()) }
-
+        bind<AddSongsAndPlaylistCase>() with singleton { AddSongsAndPlaylistOneShotCase(instance(), instance()) }
         bind<CreateDefaultPlaylistCase>() with singleton { CreateDefaultPlaylistOneShotCase(instance()) }
     }
 }

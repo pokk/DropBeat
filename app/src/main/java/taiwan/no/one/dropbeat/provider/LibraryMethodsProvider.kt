@@ -26,6 +26,7 @@ package taiwan.no.one.dropbeat.provider
 
 import androidx.annotation.WorkerThread
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.mediaplayer.MusicInfo
 
 interface LibraryMethodsProvider {
     @WorkerThread
@@ -36,6 +37,9 @@ interface LibraryMethodsProvider {
 
     @WorkerThread
     suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean
+
+    @WorkerThread
+    suspend fun addSongToPlaylist(musicInfo: MusicInfo, playlistId: Int): Boolean
 
     @WorkerThread
     suspend fun removeSongFromPlaylist(songId: Int, playlistId: Int): Boolean

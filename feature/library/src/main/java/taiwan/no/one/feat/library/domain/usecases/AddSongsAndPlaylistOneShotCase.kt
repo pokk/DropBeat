@@ -30,29 +30,48 @@ import org.kodein.di.DIAware
 import org.kodein.di.android.di
 import org.kodein.di.instance
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
-internal class AddSongsOneShotCase(
-    private val repository: SongRepo,
-) : AddSongsCase(), DIAware {
+internal class AddSongsAndPlaylistOneShotCase(
+    private val songRepository: SongRepo,
+    private val playlistRepository: PlaylistRepo,
+) : AddSongsAndPlaylistCase(), DIAware {
     override val di by di(DropBeatApp.appContext)
 
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        val list = songs ?: run {
-            val gson by instance<Gson>()
-            try {
-                gson.fromJson(songsStream, Array<SongEntity>::class.java).toList()
-            }
-            catch (e: Exception) {
-                loge(e)
-                return@ensure false
+        val gson by instance<Gson>()
+        val list = try {
+            gson.fromJson(songsStream, Array<SongEntity>::class.java).toList()
+        }
+        catch (e: Exception) {
+            loge(e)
+            return@ensure false
+        }
+        try {
+            songRepository.addMusics(list)
+        }
+        catch (e: Exception) {
+            // The error happens because the music has been in the database.
+        }
+        finally {
+            list.forEach {
+                val track = when {
+                    it.uri.isNotEmpty() -> songRepository.getMusic(remoteUri = it.uri)
+                    it.localUri.isNotEmpty() -> songRepository.getMusic(localUri = it.localUri)
+                    else -> throw ParameterNotMatchException()
+                }
+                playlistRepository.addMusicToPlaylist(track, playlistId)
             }
         }
-        repository.addMusics(list)
         true
     }
 
-    data class Request(val songs: List<SongEntity>? = null, val songsStream: String? = null) : RequestValues
+    data class Request(
+        val songsStream: String? = null,
+        val playlistId: Int,
+    ) : RequestValues
 }

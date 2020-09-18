@@ -31,6 +31,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/fragment_player_scene"
+    app:motionDebug="SHOW_PATH"
+    app:showPaths="true"
     tools:context=".presentation.fragments.PlayerFragment">
 
     <!--region Mini Player Background-->

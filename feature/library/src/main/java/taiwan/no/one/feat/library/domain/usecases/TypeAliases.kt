@@ -45,6 +45,8 @@ internal typealias FetchIsInThePlaylistCase = OneShotUsecase<Boolean, FetchIsInT
 internal typealias FetchIsInThePlaylistReq = FetchIsInThePlaylistOneShotCase.Request
 internal typealias AddSongsCase = OneShotUsecase<Boolean, AddSongsReq>
 internal typealias AddSongsReq = AddSongsOneShotCase.Request
+internal typealias AddSongsAndPlaylistCase = OneShotUsecase<Boolean, AddSongsAndPlaylistReq>
+internal typealias AddSongsAndPlaylistReq = AddSongsAndPlaylistOneShotCase.Request
 
 internal typealias CreateDefaultPlaylistCase = OneShotUsecase<Boolean, CreateDefaultPlaylistReq>
 internal typealias CreateDefaultPlaylistReq = CreateDefaultPlaylistOneShotCase.Request

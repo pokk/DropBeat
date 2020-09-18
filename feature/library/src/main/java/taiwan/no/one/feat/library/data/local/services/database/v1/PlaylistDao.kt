@@ -81,6 +81,15 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         update(newPlaylist)
     }
 
+    @Transaction
+    open suspend fun updateBy(id: Int, tracksId: List<Int>) {
+        val playlist = getPlaylist(id)
+        val songIds = playlist.songIds.toHashSet().apply {
+            tracksId.forEach { add(it) }
+        }.toList()
+        update(playlist.copy(songIds = songIds, count = songIds.size))
+    }
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertIfNotExist(entity: LibraryEntity.PlayListEntity)
 

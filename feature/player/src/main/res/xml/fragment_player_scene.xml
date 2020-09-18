@@ -28,6 +28,14 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
+        android:id="@+id/transition_expand_lyric"
+        motion:constraintSetEnd="@+id/lyric_expand_end"
+        motion:constraintSetStart="@id/lyric_expand_start"
+        motion:duration="250">
+        <OnClick motion:targetId="@+id/siv_album"/>
+    </Transition>
+
+    <Transition
         android:id="@+id/transition_mini_player"
         motion:constraintSetEnd="@+id/mini_player_end"
         motion:constraintSetStart="@+id/mini_player_start">
@@ -275,13 +283,6 @@
     </ConstraintSet>
 
     <!--region Click Lyric Motion-->
-    <Transition
-        android:id="@+id/transition_expand_lyric"
-        motion:constraintSetEnd="@+id/lyric_expand_end"
-        motion:constraintSetStart="@id/lyric_expand_start"
-        motion:duration="250">
-    </Transition>
-
     <ConstraintSet android:id="@+id/lyric_expand_start">
         <!-- FIXME(Jieyi): 2020/9/12 top to bottom is not correct, it should be constraint by a barrier -->
         <Constraint

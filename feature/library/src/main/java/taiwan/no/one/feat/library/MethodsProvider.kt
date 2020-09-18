@@ -29,11 +29,14 @@ import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.dropbeat.data.mappers.TrackMapper
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
+import taiwan.no.one.feat.library.domain.usecases.AddSongsAndPlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.AddSongsAndPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
 import taiwan.no.one.feat.library.domain.usecases.CreateDefaultPlaylistCase
@@ -44,12 +47,14 @@ import taiwan.no.one.feat.library.domain.usecases.FetchSongCase
 import taiwan.no.one.feat.library.domain.usecases.FetchSongReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
+import taiwan.no.one.mediaplayer.MusicInfo
 
 @AutoService(LibraryMethodsProvider::class)
 class MethodsProvider : LibraryMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val createDefaultPlaylistCase by instance<CreateDefaultPlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
+    private val addSongsAndPlaylistCase by instance<AddSongsAndPlaylistCase>()
     private val addPlaylistCase by instance<AddPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
@@ -68,6 +73,12 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
 
     override suspend fun addSongToPlaylist(songLocalPath: String, playlistId: Int): Boolean {
         updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, songsPaths = listOf(songLocalPath), isAddSongs = true))
+        return true
+    }
+
+    override suspend fun addSongToPlaylist(musicInfo: MusicInfo, playlistId: Int): Boolean {
+        addSongsAndPlaylistCase.execute(
+            AddSongsAndPlaylistReq(TrackMapper.musicInfoToSongEntitiesJson(musicInfo), playlistId))
         return true
     }
 

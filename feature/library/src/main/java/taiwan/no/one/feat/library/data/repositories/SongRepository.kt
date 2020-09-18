@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.data.repositories
 
 import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
 internal class SongRepository(
@@ -32,4 +33,6 @@ internal class SongRepository(
     private val remote: DataStore,
 ) : SongRepo {
     override suspend fun getMusic(remoteUri: String?, localUri: String?) = local.getMusic(remoteUri, localUri)
+
+    override suspend fun addMusics(songs: List<SongEntity>) = local.createMusics(songs)
 }

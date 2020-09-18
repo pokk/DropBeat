@@ -24,6 +24,8 @@
 
 package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
 
+import android.view.MotionEvent
+import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.feat.player.databinding.ItemPlaylistBinding
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
@@ -32,10 +34,22 @@ import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 internal class PlaylistViewHolder(
     private val binding: ItemPlaylistBinding,
 ) : ViewHolderBinding<SimplePlaylistEntity, PlaylistAdapter>(binding.root) {
+    private var hasClicked = false
+
     override fun initView(entity: SimplePlaylistEntity, adapter: PlaylistAdapter) {
         binding.apply {
             mtvTitle.text = entity.name
             mtvSubtitle.text = "${entity.songIds.size} songs"
+            clParent.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> hasClicked = true
+                    MotionEvent.ACTION_MOVE -> hasClicked = false
+                    MotionEvent.ACTION_UP -> if (hasClicked) {
+                        adapter.onClickListener?.invoke(entity)
+                    }
+                }
+                true
+            }
         }
     }
 }

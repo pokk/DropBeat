@@ -25,7 +25,6 @@
 package taiwan.no.one.feat.player.presentation.fragments
 
 import android.os.Bundle
-import android.view.MotionEvent
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -33,7 +32,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
 import com.devrapid.kotlinknifer.getDrawable
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.google.android.material.slider.Slider
@@ -42,7 +40,6 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
-import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
@@ -177,52 +174,52 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
             sliderMiniProgress.clearOnSliderTouchListeners()
             sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
-            sivAlbum.setOnTouchListener { v, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_UP -> {
-                        if (!hasClicked) return@setOnTouchListener true
-                        binding.mlParent.apply {
-                            setTransition(R.id.transition_expand_lyric)
-                            transitionToEnd()
-                        }
-                    }
-                    MotionEvent.ACTION_DOWN -> {
-                        hasClicked = true
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        hasClicked = false
-                    }
-                }
-                true
-            }
-            sivLyrics.setOnTouchListener { v, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_UP -> {
-                        if (!hasClicked) return@setOnTouchListener true
-                        binding.mlParent.apply {
-                            setTransition(R.id.transition_expand_lyric)
-                            transitionToStart()
-                        }
-                    }
-                    MotionEvent.ACTION_DOWN -> {
-                        hasClicked = true
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        hasClicked = false
-                    }
-                }
-                true
-            }
+//            sivAlbum.setOnTouchListener { v, event ->
+//                when (event.action) {
+//                    MotionEvent.ACTION_UP -> {
+//                        if (!hasClicked) return@setOnTouchListener true
+//                        binding.mlParent.apply {
+//                            setTransition(R.id.transition_expand_lyric)
+//                            transitionToEnd()
+//                        }
+//                    }
+//                    MotionEvent.ACTION_DOWN -> {
+//                        hasClicked = true
+//                    }
+//                    MotionEvent.ACTION_MOVE -> {
+//                        hasClicked = false
+//                    }
+//                }
+//                true
+//            }
+//            sivLyrics.setOnTouchListener { v, event ->
+//                when (event.action) {
+//                    MotionEvent.ACTION_UP -> {
+//                        if (!hasClicked) return@setOnTouchListener true
+//                        binding.mlParent.apply {
+//                            setTransition(R.id.transition_expand_lyric)
+//                            transitionToStart()
+//                        }
+//                    }
+//                    MotionEvent.ACTION_DOWN -> {
+//                        hasClicked = true
+//                    }
+//                    MotionEvent.ACTION_MOVE -> {
+//                        hasClicked = false
+//                    }
+//                }
+//                true
+//            }
             binding.mlParent.setTransitionListener(object : MotionLayout.TransitionListener {
                 override fun onTransitionStarted(motionLayout: MotionLayout, startId: Int, endId: Int) {
-                    logd(R.id.transition_expand_lyric)
+//                    logd(R.id.transition_expand_lyric)
                 }
 
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
-                    if (currentId == R.id.lyric_expand_start || currentId == R.id.lyric_expand_end) {
-                        // TODO(jieyi): 9/15/20 change to the drag animation.
-                        motionLayout.setTransition(R.id.transition_mini_player)
-                    }
+//                    if (currentId == R.id.lyric_expand_start || currentId == R.id.lyric_expand_end) {
+//                        // TODO(jieyi): 9/15/20 change to the drag animation.
+//                        motionLayout.setTransition(R.id.transition_mini_player)
+//                    }
                 }
 
                 override fun onTransitionChange(
@@ -272,12 +269,16 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     private fun handleFavorite() {
     }
 
-    private fun popupPlaylist() {
-        PlaylistPopupWindow(requireActivity()).builder {
-            it.rvPlaylist.adapter = PlaylistAdapter(vm.playlists.value?.getOrNull().orEmpty())
-            it.rvPlaylist.layoutManager = linearLayoutManager()
-        }.anchorOn(merge.btnAddPlaylist).popup()
-    }
+    private fun popupPlaylist() = PlaylistPopupWindow(requireActivity()).builder {
+        it.rvPlaylist.apply {
+            adapter = PlaylistAdapter(vm.playlists.value?.getOrNull().orEmpty()).apply {
+                setOnClickListener { playlist ->
+                    player.curPlayingInfo?.let { music -> vm.addSongToPlaylist(music, playlist.id) }
+                }
+            }
+            layoutManager = linearLayoutManager()
+        }
+    }.anchorOn(merge.btnAddPlaylist).popup()
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {

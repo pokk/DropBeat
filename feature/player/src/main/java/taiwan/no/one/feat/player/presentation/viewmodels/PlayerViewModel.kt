@@ -29,6 +29,7 @@ import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
 import taiwan.no.one.ktx.livedata.toLiveData
+import taiwan.no.one.mediaplayer.MusicInfo
 
 internal class PlayerViewModel : BehindViewModel() {
     private val libraryProvider get() = FeatModuleHelper.methodsProvider()
@@ -39,7 +40,7 @@ internal class PlayerViewModel : BehindViewModel() {
 
     fun download(uri: String) = launchBehind { libraryProvider.downloadTrack(uri) }
 
-    fun addFavorite() = launchBehind {}
+    fun addFavorite(music: MusicInfo) = launchBehind {}
 
     fun removeFavorite() = launchBehind {}
 
@@ -48,4 +49,7 @@ internal class PlayerViewModel : BehindViewModel() {
     fun getPlaylists() = launchBehind { _playlists.postValue(libraryProvider.getPlaylists()) }
 
     fun createPlaylist(name: String) = launchBehind { libraryProvider.createPlaylist(name) }
+
+    fun addSongToPlaylist(music: MusicInfo, playlistId: Int) =
+        launchBehind { libraryProvider.addSongToPlaylist(music, playlistId) }
 }

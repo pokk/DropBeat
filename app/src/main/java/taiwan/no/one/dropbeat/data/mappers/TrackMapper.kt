@@ -22,16 +22,27 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.domain.repositories
+package taiwan.no.one.dropbeat.data.mappers
 
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.mediaplayer.MusicInfo
 
-/**
- * This interface will be the similar to [taiwan.no.one.feat.library.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-internal interface SongRepo {
-    suspend fun getMusic(remoteUri: String? = null, localUri: String? = null): SongEntity
+object TrackMapper {
+    fun musicInfoToSongEntitiesJson(music: MusicInfo) = buildString {
+        append("""[${musicInfoToSongEntityJson(music)}]""")
+    }
 
-    suspend fun addMusics(songs: List<SongEntity>)
+    fun musicInfoListToSongEntitiesJson(musics: List<MusicInfo>) = buildString {
+        musics.map { musicInfoToSongEntityJson(it) }.joinToString(",", "[", "]")
+    }
+
+    private fun musicInfoToSongEntityJson(music: MusicInfo) = buildString {
+        append("""{
+    "title" : "${music.title}",
+    "artist" : "${music.artist}",
+    "uri" : "${music.uri}",
+    "cover_uri" : "${music.thumbUri}",
+    "duration" : ${music.duration},
+    "has_own" : false
+}""".trimIndent())
+    }
 }
