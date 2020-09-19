@@ -23,25 +23,8 @@
   ~ SOFTWARE.
   -->
 
-<layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:end="@dimen/md_one_unit">
-        <shape android:shape="rectangle">
-            <size
-                android:width="58dp"
-                android:height="58dp"/>
-            <solid android:color="@color/pastel_pink"/>
-            <corners
-                android:bottomLeftRadius="@dimen/md_two_unit"
-                android:bottomRightRadius="@dimen/md_two_unit"
-                android:topLeftRadius="@dimen/md_two_unit"
-                android:topRightRadius="@dimen/md_two_unit"/>
-        </shape>
-    </item>
-    <item
-        android:width="24dp"
-        android:height="24dp"
-        android:drawable="@drawable/ic_search"
-        android:end="@dimen/md_one_unit"
-        android:gravity="center"/>
-</layer-list>
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#ffffffff">
+    <item android:drawable="@drawable/ic_search_with_bg"/>
+</ripple>

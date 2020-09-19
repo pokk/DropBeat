@@ -84,7 +84,7 @@
         android:layout_height="@dimen/md_zero_unit"
         android:layout_margin="@dimen/md_two_unit"
         app:boxBackgroundMode="none"
-        app:endIconDrawable="@drawable/ic_search_with_bg"
+        app:endIconDrawable="@drawable/ic_ripple_search"
         app:endIconMode="custom"
         app:endIconTint="@null"
         app:endIconTintMode="multiply"

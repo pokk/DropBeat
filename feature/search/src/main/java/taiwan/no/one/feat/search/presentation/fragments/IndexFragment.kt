@@ -167,6 +167,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun searchMusic(keyword: String) {
+        if (keyword.isBlank()) return
         showLoading()
         vm.add(keyword)
         jobs += searchVm.search(keyword, 0)
