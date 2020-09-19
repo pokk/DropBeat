@@ -25,7 +25,7 @@
 
 <layer-list
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:end="@dimen/md_one_unit">
         <shape android:shape="rectangle">
             <size
                 android:width="58dp"
@@ -39,6 +39,7 @@
         </shape>
     </item>
     <item
+        android:end="@dimen/md_one_unit"
         android:width="24dp"
         android:height="24dp"
         android:drawable="@drawable/ic_search"
