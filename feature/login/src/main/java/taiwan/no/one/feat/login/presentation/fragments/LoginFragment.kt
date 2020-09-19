@@ -29,13 +29,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -47,6 +47,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.google.firebase.auth.OAuthProvider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.login.R
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.databinding.FragmentLoginBinding
@@ -55,9 +56,11 @@ import taiwan.no.one.feat.login.presentation.recyclerviews.adapters.ThirdPartyLo
 import taiwan.no.one.feat.login.presentation.recyclerviews.decorators.SnsItemDecorator
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
 import taiwan.no.one.widget.WidgetResDimen
+import taiwan.no.one.widget.toast.showTopToast
 
 internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBinding>() {
     private val vm by viewModels<LoginViewModel>()
+    private val privacyVm by activityViewModels<PrivacyViewModel>()
     private val snsAdapter by lazy { ThirdPartyLoginAdapter(snsList) }
     private val snsList by lazy {
         listOf(R.drawable.ic_facebook,
@@ -122,7 +125,12 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     override fun bindLiveData() {
         vm.userInfo.observe(this) {
             it.onSuccess {
-                logw(it)
+                // Make the activity viewmodel has the newest user information.
+                privacyVm.getUserInfo()
+                // Toast a message for the success login.
+                val name = it.displayName ?: it.email.orEmpty()
+                requireActivity().showTopToast("Welcome back, $name", R.drawable.ic_login_arrow)
+                // Go back to the previous screen.
                 findNavController().navigateUp()
             }.onFailure {
                 loge(it)
@@ -159,13 +167,13 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                 }
                 else -> Unit
             }
-            binding.apply {
-                btnForgotPassword.setOnClickListener {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
-                }
-                btnLogin.setOnClickListener {
-                    vm.login(tietEmail.text.toString(), tietPassword.text.toString())
-                }
+        }
+        binding.apply {
+            btnForgotPassword.setOnClickListener {
+                findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
+            }
+            btnLogin.setOnClickListener {
+                vm.login(tietEmail.text.toString(), tietPassword.text.toString())
             }
         }
     }

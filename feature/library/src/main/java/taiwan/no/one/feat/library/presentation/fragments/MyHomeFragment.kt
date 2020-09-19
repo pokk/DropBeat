@@ -169,7 +169,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     override fun rendered(savedInstanceState: Bundle?) {
         userEntity?.takeIf { it.uid.isNotNull() }?.let {
-            mergeTopControllerBinding.mtvTitle.text = it.displayName
+            mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
         }
         vm.getAllPlaylists()

@@ -1,0 +1,37 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="30dp"
+    android:height="30dp"
+    android:viewportWidth="30"
+    android:viewportHeight="30">
+    <path
+        android:fillColor="#262345"
+        android:pathData="M9.375,23.4375H20.625C22.1757,23.4375 23.4375,22.1757 23.4375,20.625V9.375C23.4375,7.8243 22.1757,6.5625 20.625,6.5625H9.375C7.8243,6.5625 6.5625,7.8243 6.5625,9.375V12.1875C6.5625,12.5756 6.8775,12.8906 7.2656,12.8906C7.6537,12.8906 7.9688,12.5756 7.9688,12.1875V9.375C7.9688,8.5995 8.5995,7.9688 9.375,7.9688H20.625C21.4005,7.9688 22.0312,8.5995 22.0312,9.375V20.625C22.0312,21.4005 21.4005,22.0312 20.625,22.0312H9.375C8.5995,22.0312 7.9688,21.4005 7.9688,20.625V17.8125C7.9688,17.4244 7.6537,17.1094 7.2656,17.1094C6.8775,17.1094 6.5625,17.4244 6.5625,17.8125V20.625C6.5625,22.1757 7.8243,23.4375 9.375,23.4375Z"/>
+    <path
+        android:fillColor="#262345"
+        android:pathData="M9.375,15C9.375,15.3881 9.69,15.7031 10.0781,15.7031H18.2245L16.6123,17.3154C16.3377,17.5899 16.3377,18.035 16.6123,18.3096C16.7494,18.447 16.9294,18.5156 17.1094,18.5156C17.2894,18.5156 17.4694,18.447 17.6065,18.3096L20.419,15.4971C20.6936,15.2225 20.6936,14.7774 20.419,14.5029L17.6065,11.6904C17.3323,11.4158 16.8865,11.4158 16.6123,11.6904C16.3377,11.9649 16.3377,12.41 16.6123,12.6846L18.2245,14.2968H10.0781C9.69,14.2968 9.375,14.6118 9.375,15Z"/>
+</vector>
