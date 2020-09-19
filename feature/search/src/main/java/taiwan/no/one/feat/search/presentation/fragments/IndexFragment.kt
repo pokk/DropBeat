@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
+import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.EditText
 import androidx.core.net.toUri
@@ -38,6 +39,7 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinknifer.visible
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.debounce
@@ -82,6 +84,12 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         LayoutManagerParams(WeakReference(requireActivity()))
     }
     private val jobs = mutableListOf<Job>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+    }
 
     override fun onDetach() {
         super.onDetach()

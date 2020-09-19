@@ -43,6 +43,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.transition.MaterialSharedAxis
 import com.google.firebase.auth.OAuthProvider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -91,6 +92,8 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
         LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback)
         googleLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {

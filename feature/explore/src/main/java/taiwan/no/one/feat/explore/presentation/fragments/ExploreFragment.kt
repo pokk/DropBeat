@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
+import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -62,6 +63,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
     private val includeTopTrack get() = find<ConstraintLayout>(R.id.include_top_track)
     private val includeTopArtist get() = find<ConstraintLayout>(R.id.include_top_artist)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+    }
 
     override fun viewComponentBinding() {
         super.viewComponentBinding()

@@ -39,7 +39,7 @@ interface AutoUpdatable {
     open class DefaultDiffUtilCallback<T>(
         private val old: List<T>,
         private val new: List<T>,
-        private val compare: (T, T) -> Boolean
+        private val compare: (T, T) -> Boolean,
     ) : DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
             compare(old[oldItemPosition], new[newItemPosition])

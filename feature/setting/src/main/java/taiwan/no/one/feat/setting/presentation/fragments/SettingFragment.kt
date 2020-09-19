@@ -24,9 +24,11 @@
 
 package taiwan.no.one.feat.setting.presentation.fragments
 
+import android.os.Bundle
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.setting.R
@@ -40,9 +42,12 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
     private val mergeSyncBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
     private val mergeOtherBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+    }
+
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         // Set the Text

@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
+import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -56,6 +57,12 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
     private val navArgs by navArgs<PlaylistFragmentArgs>()
     private val noSongsBinding by lazy { StubNoSongsBinding.bind(binding.root) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+    }
 
     override fun bindLiveData() {
         vm.playlist.observe(this) { res ->

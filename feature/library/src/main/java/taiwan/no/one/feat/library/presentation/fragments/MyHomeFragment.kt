@@ -38,6 +38,7 @@ import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
+import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -70,6 +71,12 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
     private val playlistAdapter by lazy { PlaylistAdapter() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+    }
 
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
