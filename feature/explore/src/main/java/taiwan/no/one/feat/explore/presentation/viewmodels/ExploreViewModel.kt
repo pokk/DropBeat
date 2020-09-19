@@ -28,6 +28,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.core.viewmodel.BehindSavedStateViewModel
+import taiwan.no.one.dropbeat.di.FeatModuleHelper
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistReq
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTagCase
@@ -36,11 +37,15 @@ import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackReq
 
 internal class ExploreViewModel(
-    override val handle: SavedStateHandle
+    override val handle: SavedStateHandle,
 ) : BehindSavedStateViewModel() {
     private val fetchChartTopTagCase by instance<FetchChartTopTagCase>()
     private val fetchChartTopTrackCase by instance<FetchChartTopTrackCase>()
     private val fetchChartTopArtistCase by instance<FetchChartTopArtistCase>()
+
+    val playlists = liveData {
+        emit(FeatModuleHelper.methodsProvider().getPlaylists())
+    }
 
     val topTags = liveData {
         emit(fetchChartTopTagCase.execute(FetchChartTopTagReq(0, 10)))

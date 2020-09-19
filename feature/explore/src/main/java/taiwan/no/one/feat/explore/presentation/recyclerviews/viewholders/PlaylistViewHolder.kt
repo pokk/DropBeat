@@ -22,25 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.presentation.recyclerviews.adapters
+package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import taiwan.no.one.dropbeat.AppResLayout
-import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
-import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChartViewHolder
+import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
+import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
+import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
-internal class TopChartAdapter(
-    private val itemList: List<Any>,
-) : RecyclerView.Adapter<TopChartViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        LayoutInflater.from(parent.context)
-            .inflate(AppResLayout.item_type_of_music, parent, false)
-            .let { TopChartViewHolder(ItemTypeOfMusicBinding.bind(it)) }
-
-    override fun onBindViewHolder(holder: TopChartViewHolder, position: Int) =
-        holder.initView(itemList[position], this)
-
-    override fun getItemCount() = itemList.size
+internal class PlaylistViewHolder(
+    private val binding: ItemTrendBinding,
+) : ViewHolderBinding<SimplePlaylistEntity, PlaylistAdapter>(binding.root) {
+    override fun initView(entity: SimplePlaylistEntity, adapter: PlaylistAdapter) {
+        binding.apply {
+            mtvTitle.text = entity.name
+            mtvNumOfSongs.text = "${entity.songIds.size} songs"
+        }
+    }
 }

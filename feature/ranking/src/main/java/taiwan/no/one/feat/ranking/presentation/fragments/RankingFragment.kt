@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.ranking.presentation.fragments
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,21 +43,6 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
 //        }
 //    }
 
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
-    override fun bindLiveData() {
-        vm.rankings.observe(this) { res ->
-            res.onSuccess {
-                (binding.rvMusics.adapter as? RankAdapter)?.data = it
-                parent.hideLoading()
-            }.onFailure {
-                parent.showError(it.message.toString())
-            }
-        }
-    }
-
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
     override fun viewComponentBinding() {
         binding.rvMusics.apply {
             if (adapter == null) {
@@ -68,13 +54,20 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all component listeners here.
-     */
     override fun componentListenersBinding() {
         (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener {
-
 //            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
+        }
+    }
+
+    override fun rendered(savedInstanceState: Bundle?) {
+        vm.rankings.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                (binding.rvMusics.adapter as? RankAdapter)?.data = it
+                parent.hideLoading()
+            }.onFailure {
+                parent.showError(it.message.toString())
+            }
         }
     }
 }

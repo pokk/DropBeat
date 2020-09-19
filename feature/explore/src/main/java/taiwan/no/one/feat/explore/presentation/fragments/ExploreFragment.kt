@@ -24,56 +24,45 @@
 
 package taiwan.no.one.feat.explore.presentation.fragments
 
+import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.visible
+import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
+import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.view.find
+import java.lang.ref.WeakReference
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
     private val vm by viewModels<ExploreViewModel>()
+    private val linearLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()))
+    }
+    private val playlistLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
+    }
 
     // NOTE(Jieyi): 8/11/20 Because of some reasons, viewbinding can't use for `include` xml from other modules
+    private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
     private val includeTopTrack get() = find<ConstraintLayout>(R.id.include_top_track)
     private val includeTopArtist get() = find<ConstraintLayout>(R.id.include_top_artist)
 
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
-    override fun bindLiveData() {
-        super.bindLiveData()
-        vm.topTags.observe(this) { res ->
-            res.onSuccess {
-                binding.includeExplore.rvMusics.adapter = ExploreAdapter(it.tags.orEmpty())
-            }.onFailure { }
-        }
-        vm.topArtists.observe(this) { res ->
-            res.onSuccess {
-                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
-            }.onFailure {
-                loge(it)
-            }
-        }
-        vm.topTracks.observe(this) { res ->
-            res.onSuccess {
-                includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
-                    TopChartAdapter(it.tracks.subList(0, 4))
-            }
-        }
-    }
-
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         binding.includeExplore.rvMusics.apply {
@@ -81,10 +70,20 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
             }
         }
+        includePlaylist.apply {
+            find<RecyclerView>(AppResId.rv_musics).apply {
+                if (layoutManager == null) {
+                    layoutManager = playlistLayoutManager()
+                }
+            }
+            find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
+            find<View>(AppResId.btn_play_all).visible()
+            find<View>(AppResId.btn_play_all).gone()
+        }
         includeTopArtist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
                 if (layoutManager == null) {
-                    layoutManager = LinearLayoutManager(requireActivity())
+                    layoutManager = linearLayoutManager()
                 }
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopArtist"
@@ -92,10 +91,34 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         includeTopTrack.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
                 if (layoutManager == null) {
-                    layoutManager = LinearLayoutManager(requireActivity())
+                    layoutManager = linearLayoutManager()
                 }
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"
+        }
+    }
+
+    override fun rendered(savedInstanceState: Bundle?) {
+        vm.playlists.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = PlaylistAdapter(it)
+            }.onFailure { loge(it) }
+        }
+        vm.topTags.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                binding.includeExplore.rvMusics.adapter = ExploreAdapter(it.tags.orEmpty())
+            }.onFailure { loge(it) }
+        }
+        vm.topArtists.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
+            }.onFailure { loge(it) }
+        }
+        vm.topTracks.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
+                    TopChartAdapter(it.tracks.subList(0, 4))
+            }.onFailure { loge(it) }
         }
     }
 }

@@ -42,6 +42,8 @@ import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val vm by viewModels<PrivacyViewModel>()
+
+    // If we are using [NavHostFragment], need to use this way for get the navController.
     private val navigator
         get() = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
 
