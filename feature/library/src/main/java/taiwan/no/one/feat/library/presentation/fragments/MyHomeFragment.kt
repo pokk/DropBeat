@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +36,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
 import org.kodein.di.provider
@@ -47,7 +47,7 @@ import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
-import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
+import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
 import java.lang.ref.WeakReference
@@ -55,6 +55,7 @@ import java.lang.ref.WeakReference
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private var _mergeTopControllerBinding: MergeTopControllerBinding? = null
     private val mergeTopControllerBinding get() = checkNotNull(_mergeTopControllerBinding)
+    private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
     private val includeFavorite get() = find<ConstraintLayout>(R.id.include_favorite)
     private val includeDownloaded get() = find<ConstraintLayout>(R.id.include_download)
     private val includeHistory get() = find<ConstraintLayout>(R.id.include_history)
@@ -64,12 +65,13 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
+    private val playlistLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
+    }
 
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
-                logw(it)
                 vm.extractMainPlaylist(it)
             }.onFailure {
                 loge(it)
@@ -80,7 +82,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 includeDownloaded.find<TextView>(AppResId.mtv_no_music).visible()
             }
             else {
-                (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
+                (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
                     .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
             }
         }
@@ -89,25 +91,33 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 includeFavorite.find<TextView>(AppResId.mtv_no_music).visible()
             }
             else {
-                (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.data = it.songs
+                (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
                     .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
             }
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         _mergeTopControllerBinding = MergeTopControllerBinding.bind(binding.root)
+        includePlaylist.apply {
+            find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
+            find<View>(AppResId.btn_play_all).gone()
+            find<RecyclerView>(AppResId.rv_musics).apply {
+                if (adapter == null) {
+                    adapter = TrackAdapter()
+                }
+                if (layoutManager == null) {
+                    layoutManager = playlistLayoutManager()
+                }
+            }
+        }
         includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite"
-        logw(includeDownloaded)
         includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
         includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
         includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
             if (adapter == null) {
-                adapter = PlaylistAdapter()
+                adapter = TrackAdapter()
             }
             if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
@@ -115,7 +125,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         }
         includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
             if (adapter == null) {
-                adapter = PlaylistAdapter()
+                adapter = TrackAdapter()
             }
             if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
@@ -123,9 +133,6 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all component listeners here.
-     */
     override fun componentListenersBinding() {
         mergeTopControllerBinding.apply {
             btnLogin.setOnClickListener {
@@ -144,17 +151,12 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(id))
             }
         }
-        (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.setOnClickListener {
+        (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.setOnClickListener {
         }
-        (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? PlaylistAdapter)?.setOnClickListener {
+        (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.setOnClickListener {
         }
     }
 
-    /**
-     * Initialize doing some methods or actions here.
-     *
-     * @param savedInstanceState previous status.
-     */
     override fun rendered(savedInstanceState: Bundle?) {
         userEntity?.takeIf { it.uid.isNotNull() }?.let {
             mergeTopControllerBinding.mtvTitle.text = it.displayName

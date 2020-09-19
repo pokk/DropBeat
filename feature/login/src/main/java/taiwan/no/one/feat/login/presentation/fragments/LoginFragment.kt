@@ -116,7 +116,6 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
         LoginManager.getInstance().unregisterCallback(facebookCallbackManager)
     }
 
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.userInfo.observe(this) {
             it.onSuccess {
@@ -128,9 +127,6 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all view components here.
-     */
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         binding.rvSns.apply {
@@ -146,9 +142,6 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all component listeners here.
-     */
     override fun componentListenersBinding() {
         snsAdapter.setOnClickListener {
             when (it) {

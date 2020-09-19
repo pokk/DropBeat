@@ -45,14 +45,14 @@ import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
 import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
-import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
+import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
 import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
-    private val playlistAdapter by lazy { PlaylistAdapter() }
+    private val playlistAdapter by lazy { TrackAdapter() }
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
     private val navArgs by navArgs<PlaylistFragmentArgs>()
     private val noSongsBinding by lazy { StubNoSongsBinding.bind(binding.root) }
@@ -92,7 +92,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             if (layoutManager == null) {
                 layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
             }
-            (adapter as? PlaylistAdapter)?.data = songs
+            (adapter as? TrackAdapter)?.data = songs
         }
         // Set the section title.
         find<TextView>(AppResId.mtv_explore_title).text = "All Songs"

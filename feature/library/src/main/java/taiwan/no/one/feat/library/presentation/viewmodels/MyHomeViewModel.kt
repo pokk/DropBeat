@@ -25,9 +25,6 @@
 package taiwan.no.one.feat.library.presentation.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
@@ -51,7 +48,7 @@ internal class MyHomeViewModel : BehindViewModel() {
         _playlists.postValue(fetchAllPlaylistsCase.execute())
     }
 
-    fun extractMainPlaylist(list: List<PlayListEntity>) = viewModelScope.launch(Dispatchers.Default) {
+    fun extractMainPlaylist(list: List<PlayListEntity>) = launchBehind {
         _downloaded.postValue(list[0])
         _favorites.postValue(list[1])
     }
