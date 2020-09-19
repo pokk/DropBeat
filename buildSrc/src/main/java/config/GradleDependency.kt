@@ -31,8 +31,8 @@ object GradleDependency {
         const val SAFE_ARGS = NAVIGATION_KTX
         const val GOOGLE_SERVICE = "4.3.3"
         const val CRASHLYTICS = "2.2.0"
-        const val DETEKT = "1.12.0"
-        const val VERSION_UPDATER = "0.29.0"
+        const val DETEKT = "1.13.1"
+        const val VERSION_UPDATER = "0.33.0"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${CoreDependency.Version.KOTLIN}"
