@@ -47,6 +47,7 @@ import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
+import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
@@ -68,10 +69,12 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val playlistLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
+    private val playlistAdapter by lazy { PlaylistAdapter() }
 
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
+                playlistAdapter.data = it
                 vm.extractMainPlaylist(it)
             }.onFailure {
                 loge(it)
@@ -105,7 +108,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             find<View>(AppResId.btn_play_all).gone()
             find<RecyclerView>(AppResId.rv_musics).apply {
                 if (adapter == null) {
-                    adapter = TrackAdapter()
+                    adapter = playlistAdapter
                 }
                 if (layoutManager == null) {
                     layoutManager = playlistLayoutManager()
