@@ -22,10 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.setting.presentation.fragments
+package taiwan.no.one.dropbeat.provider
 
-import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.setting.databinding.FragmentSettingBinding
+import androidx.annotation.WorkerThread
 
-internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentSettingBinding>()
+interface LoginMethodsProvider {
+    @WorkerThread
+    suspend fun logout(): Result<Boolean>
+}

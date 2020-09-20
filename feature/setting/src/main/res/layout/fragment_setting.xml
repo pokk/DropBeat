@@ -39,10 +39,23 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mtv_title"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/md_zero_unit"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/md_two_unit"
             android:text="Setting"
+            android:textSize="@dimen/title_header_1"
+            app:layout_constraintEnd_toStartOf="@id/btn_logout"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="logout"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/mtv_title"/>
 
         <include layout="@layout/merge_setting_app_block"/>
 

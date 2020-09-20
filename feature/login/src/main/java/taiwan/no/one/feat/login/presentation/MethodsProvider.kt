@@ -22,20 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.login.presentation
 
-import android.app.Application
-import org.kodein.di.DI
-import org.kodein.di.android.x.androidXModule
+import com.google.auto.service.AutoService
+import org.kodein.di.DIAware
+import org.kodein.di.instance
+import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
+import taiwan.no.one.feat.login.domain.usecases.LogoutCase
 
-object Dispatcher {
-    fun importIntoApp(app: Application) = DI.lazy {
-        import(androidXModule(app))
-        import(UtilModules.provide(app))
-        import(UtilModules.provideUi())
-        import(CacheModule.provide(app))
-        import(AppModules.provide(app))
-        import(FeatModuleHelper.provide())
-        importAll(FeatModuleHelper.kodeinModules(app))
-    }
+@AutoService(LoginMethodsProvider::class)
+class MethodsProvider : LoginMethodsProvider, DIAware {
+    override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
+    private val logoutCase by instance<LogoutCase>()
+
+    override suspend fun logout() = logoutCase.execute()
 }

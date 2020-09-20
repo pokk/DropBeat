@@ -22,20 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.setting.presentation.viewmodels
 
-import android.app.Application
-import org.kodein.di.DI
-import org.kodein.di.android.x.androidXModule
+import org.kodein.di.DIAware
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 
-object Dispatcher {
-    fun importIntoApp(app: Application) = DI.lazy {
-        import(androidXModule(app))
-        import(UtilModules.provide(app))
-        import(UtilModules.provideUi())
-        import(CacheModule.provide(app))
-        import(AppModules.provide(app))
-        import(FeatModuleHelper.provide())
-        importAll(FeatModuleHelper.kodeinModules(app))
-    }
+internal class SettingViewModel : BehindViewModel(), DIAware {
+    fun logout(): Any = TODO()
 }

@@ -27,6 +27,7 @@ package taiwan.no.one.feat.setting.presentation.fragments
 import android.os.Bundle
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.viewModels
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -34,9 +35,11 @@ import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.setting.R
 import taiwan.no.one.feat.setting.databinding.FragmentSettingBinding
 import taiwan.no.one.feat.setting.databinding.MergeSettingAppBlockBinding
+import taiwan.no.one.feat.setting.presentation.viewmodels.SettingViewModel
 import taiwan.no.one.ktx.view.find
 
 internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBinding>() {
+    private val vm by viewModels<SettingViewModel>()
     private val mergeAppBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
     private val mergeMusicBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
     private val mergeSyncBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
@@ -77,5 +80,9 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
             find(R.id.include_feedback),
         ).forEach { it.find<MaterialButton>(R.id.btn_next).apply { setIconResource(R.drawable.ic_chevron_right) } }
         find<ConstraintLayout>(R.id.include_quality).find<MaterialButton>(R.id.btn_next).text = "Auto"
+    }
+
+    override fun componentListenersBinding() {
+        binding.btnLogout.setOnClickListener { vm.logout() }
     }
 }
