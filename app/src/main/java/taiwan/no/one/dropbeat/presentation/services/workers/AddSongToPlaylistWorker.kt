@@ -27,16 +27,23 @@ package taiwan.no.one.dropbeat.presentation.services.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 
 internal class AddSongToPlaylistWorker(
     context: Context,
     params: WorkerParameters,
-) : CoroutineWorker(context, params) {
+) : CoroutineWorker(context, params), DIAware {
     companion object Constant {
         const val PARAM_PLAYLIST_ID = "playlist id"
         const val PARAM_SONG_PATH = "song path"
     }
+
+    override val di by DI.lazy { import(FeatModuleHelper.provide()) }
+    private val libraryProvider by instance<LibraryMethodsProvider>()
 
     override suspend fun doWork(): Result {
         val (playlistId, songPath) = inputData.run {
@@ -45,7 +52,7 @@ internal class AddSongToPlaylistWorker(
         if (playlistId == -1 || songPath == null) {
             return Result.failure()
         }
-        val res = FeatModuleHelper.methodsProvider().addSongToPlaylist(songPath, playlistId)
+        val res = libraryProvider.addSongToPlaylist(songPath, playlistId)
         return if (res) Result.success() else Result.failure()
     }
 }

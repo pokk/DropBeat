@@ -24,9 +24,18 @@
 
 package taiwan.no.one.feat.setting.presentation.viewmodels
 
-import org.kodein.di.DIAware
+import org.kodein.di.instance
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
+import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class SettingViewModel : BehindViewModel(), DIAware {
-    fun logout(): Any = TODO()
+internal class SettingViewModel : BehindViewModel() {
+    private val loginProvider by instance<LoginMethodsProvider>()
+    private val _logoutRes by lazy { ResultLiveData<Boolean>() }
+    val logoutRes = _logoutRes.toLiveData()
+
+    fun logout() = launchBehind {
+        _logoutRes.postValue(loginProvider.logout())
+    }
 }

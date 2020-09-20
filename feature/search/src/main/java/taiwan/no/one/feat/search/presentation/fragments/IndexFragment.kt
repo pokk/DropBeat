@@ -170,7 +170,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             binding.tietSearch.text?.clear()
         }
         if (loadMoreListener.fetchMoreBlock == null) {
-            loadMoreListener.fetchMoreBlock = ::getMoreMusics
+//            loadMoreListener.fetchMoreBlock = ::getMoreMusics
         }
     }
 

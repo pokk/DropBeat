@@ -27,14 +27,21 @@ package taiwan.no.one.dropbeat.presentation.services.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 
 internal class CreateDefaultPlaylistWorker(
     context: Context,
     params: WorkerParameters,
-) : CoroutineWorker(context, params) {
+) : CoroutineWorker(context, params), DIAware {
+    override val di by DI.lazy { import(FeatModuleHelper.provide()) }
+    private val libraryProvider by instance<LibraryMethodsProvider>()
+
     override suspend fun doWork(): Result {
-        val res = FeatModuleHelper.methodsProvider().createDefaultPlaylists()
+        val res = libraryProvider.createDefaultPlaylists()
         return if (res) Result.success() else Result.failure()
     }
 }

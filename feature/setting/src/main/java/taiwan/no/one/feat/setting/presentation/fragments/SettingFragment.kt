@@ -28,6 +28,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
+import com.devrapid.kotlinknifer.loge
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -49,6 +50,13 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
         super.onCreate(savedInstanceState)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+    }
+
+    override fun bindLiveData() {
+        vm.logoutRes.observe(this) { res ->
+            res.onSuccess {
+            }.onFailure { loge(it) }
+        }
     }
 
     override fun viewComponentBinding() {

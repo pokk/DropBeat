@@ -28,21 +28,28 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import org.json.JSONArray
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 
 internal class AddSongToDatabaseWorker(
     context: Context,
     params: WorkerParameters,
-) : CoroutineWorker(context, params) {
+) : CoroutineWorker(context, params), DIAware {
     companion object Constant {
         const val PARAM_STREAM_DATA = "songs streaming data"
         const val PARAM_FILE_PATH = "song file local path"
     }
 
+    override val di by DI.lazy { import(FeatModuleHelper.provide()) }
+    private val libraryProvider by instance<LibraryMethodsProvider>()
+
     override suspend fun doWork(): Result {
         val stream = inputData.getString(PARAM_STREAM_DATA) ?: return Result.failure()
         val localFilePath = inputData.getStringArray(PARAM_FILE_PATH) ?: return Result.failure()
-        val res = FeatModuleHelper.methodsProvider().downloadTrack(addAdditionInfo(stream, localFilePath))
+        val res = libraryProvider.downloadTrack(addAdditionInfo(stream, localFilePath))
         return if (res) Result.success() else Result.failure()
     }
 

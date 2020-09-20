@@ -24,15 +24,16 @@
 
 package taiwan.no.one.feat.player.presentation.viewmodels
 
+import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
-import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.ktx.livedata.toLiveData
 import taiwan.no.one.mediaplayer.MusicInfo
 
 internal class PlayerViewModel : BehindViewModel() {
-    private val libraryProvider get() = FeatModuleHelper.methodsProvider()
+    private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<SimplePlaylistEntity>>() }
     val playlists = _playlists.toLiveData()
     private val _isFavorite by lazy { ResultLiveData<Boolean>() }
