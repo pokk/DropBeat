@@ -36,7 +36,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.invisible
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
@@ -50,6 +49,7 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.DownloadHelper
+import taiwan.no.one.dropbeat.core.helpers.TouchHelper
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
@@ -68,11 +68,18 @@ import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 import java.lang.ref.WeakReference
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
+    //region Variable of View Binding
     private val mergeBinding get() = MergeSearchHasResultBinding.bind(binding.root)
     private val mergeNoResultBinding get() = MergeSearchHasNoResultBinding.bind(binding.root)
+    //endregion
+
+    //region Variable of View Model
     private val vm by viewModels<RecentViewModel>()
     private val searchVm by viewModels<ResultViewModel>()
     private val songVm by viewModels<SongViewModel>()
+    //endregion
+
+    //region Variable of Recycler View
     private val searchHistoryAdapter by lazy { HistoryAdapter() }
     private val musicAdapter by lazy { ResultAdapter() }
     private val musicItemDecoration by lazy {
@@ -83,8 +90,12 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
+    //endregion
+
+    private val clickFlag by lazy { TouchHelper.ClickFlag() }
     private val jobs = mutableListOf<Job>()
 
+    //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
@@ -95,10 +106,10 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         super.onDetach()
         loadMoreListener.fetchMoreBlock = null
     }
+    //endregion
 
     override fun bindLiveData() {
         vm.histories.observe(this) {
-            logw(it)
             if (it.isEmpty()) {
                 // TODO(Jieyi): 8/5/20 The action needs to be confirmed again.
             }
@@ -133,6 +144,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             // anchor 3 is top margin, it didn't define inside setMargin
             binding.layoutParent.getConstraintSet(R.id.expanded)?.setMargin(R.id.mtv_rv_title, 3, halfWidth)
         }
+        mergeBinding.mtvRvTitle.text = "History Search "
         rvMusics.apply {
             if (adapter == null) {
                 adapter = searchHistoryAdapter
@@ -141,10 +153,22 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 layoutManager = linearLayoutManager()
             }
             addOnScrollListener(loadMoreListener)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    // Check if the motion should be enable or not.
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        enableMotionWhenScrollable(recyclerView)
+                    }
+                }
+            })
         }
     }
 
     override fun componentListenersBinding() {
+        binding.root.setOnTouchListener { v, event ->
+            TouchHelper.simulateClickEvent(event, clickFlag) { v.hideSoftKeyboard() }
+            true
+        }
         searchHistoryAdapter.setOnClickListener(::clickedOnHistoryItem)
         musicAdapter.setOnClickListener(::clickedOnSongItem)
         binding.apply {
@@ -191,6 +215,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun setAndDisplayHistory() {
+        resetMotionAnimation()
         // 1. Pre-handle and finish the music adapter's process.
         cancelJobs()
         if (musicAdapter.data.isNotEmpty()) {
@@ -210,10 +235,11 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun setAndDisplaySearchResult() {
+        resetMotionAnimation()
         // 1. Pre-process the setting of the result recyclerview.
         musicAdapter.clear()
         // Post-action for hiding the soft keyboard.
-        view?.hideSoftKeyboard()
+        requireView().hideSoftKeyboard()
         // Add the item decoration.
         if (musicItemDecoration !in rvMusics) {
             rvMusics.addItemDecoration(musicItemDecoration)
@@ -230,24 +256,32 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     private fun disableMotion() {
-        binding.layoutParent.getTransition(R.id.transition_search_scene).apply {
-            if (isEnabled) {
-                setEnable(false)
+        binding.root.apply {
+            getTransition(R.id.transition_search_scene).apply {
+                if (isEnabled) {
+                    setEnable(false)
+                }
             }
         }
     }
 
     private fun enableMotion() {
-        binding.layoutParent.getTransition(R.id.transition_search_scene).apply {
-            if (!isEnabled) {
-                setEnable(true)
+        binding.root.apply {
+            getTransition(R.id.transition_search_scene).apply {
+                if (!isEnabled) {
+                    setEnable(true)
+                }
             }
         }
     }
 
+    private fun resetMotionAnimation() {
+        binding.root.transitionToStart()
+    }
+
     private fun enableMotionWhenScrollable(recyclerView: RecyclerView) {
         // down = 1; up = -1
-        if (recyclerView.canScrollVertically(-1)) enableMotion() else disableMotion()
+        if (recyclerView.canScrollVertically(1)) enableMotion() else disableMotion()
     }
 
     private fun cancelJobs() {

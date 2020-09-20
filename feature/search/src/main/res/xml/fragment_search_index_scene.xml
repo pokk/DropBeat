@@ -31,7 +31,7 @@
         android:id="@+id/transition_search_scene"
         motion:constraintSetEnd="@id/collapsed"
         motion:constraintSetStart="@id/expanded"
-        motion:duration="1000">
+        motion:duration="100">
         <KeyFrameSet>
             <KeyAttribute
                 motion:framePosition="50"

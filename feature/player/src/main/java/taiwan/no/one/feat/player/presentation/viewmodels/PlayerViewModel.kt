@@ -51,6 +51,7 @@ internal class PlayerViewModel : BehindViewModel() {
 
     fun createPlaylist(name: String) = launchBehind { libraryProvider.createPlaylist(name) }
 
-    fun addSongToPlaylist(music: MusicInfo, playlistId: Int) =
-        launchBehind { libraryProvider.addSongToPlaylist(music, playlistId) }
+    fun addSongToPlaylist(music: MusicInfo, playlistId: Int) = launchBehind {
+        libraryProvider.addSongToPlaylist(music, playlistId)
+    }
 }

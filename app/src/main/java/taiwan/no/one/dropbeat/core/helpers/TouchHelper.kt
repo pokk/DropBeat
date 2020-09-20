@@ -22,28 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
+package taiwan.no.one.dropbeat.core.helpers
 
-import taiwan.no.one.dropbeat.core.helpers.TouchHelper
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
-import taiwan.no.one.feat.player.databinding.ItemPlaylistBinding
-import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+import android.view.MotionEvent
 
-internal class PlaylistViewHolder(
-    private val binding: ItemPlaylistBinding,
-) : ViewHolderBinding<SimplePlaylistEntity, PlaylistAdapter>(binding.root) {
-    private val clickFlag = TouchHelper.ClickFlag()
+object TouchHelper {
+    data class ClickFlag(var value: Boolean = false)
 
-    override fun initView(entity: SimplePlaylistEntity, adapter: PlaylistAdapter) {
-        binding.apply {
-            mtvTitle.text = entity.name
-            mtvSubtitle.text = "${entity.songIds.size} songs"
-            clParent.setOnTouchListener { v, event ->
-                TouchHelper.simulateClickEvent(event, clickFlag) {
-                    adapter.onClickListener?.invoke(entity)
-                }
-                true
+    fun simulateClickEvent(event: MotionEvent, flag: ClickFlag, block: () -> Unit) {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> flag.value = true
+            MotionEvent.ACTION_MOVE -> flag.value = false
+            MotionEvent.ACTION_UP -> if (flag.value) {
+                block()
+                flag.value = false
             }
         }
     }
