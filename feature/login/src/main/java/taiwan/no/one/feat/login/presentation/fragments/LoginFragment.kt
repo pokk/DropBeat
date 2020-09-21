@@ -95,8 +95,8 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback)
         googleLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -140,6 +140,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        addStatusBarHeightMarginTop(binding.btnBack)
         binding.rvSns.apply {
             if (adapter == null) {
                 adapter = snsAdapter
@@ -169,6 +170,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
             }
         }
         binding.apply {
+            btnBack.setOnClickListener { findNavController().navigateUp() }
             btnForgotPassword.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
             }

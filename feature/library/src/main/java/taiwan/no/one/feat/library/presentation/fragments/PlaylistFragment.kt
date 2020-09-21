@@ -29,6 +29,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,8 +61,8 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun bindLiveData() {
@@ -80,7 +81,13 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         }
     }
 
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        addStatusBarHeightMarginTop(binding.btnBack)
+    }
+
     override fun componentListenersBinding() {
+        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         playlistAdapter.setOnClickListener {}
     }
 

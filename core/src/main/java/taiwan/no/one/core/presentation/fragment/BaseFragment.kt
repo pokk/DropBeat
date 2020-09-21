@@ -28,6 +28,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.annotation.StyleRes
@@ -233,6 +234,15 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
 
     @UiThread
     open fun onBackPressed() = Unit
+
+    @UiThread
+    protected fun addStatusBarHeightMarginTop(view: View) {
+        val statusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
+                                  .takeIf { 0 < it }
+                                  ?.let { resources.getDimensionPixelSize(it) } ?: 0
+        (view.layoutParams as MarginLayoutParams)
+            .setMargins(view.left, view.top + statusBarHeight, view.right, view.bottom)
+    }
 
     @Suppress("UNCHECKED_CAST")
     @UiThread

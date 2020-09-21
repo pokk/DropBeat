@@ -32,13 +32,17 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".presentation.fragments.PlaylistFragment">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back"
+        style="@style/Taiwan.No.One.Back.Button"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_back"
         tools:text="Favorite"/>
 
     <com.google.android.material.textview.MaterialTextView

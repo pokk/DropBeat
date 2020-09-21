@@ -1,0 +1,34 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M10.1423,6.1677L5.2258,10.851C4.9198,11.1575 4.75,11.567 4.75,12C4.75,12.4356 4.9219,12.8448 5.2361,13.1587L10.1423,17.8318C10.342,18.0223 10.6042,18.125 10.875,18.125C11.1635,18.125 11.4418,18.0083 11.6447,17.795L11.725,17.7004C12.0449,17.2756 12.0026,16.6691 11.608,16.2932L8.202,13.062L18.1875,13.0625C18.7741,13.0625 19.25,12.5867 19.25,12L19.2438,11.8843C19.1861,11.352 18.735,10.9375 18.1875,10.9375L8.215,10.937L11.6077,7.7068C12.0326,7.3021 12.0491,6.6295 11.6443,6.2045C11.2398,5.7799 10.5674,5.7633 10.1423,6.1677Z"/>
+</vector>

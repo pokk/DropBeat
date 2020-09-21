@@ -98,8 +98,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun onDetach() {
@@ -194,7 +194,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             binding.tietSearch.text?.clear()
         }
         if (loadMoreListener.fetchMoreBlock == null) {
-//            loadMoreListener.fetchMoreBlock = ::getMoreMusics
+            loadMoreListener.fetchMoreBlock = ::getMoreMusics
         }
     }
 

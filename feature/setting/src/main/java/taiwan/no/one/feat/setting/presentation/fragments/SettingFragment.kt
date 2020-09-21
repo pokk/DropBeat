@@ -28,6 +28,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.transition.MaterialSharedAxis
@@ -48,8 +49,8 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun bindLiveData() {
@@ -61,6 +62,7 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        addStatusBarHeightMarginTop(binding.btnBack)
         // Set the Text
         listOf(
             // App Block
@@ -92,5 +94,6 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
 
     override fun componentListenersBinding() {
         binding.btnLogout.setOnClickListener { vm.logout() }
+        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
     }
 }

@@ -32,6 +32,10 @@
     android:background="@color/colorPrimaryDark"
     tools:context="taiwan.no.one.feat.login.presentation.fragments.LoginFragment">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back"
+        style="@style/Taiwan.No.One.Back.Button"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"
         android:layout_width="match_parent"
@@ -39,7 +43,7 @@
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
         android:text="Login / Sign Up"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/btn_back"/>
 
     <!--region Topper Custom Login-->
     <com.google.android.material.imageview.ShapeableImageView

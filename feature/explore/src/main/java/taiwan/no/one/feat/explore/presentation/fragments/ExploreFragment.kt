@@ -66,12 +66,13 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        addStatusBarHeightMarginTop(binding.mtvTitle)
         binding.includeExplore.rvMusics.apply {
             if (layoutManager == null) {
                 layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)

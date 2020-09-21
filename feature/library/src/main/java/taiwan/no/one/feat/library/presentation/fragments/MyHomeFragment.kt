@@ -55,8 +55,7 @@ import taiwan.no.one.ktx.view.find
 import java.lang.ref.WeakReference
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
-    private var _mergeTopControllerBinding: MergeTopControllerBinding? = null
-    private val mergeTopControllerBinding get() = checkNotNull(_mergeTopControllerBinding)
+    private val mergeTopControllerBinding get() = MergeTopControllerBinding.bind(binding.root)
     private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
     private val includeFavorite get() = find<ConstraintLayout>(R.id.include_favorite)
     private val includeDownloaded get() = find<ConstraintLayout>(R.id.include_download)
@@ -74,8 +73,8 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun bindLiveData() {
@@ -109,7 +108,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
-        _mergeTopControllerBinding = MergeTopControllerBinding.bind(binding.root)
+        addStatusBarHeightMarginTop(mergeTopControllerBinding.mtvTitle)
         includePlaylist.apply {
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
             find<View>(AppResId.btn_play_all).gone()
