@@ -34,6 +34,27 @@
         <!-- Customized font -->
         <item name="fontFamily">monospace</item>
         <item name="android:fontFamily">monospace</item>
+
+        <!-- Typography -->
+        <item name="textAppearanceHeadline1">@style/Taiwan.No.One.TextAppearance.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/Taiwan.No.One.TextAppearance.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/Taiwan.No.One.TextAppearance.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/Taiwan.No.One.TextAppearance.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/Taiwan.No.One.TextAppearance.Body1</item>
+        <item name="textAppearanceBody2">@style/Taiwan.No.One.TextAppearance.Body2</item>
+        <item name="textAppearanceCaption">?textAppearanceCaption1</item>
+        <item name="textAppearanceButton">?textAppearanceButton1</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
+
+        <!-- Customized Attributes -->
+        <item name="textAppearanceCaption1">@style/Taiwan.No.One.TextAppearance.Caption1</item>
+        <item name="textAppearanceCaption2">@style/Taiwan.No.One.TextAppearance.Caption2</item>
+        <item name="textAppearanceButton1">@style/Taiwan.No.One.TextAppearance.Button1</item>
+        <item name="textAppearanceButton2">@style/Taiwan.No.One.TextAppearance.Button2</item>
     </style>
 
     <style name="Taiwan.No.One.TextButton" parent="Widget.MaterialComponents.Button.TextButton">

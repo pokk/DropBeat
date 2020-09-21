@@ -55,14 +55,20 @@ import taiwan.no.one.ktx.view.find
 import java.lang.ref.WeakReference
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
+    //region Variable of View Binding
     private val mergeTopControllerBinding get() = MergeTopControllerBinding.bind(binding.root)
     private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
     private val includeFavorite get() = find<ConstraintLayout>(R.id.include_favorite)
     private val includeDownloaded get() = find<ConstraintLayout>(R.id.include_download)
     private val includeHistory get() = find<ConstraintLayout>(R.id.include_history)
-    private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
+    //endregion
+
+    //region Variable of View Model
     private val privacyVm by activityViewModels<PrivacyViewModel>()
     private val vm by viewModels<MyHomeViewModel>()
+    //endregion
+
+    //region Variable of Recycler View
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
@@ -70,6 +76,9 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
     private val playlistAdapter by lazy { PlaylistAdapter() }
+    //endregion
+
+    private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

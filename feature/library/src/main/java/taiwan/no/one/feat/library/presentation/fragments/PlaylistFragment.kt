@@ -53,11 +53,21 @@ import taiwan.no.one.ktx.view.find
 import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
+    //region Variable of View Binding
+    private val noSongsBinding get() = StubNoSongsBinding.bind(binding.root)
+    //endregion
+
+    //region Variable of View Model
     private val vm by viewModels<PlaylistViewModel>()
+    //endregion
+
+    //region Variable of Recycler View
     private val playlistAdapter by lazy { TrackAdapter() }
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
+
+    //endregion
+
     private val navArgs by navArgs<PlaylistFragmentArgs>()
-    private val noSongsBinding by lazy { StubNoSongsBinding.bind(binding.root) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
