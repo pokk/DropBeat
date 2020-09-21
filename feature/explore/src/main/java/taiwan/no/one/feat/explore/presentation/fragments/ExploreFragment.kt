@@ -121,12 +121,14 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             res.onSuccess {
                 includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
             }.onFailure { loge(it) }
+            includeTopArtist.find<View>(AppResId.pb_progress).gone()
         }
         vm.topTracks.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
                 includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
                     TopChartAdapter(it.tracks.subList(0, 4))
             }.onFailure { loge(it) }
+            includeTopTrack.find<View>(AppResId.pb_progress).gone()
         }
     }
 }

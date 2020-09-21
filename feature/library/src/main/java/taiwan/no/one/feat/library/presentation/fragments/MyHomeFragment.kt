@@ -94,6 +94,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
                     .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
             }
+            includeDownloaded.find<View>(AppResId.pb_progress).gone()
         }
         vm.favorites.observe(this) {
             if (it.songs.isEmpty()) {
@@ -103,6 +104,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
                     .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
             }
+            includeFavorite.find<View>(AppResId.pb_progress).gone()
         }
     }
 
