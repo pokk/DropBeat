@@ -36,8 +36,6 @@ import java.util.ServiceLoader
 object FeatModuleHelper {
     fun kodeinModules(context: Context) = ServiceLoader.load(ModuleProvider::class.java).map { it.provide(context) }
 
-    fun methodsProvider() = ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first()
-
     fun provide() = DI.Module("Feature Method Provider Module") {
         bind<LibraryMethodsProvider>() with singleton {
             ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first()

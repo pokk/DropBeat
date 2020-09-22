@@ -28,27 +28,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/login_fragment">
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/login_fragment"
         android:name="taiwan.no.one.feat.login.presentation.fragments.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
+        <deepLink app:uri="@string/deep_link_login"/>
         <action
             android:id="@+id/action_login_to_forgotPassword"
-            app:destination="@id/forgotPasswordFragment"/>
+            app:destination="@id/forgot_password_fragment"/>
         <action
             android:id="@+id/action_login_to_register"
-            app:destination="@id/registerFragment"/>
+            app:destination="@id/register_fragment"/>
     </fragment>
     <fragment
-        android:id="@+id/registerFragment"
+        android:id="@+id/register_fragment"
         android:name="taiwan.no.one.feat.login.presentation.fragments.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_register"/>
     <fragment
-        android:id="@+id/forgotPasswordFragment"
+        android:id="@+id/forgot_password_fragment"
         android:name="taiwan.no.one.feat.login.presentation.fragments.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_password"/>

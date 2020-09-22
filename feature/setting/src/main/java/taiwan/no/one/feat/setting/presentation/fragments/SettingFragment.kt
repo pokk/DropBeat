@@ -27,6 +27,7 @@ package taiwan.no.one.feat.setting.presentation.fragments
 import android.os.Bundle
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -38,6 +39,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.AppResString
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.setting.R
 import taiwan.no.one.feat.setting.databinding.FragmentSettingBinding
@@ -138,5 +140,8 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
     override fun componentListenersBinding() {
         binding.btnLogout.setOnClickListener { vm.logout() }
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        mergeSyncBlock.includeSync.root.setOnClickListener {
+            findNavController().navigate(getString(AppResString.deep_link_login).toUri())
+        }
     }
 }

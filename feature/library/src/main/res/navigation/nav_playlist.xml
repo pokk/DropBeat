@@ -45,7 +45,9 @@
     </fragment>
 
     <include app:graph="@navigation/nav_login"/>
+
     <include app:graph="@navigation/nav_setting"/>
+
     <fragment
         android:id="@+id/playlistFragment"
         android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
