@@ -77,6 +77,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     private val facebookCallbackManager by lazy { CallbackManager.Factory.create() }
     private val facebookCallback = object : FacebookCallback<LoginResult> {
         override fun onSuccess(loginResult: LoginResult) {
+            showLoading()
             vm.login(Credential.Facebook(loginResult.accessToken.token))
         }
 
@@ -127,14 +128,17 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
             it.onSuccess {
                 // Make the activity viewmodel has the newest user information.
                 privacyVm.getUserInfo()
+            }.onFailure { loge(it) }
+        }
+        privacyVm.userInfo.observe(this) { res ->
+            hideLoading()
+            res.onSuccess {
                 // Toast a message for the success login.
                 val name = it.displayName ?: it.email.orEmpty()
                 requireActivity().showTopToast("Welcome back, $name", R.drawable.ic_login_arrow)
                 // Go back to the previous screen.
                 findNavController().navigateUp()
-            }.onFailure {
-                loge(it)
-            }
+            }.onFailure { loge(it) }
         }
     }
 
@@ -175,6 +179,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                 findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
             }
             btnLogin.setOnClickListener {
+                showLoading()
                 vm.login(tietEmail.text.toString(), tietPassword.text.toString())
             }
         }

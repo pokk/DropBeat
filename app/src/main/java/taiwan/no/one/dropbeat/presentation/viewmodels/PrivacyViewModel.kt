@@ -24,6 +24,8 @@
 
 package taiwan.no.one.dropbeat.presentation.viewmodels
 
+import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
@@ -36,11 +38,13 @@ class PrivacyViewModel : BehindViewModel() {
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()
 
+    @WorkerThread
     fun getUserInfo() = launchBehind {
         _userInfo.postValue(fetchLoginInfoCase.execute())
     }
 
+    @UiThread
     fun clearUseInfo() {
-        _userInfo.value = null
+        _userInfo.value = Result.failure(NullPointerException("There is no user information."))
     }
 }
