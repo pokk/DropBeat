@@ -1,0 +1,35 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF5753"
+        android:fillType="evenOdd"
+        android:pathData="M16.8193,12.9601C17.5575,13.2881 18.2006,13.6907 18.7308,14.1566C19.5374,14.8652 20,15.8901 20,16.9688V18.125C20,19.1589 19.1589,20 18.125,20H5.875C4.8411,20 4,19.1589 4,18.125V16.9688C4,15.8901 4.4626,14.8652 5.2692,14.1566C5.9221,13.5828 7.1726,12.7322 9.1829,12.2903C8.0842,11.444 7.375,10.1158 7.375,8.625C7.375,6.0748 9.4498,4 12,4C14.5502,4 16.625,6.0748 16.625,8.625C16.625,11.1752 14.5502,13.25 12,13.25C8.5655,13.25 6.7257,14.5406 6.0942,15.0956C5.5577,15.567 5.25,16.2496 5.25,16.9688V18.125C5.25,18.4696 5.5304,18.75 5.875,18.75H18.125C18.4696,18.75 18.75,18.4696 18.75,18.125V16.9688C18.75,16.2496 18.4423,15.567 17.9058,15.0956C17.4706,14.7131 16.9342,14.379 16.3118,14.1024C15.9963,13.9622 15.8542,13.5929 15.9944,13.2775C16.1345,12.962 16.5038,12.8199 16.8193,12.9601ZM12,5.25C10.139,5.25 8.625,6.764 8.625,8.625C8.625,10.486 10.139,12 12,12C13.861,12 15.375,10.486 15.375,8.625C15.375,6.764 13.861,5.25 12,5.25Z"/>
+</vector>

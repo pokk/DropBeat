@@ -28,6 +28,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -175,6 +176,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         }
         (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.setOnClickListener {
         }
+        mergeTopControllerBinding.btnMore.setOnClickListener { showMenu(it) }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
@@ -184,4 +186,8 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         }
         vm.getAllPlaylists()
     }
+
+    private fun showMenu(anchor: View) = PopupMenu(requireActivity(), anchor).apply {
+        menuInflater.inflate(R.menu.menu_more_setting, menu)
+    }.show()
 }
