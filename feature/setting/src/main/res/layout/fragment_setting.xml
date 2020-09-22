@@ -54,9 +54,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_logout"
+            style="@style/Taiwan.No.One.Special.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="logout"
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"
             app:layout_constraintBottom_toBottomOf="@id/mtv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/mtv_title"/>

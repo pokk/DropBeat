@@ -45,6 +45,7 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:text="Sync Playlist to cloud"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/siv_icon"
         app:layout_constraintTop_toTopOf="parent"/>

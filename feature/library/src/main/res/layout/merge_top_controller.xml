@@ -43,8 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
-            tools:text="Guest"/>
+            android:text="Guest"
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
@@ -58,8 +58,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_setting"
+        style="@style/Taiwan.No.One.Special.Button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_one_half_unit"
         android:text="Setting"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"
@@ -70,7 +70,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_more"
-        style="@style/Taiwan.No.One.Button.IconOnly"
+        style="@style/Taiwan.No.One.Special.Button"
+        android:layout_marginStart="@dimen/md_one_unit"
         app:icon="@drawable/ic_menu"
         app:layout_constraintBottom_toBottomOf="@id/btn_setting"
         app:layout_constraintEnd_toEndOf="parent"

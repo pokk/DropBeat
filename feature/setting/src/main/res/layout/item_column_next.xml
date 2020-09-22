@@ -45,6 +45,7 @@
         android:id="@+id/mtv_title"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_next"
         app:layout_constraintStart_toEndOf="@id/siv_icon"

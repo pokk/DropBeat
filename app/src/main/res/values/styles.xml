@@ -57,6 +57,7 @@
         <item name="textAppearanceButton2">@style/Taiwan.No.One.TextAppearance.Button2</item>
     </style>
 
+    <!--region Button -->
     <style name="Taiwan.No.One.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
     </style>
 
@@ -79,10 +80,17 @@
         <item name="cornerRadius">@dimen/md_two_unit</item>
     </style>
 
+    <style name="Taiwan.No.One.Special.Button" parent="Taiwan.No.One.Button.IconOnly">
+        <item name="android:textColor">@color/pastel_pink</item>
+        <item name="backgroundTint">@color/special_button_background</item>
+        <item name="iconTint">@color/pastel_pink</item>
+    </style>
+
     <style name="Taiwan.No.One.Back.Button" parent="Taiwan.No.One.Button.IconOnly">
         <item name="android:layout_marginTop">@dimen/md_one_unit</item>
         <item name="icon">@drawable/ic_back</item>
         <item name="layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
+    <!--endregion-->
 </resources>

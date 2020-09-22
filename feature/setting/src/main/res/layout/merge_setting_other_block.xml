@@ -39,7 +39,8 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Other"/>
+            android:text="Other"
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline3"/>
 
         <include
             android:id="@+id/include_policy"

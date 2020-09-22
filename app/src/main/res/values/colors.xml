@@ -37,5 +37,8 @@
 
     <color name="silver">#BCBAC6</color>
     <color name="dark_slate_blue">#383676</color>
+
+    <!-- Special Button Background -->
+    <color name="special_button_background">#25FFFFFF</color>
 </resources>
 
