@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/md_two_unit"
             android:text="Setting"
-            android:textSize="@dimen/title_header_1"
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
             app:layout_constraintEnd_toStartOf="@id/btn_logout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_back"/>

@@ -38,12 +38,13 @@
     <!--region Top Search Components-->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"
-        style="@style/Text.Header.One"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
+        android:gravity="center"
         android:text="@string/fragment_title"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <View
@@ -103,7 +104,7 @@
             android:inputType="text"
             android:paddingHorizontal="@dimen/md_two_unit"
             android:paddingVertical="@dimen/md_one_unit"
-            android:textSize="@dimen/body_text_1"/>
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Body1"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Guideline

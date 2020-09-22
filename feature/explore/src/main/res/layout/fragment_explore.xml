@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hi\nTime for Music?"
-            android:textSize="@dimen/title_header_1"
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <include

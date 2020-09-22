@@ -43,6 +43,7 @@
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:layout_marginTop="@dimen/md_two_unit"
         android:text="Login / Sign Up"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
         app:layout_constraintTop_toBottomOf="@id/btn_back"/>
 
     <!--region Topper Custom Login-->
@@ -86,7 +87,7 @@
             android:inputType="text"
             android:paddingHorizontal="@dimen/md_two_unit"
             android:paddingVertical="@dimen/md_one_unit"
-            android:textSize="14sp"/>
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Body1"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -119,7 +120,7 @@
             android:inputType="text"
             android:paddingHorizontal="@dimen/md_two_unit"
             android:paddingVertical="@dimen/md_one_unit"
-            android:textSize="14sp"/>
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Body1"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -128,8 +129,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Body2"
         android:textColor="@color/grapefruit"
-        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/siv_search_backdrop"
         app:layout_constraintTop_toBottomOf="@id/til_password"/>
 
@@ -140,6 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_four_unit"
         android:text="Login"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"
         app:layout_constraintTop_toBottomOf="@id/btn_forgot_password"/>
 
     <androidx.constraintlayout.widget.Barrier
@@ -181,6 +183,7 @@
         android:layout_marginBottom="@dimen/md_five_unit"
         android:gravity="center"
         android:text="Continue with SNS Account"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Body2"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.constraintlayout.widget.Barrier

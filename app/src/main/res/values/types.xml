@@ -28,60 +28,60 @@
     <style name="Taiwan.No.One.TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/title_header_1</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/title_header_2</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/title_header_3</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/title_header_4</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Button1" parent="TextAppearance.MaterialComponents.Button">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/button_text_1</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Button2" parent="Taiwan.No.One.TextAppearance.Button1">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/button_text_2</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Caption1" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/caption_text_1</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Caption2" parent="Taiwan.No.One.TextAppearance.Caption1">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/caption_text_2</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/body_text_1</item>
     </style>
 
     <style name="Taiwan.No.One.TextAppearance.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">96sp</item>
+        <item name="android:textSize">@dimen/body_text_2</item>
     </style>
 </resources>

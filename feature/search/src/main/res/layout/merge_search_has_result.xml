@@ -36,7 +36,7 @@
         android:layout_marginTop="@dimen/md_ten_unit"
         android:gravity="fill_vertical"
         android:rotation="-90"
-        android:textSize="@dimen/title_header_3"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline3"
         app:layout_constraintEnd_toEndOf="@id/g_line_title"
         app:layout_constraintStart_toStartOf="@id/g_line_title"
         app:layout_constraintTop_toBottomOf="@id/sov_backdrop"

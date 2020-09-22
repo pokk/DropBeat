@@ -43,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Guest"/>
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
+            tools:text="Guest"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
@@ -51,7 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/md_two_unit"
-            android:text="Continue with Account"/>
+            android:text="Continue with Account"
+            android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.button.MaterialButton
@@ -60,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_one_half_unit"
         android:text="Setting"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"
         app:layout_constraintEnd_toStartOf="@id/btn_more"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
