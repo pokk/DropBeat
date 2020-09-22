@@ -25,27 +25,44 @@
 package taiwan.no.one.feat.setting.presentation.fragments
 
 import android.os.Bundle
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.devrapid.kotlinknifer.getDimen
+import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.visible
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.setting.R
 import taiwan.no.one.feat.setting.databinding.FragmentSettingBinding
 import taiwan.no.one.feat.setting.databinding.MergeSettingAppBlockBinding
+import taiwan.no.one.feat.setting.databinding.MergeSettingMusicBlockBinding
+import taiwan.no.one.feat.setting.databinding.MergeSettingOtherBlockBinding
+import taiwan.no.one.feat.setting.databinding.MergeSettingSyncBinding
+import taiwan.no.one.feat.setting.databinding.MergeSettingUserBlockBinding
 import taiwan.no.one.feat.setting.presentation.viewmodels.SettingViewModel
 import taiwan.no.one.ktx.view.find
+import taiwan.no.one.widget.WidgetResDimen
 
 internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBinding>() {
-    private val vm by viewModels<SettingViewModel>()
+    //region Variable of View Binding
+    private val mergeUserBlock get() = MergeSettingUserBlockBinding.bind(binding.root)
     private val mergeAppBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
-    private val mergeMusicBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
-    private val mergeSyncBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
-    private val mergeOtherBlock get() = MergeSettingAppBlockBinding.bind(binding.root)
+    private val mergeMusicBlock get() = MergeSettingMusicBlockBinding.bind(binding.root)
+    private val mergeSyncBlock get() = MergeSettingSyncBinding.bind(binding.root)
+    private val mergeOtherBlock get() = MergeSettingOtherBlockBinding.bind(binding.root)
+    //endregion
+
+    //region Variable of View Model
+    private val vm by viewModels<SettingViewModel>()
+    private val privacyVm by activityViewModels<PrivacyViewModel>()
+    //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +73,8 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
     override fun bindLiveData() {
         vm.logoutRes.observe(this) { res ->
             res.onSuccess {
+                privacyVm.clearUseInfo()
+                findNavController().navigateUp()
             }.onFailure { loge(it) }
         }
     }
@@ -65,31 +84,55 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
         addStatusBarHeightMarginTop(binding.btnBack)
         // Set the Text
         listOf(
+            // User Block
+            mergeUserBlock.includeName to "Showing Name",
+            mergeUserBlock.includeEmail to "Email",
+            mergeUserBlock.includeChangePassword to "Change Password",
             // App Block
-            find<ConstraintLayout>(R.id.include_sleep_timer) to "Sleeping Timer",
-            find<ConstraintLayout>(R.id.include_lock_screen) to "Lockscreen Player",
-            find<ConstraintLayout>(R.id.include_offline) to "Play offline music only",
-            find<ConstraintLayout>(R.id.include_notification_player) to "Notification Player",
+            mergeAppBlock.includeSleepTimer to "Sleeping Timer",
+            mergeAppBlock.includeLockScreen to "Lockscreen Player",
+            mergeAppBlock.includeOffline to "Play offline music only",
+            mergeAppBlock.includeNotificationPlayer to "Notification Player",
             // Music Block
-            find<ConstraintLayout>(R.id.include_quality) to "Quality of Music",
-            find<ConstraintLayout>(R.id.include_auto_mv) to "Auto Show MV Auto",
+            mergeMusicBlock.includeQuality to "Quality of Music",
+            mergeMusicBlock.includeAutoMv to "Auto Show MV Auto",
+            // Sync Block
+            mergeSyncBlock.includeLoggedInSync to "Sync Playlist to cloud",
             // Other Block
-            find<ConstraintLayout>(R.id.include_policy) to "Policy",
-            find<ConstraintLayout>(R.id.include_coffee_to_me) to "Buy Me a Coffee",
-            find<ConstraintLayout>(R.id.include_star) to "5 Start in Store",
-            find<ConstraintLayout>(R.id.include_feedback) to "Feedback",
+            mergeOtherBlock.includePolicy to "Policy",
+            mergeOtherBlock.includeCoffeeToMe to "Buy Me a Coffee",
+            mergeOtherBlock.includeStar to "5 Start in Store",
+            mergeOtherBlock.includeFeedback to "Feedback",
         ).forEach { (viewGroup, text) ->
-            viewGroup.find<TextView>(R.id.mtv_title).text = text
+            viewGroup.root.find<TextView>(R.id.mtv_title).text = text
         }
+        mergeMusicBlock.includeQuality.btnNext.text = "Auto"
         // Set the Icons
         listOf(
-            find<ConstraintLayout>(R.id.include_quality),
-            find(R.id.include_policy),
-            find(R.id.include_coffee_to_me),
-            find(R.id.include_star),
-            find(R.id.include_feedback),
-        ).forEach { it.find<MaterialButton>(R.id.btn_next).apply { setIconResource(R.drawable.ic_chevron_right) } }
-        find<ConstraintLayout>(R.id.include_quality).find<MaterialButton>(R.id.btn_next).text = "Auto"
+            mergeUserBlock.includeName,
+            mergeUserBlock.includeChangePassword,
+            mergeMusicBlock.includeQuality,
+            mergeSyncBlock.includeLoggedInSync,
+            mergeOtherBlock.includePolicy,
+            mergeOtherBlock.includeCoffeeToMe,
+            mergeOtherBlock.includeStar,
+            mergeOtherBlock.includeFeedback,
+        ).forEach { it.root.find<MaterialButton>(R.id.btn_next).apply { setIconResource(R.drawable.ic_chevron_right) } }
+        mergeUserBlock.includeEmail.btnNext.icon = null
+        // Change the margin if has the user information.
+        privacyVm.userInfo.value?.getOrNull()?.also {
+            // Set components to visible.
+            binding.btnLogout.visible()
+            mergeUserBlock.llUser.visible()
+            (mergeAppBlock.llApp.layoutParams as MarginLayoutParams).topMargin =
+                getDimen(WidgetResDimen.md_four_unit).toInt()
+            mergeSyncBlock.includeLoggedInSync.root.visible()
+            mergeSyncBlock.includeSync.root.gone()
+            // Set the user information.
+            mergeUserBlock.includeName.btnNext.text = it.displayName
+            mergeUserBlock.includeEmail.btnNext.text = it.email
+            mergeUserBlock.includeChangePassword.btnNext.text = "●●●●●●"
+        }
     }
 
     override fun componentListenersBinding() {

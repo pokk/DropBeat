@@ -52,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/md_two_unit"
+            android:layout_marginTop="@dimen/md_button_gap_two_unit"
             android:text="Continue with Account"
             android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -60,7 +61,7 @@
         android:id="@+id/btn_setting"
         style="@style/Taiwan.No.One.Special.Button"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/md_one_half_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
         android:text="Setting"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"
         app:layout_constraintEnd_toStartOf="@id/btn_more"

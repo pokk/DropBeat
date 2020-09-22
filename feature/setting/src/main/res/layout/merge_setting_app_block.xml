@@ -33,7 +33,7 @@
         android:id="@+id/ll_app"
         style="@style/Taiwan.No.One.Setting.Block.Layout"
         android:layout_marginTop="@dimen/md_two_unit"
-        app:layout_constraintTop_toBottomOf="@id/mtv_title">
+        app:layout_constraintTop_toBottomOf="@id/ll_user">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"

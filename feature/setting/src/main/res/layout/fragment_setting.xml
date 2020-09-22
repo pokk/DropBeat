@@ -59,9 +59,13 @@
             android:layout_height="wrap_content"
             android:text="logout"
             android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/mtv_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/mtv_title"/>
+            app:layout_constraintTop_toTopOf="@id/mtv_title"
+            tools:visibility="visible"/>
+
+        <include layout="@layout/merge_setting_user_block"/>
 
         <include layout="@layout/merge_setting_app_block"/>
 

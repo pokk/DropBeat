@@ -39,4 +39,8 @@ class PrivacyViewModel : BehindViewModel() {
     fun getUserInfo() = launchBehind {
         _userInfo.postValue(fetchLoginInfoCase.execute())
     }
+
+    fun clearUseInfo() {
+        _userInfo.value = null
+    }
 }
