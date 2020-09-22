@@ -31,6 +31,12 @@ import android.view.LayoutInflater
 import android.view.WindowManager.LayoutParams
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import taiwan.no.one.widget.R
 import taiwan.no.one.widget.databinding.PartTopToastBinding
 
@@ -53,7 +59,15 @@ fun Context.showTopToast(text: String, @DrawableRes icon: Int = R.drawable.ic_cl
                 println(e.printStackTrace())
             }
 
-            btnClose.setOnClickListener { cancel() }
+            callbackFlow {
+                btnClose.setOnClickListener { offer(Unit) }
+                awaitClose { btnClose.setOnClickListener(null) }
+            }.debounce(150)
+                .onEach {
+                    btnClose.setOnClickListener(null)
+                    this@toast.cancel()
+                }
+                .launchIn(GlobalScope)
         }
     duration = Toast.LENGTH_LONG
     setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 0)
