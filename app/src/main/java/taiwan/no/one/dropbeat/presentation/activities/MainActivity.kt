@@ -75,6 +75,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun hideLoading() {
+        if (navigator.currentDestination?.id != R.id.loading_dialog_fragment) return
         navigator.navigateUp()
     }
 
