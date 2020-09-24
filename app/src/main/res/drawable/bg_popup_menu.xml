@@ -23,23 +23,12 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <!-- Theme Colors -->
-    <color name="dusk">#465180</color>
-    <color name="colorPrimaryDark">#262345</color>
-    <color name="coral">#FF5735</color>
-    <color name="pastel_pink">#E8BCD3</color>
-    <color name="colorText">#FFFFFF</color>
-
-    <!-- Others -->
-    <color name="grapefruit">#FF5753</color>
-    <color name="pale_grey">#F4F6FC</color>
-
-    <color name="silver">#BCBAC6</color>
-    <color name="dark_slate_blue">#383676</color>
-    <color name="shark">#19191A</color>
-
-    <!-- Special Button Background -->
-    <color name="special_button_background">#25FFFFFF</color>
-</resources>
-
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/shark"/>
+            <corners android:radius="@dimen/md_two_unit"/>
+        </shape>
+    </item>
+</layer-list>

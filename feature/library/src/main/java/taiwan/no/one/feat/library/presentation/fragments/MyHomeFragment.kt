@@ -189,5 +189,14 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     private fun showMenu(anchor: View) = PopupMenu(requireActivity(), anchor).apply {
         menuInflater.inflate(R.menu.menu_more_setting, menu)
+        // Trick for displaying the icon.
+        try {
+            val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", Boolean::class.javaPrimitiveType)
+            method.isAccessible = true
+            method.invoke(menu, true)
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
     }.show()
 }

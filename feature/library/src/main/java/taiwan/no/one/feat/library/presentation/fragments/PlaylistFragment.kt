@@ -88,6 +88,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             }.onFailure {
                 loge(it)
             }
+            find<View>(AppResId.pb_progress).gone()
         }
     }
 

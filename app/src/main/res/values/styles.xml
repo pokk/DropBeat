@@ -35,6 +35,9 @@
         <item name="fontFamily">monospace</item>
         <item name="android:fontFamily">monospace</item>
 
+        <item name="popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+
         <!-- Typography -->
         <item name="textAppearanceHeadline1">@style/Taiwan.No.One.TextAppearance.Headline1</item>
         <item name="textAppearanceHeadline2">@style/Taiwan.No.One.TextAppearance.Headline2</item>
@@ -93,4 +96,8 @@
         <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
     <!--endregion-->
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_popup_menu</item>
+    </style>
 </resources>

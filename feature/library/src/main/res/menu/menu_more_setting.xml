@@ -24,12 +24,15 @@
   -->
 
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/item_playlist"
         android:icon="@drawable/ic_music"
         android:iconTint="@color/grapefruit"
-        android:title="My Playlists"/>
+        android:iconTintMode="screen"
+        android:title="My Playlists"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/item_favorite"
         android:icon="@drawable/ic_music"
