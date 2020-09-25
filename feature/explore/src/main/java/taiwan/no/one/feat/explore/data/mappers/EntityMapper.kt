@@ -22,27 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.data.mappers
+package taiwan.no.one.feat.explore.data.mappers
 
-import taiwan.no.one.mediaplayer.MusicInfo
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 
-object TrackMapper {
-    fun musicInfoToSongEntitiesJson(music: MusicInfo) = buildString {
-        append("""[${musicInfoToSongEntityJson(music)}]""")
-    }
-
-    fun musicInfoListToSongEntitiesJson(musics: List<MusicInfo>) = buildString {
-        musics.joinToString(",", "[", "]") { musicInfoToSongEntityJson(it) }
-    }
-
-    private fun musicInfoToSongEntityJson(music: MusicInfo) = buildString {
-        append("""{
-    "title" : "${music.title}",
-    "artist" : "${music.artist}",
-    "uri" : "${music.uri}",
-    "cover_uri" : "${music.thumbUri}",
-    "duration" : ${music.duration},
-    "has_own" : false
-}""".trimIndent())
+internal object EntityMapper {
+    fun exploreToSimpleTrackEntity(entity: TrackEntity) = entity.let {
+        SimpleTrackEntity(
+            it.name.orEmpty(),
+            it.artist?.name.orEmpty(),
+            it.url.orEmpty(),
+            DEFAULT_STR,
+            it.images?.first()?.text.orEmpty(),
+            DEFAULT_STR,
+            it.duration?.toInt() ?: 0,
+            false,
+            false,
+        )
     }
 }

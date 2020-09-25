@@ -53,8 +53,15 @@
         android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
         android:label="fragment_playlist"
         tools:layout="@layout/fragment_playlist">
+        <deepLink
+            app:uri="https://taiwan.no.one/library/playlist?id={playlistId}&amp;songs={songs}"/>
         <argument
             android:name="playlistId"
+            android:defaultValue="-1"
             app:argType="integer"/>
+        <argument
+            android:name="songs"
+            android:defaultValue='""'
+            app:argType="string"/>
     </fragment>
 </navigation>

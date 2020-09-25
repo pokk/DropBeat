@@ -22,27 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.data.mappers
+package taiwan.no.one.dropbeat.data.entities
 
-import taiwan.no.one.mediaplayer.MusicInfo
+import android.os.Parcelable
+import androidx.annotation.Keep
+import kotlinx.android.parcel.Parcelize
 
-object TrackMapper {
-    fun musicInfoToSongEntitiesJson(music: MusicInfo) = buildString {
-        append("""[${musicInfoToSongEntityJson(music)}]""")
-    }
-
-    fun musicInfoListToSongEntitiesJson(musics: List<MusicInfo>) = buildString {
-        musics.joinToString(",", "[", "]") { musicInfoToSongEntityJson(it) }
-    }
-
-    private fun musicInfoToSongEntityJson(music: MusicInfo) = buildString {
-        append("""{
-    "title" : "${music.title}",
-    "artist" : "${music.artist}",
-    "uri" : "${music.uri}",
-    "cover_uri" : "${music.thumbUri}",
-    "duration" : ${music.duration},
-    "has_own" : false
-}""".trimIndent())
-    }
-}
+/**
+ * [SimpleTrackEntity] is for global usage and it only keeps brief information.
+ */
+@Keep
+@Parcelize
+data class SimpleTrackEntity(
+    val name: String,
+    val artist: String,
+    val uri: String,
+    val localUri: String,
+    val thumbUri: String,
+    val lyricUri: String,
+    val duration: Int,
+    val isFavorite: Boolean,
+    val isOwn: Boolean,
+) : Parcelable
