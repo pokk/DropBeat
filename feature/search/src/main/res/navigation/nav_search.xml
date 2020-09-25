@@ -33,5 +33,20 @@
         android:id="@+id/indexFragment"
         android:name="taiwan.no.one.feat.search.presentation.fragments.IndexFragment"
         android:label="@string/fragment_title"
-        tools:layout="@layout/fragment_search_index"/>
+        tools:layout="@layout/fragment_search_index">
+
+        <action
+            android:id="@+id/action_index_to_player"
+            app:destination="@id/nav_player"/>
+    </fragment>
+
+    <include-dynamic
+        android:id="@+id/nav_player"
+        app:graphResName="nav_player"
+        app:moduleName="player"/>
+
+    <include-dynamic
+        android:id="@+id/nav_login"
+        app:graphResName="nav_login"
+        app:moduleName="login"/>
 </navigation>

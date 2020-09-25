@@ -31,6 +31,7 @@ import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.hideSoftKeyboard
@@ -174,7 +175,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         binding.apply {
             // Click the search icon
             tilSearchBar.setEndIconOnClickListener {
-                searchMusic(tietSearch.text.toString())
+//                searchMusic(tietSearch.text.toString())
+                findNavController().navigate(IndexFragmentDirections.actionIndexToPlayer())
             }
             // Hit the enter key on the soft keyword or the physical keyboard
             tietSearch.setOnKeyListener { v, keyCode, event ->

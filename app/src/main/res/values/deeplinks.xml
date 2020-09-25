@@ -24,6 +24,7 @@
   -->
 
 <resources>
+    <string name="deep_link_player">https://taiwan.no.one/player/</string>
     <string name="deep_link_login">https://taiwan.no.one/login/</string>
     <string name="deep_link_playlist">https://taiwan.no.one/library/playlist?id=%s&amp;songs=%s</string>
 </resources>

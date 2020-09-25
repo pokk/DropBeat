@@ -35,18 +35,14 @@
         tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myHome_to_login_graph"
-            app:destination="@id/login_graph"/>
+            app:destination="@id/nav_login"/>
         <action
             android:id="@+id/action_myHome_to_setting_graph"
-            app:destination="@id/setting_graph"/>
+            app:destination="@id/nav_setting"/>
         <action
             android:id="@+id/action_myHome_to_playlist"
             app:destination="@id/playlistFragment"/>
     </fragment>
-
-    <include app:graph="@navigation/nav_login"/>
-
-    <include app:graph="@navigation/nav_setting"/>
 
     <fragment
         android:id="@+id/playlistFragment"
@@ -64,4 +60,14 @@
             android:defaultValue='""'
             app:argType="string"/>
     </fragment>
+
+    <include-dynamic
+        android:id="@+id/nav_login"
+        app:graphResName="nav_login"
+        app:moduleName="login"/>
+
+    <include-dynamic
+        android:id="@+id/nav_setting"
+        app:graphResName="nav_setting"
+        app:moduleName="setting"/>
 </navigation>

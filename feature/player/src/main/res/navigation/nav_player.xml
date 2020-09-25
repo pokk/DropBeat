@@ -27,11 +27,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/playerFragment">
+    app:startDestination="@id/player_fragment">
 
     <fragment
-        android:id="@+id/playerFragment"
+        android:id="@+id/player_fragment"
         android:name="taiwan.no.one.feat.player.presentation.fragments.PlayerFragment"
         android:label="PlayerFragment"
-        tools:layout="@layout/fragment_index"/>
+        tools:layout="@layout/fragment_index">
+        <deepLink app:uri="@string/deep_link_player"/>
+    </fragment>
 </navigation>

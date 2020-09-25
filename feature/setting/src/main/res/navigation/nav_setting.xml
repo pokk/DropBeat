@@ -27,11 +27,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/setting_graph"
-    app:startDestination="@id/settingFragment">
+    app:startDestination="@id/setting_fragment">
 
     <fragment
-        android:id="@+id/settingFragment"
+        android:id="@+id/setting_fragment"
         android:name="taiwan.no.one.feat.setting.presentation.fragments.SettingFragment"
         android:label="FragmentSetting"
         tools:layout="@layout/fragment_setting"/>

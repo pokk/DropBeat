@@ -137,6 +137,8 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                     TopChartAdapter(it.tracks.subList(0, 4))
             }.onFailure { loge(it) }
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
+            includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
+            }
         }
     }
 }
