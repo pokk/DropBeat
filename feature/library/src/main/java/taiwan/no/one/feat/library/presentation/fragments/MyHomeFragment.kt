@@ -28,7 +28,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -53,6 +52,7 @@ import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAd
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
+import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
@@ -187,16 +187,6 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         vm.getAllPlaylists()
     }
 
-    private fun showMenu(anchor: View) = PopupMenu(requireActivity(), anchor).apply {
-        menuInflater.inflate(R.menu.menu_more_setting, menu)
-        // Trick for displaying the icon.
-        try {
-            val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", Boolean::class.javaPrimitiveType)
-            method.isAccessible = true
-            method.invoke(menu, true)
-        }
-        catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }.show()
+    private fun showMenu(anchor: View) =
+        popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_setting).show()
 }

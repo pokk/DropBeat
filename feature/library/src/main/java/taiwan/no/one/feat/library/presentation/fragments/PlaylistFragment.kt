@@ -50,6 +50,7 @@ import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
+import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
@@ -99,6 +100,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     override fun componentListenersBinding() {
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.btnMore.setOnClickListener { showMoreMenu(binding.btnMore) }
         playlistAdapter.setOnClickListener {}
     }
 
@@ -137,4 +139,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         }
         binding.mtvSubtitle.text = "0 Songs"
     }
+
+    private fun showMoreMenu(anchor: View) =
+        popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_playlist).show()
 }

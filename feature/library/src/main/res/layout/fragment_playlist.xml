@@ -36,6 +36,15 @@
         android:id="@+id/btn_back"
         style="@style/Taiwan.No.One.Back.Button"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_more"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        app:icon="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_back"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_title"
         android:layout_width="match_parent"

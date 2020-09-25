@@ -1,0 +1,35 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF5753"
+        android:fillType="evenOdd"
+        android:pathData="M18.1333,7.3375C18.1333,6.0485 17.0846,5 15.7958,5C14.5071,5 13.4583,6.0485 13.4583,7.3375C13.4583,7.5471 13.486,7.7504 13.538,7.9439L9.0142,10.5229C8.5892,10.085 7.9945,9.8125 7.3375,9.8125C6.0487,9.8125 5,10.861 5,12.15C5,13.439 6.0487,14.4875 7.3375,14.4875C7.9946,14.4875 8.5893,14.2149 9.0144,13.7769L13.5381,16.3559C13.4861,16.5494 13.4583,16.7528 13.4583,16.9625C13.4583,18.2515 14.5071,19.3 15.7958,19.3C17.0846,19.3 18.1333,18.2515 18.1333,16.9625C18.1333,15.6735 17.0846,14.625 15.7958,14.625C15.139,14.625 14.5445,14.8973 14.1195,15.335L9.5954,12.7559C9.6473,12.5626 9.675,12.3595 9.675,12.15C9.675,11.9404 9.6473,11.7372 9.5953,11.5438L14.1193,8.9648C14.5444,9.4026 15.1389,9.675 15.7958,9.675C17.0846,9.675 18.1333,8.6265 18.1333,7.3375ZM14.6333,7.3375C14.6333,6.6966 15.1551,6.175 15.7958,6.175C16.4365,6.175 16.9583,6.6966 16.9583,7.3375C16.9583,7.9784 16.4365,8.5 15.7958,8.5C15.1551,8.5 14.6333,7.9784 14.6333,7.3375ZM14.6333,16.9625C14.6333,16.3216 15.1551,15.8 15.7958,15.8C16.4365,15.8 16.9583,16.3216 16.9583,16.9625C16.9583,17.6034 16.4365,18.125 15.7958,18.125C15.1551,18.125 14.6333,17.6034 14.6333,16.9625ZM7.3375,10.9875C6.6968,10.9875 6.175,11.5091 6.175,12.15C6.175,12.7909 6.6968,13.3125 7.3375,13.3125C7.9782,13.3125 8.5,12.7909 8.5,12.15C8.5,11.5091 7.9782,10.9875 7.3375,10.9875Z"/>
+</vector>

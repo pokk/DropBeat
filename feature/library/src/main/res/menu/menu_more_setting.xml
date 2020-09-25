@@ -26,36 +26,41 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/item_playlist"
-        android:icon="@drawable/ic_music"
-        android:iconTint="@color/grapefruit"
-        android:iconTintMode="screen"
-        android:title="My Playlists"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/item_favorite"
-        android:icon="@drawable/ic_music"
-        android:iconTint="@color/grapefruit"
-        android:title="My Favorites"/>
-    <item
-        android:id="@+id/item_downloaded"
-        android:icon="@drawable/ic_music"
-        android:iconTint="@color/grapefruit"
-        android:title="My Downloaded"/>
-    <item
-        android:id="@+id/item_local_music"
-        android:icon="@drawable/ic_music"
-        android:iconTint="@color/grapefruit"
-        android:title="My Local Music"/>
-    <item
-        android:id="@+id/item_setting"
-        android:icon="@drawable/ic_user"
-        android:iconTint="@color/grapefruit"
-        android:title="Settings"/>
-    <item
-        android:id="@+id/item_about"
-        android:icon="@drawable/ic_user"
-        android:iconTint="@color/grapefruit"
-        android:title="About DropBeat"/>
+    <group
+        android:id="@+id/g_my_list">
+        <item
+            android:id="@+id/item_playlist"
+            android:icon="@drawable/ic_music"
+            android:iconTint="@color/grapefruit"
+            android:iconTintMode="screen"
+            android:title="My Playlists"/>
+        <item
+            android:id="@+id/item_favorite"
+            android:icon="@drawable/ic_music"
+            android:iconTint="@color/grapefruit"
+            android:title="My Favorites"/>
+        <item
+            android:id="@+id/item_downloaded"
+            android:icon="@drawable/ic_music"
+            android:iconTint="@color/grapefruit"
+            android:title="My Downloaded"/>
+        <item
+            android:id="@+id/item_local_music"
+            android:icon="@drawable/ic_music"
+            android:iconTint="@color/grapefruit"
+            android:title="My Local Music"/>
+    </group>
+    <group
+        android:id="@+id/g_app">
+        <item
+            android:id="@+id/item_setting"
+            android:icon="@drawable/ic_user"
+            android:iconTint="@color/grapefruit"
+            android:title="Settings"/>
+        <item
+            android:id="@+id/item_about"
+            android:icon="@drawable/ic_user"
+            android:iconTint="@color/grapefruit"
+            android:title="About DropBeat"/>
+    </group>
 </menu>

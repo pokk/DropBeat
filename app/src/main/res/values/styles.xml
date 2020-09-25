@@ -35,8 +35,8 @@
         <item name="fontFamily">monospace</item>
         <item name="android:fontFamily">monospace</item>
 
-        <item name="popupMenuStyle">@style/PopupMenu</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <item name="popupMenuStyle">@style/Taiwan.No.One.PopupMenu</item>
+        <item name="android:popupMenuStyle">@style/Taiwan.No.One.PopupMenu</item>
 
         <!-- Typography -->
         <item name="textAppearanceHeadline1">@style/Taiwan.No.One.TextAppearance.Headline1</item>
@@ -91,13 +91,14 @@
 
     <style name="Taiwan.No.One.Back.Button" parent="Taiwan.No.One.Button.IconOnly">
         <item name="android:layout_marginTop">@dimen/md_one_unit</item>
+        <item name="android:layout_marginStart">@dimen/md_two_unit</item>
         <item name="icon">@drawable/ic_back</item>
         <item name="layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
     <!--endregion-->
 
-    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+    <style name="Taiwan.No.One.PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@drawable/bg_popup_menu</item>
     </style>
 </resources>

@@ -1,0 +1,37 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF5753"
+        android:pathData="M11.6024,15.7727C11.7121,15.8827 11.8561,15.9375 12.0001,15.9375C12.1441,15.9375 12.2878,15.8827 12.3977,15.7727L15.2102,12.9602C15.4299,12.7405 15.4299,12.3845 15.2102,12.1648C14.9906,11.9452 14.6345,11.9452 14.4149,12.1648L12.5626,14.0171V5.8125C12.5626,5.502 12.3106,5.25 12.0001,5.25C11.6896,5.25 11.4376,5.502 11.4376,5.8125V14.0171L9.5852,12.1648C9.3659,11.9452 9.0092,11.9452 8.7899,12.1648C8.5702,12.3845 8.5702,12.7405 8.7899,12.9602L11.6024,15.7727Z"/>
+    <path
+        android:fillColor="#FF5753"
+        android:pathData="M8.0625,18.75H15.9375C16.8682,18.75 17.625,17.9932 17.625,17.0625V14.8125C17.625,14.502 17.373,14.25 17.0625,14.25C16.752,14.25 16.5,14.502 16.5,14.8125V17.0625C16.5,17.3727 16.2477,17.625 15.9375,17.625H8.0625C7.7523,17.625 7.5,17.3727 7.5,17.0625V14.8125C7.5,14.502 7.248,14.25 6.9375,14.25C6.627,14.25 6.375,14.502 6.375,14.8125V17.0625C6.375,17.9932 7.1318,18.75 8.0625,18.75Z"/>
+</vector>

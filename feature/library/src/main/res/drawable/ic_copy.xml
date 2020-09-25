@@ -1,0 +1,35 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF5753"
+        android:fillType="evenOdd"
+        android:pathData="M18.5158,6.4366C18.4236,5.0774 17.2887,4 15.9065,4H9.1145L9.0087,4.0071C8.6281,4.0587 8.3348,4.385 8.3348,4.7797C8.3348,5.2104 8.6839,5.5594 9.1145,5.5594H15.9065L16.0294,5.5666C16.5538,5.6277 16.9624,6.0749 16.9624,6.6154V15.8549L16.9695,15.9607C17.0212,16.3413 17.3474,16.6346 17.7421,16.6346C18.1728,16.6346 18.5219,16.2856 18.5219,15.8549V6.6154L18.5158,6.4366ZM13.4589,6.4781C14.8411,6.4781 15.9761,7.5555 16.0683,8.9147L16.0743,9.0935V17.3846C16.0743,18.7668 14.9969,19.9018 13.6377,19.994L13.4589,20H7.6154C6.2332,20 5.0982,18.9226 5.006,17.5634L5,17.3846V9.0935C5,7.7113 6.0774,6.5764 7.4366,6.4842L7.6154,6.4781H13.4589ZM13.4589,8.0376H7.6154C7.0749,8.0376 6.6277,8.4462 6.5666,8.9706L6.5594,9.0935V17.3846C6.5594,17.9251 6.9681,18.3723 7.4925,18.4334L7.6154,18.4406H13.4589C13.9994,18.4406 14.4466,18.032 14.5077,17.5076L14.5149,17.3846V9.0935C14.5149,8.5115 14.041,8.0376 13.4589,8.0376Z"/>
+</vector>
