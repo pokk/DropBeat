@@ -28,17 +28,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.AppResLayout
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.TrackViewHolder
 import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 import kotlin.properties.Delegates
 
 internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdatable {
-    var data: List<SongEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
+    var data: List<SimpleTrackEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { o, n -> o.uri == n.uri }
     }
-    var clickListener: ((SongEntity) -> Unit)? = null
+    var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
     var optionListener: (() -> Unit)? = null
         private set
@@ -53,7 +53,7 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
 
     override fun getItemCount() = data.size
 
-    fun setOnClickListener(listener: (SongEntity) -> Unit) {
+    fun setOnClickListener(listener: (SimpleTrackEntity) -> Unit) {
         clickListener = listener
     }
 

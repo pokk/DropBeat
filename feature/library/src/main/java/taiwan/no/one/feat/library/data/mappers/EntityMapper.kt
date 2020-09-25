@@ -22,25 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.presentation.recyclerviews.viewholders
+package taiwan.no.one.feat.library.data.mappers
 
-import coil.loadAny
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
-import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
-import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 
-internal class TrackViewHolder(
-    private val binding: ItemTypeOfMusicBinding,
-) : ViewHolderBinding<SimpleTrackEntity, TrackAdapter>(binding.root) {
-    override fun initView(entity: SimpleTrackEntity, adapter: TrackAdapter) {
-        binding.apply {
-            mtvNumber.text = "#${absoluteAdapterPosition + 1}"
-            sivAlbumThumb.loadAny(entity.thumbUri)
-            mtvAlbumName.text = entity.name
-            mtvArtistName.text = entity.artist
-            btnOption.setOnClickListener { adapter.optionListener?.invoke() }
-            root.setOnClickListener { adapter.clickListener?.invoke(entity) }
-        }
+internal object EntityMapper {
+    fun libraryToSimpleTrackEntity(entity: SongEntity) = entity.let {
+        SimpleTrackEntity(
+            it.title,
+            it.artist,
+            it.uri,
+            it.localUri,
+            it.coverUri,
+            DEFAULT_STR,
+            it.duration,
+            false,
+            it.hasOwn,
+        )
     }
 }

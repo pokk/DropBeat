@@ -43,9 +43,10 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.library.R
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
 import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
@@ -85,12 +86,11 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                     displayNoSongs()
                 }
                 else {
-                    displaySongs(it)
+                    displaySongs(it.songs.map(EntityMapper::libraryToSimpleTrackEntity))
                 }
             }.onFailure {
                 loge(it)
             }
-            find<View>(AppResId.pb_progress).gone()
         }
     }
 
@@ -106,14 +106,18 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-//        vm.getSongs(navArgs.playlistId)
-        logw(navArgs.playlistId, navArgs.songs?.toList())
+        if (navArgs.playlistId != -1 && navArgs.songs == null) {
+            vm.getSongs(navArgs.playlistId)
+        }
+        if (navArgs.playlistId == -1 && navArgs.songs != null) {
+            navArgs.songs?.also { displaySongs(it.toList()) } ?: displayNoSongs()
+        }
     }
 
-    private fun displaySongs(playlist: PlayListEntity) {
+    private fun displaySongs(songs: List<SimpleTrackEntity>) {
+        find<View>(AppResId.pb_progress).gone()
         find<View>(R.id.include_favorite).visible()
         // Set the recycler view.
-        val songs = playlist.songs
         find<RecyclerView>(AppResId.rv_musics).apply {
             if (adapter == null) {
                 adapter = playlistAdapter
@@ -135,6 +139,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     }
 
     private fun displayNoSongs() {
+        find<View>(AppResId.pb_progress).gone()
         binding.vsNoSongs.takeIf { !it.isVisible }?.inflate()
         noSongsBinding.btnSearch.setOnClickListener {
             // Go to the search page.

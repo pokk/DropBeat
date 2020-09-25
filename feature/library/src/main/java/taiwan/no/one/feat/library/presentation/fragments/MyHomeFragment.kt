@@ -46,6 +46,7 @@ import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.R
+import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
@@ -102,6 +103,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             }
             else {
                 (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
+                    .map(EntityMapper::libraryToSimpleTrackEntity)
                     .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
             }
             includeDownloaded.find<View>(AppResId.pb_progress).gone()
@@ -112,6 +114,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             }
             else {
                 (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
+                    .map(EntityMapper::libraryToSimpleTrackEntity)
                     .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
             }
             includeFavorite.find<View>(AppResId.pb_progress).gone()
