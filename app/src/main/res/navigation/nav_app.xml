@@ -28,7 +28,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_app"
-    app:startDestination="@id/nav_playlist">
+    app:startDestination="@id/nav_explore">
 
     <include-dynamic
         android:id="@+id/nav_explore"

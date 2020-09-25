@@ -34,10 +34,13 @@
         android:name="taiwan.no.one.feat.explore.presentation.fragments.ExploreFragment"
         android:label=""
         tools:layout="@layout/fragment_explore">
+        <action
+            android:id="@+id/action_explore_to_playlist"
+            app:destination="@id/nav_playlist_detail"/>
     </fragment>
 
     <include-dynamic
-        android:id="@+id/nav_playlist"
-        app:graphResName="nav_playlist"
-        app:moduleName="playlist"/>
+        android:id="@+id/nav_playlist_detail"
+        app:graphResName="nav_detail"
+        app:moduleName="library"/>
 </navigation>

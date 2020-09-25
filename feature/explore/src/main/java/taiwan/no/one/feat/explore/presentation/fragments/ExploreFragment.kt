@@ -29,7 +29,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -43,7 +42,6 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
-import taiwan.no.one.dropbeat.AppResString
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
@@ -124,10 +122,6 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         vm.topArtists.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
                 includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
-                includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
-                    findNavController()
-                        .navigate(getString(AppResString.deep_link_playlist).format(3, "test").toUri())
-                }
             }.onFailure { loge(it) }
             includeTopArtist.find<View>(AppResId.pb_progress).gone()
         }
@@ -137,9 +131,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                     TopChartAdapter(it.tracks.subList(0, 4))
             }.onFailure { loge(it) }
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
-            includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
-                findNavController().navigate(getString(AppResString.deep_link_login).toUri())
-            }
+        }
+        includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist())
         }
     }
 }

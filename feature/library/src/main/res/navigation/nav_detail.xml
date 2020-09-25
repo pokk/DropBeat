@@ -27,22 +27,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/myHome_fragment">
-
-    <fragment
-        android:id="@+id/myHome_fragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.MyHomeFragment"
-        tools:layout="@layout/fragment_my_page">
-        <action
-            android:id="@+id/action_myHome_to_login_graph"
-            app:destination="@id/nav_login"/>
-        <action
-            android:id="@+id/action_myHome_to_setting_graph"
-            app:destination="@id/nav_setting"/>
-        <action
-            android:id="@+id/action_myHome_to_playlist"
-            app:destination="@id/playlist_fragment"/>
-    </fragment>
+    app:startDestination="@id/playlist_fragment">
 
     <fragment
         android:id="@+id/playlist_fragment"
@@ -60,14 +45,4 @@
             android:defaultValue='""'
             app:argType="string"/>
     </fragment>
-
-    <include-dynamic
-        android:id="@+id/nav_login"
-        app:graphResName="nav_login"
-        app:moduleName="login"/>
-
-    <include-dynamic
-        android:id="@+id/nav_setting"
-        app:graphResName="nav_setting"
-        app:moduleName="setting"/>
 </navigation>
