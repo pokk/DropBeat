@@ -64,7 +64,7 @@
     <!--endregion-->
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_artist"
+        android:id="@+id/mtv_track"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
@@ -73,12 +73,12 @@
         tools:text="@tools:sample/full_names"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtv_track"
+        android:id="@+id/mtv_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+        app:layout_constraintTop_toBottomOf="@id/mtv_track"
         tools:text="@tools:sample/full_names"/>
 
     <com.google.android.material.button.MaterialButton
@@ -133,7 +133,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mtv_track"
+        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
         app:layout_constraintVertical_bias="0.0"
         app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"
         tools:src="@tools:sample/avatars"/>

@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.player.presentation.fragments
 
 import android.os.Bundle
+import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -40,6 +41,7 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
@@ -51,6 +53,7 @@ import taiwan.no.one.mediaplayer.SimpleMusicPlayer
 import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
+import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
 internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
@@ -159,6 +162,8 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
+        addStatusBarHeightMarginTop(binding.btnClose)
+        addStatusBarHeightMarginTop(binding.mtvTrack)
         binding.apply {
             (player.curPlayingInfo ?: playlist.first()).also(this@PlayerFragment::setMusicInfo)
             merge.mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(player.curTrackSec)
@@ -169,6 +174,8 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
 
     override fun componentListenersBinding() {
         binding.apply {
+            btnClose.setOnClickListener { }
+            btnOption.setOnClickListener { popupMenu(binding.btnOption) }
             btnMiniPlay.setOnClickListener { handlePlayAction() }
             btnMiniNext.setOnClickListener { player.next() }
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
@@ -279,6 +286,8 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             layoutManager = linearLayoutManager()
         }
     }.anchorOn(merge.btnAddPlaylist).popup()
+
+    private fun popupMenu(anchor: View) = popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more).show()
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {
