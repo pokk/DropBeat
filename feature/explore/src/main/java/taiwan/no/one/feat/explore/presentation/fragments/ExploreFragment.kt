@@ -44,6 +44,7 @@ import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
+import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
@@ -124,16 +125,20 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
             }.onFailure { loge(it) }
             includeTopArtist.find<View>(AppResId.pb_progress).gone()
+            includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
+                findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist())
+            }
         }
         vm.topTracks.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
                 includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
                     TopChartAdapter(it.tracks.subList(0, 4))
+                val list = it.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
+                includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
+                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
+                }
             }.onFailure { loge(it) }
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
-        }
-        includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist())
         }
     }
 }

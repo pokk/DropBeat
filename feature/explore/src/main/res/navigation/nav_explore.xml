@@ -42,5 +42,15 @@
     <include-dynamic
         android:id="@+id/nav_playlist_detail"
         app:graphResName="nav_detail"
-        app:moduleName="library"/>
+        app:moduleName="library">
+        <argument
+            android:name="playlistId"
+            android:defaultValue="-1"
+            app:argType="integer"/>
+        <argument
+            android:name="songs"
+            android:defaultValue="@null"
+            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
+            app:nullable="true"/>
+    </include-dynamic>
 </navigation>

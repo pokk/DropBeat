@@ -57,8 +57,9 @@
             app:argType="integer"/>
         <argument
             android:name="songs"
-            android:defaultValue='""'
-            app:argType="string"/>
+            android:defaultValue="@null"
+            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
+            app:nullable="true"/>
     </fragment>
 
     <include-dynamic

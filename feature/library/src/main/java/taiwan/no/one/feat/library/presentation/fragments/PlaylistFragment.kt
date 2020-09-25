@@ -107,7 +107,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     override fun rendered(savedInstanceState: Bundle?) {
 //        vm.getSongs(navArgs.playlistId)
-        logw(navArgs.playlistId, navArgs.songs)
+        logw(navArgs.playlistId, navArgs.songs?.toList())
     }
 
     private fun displaySongs(playlist: PlayListEntity) {
