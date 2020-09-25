@@ -138,6 +138,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             }.onFailure { loge(it) }
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
             includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
+                findNavController().navigate(getString(AppResString.deep_link_login).toUri())
             }
         }
     }

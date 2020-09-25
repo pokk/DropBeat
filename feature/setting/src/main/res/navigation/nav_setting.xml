@@ -33,5 +33,14 @@
         android:id="@+id/setting_fragment"
         android:name="taiwan.no.one.feat.setting.presentation.fragments.SettingFragment"
         android:label="FragmentSetting"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_setting_to_login"
+            app:destination="@id/nav_login"/>
+    </fragment>
+
+    <include-dynamic
+        android:id="@+id/nav_login"
+        app:graphResName="nav_login"
+        app:moduleName="login"/>
 </navigation>

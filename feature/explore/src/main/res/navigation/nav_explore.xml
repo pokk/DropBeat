@@ -35,4 +35,9 @@
         android:label=""
         tools:layout="@layout/fragment_explore">
     </fragment>
+
+    <include-dynamic
+        android:id="@+id/nav_playlist"
+        app:graphResName="nav_playlist"
+        app:moduleName="playlist"/>
 </navigation>
