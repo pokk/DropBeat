@@ -96,7 +96,5 @@ kapt {
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
-    implementation(project(CommonModuleDependency.FEAT_LOGIN))
-    implementation(project(CommonModuleDependency.FEAT_SETTING))
     annotationDependencies()
 }
