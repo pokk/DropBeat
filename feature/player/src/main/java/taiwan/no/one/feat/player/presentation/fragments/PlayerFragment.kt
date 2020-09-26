@@ -24,11 +24,11 @@
 
 package taiwan.no.one.feat.player.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
@@ -40,6 +40,7 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
+import taiwan.no.one.dropbeat.core.helpers.TouchHelper
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
@@ -58,7 +59,8 @@ import java.lang.ref.WeakReference
 
 internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     private var isTouchingSlider = false
-    private var hasClicked = false
+    private var hasClicked = TouchHelper.ClickFlag()
+    private var isRunningAnim = false
     private val vm by viewModels<PlayerViewModel>()
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
     private val isPlaying get() = player.isPlaying
@@ -172,77 +174,36 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
         switchPlayIcon()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun componentListenersBinding() {
         binding.apply {
-            btnClose.setOnClickListener { }
+            btnClose.setOnClickListener { collapsePlayer() }
             btnOption.setOnClickListener { popupMenu(binding.btnOption) }
             btnMiniPlay.setOnClickListener { handlePlayAction() }
             btnMiniNext.setOnClickListener { player.next() }
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
             sliderMiniProgress.clearOnSliderTouchListeners()
             sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
-//            sivAlbum.setOnTouchListener { v, event ->
-//                when (event.action) {
-//                    MotionEvent.ACTION_UP -> {
-//                        if (!hasClicked) return@setOnTouchListener true
-//                        binding.mlParent.apply {
-//                            setTransition(R.id.transition_expand_lyric)
-//                            transitionToEnd()
-//                        }
-//                    }
-//                    MotionEvent.ACTION_DOWN -> {
-//                        hasClicked = true
-//                    }
-//                    MotionEvent.ACTION_MOVE -> {
-//                        hasClicked = false
-//                    }
-//                }
-//                true
-//            }
-//            sivLyrics.setOnTouchListener { v, event ->
-//                when (event.action) {
-//                    MotionEvent.ACTION_UP -> {
-//                        if (!hasClicked) return@setOnTouchListener true
-//                        binding.mlParent.apply {
-//                            setTransition(R.id.transition_expand_lyric)
-//                            transitionToStart()
-//                        }
-//                    }
-//                    MotionEvent.ACTION_DOWN -> {
-//                        hasClicked = true
-//                    }
-//                    MotionEvent.ACTION_MOVE -> {
-//                        hasClicked = false
-//                    }
-//                }
-//                true
-//            }
-            binding.mlParent.setTransitionListener(object : MotionLayout.TransitionListener {
-                override fun onTransitionStarted(motionLayout: MotionLayout, startId: Int, endId: Int) {
-//                    logd(R.id.transition_expand_lyric)
+            sivAlbum.setOnTouchListener { v, event ->
+                TouchHelper.simulateClickEvent(event, hasClicked) {
+                    if (isRunningAnim) return@simulateClickEvent
+                    binding.root.apply {
+                        setTransition(R.id.transition_expand_lyric)
+                        transitionToEnd()
+                    }
                 }
-
-                override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
-//                    if (currentId == R.id.lyric_expand_start || currentId == R.id.lyric_expand_end) {
-//                        // TODO(jieyi): 9/15/20 change to the drag animation.
-//                        motionLayout.setTransition(R.id.transition_mini_player)
-//                    }
+                true
+            }
+            sivLyrics.setOnTouchListener { v, event ->
+                TouchHelper.simulateClickEvent(event, hasClicked) {
+                    if (isRunningAnim) return@simulateClickEvent
+                    binding.root.apply {
+                        setTransition(R.id.transition_expand_lyric)
+                        transitionToStart()
+                    }
                 }
-
-                override fun onTransitionChange(
-                    motionLayout: MotionLayout,
-                    startId: Int,
-                    endId: Int,
-                    progress: Float,
-                ) = Unit
-
-                override fun onTransitionTrigger(
-                    motionLayout: MotionLayout,
-                    triggerId: Int,
-                    positive: Boolean,
-                    progress: Float,
-                ) = Unit
-            })
+                true
+            }
         }
         merge.apply {
             btnFavorite.setOnClickListener { handleFavorite() }
@@ -304,5 +265,13 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     private fun setProgress(progress: Float) {
         merge.sliderMusic.progress = (progress * 100).toInt()
         binding.sliderMiniProgress.value = progress
+    }
+
+    private fun collapsePlayer() {
+        if (isRunningAnim) return
+        binding.root.apply {
+            setTransition(R.id.transition_mini_player)
+            transitionToEnd()
+        }
     }
 }

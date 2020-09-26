@@ -27,14 +27,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--    <Transition-->
-    <!--        android:id="@+id/transition_expand_lyric"-->
-    <!--        app:constraintSetEnd="@+id/lyric_expand_end"-->
-    <!--        app:constraintSetStart="@id/lyric_expand_start"-->
-    <!--        app:duration="250">-->
-    <!--        <OnClick app:targetId="@+id/siv_album"/>-->
-    <!--    </Transition>-->
-
     <Transition
         android:id="@+id/transition_mini_player"
         app:constraintSetEnd="@+id/mini_player_end"
@@ -93,6 +85,13 @@
                 app:framePosition="40"
                 app:motionTarget="@id/cl_mini_container"/>
         </KeyFrameSet>
+    </Transition>
+
+    <Transition
+        android:id="@+id/transition_expand_lyric"
+        app:constraintSetEnd="@+id/lyric_expand_end"
+        app:constraintSetStart="@id/lyric_expand_start"
+        app:duration="250">
     </Transition>
 
     <ConstraintSet android:id="@+id/mini_player_start">
