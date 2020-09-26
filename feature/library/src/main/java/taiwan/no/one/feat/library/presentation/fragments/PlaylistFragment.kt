@@ -35,7 +35,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.factory

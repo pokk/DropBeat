@@ -123,11 +123,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         vm.topArtists.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
                 includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
+                val list = it.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
+                includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
+                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
+                }
             }.onFailure { loge(it) }
             includeTopArtist.find<View>(AppResId.pb_progress).gone()
-            includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
-                findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist())
-            }
         }
         vm.topTracks.observe(viewLifecycleOwner) { res ->
             res.onSuccess {

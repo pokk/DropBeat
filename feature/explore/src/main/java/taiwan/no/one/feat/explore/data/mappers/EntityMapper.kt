@@ -27,6 +27,7 @@ package taiwan.no.one.feat.explore.data.mappers
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 
 internal object EntityMapper {
     fun exploreToSimpleTrackEntity(entity: TrackEntity) = entity.let {
@@ -35,11 +36,25 @@ internal object EntityMapper {
             it.artist?.name.orEmpty(),
             it.url.orEmpty(),
             DEFAULT_STR,
-            it.images?.first()?.text.orEmpty(),
+            (it.images?.find { it.size == "cover" }?.text ?: entity.images?.get(0)?.text).orEmpty(),
             DEFAULT_STR,
             it.duration?.toInt() ?: 0,
             false,
             false,
+        )
+    }
+
+    fun artistToSimpleTrackEntity(entity: ArtistWithMoreDetailEntity) = entity.let { (artist, album) ->
+        SimpleTrackEntity(
+            album?.popularTrackThisWeek?.name.orEmpty(),
+            artist.name.orEmpty(),
+            album?.popularTrackThisWeek?.url.orEmpty(),
+            DEFAULT_STR,
+            album?.coverPhotoUrl.orEmpty(),
+            DEFAULT_STR,
+            album?.popularTrackThisWeek?.duration?.toInt() ?: 0,
+            false,
+            false
         )
     }
 }
