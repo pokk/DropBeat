@@ -24,14 +24,13 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.EditText
-import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.hideSoftKeyboard
@@ -49,7 +48,6 @@ import org.kodein.di.instance
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.dropbeat.core.helpers.DownloadHelper
 import taiwan.no.one.dropbeat.core.helpers.TouchHelper
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.search.R
@@ -153,30 +151,37 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
             }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun componentListenersBinding() {
+        binding.root.setOnTouchListener { v, event ->
+            TouchHelper.simulateClickEvent(event, clickFlag) { v.hideSoftKeyboard() }
+            false
+        }
+        rvMusics.apply {
             addOnScrollListener(loadMoreListener)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    hideSoftKeyboard()
                     // Check if the motion should be enable or not.
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                         enableMotionWhenScrollable(recyclerView)
                     }
                 }
             })
-        }
-    }
-
-    override fun componentListenersBinding() {
-        binding.root.setOnTouchListener { v, event ->
-            TouchHelper.simulateClickEvent(event, clickFlag) { v.hideSoftKeyboard() }
-            true
+            setOnTouchListener { v, event ->
+                TouchHelper.simulateClickEvent(event, clickFlag) { v.hideSoftKeyboard() }
+                false
+            }
         }
         searchHistoryAdapter.setOnClickListener(::clickedOnHistoryItem)
         musicAdapter.setOnClickListener(::clickedOnSongItem)
         binding.apply {
             // Click the search icon
             tilSearchBar.setEndIconOnClickListener {
-//                searchMusic(tietSearch.text.toString())
-                findNavController().navigate(IndexFragmentDirections.actionIndexToPlayer())
+                searchMusic(tietSearch.text.toString())
             }
             // Hit the enter key on the soft keyword or the physical keyboard
             tietSearch.setOnKeyListener { v, keyCode, event ->
@@ -293,7 +298,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
 
     private fun clickedOnSongItem(song: SongEntity) {
         val filename = "${song.artist} - ${song.title}"
-        DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
+//        DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
     }
 
     private fun clickedOnHistoryItem(keyword: String) {
