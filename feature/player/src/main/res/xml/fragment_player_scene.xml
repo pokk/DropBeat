@@ -25,150 +25,150 @@
 
 <MotionScene
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:motion="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--    <Transition-->
     <!--        android:id="@+id/transition_expand_lyric"-->
-    <!--        motion:constraintSetEnd="@+id/lyric_expand_end"-->
-    <!--        motion:constraintSetStart="@id/lyric_expand_start"-->
-    <!--        motion:duration="250">-->
-    <!--        <OnClick motion:targetId="@+id/siv_album"/>-->
+    <!--        app:constraintSetEnd="@+id/lyric_expand_end"-->
+    <!--        app:constraintSetStart="@id/lyric_expand_start"-->
+    <!--        app:duration="250">-->
+    <!--        <OnClick app:targetId="@+id/siv_album"/>-->
     <!--    </Transition>-->
 
     <Transition
         android:id="@+id/transition_mini_player"
-        motion:constraintSetEnd="@+id/mini_player_end"
-        motion:constraintSetStart="@+id/mini_player_start">
+        app:constraintSetEnd="@+id/mini_player_end"
+        app:constraintSetStart="@+id/mini_player_start">
         <OnSwipe
-            motion:dragDirection="dragDown"
-            motion:touchAnchorId="@+id/cl_mini_container"/>
+            app:dragDirection="dragDown"
+            app:touchAnchorId="@+id/cl_mini_container"/>
 
         <KeyFrameSet>
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="40"
-                motion:motionTarget="@id/btn_mini_play"/>
+                app:framePosition="40"
+                app:motionTarget="@id/btn_mini_play"/>
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="40"
-                motion:motionTarget="@id/btn_mini_next"/>
+                app:framePosition="40"
+                app:motionTarget="@id/btn_mini_next"/>
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="40"
-                motion:motionTarget="@id/btn_mini_option"/>
+                app:framePosition="40"
+                app:motionTarget="@id/btn_mini_option"/>
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="40"
-                motion:motionTarget="@id/slider_mini_progress"/>
+                app:framePosition="40"
+                app:motionTarget="@id/slider_mini_progress"/>
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="60"
-                motion:motionTarget="@id/btn_close"/>
+                app:framePosition="60"
+                app:motionTarget="@id/btn_close"/>
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="60"
-                motion:motionTarget="@id/btn_option"/>
+                app:framePosition="60"
+                app:motionTarget="@id/btn_option"/>
             <KeyAttribute
-                motion:framePosition="50"
-                motion:motionTarget="@id/cl_container">
+                app:framePosition="50"
+                app:motionTarget="@id/cl_container">
                 <CustomAttribute
-                    motion:attributeName="topLeftRadiusDp"
-                    motion:customFloatValue="0"/>
+                    app:attributeName="topLeftRadiusDp"
+                    app:customFloatValue="0"/>
                 <CustomAttribute
-                    motion:attributeName="topRightRadiusDp"
-                    motion:customFloatValue="0"/>
+                    app:attributeName="topRightRadiusDp"
+                    app:customFloatValue="0"/>
             </KeyAttribute>
             <KeyAttribute
-                motion:framePosition="50"
-                motion:motionTarget="@id/cl_mini_container">
+                app:framePosition="50"
+                app:motionTarget="@id/cl_mini_container">
                 <CustomAttribute
-                    motion:attributeName="topLeftRadiusDp"
-                    motion:customFloatValue="0"/>
+                    app:attributeName="topLeftRadiusDp"
+                    app:customFloatValue="0"/>
                 <CustomAttribute
-                    motion:attributeName="topRightRadiusDp"
-                    motion:customFloatValue="0"/>
+                    app:attributeName="topRightRadiusDp"
+                    app:customFloatValue="0"/>
             </KeyAttribute>
             <KeyAttribute
                 android:alpha="0"
-                motion:framePosition="40"
-                motion:motionTarget="@id/cl_mini_container"/>
+                app:framePosition="40"
+                app:motionTarget="@id/cl_mini_container"/>
         </KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/mini_player_start">
-        <Constraint
-            android:id="@+id/cl_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Constraint android:id="@+id/cl_container">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
             <CustomAttribute
-                motion:attributeName="topLeftRadiusDp"
-                motion:customFloatValue="0"/>
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="0"/>
             <CustomAttribute
-                motion:attributeName="topRightRadiusDp"
-                motion:customFloatValue="0"/>
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="0"/>
         </Constraint>
         <Constraint android:id="@+id/cl_mini_container">
             <PropertySet android:alpha="0"/>
             <CustomAttribute
-                motion:attributeName="topLeftRadiusDp"
-                motion:customFloatValue="0"/>
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="0"/>
             <CustomAttribute
-                motion:attributeName="topRightRadiusDp"
-                motion:customFloatValue="0"/>
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="0"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/siv_album"
-            android:layout_width="@dimen/md_zero_unit"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginStart="@dimen/md_ten_unit"
-            android:layout_marginTop="@dimen/md_two_unit"
-            android:layout_marginEnd="@dimen/md_ten_unit"
-            motion:layout_constraintBottom_toTopOf="@id/btn_video"
-            motion:layout_constraintDimensionRatio="1:1"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/mtv_artist"
-            motion:layout_constraintVertical_bias="0.0"/>
-        <Constraint
-            android:id="@+id/mtv_artist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/md_two_unit"
-            motion:layout_constraintTop_toBottomOf="@id/mtv_track"/>
-        <Constraint
-            android:id="@+id/mtv_track"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/md_two_unit"
-            motion:layout_constraintTop_toTopOf="parent"/>
-        <Constraint
-            android:id="@+id/btn_mini_play"
-            android:layout_marginEnd="@dimen/md_two_unit">
+        <Constraint android:id="@+id/siv_album">
+            <Layout
+                android:layout_width="@dimen/md_zero_unit"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_ten_unit"
+                android:layout_marginTop="@dimen/md_two_unit"
+                android:layout_marginEnd="@dimen/md_ten_unit"
+                app:layout_constraintBottom_toTopOf="@id/btn_video"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+                app:layout_constraintVertical_bias="0.0"/>
+        </Constraint>
+        <Constraint android:id="@+id/mtv_artist">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/md_two_unit"
+                app:layout_constraintTop_toBottomOf="@id/mtv_track"/>
+        </Constraint>
+        <Constraint android:id="@+id/mtv_track">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/md_two_unit"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
+            <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/btn_mini_next">
+        <Constraint android:id="@+id/btn_mini_next">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/btn_mini_option">
+        <Constraint android:id="@+id/btn_mini_option">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/siv_lyrics"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginStart="@dimen/md_two_unit"
-            android:layout_marginEnd="@dimen/md_two_unit"
-            android:layout_marginBottom="@dimen/md_three_unit"
-            motion:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
-            motion:layout_constraintTop_toBottomOf="@id/siv_album">
+        <Constraint android:id="@+id/siv_lyrics">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_two_unit"
+                android:layout_marginEnd="@dimen/md_two_unit"
+                android:layout_marginBottom="@dimen/md_three_unit"
+                app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
+                app:layout_constraintTop_toBottomOf="@id/siv_album"/>
             <PropertySet android:alpha="1"/>
         </Constraint>
         <Constraint android:id="@+id/btn_close">
@@ -183,54 +183,56 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/mini_player_end">
-        <Constraint
-            android:id="@+id/cl_container"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/md_eight_unit"
-            motion:layout_constraintBottom_toBottomOf="parent">
+        <Constraint android:id="@+id/cl_container">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_eight_unit"
+                app:layout_constraintBottom_toBottomOf="parent"/>
             <CustomAttribute
-                motion:attributeName="topLeftRadiusDp"
-                motion:customFloatValue="24"/>
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="24"/>
             <CustomAttribute
-                motion:attributeName="topRightRadiusDp"
-                motion:customFloatValue="24"/>
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="24"/>
         </Constraint>
         <Constraint android:id="@+id/cl_mini_container">
             <PropertySet android:alpha="1"/>
             <CustomAttribute
-                motion:attributeName="topLeftRadiusDp"
-                motion:customFloatValue="24"/>
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="24"/>
             <CustomAttribute
-                motion:attributeName="topRightRadiusDp"
-                motion:customFloatValue="24"/>
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="24"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/mtv_track"
-            android:layout_width="@dimen/md_zero_unit"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/md_two_unit"
-            android:layout_marginEnd="@dimen/md_two_unit"
-            motion:layout_constraintBottom_toTopOf="@id/mtv_artist"
-            motion:layout_constraintEnd_toStartOf="@id/btn_mini_option"
-            motion:layout_constraintStart_toEndOf="@id/siv_album"
-            motion:layout_constraintTop_toTopOf="@id/cl_container"
-            motion:layout_constraintVertical_chainStyle="packed"/>
-        <Constraint
-            android:id="@+id/mtv_artist"
-            android:layout_width="@dimen/md_zero_unit"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toBottomOf="@id/cl_container"
-            motion:layout_constraintEnd_toEndOf="@id/mtv_track"
-            motion:layout_constraintStart_toStartOf="@id/mtv_track"
-            motion:layout_constraintTop_toBottomOf="@id/mtv_track"/>
-        <Constraint
-            android:id="@+id/btn_mini_play"
-            android:layout_width="@dimen/md_five_unit"
-            android:layout_height="@dimen/md_five_unit"
-            android:layout_marginEnd="@dimen/md_two_unit"
-            motion:layout_constraintBottom_toBottomOf="@id/siv_album"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="@id/siv_album">
+        <Constraint android:id="@+id/mtv_track">
+            <Layout
+                android:layout_width="@dimen/md_zero_unit"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/md_two_unit"
+                android:layout_marginEnd="@dimen/md_two_unit"
+                app:layout_constraintBottom_toTopOf="@id/mtv_artist"
+                app:layout_constraintEnd_toStartOf="@id/btn_mini_option"
+                app:layout_constraintStart_toEndOf="@id/siv_album"
+                app:layout_constraintTop_toTopOf="@id/cl_container"
+                app:layout_constraintVertical_chainStyle="packed"/>
+        </Constraint>
+        <Constraint android:id="@+id/mtv_artist">
+            <Layout
+                android:layout_width="@dimen/md_zero_unit"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/cl_container"
+                app:layout_constraintEnd_toEndOf="@id/mtv_track"
+                app:layout_constraintStart_toStartOf="@id/mtv_track"
+                app:layout_constraintTop_toBottomOf="@id/mtv_track"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
+            <Layout
+                android:layout_width="@dimen/md_five_unit"
+                android:layout_height="@dimen/md_five_unit"
+                android:layout_marginEnd="@dimen/md_two_unit"
+                app:layout_constraintBottom_toBottomOf="@id/siv_album"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/siv_album"/>
             <PropertySet
                 android:alpha="1"
                 android:visibility="visible"/>
@@ -245,30 +247,31 @@
                 android:alpha="1"
                 android:visibility="visible"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/siv_album"
-            android:layout_width="@dimen/md_four_unit"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginStart="@dimen/md_two_unit"
-            motion:layout_constraintBottom_toBottomOf="@id/cl_container"
-            motion:layout_constraintDimensionRatio="1:1"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toTopOf="@id/cl_container"/>
-        <Constraint
-            android:id="@+id/siv_lyrics"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginBottom="@dimen/md_three_unit"
-            motion:layout_constraintBottom_toTopOf="@id/btn_video"
-            motion:layout_constraintTop_toBottomOf="@id/siv_album">
+        <Constraint android:id="@+id/siv_album">
+            <Layout
+                android:layout_width="@dimen/md_four_unit"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_two_unit"
+                app:layout_constraintBottom_toBottomOf="@id/cl_container"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_container"/>
+        </Constraint>
+        <Constraint android:id="@+id/siv_lyrics">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginBottom="@dimen/md_three_unit"
+                app:layout_constraintBottom_toTopOf="@id/btn_video"
+                app:layout_constraintTop_toBottomOf="@id/siv_album"/>
             <PropertySet android:alpha="0"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/nsv_scrolling"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/md_zero_unit"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintTop_toBottomOf="parent">
+        <Constraint android:id="@+id/nsv_scrolling">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_zero_unit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"/>
             <PropertySet android:alpha="0"/>
         </Constraint>
         <Constraint android:id="@+id/btn_close">
@@ -285,43 +288,42 @@
     <!--region Click Lyric Motion-->
     <ConstraintSet android:id="@+id/lyric_expand_start">
         <!-- FIXME(Jieyi): 2020/9/12 top to bottom is not correct, it should be constraint by a barrier -->
-        <Constraint
-            android:id="@+id/siv_lyrics"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginStart="@dimen/md_two_unit"
-            android:layout_marginEnd="@dimen/md_two_unit"
-            android:layout_marginBottom="@dimen/md_three_unit"
-            motion:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
-            motion:layout_constraintTop_toBottomOf="@id/siv_album"/>
-        <Constraint
-            android:id="@+id/siv_album"
-            android:layout_width="@dimen/md_zero_unit"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginStart="@dimen/md_ten_unit"
-            android:layout_marginTop="@dimen/md_two_unit"
-            android:layout_marginEnd="@dimen/md_ten_unit"
-            motion:layout_constraintBottom_toTopOf="@id/btn_video"
-            motion:layout_constraintDimensionRatio="1:1"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/mtv_artist"
-            motion:layout_constraintVertical_bias="0.0"/>
-        <Constraint
-            android:id="@+id/btn_mini_play"
-            android:layout_marginEnd="@dimen/md_two_unit">
+        <Constraint android:id="@+id/siv_lyrics">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_two_unit"
+                android:layout_marginEnd="@dimen/md_two_unit"
+                android:layout_marginBottom="@dimen/md_three_unit"
+                app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
+                app:layout_constraintTop_toBottomOf="@id/siv_album"/>
+        </Constraint>
+        <Constraint android:id="@+id/siv_album">
+            <Layout
+                android:layout_width="@dimen/md_zero_unit"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_ten_unit"
+                android:layout_marginTop="@dimen/md_two_unit"
+                android:layout_marginEnd="@dimen/md_ten_unit"
+                app:layout_constraintBottom_toTopOf="@id/btn_video"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+                app:layout_constraintVertical_bias="0.0"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
+            <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/btn_mini_next">
+        <Constraint android:id="@+id/btn_mini_next">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/btn_mini_option">
+        <Constraint android:id="@+id/btn_mini_option">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
@@ -329,42 +331,41 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/lyric_expand_end">
-        <Constraint
-            android:id="@+id/siv_lyrics"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginStart="@dimen/md_six_unit"
-            android:layout_marginTop="@dimen/md_five_unit"
-            android:layout_marginEnd="@dimen/md_three_unit"
-            android:layout_marginBottom="@dimen/md_three_unit"
-            motion:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
-            motion:layout_constraintTop_toBottomOf="@id/mtv_artist"/>
-        <Constraint
-            android:id="@+id/siv_album"
-            android:layout_width="84dp"
-            android:layout_height="@dimen/md_zero_unit"
-            android:layout_marginStart="@dimen/md_two_unit"
-            android:layout_marginTop="@dimen/md_two_unit"
-            motion:layout_constraintBottom_toTopOf="@id/btn_video"
-            motion:layout_constraintDimensionRatio="1:1"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/mtv_artist"
-            motion:layout_constraintVertical_bias="0.0"/>
-        <Constraint
-            android:id="@+id/btn_mini_play"
-            android:layout_marginEnd="@dimen/md_two_unit">
+        <Constraint android:id="@+id/siv_lyrics">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_six_unit"
+                android:layout_marginTop="@dimen/md_five_unit"
+                android:layout_marginEnd="@dimen/md_three_unit"
+                android:layout_marginBottom="@dimen/md_three_unit"
+                app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
+                app:layout_constraintTop_toBottomOf="@id/mtv_artist"/>
+        </Constraint>
+        <Constraint android:id="@+id/siv_album">
+            <Layout
+                android:layout_width="84dp"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_two_unit"
+                android:layout_marginTop="@dimen/md_two_unit"
+                app:layout_constraintBottom_toTopOf="@id/btn_video"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+                app:layout_constraintVertical_bias="0.0"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
+            <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/btn_mini_next">
+        <Constraint android:id="@+id/btn_mini_next">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
         </Constraint>
-        <Constraint
-            android:id="@+id/btn_mini_option">
+        <Constraint android:id="@+id/btn_mini_option">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
