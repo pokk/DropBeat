@@ -29,11 +29,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/player_fragment">
 
-    <fragment
+    <dialog
         android:id="@+id/player_fragment"
         android:name="taiwan.no.one.feat.player.presentation.fragments.PlayerFragment"
         android:label="PlayerFragment"
-        tools:layout="@layout/fragment_index">
+        tools:layout="@layout/fragment_player">
         <deepLink app:uri="@string/deep_link_player"/>
-    </fragment>
+    </dialog>
 </navigation>

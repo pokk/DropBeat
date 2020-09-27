@@ -60,6 +60,15 @@
         <item name="textAppearanceButton2">@style/Taiwan.No.One.TextAppearance.Button2</item>
     </style>
 
+    <style name="Dialog.FullScreen.Theme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- Set this to true if you want Full Screen without status bar -->
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <!--region Button -->
     <style name="Taiwan.No.One.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
     </style>

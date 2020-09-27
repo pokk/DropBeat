@@ -27,6 +27,7 @@ package taiwan.no.one.feat.player.presentation.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -37,12 +38,12 @@ import coil.loadAny
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.ofAlpha
 import com.google.android.material.slider.Slider
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.core.presentation.fragment.BaseDialogFragment
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
-import taiwan.no.one.dropbeat.core.helpers.TouchHelper
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
@@ -59,9 +60,8 @@ import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
-internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
+internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     private var isTouchingSlider = false
-    private var hasClicked = TouchHelper.ClickFlag()
     private var isRunningAnim = false
     private val vm by viewModels<PlayerViewModel>()
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
@@ -159,6 +159,11 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
         player.replacePlaylist(playlist)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, taiwan.no.one.dropbeat.R.style.Dialog_FullScreen_Theme)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         player.setPlayerEventCallback(null)
@@ -212,6 +217,13 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
+        requireDialog().window?.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            // For not opaque(transparent) color.
+            statusBarColor = 0.ofAlpha(0f)
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
         vm.getPlaylists()
     }
 

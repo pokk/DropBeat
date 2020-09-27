@@ -32,11 +32,14 @@
     <fragment
         android:id="@+id/explore_fragment"
         android:name="taiwan.no.one.feat.explore.presentation.fragments.ExploreFragment"
-        android:label=""
+        android:label="ExploreFragment"
         tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_explore_to_playlist"
             app:destination="@id/nav_playlist_detail"/>
+        <action
+            android:id="@+id/action_explore_to_player"
+            app:destination="@id/nav_player"/>
     </fragment>
 
     <include-dynamic
@@ -53,4 +56,9 @@
             app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
             app:nullable="true"/>
     </include-dynamic>
+
+    <include-dynamic
+        android:id="@+id/nav_player"
+        app:graphResName="nav_player"
+        app:moduleName="player"/>
 </navigation>
