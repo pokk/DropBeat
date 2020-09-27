@@ -35,6 +35,7 @@
     tools:context=".presentation.fragments.PlayerFragment">
 
     <!--region Mini Player Background-->
+    <!-- This is for the Expanded Played -->
     <com.github.florent37.shapeofview.shapes.RoundRectView
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
@@ -47,6 +48,7 @@
             android:background="@drawable/bg_player_background"/>
     </com.github.florent37.shapeofview.shapes.RoundRectView>
 
+    <!-- This is for the Mini Player -->
     <com.github.florent37.shapeofview.shapes.RoundRectView
         android:id="@+id/cl_mini_container"
         android:layout_width="match_parent"

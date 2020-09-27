@@ -280,7 +280,7 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
     }
 
     private fun expandLyrics() {
-        if (isRunningAnim) return
+        if (isRunningAnim || binding.root.currentState == R.id.mini_player_end) return
         binding.root.apply {
             setTransition(R.id.transition_expand_lyric)
             transitionToEnd()
