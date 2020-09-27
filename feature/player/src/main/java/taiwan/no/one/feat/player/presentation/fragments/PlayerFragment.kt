@@ -159,6 +159,7 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
         player.replacePlaylist(playlist)
     }
 
+    //region DialogFragment Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, taiwan.no.one.dropbeat.R.style.Dialog_FullScreen_Theme)
@@ -168,6 +169,7 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
         super.onDestroy()
         player.setPlayerEventCallback(null)
     }
+    //endregion
 
     override fun viewComponentBinding() {
         super.viewComponentBinding()
@@ -217,12 +219,18 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
+        // Set the status bar to transparent.
         requireDialog().window?.apply {
             clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             // For not opaque(transparent) color.
             statusBarColor = 0.ofAlpha(0f)
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+            // Make the dialog possible to be outside touch
+            setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            requireView().invalidate()
         }
         vm.getPlaylists()
     }
