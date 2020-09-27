@@ -29,6 +29,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
@@ -177,6 +179,15 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     @SuppressLint("ClickableViewAccessibility")
     override fun componentListenersBinding() {
         binding.apply {
+            root.addTransitionListener(object : TransitionAdapter() {
+                override fun onTransitionStarted(motionLayout: MotionLayout, startId: Int, endId: Int) {
+                    isRunningAnim = true
+                }
+
+                override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
+                    isRunningAnim = false
+                }
+            })
             btnClose.setOnClickListener { collapsePlayer() }
             btnOption.setOnClickListener { popupMenu(binding.btnOption) }
             btnMiniPlay.setOnClickListener { handlePlayAction() }
@@ -184,26 +195,8 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
             sliderMiniProgress.clearOnSliderTouchListeners()
             sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
-            sivAlbum.setOnTouchListener { v, event ->
-                TouchHelper.simulateClickEvent(event, hasClicked) {
-                    if (isRunningAnim) return@simulateClickEvent
-                    binding.root.apply {
-                        setTransition(R.id.transition_expand_lyric)
-                        transitionToEnd()
-                    }
-                }
-                true
-            }
-            sivLyrics.setOnTouchListener { v, event ->
-                TouchHelper.simulateClickEvent(event, hasClicked) {
-                    if (isRunningAnim) return@simulateClickEvent
-                    binding.root.apply {
-                        setTransition(R.id.transition_expand_lyric)
-                        transitionToStart()
-                    }
-                }
-                true
-            }
+            sivAlbum.setOnClickListener { expandLyrics() }
+            sivLyrics.setOnClickListener { collapseLyrics() }
         }
         merge.apply {
             btnFavorite.setOnClickListener { handleFavorite() }
@@ -265,6 +258,22 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     private fun setProgress(progress: Float) {
         merge.sliderMusic.progress = (progress * 100).toInt()
         binding.sliderMiniProgress.value = progress
+    }
+
+    private fun collapseLyrics() {
+        if (isRunningAnim) return
+        binding.root.apply {
+            setTransition(R.id.transition_expand_lyric)
+            transitionToStart()
+        }
+    }
+
+    private fun expandLyrics() {
+        if (isRunningAnim) return
+        binding.root.apply {
+            setTransition(R.id.transition_expand_lyric)
+            transitionToEnd()
+        }
     }
 
     private fun collapsePlayer() {
