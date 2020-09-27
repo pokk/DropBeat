@@ -167,7 +167,6 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     override fun viewComponentBinding() {
         super.viewComponentBinding()
         addStatusBarHeightMarginTop(binding.btnClose)
-        addStatusBarHeightMarginTop(binding.mtvTrack)
         binding.apply {
             (player.curPlayingInfo ?: playlist.first()).also(this@PlayerFragment::setMusicInfo)
             merge.mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(player.curTrackSec)
@@ -279,7 +278,7 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
     private fun collapsePlayer() {
         if (isRunningAnim) return
         binding.root.apply {
-            setTransition(R.id.transition_mini_player)
+            setTransition(currentState, R.id.mini_player_end)
             transitionToEnd()
         }
     }

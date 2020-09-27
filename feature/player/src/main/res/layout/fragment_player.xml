@@ -67,7 +67,7 @@
         android:id="@+id/mtv_track"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_five_unit"
         android:gravity="center"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline3"
         app:layout_constraintTop_toTopOf="parent"

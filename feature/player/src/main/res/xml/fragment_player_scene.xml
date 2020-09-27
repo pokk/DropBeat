@@ -140,7 +140,7 @@
             <Layout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/md_two_unit"
+                android:layout_marginTop="@dimen/md_five_unit"
                 app:layout_constraintTop_toTopOf="parent"/>
         </Constraint>
         <Constraint android:id="@+id/btn_mini_play">
