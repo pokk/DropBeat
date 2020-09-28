@@ -27,10 +27,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/myHome_fragment">
+    app:startDestination="@id/my_home_fragment">
 
     <fragment
-        android:id="@+id/myHome_fragment"
+        android:id="@+id/my_home_fragment"
         android:name="taiwan.no.one.feat.library.presentation.fragments.MyHomeFragment"
         tools:layout="@layout/fragment_my_page">
         <action
