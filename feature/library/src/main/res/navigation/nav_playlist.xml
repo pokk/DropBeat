@@ -60,6 +60,19 @@
             android:defaultValue="@null"
             app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
             app:nullable="true"/>
+        <action
+            android:id="@+id/action_playlist_to_rename"
+            app:destination="@id/rename_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/rename_fragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.RenameFragment"
+        android:label="RenameFragment"
+        tools:layout="@layout/fragment_rename">
+        <argument
+            android:name="playlistId"
+            app:argType="integer"/>
     </fragment>
 
     <include-dynamic

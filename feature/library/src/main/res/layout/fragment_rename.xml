@@ -30,7 +30,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".presentation.fragments.PlaylistFragment">
+    tools:context=".presentation.fragments.RenameFragment">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_back"
