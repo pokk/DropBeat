@@ -192,6 +192,16 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
 
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                     isRunningAnim = false
+                    // TODO(jieyi): 9/28/20 wanna set the dialog
+//                    if (currentId == R.id.mini_player_end) {
+//                        val (width, height) = requireActivity().displayPixels()
+//                        requireDialog().window?.setLayout(width, getDimen(WidgetResDimen.md_eight_unit).toInt())
+//                        logw(requireDialog().window?.attributes)
+//                        requireDialog().window?.attributes?.gravity = Gravity.BOTTOM
+//                        requireDialog().window?.attributes?.flags =
+//                            requireNotNull(requireDialog().window?.attributes?.flags) and LayoutParams.FLAG_DIM_BEHIND.inv()
+//                        logw(requireDialog().window?.attributes)
+//                    }
                 }
             })
             btnClose.setOnClickListener { collapsePlayer() }

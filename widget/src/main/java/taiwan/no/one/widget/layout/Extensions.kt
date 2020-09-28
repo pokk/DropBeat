@@ -47,9 +47,6 @@ suspend fun MotionLayout.awaitTransitionComplete(transitionId: Int, timeout: Lon
             suspendCancellableCoroutine<Unit> { continuation ->
                 val l = object : TransitionAdapter() {
                     override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
-                        println("=================================================")
-                        println(currentId)
-                        println("=================================================")
                         if (currentId == transitionId) {
                             removeTransitionListener(this)
                             continuation.resume(Unit, Throwable::printStackTrace)

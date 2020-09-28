@@ -61,7 +61,6 @@
     </style>
 
     <style name="Dialog.FullScreen.Theme" parent="AppTheme">
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- Set this to true if you want Full Screen without status bar -->
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">false</item>
