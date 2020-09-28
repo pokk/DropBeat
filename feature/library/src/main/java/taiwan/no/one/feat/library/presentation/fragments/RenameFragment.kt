@@ -25,7 +25,6 @@
 package taiwan.no.one.feat.library.presentation.fragments
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.library.databinding.FragmentRenameBinding
@@ -33,5 +32,5 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 
 internal class RenameFragment : BaseFragment<BaseActivity<*>, FragmentRenameBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
-    private val navArgs by navArgs<RenameFragmentArgs>()
+//    private val navArgs by navArgs<RenameFragmentArgs>()
 }
