@@ -24,12 +24,43 @@
 
 package taiwan.no.one.feat.library.presentation.fragments
 
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.devrapid.kotlinknifer.loge
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.databinding.FragmentCreateBinding
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 
 internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
+
+    override fun bindLiveData() {
+        vm.result.observe(this) {
+            it.onSuccess {
+                findNavController().navigateUp()
+            }.onFailure { loge(it) }
+        }
+    }
+
+    override fun viewComponentBinding() {
+        super.viewComponentBinding()
+        binding.tietPlaylistName.addTextChangedListener {
+            binding.btnCreate.text = if (it.isNullOrBlank()) "Skip" else "Create"
+        }
+    }
+
+    override fun componentListenersBinding() {
+        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.btnCreate.setOnClickListener {
+            if (binding.tietPlaylistName.text.isNullOrBlank()) {
+                findNavController().navigateUp()
+            }
+            else {
+                vm.createPlaylist(PlayListEntity(name = binding.tietPlaylistName.text.toString()))
+            }
+        }
+    }
 }
