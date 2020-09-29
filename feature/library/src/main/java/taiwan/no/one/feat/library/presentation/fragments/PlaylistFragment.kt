@@ -150,6 +150,9 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     private fun showMoreMenu(anchor: View) =
         popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_playlist).apply {
+            if (navArgs.playlistId in listOf(1, 2)) {
+                menu.removeItem(R.id.item_rename)
+            }
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.item_share -> Unit
