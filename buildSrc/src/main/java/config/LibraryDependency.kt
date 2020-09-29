@@ -27,7 +27,7 @@ package config
 object LibraryDependency {
     object Version {
         const val ARV = "1.0.16"
-        const val KINFER = "2.1.19"
+        const val KINFER = "2.2.0"
         const val MATERIAL = "1.3.0-alpha02"
         const val ANDROIDX = "1.0.0"
         const val ANNOTATION = "1.2.0-alpha01"
