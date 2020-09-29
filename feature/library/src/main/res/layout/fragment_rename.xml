@@ -29,7 +29,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/bg_main_oval_blur"
     tools:context=".presentation.fragments.RenameFragment">
 
     <com.google.android.material.button.MaterialButton
