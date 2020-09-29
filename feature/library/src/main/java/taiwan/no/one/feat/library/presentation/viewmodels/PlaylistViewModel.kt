@@ -24,8 +24,6 @@
 
 package taiwan.no.one.feat.library.presentation.viewmodels
 
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
@@ -38,6 +36,7 @@ import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class PlaylistViewModel : BehindViewModel() {
@@ -53,11 +52,17 @@ internal class PlaylistViewModel : BehindViewModel() {
         _playlist.postValue(fetchPlaylistCase.execute(FetchPlaylistReq(playlistId)))
     }
 
-    fun createPlaylist(playlist: PlayListEntity) = viewModelScope.launch {
-        _resPlaylist.value = addPlaylistCase.execute(AddPlaylistReq(playlist))
+    fun getPlaylist(playlistId: Int) = getSongs(playlistId)
+
+    fun createPlaylist(playlist: PlayListEntity) = launchBehind {
+        _resPlaylist.postValue(addPlaylistCase.execute(AddPlaylistReq(playlist)))
     }
 
-    fun createSongs(songs: List<SongEntity>) = viewModelScope.launch {
-        _resPlaylist.value = addSongsCase.execute(AddSongsReq(songs))
+    fun updatePlaylist(playlistId: Int, playlistName: String) = launchBehind {
+        _resPlaylist.postValue(updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, playlistName)))
+    }
+
+    fun createSongs(songs: List<SongEntity>) = launchBehind {
+        _resPlaylist.postValue(addSongsCase.execute(AddSongsReq(songs)))
     }
 }

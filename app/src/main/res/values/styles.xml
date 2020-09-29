@@ -87,7 +87,8 @@
     <style name="Taiwan.No.One.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textStyle">bold</item>
         <item name="android:minHeight">@dimen/md_button_height_56dp</item>
-        <item name="backgroundTint">@color/grapefruit</item>
+        <item name="backgroundTint">@color/selector_bg_button</item>
+        <item name="android:textColor">@color/selector_text_button</item>
         <item name="cornerRadius">@dimen/md_two_unit</item>
     </style>
 

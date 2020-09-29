@@ -75,6 +75,8 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         super.onCreate(savedInstanceState)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun bindLiveData() {
@@ -147,5 +149,16 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     }
 
     private fun showMoreMenu(anchor: View) =
-        popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_playlist).show()
+        popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_playlist).apply {
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.item_share -> Unit
+                    R.id.item_download_all -> Unit
+                    R.id.item_rename -> findNavController()
+                        .navigate(PlaylistFragmentDirections.actionPlaylistToRename(navArgs.playlistId))
+                    R.id.item_delete -> Unit
+                }
+                true
+            }
+        }.show()
 }
