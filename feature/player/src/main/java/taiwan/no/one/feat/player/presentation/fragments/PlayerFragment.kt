@@ -33,6 +33,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
 import com.devrapid.kotlinknifer.getDrawable
@@ -260,7 +261,10 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
     }
 
     private fun popupPlaylist() = PlaylistPopupWindow(requireActivity()).builder {
-        it.rvPlaylist.apply {
+        btnCreatePlaylist.setOnClickListener {
+            findNavController().navigate(PlayerFragmentDirections.actionPlayerToPlaylistCreate())
+        }
+        rvPlaylist.apply {
             adapter = PlaylistAdapter(vm.playlists.value?.getOrNull().orEmpty()).apply {
                 setOnClickListener { playlist ->
                     player.curPlayingInfo?.let { music -> vm.addSongToPlaylist(music, playlist.id) }

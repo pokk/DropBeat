@@ -45,7 +45,7 @@ internal class PlaylistPopupWindow(private val context: Context) {
     private var anchorPosY = 0
     private var anchor: View? = null
 
-    fun builder(buildBlock: (PopupPlaylistBinding) -> Unit): PlaylistPopupWindow {
+    fun builder(buildBlock: PopupPlaylistBinding.() -> Unit): PlaylistPopupWindow {
         popup.apply {
             height = context.resources.getDimension(R.dimen.popup_playlist_height).toInt()
             width = context.resources.getDimension(R.dimen.popup_playlist_width).toInt()
@@ -53,7 +53,7 @@ internal class PlaylistPopupWindow(private val context: Context) {
             isOutsideTouchable = true
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
-        buildBlock(binding)
+        binding.buildBlock()
         return this@PlaylistPopupWindow
     }
 

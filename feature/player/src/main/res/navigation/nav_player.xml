@@ -35,5 +35,13 @@
         android:label="PlayerFragment"
         tools:layout="@layout/fragment_player">
         <deepLink app:uri="@string/deep_link_player"/>
+        <action
+            android:id="@+id/action_player_to_playlist_create"
+            app:destination="@id/nav_playlist_create"/>
     </dialog>
+
+    <include-dynamic
+        android:id="@+id/nav_playlist_create"
+        app:graphResName="nav_create"
+        app:moduleName="library"/>
 </navigation>
