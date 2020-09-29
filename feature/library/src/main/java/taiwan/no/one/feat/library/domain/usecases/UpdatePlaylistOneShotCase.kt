@@ -34,38 +34,43 @@ internal class UpdatePlaylistOneShotCase(
 ) : UpdatePlaylistCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         val oldPlaylist = playlistRepository.fetchPlaylist(playlistId!!)
-        val set = oldPlaylist.songIds.toSet()
-        val songIds = getSongIds(this)
-        val ids = when {
-            // Add new song ids.
-            isAddSongs == true && isRemoveSongs != true -> oldPlaylist.songIds.toMutableList()
-                .apply {
-                    // Check the id has already been in the list.
-                    songIds.forEach {
-                        // If the song id is not in the list, add id into the new list.
-                        if (!set.contains(it)) {
-                            add(it)
-                        }
-                    }
-                }
-            // Remove song ids.
-            isAddSongs != true && isRemoveSongs == true -> oldPlaylist.songIds.toMutableList()
-                .apply {
-                    // Check the id has already been in the list.
-                    songIds.forEach {
-                        // If the song id is in the list, remove id into the new list.
-                        if (set.contains(it)) {
-                            remove(it)
-                        }
-                    }
-                }
-            else -> oldPlaylist.songIds
+        val newPlaylist = if (songIds == null && songsPaths == null) {
+            oldPlaylist.copy(name = name ?: oldPlaylist.name)
         }
-        val newPlaylist = oldPlaylist.copy(
-            name = name ?: oldPlaylist.name,
-            songIds = ids,
-            count = ids.size
-        )
+        else {
+            val set = oldPlaylist.songIds.toSet()
+            val songIds = getSongIds(this)
+            val ids = when {
+                // Add new song ids.
+                isAddSongs == true && isRemoveSongs != true -> oldPlaylist.songIds.toMutableList()
+                    .apply {
+                        // Check the id has already been in the list.
+                        songIds.forEach {
+                            // If the song id is not in the list, add id into the new list.
+                            if (!set.contains(it)) {
+                                add(it)
+                            }
+                        }
+                    }
+                // Remove song ids.
+                isAddSongs != true && isRemoveSongs == true -> oldPlaylist.songIds.toMutableList()
+                    .apply {
+                        // Check the id has already been in the list.
+                        songIds.forEach {
+                            // If the song id is in the list, remove id into the new list.
+                            if (set.contains(it)) {
+                                remove(it)
+                            }
+                        }
+                    }
+                else -> oldPlaylist.songIds
+            }
+            oldPlaylist.copy(
+                name = name ?: oldPlaylist.name,
+                songIds = ids,
+                count = ids.size
+            )
+        }
         playlistRepository.updatePlaylist(newPlaylist)
         true
     }

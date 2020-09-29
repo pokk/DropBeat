@@ -54,6 +54,9 @@ internal class RenameFragment : BaseFragment<BaseActivity<*>, FragmentRenameBind
                 binding.tietPlaylistName.setText(it.name)
             }.onFailure { loge(it) }
         }
+        vm.result.observe(this) {
+            it.onSuccess { findNavController().navigateUp() }.onFailure { loge(it) }
+        }
     }
 
     override fun componentListenersBinding() {
@@ -61,7 +64,9 @@ internal class RenameFragment : BaseFragment<BaseActivity<*>, FragmentRenameBind
             binding.btnUpdate.isEnabled = !it.isNullOrBlank()
         }
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
-        binding.btnUpdate.setOnClickListener { }
+        binding.btnUpdate.setOnClickListener {
+            vm.updatePlaylist(navArgs.playlistId, binding.tietPlaylistName.text.toString())
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

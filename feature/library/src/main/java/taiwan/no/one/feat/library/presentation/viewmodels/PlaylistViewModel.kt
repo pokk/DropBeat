@@ -45,6 +45,7 @@ internal class PlaylistViewModel : BehindViewModel() {
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
     private val _resPlaylist by lazy { ResultLiveData<Boolean>() }
+    val result = _resPlaylist.toLiveData()
     private val _playlist by lazy { ResultLiveData<PlayListEntity>() }
     val playlist = _playlist.toLiveData()
 
