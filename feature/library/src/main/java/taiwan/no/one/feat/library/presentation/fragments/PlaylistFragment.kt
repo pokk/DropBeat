@@ -89,9 +89,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                 else {
                     displaySongs(it.songs.map(EntityMapper::libraryToSimpleTrackEntity))
                 }
-            }.onFailure {
-                loge(it)
-            }
+            }.onFailure(::loge)
         }
     }
 

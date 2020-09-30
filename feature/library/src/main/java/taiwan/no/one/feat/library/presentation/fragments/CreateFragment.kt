@@ -41,7 +41,7 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
         vm.result.observe(this) {
             it.onSuccess {
                 findNavController().navigateUp()
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
         }
     }
 

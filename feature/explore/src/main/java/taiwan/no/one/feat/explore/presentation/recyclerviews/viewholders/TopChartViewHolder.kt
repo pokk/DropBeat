@@ -38,7 +38,7 @@ internal class TopChartViewHolder(
         (entity as? TrackEntity)?.let(::initTrackType)
         (entity as? ArtistWithMoreDetailEntity)?.let(::initArtistType)
         binding.apply {
-            mtvNumber.text = (position + 1).toString()
+            mtvNumber.text = (absoluteAdapterPosition + 1).toString()
         }
     }
 
