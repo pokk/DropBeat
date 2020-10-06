@@ -33,6 +33,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.changeStatusBarColor
 import com.google.android.play.core.splitcompat.SplitCompat
 import taiwan.no.one.core.presentation.activity.BaseActivity
+import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.R
 import taiwan.no.one.dropbeat.databinding.ActivityMainBinding
 import taiwan.no.one.dropbeat.presentation.lifecycle.SplitModuleAddLifecycle
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         get() = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
 
     init {
-        SplitModuleAddLifecycle(applicationContext, listOf("featSearchMusic"))
+        SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featSearchMusic"))
     }
 
     override fun attachBaseContext(newBase: Context?) {
