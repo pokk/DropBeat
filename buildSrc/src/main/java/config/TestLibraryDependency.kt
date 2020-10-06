@@ -28,41 +28,33 @@ object TestLibraryDependency {
     private object Version {
         const val CORE = "1.2.0"
         const val JUNIT = "1.1.1"
-        const val ASSERT_K = "0.19"
-        const val RUNNER = "1.2.0"
-        const val ESPRESSO = "3.2.0"
+        const val ASSERT_K = "0.23"
+        const val ESPRESSO = "3.3.0"
         const val KAKAO = "2.1.0"
-        const val POWER_MOCKITO = "1.7.4"
-        const val MOCKITO_KOTLIN = "2.2.0"
-        const val MOCKITO_ANDROID = "2.23.0"
-        const val MOCKK = "v1.8.9.kotlin13"
-        const val BYTE_BUDDY = "1.10.1"
+        const val MOCKK = "1.10.2"
     }
 
-    const val JUNIT_CORE = "androidx.test:core:${Version.CORE}"
-    const val JUNIT = "androidx.test.ext:junit:${Version.JUNIT}"
-    const val KOTLIN = "org.jetbrains.kotlin:kotlin-test-junit:${CoreDependency.Version.KOTLIN}"
+    const val COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${CoreDependency.Version.KOTLIN_COROUTINE}"
+    const val JUNIT = "junit:junit:4.13"
 
     // Assert
     const val ASSERTK = "com.willowtreeapps.assertk:assertk-jvm:${Version.ASSERT_K}"
 
-    // Mockito
-    const val MOCKITO = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Version.MOCKITO_KOTLIN}"
-    const val POWER_MOCK_JUNIT = "org.powermock:powermock-module-junit4:${Version.POWER_MOCKITO}"
-    const val POWER_MOCKITO = "org.powermock:powermock-api-mockito2:${Version.POWER_MOCKITO}"
-
-    // Buddy
-    const val BYTE_BUDDY = "net.bytebuddy:byte-buddy:${Version.BYTE_BUDDY}"
-    const val BYTE_BUDDY_AGENT = "net.bytebuddy:byte-buddy-agent:${Version.BYTE_BUDDY}"
-    const val BYTE_BUDDY_ANDROID = "net.bytebuddy:byte-buddy-android:${Version.BYTE_BUDDY}"
+    // Mock
+    const val MOCKK = "io.mockk:mockk:${Version.MOCKK}"
+    const val MOCKK_ANDROID = "io.mockk:mockk-android:${Version.MOCKK}"
 
     // Android Related
-    const val MOCKITO_ANDROID = "org.mockito:mockito-android:${Version.MOCKITO_ANDROID}"
-    const val MOCKK_ANDROID = "io.mockk:mockk-android:${Version.MOCKK}"
-    const val KAKAO = "com.agoda.kakao:kakao:${Version.KAKAO}"
-    const val RUNNER = "androidx.test:runner:${Version.RUNNER}"
+    const val ANDROID_JUNIT = "androidx.test.ext:junit:${Version.JUNIT}"
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Version.ESPRESSO}"
+    const val ESPRESSO_INTENT = "androidx.test.espresso:espresso-intents:${Version.ESPRESSO}"
+    const val ESPRESSO_IDLING = "androidx.test.espresso:espresso-idling-resource:${Version.ESPRESSO}"
+    const val CORE_KTX = "androidx.test:core-ktx:${Version.CORE}"
+    const val ARCH_CORE = "androidx.arch.core:core-testing:${Version.CORE}"
+    const val NAVIGATION = "androidx.navigation:navigation-testing:${LibraryDependency.Version.NAVIGATION_KTX}"
+    const val FRAGMENT = "androidx.fragment:fragment-testing:${LibraryDependency.Version.FRAGMENT_KTX}"
+    const val KAKAO = "com.agoda.kakao:kakao:${Version.KAKAO}"
 
-    // Testing stub
-    const val IDLING_ESPRESSO = "androidx.test.espresso:espresso-idling-resource:${Version.ESPRESSO}"
+    // Retrofit2
+    const val OKHTTP_SERVER = "com.squareup.okhttp3:mockwebserver:${LibraryDependency.Version.OKHTTP3}"
 }

@@ -30,6 +30,8 @@ const val DepEnvImpl = "implementation"
 const val DepEnvApi = "api"
 const val DepEnvDebugApi = "debugApi"
 const val DepEnvKapt = "kapt"
+const val DepEnvTest = "testImplementation"
+const val DepEnvAndroidTest = "androidTestImplementation"
 
 /**********************************************************
  * Below functions will be used in each Gradles directly. *
@@ -194,4 +196,26 @@ fun DependencyHandlerScope.debugDependencies(env: String) {
     env(DebugDependency.STEHO_INTERCEPTOR)
     env(DebugDependency.DEBUG_DB)
 //    env(DebugDependency.OK_HTTP_PROFILER)
+}
+
+fun DependencyHandlerScope.unitTestDependencies() {
+    DepEnvTest(TestLibraryDependency.JUNIT)
+    DepEnvTest(TestLibraryDependency.COROUTINE)
+    DepEnvTest(TestLibraryDependency.ASSERTK)
+    DepEnvTest(TestLibraryDependency.MOCKK)
+    DepEnvTest(TestLibraryDependency.OKHTTP_SERVER)
+}
+
+fun DependencyHandlerScope.androidTestDependencies() {
+    DepEnvAndroidTest(TestLibraryDependency.ANDROID_JUNIT)
+    DepEnvAndroidTest(TestLibraryDependency.ESPRESSO_CORE)
+    DepEnvAndroidTest(TestLibraryDependency.ESPRESSO_INTENT)
+    DepEnvAndroidTest(TestLibraryDependency.ESPRESSO_IDLING)
+    DepEnvAndroidTest(TestLibraryDependency.CORE_KTX)
+    DepEnvAndroidTest(TestLibraryDependency.ARCH_CORE)
+    DepEnvAndroidTest(TestLibraryDependency.NAVIGATION)
+    DepEnvAndroidTest(TestLibraryDependency.FRAGMENT)
+    DepEnvAndroidTest(TestLibraryDependency.ASSERTK)
+    DepEnvAndroidTest(TestLibraryDependency.MOCKK_ANDROID)
+    DepEnvAndroidTest(TestLibraryDependency.ANDROID_JUNIT)
 }

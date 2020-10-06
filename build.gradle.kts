@@ -88,11 +88,11 @@ subprojects {
     //region Apply plugin
     apply {
         when (name) {
-            "domain", "ext" -> {
+            "ext" -> {
                 plugin("java-library")
                 plugin("kotlin")
             }
-            "widget", "ktx", "device", "core", "mediaplayer" -> {
+            "widget", "ktx", "device", "core", "mediaplayer", "test" -> {
                 plugin("com.android.library")
                 plugin("kotlin-android")
             }
