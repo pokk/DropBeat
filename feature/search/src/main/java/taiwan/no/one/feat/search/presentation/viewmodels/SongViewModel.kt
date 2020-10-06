@@ -24,12 +24,17 @@
 
 package taiwan.no.one.feat.search.presentation.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import com.google.gson.Gson
 import org.kodein.di.instance
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 
-internal class SongViewModel : BehindViewModel() {
+internal class SongViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(application) {
     private val gson by instance<Gson>()
 
     fun songToStream(song: SongEntity) = gson.toJson(listOf(song))

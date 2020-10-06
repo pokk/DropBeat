@@ -24,13 +24,18 @@
 
 package taiwan.no.one.feat.setting.presentation.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class SettingViewModel : BehindViewModel() {
+internal class SettingViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(application) {
     private val loginProvider by instance<LoginMethodsProvider>()
     private val _logoutRes by lazy { ResultLiveData<Boolean>() }
     val logoutRes = _logoutRes.toLiveData()

@@ -24,11 +24,13 @@
 
 package taiwan.no.one.feat.search.presentation.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryReq
@@ -36,7 +38,11 @@ import taiwan.no.one.feat.search.domain.usecases.FetchMusicCase
 import taiwan.no.one.feat.search.domain.usecases.FetchMusicReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class ResultViewModel : BehindViewModel() {
+internal class ResultViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(
+    application) {
     private val fetchMusicCase by instance<FetchMusicCase>()
     private val addOrUpdateHistoryCase by instance<AddOrUpdateHistoryCase>()
     private val _musics by lazy { ResultLiveData<List<SongEntity>>() }

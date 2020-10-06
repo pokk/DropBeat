@@ -25,6 +25,7 @@
 package taiwan.no.one.dropbeat.presentation.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
@@ -37,7 +38,8 @@ import taiwan.no.one.ktx.livedata.toLiveData
 import java.util.concurrent.TimeUnit
 
 internal class SplashViewModel(
-    application: Application
+    application: Application,
+    override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
     private val _configs by lazy { ResultLiveData<Boolean>() }
     val configs = _configs.toLiveData()

@@ -24,16 +24,21 @@
 
 package taiwan.no.one.dropbeat.presentation.viewmodels
 
+import android.app.Application
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.dropbeat.domain.usecases.FetchLoginInfoCase
 import taiwan.no.one.ktx.livedata.toLiveData
 
-class PrivacyViewModel : BehindViewModel() {
+class PrivacyViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(application) {
     private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()

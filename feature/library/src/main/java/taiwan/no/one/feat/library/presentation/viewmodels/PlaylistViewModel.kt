@@ -24,9 +24,11 @@
 
 package taiwan.no.one.feat.library.presentation.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
@@ -39,7 +41,10 @@ import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class PlaylistViewModel : BehindViewModel() {
+internal class PlaylistViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(application) {
     private val addPlaylistCase by instance<AddPlaylistCase>()
     private val fetchPlaylistCase by instance<FetchPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()

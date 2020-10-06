@@ -24,9 +24,11 @@
 
 package taiwan.no.one.feat.login.presentation.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
@@ -37,7 +39,11 @@ import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordCase
 import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class LoginViewModel : BehindViewModel() {
+internal class LoginViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(
+    application) {
     private val loginCase by instance<LoginCase>()
     private val createUserCase by instance<CreateUserCase>()
     private val modifyPasswordCase by instance<ModifyPasswordCase>()

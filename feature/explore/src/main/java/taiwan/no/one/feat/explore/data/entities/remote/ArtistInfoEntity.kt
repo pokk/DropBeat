@@ -24,11 +24,14 @@
 
 package taiwan.no.one.feat.explore.data.entities.remote
 
+import androidx.room.ColumnInfo
+import androidx.room.Ignore
 import com.google.gson.annotations.SerializedName
 import taiwan.no.one.ext.DEFAULT_STR
+import java.util.Date
 
 internal data class ArtistInfoEntity(
-    val artist: ArtistEntity?
+    val artist: ArtistEntity?,
 ) {
     internal data class ArtistEntity(
         val name: String? = DEFAULT_STR,
@@ -43,38 +46,48 @@ internal data class ArtistInfoEntity(
         val onTour: String? = DEFAULT_STR,
         @SerializedName("playcount")
         val playCount: String? = DEFAULT_STR,
+        @Ignore
         val stats: StatsEntity? = null,
+        @Ignore
         val similar: SimilarEntity? = null,
+        @Ignore
         val tags: CommonLastFmEntity.TagsEntity? = null,
-        val bio: BioEntity? = null
+        @Ignore
+        val bio: BioEntity? = null,
+        // For database searching
+        val paging: Int? = null,
+        @ColumnInfo(name = "created_at")
+        val createdAt: Date = Date(),
+        @ColumnInfo(name = "updated_at")
+        val updatedAt: Date = Date(),
     )
 
     internal data class BioEntity(
         val links: LinksEntity?,
         val published: String?,
         val summary: String?,
-        val content: String?
+        val content: String?,
     )
 
     internal data class LinksEntity(
-        val link: LinkEntity?
+        val link: LinkEntity?,
     )
 
     internal data class LinkEntity(
         @SerializedName("#text")
         val text: String?,
         val rel: String?,
-        val href: String?
+        val href: String?,
     )
 
     internal data class StatsEntity(
         val listeners: String?,
         @SerializedName("playcount")
-        val playCount: String?
+        val playCount: String?,
     )
 
     internal data class SimilarEntity(
         @SerializedName("artist")
-        val artists: List<ArtistEntity>?
+        val artists: List<ArtistEntity>?,
     )
 }

@@ -24,15 +24,20 @@
 
 package taiwan.no.one.feat.library.presentation.viewmodels
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
 import taiwan.no.one.ktx.livedata.toLiveData
 
-internal class MyHomeViewModel : BehindViewModel() {
+internal class MyHomeViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(application) {
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
 
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }

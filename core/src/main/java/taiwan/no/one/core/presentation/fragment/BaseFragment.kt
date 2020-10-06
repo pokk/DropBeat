@@ -29,12 +29,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.annotation.StyleRes
 import androidx.annotation.UiThread
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -53,43 +50,11 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
         // If there's no parent, forcing crashing the app.
         get() = requireActivity() as A
 
-    // Set action bar's back icon color into all fragments are inheriting advFragment.
-    protected open val backDrawable by lazy {
-        //                android.R.drawable.arrow_down_float
-//            .toDrawable(parent)
-//            .changeColor(getColor(R.color.colorPrimaryTextV1))
-        android.R.drawable.arrow_down_float
-    }
     private var _binding: V? = null
     protected val binding get() = checkNotNull(_binding) { "The View Binding is null!" }
     private lateinit var localInflater: LayoutInflater
 
-    //        private val actionTitle by extra<String>(COMMON_TITLE)
-    private val actionTitle = ""
-
     //region Lifecycle
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        // Focusing on entering animation ([enter] == true) with animation ([nextAnim] != 0).
-        if (!enter || nextAnim == 0) return super.onCreateAnimation(transit, enter, nextAnim)
-        val anim = AnimationUtils.loadAnimation(activity, nextAnim)
-        anim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {
-                onTransitionStart(animation)
-            }
-
-            override fun onAnimationRepeat(animation: Animation) {
-                onTransitionRepeat(animation)
-            }
-
-            override fun onAnimationEnd(animation: Animation) {
-                onTransitionEnd(animation)
-                anim.setAnimationListener(null)
-            }
-        })
-
-        return anim
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Pre-set the binding live data.
@@ -156,17 +121,7 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
      * For separating the huge function code in [rendered]. Initialize all view components here.
      */
     @UiThread
-    protected open fun viewComponentBinding() {
-        if (parent.supportActionBar == null) {
-            // Set the title into the support action bar.
-            parent.setSupportActionBar(provideActionBarResource())
-        }
-        parent.supportActionBar?.apply {
-            actionBarTitle()?.let(this::setTitle)
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(backDrawable)
-        }
-    }
+    protected open fun viewComponentBinding() = Unit
 
     /**
      * For separating the huge function code in [rendered]. Initialize all component listeners here.
@@ -190,46 +145,6 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
     @UiThread
     @StyleRes
     protected open fun customTheme(): Int? = null
-
-    /**
-     * Set fragment title into action bar.
-     *
-     * @return [String] action bar title.
-     */
-    @UiThread
-    protected open fun actionBarTitle(): CharSequence? = actionTitle
-
-    /**
-     * Provide action bar object for pre-setting.
-     *
-     * @return [Toolbar] action bar object.
-     */
-    @UiThread
-    protected open fun provideActionBarResource(): Toolbar? = null
-
-    /**
-     * The event for starting the view transition animation.
-     *
-     * @param animation
-     */
-    @UiThread
-    protected open fun onTransitionStart(animation: Animation) = Unit
-
-    /**
-     * The event for repeating the view transition animation.
-     *
-     * @param animation
-     */
-    @UiThread
-    protected open fun onTransitionRepeat(animation: Animation) = Unit
-
-    /**
-     * The event for ending the view transition animation.
-     *
-     * @param animation
-     */
-    @UiThread
-    protected open fun onTransitionEnd(animation: Animation) = Unit
     //endregion
 
     @UiThread

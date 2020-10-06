@@ -25,7 +25,6 @@
 package taiwan.no.one.feat.explore.data.local.configs
 
 import android.content.Context
-import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -34,9 +33,9 @@ import taiwan.no.one.core.data.local.room.convert.DateConvert
 /**
  * The access operations to a database.
  */
-@Database(entities = [],
-          version = 1,
-          exportSchema = false)
+//@Database(entities = [],
+//          version = 1,
+//          exportSchema = false)
 @TypeConverters(DateConvert::class)
 internal abstract class LastFmCacheDatabase : RoomDatabase() {
     companion object {
