@@ -44,13 +44,13 @@ import taiwan.no.one.dropbeat.presentation.services.workers.AddSongToPlaylistWor
 
 internal class DownloadReceiver : BroadcastReceiver(), DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
-    private val downloadManager by di.on(DropBeatApp.appContext).instance<DownloadManager>()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val action = intent?.action ?: return
-
         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE == action) {
             val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (context?.applicationContext == null) return
+            val downloadManager by di.on(context.applicationContext).instance<DownloadManager>()
             downloadManager.query(Query().setFilterById(downloadId)).use { cursor ->
                 if (cursor.moveToFirst()) {
                     val title = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE))

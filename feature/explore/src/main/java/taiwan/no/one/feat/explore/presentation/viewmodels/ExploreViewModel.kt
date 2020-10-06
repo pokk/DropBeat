@@ -24,10 +24,11 @@
 
 package taiwan.no.one.feat.explore.presentation.viewmodels
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import org.kodein.di.instance
-import taiwan.no.one.dropbeat.core.viewmodel.BehindSavedStateViewModel
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistReq
@@ -37,8 +38,9 @@ import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackReq
 
 internal class ExploreViewModel(
+    application: Application,
     override val handle: SavedStateHandle,
-) : BehindSavedStateViewModel() {
+) : BehindAndroidViewModel(application) {
     private val fetchChartTopTagCase by instance<FetchChartTopTagCase>()
     private val fetchChartTopTrackCase by instance<FetchChartTopTrackCase>()
     private val fetchChartTopArtistCase by instance<FetchChartTopArtistCase>()

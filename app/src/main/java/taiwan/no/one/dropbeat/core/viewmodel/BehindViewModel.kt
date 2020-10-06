@@ -24,13 +24,21 @@
 
 package taiwan.no.one.dropbeat.core.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.kodein.di.DIAware
+import org.kodein.di.android.di
+import taiwan.no.one.dropbeat.DropBeatApp
 import kotlin.coroutines.CoroutineContext
 
-abstract class BehindViewModel : InjectableViewModel() {
+abstract class BehindViewModel : ViewModel(), DIAware {
+    override val di by di(DropBeatApp.appContext)
+    protected abstract val handle: SavedStateHandle
+
     protected inline fun launchBehind(
         context: CoroutineContext = Dispatchers.IO,
         crossinline block: suspend CoroutineScope.() -> Unit,

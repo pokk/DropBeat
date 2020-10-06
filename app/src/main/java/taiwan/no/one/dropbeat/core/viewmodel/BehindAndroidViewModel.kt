@@ -26,6 +26,7 @@ package taiwan.no.one.dropbeat.core.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +42,7 @@ abstract class BehindAndroidViewModel(application: Application) : AndroidViewMod
      */
     override val di by di()
     protected val context get() = getApplication<Application>()
+    protected abstract val handle: SavedStateHandle
 
     protected inline fun launchBehind(
         context: CoroutineContext = Dispatchers.IO,
