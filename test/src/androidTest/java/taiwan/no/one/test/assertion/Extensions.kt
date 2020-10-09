@@ -22,27 +22,20 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.test
+package taiwan.no.one.test.assertion
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.Visibility
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.GONE
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.INVISIBLE
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 
-import org.junit.Test
-import org.junit.runner.RunWith
+fun ViewInteraction.isGone() = getViewAssertion(GONE)
 
-import org.junit.Assert.*
+fun ViewInteraction.isVisible() = getViewAssertion(VISIBLE)
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("taiwan.no.one.test.test", appContext.packageName)
-    }
-}
+fun ViewInteraction.isInvisible() = getViewAssertion(INVISIBLE)
+
+private fun getViewAssertion(visibility: Visibility) = matches(withEffectiveVisibility(visibility))
