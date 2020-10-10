@@ -37,6 +37,7 @@ object CommonModuleDependency {
     const val LIB_MEDIA_PLAYER = ":mediaplayer"
     const val LIB_DEVICE = ":device"
     const val LIB_CORE = ":core"
+    const val LIB_TEST = ":test"
 
     // feature module name
     const val FEAT_SEARCH_MUSIC = "${FEATURE_PREFIX}search"

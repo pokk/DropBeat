@@ -23,6 +23,7 @@
  */
 
 import config.AndroidConfiguration
+import config.CommonModuleDependency
 import config.widgetDependencies
 
 android {
@@ -66,6 +67,6 @@ android {
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(project(":ext"))
+    implementation(project(CommonModuleDependency.LIB_PURE_EXT))
     widgetDependencies()
 }

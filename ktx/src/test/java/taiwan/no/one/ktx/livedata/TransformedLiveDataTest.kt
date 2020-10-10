@@ -22,14 +22,17 @@
  * SOFTWARE.
  */
 
-plugins {
-    `kotlin-dsl`
-}
+package taiwan.no.one.ktx.livedata
 
-// gradle versions above 4.10.
-repositories {
-    // The org.jetbrains.kotlin.jvm plugin requires a repository
-    // where to download the Kotlin compiler dependencies from.
-    jcenter()
-    mavenCentral()
+import junit.framework.TestCase
+import org.junit.Before
+import taiwan.no.one.test.CoroutineTestRule
+
+class TransformedLiveDataTest : TestCase() {
+
+    val rule = CoroutineTestRule()
+
+    @Before
+    public override fun setUp() {
+    }
 }

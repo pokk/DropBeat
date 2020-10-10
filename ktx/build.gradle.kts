@@ -26,6 +26,7 @@ import config.AndroidConfiguration
 import config.CommonModuleDependency
 import config.LibraryDependency
 import config.ktxDependencies
+import config.unitTestDependencies
 
 android {
     compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
@@ -68,6 +69,8 @@ android {
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_WIDGET), project(CommonModuleDependency.LIB_PURE_EXT)).forEach(::api)
+    testApi(project(CommonModuleDependency.LIB_TEST))
     ktxDependencies()
     implementation(LibraryDependency.Jieyi.KNIFER)
+    unitTestDependencies()
 }
