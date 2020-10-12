@@ -24,8 +24,10 @@
 
 import config.AndroidConfiguration
 import config.CommonModuleDependency
+import config.androidTestDependencies
 import config.annotationDependencies
 import config.appDependencies
+import config.unitTestDependencies
 import org.jetbrains.kotlin.gradle.internal.CacheImplementation
 import resources.FeatureRes
 
@@ -123,8 +125,11 @@ kapt {
 dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_CORE), project(CommonModuleDependency.LIB_MEDIA_PLAYER)).forEach(::api)
+    testImplementation(project(CommonModuleDependency.LIB_TEST))
     appDependencies()
     annotationDependencies()
+    unitTestDependencies()
+    androidTestDependencies()
 }
 
 fun com.android.build.gradle.internal.dsl.DefaultConfig.buildConfigField(name: String, value: Set<String>) {

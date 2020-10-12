@@ -24,9 +24,12 @@
 
 import config.AndroidConfiguration
 import config.CommonModuleDependency
+import config.LibraryDependency
+import config.androidTestDependencies
 import config.annotationDependencies
 import config.coreDependencies
 import config.debugDependencies
+import config.unitTestDependencies
 import org.jetbrains.kotlin.gradle.internal.CacheImplementation
 
 android {
@@ -101,7 +104,10 @@ kapt {
 dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_KTX), project(CommonModuleDependency.LIB_DEVICE)).forEach(::api)
+    testImplementation(project(CommonModuleDependency.LIB_TEST))
     coreDependencies()
     annotationDependencies()
     debugDependencies(config.DepEnvDebugApi)
+    unitTestDependencies()
+    androidTestDependencies()
 }

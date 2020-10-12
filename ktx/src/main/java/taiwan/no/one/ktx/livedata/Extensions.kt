@@ -24,11 +24,8 @@
 
 package taiwan.no.one.ktx.livedata
 
-import androidx.annotation.MainThread
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.observe as CoroutineObserve
 
 inline fun <reified T> MutableLiveData<T>.toLiveData() = this as LiveData<T>
 

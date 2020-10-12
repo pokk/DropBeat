@@ -26,11 +26,8 @@ package taiwan.no.one.ktx.livedata
 
 import junit.framework.TestCase
 import org.junit.Before
-import taiwan.no.one.test.CoroutineTestRule
 
 class TransformedLiveDataTest : TestCase() {
-
-    val rule = CoroutineTestRule()
 
     @Before
     public override fun setUp() {
