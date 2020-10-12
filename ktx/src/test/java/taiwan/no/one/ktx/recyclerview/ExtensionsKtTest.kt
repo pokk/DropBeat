@@ -31,9 +31,14 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import taiwan.no.one.test.CoroutineTestRule
 
 class ExtensionsKtTest : TestCase() {
+    @Rule
+    val rule = CoroutineTestRule()
+
     @MockK
     private lateinit var recyclerView: RecyclerView
 

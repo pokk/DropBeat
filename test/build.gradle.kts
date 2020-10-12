@@ -23,10 +23,7 @@
  */
 
 import config.AndroidConfiguration
-import config.DepEnvImpl
-import config.androidTestDependencies
-import config.kotlinDependencies
-import config.unitTestDependencies
+import config.testDependencies
 
 android {
     compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
@@ -68,7 +65,5 @@ android {
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    kotlinDependencies(DepEnvImpl)
-    unitTestDependencies()
-    androidTestDependencies()
+    testDependencies()
 }

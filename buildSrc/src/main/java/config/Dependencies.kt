@@ -96,6 +96,13 @@ fun DependencyHandlerScope.firebaseAuthDependencies() {
     DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
 }
 
+fun DependencyHandlerScope.testDependencies() {
+    kotlinDependencies(DepEnvImpl)
+    DepEnvImpl(TestLibraryDependency.JUNIT)
+    DepEnvImpl(TestLibraryDependency.COROUTINE)
+    DepEnvImpl(TestLibraryDependency.ESPRESSO_CORE)
+}
+
 /************************************
  * Below functions are for modeling *
  ************************************/
@@ -198,24 +205,24 @@ fun DependencyHandlerScope.debugDependencies(env: String) {
 //    env(DebugDependency.OK_HTTP_PROFILER)
 }
 
-fun DependencyHandlerScope.unitTestDependencies() {
-    DepEnvTest(TestLibraryDependency.JUNIT)
-    DepEnvTest(TestLibraryDependency.COROUTINE)
-    DepEnvTest(TestLibraryDependency.ASSERTK)
-    DepEnvTest(TestLibraryDependency.MOCKK)
-    DepEnvTest(TestLibraryDependency.OKHTTP_SERVER)
+fun DependencyHandlerScope.unitTestDependencies(env: String = DepEnvTest) {
+    env(TestLibraryDependency.JUNIT)
+    env(TestLibraryDependency.COROUTINE)
+    env(TestLibraryDependency.ASSERTK)
+    env(TestLibraryDependency.MOCKK)
+    env(TestLibraryDependency.OKHTTP_SERVER)
 }
 
-fun DependencyHandlerScope.androidTestDependencies() {
-    DepEnvAndroidTest(TestLibraryDependency.ANDROID_JUNIT)
-    DepEnvAndroidTest(TestLibraryDependency.ESPRESSO_CORE)
-    DepEnvAndroidTest(TestLibraryDependency.ESPRESSO_INTENT)
-    DepEnvAndroidTest(TestLibraryDependency.ESPRESSO_IDLING)
-    DepEnvAndroidTest(TestLibraryDependency.CORE_KTX)
-    DepEnvAndroidTest(TestLibraryDependency.ARCH_CORE)
-    DepEnvAndroidTest(TestLibraryDependency.NAVIGATION)
-    DepEnvAndroidTest(TestLibraryDependency.FRAGMENT)
-    DepEnvAndroidTest(TestLibraryDependency.ASSERTK)
-    DepEnvAndroidTest(TestLibraryDependency.MOCKK_ANDROID)
-    DepEnvAndroidTest(TestLibraryDependency.ANDROID_JUNIT)
+fun DependencyHandlerScope.androidTestDependencies(env: String = DepEnvAndroidTest) {
+    env(TestLibraryDependency.ANDROID_JUNIT)
+    env(TestLibraryDependency.ESPRESSO_CORE)
+    env(TestLibraryDependency.ESPRESSO_INTENT)
+    env(TestLibraryDependency.ESPRESSO_IDLING)
+    env(TestLibraryDependency.CORE_KTX)
+    env(TestLibraryDependency.ARCH_CORE)
+    env(TestLibraryDependency.NAVIGATION)
+    env(TestLibraryDependency.FRAGMENT)
+    env(TestLibraryDependency.ASSERTK)
+    env(TestLibraryDependency.MOCKK_ANDROID)
+    env(TestLibraryDependency.ANDROID_JUNIT)
 }
