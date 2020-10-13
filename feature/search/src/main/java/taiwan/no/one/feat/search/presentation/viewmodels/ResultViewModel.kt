@@ -61,11 +61,11 @@ internal class ResultViewModel(
             curPage = page
         }
         if (curKeyword.isBlank()) return@launch
-        _musics.value = fetchMusicCase.execute(FetchMusicReq(curKeyword, curPage))
+        _musics.value = runCatching { fetchMusicCase.execute(FetchMusicReq(curKeyword, curPage)) }
     }
 
     fun add(keyword: String) = viewModelScope.launch {
-        _addOrUpdateResult.value = addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword))
+        _addOrUpdateResult.value = runCatching { addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)) }
     }
 
     fun goNextPage() = curPage++

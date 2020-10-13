@@ -34,5 +34,5 @@ internal class FetchSimilarArtistOneShotCase(
         repository.fetchSimilarArtistInfo(mbid)
     }
 
-    data class Request(val mbid: String) : RequestValues
+    internal data class Request(val mbid: String) : RequestValues
 }

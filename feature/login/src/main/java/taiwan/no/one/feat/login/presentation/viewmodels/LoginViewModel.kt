@@ -26,6 +26,8 @@ package taiwan.no.one.feat.login.presentation.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
@@ -52,19 +54,19 @@ internal class LoginViewModel(
     private val _resetResp by lazy { ResultLiveData<Boolean>() }
     val resetResp = _resetResp.toLiveData()
 
-    fun login(email: String, password: String) = launchBehind {
-        _userInfo.postValue(loginCase.execute(LoginReq(email, password)))
+    fun login(email: String, password: String) = viewModelScope.launch {
+        _userInfo.value = runCatching { loginCase.execute(LoginReq(email, password)) }
     }
 
-    fun login(credential: Credential) = launchBehind {
-        _userInfo.postValue(loginCase.execute(LoginReq(credential = credential)))
+    fun login(credential: Credential) = viewModelScope.launch {
+        _userInfo.value = runCatching { loginCase.execute(LoginReq(credential = credential)) }
     }
 
-    fun register(email: String, password: String) = launchBehind {
-        _userInfo.postValue(createUserCase.execute(CreateUserReq(email, password)))
+    fun register(email: String, password: String) = viewModelScope.launch {
+        _userInfo.value = runCatching { createUserCase.execute(CreateUserReq(email, password)) }
     }
 
-    fun resetPassword(email: String) = launchBehind {
-        _resetResp.postValue(modifyPasswordCase.execute(ModifyPasswordReq(email)))
+    fun resetPassword(email: String) = viewModelScope.launch {
+        _resetResp.value = runCatching { modifyPasswordCase.execute(ModifyPasswordReq(email)) }
     }
 }

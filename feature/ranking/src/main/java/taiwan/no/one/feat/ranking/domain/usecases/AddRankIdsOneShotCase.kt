@@ -35,5 +35,5 @@ internal class AddRankIdsOneShotCase(
         repository.addRankings(entities)
     }
 
-    data class Request(val entities: List<RankingIdEntity>) : RequestValues
+    internal data class Request(val entities: List<RankingIdEntity>) : RequestValues
 }

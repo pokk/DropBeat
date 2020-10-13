@@ -27,6 +27,8 @@ package taiwan.no.one.feat.library.presentation.viewmodels
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
@@ -49,8 +51,8 @@ internal class MyHomeViewModel(
     private val _histories by lazy { MutableLiveData<PlayListEntity>() }
     val histories = _histories.toLiveData()
 
-    fun getAllPlaylists() = launchBehind {
-        _playlists.postValue(fetchAllPlaylistsCase.execute())
+    fun getAllPlaylists() = viewModelScope.launch {
+        _playlists.value = runCatching { fetchAllPlaylistsCase.execute() }
     }
 
     fun extractMainPlaylist(list: List<PlayListEntity>) = launchBehind {

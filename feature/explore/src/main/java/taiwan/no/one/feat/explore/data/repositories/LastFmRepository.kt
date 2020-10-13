@@ -24,12 +24,22 @@
 
 package taiwan.no.one.feat.explore.data.repositories
 
+import android.content.SharedPreferences
+import androidx.core.content.edit
+import taiwan.no.one.core.data.repostory.cache.LayerCaching
+import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
+import java.util.Date
 
 internal class LastFmRepository(
     private val local: DataStore,
-    private val remote: DataStore
+    private val remote: DataStore,
+    private val sp: SharedPreferences,
 ) : LastFmRepo {
     override suspend fun fetchAlbum(mbid: String) = remote.getAlbumInfo(mbid).album ?: throw Exception()
 
@@ -45,7 +55,28 @@ internal class LastFmRepository(
 
     override suspend fun fetchSimilarTrackInfo(mbid: String) = remote.getSimilarTrackInfo(mbid).similarTracks
 
-    override suspend fun fetchChartTopTrack(page: Int, limit: Int) = remote.getChartTopTrack(page, limit).track
+    override suspend fun fetchChartTopTrack(page: Int, limit: Int) = object : LayerCaching<TopTrackInfoEntity>() {
+        override var timestamp
+            get() = sp.getLong(convertToKey(page, limit), 0L)
+            set(value) {
+                sp.edit { putLong(convertToKey(page, limit), value) }
+            }
+
+        override suspend fun saveCallResult(data: TopTrackInfoEntity) {
+            local.createChartTopTrack(page, limit, data)
+        }
+
+        override suspend fun shouldFetch(data: TopTrackInfoEntity) =
+            Date().time - timestamp > Repository.EXPIRED_DURATION
+
+        override suspend fun loadFromLocal() = local.getChartTopTrack(page, limit)
+
+        override suspend fun createCall() = remote.getChartTopTrack(page, limit)
+    }.value().track
+
+    override suspend fun addChartTopTrack(page: Int, limit: Int, entities: List<TrackEntity>) {
+        local.createChartTopTrack(page, limit, TopTrackInfoEntity(TracksEntity(entities, null)))
+    }
 
     override suspend fun fetchChartTopArtist(page: Int, limit: Int) = remote.getChartTopArtist(page, limit).artists
 

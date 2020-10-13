@@ -25,9 +25,11 @@
 package taiwan.no.one.feat.explore.data.stores
 
 import android.content.Context
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.Constants
+import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
@@ -39,7 +41,7 @@ import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
 internal class RemoteStore(
     private val lastFmService: LastFmService,
     private val lastFmExtraService: LastFmExtraService,
-    private val context: Context
+    private val context: Context,
 ) : DataStore {
     private val lastFmToken by lazy { context.getString(R.string.lastfm_api_key) }
 
@@ -75,6 +77,8 @@ internal class RemoteStore(
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
         lastFmService.retrieveChartTopTrack(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_TRACKS, page, limit))
+
+    override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = UnsupportedOperation()
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
         lastFmService.retrieveChartTopArtist(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_ARTISTS, page, limit))

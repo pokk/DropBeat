@@ -36,9 +36,7 @@ import taiwan.no.one.ext.DEFAULT_STR
 abstract class OneShotUsecase<T : Any, R : Usecase.RequestValues> : Usecase<R> {
     protected abstract suspend fun acquireCase(parameter: R? = null): T
 
-    open suspend fun execute(parameter: R? = null) = withContext(Dispatchers.IO) {
-        runCatching { acquireCase(parameter) }
-    }
+    open suspend fun execute(parameter: R? = null) = withContext(Dispatchers.IO) { acquireCase(parameter) }
 
     protected suspend fun R?.ensure(errorMessage: String = DEFAULT_STR, block: suspend R.() -> T) =
         this?.run { block() } ?: throw ParameterNotMatchException(errorMessage)

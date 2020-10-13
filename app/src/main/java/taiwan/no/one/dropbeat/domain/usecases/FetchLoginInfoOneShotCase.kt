@@ -38,7 +38,7 @@ internal class FetchLoginInfoOneShotCase(
         return entity
     }
 
-    data class Request(
+    internal data class Request(
         val email: String? = null,
         val password: String? = null,
         val credential: Credential? = null,

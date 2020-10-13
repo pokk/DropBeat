@@ -34,5 +34,5 @@ internal class UpdateRankItemOneShotCase(
         repository.updateRanking(id, uri, number)
     }
 
-    data class Request(val id: Int, val uri: String, val number: Int) : RequestValues
+    internal data class Request(val id: Int, val uri: String, val number: Int) : RequestValues
 }

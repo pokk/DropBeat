@@ -34,5 +34,5 @@ internal class FetchChartTopTagOneShotCase(
         repository.fetchChartTopTag(page, limit)
     }
 
-    data class Request(val page: Int, val limit: Int) : RequestValues
+    internal data class Request(val page: Int, val limit: Int) : RequestValues
 }

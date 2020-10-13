@@ -28,6 +28,8 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.core.domain.repository.Repository.Constant
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
@@ -39,10 +41,6 @@ internal class RankingRepository(
     private val remote: DataStore,
     private val sp: SharedPreferences,
 ) : RankingRepo {
-    companion object Constant {
-        private const val EXPIRED_DURATION = 360000 // 60 * 60 * 1000 = an hour
-    }
-
     override suspend fun fetchMusicRanking(rankId: String) = object : LayerCaching<MusicInfoEntity>() {
         override var timestamp
             get() = sp.getLong(convertToKey(rankId), 0L)
@@ -54,7 +52,7 @@ internal class RankingRepository(
             local.createMusicRanking(rankId, data)
         }
 
-        override suspend fun shouldFetch(data: MusicInfoEntity) = Date().time - timestamp > EXPIRED_DURATION
+        override suspend fun shouldFetch(data: MusicInfoEntity) = Date().time - timestamp > Repository.EXPIRED_DURATION
 
         override suspend fun loadFromLocal() = local.getMusicRanking(rankId)
 

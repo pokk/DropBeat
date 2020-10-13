@@ -35,5 +35,5 @@ internal class ModifyPasswordOneShotCase(
         true // If there are no errors happened, always will be true.
     }
 
-    data class Request(val email: String) : Usecase.RequestValues
+    internal data class Request(val email: String) : Usecase.RequestValues
 }

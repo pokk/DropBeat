@@ -34,5 +34,5 @@ internal class CreateUserOneShotCase(
         authService.getLogin(email, password)
     }
 
-    data class Request(val email: String, val password: String) : Usecase.RequestValues
+    internal data class Request(val email: String, val password: String) : Usecase.RequestValues
 }

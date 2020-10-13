@@ -28,7 +28,6 @@ import junit.framework.TestCase
 import org.junit.Before
 
 class TransformedLiveDataTest : TestCase() {
-
     @Before
     public override fun setUp() {
     }

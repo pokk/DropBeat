@@ -48,12 +48,12 @@ internal class ExploreViewModel(
     val playlists = liveData { emit(libraryProvider.getPlaylists()) }
 
     val topTags = liveData {
-        emit(fetchChartTopTagCase.execute(FetchChartTopTagReq(0, 10)))
+        emit(runCatching { fetchChartTopTagCase.execute(FetchChartTopTagReq(0, 10)) })
     }
     val topTracks = liveData {
-        emit(fetchChartTopTrackCase.execute(FetchChartTopTrackReq(0, 10, 4)))
+        emit(runCatching { fetchChartTopTrackCase.execute(FetchChartTopTrackReq(0, 10, 4)) })
     }
     val topArtists = liveData {
-        emit(fetchChartTopArtistCase.execute(FetchChartTopArtistReq(0, 10, 4)))
+        emit(runCatching { fetchChartTopArtistCase.execute(FetchChartTopArtistReq(0, 10, 4)) })
     }
 }

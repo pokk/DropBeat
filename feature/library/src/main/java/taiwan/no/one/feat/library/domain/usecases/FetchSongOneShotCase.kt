@@ -34,7 +34,7 @@ internal class FetchSongOneShotCase(
         repository.getMusic(uri, null)
     }
 
-    data class Request(
+    internal data class Request(
         val uri: String,
     ) : RequestValues
 }

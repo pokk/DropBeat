@@ -55,10 +55,10 @@ internal class RecentViewModel(
     val histories = fetchHistoryCase.execute(FetchHistoryReq(50)).asLiveData(viewModelScope.coroutineContext)
 
     fun delete(keyword: String?, entity: SearchHistoryEntity?) = viewModelScope.launch {
-        _deleteResult.value = deleteHistoryCase.execute(DeleteHistoryReq(keyword, entity))
+        _deleteResult.value = runCatching { deleteHistoryCase.execute(DeleteHistoryReq(keyword, entity)) }
     }
 
     fun add(keyword: String) = viewModelScope.launch {
-        _addOrUpdateResult.value = addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword))
+        _addOrUpdateResult.value = runCatching { addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)) }
     }
 }

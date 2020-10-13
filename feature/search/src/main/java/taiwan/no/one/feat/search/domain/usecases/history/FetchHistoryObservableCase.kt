@@ -35,5 +35,5 @@ internal class FetchHistoryObservableCase(
         repository.fetchSearchHistories(count)
     }
 
-    data class Request(val count: Int) : RequestValues
+    internal data class Request(val count: Int) : RequestValues
 }

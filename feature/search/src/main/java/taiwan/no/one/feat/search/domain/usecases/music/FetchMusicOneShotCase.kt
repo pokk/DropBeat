@@ -49,5 +49,5 @@ internal class FetchMusicOneShotCase(
         }
     }
 
-    data class Request(val keyword: String, val page: Int) : Usecase.RequestValues
+    internal data class Request(val keyword: String, val page: Int) : Usecase.RequestValues
 }

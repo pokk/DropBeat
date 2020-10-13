@@ -28,6 +28,8 @@ import android.app.Application
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
@@ -44,8 +46,8 @@ class PrivacyViewModel(
     val userInfo = _userInfo.toLiveData()
 
     @WorkerThread
-    fun getUserInfo() = launchBehind {
-        _userInfo.postValue(fetchLoginInfoCase.execute())
+    fun getUserInfo() = viewModelScope.launch {
+        _userInfo.value = runCatching { fetchLoginInfoCase.execute() }
     }
 
     @UiThread

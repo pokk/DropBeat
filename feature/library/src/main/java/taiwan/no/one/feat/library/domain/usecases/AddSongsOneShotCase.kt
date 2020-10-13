@@ -54,5 +54,5 @@ internal class AddSongsOneShotCase(
         true
     }
 
-    data class Request(val songs: List<SongEntity>? = null, val songsStream: String? = null) : RequestValues
+    internal data class Request(val songs: List<SongEntity>? = null, val songsStream: String? = null) : RequestValues
 }

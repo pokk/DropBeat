@@ -70,7 +70,7 @@ internal class AddSongsAndPlaylistOneShotCase(
         true
     }
 
-    data class Request(
+    internal data class Request(
         val songsStream: String? = null,
         val playlistId: Int,
     ) : RequestValues

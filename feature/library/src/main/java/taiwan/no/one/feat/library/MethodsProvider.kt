@@ -92,16 +92,19 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
         return true
     }
 
-    override suspend fun hasOwnTrack(uri: String) = fetchSongCase.execute(FetchSongReq(uri)).map(SongEntity::hasOwn)
+    override suspend fun hasOwnTrack(uri: String) = runCatching { fetchSongCase.execute(FetchSongReq(uri)) }
+        .map(SongEntity::hasOwn)
 
     override suspend fun isFavoriteTrack(uri: String, playlistId: Int) =
-        fetchIsInThePlaylistCase.execute(FetchIsInThePlaylistReq(null, uri, playlistId))
+        runCatching { fetchIsInThePlaylistCase.execute(FetchIsInThePlaylistReq(null, uri, playlistId)) }
 
-    override suspend fun getPlaylists() = fetchAllPlaylistsCase.execute()
-        .map { list ->
-            list.map { SimplePlaylistEntity(it.id, it.name, it.songIds, "") }
-        }
+    override suspend fun getPlaylists() = runCatching {
+        fetchAllPlaylistsCase.execute()
+    }.map { list ->
+        list.map { SimplePlaylistEntity(it.id, it.name, it.songIds, "") }
+    }
 
-    override suspend fun createPlaylist(name: String): Result<Boolean> =
+    override suspend fun createPlaylist(name: String): Result<Boolean> = runCatching {
         addPlaylistCase.execute(AddPlaylistReq(PlayListEntity(name = name)))
+    }
 }

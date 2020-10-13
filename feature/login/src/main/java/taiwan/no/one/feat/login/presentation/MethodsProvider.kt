@@ -36,5 +36,5 @@ class MethodsProvider : LoginMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val logoutCase by instance<LogoutCase>()
 
-    override suspend fun logout() = logoutCase.execute()
+    override suspend fun logout() = runCatching { logoutCase.execute() }
 }

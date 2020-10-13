@@ -22,25 +22,37 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.domain.usecases
+package taiwan.no.one.ktx.livedata
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
-import taiwan.no.one.feat.library.domain.repositories.SongRepo
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import assertk.assertThat
+import assertk.assertions.isInstanceOf
+import junit.framework.TestCase
+import org.junit.Test
 
-internal class FetchIsInThePlaylistOneShotCase(
-    private val repository: PlaylistRepo,
-    private val songRepository: SongRepo,
-) : FetchIsInThePlaylistCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        val id = if (trackUri != null) songRepository.getMusic(trackUri).id else trackId ?: -1
-        val playlist = repository.fetchPlaylist(playlistId)
-        id in playlist.songIds
+class ExtensionsKtTest : TestCase() {
+    @Test
+    fun `test success casting of livedata`() {
+        // GIVEN
+        val mutableLiveData = MutableLiveData<Int>()
+        val wrappedMutableLiveData = MutableLiveData<Result<Any>>()
+        // WHEN
+        val liveData = mutableLiveData.toLiveData()
+        val wrappedLiveData = wrappedMutableLiveData.toLiveData()
+        // THEN
+        assertThat(liveData).isInstanceOf(LiveData::class.java)
+        assertThat(wrappedLiveData).isInstanceOf(LiveData::class.java)
     }
 
-    internal data class Request(
-        val trackId: Int? = null,
-        val trackUri: String? = null,
-        val playlistId: Int,
-    ) : RequestValues
+    @Test
+    fun `test success casting of safe livedata`() {
+        // GIVEN
+        val mutableLiveData = SafeMutableLiveData(1)
+        // WHEN
+        val liveData = mutableLiveData.toLiveData()
+        // THEN
+        assertThat(liveData).isInstanceOf(LiveData::class.java)
+        assertThat(liveData).isInstanceOf(SafeLiveData::class.java)
+    }
 }

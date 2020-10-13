@@ -28,6 +28,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
@@ -38,10 +39,6 @@ internal class SearchMusicRepository(
     private val local: DataStore,
     private val sp: SharedPreferences,
 ) : SearchMusicRepo {
-    companion object Constant {
-        private const val EXPIRED_DURATION = 360000 // 60 * 60 * 1000 = an hour
-    }
-
     override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<MusicInfoEntity>() {
         override var timestamp
             get() = sp.getLong(convertToKey(keyword, page), 0L)
@@ -53,7 +50,7 @@ internal class SearchMusicRepository(
             local.createMusic(keyword, page, data)
         }
 
-        override suspend fun shouldFetch(data: MusicInfoEntity) = Date().time - timestamp > EXPIRED_DURATION
+        override suspend fun shouldFetch(data: MusicInfoEntity) = Date().time - timestamp > Repository.EXPIRED_DURATION
 
         override suspend fun loadFromLocal() = local.getMusic(keyword, page)
 

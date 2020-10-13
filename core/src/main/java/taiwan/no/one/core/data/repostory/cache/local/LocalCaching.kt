@@ -33,7 +33,7 @@ abstract class LocalCaching<RT>(
     private val diskCache: DiskCache,
 ) {
     companion object Constant {
-        private const val EXPIRED_DURATION = 1000 // 1 * 1000
+        private const val EXPIRED_DURATION = 1_000 // 1 * 1000
     }
 
     protected abstract val key: String

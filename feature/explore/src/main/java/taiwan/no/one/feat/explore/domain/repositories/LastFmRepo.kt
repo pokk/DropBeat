@@ -62,6 +62,8 @@ internal interface LastFmRepo : Repository {
     //region Chart
     suspend fun fetchChartTopTrack(page: Int, limit: Int): TopTrackInfoEntity.TracksEntity
 
+    suspend fun addChartTopTrack(page: Int, limit: Int, entities: List<TrackInfoEntity.TrackEntity>)
+
     suspend fun fetchChartTopArtist(page: Int, limit: Int): TopArtistInfoEntity.ArtistsEntity
 
     suspend fun fetchChartTopTag(page: Int, limit: Int): CommonLastFmEntity.TagsEntity

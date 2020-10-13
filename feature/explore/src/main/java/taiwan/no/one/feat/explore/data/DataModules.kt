@@ -32,6 +32,7 @@ import org.kodein.di.singleton
 import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
+import taiwan.no.one.dropbeat.di.Constant.TAG_FEAT_REPO_SHARED_PREFS
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Companion.FEAT_NAME
 import taiwan.no.one.feat.explore.data.contracts.DataStore
@@ -59,7 +60,9 @@ internal object DataModules : ModuleProvider {
         bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance(), instance(), context) }
 
         bind<LastFmRepo>() with singleton {
-            LastFmRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+            LastFmRepository(instance(TAG_LOCAL_DATA_STORE),
+                             instance(TAG_REMOTE_DATA_STORE),
+                             instance(TAG_FEAT_REPO_SHARED_PREFS))
         }
         bind<LastFmExtraRepo>() with singleton {
             LastFmExtraRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))

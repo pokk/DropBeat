@@ -35,5 +35,5 @@ internal class FetchArtistPhotoOneShotCase(
         repository.fetchArtistPhotoInfo(artistName, page)
     }
 
-    data class Request(val artistName: String, val page: Int) : RequestValues
+    internal data class Request(val artistName: String, val page: Int) : RequestValues
 }

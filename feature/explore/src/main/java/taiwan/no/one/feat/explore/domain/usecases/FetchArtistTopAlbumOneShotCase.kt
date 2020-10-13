@@ -34,5 +34,5 @@ internal class FetchArtistTopAlbumOneShotCase(
         repository.fetchArtistTopAlbum(mbid)
     }
 
-    data class Request(val mbid: String) : RequestValues
+    internal data class Request(val mbid: String) : RequestValues
 }

@@ -34,5 +34,5 @@ internal class FetchMusicRankOneShotCase(
         repository.fetchMusicRanking(rankId)
     }
 
-    data class Request(val rankId: String) : RequestValues
+    internal data class Request(val rankId: String) : RequestValues
 }

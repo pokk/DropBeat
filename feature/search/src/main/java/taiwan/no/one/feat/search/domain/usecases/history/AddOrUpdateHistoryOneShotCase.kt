@@ -35,5 +35,5 @@ internal class AddOrUpdateHistoryOneShotCase(
         repository.addOrUpdateSearchHistory(keyword)
     }
 
-    data class Request(val keyword: String) : RequestValues
+    internal data class Request(val keyword: String) : RequestValues
 }

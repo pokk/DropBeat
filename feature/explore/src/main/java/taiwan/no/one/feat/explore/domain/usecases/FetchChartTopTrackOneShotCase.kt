@@ -37,11 +37,15 @@ internal class FetchChartTopTrackOneShotCase(
             // Override the tracks
             tracks.mapIndexed { index, trackEntity ->
                 takeIf { index < moreDetailRange }
+                    ?.takeIf { trackEntity.images?.any { it.text == "cover" } ?: false }
                     ?.let { trackEntity.url }
                     ?.let { extraRepo.fetchTrackCover(it, trackEntity) } ?: trackEntity
+            }.apply {
+                // Save back again.
+                repository.addChartTopTrack(page, limit, this)
             }
         }
     }
 
-    data class Request(val page: Int, val limit: Int, val moreDetailRange: Int = 0) : RequestValues
+    internal data class Request(val page: Int, val limit: Int, val moreDetailRange: Int = 0) : RequestValues
 }

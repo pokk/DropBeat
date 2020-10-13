@@ -38,5 +38,5 @@ internal class DeleteHistoryOneShotCase(
         repository.deleteSearchHistory(keyword, entity)
     }
 
-    data class Request(val keyword: String?, val entity: SearchHistoryEntity?) : RequestValues
+    internal data class Request(val keyword: String?, val entity: SearchHistoryEntity?) : RequestValues
 }

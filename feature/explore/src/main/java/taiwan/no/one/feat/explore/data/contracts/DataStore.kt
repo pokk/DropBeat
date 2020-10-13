@@ -75,6 +75,8 @@ internal interface DataStore {
     //region Chart
     suspend fun getChartTopTrack(page: Int, limit: Int): TopTrackInfoEntity
 
+    suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity): Boolean
+
     suspend fun getChartTopArtist(page: Int, limit: Int): TopArtistInfoEntity
 
     suspend fun getChartTopTag(page: Int, limit: Int): TopTagInfoEntity

@@ -45,11 +45,11 @@ internal class RankViewModel(
     private val fetchDetailOfRankingsCase by instance<FetchDetailOfRankingsCase>()
     private val fetchMusicRankCase by instance<FetchMusicRankCase>()
 
-    val rankings = liveData { emit(fetchDetailOfRankingsCase.execute()) }
+    val rankings = liveData { emit(runCatching { fetchDetailOfRankingsCase.execute() }) }
     private val _musics by lazy { ResultLiveData<List<SongEntity>>() }
     val musics = _musics.toLiveData()
 
     fun getMusics(rankId: String) = viewModelScope.launch {
-        _musics.value = fetchMusicRankCase.execute(FetchMusicRankReq(rankId))
+        _musics.value = runCatching { fetchMusicRankCase.execute(FetchMusicRankReq(rankId)) }
     }
 }

@@ -24,4 +24,8 @@
 
 package taiwan.no.one.core.domain.repository
 
-interface Repository
+interface Repository {
+    companion object Constant {
+        const val EXPIRED_DURATION = 3_600_000L // 60 * 60 * 1000 = an hour
+    }
+}

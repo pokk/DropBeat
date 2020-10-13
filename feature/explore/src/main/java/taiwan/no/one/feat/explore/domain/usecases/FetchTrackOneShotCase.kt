@@ -34,5 +34,5 @@ internal class FetchTrackOneShotCase(
         repository.fetchTrack(mbid)
     }
 
-    data class Request(val mbid: String) : RequestValues
+    internal data class Request(val mbid: String) : RequestValues
 }
