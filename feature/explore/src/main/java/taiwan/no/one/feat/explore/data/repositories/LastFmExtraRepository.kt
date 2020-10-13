@@ -24,18 +24,46 @@
 
 package taiwan.no.one.feat.explore.data.repositories
 
+import android.content.SharedPreferences
+import androidx.core.content.edit
+import taiwan.no.one.core.data.repostory.cache.LayerCaching
+import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
+import java.util.Date
 
 internal class LastFmExtraRepository(
     private val local: DataStore,
-    private val remote: DataStore
+    private val remote: DataStore,
+    private val sp: SharedPreferences,
 ) : LastFmExtraRepo {
+    companion object Constant {
+        private const val EXPIRED_DURATION = 2_592_000_000L // one month 30 x 24 x 60 x 60 x 1000
+    }
+
     override suspend fun fetchArtistPhotoInfo(artistName: String, page: Int) =
         remote.getArtistPhotosInfo(artistName, page).photos
 
-    override suspend fun fetchArtistMoreDetail(artistName: String) = remote.getArtistMoreInfo(artistName)
+    override suspend fun fetchArtistMoreDetail(artistName: String) = object : LayerCaching<ArtistMoreDetailEntity>() {
+        override var timestamp
+            get() = sp.getLong(convertToKey(artistName), 0L)
+            set(value) {
+                sp.edit { putLong(convertToKey(artistName), value) }
+            }
+
+        override suspend fun saveCallResult(data: ArtistMoreDetailEntity) {
+            local.createArtistMoreInfo(artistName, data)
+        }
+
+        override suspend fun shouldFetch(data: ArtistMoreDetailEntity) =
+            Date().time - timestamp > EXPIRED_DURATION
+
+        override suspend fun loadFromLocal() = local.getArtistMoreInfo(artistName)
+
+        override suspend fun createCall() = remote.getArtistMoreInfo(artistName)
+    }.value()
 
     override suspend fun fetchTrackCover(trackUrl: String, trackEntity: TrackEntity) =
         remote.getTrackCover(trackUrl, trackEntity)

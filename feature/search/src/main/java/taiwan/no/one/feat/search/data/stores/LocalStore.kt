@@ -29,7 +29,7 @@ import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 import taiwan.no.one.core.data.repostory.cache.local.LocalCaching
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
-import taiwan.no.one.feat.search.BuildConfig
+import taiwan.no.one.core.data.store.tryWrapper
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
@@ -63,7 +63,7 @@ internal class LocalStore(
 
     override suspend fun removeSearchHistory(
         keyword: String?,
-        entity: SearchHistoryEntity?
+        entity: SearchHistoryEntity?,
     ) = tryWrapper {
         if (entity != null) {
             searchHistoryDao.delete(entity)
@@ -71,18 +71,5 @@ internal class LocalStore(
         else {
             searchHistoryDao.deleteBy(keyword.orEmpty())
         }
-    }
-
-    private suspend fun tryWrapper(tryBlock: suspend () -> Unit): Boolean {
-        try {
-            tryBlock()
-        }
-        catch (e: Exception) {
-            if (BuildConfig.DEBUG) {
-                e.printStackTrace()
-            }
-            return false
-        }
-        return true
     }
 }

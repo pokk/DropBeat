@@ -29,6 +29,8 @@ import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.Constants
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
@@ -66,6 +68,9 @@ internal class RemoteStore(
     override suspend fun getArtistMoreInfo(artistName: String) =
         lastFmExtraService.retrieveArtistMoreDetail(artistName)
 
+    override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) =
+        UnsupportedOperation()
+
     override suspend fun getTrackInfo(mbid: String) =
         lastFmService.retrieveTrackInfo(infoQuery(Constants.LASTFM_PARAM_TRACK_INFO, mbid))
 
@@ -82,6 +87,9 @@ internal class RemoteStore(
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
         lastFmService.retrieveChartTopArtist(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_ARTISTS, page, limit))
+
+    override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) =
+        UnsupportedOperation()
 
     override suspend fun getChartTopTag(page: Int, limit: Int) =
         lastFmService.retrieveChartTopTag(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_TAGS, page, limit))

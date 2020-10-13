@@ -28,8 +28,8 @@ import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 import taiwan.no.one.core.data.repostory.cache.local.LocalCaching
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.core.data.store.tryWrapper
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
-import taiwan.no.one.feat.ranking.BuildConfig
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
@@ -68,18 +68,5 @@ internal class LocalStore(
 
     override suspend fun modifyRankingEntity(id: Int, uri: String, number: Int) = tryWrapper {
         rankingDao.replaceBy(id, uri, number)
-    }
-
-    private suspend fun tryWrapper(tryBlock: suspend () -> Unit): Boolean {
-        try {
-            tryBlock()
-        }
-        catch (e: Exception) {
-            if (BuildConfig.DEBUG) {
-                e.printStackTrace()
-            }
-            return false
-        }
-        return true
     }
 }

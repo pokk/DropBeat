@@ -30,9 +30,12 @@ import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.stores.LocalStore.Constant.TYPE_CHART_TOP_ARTIST
+import taiwan.no.one.feat.explore.data.stores.LocalStore.Constant.TYPE_CHART_TOP_TRACK
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 import java.util.Date
 
@@ -57,9 +60,9 @@ internal class LastFmRepository(
 
     override suspend fun fetchChartTopTrack(page: Int, limit: Int) = object : LayerCaching<TopTrackInfoEntity>() {
         override var timestamp
-            get() = sp.getLong(convertToKey(page, limit), 0L)
+            get() = sp.getLong(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), 0L)
             set(value) {
-                sp.edit { putLong(convertToKey(page, limit), value) }
+                sp.edit { putLong(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), value) }
             }
 
         override suspend fun saveCallResult(data: TopTrackInfoEntity) {
@@ -78,7 +81,24 @@ internal class LastFmRepository(
         local.createChartTopTrack(page, limit, TopTrackInfoEntity(TracksEntity(entities, null)))
     }
 
-    override suspend fun fetchChartTopArtist(page: Int, limit: Int) = remote.getChartTopArtist(page, limit).artists
+    override suspend fun fetchChartTopArtist(page: Int, limit: Int) = object : LayerCaching<TopArtistInfoEntity>() {
+        override var timestamp
+            get() = sp.getLong(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), 0L)
+            set(value) {
+                sp.edit { putLong(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), value) }
+            }
+
+        override suspend fun saveCallResult(data: TopArtistInfoEntity) {
+            local.createChartTopArtist(page, limit, data)
+        }
+
+        override suspend fun shouldFetch(data: TopArtistInfoEntity) =
+            Date().time - timestamp > Repository.EXPIRED_DURATION
+
+        override suspend fun loadFromLocal() = local.getChartTopArtist(page, limit)
+
+        override suspend fun createCall() = remote.getChartTopArtist(page, limit)
+    }.value().artists
 
     override suspend fun fetchChartTopTag(page: Int, limit: Int) = remote.getChartTopTag(page, limit).tag
 

@@ -62,6 +62,8 @@ internal interface DataStore {
     suspend fun getArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
 
     suspend fun getArtistMoreInfo(artistName: String): ArtistMoreDetailEntity
+
+    suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity): Boolean
     //endregion
 
     //region Track Data
@@ -78,6 +80,8 @@ internal interface DataStore {
     suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity): Boolean
 
     suspend fun getChartTopArtist(page: Int, limit: Int): TopArtistInfoEntity
+
+    suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity): Boolean
 
     suspend fun getChartTopTag(page: Int, limit: Int): TopTagInfoEntity
     //endregion

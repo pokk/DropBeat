@@ -22,10 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.domain.repository
+package taiwan.no.one.core.data.store
 
-interface Repository {
-    companion object Constant {
-        const val EXPIRED_DURATION = 604_800_000L // 7 * 24 * 60 * 60 * 1000 = a week
+import taiwan.no.one.core.BuildConfig
+
+suspend fun tryWrapper(tryBlock: suspend () -> Unit): Boolean {
+    try {
+        tryBlock()
     }
+    catch (e: Exception) {
+        if (BuildConfig.DEBUG) {
+            e.printStackTrace()
+        }
+        return false
+    }
+    return true
 }

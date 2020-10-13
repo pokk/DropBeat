@@ -65,7 +65,9 @@ internal object DataModules : ModuleProvider {
                              instance(TAG_FEAT_REPO_SHARED_PREFS))
         }
         bind<LastFmExtraRepo>() with singleton {
-            LastFmExtraRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
+            LastFmExtraRepository(instance(TAG_LOCAL_DATA_STORE),
+                                  instance(TAG_REMOTE_DATA_STORE),
+                                  instance(TAG_FEAT_REPO_SHARED_PREFS))
         }
     }
 

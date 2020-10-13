@@ -26,9 +26,12 @@ package taiwan.no.one.feat.explore.data.stores
 
 import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.core.data.store.tryWrapper
 import taiwan.no.one.core.exceptions.NotFoundException
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 
@@ -40,7 +43,8 @@ internal class LocalStore(
     private val mmkvCache: DiskCache,
 ) : DataStore {
     companion object Constant {
-        private const val TYPE_CHART_TOP_TRACK = "top_track"
+        const val TYPE_CHART_TOP_TRACK = "top_track"
+        const val TYPE_CHART_TOP_ARTIST = "top_artist"
     }
 
     override suspend fun getAlbumInfo(mbid: String) = UnsupportedOperation()
@@ -55,7 +59,12 @@ internal class LocalStore(
 
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) = UnsupportedOperation()
 
-    override suspend fun getArtistMoreInfo(artistName: String) = UnsupportedOperation()
+    override suspend fun getArtistMoreInfo(artistName: String) =
+        mmkvCache.get(convertToKey(artistName), ArtistMoreDetailEntity::class.java)?.second ?: throw NotFoundException()
+
+    override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) = tryWrapper {
+        mmkvCache.put(convertToKey(artistName), entity)
+    }
 
     override suspend fun getTrackInfo(mbid: String) = UnsupportedOperation()
 
@@ -67,12 +76,17 @@ internal class LocalStore(
         mmkvCache.get(convertToKey(page, limit, TYPE_CHART_TOP_TRACK),
                       TopTrackInfoEntity::class.java)?.second ?: throw NotFoundException()
 
-    override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity): Boolean {
+    override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = tryWrapper {
         mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), entity)
-        return true
     }
 
-    override suspend fun getChartTopArtist(page: Int, limit: Int) = UnsupportedOperation()
+    override suspend fun getChartTopArtist(page: Int, limit: Int) =
+        mmkvCache.get(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST),
+                      TopArtistInfoEntity::class.java)?.second ?: throw NotFoundException()
+
+    override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) = tryWrapper {
+        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), entity)
+    }
 
     override suspend fun getChartTopTag(page: Int, limit: Int) = UnsupportedOperation()
 
