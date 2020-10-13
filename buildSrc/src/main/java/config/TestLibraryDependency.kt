@@ -26,19 +26,20 @@ package config
 
 object TestLibraryDependency {
     private object Version {
-        const val CORE = "1.2.0"
-        const val JUNIT = "1.1.1"
-        const val ASSERT_K = "0.23"
+        const val KTX_CORE = "1.3.0"
+        const val CORE = "2.1.0"
+        const val JUNIT = "1.1.2"
+        const val ASSERTK = "0.23"
         const val ESPRESSO = "3.3.0"
         const val KAKAO = "2.1.0"
         const val MOCKK = "1.10.2"
     }
 
     const val COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${CoreDependency.Version.KOTLIN_COROUTINE}"
-    const val JUNIT = "junit:junit:4.13"
+    const val JUNIT = "junit:junit:4.13.1"
 
     // Assert
-    const val ASSERTK = "com.willowtreeapps.assertk:assertk-jvm:${Version.ASSERT_K}"
+    const val ASSERTK = "com.willowtreeapps.assertk:assertk-jvm:${Version.ASSERTK}"
 
     // Mock
     const val MOCKK = "io.mockk:mockk:${Version.MOCKK}"
@@ -49,7 +50,7 @@ object TestLibraryDependency {
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Version.ESPRESSO}"
     const val ESPRESSO_INTENT = "androidx.test.espresso:espresso-intents:${Version.ESPRESSO}"
     const val ESPRESSO_IDLING = "androidx.test.espresso:espresso-idling-resource:${Version.ESPRESSO}"
-    const val CORE_KTX = "androidx.test:core-ktx:${Version.CORE}"
+    const val CORE_KTX = "androidx.test:core-ktx:${Version.KTX_CORE}"
     const val ARCH_CORE = "androidx.arch.core:core-testing:${Version.CORE}"
     const val NAVIGATION = "androidx.navigation:navigation-testing:${LibraryDependency.Version.NAVIGATION_KTX}"
     const val FRAGMENT = "androidx.fragment:fragment-testing:${LibraryDependency.Version.FRAGMENT_KTX}"
