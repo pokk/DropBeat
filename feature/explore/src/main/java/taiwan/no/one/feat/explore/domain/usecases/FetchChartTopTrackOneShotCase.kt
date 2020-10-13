@@ -37,7 +37,7 @@ internal class FetchChartTopTrackOneShotCase(
             // Override the tracks
             tracks.mapIndexed { index, trackEntity ->
                 takeIf { index < moreDetailRange }
-                    ?.takeIf { trackEntity.images?.any { it.text == "cover" } ?: false }
+                    ?.takeIf { trackEntity.images?.find { it.size == "cover" } == null }
                     ?.let { trackEntity.url }
                     ?.let { extraRepo.fetchTrackCover(it, trackEntity) } ?: trackEntity
             }.apply {
