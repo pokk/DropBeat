@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-import config.AndroidConfiguration
 import config.CommonModuleDependency
 import config.androidTestDependencies
 import config.annotationDependencies

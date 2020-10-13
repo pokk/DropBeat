@@ -23,41 +23,12 @@
  */
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import config.AndroidConfiguration
 import config.CommonModuleDependency
 import config.annotationDependencies
 
-plugins {
-    id("com.android.dynamic-feature")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
-    id("androidx.navigation.safeargs.kotlin")
-}
-
 android {
-    compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
-    defaultConfig {
-        minSdkVersion(AndroidConfiguration.MIN_SDK)
-        targetSdkVersion(AndroidConfiguration.TARGET_SDK)
-        versionCode = 1
-        versionName = "1.0"
-        vectorDrawables.useSupportLibrary = true
-        renderscriptTargetApi = AndroidConfiguration.MIN_SDK
-        testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
-        consumerProguardFiles(file("consumer-rules.pro"))
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-                arguments["room.incremental"] = "true"
-                arguments["room.expandProjection"] = "true"
-            }
-        }
-    }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
-
             buildConfigField("String",
                              "SeekSongUriDomain",
                              gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
@@ -78,15 +49,6 @@ android {
                              gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
         }
         getByName("debug") {
-            splits.abi.isEnable = false
-            splits.density.isEnable = false
-            aaptOptions.cruncherEnabled = false
-            isMinifyEnabled = false
-            isTestCoverageEnabled = false
-            // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
-            ext.set("alwaysUpdateBuildId", false)
-            isCrunchPngs = false // Enabled by default for RELEASE build type
-
             buildConfigField("String",
                              "SeekSongUriDomain",
                              gradleLocalProperties(rootDir).getProperty("seek_song_uri_domain"))
@@ -107,17 +69,6 @@ android {
                              gradleLocalProperties(rootDir).getProperty("seek_song_param_2"))
         }
     }
-    dexOptions {
-        jumboMode = true
-        preDexLibraries = true
-        threadCount = 8
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    testOptions { unitTests.apply { isReturnDefaultValues = true } }
-    lintOptions { isAbortOnError = false }
     buildFeatures.viewBinding = true
 }
 

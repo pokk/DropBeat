@@ -42,7 +42,6 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
     defaultConfig {
         applicationId = AndroidConfiguration.ID
         minSdkVersion(AndroidConfiguration.MIN_SDK)
@@ -55,38 +54,15 @@ android {
         testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
         consumerProguardFiles(file("consumer-rules.pro"))
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), file("proguard-rules.pro"))
-        }
-        getByName("debug") {
-            splits.abi.isEnable = false
-            splits.density.isEnable = false
-            aaptOptions.cruncherEnabled = false
-            isMinifyEnabled = false
-            isTestCoverageEnabled = false
-            // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
-            ext.set("alwaysUpdateBuildId", false)
-            isCrunchPngs = false // Enabled by default for RELEASE build type
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), file("proguard-rules.pro"))
-        }
-    }
     sourceSets {
         getByName("main").apply {
             res.srcDirs(*FeatureRes.dirs)
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     packagingOptions {
         exclude("META-INF/atomicfu.kotlin_module")
         exclude("META-INF/kotlinx-coroutines-core.kotlin_module")
     }
-    testOptions { unitTests.apply { isReturnDefaultValues = true } }
-    lintOptions { isAbortOnError = false }
     buildFeatures.viewBinding = true
     dynamicFeatures = CommonModuleDependency.getFeatureModuleName()
 }
