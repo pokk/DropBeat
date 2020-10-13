@@ -221,6 +221,12 @@ formatting:
   AnnotationOnSeparateLine:
     active: true
     autoCorrect: true
+  AnnotationSpacing:
+    active: false
+    autoCorrect: true
+  ArgumentListWrapping:
+    active: false
+    autoCorrect: true
   ChainWrapping:
     active: true
     autoCorrect: true
@@ -384,6 +390,9 @@ naming:
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
+  NonBooleanPropertyPrefixedWithIs:
+    active: false
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
   ObjectPropertyNaming:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
@@ -467,6 +476,8 @@ potential-bugs:
     active: false
   MissingWhenCase:
     active: true
+  NullableToStringCall:
+    active: false
   RedundantElseInWhen:
     active: true
   UnconditionalJumpStatementInLoop:
@@ -488,6 +499,8 @@ potential-bugs:
 
 style:
   active: true
+  ClassOrdering:
+    active: false
   CollapsibleIfStatements:
     active: false
   DataClassContainsFunctions:
@@ -531,6 +544,8 @@ style:
     excludeAnnotatedFunction: ['dagger.Provides']
   LibraryCodeMustSpecifyReturnType:
     active: true
+  LibraryEntitiesShouldNotBePublic:
+    active: false
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
@@ -626,15 +641,21 @@ style:
     allowedNames: '(_|ignored|expected|serialVersionUID)'
   UseArrayLiteralsInAnnotations:
     active: true
+  UseCheckNotNull:
+    active: true
   UseCheckOrError:
     active: true
   UseDataClass:
     active: true
     excludeAnnotatedClasses: []
     allowVars: true
+  UseEmptyCounterpart:
+    active: false
   UseIfInsteadOfWhen:
     active: true
   UseRequire:
+    active: true
+  UseRequireNotNull:
     active: true
   UselessCallOnNotNull:
     active: true
