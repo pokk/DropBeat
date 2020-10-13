@@ -64,7 +64,7 @@ android {
         exclude("META-INF/kotlinx-coroutines-core.kotlin_module")
     }
     buildFeatures.viewBinding = true
-    dynamicFeatures = CommonModuleDependency.getFeatureModuleName()
+    dynamicFeatures = CommonModuleDependency.getDynamicFeatureModules()
 }
 
 androidExtensions {

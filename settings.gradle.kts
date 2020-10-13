@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+// NOTE(jieyi): New sub-project need to be added here!
 include(":app", ":ktx", ":ext", ":widget", ":mediaplayer", ":device", ":core", ":test")
 include(":feature:search",
         ":feature:ranking",
-        "feature:login",
-        "feature:library",
-        "feature:explore",
-        "feature:player",
-        "feature:setting")
+        ":feature:login",
+        ":feature:library",
+        ":feature:explore",
+        ":feature:player",
+        ":feature:setting")

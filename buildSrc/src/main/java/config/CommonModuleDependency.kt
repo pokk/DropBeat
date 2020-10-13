@@ -30,6 +30,7 @@ import kotlin.reflect.full.memberProperties
 private const val FEATURE_PREFIX = ":feature:"
 
 object CommonModuleDependency {
+    // NOTE(jieyi): New sub-project need to be added here!
     const val APP = ":app"
     const val LIB_PURE_EXT = ":ext"
     const val LIB_KTX = ":ktx"
@@ -59,6 +60,11 @@ object CommonModuleDependency {
         .filter { it.startsWith(FEATURE_PREFIX) }
         .toMutableSet()
 
-    fun getFeatureModuleName() = getDynamicFeatureModules()
-        .toMutableSet()
+    fun getFeatureModuleSimpleName() = getDynamicFeatureModules()
+        .map { it.split(":").last() }
+
+    fun getLibraryModuleSimpleName() = getAllModules()
+        .filterNot { it.startsWith(FEATURE_PREFIX) }
+        .filterNot { it == APP || it == LIB_PURE_EXT }
+        .map { it.split(":").last() }
 }
