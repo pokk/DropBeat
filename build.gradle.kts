@@ -65,23 +65,6 @@ allprojects {
         maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
         maven { url = uri("https://dl.bintray.com/kodein-framework/Kodein-DI") }
     }
-
-    tasks {
-        withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-            kotlinOptions {
-                jvmTarget = "1.8"
-                suppressWarnings = false
-                freeCompilerArgs = listOf(
-                    "-Xuse-experimental=kotlin.Experimental",
-                    "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
-                    "-Xuse-experimental=kotlin.ExperimentalContracts",
-                    "-Xuse-experimental=org.mylibrary.ExperimentalMarker",
-                    "-Xallow-result-return-type",
-                    "-Xjvm-default=all"
-                )
-            }
-        }
-    }
 }
 
 subprojects {
@@ -92,9 +75,55 @@ subprojects {
                 plugin("java-library")
                 plugin("kotlin")
             }
-            "widget", "ktx", "device", "core", "mediaplayer", "test" -> {
+            "core", "ktx", "widget", "device", "mediaplayer", "test" -> {
                 plugin("com.android.library")
                 plugin("kotlin-android")
+
+                afterEvaluate {
+                    // BaseExtension is common parent for application, library and test modules
+                    extensions.configure(com.android.build.gradle.BaseExtension::class.java) {
+                        compileSdkVersion(config.AndroidConfiguration.COMPILE_SDK)
+                        defaultConfig {
+                            minSdkVersion(config.AndroidConfiguration.MIN_SDK)
+                            targetSdkVersion(config.AndroidConfiguration.TARGET_SDK)
+                            testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
+                            consumerProguardFiles(file("consumer-rules.pro"))
+                        }
+                        buildTypes {
+                            getByName("release") {
+                                isMinifyEnabled = true
+                                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
+                                              file("proguard-rules.pro"))
+                            }
+                            getByName("debug") {
+                                splits.abi.isEnable = false
+                                splits.density.isEnable = false
+                                aaptOptions.cruncherEnabled = false
+                                isTestCoverageEnabled = true
+                                // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
+                                ext.set("alwaysUpdateBuildId", false)
+                                isCrunchPngs = false // Enabled by default for RELEASE build type
+                            }
+                        }
+                        dexOptions {
+                            jumboMode = true
+                            preDexLibraries = true
+                            threadCount = 8
+                        }
+                        compileOptions {
+                            sourceCompatibility = JavaVersion.VERSION_1_8
+                            targetCompatibility = JavaVersion.VERSION_1_8
+                        }
+                        lintOptions {
+                            isAbortOnError = false
+                            isIgnoreWarnings = true
+                            isQuiet = true
+                        }
+                        testOptions {
+                            unitTests.isReturnDefaultValues = true
+                        }
+                    }
+                }
             }
         }
         if (name == "core") {
@@ -117,12 +146,28 @@ subprojects {
         baseline = file("$rootDir/config/detekt/baseline.xml")
         buildUponDefaultConfig = true
     }
-
-    tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
-        jvmTarget = "1.8"
-        exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
-    }
     //endregion
+
+    tasks {
+        withType<io.gitlab.arturbosch.detekt.Detekt> {
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
+        }
+        withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8.toString()
+                suppressWarnings = false
+                freeCompilerArgs = listOf(
+                    "-Xuse-experimental=kotlin.Experimental",
+                    "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
+                    "-Xuse-experimental=kotlin.ExperimentalContracts",
+                    "-Xuse-experimental=org.mylibrary.ExperimentalMarker",
+                    "-Xallow-result-return-type",
+                    "-Xjvm-default=all"
+                )
+            }
+        }
+    }
 
 //    tasks.whenObjectAdded {
 //        if (

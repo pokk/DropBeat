@@ -77,11 +77,6 @@ android {
             res.srcDirs(*FeatureRes.dirs)
         }
     }
-    dexOptions {
-        jumboMode = true
-        preDexLibraries = true
-        threadCount = 8
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

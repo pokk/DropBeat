@@ -23,22 +23,8 @@
  */
 
 import config.kotlinDependencies
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     kotlinDependencies(config.DepEnvImpl)
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    // We have to add the explicit cast before accessing the options itself.
-    // If we don't, it does not work: "unresolved reference: jvmTarget"
-    val options = this as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-    options.jvmTarget = JavaVersion.VERSION_1_8.toString()
 }

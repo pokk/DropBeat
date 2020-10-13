@@ -22,41 +22,8 @@
  * SOFTWARE.
  */
 
-import config.AndroidConfiguration
 import config.CommonModuleDependency
 import config.kotlinDependencies
-
-android {
-    compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
-    defaultConfig {
-        minSdkVersion(AndroidConfiguration.MIN_SDK)
-        targetSdkVersion(AndroidConfiguration.TARGET_SDK)
-        testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
-        consumerProguardFiles(file("consumer-rules.pro"))
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), file("proguard-rules.pro"))
-        }
-        getByName("debug") {
-            splits.abi.isEnable = false
-            splits.density.isEnable = false
-            aaptOptions.cruncherEnabled = false
-            isMinifyEnabled = false
-            isTestCoverageEnabled = false
-            // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
-            ext.set("alwaysUpdateBuildId", false)
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), file("proguard-rules.pro"))
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    testOptions { unitTests.apply { isReturnDefaultValues = true } }
-    lintOptions { isAbortOnError = false }
-}
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
