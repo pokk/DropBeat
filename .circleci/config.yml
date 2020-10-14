@@ -20,7 +20,7 @@ jobs:
           name: Decode Api URL
           command: echo ${MUSIC_URI} | base64 --decode > ${HOME}/workspace/local.properties
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "presentation/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
           name: Decode Google Services Key
           command: echo ${GOOGLE_SERVICE} | base64 --decode > ${HOME}/workspace/app/google-services.json
@@ -38,7 +38,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradlew
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "presentation/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       #      - run:
       #          name: Run Unit Tests
       #          command: ./gradlew test
@@ -48,14 +48,8 @@ jobs:
       - store_artifacts:
           path: app/build/outputs/apk
           destination: apk
-          environment:
-            TERM: dumb
       - store_artifacts:
           path: app/build/reports
           destination: reports
-          environment:
-            TERM: dumb
       - store_test_results:
           path: app/build/test-results
-          environment:
-            TERM: dumb
