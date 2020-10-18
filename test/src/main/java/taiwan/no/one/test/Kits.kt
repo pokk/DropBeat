@@ -24,9 +24,18 @@
 
 package taiwan.no.one.test
 
+import kotlin.random.Random
+
 object Kits {
+    private val charPool = ('a'..'z') + ('A'..'Z') + ('0'..'9') + ' '
+
     fun openJsonFile(path: String) = javaClass.classLoader
         ?.getResourceAsStream(path)
         ?.bufferedReader()
         ?.use { it.readText() }
+
+    fun getRandomString(length: Int, charPool: List<Char> = Kits.charPool) = (0..length)
+        .map { Random.nextInt(0, charPool.size) }
+        .map(charPool::get)
+        .joinToString("")
 }

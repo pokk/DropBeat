@@ -101,6 +101,8 @@ fun DependencyHandlerScope.testDependencies() {
     DepEnvImpl(TestLibraryDependency.JUNIT)
     DepEnvImpl(TestLibraryDependency.COROUTINE)
     DepEnvImpl(TestLibraryDependency.ESPRESSO_CORE)
+
+    DepEnvImpl(LibraryDependency.JetPack.MATERIAL_DESIGN)
 }
 
 /************************************

@@ -27,6 +27,7 @@ package taiwan.no.one.test.matcher
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
@@ -57,5 +58,16 @@ fun withTextViewStartDrawableSize(height: Int, width: Int) = object : TypeSafeMa
 
     override fun describeTo(description: Description) {
         description.appendText("with textview start drawable bound size should be the same as $height and $width")
+    }
+}
+
+fun hasTextInputLayoutHintText(expectedHintText: String) = object : TypeSafeMatcher<View>() {
+    override fun describeTo(description: Description) {
+        description.appendText("Edit Layout hint should have the same $expectedHintText.")
+    }
+
+    override fun matchesSafely(view: View?): Boolean {
+        val hint = (view as? TextInputLayout)?.hint ?: return false
+        return expectedHintText == hint.toString()
     }
 }

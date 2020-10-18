@@ -25,9 +25,12 @@
 package taiwan.no.one.test.action
 
 import android.view.View
+import android.widget.TextView
 import androidx.test.espresso.PerformException.Builder
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.util.HumanReadables
@@ -56,4 +59,29 @@ fun waitId(viewId: Int, millis: Long = 0L) = object : ViewAction {
             .withCause(TimeoutException())
             .build()
     }
+}
+
+fun waitFor(delay: Long) = object : ViewAction {
+    override fun getConstraints() = isRoot()
+
+    override fun getDescription() = "wait for ${delay}milliseconds"
+
+    override fun perform(uiController: UiController, view: View) {
+        uiController.loopMainThreadForAtLeast(delay)
+    }
+}
+
+fun getText(matcher: ViewInteraction): String {
+    var text = String()
+    matcher.perform(object : ViewAction {
+        override fun getConstraints() = isAssignableFrom(TextView::class.java)
+
+        override fun getDescription() = "Text of the view"
+
+        override fun perform(uiController: UiController, view: View) {
+            val tv = view as TextView
+            text = tv.text.toString()
+        }
+    })
+    return text
 }
