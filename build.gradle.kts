@@ -73,8 +73,8 @@ val modules = CommonModuleDependency.getLibraryModuleSimpleName()
 val features = CommonModuleDependency.getFeatureModuleSimpleName()
 
 subprojects {
-    //region Apply plugin
     apply {
+        //region Apply plugin
         when (this@subprojects.name) {
             "ext" -> {
                 plugin("java-library")
@@ -97,66 +97,66 @@ subprojects {
             plugin("org.jetbrains.kotlin.kapt")
         }
         plugin(config.GradleDependency.DETEKT)
-    }
-    //endregion
+        //endregion
 
-    afterEvaluate {
-        if (this@subprojects.name !in listOf("ext", "feature")) {
-            // BaseExtension is common parent for application, library and test modules
-            extensions.configure(com.android.build.gradle.BaseExtension::class.java) {
-                compileSdkVersion(config.AndroidConfiguration.COMPILE_SDK)
-                defaultConfig {
-                    minSdkVersion(config.AndroidConfiguration.MIN_SDK)
-                    targetSdkVersion(config.AndroidConfiguration.TARGET_SDK)
-                    testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
-                    consumerProguardFiles(file("consumer-rules.pro"))
-                    //region NOTE: This is exceptions, only the library is using room.
-                    if (this@subprojects.name in listOf("library", "search", "ranking")) {
-                        javaCompileOptions {
-                            annotationProcessorOptions {
-                                arguments["room.schemaLocation"] = "$projectDir/schemas"
-                                arguments["room.incremental"] = "true"
-                                arguments["room.expandProjection"] = "true"
+        afterEvaluate {
+            if (this@subprojects.name !in listOf("ext", "feature")) {
+                // BaseExtension is common parent for application, library and test modules
+                extensions.configure(com.android.build.gradle.BaseExtension::class.java) {
+                    compileSdkVersion(config.AndroidConfiguration.COMPILE_SDK)
+                    defaultConfig {
+                        minSdkVersion(config.AndroidConfiguration.MIN_SDK)
+                        targetSdkVersion(config.AndroidConfiguration.TARGET_SDK)
+                        testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
+                        consumerProguardFiles(file("consumer-rules.pro"))
+                        //region NOTE: This is exceptions, only the library is using room.
+                        if (this@subprojects.name in listOf("library", "search", "ranking")) {
+                            javaCompileOptions {
+                                annotationProcessorOptions {
+                                    arguments["room.schemaLocation"] = "$projectDir/schemas"
+                                    arguments["room.incremental"] = "true"
+                                    arguments["room.expandProjection"] = "true"
+                                }
                             }
                         }
+                        //endregion
                     }
-                    //endregion
-                }
-                buildTypes {
-                    getByName("release") {
-                        // This is exceptions.
-                        if (this@subprojects.name !in features) {
-                            isMinifyEnabled = true
+                    buildTypes {
+                        getByName("release") {
+                            // This is exceptions.
+                            if (this@subprojects.name !in features) {
+                                isMinifyEnabled = true
+                            }
+                            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
+                                          file("proguard-rules.pro"))
                         }
-                        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
-                                      file("proguard-rules.pro"))
+                        getByName("debug") {
+                            splits.abi.isEnable = false
+                            splits.density.isEnable = false
+                            aaptOptions.cruncherEnabled = false
+                            isTestCoverageEnabled = true
+                            // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
+                            ext.set("alwaysUpdateBuildId", false)
+                            isCrunchPngs = false // Enabled by default for RELEASE build type
+                        }
                     }
-                    getByName("debug") {
-                        splits.abi.isEnable = false
-                        splits.density.isEnable = false
-                        aaptOptions.cruncherEnabled = false
-                        isTestCoverageEnabled = true
-                        // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
-                        ext.set("alwaysUpdateBuildId", false)
-                        isCrunchPngs = false // Enabled by default for RELEASE build type
+                    dexOptions {
+                        jumboMode = true
+                        preDexLibraries = true
+                        threadCount = 8
                     }
-                }
-                dexOptions {
-                    jumboMode = true
-                    preDexLibraries = true
-                    threadCount = 8
-                }
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_1_8
-                    targetCompatibility = JavaVersion.VERSION_1_8
-                }
-                lintOptions {
-                    isAbortOnError = false
-                    isIgnoreWarnings = true
-                    isQuiet = true
-                }
-                testOptions {
-                    unitTests.isReturnDefaultValues = true
+                    compileOptions {
+                        sourceCompatibility = JavaVersion.VERSION_1_8
+                        targetCompatibility = JavaVersion.VERSION_1_8
+                    }
+                    lintOptions {
+                        isAbortOnError = false
+                        isIgnoreWarnings = true
+                        isQuiet = true
+                    }
+                    testOptions {
+                        unitTests.isReturnDefaultValues = true
+                    }
                 }
             }
         }
