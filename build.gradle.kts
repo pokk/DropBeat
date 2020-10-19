@@ -155,7 +155,10 @@ subprojects {
                         isQuiet = true
                     }
                     testOptions {
-                        unitTests.isReturnDefaultValues = true
+                        unitTests {
+                            it.isReturnDefaultValues = true
+                            it.isIncludeAndroidResources = true
+                        }
                     }
                 }
             }

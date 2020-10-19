@@ -25,6 +25,7 @@
 package taiwan.no.one.dropbeat.core.viewmodel
 
 import android.app.Application
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -32,15 +33,26 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.DI
+import org.kodein.di.DI.Module
 import org.kodein.di.DIAware
-import org.kodein.di.android.x.di
+import org.kodein.di.LateInitDI
 import kotlin.coroutines.CoroutineContext
 
 abstract class BehindAndroidViewModel(application: Application) : AndroidViewModel(application), DIAware {
-    /**
-     * A DI Aware class must be within reach of a [DI] object.
-     */
-    override val di by di()
+    init {
+        (context as? DIAware)?.di?.let { di.baseDI = it }
+    }
+
+    override val di = LateInitDI()
+
+    var module: Module? = null
+        @VisibleForTesting
+        set(value) {
+            if (value == null) return
+            di.baseDI = DI.lazy {
+                import(value)
+            }
+        }
     protected val context get() = getApplication<Application>()
     protected abstract val handle: SavedStateHandle
 
