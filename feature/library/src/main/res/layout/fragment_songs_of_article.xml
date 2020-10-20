@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".presentation.fragments.PlaylistFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/v_supporter"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/roundBottomBackdropImageView"
+        tools:src="@tools:sample/avatars"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back"
+        style="@style/Taiwan.No.One.Back.Button"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_more"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        app:icon="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_back"/>
+
+    <include layout="@layout/merge_article_information"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
+        app:layout_constraintBottom_toTopOf="@id/btn_play_all"
+        app:layout_constraintTop_toBottomOf="@id/ll_information"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_play_all"
+        style="@style/Taiwan.No.One.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_five_unit"
+        android:layout_marginTop="@dimen/md_button_gap_two_unit"
+        android:text="Play All"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/mtv_title"
+        tools:visibility="visible"/>
+
+    <View
+        android:id="@+id/v_supporter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_dp"
+        android:layout_marginTop="@dimen/one_dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/btn_play_all"
+        app:layout_constraintTop_toTopOf="@id/btn_play_all"/>
+
+    <include
+        android:id="@+id/include_favorite"
+        layout="@layout/include_layout_songs_of_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_five_unit"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/btn_play_all"
+        tools:visibility="visible"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
