@@ -22,19 +22,26 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.login.presentation
+package taiwan.no.one.feat.explore
 
 import com.google.auto.service.AutoService
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
-import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
-import taiwan.no.one.feat.login.domain.usecases.LogoutCase
+import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.feat.explore.data.mappers.EntityMapper
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackReq
 
-@AutoService(LoginMethodsProvider::class)
-class MethodsProvider : LoginMethodsProvider, DIAware {
+@AutoService(LibraryMethodsProvider::class)
+class MethodsProvider : ExploreMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
-    private val logoutCase by instance<LogoutCase>()
+    private val fetchTagTopTrackCase by instance<FetchTagTopTrackCase>()
 
-    override suspend fun logout() = runCatching { logoutCase.execute() }
+    override suspend fun getTopTracksOfTag(mbid: String) = runCatching {
+        fetchTagTopTrackCase.execute(FetchTagTopTrackReq(mbid)).tracks.map {
+            EntityMapper.exploreToSimpleTrackEntity(it)
+        }
+    }
 }

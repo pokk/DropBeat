@@ -22,30 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.feat.login
 
-import android.content.Context
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.singleton
-import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
-import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import com.google.auto.service.AutoService
+import org.kodein.di.DIAware
+import org.kodein.di.instance
+import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
-import taiwan.no.one.dropbeat.provider.ModuleProvider
-import java.util.ServiceLoader
+import taiwan.no.one.feat.login.domain.usecases.LogoutCase
 
-object FeatModuleHelper {
-    fun kodeinModules(context: Context) = ServiceLoader.load(ModuleProvider::class.java).map { it.provide(context) }
+@AutoService(LoginMethodsProvider::class)
+class MethodsProvider : LoginMethodsProvider, DIAware {
+    override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
+    private val logoutCase by instance<LogoutCase>()
 
-    fun provide() = DI.Module("Feature Method Provider Module") {
-        bind<ExploreMethodsProvider>() with singleton {
-            ServiceLoader.load(ExploreMethodsProvider::class.java).toList().first()
-        }
-        bind<LibraryMethodsProvider>() with singleton {
-            ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first()
-        }
-        bind<LoginMethodsProvider>() with singleton {
-            ServiceLoader.load(LoginMethodsProvider::class.java).toList().first()
-        }
-    }
+    override suspend fun logout() = runCatching { logoutCase.execute() }
 }

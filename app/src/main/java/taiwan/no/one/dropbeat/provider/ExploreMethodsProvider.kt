@@ -22,30 +22,12 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.dropbeat.provider
 
-import android.content.Context
-import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.singleton
-import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
-import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
-import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
-import taiwan.no.one.dropbeat.provider.ModuleProvider
-import java.util.ServiceLoader
+import androidx.annotation.WorkerThread
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 
-object FeatModuleHelper {
-    fun kodeinModules(context: Context) = ServiceLoader.load(ModuleProvider::class.java).map { it.provide(context) }
-
-    fun provide() = DI.Module("Feature Method Provider Module") {
-        bind<ExploreMethodsProvider>() with singleton {
-            ServiceLoader.load(ExploreMethodsProvider::class.java).toList().first()
-        }
-        bind<LibraryMethodsProvider>() with singleton {
-            ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first()
-        }
-        bind<LoginMethodsProvider>() with singleton {
-            ServiceLoader.load(LoginMethodsProvider::class.java).toList().first()
-        }
-    }
+interface ExploreMethodsProvider {
+    @WorkerThread
+    suspend fun getTopTracksOfTag(mbid: String): Result<List<SimpleTrackEntity>>
 }
