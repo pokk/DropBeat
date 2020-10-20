@@ -40,7 +40,7 @@ internal class FetchMusicOneShotCase(
                 val retriever = MediaMetadataRetriever().apply {
                     setDataSource(it.url, hashMapOf())
                 }
-                val time = retriever.extractMetadata(METADATA_KEY_DURATION).toLong() / 1000
+                val time = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong() ?: 0 / 1000
                 it.copy(length = time.toInt())
             }
             else {

@@ -44,20 +44,11 @@ plugins {
 android {
     defaultConfig {
         applicationId = AndroidConfiguration.ID
-        minSdkVersion(AndroidConfiguration.MIN_SDK)
-        targetSdkVersion(AndroidConfiguration.TARGET_SDK)
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi = AndroidConfiguration.MIN_SDK
         renderscriptSupportModeEnabled = true
-        testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
-        consumerProguardFiles(file("consumer-rules.pro"))
-    }
-    sourceSets {
-        getByName("main").apply {
-            res.srcDirs(*FeatureRes.dirs)
-        }
     }
     packagingOptions {
         exclude("META-INF/atomicfu.kotlin_module")

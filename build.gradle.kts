@@ -22,7 +22,11 @@
  * SOFTWARE.
  */
 
+import com.android.build.gradle.BaseExtension
+import config.AndroidConfiguration
 import config.CommonModuleDependency
+import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
@@ -102,12 +106,12 @@ subprojects {
         afterEvaluate {
             if (this@subprojects.name !in listOf("ext", "feature")) {
                 // BaseExtension is common parent for application, library and test modules
-                extensions.configure(com.android.build.gradle.BaseExtension::class.java) {
-                    compileSdkVersion(config.AndroidConfiguration.COMPILE_SDK)
+                extensions.configure(BaseExtension::class.java) {
+                    compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
                     defaultConfig {
-                        minSdkVersion(config.AndroidConfiguration.MIN_SDK)
-                        targetSdkVersion(config.AndroidConfiguration.TARGET_SDK)
-                        testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
+                        minSdkVersion(AndroidConfiguration.MIN_SDK)
+                        targetSdkVersion(AndroidConfiguration.TARGET_SDK)
+                        testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
                         consumerProguardFiles(file("consumer-rules.pro"))
                         //region NOTE: This is exceptions, only the library is using room.
                         if (this@subprojects.name in listOf("library", "search", "ranking")) {
@@ -180,11 +184,11 @@ subprojects {
     //endregion
 
     tasks {
-        withType<io.gitlab.arturbosch.detekt.Detekt> {
+        withType<Detekt> {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
             exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
         }
-        withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        withType<KotlinCompile> {
             kotlinOptions {
                 jvmTarget = JavaVersion.VERSION_1_8.toString()
                 suppressWarnings = false
