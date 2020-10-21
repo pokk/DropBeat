@@ -50,11 +50,11 @@
         android:layout_marginTop="@dimen/md_five_unit"
         android:gravity="fill_vertical"
         android:rotation="-90"
+        android:text="Songs"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline3"
         app:layout_constraintEnd_toEndOf="@id/g_line_title"
         app:layout_constraintStart_toStartOf="@id/g_line_title"
-        app:layout_constraintTop_toBottomOf="@id/btn_play_all"
-        tools:text="Songs"/>
+        app:layout_constraintTop_toBottomOf="@id/btn_play_all"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_musics"

@@ -87,13 +87,5 @@
         app:layout_constraintBottom_toBottomOf="@id/btn_play_all"
         app:layout_constraintTop_toTopOf="@id/btn_play_all"/>
 
-    <include
-        android:id="@+id/include_favorite"
-        layout="@layout/merge_layout_songs_of_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/md_five_unit"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/btn_play_all"
-        tools:visibility="visible"/>
+    <include layout="@layout/merge_layout_songs_of_type"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
