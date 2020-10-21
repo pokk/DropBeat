@@ -32,8 +32,8 @@ import com.google.gson.Gson
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.dropbeat.di.UtilModules
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.KEY_EXCEPTION
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_KEY_RESULT_OF_SONGS
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_TAG_OF_NAME
@@ -43,7 +43,10 @@ internal class GetSongsOfTagWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params), DIAware {
-    override val di by DI.lazy { import(FeatModuleHelper.provide()) }
+    override val di by DI.lazy {
+        import(UtilModules.provide(context))
+        import(FeatModuleHelper.provide())
+    }
     private val gson by instance<Gson>()
     private val exploreProvider by instance<ExploreMethodsProvider>()
 
@@ -55,7 +58,7 @@ internal class GetSongsOfTagWorker(
         }
         return try {
             val entities = exploreProvider.getTopTracksOfTag(tagName)
-            val json = gson.toJson(entities, Array<SimpleTrackEntity>::class.java)
+            val json = gson.toJson(entities)
             Result.success(data.putString(PARAM_KEY_RESULT_OF_SONGS, json).build())
         }
         catch (e: Exception) {

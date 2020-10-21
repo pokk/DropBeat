@@ -76,9 +76,7 @@
         android:layout_marginHorizontal="@dimen/md_five_unit"
         android:layout_marginTop="@dimen/md_button_gap_two_unit"
         android:text="Play All"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/mtv_title"
-        tools:visibility="visible"/>
+        app:layout_constraintTop_toBottomOf="@id/mtv_title"/>
 
     <View
         android:id="@+id/v_supporter"
@@ -91,7 +89,7 @@
 
     <include
         android:id="@+id/include_favorite"
-        layout="@layout/include_layout_songs_of_type"
+        layout="@layout/merge_layout_songs_of_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_five_unit"

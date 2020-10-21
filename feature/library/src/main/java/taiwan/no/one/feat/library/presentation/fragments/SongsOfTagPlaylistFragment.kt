@@ -33,6 +33,8 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo.State
 import androidx.work.WorkManager
+import com.devrapid.kotlinknifer.gone
+import com.google.android.material.transition.MaterialSharedAxis
 import com.google.gson.Gson
 import org.kodein.di.factory
 import org.kodein.di.instance
@@ -44,10 +46,12 @@ import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_GET_SONGS_OF_TAG
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfTagBinding
+import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import java.lang.ref.WeakReference
 
 internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
+    private val merge get() = MergeLayoutSongsOfTypeBinding.bind(binding.root)
     private val navArgs by navArgs<SongsOfTagPlaylistFragmentArgs>()
     private val workManager by instance<WorkManager>()
     private val worker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_GET_SONGS_OF_TAG)
@@ -56,9 +60,17 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     //region Variable of Recycler View
     private val adapter by lazy { TrackAdapter() }
     private val layoutManager: () -> LinearLayoutManager by provider {
-        LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
+        LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.VERTICAL)
     }
     //endregion
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
 
     override fun bindLiveData() {
         workManager.getWorkInfosByTagLiveData(WorkerConstant.Tag.TAG_SONGS_OF_TAG).observe(this) {
@@ -72,11 +84,14 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
                 State.FAILED -> Unit
                 else -> Unit
             }
+            merge.pbProgress.gone()
         }
     }
 
     override fun viewComponentBinding() {
-        binding.includeFavorite.rvMusics.apply {
+        addStatusBarHeightMarginTop(binding.btnBack)
+        binding.mtvTitle.text = navArgs.name
+        merge.rvMusics.apply {
             if (adapter == null) {
                 adapter = this@SongsOfTagPlaylistFragment.adapter
             }
