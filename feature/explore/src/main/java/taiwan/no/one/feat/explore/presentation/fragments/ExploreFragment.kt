@@ -61,9 +61,10 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val playlistLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
-    private val exploreAdapter by lazy { ExploreAdapter(emptyList()) }
+    private val exploreAdapter by lazy { ExploreAdapter() }
 
-    // NOTE(Jieyi): 8/11/20 Because of some reasons, viewbinding can't use for `include` xml from other modules
+    // NOTE(Jieyi): 8/11/20 Because the layout xml is not in the module,
+    //  viewbinding can't use for `include` xml from other modules.
     private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
     private val includeTopTrack get() = find<ConstraintLayout>(R.id.include_top_track)
     private val includeTopArtist get() = find<ConstraintLayout>(R.id.include_top_artist)
@@ -131,7 +132,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topTags.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
-                it.tags?.takeIf { it.isNotEmpty() }?.also { exploreAdapter.data = it }
+                it.tags?.takeIf { it.isNotEmpty() }?.also {
+                    exploreAdapter.data = it
+                }
             }.onFailure { loge(it) }
         }
         vm.topArtists.observe(viewLifecycleOwner) { res ->

@@ -34,9 +34,7 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.Explore
 import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 import kotlin.properties.Delegates
 
-internal class ExploreAdapter(
-    private val itemList: List<TagEntity>,
-) : RecyclerView.Adapter<ExploreViewHolder>(), AutoUpdatable {
+internal class ExploreAdapter : RecyclerView.Adapter<ExploreViewHolder>(), AutoUpdatable {
     var data by Delegates.observable(emptyList<TagEntity>()) { _, oldValue, newValue ->
         autoNotify(oldValue, newValue) { o, n -> o.name == n.name }
     }
@@ -48,9 +46,9 @@ internal class ExploreAdapter(
         .let { ExploreViewHolder(ItemExploreBinding.bind(it)) }
 
     override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) =
-        holder.initView(itemList[position], this)
+        holder.initView(data[position], this)
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = data.size
 
     fun setOnClickListener(listener: (entity: TagEntity) -> Unit) {
         clickListener = listener
