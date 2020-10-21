@@ -40,7 +40,7 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
-import taiwan.no.one.dropbeat.di.Constant
+import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_GET_SONGS_OF_TAG
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfTagBinding
@@ -50,7 +50,7 @@ import java.lang.ref.WeakReference
 internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
     private val navArgs by navArgs<SongsOfTagPlaylistFragmentArgs>()
     private val workManager by instance<WorkManager>()
-    private val worker: (Data) -> OneTimeWorkRequest by factory(Constant.TAG_FEAT_EXPLORE_RETROFIT)
+    private val worker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_GET_SONGS_OF_TAG)
     private val gson by instance<Gson>()
 
     //region Variable of Recycler View
