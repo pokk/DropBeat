@@ -137,7 +137,6 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         mergeBinding.mtvRvTitle.doOnPreDraw {
             val halfWidth = it.width / 2
             // anchor 3 is top margin, it didn't define inside setMargin

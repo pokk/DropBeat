@@ -37,7 +37,7 @@ import org.kodein.di.DIAware
 import org.kodein.di.android.di
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.databinding.ActivitySplashBinding
-import taiwan.no.one.dropbeat.presentation.PresentationModules
+import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_INIT_DATA
 import taiwan.no.one.dropbeat.presentation.viewmodels.SplashViewModel
 
 internal class SplashActivity : AppCompatActivity(), DIAware {
@@ -48,7 +48,7 @@ internal class SplashActivity : AppCompatActivity(), DIAware {
     private var binding: ActivitySplashBinding? = null
     private val vm by viewModels<SplashViewModel>()
     private val workManager by instance<WorkManager>()
-    private val worker by instance<OneTimeWorkRequest>(PresentationModules.TAG_WORKER_INIT_DATA)
+    private val worker by instance<OneTimeWorkRequest>(TAG_WORKER_INIT_DATA)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

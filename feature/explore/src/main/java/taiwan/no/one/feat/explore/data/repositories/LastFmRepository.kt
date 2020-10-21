@@ -108,5 +108,5 @@ internal class LastFmRepository(
 
     override suspend fun fetchTagTopArtist(mbid: String) = remote.getTagTopArtist(mbid).topArtists
 
-    override suspend fun fetchTagTopTrack(mbid: String) = remote.getTagTopTrack(mbid).track
+    override suspend fun fetchTagTopTrack(tagName: String) = remote.getTagTopTrack(tagName).track
 }

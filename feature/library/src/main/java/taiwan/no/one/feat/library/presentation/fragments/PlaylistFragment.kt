@@ -66,7 +66,6 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     //region Variable of Recycler View
     private val playlistAdapter by lazy { TrackAdapter() }
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
-
     //endregion
 
     private val navArgs by navArgs<PlaylistFragmentArgs>()
@@ -94,7 +93,6 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     }
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         addStatusBarHeightMarginTop(binding.btnBack)
     }
 

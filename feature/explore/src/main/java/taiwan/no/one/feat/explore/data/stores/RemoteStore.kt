@@ -103,10 +103,12 @@ internal class RemoteStore(
     override suspend fun getTagTopArtist(mbid: String) =
         lastFmService.retrieveTagTopArtist(infoQuery(Constants.LASTFM_PARAM_TAG_GET_TOP_ARTISTS, mbid))
 
-    override suspend fun getTagTopTrack(mbid: String) =
-        lastFmService.retrieveTagTopTrack(infoQuery(Constants.LASTFM_PARAM_TAG_GET_TOP_TRACKS, mbid))
+    override suspend fun getTagTopTrack(tagName: String) =
+        lastFmService.retrieveTagTopTrack(combineLastFmQuery(Constants.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
+            put("tag", tagName)
+        })
 
-    private fun combineLastFmQuery(method: String, block: Map<String, String>.() -> Unit) = hashMapOf(
+    private fun combineLastFmQuery(method: String, block: MutableMap<String, String>.() -> Unit) = hashMapOf(
         Constants.LASTFM_QUERY_TOKEN to lastFmToken,
         Constants.LASTFM_QUERY_METHOD to method,
         Constants.LASTFM_QUERY_FORMAT to "json",
@@ -114,11 +116,11 @@ internal class RemoteStore(
     ).apply(block)
 
     private fun chartQuery(method: String, page: Int, limit: Int) = combineLastFmQuery(method) {
-        Constants.LASTFM_QUERY_PAGE to page
-        Constants.LASTFM_QUERY_LIMIT to limit
+        put(Constants.LASTFM_QUERY_PAGE, page.toString())
+        put(Constants.LASTFM_QUERY_LIMIT, limit.toString())
     }
 
     private fun infoQuery(method: String, mbid: String) = combineLastFmQuery(method) {
-        Constants.LASTFM_QUERY_MBID to mbid
+        put(Constants.LASTFM_QUERY_MBID, mbid)
     }
 }

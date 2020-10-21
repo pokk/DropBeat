@@ -27,50 +27,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/explore_fragment">
+    app:startDestination="@id/songs_of_tag_fragment">
 
     <fragment
-        android:id="@+id/explore_fragment"
-        android:name="taiwan.no.one.feat.explore.presentation.fragments.ExploreFragment"
-        android:label="ExploreFragment"
-        tools:layout="@layout/fragment_explore">
-        <action
-            android:id="@+id/action_explore_to_playlist"
-            app:destination="@id/nav_playlist_detail"/>
-        <action
-            android:id="@+id/action_explore_to_player"
-            app:destination="@id/nav_player"/>
-        <action
-            android:id="@+id/action_explore_to_playlist_songs_of_tag"
-            app:destination="@id/nav_playlist_songs_of_tag"/>
-    </fragment>
-
-    <include-dynamic
-        android:id="@+id/nav_playlist_detail"
-        app:graphResName="nav_detail"
-        app:moduleName="library">
-        <argument
-            android:name="playlistId"
-            android:defaultValue="-1"
-            app:argType="integer"/>
-        <argument
-            android:name="songs"
-            android:defaultValue="@null"
-            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
-            app:nullable="true"/>
-    </include-dynamic>
-
-    <include-dynamic
-        android:id="@+id/nav_playlist_songs_of_tag"
-        app:graphResName="nav_songs_of_tag"
-        app:moduleName="library">
+        android:id="@+id/songs_of_tag_fragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.SongsOfTagPlaylistFragment"
+        android:label="fragment_songs_of_tag"
+        tools:layout="@layout/fragment_songs_of_tag">
         <argument
             android:name="name"
             app:argType="string"/>
-    </include-dynamic>
-
-    <include-dynamic
-        android:id="@+id/nav_player"
-        app:graphResName="nav_player"
-        app:moduleName="player"/>
+    </fragment>
 </navigation>

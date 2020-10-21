@@ -61,6 +61,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val playlistLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
+    private val exploreAdapter by lazy { ExploreAdapter(emptyList()) }
 
     // NOTE(Jieyi): 8/11/20 Because of some reasons, viewbinding can't use for `include` xml from other modules
     private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
@@ -74,9 +75,11 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     }
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         addStatusBarHeightMarginTop(binding.mtvTitle)
         binding.includeExplore.rvMusics.apply {
+            if (adapter == null) {
+                adapter = exploreAdapter
+            }
             if (layoutManager == null) {
                 layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
             }
@@ -112,6 +115,14 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
     }
 
+    override fun componentListenersBinding() {
+        exploreAdapter.setOnClickListener {
+            it.name?.takeIf { it.isNotEmpty() }?.also {
+                findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylistSongsOfTag(it))
+            }
+        }
+    }
+
     override fun rendered(savedInstanceState: Bundle?) {
         vm.playlists.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
@@ -120,7 +131,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topTags.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
-                binding.includeExplore.rvMusics.adapter = ExploreAdapter(it.tags.orEmpty())
+                it.tags?.takeIf { it.isNotEmpty() }?.also { exploreAdapter.data = it }
             }.onFailure { loge(it) }
         }
         vm.topArtists.observe(viewLifecycleOwner) { res ->

@@ -38,14 +38,14 @@ object FeatModuleHelper {
     fun kodeinModules(context: Context) = ServiceLoader.load(ModuleProvider::class.java).map { it.provide(context) }
 
     fun provide() = DI.Module("Feature Method Provider Module") {
-        bind<ExploreMethodsProvider>() with singleton {
-            ServiceLoader.load(ExploreMethodsProvider::class.java).toList().first()
-        }
         bind<LibraryMethodsProvider>() with singleton {
             ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first()
         }
         bind<LoginMethodsProvider>() with singleton {
             ServiceLoader.load(LoginMethodsProvider::class.java).toList().first()
+        }
+        bind<ExploreMethodsProvider>() with singleton {
+            ServiceLoader.load(ExploreMethodsProvider::class.java).toList().first()
         }
     }
 }

@@ -29,19 +29,15 @@ import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
-import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackReq
 
-@AutoService(LibraryMethodsProvider::class)
+@AutoService(ExploreMethodsProvider::class)
 class MethodsProvider : ExploreMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val fetchTagTopTrackCase by instance<FetchTagTopTrackCase>()
 
-    override suspend fun getTopTracksOfTag(mbid: String) = runCatching {
-        fetchTagTopTrackCase.execute(FetchTagTopTrackReq(mbid)).tracks.map {
-            EntityMapper.exploreToSimpleTrackEntity(it)
-        }
-    }
+    override suspend fun getTopTracksOfTag(tagName: String) =
+        fetchTagTopTrackCase.execute(FetchTagTopTrackReq(tagName)).tracks.map(EntityMapper::exploreToSimpleTrackEntity)
 }

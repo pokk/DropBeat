@@ -29,5 +29,5 @@ import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 
 interface ExploreMethodsProvider {
     @WorkerThread
-    suspend fun getTopTracksOfTag(mbid: String): Result<List<SimpleTrackEntity>>
+    suspend fun getTopTracksOfTag(tagName: String): List<SimpleTrackEntity>
 }

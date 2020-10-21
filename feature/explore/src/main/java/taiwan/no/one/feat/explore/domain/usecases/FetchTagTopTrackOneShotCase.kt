@@ -31,8 +31,8 @@ internal class FetchTagTopTrackOneShotCase(
     private val repository: LastFmRepo,
 ) : FetchTagTopTrackCase() {
     override suspend fun acquireCase(parameter: FetchTagTopTrackReq?) = parameter.ensure {
-        repository.fetchTagTopTrack(mbid)
+        repository.fetchTagTopTrack(tagName)
     }
 
-    internal data class Request(val mbid: String) : RequestValues
+    internal data class Request(val tagName: String) : RequestValues
 }

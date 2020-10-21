@@ -173,7 +173,6 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
     //endregion
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         addStatusBarHeightMarginTop(binding.btnClose)
         binding.apply {
             (player.curPlayingInfo ?: playlist.first()).also(this@PlayerFragment::setMusicInfo)

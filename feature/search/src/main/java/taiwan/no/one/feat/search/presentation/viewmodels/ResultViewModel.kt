@@ -49,7 +49,7 @@ internal class ResultViewModel(
     val musics = _musics.toLiveData()
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val addOrUpdateResult = _addOrUpdateResult.toLiveData()
-    private var curPage = 0
+    private var curPage = 1
     var curKeyword = ""
         private set
 
@@ -57,7 +57,7 @@ internal class ResultViewModel(
         if (keyword != null) {
             curKeyword = keyword
         }
-        if (page >= 0) {
+        if (page > 0) {
             curPage = page
         }
         if (curKeyword.isBlank()) return@launch

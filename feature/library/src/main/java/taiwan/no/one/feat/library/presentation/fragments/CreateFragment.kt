@@ -46,7 +46,6 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
     }
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         binding.tietPlaylistName.addTextChangedListener {
             binding.btnCreate.text = if (it.isNullOrBlank()) "Skip" else "Create"
         }

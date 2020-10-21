@@ -32,17 +32,14 @@ import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_FILE_PATH
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_STREAM_DATA
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 
 internal class AddSongToDatabaseWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params), DIAware {
-    companion object Constant {
-        const val PARAM_STREAM_DATA = "songs streaming data"
-        const val PARAM_FILE_PATH = "song file local path"
-    }
-
     override val di by DI.lazy { import(FeatModuleHelper.provide()) }
     private val libraryProvider by instance<LibraryMethodsProvider>()
 

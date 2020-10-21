@@ -39,11 +39,9 @@ import org.kodein.di.LateInitDI
 import kotlin.coroutines.CoroutineContext
 
 abstract class BehindAndroidViewModel(application: Application) : AndroidViewModel(application), DIAware {
-    init {
-        (context as? DIAware)?.di?.let { di.baseDI = it }
-    }
-
     override val di = LateInitDI()
+    protected val context get() = getApplication<Application>()
+    protected abstract val handle: SavedStateHandle
 
     var module: Module? = null
         @VisibleForTesting
@@ -53,8 +51,10 @@ abstract class BehindAndroidViewModel(application: Application) : AndroidViewMod
                 import(value)
             }
         }
-    protected val context get() = getApplication<Application>()
-    protected abstract val handle: SavedStateHandle
+
+    init {
+        (context as? DIAware)?.di?.let { di.baseDI = it }
+    }
 
     protected inline fun launchBehind(
         context: CoroutineContext = Dispatchers.IO,

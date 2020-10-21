@@ -150,7 +150,6 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     }
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         addStatusBarHeightMarginTop(binding.btnBack)
         binding.rvSns.apply {
             if (adapter == null) {

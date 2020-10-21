@@ -31,10 +31,18 @@ import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
 import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.ExploreViewHolder
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
+import kotlin.properties.Delegates
 
 internal class ExploreAdapter(
     private val itemList: List<TagEntity>,
-) : RecyclerView.Adapter<ExploreViewHolder>() {
+) : RecyclerView.Adapter<ExploreViewHolder>(), AutoUpdatable {
+    var data by Delegates.observable(emptyList<TagEntity>()) { _, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { o, n -> o.name == n.name }
+    }
+    var clickListener: ((TagEntity) -> Unit)? = null
+        private set
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
         .inflate(R.layout.item_explore, parent, false)
         .let { ExploreViewHolder(ItemExploreBinding.bind(it)) }
@@ -43,4 +51,8 @@ internal class ExploreAdapter(
         holder.initView(itemList[position], this)
 
     override fun getItemCount() = itemList.size
+
+    fun setOnClickListener(listener: (entity: TagEntity) -> Unit) {
+        clickListener = listener
+    }
 }

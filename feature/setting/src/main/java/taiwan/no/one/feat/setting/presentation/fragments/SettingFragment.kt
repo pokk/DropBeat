@@ -82,7 +82,6 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
     }
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         addStatusBarHeightMarginTop(binding.btnBack)
         // Set the Text
         listOf(

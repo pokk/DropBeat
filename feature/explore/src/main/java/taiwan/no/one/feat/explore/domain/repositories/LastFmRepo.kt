@@ -76,6 +76,6 @@ internal interface LastFmRepo : Repository {
 
     suspend fun fetchTagTopArtist(mbid: String): TopArtistInfoEntity.ArtistsEntity
 
-    suspend fun fetchTagTopTrack(mbid: String): TopTrackInfoEntity.TracksEntity
+    suspend fun fetchTagTopTrack(tagName: String): TopTrackInfoEntity.TracksEntity
     //endregion
 }

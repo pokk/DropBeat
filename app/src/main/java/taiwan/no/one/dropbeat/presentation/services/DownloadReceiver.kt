@@ -38,9 +38,13 @@ import org.kodein.di.factory
 import org.kodein.di.instance
 import org.kodein.di.on
 import taiwan.no.one.dropbeat.DropBeatApp
-import taiwan.no.one.dropbeat.presentation.PresentationModules
-import taiwan.no.one.dropbeat.presentation.services.workers.AddSongToDatabaseWorker
-import taiwan.no.one.dropbeat.presentation.services.workers.AddSongToPlaylistWorker
+import taiwan.no.one.dropbeat.di.Constant
+import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_ADD_SONG_TO_DB
+import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_ADD_SONG_TO_PLAYLIST
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_FILE_PATH
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_PLAYLIST_ID
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_SONG_PATH
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_STREAM_DATA
 
 internal class DownloadReceiver : BroadcastReceiver(), DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
@@ -66,16 +70,16 @@ internal class DownloadReceiver : BroadcastReceiver(), DIAware {
 
     private fun addSongsAndFavoriteList(songsStream: String, localUri: String) {
         val dbData = Data.Builder()
-            .putString(AddSongToDatabaseWorker.PARAM_STREAM_DATA, songsStream)
-            .putStringArray(AddSongToDatabaseWorker.PARAM_FILE_PATH, arrayOf(localUri))
+            .putString(PARAM_STREAM_DATA, songsStream)
+            .putStringArray(PARAM_FILE_PATH, arrayOf(localUri))
             .build()
         val playlistData = Data.Builder()
-            .putInt(AddSongToPlaylistWorker.PARAM_PLAYLIST_ID, 1) // Download id is 1.
-            .putString(AddSongToPlaylistWorker.PARAM_SONG_PATH, localUri)
+            .putInt(PARAM_PLAYLIST_ID, 1) // Download id is 1.
+            .putString(PARAM_SONG_PATH, localUri)
             .build()
         val workManager by instance<WorkManager>()
-        val dbWorker: (Data) -> OneTimeWorkRequest by factory(PresentationModules.TAG_WORKER_ADD_SONG_TO_DB)
-        val playlistWorker: (Data) -> OneTimeWorkRequest by factory(PresentationModules.TAG_WORKER_ADD_SONG_TO_PLAYLIST)
+        val dbWorker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_ADD_SONG_TO_DB)
+        val playlistWorker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_ADD_SONG_TO_PLAYLIST)
 
         workManager
             .beginWith(dbWorker(dbData))

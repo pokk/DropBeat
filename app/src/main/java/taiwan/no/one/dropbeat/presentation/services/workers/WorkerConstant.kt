@@ -22,20 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
+package taiwan.no.one.dropbeat.presentation.services.workers
 
-import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
-import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
-import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+object WorkerConstant {
+    const val PARAM_STREAM_DATA = "songs streaming data"
+    const val PARAM_FILE_PATH = "song file local path"
 
-internal class ExploreViewHolder(
-    private val binding: ItemExploreBinding,
-) : ViewHolderBinding<TagEntity, ExploreAdapter>(binding.root) {
-    override fun initView(entity: TagEntity, adapter: ExploreAdapter) {
-        binding.apply {
-            mtvTitle.text = entity.name
-            root.setOnClickListener { adapter.clickListener?.invoke(entity) }
-        }
+    const val PARAM_PLAYLIST_ID = "playlist id"
+    const val PARAM_SONG_PATH = "song path"
+
+    const val PARAM_TAG_OF_NAME = "name of songs of tag"
+    const val PARAM_KEY_RESULT_OF_SONGS = "json file of result"
+
+    const val KEY_EXCEPTION = "exception of failing"
+
+    object Tag {
+        const val TAG_SONGS_OF_TAG = "tag of songs of tags"
     }
 }

@@ -26,30 +26,40 @@ package taiwan.no.one.dropbeat.presentation.services.workers
 
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.WorkerParameters
+import com.google.gson.Gson
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
-import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_PLAYLIST_ID
-import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_SONG_PATH
-import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.KEY_EXCEPTION
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_KEY_RESULT_OF_SONGS
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_TAG_OF_NAME
+import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 
-internal class AddSongToPlaylistWorker(
+internal class GetSongsOfTagWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params), DIAware {
     override val di by DI.lazy { import(FeatModuleHelper.provide()) }
-    private val libraryProvider by instance<LibraryMethodsProvider>()
+    private val gson by instance<Gson>()
+    private val exploreProvider by instance<ExploreMethodsProvider>()
 
     override suspend fun doWork(): Result {
-        val (playlistId, songPath) = inputData.run {
-            getInt(PARAM_PLAYLIST_ID, -1) to getString(PARAM_SONG_PATH)
+        val tagName = inputData.getString(PARAM_TAG_OF_NAME)
+        val data = Data.Builder()
+        if (tagName.isNullOrBlank()) {
+            return Result.failure(data.putString(KEY_EXCEPTION, "parameters aren't found").build())
         }
-        if (playlistId == -1 || songPath == null) {
-            return Result.failure()
+        return try {
+            val entities = exploreProvider.getTopTracksOfTag(tagName)
+            val json = gson.toJson(entities, Array<SimpleTrackEntity>::class.java)
+            Result.success(data.putString(PARAM_KEY_RESULT_OF_SONGS, json).build())
         }
-        val res = libraryProvider.addSongToPlaylist(songPath, playlistId)
-        return if (res) Result.success() else Result.failure()
+        catch (e: Exception) {
+            Result.failure(data.putString(KEY_EXCEPTION, e.message).build())
+        }
     }
 }

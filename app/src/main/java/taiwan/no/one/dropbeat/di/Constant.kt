@@ -30,4 +30,9 @@ object Constant {
     const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
     const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
     const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"
+
+    const val TAG_WORKER_INIT_DATA = "worker for initializing"
+    const val TAG_WORKER_ADD_SONG_TO_DB = "worker for adding a song to the database"
+    const val TAG_WORKER_ADD_SONG_TO_PLAYLIST = "worker for adding a song to a playlist"
+    const val TAG_WORKER_GET_SONGS_OF_TAG = "worker for getting songs of tag"
 }

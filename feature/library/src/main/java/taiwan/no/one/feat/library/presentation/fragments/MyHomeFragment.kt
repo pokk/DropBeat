@@ -122,7 +122,6 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     }
 
     override fun viewComponentBinding() {
-        super.viewComponentBinding()
         addStatusBarHeightMarginTop(mergeTopControllerBinding.mtvTitle)
         includePlaylist.apply {
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
