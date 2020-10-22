@@ -24,10 +24,12 @@
 
 package taiwan.no.one.feat.library.presentation.fragments
 
+import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
+import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
@@ -36,6 +38,14 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 
 internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
 
     override fun bindLiveData() {
         vm.result.observe(this) {
@@ -46,6 +56,7 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
     }
 
     override fun viewComponentBinding() {
+        addStatusBarHeightMarginTop(binding.btnBack)
         binding.tietPlaylistName.addTextChangedListener {
             binding.btnCreate.text = if (it.isNullOrBlank()) "Skip" else "Create"
         }
@@ -54,12 +65,13 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
     override fun componentListenersBinding() {
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.btnCreate.setOnClickListener {
-            if (binding.tietPlaylistName.text.isNullOrBlank()) {
-                findNavController().navigateUp()
+            val playlistName = if (binding.tietPlaylistName.text.isNullOrBlank()) {
+                "unnamed playlist"
             }
             else {
-                vm.createPlaylist(PlayListEntity(name = binding.tietPlaylistName.text.toString()))
+                binding.tietPlaylistName.text.toString()
             }
+            vm.createPlaylist(PlayListEntity(name = playlistName))
         }
     }
 }

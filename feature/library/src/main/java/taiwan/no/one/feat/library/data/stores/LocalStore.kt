@@ -70,7 +70,7 @@ internal class LocalStore(
 
     override suspend fun getTheNewestPlaylist() = playlistDao.getLatestPlaylist()
 
-    override suspend fun createPlaylist(playlist: PlayListEntity) = playlistDao.insertIfNotExist(playlist)
+    override suspend fun createPlaylist(playlist: PlayListEntity) = playlistDao.insertIfExist(playlist)
 
     override suspend fun modifyPlaylist(playlist: PlayListEntity) = playlistDao.update(playlist)
 

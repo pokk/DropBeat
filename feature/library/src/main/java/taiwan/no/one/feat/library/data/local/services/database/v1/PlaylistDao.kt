@@ -25,8 +25,6 @@
 package taiwan.no.one.feat.library.data.local.services.database.v1
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import taiwan.no.one.core.data.local.room.BaseDao
@@ -50,6 +48,9 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
 
     @Query("SELECT * FROM table_playlist ORDER BY id DESC LIMIT 1")
     abstract suspend fun getLatestPlaylist(): LibraryEntity.PlayListEntity
+
+    @Query("SELECT * FROM table_playlist WHERE name LIKE :name")
+    abstract suspend fun getPlaylist(name: String): List<LibraryEntity.PlayListEntity>
 
     /**
      * Get a data from the playlist table.
@@ -90,8 +91,25 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         update(playlist.copy(songIds = songIds, count = songIds.size))
     }
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertIfNotExist(entity: LibraryEntity.PlayListEntity)
+    @Transaction
+    open suspend fun insertIfExist(entity: LibraryEntity.PlayListEntity) {
+        val playlistExactlySameName = getPlaylist(entity.name)
+        val playlistWitSameName = getPlaylist("${entity.name} %")
+            // Get only the same name playlists with number.
+            .filter {
+                val number = it.name.substring(entity.name.length + 1) // 1 is for the space.
+                number.toIntOrNull() != null
+            }
+        val similarNameSize = playlistExactlySameName.size + playlistWitSameName.size
+        val newEntity = if (similarNameSize == 0) {
+            entity
+        }
+        else {
+            val nextNumber = String.format("%02d", similarNameSize)
+            entity.copy(name = "${entity.name} $nextNumber")
+        }
+        insert(newEntity)
+    }
 
     /**
      * Delete a playlist by [id] from the database.
