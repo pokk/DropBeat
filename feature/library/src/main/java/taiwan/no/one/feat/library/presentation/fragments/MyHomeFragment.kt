@@ -157,6 +157,9 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     }
 
     override fun componentListenersBinding() {
+        playlistAdapter.setOnClickListener {
+            findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(it.id))
+        }
         mergeTopControllerBinding.apply {
             btnLogin.setOnClickListener {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToLoginGraph())
