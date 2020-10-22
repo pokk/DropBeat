@@ -106,6 +106,7 @@ internal class RemoteStore(
     override suspend fun getTagTopTrack(tagName: String) =
         lastFmService.retrieveTagTopTrack(combineLastFmQuery(Constants.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
             put("tag", tagName)
+            put(Constants.LASTFM_QUERY_LIMIT, "20")
         })
 
     private fun combineLastFmQuery(method: String, block: MutableMap<String, String>.() -> Unit) = hashMapOf(

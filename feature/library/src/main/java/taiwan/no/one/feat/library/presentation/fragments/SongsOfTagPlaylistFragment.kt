@@ -45,6 +45,8 @@ import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_GET_SONGS_OF_TAG
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.KEY_EXCEPTION
+import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_KEY_RESULT_OF_SONGS
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfTagBinding
 import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
@@ -54,8 +56,12 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     private val merge get() = MergeLayoutSongsOfTypeBinding.bind(binding.root)
     private val navArgs by navArgs<SongsOfTagPlaylistFragmentArgs>()
     private val workManager by instance<WorkManager>()
-    private val worker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_GET_SONGS_OF_TAG)
+    private val oneTimeWorker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_GET_SONGS_OF_TAG)
     private val gson by instance<Gson>()
+    private val worker by lazy {
+        val request = Data.Builder().putString(WorkerConstant.PARAM_TAG_OF_NAME, navArgs.name).build()
+        oneTimeWorker(request)
+    }
 
     //region Variable of Recycler View
     private val adapter by lazy { TrackAdapter() }
@@ -73,15 +79,17 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     }
 
     override fun bindLiveData() {
-        workManager.getWorkInfosByTagLiveData(WorkerConstant.Tag.TAG_SONGS_OF_TAG).observe(this) {
-            val workInfo = it.firstOrNull() ?: return@observe
+        workManager.getWorkInfoByIdLiveData(worker.id).observe(this) { workInfo ->
             when (workInfo.state) {
                 State.SUCCEEDED -> {
-                    val json = workInfo.outputData.getString(WorkerConstant.PARAM_KEY_RESULT_OF_SONGS)
+                    val json = workInfo.outputData.getString(PARAM_KEY_RESULT_OF_SONGS)
                     val result = gson.fromJson(json, Array<SimpleTrackEntity>::class.java).toList()
                     adapter.data = result
                 }
-                State.FAILED -> Unit
+                State.FAILED -> {
+                    val errorMsg = workInfo.outputData.getString(KEY_EXCEPTION)
+                    errorMsg?.let(::showError)
+                }
                 else -> Unit
             }
             merge.pbProgress.gone()
@@ -106,7 +114,6 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        val request = Data.Builder().putString(WorkerConstant.PARAM_TAG_OF_NAME, navArgs.name).build()
-        workManager.enqueue(worker(request))
+        workManager.enqueue(worker)
     }
 }

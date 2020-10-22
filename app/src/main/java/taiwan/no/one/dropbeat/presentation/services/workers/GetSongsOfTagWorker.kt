@@ -28,6 +28,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
+import com.devrapid.kotlinknifer.logw
 import com.google.gson.Gson
 import org.kodein.di.DI
 import org.kodein.di.DIAware
@@ -59,6 +60,7 @@ internal class GetSongsOfTagWorker(
         return try {
             val entities = exploreProvider.getTopTracksOfTag(tagName)
             val json = gson.toJson(entities)
+            logw(json)
             Result.success(data.putString(PARAM_KEY_RESULT_OF_SONGS, json).build())
         }
         catch (e: Exception) {
