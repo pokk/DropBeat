@@ -28,6 +28,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.EditText
+import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,7 +37,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.invisible
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.recyclerview.itemdecorator.VerticalItemDecorator
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.Job
@@ -48,6 +48,7 @@ import org.kodein.di.instance
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.core.helpers.DownloadHelper
 import taiwan.no.one.dropbeat.core.helpers.TouchHelper
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.search.R
@@ -60,9 +61,7 @@ import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapt
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.SongViewModel
-import taiwan.no.one.ktx.recyclerview.contains
 import taiwan.no.one.ktx.view.afterTextChanges
-import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 import java.lang.ref.WeakReference
 
@@ -81,9 +80,6 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     //region Variable of Recycler View
     private val searchHistoryAdapter by lazy { HistoryAdapter() }
     private val musicAdapter by lazy { ResultAdapter() }
-    private val musicItemDecoration by lazy {
-        VerticalItemDecorator(resources.getDimension(WidgetResDimen.md_three_unit).toInt(), 0)
-    }
     private val rvMusics get() = mergeBinding.rvMusics
     private val loadMoreListener by instance<LinearLoadMoreScrollListener>()
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
@@ -228,9 +224,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             musicAdapter.clear()
         }
         // Remove the item decoration.
-        if (musicItemDecoration in rvMusics) {
-            rvMusics.removeItemDecoration(musicItemDecoration)
-        }
+//        if (musicItemDecoration in rvMusics) {
+//        }
         // 2. Set the adapter for displaying the history.
         rvMusics.apply {
             if (adapter != searchHistoryAdapter) {
@@ -247,9 +242,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         // Post-action for hiding the soft keyboard.
         requireView().hideSoftKeyboard()
         // Add the item decoration.
-        if (musicItemDecoration !in rvMusics) {
-            rvMusics.addItemDecoration(musicItemDecoration)
-        }
+//        if (musicItemDecoration !in rvMusics) {
+//        }
         // Reset the status.
         loadMoreListener.reset()
         // 2. Set the adapter for displaying the result.
@@ -297,7 +291,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
 
     private fun clickedOnSongItem(song: SongEntity) {
         val filename = "${song.artist} - ${song.title}"
-//        DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
+        DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
     }
 
     private fun clickedOnHistoryItem(keyword: String) {

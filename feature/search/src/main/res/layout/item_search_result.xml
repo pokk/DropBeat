@@ -30,6 +30,7 @@
     android:id="@+id/cl_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
     tools:context="taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder"
     tools:showIn="@layout/fragment_search_index">
 
@@ -37,7 +38,9 @@
         android:id="@+id/siv_album_thumb"
         android:layout_width="@dimen/md_four_unit"
         android:layout_height="@dimen/md_four_unit"
+        android:layout_marginVertical="@dimen/md_two_half_unit"
         android:layout_marginTop="@dimen/md_zero_unit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundFullOneHalfUnit"
@@ -50,10 +53,11 @@
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Caption1"
         android:textColor="@color/colorText"
-        app:layout_constraintBottom_toTopOf="@id/mtv_album_name"
+        app:layout_constraintBottom_toTopOf="@id/mtv_artist_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/siv_album_thumb"
-        app:layout_constraintTop_toTopOf="@id/siv_album_thumb"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="@tools:sample/full_names"/>
 
     <com.google.android.material.textview.MaterialTextView
@@ -62,7 +66,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/pastel_pink"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@id/siv_album_thumb"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/mtv_album_name"
         app:layout_constraintStart_toStartOf="@id/mtv_album_name"
         app:layout_constraintTop_toBottomOf="@id/mtv_album_name"

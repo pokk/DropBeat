@@ -40,7 +40,7 @@ internal class CreateDefaultPlaylistOneShotCase(
         val names = list.map(PlayListEntity::name)
         ids.zip(names)
             .map { (id, name) -> PlayListEntity(id, name) }
-            .forEach { repository.addPlaylist(it) }
+            .forEach { repository.addPlaylist(it, true) }
         return true
     }
 

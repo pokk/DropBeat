@@ -47,7 +47,8 @@ internal class PlaylistRepository(
 
     override suspend fun fetchTheNewestPlaylist() = local.getTheNewestPlaylist()
 
-    override suspend fun addPlaylist(playlist: PlayListEntity) = local.createPlaylist(playlist)
+    override suspend fun addPlaylist(playlist: PlayListEntity, ifExistAndIgnore: Boolean) =
+        local.createPlaylist(playlist, ifExistAndIgnore)
 
     override suspend fun updatePlaylist(playlist: PlayListEntity) = local.modifyPlaylist(playlist)
 

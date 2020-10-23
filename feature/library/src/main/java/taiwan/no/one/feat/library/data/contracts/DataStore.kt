@@ -48,7 +48,7 @@ internal interface DataStore {
 
     suspend fun getTheNewestPlaylist(): PlayListEntity
 
-    suspend fun createPlaylist(playlist: PlayListEntity)
+    suspend fun createPlaylist(playlist: PlayListEntity, ifExistAndIgnore: Boolean)
 
     suspend fun modifyPlaylist(playlist: PlayListEntity)
 

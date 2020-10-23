@@ -25,6 +25,8 @@
 package taiwan.no.one.feat.library.data.local.services.database.v1
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import taiwan.no.one.core.data.local.room.BaseDao
@@ -90,6 +92,9 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         }.toList()
         update(playlist.copy(songIds = songIds, count = songIds.size))
     }
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertIfNotExist(entity: LibraryEntity.PlayListEntity)
 
     @Transaction
     open suspend fun insertIfExist(entity: LibraryEntity.PlayListEntity) {

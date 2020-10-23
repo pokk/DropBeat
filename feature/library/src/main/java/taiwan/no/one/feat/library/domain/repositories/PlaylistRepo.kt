@@ -45,7 +45,7 @@ internal interface PlaylistRepo : Repository {
 
     suspend fun fetchTheNewestPlaylist(): PlayListEntity
 
-    suspend fun addPlaylist(playlist: PlayListEntity)
+    suspend fun addPlaylist(playlist: PlayListEntity, ifExistAndIgnore: Boolean = false)
 
     suspend fun updatePlaylist(playlist: PlayListEntity)
 
