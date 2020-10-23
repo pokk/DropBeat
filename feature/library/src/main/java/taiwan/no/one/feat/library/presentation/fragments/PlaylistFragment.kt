@@ -100,6 +100,9 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                 if (it && navArgs.playlistId == 2) {
                     willRemoveEntity?.let(playlistAdapter::removeItem)
                     willRemoveEntity = null
+                    if (playlistAdapter.data.isEmpty()) {
+                        displayNoSongs()
+                    }
                 }
             }
         }
@@ -161,6 +164,8 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     private fun displayNoSongs() {
         find<View>(AppResId.pb_progress).gone()
+        find<View>(R.id.include_favorite).gone()
+        binding.btnPlayAll.gone()
         binding.vsNoSongs.takeIf { !it.isVisible }?.inflate()
         noSongsBinding.btnSearch.setOnClickListener {
             // Go to the search page.
