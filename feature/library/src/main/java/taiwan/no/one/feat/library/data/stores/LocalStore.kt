@@ -53,6 +53,8 @@ internal class LocalStore(
         return songDao.getMusics(playlist.songIds)
     }
 
+    override suspend fun modifyMusic(songId: Int, isFavorite: Boolean) = songDao.updateFavorite(songId, isFavorite)
+
     override suspend fun createMusics(songs: List<SongEntity>) = songDao.insert(*songs.toTypedArray())
 
     override suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int) =

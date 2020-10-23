@@ -32,6 +32,7 @@ import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 internal object EntityMapper {
     fun exploreToSimpleTrackEntity(entity: TrackEntity) = entity.let {
         SimpleTrackEntity(
+            0,
             it.name.orEmpty(),
             it.artist?.name.orEmpty(),
             it.url.orEmpty(),
@@ -46,6 +47,7 @@ internal object EntityMapper {
 
     fun artistToSimpleTrackEntity(entity: ArtistWithMoreDetailEntity) = entity.let { (artist, album) ->
         SimpleTrackEntity(
+            0,
             album?.popularTrackThisWeek?.name.orEmpty(),
             artist.name.orEmpty(),
             album?.popularTrackThisWeek?.url.orEmpty(),

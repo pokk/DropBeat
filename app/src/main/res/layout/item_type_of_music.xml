@@ -60,7 +60,7 @@
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Caption1"
         android:textColor="@color/colorText"
         app:layout_constraintBottom_toTopOf="@id/mtv_album_name"
-        app:layout_constraintEnd_toStartOf="@id/btn_option"
+        app:layout_constraintEnd_toStartOf="@id/btn_favorite"
         app:layout_constraintStart_toEndOf="@id/siv_album_thumb"
         app:layout_constraintTop_toTopOf="@id/siv_album_thumb"
         tools:text="@tools:sample/full_names"/>
@@ -76,6 +76,15 @@
         app:layout_constraintStart_toStartOf="@id/mtv_album_name"
         app:layout_constraintTop_toBottomOf="@id/mtv_album_name"
         tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_favorite"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_heart"
+        app:iconTint="?colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_option"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_option"

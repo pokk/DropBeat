@@ -89,6 +89,9 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
     @Query("SELECT * FROM table_song WHERE title=:track AND artist=:artist")
     abstract suspend fun getMusics(track: String, artist: String): LibraryEntity.SongEntity?
 
+    @Query("UPDATE table_song SET is_favorite=:isFavorite WHERE id=:id")
+    abstract suspend fun updateFavorite(id: Int, isFavorite: Boolean)
+
     /**
      * Remove a music from local music table.
      *

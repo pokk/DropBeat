@@ -34,4 +34,6 @@ internal interface SongRepo {
     suspend fun getMusic(remoteUri: String? = null, localUri: String? = null): SongEntity
 
     suspend fun addMusics(songs: List<SongEntity>)
+
+    suspend fun updateMusic(songId: Int, isFavorite: Boolean)
 }

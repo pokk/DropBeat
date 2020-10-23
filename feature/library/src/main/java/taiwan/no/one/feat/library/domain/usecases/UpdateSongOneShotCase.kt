@@ -22,9 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat
+package taiwan.no.one.feat.library.domain.usecases
 
-typealias AppResId = R.id
-typealias AppResString = R.string
-typealias AppResLayout = R.layout
-typealias AppResDrawable = R.drawable
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.feat.library.domain.repositories.SongRepo
+
+internal class UpdateSongOneShotCase(
+    private val repository: SongRepo,
+) : UpdateSongCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        if (songId != null && isFavorite != null) {
+            repository.updateMusic(songId, isFavorite)
+        }
+        true
+    }
+
+    internal data class Request(
+        val song: SimpleTrackEntity? = null,
+        val songId: Int? = null,
+        val isFavorite: Boolean? = null,
+    ) : RequestValues
+}

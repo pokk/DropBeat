@@ -72,6 +72,8 @@ internal data class LibraryEntity(
         @ColumnInfo(name = "cover_uri")
         val coverUri: String = DEFAULT_STR,
         val duration: Int = 0,
+        @ColumnInfo(name = "is_favorite")
+        val isFavorite: Boolean = false,
         @Embedded
         val time: TimeEntity = TimeEntity(),
         // ↓↓↓ If downloaded ↓↓↓

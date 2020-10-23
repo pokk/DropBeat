@@ -41,6 +41,8 @@ import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
+import taiwan.no.one.feat.library.domain.usecases.UpdateSongCase
+import taiwan.no.one.feat.library.domain.usecases.UpdateSongReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class PlaylistViewModel(
@@ -51,8 +53,9 @@ internal class PlaylistViewModel(
     private val fetchPlaylistCase by instance<FetchPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
-    private val _resPlaylist by lazy { ResultLiveData<Boolean>() }
-    val result = _resPlaylist.toLiveData()
+    private val updateSongCase by instance<UpdateSongCase>()
+    private val _result by lazy { ResultLiveData<Boolean>() }
+    val result = _result.toLiveData()
     private val _playlist by lazy { ResultLiveData<PlayListEntity>() }
     val playlist = _playlist.toLiveData()
 
@@ -63,14 +66,18 @@ internal class PlaylistViewModel(
     fun getPlaylist(playlistId: Int) = getSongs(playlistId)
 
     fun createPlaylist(playlist: PlayListEntity) = viewModelScope.launch {
-        _resPlaylist.value = runCatching { addPlaylistCase.execute(AddPlaylistReq(playlist)) }
+        _result.value = runCatching { addPlaylistCase.execute(AddPlaylistReq(playlist)) }
     }
 
     fun updatePlaylist(playlistId: Int, playlistName: String) = viewModelScope.launch {
-        _resPlaylist.value = runCatching { updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, playlistName)) }
+        _result.value = runCatching { updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, playlistName)) }
     }
 
     fun createSongs(songs: List<SongEntity>) = viewModelScope.launch {
-        _resPlaylist.value = runCatching { addSongsCase.execute(AddSongsReq(songs)) }
+        _result.value = runCatching { addSongsCase.execute(AddSongsReq(songs)) }
+    }
+
+    fun updateSong(songId: Int, isFavorite: Boolean) = viewModelScope.launch {
+        _result.value = runCatching { updateSongCase.execute(UpdateSongReq(songId = songId, isFavorite = isFavorite)) }
     }
 }

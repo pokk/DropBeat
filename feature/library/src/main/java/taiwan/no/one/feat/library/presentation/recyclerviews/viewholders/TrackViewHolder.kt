@@ -24,7 +24,9 @@
 
 package taiwan.no.one.feat.library.presentation.recyclerviews.viewholders
 
+import androidx.core.content.ContextCompat
 import coil.loadAny
+import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
@@ -39,8 +41,21 @@ internal class TrackViewHolder(
             sivAlbumThumb.loadAny(entity.thumbUri)
             mtvAlbumName.text = entity.name
             mtvArtistName.text = entity.artist
+            setFavoriteIcon(entity.isFavorite)
             btnOption.setOnClickListener { adapter.optionListener?.invoke() }
+            btnFavorite.setOnClickListener {
+                entity.isFavorite = !entity.isFavorite
+                setFavoriteIcon(entity.isFavorite)
+                adapter.favoriteListener?.invoke(entity)
+            }
             root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
+    }
+
+    private fun setFavoriteIcon(isFavorite: Boolean) {
+        binding.btnFavorite.icon = ContextCompat.getDrawable(
+            context,
+            if (isFavorite) AppResDrawable.ic_heart_solid else AppResDrawable.ic_heart
+        )
     }
 }

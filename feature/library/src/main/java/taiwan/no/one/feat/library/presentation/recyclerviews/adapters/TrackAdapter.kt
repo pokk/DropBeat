@@ -42,6 +42,8 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
         private set
     var optionListener: (() -> Unit)? = null
         private set
+    var favoriteListener: ((SimpleTrackEntity) -> Unit)? = null
+        private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
@@ -59,5 +61,9 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
 
     fun setOptionClickListener(listener: () -> Unit) {
         optionListener = listener
+    }
+
+    fun setFavoriteClickListener(listener: (SimpleTrackEntity) -> Unit) {
+        favoriteListener = listener
     }
 }

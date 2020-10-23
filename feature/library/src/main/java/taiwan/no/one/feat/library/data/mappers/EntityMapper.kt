@@ -31,6 +31,7 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 internal object EntityMapper {
     fun libraryToSimpleTrackEntity(entity: SongEntity) = entity.let {
         SimpleTrackEntity(
+            it.id,
             it.title,
             it.artist,
             it.uri,
@@ -38,7 +39,7 @@ internal object EntityMapper {
             it.coverUri,
             DEFAULT_STR,
             it.duration,
-            false,
+            it.isFavorite,
             it.hasOwn,
         )
     }

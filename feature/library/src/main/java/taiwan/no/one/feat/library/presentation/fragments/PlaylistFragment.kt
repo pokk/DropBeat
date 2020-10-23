@@ -99,7 +99,11 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     override fun componentListenersBinding() {
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.btnMore.setOnClickListener { showMoreMenu(binding.btnMore) }
-        playlistAdapter.setOnClickListener {}
+        playlistAdapter.apply {
+            setOnClickListener {}
+            setOptionClickListener { }
+            setFavoriteClickListener { vm.updateSong(it.id, it.isFavorite) }
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

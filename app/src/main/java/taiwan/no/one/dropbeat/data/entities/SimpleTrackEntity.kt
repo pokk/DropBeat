@@ -34,6 +34,7 @@ import kotlinx.android.parcel.Parcelize
 @Keep
 @Parcelize
 data class SimpleTrackEntity(
+    val id: Int,
     val name: String,
     val artist: String,
     val uri: String,
@@ -41,6 +42,6 @@ data class SimpleTrackEntity(
     val thumbUri: String,
     val lyricUri: String,
     val duration: Int,
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
     val isOwn: Boolean,
 ) : Parcelable
