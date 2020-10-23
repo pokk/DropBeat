@@ -34,6 +34,8 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
  * remote service to access the data.
  */
 internal class RemoteStore : DataStore {
+    override suspend fun getMusic(songId: Int) = UnsupportedOperation()
+
     override suspend fun getMusic(remoteUri: String?, localUri: String?) = UnsupportedOperation()
 
     override suspend fun getMusics(playlistId: Int) = UnsupportedOperation()
@@ -42,7 +44,9 @@ internal class RemoteStore : DataStore {
 
     override suspend fun createMusics(songs: List<SongEntity>) = UnsupportedOperation()
 
-    override suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int) = UnsupportedOperation()
+    override suspend fun createMusic(song: SongEntity, playlistId: Int) = UnsupportedOperation()
+
+    override suspend fun removeMusic(id: Int, playlistId: Int) = UnsupportedOperation()
 
     override suspend fun removeMusic(id: Int) = UnsupportedOperation()
 

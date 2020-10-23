@@ -39,32 +39,14 @@ import java.util.Date
  */
 @Dao
 internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
-    /**
-     * Insert a data if there's the same data inside the database, it will be replaced.
-     *
-     * @param newData
-     */
-    @Transaction
-    open suspend fun insertBy(newData: LibraryEntity.SongEntity, addOrMinus: Boolean) {
-        val existMusic = getMusics(newData.title, newData.artist)
-        var updatedData = newData
-        // Update the download date if the data isn't download information.
-        if (!newData.hasOwn || newData.hasOwn && existMusic?.hasOwn == true) {
-            updatedData = newData.copy(downloadedAt = Date(0),
-                                       lastListenAt = if (!updatedData.hasOwn) {
-                                           updatedData.lastListenAt
-                                       }
-                                       else {
-                                           existMusic?.lastListenAt ?: updatedData.lastListenAt
-                                       })
-        }
-    }
-
     @Query("SELECT * FROM table_song WHERE local_uri=:path")
     abstract suspend fun getMusicByLocal(path: String): LibraryEntity.SongEntity?
 
     @Query("SELECT * FROM table_song WHERE uri=:path")
     abstract suspend fun getMusicByRemote(path: String): LibraryEntity.SongEntity?
+
+    @Query("SELECT * FROM table_song WHERE id=:id")
+    abstract suspend fun getMusicBy(id: Int): LibraryEntity.SongEntity
 
     /**
      * Get all data from the local music table.
@@ -88,6 +70,27 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
      */
     @Query("SELECT * FROM table_song WHERE title=:track AND artist=:artist")
     abstract suspend fun getMusics(track: String, artist: String): LibraryEntity.SongEntity?
+
+    /**
+     * Insert a data if there's the same data inside the database, it will be replaced.
+     *
+     * @param newData
+     */
+    @Transaction
+    open suspend fun insertBy(newData: LibraryEntity.SongEntity, addOrMinus: Boolean) {
+        val existMusic = getMusics(newData.title, newData.artist)
+        var updatedData = newData
+        // Update the download date if the data isn't download information.
+        if (!newData.hasOwn || newData.hasOwn && existMusic?.hasOwn == true) {
+            updatedData = newData.copy(downloadedAt = Date(0),
+                                       lastListenAt = if (!updatedData.hasOwn) {
+                                           updatedData.lastListenAt
+                                       }
+                                       else {
+                                           existMusic?.lastListenAt ?: updatedData.lastListenAt
+                                       })
+        }
+    }
 
     @Query("UPDATE table_song SET is_favorite=:isFavorite WHERE id=:id")
     abstract suspend fun updateFavorite(id: Int, isFavorite: Boolean)

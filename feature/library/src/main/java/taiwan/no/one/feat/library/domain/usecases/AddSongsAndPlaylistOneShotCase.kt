@@ -64,7 +64,7 @@ internal class AddSongsAndPlaylistOneShotCase(
                     it.localUri.isNotEmpty() -> songRepository.getMusic(localUri = it.localUri)
                     else -> throw ParameterNotMatchException()
                 }
-                playlistRepository.addMusicToPlaylist(track, playlistId)
+                playlistRepository.addMusic(track, playlistId)
             }
         }
         true

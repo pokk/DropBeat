@@ -116,6 +116,14 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         insert(newEntity)
     }
 
+    @Transaction
+    open suspend fun deleteSongBy(id: Int, songId: Int) {
+        val playlist = getPlaylist(id)
+        val songIds = playlist.songIds.toMutableList()
+        songIds.remove(songId)
+        update(playlist.copy(songIds = songIds, count = songIds.size))
+    }
+
     /**
      * Delete a playlist by [id] from the database.
      *

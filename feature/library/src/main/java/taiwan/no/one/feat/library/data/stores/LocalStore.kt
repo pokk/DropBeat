@@ -40,6 +40,8 @@ internal class LocalStore(
     private val playlistDao: PlaylistDao,
     private val songDao: SongDao,
 ) : DataStore {
+    override suspend fun getMusic(songId: Int) = songDao.getMusicBy(songId)
+
     override suspend fun getMusic(remoteUri: String?, localUri: String?) = when {
         remoteUri != null -> songDao.getMusicByRemote(remoteUri)
                              ?: throw NotFoundException("Couldn't find the track by the remote uri path.")
@@ -57,8 +59,10 @@ internal class LocalStore(
 
     override suspend fun createMusics(songs: List<SongEntity>) = songDao.insert(*songs.toTypedArray())
 
-    override suspend fun createMusicToPlaylist(song: SongEntity, playlistId: Int) =
+    override suspend fun createMusic(song: SongEntity, playlistId: Int) =
         playlistDao.updateBy(playlistId, listOf(song.id))
+
+    override suspend fun removeMusic(id: Int, playlistId: Int) = playlistDao.deleteSongBy(playlistId, id)
 
     override suspend fun removeMusic(id: Int) = songDao.deleteBy(id)
 

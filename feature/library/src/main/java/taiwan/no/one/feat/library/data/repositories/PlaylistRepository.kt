@@ -35,11 +35,9 @@ internal class PlaylistRepository(
 ) : PlaylistRepo {
     override suspend fun fetchMusics(playlistId: Int) = local.getMusics(playlistId)
 
-    override suspend fun addMusicToPlaylist(song: SongEntity, playlistId: Int) =
-        local.createMusicToPlaylist(song, playlistId)
+    override suspend fun addMusic(song: SongEntity, playlistId: Int) = local.createMusic(song, playlistId)
 
-    override suspend fun deleteMusic(playlistId: Int?, playlist: PlayListEntity?) =
-        local.removePlaylist(playlistId, playlist)
+    override suspend fun deleteMusic(id: Int, playlistId: Int) = local.removeMusic(id, playlistId)
 
     override suspend fun fetchPlaylist(playlistId: Int) = local.getPlaylist(playlistId)
 

@@ -36,11 +36,20 @@ internal class UpdateSongOneShotCase(
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         if (songId != null && isFavorite != null) {
             songRepo.updateMusic(songId, isFavorite)
+            val song = songRepo.getMusic(songId)
+            if (isFavorite) {
+                // Add into the favorite playlist.
+                playlistRepo.addMusic(song, 2)
+            }
+            else {
+                // Remove the song from the favorite playlist.
+                playlistRepo.deleteMusic(songId, 2)
+            }
         }
         true
     }
 
-    internal data class Request(
+    internal class Request(
         val song: SimpleTrackEntity? = null,
         val songId: Int? = null,
         val isFavorite: Boolean? = null,
