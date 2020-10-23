@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.ranking.domain.usecases
 
+import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
@@ -31,11 +32,9 @@ import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.Brief
 
 internal typealias FetchMusicRankCase = OneShotUsecase<List<SongEntity>, FetchMusicRankReq>
 internal typealias FetchMusicRankReq = FetchMusicRankOneShotCase.Request
-internal typealias FetchDetailOfRankingsCase = OneShotUsecase<List<BriefRankEntity>, FetchDetailOfRankingsReq>
-internal typealias FetchDetailOfRankingsReq = FetchDetailOfRankingsOneShotCase.Request
+internal typealias FetchDetailOfRankingsCase = OneShotUsecase<List<BriefRankEntity>, NonRequest>
 
-internal typealias FetchRankIdsCase = OneShotUsecase<List<RankingIdEntity>, FetchRankIdsReq>
-internal typealias FetchRankIdsReq = FetchRankIdsOneShotCase.Request
+internal typealias FetchRankIdsCase = OneShotUsecase<List<RankingIdEntity>, NonRequest>
 internal typealias AddRankIdsCase = OneShotUsecase<Boolean, AddRankIdsReq>
 internal typealias AddRankIdsReq = AddRankIdsOneShotCase.Request
 internal typealias UpdateRankItemCase = OneShotUsecase<Boolean, UpdateRankItemReq>

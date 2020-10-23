@@ -24,13 +24,11 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class FetchAllPlaylistsOneShotCase(
     private val repository: PlaylistRepo,
 ) : FetchAllPlaylistsCase() {
-    override suspend fun acquireCase(parameter: Request?) = repository.fetchPlaylists()
-
-    class Request : RequestValues
+    override suspend fun acquireCase(parameter: NonRequest?) = repository.fetchPlaylists()
 }

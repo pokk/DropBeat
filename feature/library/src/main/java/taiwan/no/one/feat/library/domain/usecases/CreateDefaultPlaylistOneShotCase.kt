@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.data.extensions.parseObjectFromJson
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
@@ -33,7 +33,7 @@ import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 internal class CreateDefaultPlaylistOneShotCase(
     private val repository: PlaylistRepo,
 ) : CreateDefaultPlaylistCase() {
-    override suspend fun acquireCase(parameter: Request?): Boolean {
+    override suspend fun acquireCase(parameter: NonRequest?): Boolean {
         val list = DropBeatApp.appContext
                        .parseObjectFromJson<List<PlayListEntity>>("json/default_playlist.json") ?: throw Exception()
         val ids = list.map(PlayListEntity::id)
@@ -43,6 +43,4 @@ internal class CreateDefaultPlaylistOneShotCase(
             .forEach { repository.addPlaylist(it, true) }
         return true
     }
-
-    class Request : RequestValues
 }

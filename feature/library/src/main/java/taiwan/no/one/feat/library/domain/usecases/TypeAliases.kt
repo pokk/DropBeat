@@ -24,20 +24,19 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
+import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 
 internal typealias FetchPlaylistCase = OneShotUsecase<PlayListEntity, FetchPlaylistReq>
 internal typealias FetchPlaylistReq = FetchPlaylistOneShotCase.Request
-internal typealias FetchAllPlaylistsCase = OneShotUsecase<List<PlayListEntity>, FetchAllPlaylistsReq>
-internal typealias FetchAllPlaylistsReq = FetchAllPlaylistsOneShotCase.Request
+internal typealias FetchAllPlaylistsCase = OneShotUsecase<List<PlayListEntity>, NonRequest>
 internal typealias AddPlaylistCase = OneShotUsecase<Boolean, AddPlaylistReq>
 internal typealias AddPlaylistReq = AddPlaylistOneShotCase.Request
 internal typealias UpdatePlaylistCase = OneShotUsecase<Boolean, UpdatePlaylistReq>
 internal typealias UpdatePlaylistReq = UpdatePlaylistOneShotCase.Request
-internal typealias DeletePlaylistCase = OneShotUsecase<Boolean, DeletePlaylistReq>
-internal typealias DeletePlaylistReq = DeletePlaylistOneShotCase.Request
+internal typealias DeletePlaylistCase = OneShotUsecase<Boolean, NonRequest>
 
 internal typealias FetchSongCase = OneShotUsecase<SongEntity, FetchSongReq>
 internal typealias FetchSongReq = FetchSongOneShotCase.Request
@@ -50,5 +49,4 @@ internal typealias AddSongsAndPlaylistReq = AddSongsAndPlaylistOneShotCase.Reque
 internal typealias UpdateSongCase = OneShotUsecase<Boolean, UpdateSongReq>
 internal typealias UpdateSongReq = UpdateSongOneShotCase.Request
 
-internal typealias CreateDefaultPlaylistCase = OneShotUsecase<Boolean, CreateDefaultPlaylistReq>
-internal typealias CreateDefaultPlaylistReq = CreateDefaultPlaylistOneShotCase.Request
+internal typealias CreateDefaultPlaylistCase = OneShotUsecase<Boolean, NonRequest>

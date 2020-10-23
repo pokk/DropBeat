@@ -65,7 +65,7 @@ internal object DomainModules : ModuleProvider {
         bind<FetchIsInThePlaylistCase>() with singleton { FetchIsInThePlaylistOneShotCase(instance(), instance()) }
         bind<AddSongsCase>() with singleton { AddSongsOneShotCase(instance()) }
         bind<AddSongsAndPlaylistCase>() with singleton { AddSongsAndPlaylistOneShotCase(instance(), instance()) }
-        bind<UpdateSongCase>() with singleton { UpdateSongOneShotCase(instance()) }
+        bind<UpdateSongCase>() with singleton { UpdateSongOneShotCase(instance(), instance()) }
         bind<CreateDefaultPlaylistCase>() with singleton { CreateDefaultPlaylistOneShotCase(instance()) }
     }
 }

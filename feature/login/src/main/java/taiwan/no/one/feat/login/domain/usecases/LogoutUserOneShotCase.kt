@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.login.domain.usecases
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.dropbeat.domain.repositories.PrivacyRepo
 import taiwan.no.one.feat.login.domain.repositories.AuthRepo
 
@@ -32,13 +32,11 @@ internal class LogoutUserOneShotCase(
     private val repository: AuthRepo,
     private val privacyRepository: PrivacyRepo,
 ) : LogoutCase() {
-    override suspend fun acquireCase(parameter: Request?): Boolean {
+    override suspend fun acquireCase(parameter: NonRequest?): Boolean {
         // Firebase logout.
         repository.fetchLogout()
         // Remove the user information from the local storage.
         val info = privacyRepository.fetchLoginInfo()
         return info.uid?.let { privacyRepository.deleteLoginInfo(it) } ?: false
     }
-
-    class Request : RequestValues
 }

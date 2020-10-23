@@ -24,13 +24,11 @@
 
 package taiwan.no.one.feat.ranking.domain.usecases
 
-import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal class FetchDetailOfRankingsOneShotCase(
     private val repository: RankingRepo,
 ) : FetchDetailOfRankingsCase() {
-    override suspend fun acquireCase(parameter: Request?) = repository.fetchDetailOfRankings()
-
-    class Request : RequestValues
+    override suspend fun acquireCase(parameter: NonRequest?) = repository.fetchDetailOfRankings()
 }

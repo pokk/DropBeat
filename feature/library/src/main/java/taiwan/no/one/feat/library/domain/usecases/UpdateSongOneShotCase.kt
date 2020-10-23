@@ -26,14 +26,16 @@ package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
 internal class UpdateSongOneShotCase(
-    private val repository: SongRepo,
+    private val playlistRepo: PlaylistRepo,
+    private val songRepo: SongRepo,
 ) : UpdateSongCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         if (songId != null && isFavorite != null) {
-            repository.updateMusic(songId, isFavorite)
+            songRepo.updateMusic(songId, isFavorite)
         }
         true
     }
