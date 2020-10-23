@@ -44,9 +44,11 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
+import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.library.R
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
 import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
@@ -59,6 +61,7 @@ import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
+    private var playlist: PlayListEntity? = null
 
     //region Variable of View Binding
     private val noSongsBinding get() = StubNoSongsBinding.bind(binding.root)
@@ -86,6 +89,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     override fun bindLiveData() {
         vm.playlist.observe(this) { res ->
             res.onSuccess {
+                playlist = it
                 binding.mtvTitle.text = it.name
                 if (it.songs.isEmpty()) {
                     displayNoSongs()
@@ -180,6 +184,11 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             }
             setOnMenuItemClickListener {
                 when (it.itemId) {
+                    R.id.item_duplicate -> playlist?.let {
+                        val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, "")
+                        findNavController()
+                            .navigate(PlaylistFragmentDirections.actionPlaylistToCreate(simplePlaylist))
+                    }
                     R.id.item_share -> Unit
                     R.id.item_download_all -> Unit
                     R.id.item_rename -> findNavController()

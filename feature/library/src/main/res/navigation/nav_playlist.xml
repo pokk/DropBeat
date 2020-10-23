@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_playlist_to_rename"
             app:destination="@id/rename_fragment"/>
+        <action
+            android:id="@+id/action_playlist_to_create"
+            app:destination="@id/create_fragment"/>
     </fragment>
 
     <fragment
@@ -73,6 +76,18 @@
         <argument
             android:name="playlistId"
             app:argType="integer"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/create_fragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.CreateFragment"
+        android:label="fragment_create"
+        tools:layout="@layout/fragment_create">
+        <argument
+            android:name="playlist"
+            android:defaultValue="@null"
+            app:argType="taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity"
+            app:nullable="true"/>
     </fragment>
 
     <include-dynamic

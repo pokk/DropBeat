@@ -24,12 +24,16 @@
 
 package taiwan.no.one.dropbeat.data.entities
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * [SimplePlaylistEntity] is for global usage and it only keeps brief information.
  */
+@Parcelize
 data class SimplePlaylistEntity(
     val id: Int,
     val name: String,
     val songIds: List<Int>,
     val thumbUri: String,
-)
+) : Parcelable

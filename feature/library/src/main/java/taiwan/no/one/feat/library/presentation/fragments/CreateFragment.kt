@@ -28,6 +28,7 @@ import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.devrapid.kotlinknifer.loge
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -38,6 +39,7 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 
 internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
+    private val navArgs by navArgs<CreateFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +62,9 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
         binding.tietPlaylistName.addTextChangedListener {
             binding.btnCreate.text = if (it.isNullOrBlank()) "Skip" else "Create"
         }
+        navArgs.playlist?.apply {
+            binding.mtvTitle.text = "Duplicate A Playlist"
+        }
     }
 
     override fun componentListenersBinding() {
@@ -71,7 +76,10 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
             else {
                 binding.tietPlaylistName.text.toString()
             }
-            vm.createPlaylist(PlayListEntity(name = playlistName))
+            val newPlaylist = navArgs.playlist?.let {
+                PlayListEntity(name = playlistName, songIds = it.songIds, count = it.songIds.size)
+            } ?: PlayListEntity(name = playlistName)
+            vm.createPlaylist(newPlaylist)
         }
     }
 }
