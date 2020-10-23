@@ -26,11 +26,15 @@ package taiwan.no.one.feat.search.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.getDimen
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder
+import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 import kotlin.properties.Delegates
 
@@ -48,6 +52,14 @@ internal class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>(), AutoUpd
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
+        // Adjust the margin
+        holder.itemView.updateLayoutParams<MarginLayoutParams> {
+            topMargin = holder.itemView
+                .context
+                .applicationContext
+                .getDimen(if (position == 0) WidgetResDimen.md_two_unit else WidgetResDimen.md_two_half_unit)
+                .toInt()
+        }
         holder.initView(data[position], this)
     }
 
