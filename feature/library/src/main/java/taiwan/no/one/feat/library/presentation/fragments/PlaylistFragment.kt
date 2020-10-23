@@ -28,11 +28,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
@@ -51,6 +53,7 @@ import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
+import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
@@ -133,6 +136,10 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         find<View>(R.id.include_favorite).visible()
         // Set the recycler view.
         find<RecyclerView>(AppResId.rv_musics).apply {
+            // Make the height to fit the view height.
+            updateLayoutParams {
+                height = getDimen(WidgetResDimen.md_zero_unit).toInt()
+            }
             if (adapter == null) {
                 adapter = playlistAdapter
             }
