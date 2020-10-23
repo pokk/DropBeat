@@ -87,9 +87,8 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
     @Transaction
     open suspend fun updateBy(id: Int, tracksId: List<Int>) {
         val playlist = getPlaylist(id)
-        val songIds = playlist.songIds.toHashSet().apply {
-            tracksId.forEach { add(it) }
-        }.toList()
+        val remained = tracksId - playlist.songIds
+        val songIds = playlist.songIds.toMutableList().apply { addAll(remained) }
         update(playlist.copy(songIds = songIds, count = songIds.size))
     }
 

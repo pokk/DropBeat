@@ -67,11 +67,11 @@ internal class LocalStore(
     override suspend fun removeMusic(id: Int) = songDao.deleteBy(id)
 
     override suspend fun getPlaylists() = playlistDao.getPlaylists().apply {
-        map { it.songs = songDao.getMusics(it.songIds) }
+        map { it.songs = getArrangedSongs(it.songIds) }
     }
 
     override suspend fun getPlaylist(playlistId: Int) = playlistDao.getPlaylist(playlistId).apply {
-        songs = songDao.getMusics(songIds)
+        songs = getArrangedSongs(songIds)
     }
 
     override suspend fun getTheNewestPlaylist() = playlistDao.getLatestPlaylist()
@@ -91,6 +91,13 @@ internal class LocalStore(
         }
         if (playlistId != null) {
             playlistDao.deleteBy(playlistId)
+        }
+    }
+
+    private suspend fun getArrangedSongs(originIds: List<Int>) = buildList {
+        val songsMap = songDao.getMusics(originIds).map { it.id to it }.toMap()
+        originIds.forEach {
+            songsMap[it]?.let { song -> add(song) }
         }
     }
 }
