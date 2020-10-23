@@ -56,6 +56,8 @@ internal class PlaylistViewModel(
     private val updateSongCase by instance<UpdateSongCase>()
     private val _result by lazy { ResultLiveData<Boolean>() }
     val result = _result.toLiveData()
+    private val _resultOfFavorite by lazy { ResultLiveData<Boolean>() }
+    val resultOfFavorite = _resultOfFavorite.toLiveData()
     private val _playlist by lazy { ResultLiveData<PlayListEntity>() }
     val playlist = _playlist.toLiveData()
 
@@ -78,6 +80,7 @@ internal class PlaylistViewModel(
     }
 
     fun updateSong(songId: Int, isFavorite: Boolean) = viewModelScope.launch {
-        _result.value = runCatching { updateSongCase.execute(UpdateSongReq(songId = songId, isFavorite = isFavorite)) }
+        _resultOfFavorite.value =
+            runCatching { updateSongCase.execute(UpdateSongReq(songId = songId, isFavorite = isFavorite)) }
     }
 }

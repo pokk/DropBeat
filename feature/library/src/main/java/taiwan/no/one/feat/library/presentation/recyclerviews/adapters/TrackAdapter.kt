@@ -26,11 +26,14 @@ package taiwan.no.one.feat.library.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.getDimen
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.TrackViewHolder
+import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 import kotlin.properties.Delegates
 
@@ -50,10 +53,24 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
             .inflate(AppResLayout.item_type_of_music, parent, false)
             .let { TrackViewHolder(ItemTypeOfMusicBinding.bind(it)) }
 
-    override fun onBindViewHolder(holder: TrackViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
+        holder.itemView.updatePadding(top = holder.itemView.context.applicationContext.getDimen(
+            if (position == 0) {
+                WidgetResDimen.md_zero_unit
+            }
+            else {
+                WidgetResDimen.md_two_half_unit
+            }
+        ).toInt())
         holder.initView(data[position], this)
+    }
 
     override fun getItemCount() = data.size
+
+    fun removeItem(entity: SimpleTrackEntity) {
+        data = data.toMutableList().apply { remove(entity) }
+        notifyDataSetChanged()
+    }
 
     fun setOnClickListener(listener: (SimpleTrackEntity) -> Unit) {
         clickListener = listener

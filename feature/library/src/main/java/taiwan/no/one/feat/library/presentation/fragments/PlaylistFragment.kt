@@ -55,6 +55,8 @@ import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
+    private var willRemoveEntity: SimpleTrackEntity? = null
+
     //region Variable of View Binding
     private val noSongsBinding get() = StubNoSongsBinding.bind(binding.root)
     //endregion
@@ -90,6 +92,14 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                 }
             }.onFailure(::loge)
         }
+        vm.resultOfFavorite.observe(this) { res ->
+            res.onSuccess {
+                if (it && navArgs.playlistId == 2) {
+                    willRemoveEntity?.let(playlistAdapter::removeItem)
+                    willRemoveEntity = null
+                }
+            }
+        }
     }
 
     override fun viewComponentBinding() {
@@ -102,7 +112,10 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         playlistAdapter.apply {
             setOnClickListener {}
             setOptionClickListener { }
-            setFavoriteClickListener { vm.updateSong(it.id, it.isFavorite) }
+            setFavoriteClickListener {
+                willRemoveEntity = it
+                vm.updateSong(it.id, it.isFavorite)
+            }
         }
     }
 

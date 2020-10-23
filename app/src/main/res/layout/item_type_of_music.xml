@@ -30,6 +30,7 @@
     android:id="@+id/cl_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/md_two_half_unit"
     tools:showIn="@layout/include_layout_ranking">
 
     <com.google.android.material.textview.MaterialTextView
@@ -59,7 +60,7 @@
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Caption1"
         android:textColor="@color/colorText"
-        app:layout_constraintBottom_toTopOf="@id/mtv_album_name"
+        app:layout_constraintBottom_toTopOf="@id/mtv_artist_name"
         app:layout_constraintEnd_toStartOf="@id/btn_favorite"
         app:layout_constraintStart_toEndOf="@id/siv_album_thumb"
         app:layout_constraintTop_toTopOf="@id/siv_album_thumb"

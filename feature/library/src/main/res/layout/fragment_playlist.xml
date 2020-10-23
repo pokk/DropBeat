@@ -80,9 +80,10 @@
         android:id="@+id/include_favorite"
         layout="@layout/include_layout_ranking"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/md_zero_unit"
         android:layout_marginTop="@dimen/md_five_unit"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_play_all"
         tools:visibility="visible"/>
 
