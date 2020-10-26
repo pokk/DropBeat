@@ -225,3 +225,7 @@ subprojects {
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
+
+// pre-requirement: brew install graphviz
+// ./gradlew projectDependencyGraph
+apply(file("gradle/projectDependencyGraph.gradle"))
