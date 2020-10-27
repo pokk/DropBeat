@@ -62,6 +62,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
     private val exploreAdapter by lazy { ExploreAdapter() }
+    private val playlistAdapter by lazy { PlaylistAdapter() }
 
     // NOTE(Jieyi): 8/11/20 Because the layout xml is not in the module,
     //  viewbinding can't use for `include` xml from other modules.
@@ -87,6 +88,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         includePlaylist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
+                if (adapter == null) {
+                    adapter = playlistAdapter
+                }
                 if (layoutManager == null) {
                     layoutManager = playlistLayoutManager()
                 }
@@ -122,12 +126,15 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylistSongsOfTag(it))
             }
         }
+        playlistAdapter.setOnClickListener {
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id))
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
         vm.playlists.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
-                includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = PlaylistAdapter(it)
+                playlistAdapter.data = it
             }.onFailure { loge(it) }
         }
         vm.topTags.observe(viewLifecycleOwner) { res ->

@@ -36,6 +36,7 @@ internal class PlaylistViewHolder(
         binding.apply {
             mtvTitle.text = entity.name
             mtvNumOfSongs.text = "${entity.songIds.size} songs"
+            root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }
 }

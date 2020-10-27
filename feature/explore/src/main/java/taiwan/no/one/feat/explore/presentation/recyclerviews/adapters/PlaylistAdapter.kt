@@ -31,17 +31,27 @@ import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.PlaylistViewHolder
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
+import kotlin.properties.Delegates
 
-internal class PlaylistAdapter(
-    private val itemList: List<SimplePlaylistEntity>,
-) : RecyclerView.Adapter<PlaylistViewHolder>() {
+internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), AutoUpdatable {
+    var data by Delegates.observable(emptyList<SimplePlaylistEntity>()) { _, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
+    }
+    var clickListener: ((SimplePlaylistEntity) -> Unit)? = null
+        private set
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
             .inflate(AppResLayout.item_trend, parent, false)
             .let { PlaylistViewHolder(ItemTrendBinding.bind(it)) }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
-        holder.initView(itemList[position], this)
+        holder.initView(data[position], this)
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = data.size
+
+    fun setOnClickListener(listener: (SimplePlaylistEntity) -> Unit) {
+        clickListener = listener
+    }
 }
