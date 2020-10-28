@@ -27,7 +27,7 @@ package config
 object CoreDependency {
     object Version {
         const val KOTLIN = "1.4.10"
-        const val KOTLIN_COROUTINE = "1.3.9"
+        const val KOTLIN_COROUTINE = "1.4.0"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Version.KOTLIN}"
