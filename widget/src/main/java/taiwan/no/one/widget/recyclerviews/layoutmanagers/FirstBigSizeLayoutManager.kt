@@ -24,209 +24,192 @@
 
 package taiwan.no.one.widget.recyclerviews.layoutmanagers
 
+import android.graphics.Rect
+import android.util.SparseArray
+import android.util.SparseBooleanArray
 import android.view.View
+import androidx.core.util.getOrDefault
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import androidx.recyclerview.widget.RecyclerView.State
+import kotlin.math.max
+import kotlin.math.min
 
 class FirstBigSizeLayoutManager : LayoutManager() {
+    companion object Constant {
+        private const val SCALE_SIZE = 0.75f
+    }
+
     private var decoratedChildWidth = 0
     private var decoratedChildHeight = 0
-    private var interval = 0
-    private var middle = 0
-    private var offset = 0
-    private var offsetList = mutableListOf<Int>()
+    private var horizontalScrollOffset = 0
+    private var totalWidth = 0
+    private var firstTime = true
+    private val allItemFrames by lazy { SparseArray<Rect>() }
+    private val hasAttachedItems by lazy { SparseBooleanArray() }
 
-    /**
-     * Create a default `LayoutParams` object for a child of the RecyclerView.
-     *
-     *
-     * LayoutManagers will often want to use a custom `LayoutParams` type
-     * to store extra information specific to the layout. Client code should subclass
-     * [RecyclerView.LayoutParams] for this purpose.
-     *
-     *
-     * *Important:* if you use your own custom `LayoutParams` type
-     * you must also override
-     * [.checkLayoutParams],
-     * [.generateLayoutParams] and
-     * [.generateLayoutParams].
-     *
-     * @return A new LayoutParams for a child view
-     */
     override fun generateDefaultLayoutParams() =
-        RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT)
+        RecyclerView.LayoutParams(
+            RecyclerView.LayoutParams.WRAP_CONTENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
 
-    /**
-     * Lay out all relevant child views from the given adapter.
-     *
-     * The LayoutManager is in charge of the behavior of item animations. By default,
-     * RecyclerView has a non-null [ItemAnimator][.getItemAnimator], and simple
-     * item animations are enabled. This means that add/remove operations on the
-     * adapter will result in animations to add new or appearing items, removed or
-     * disappearing items, and moved items. If a LayoutManager returns false from
-     * [.supportsPredictiveItemAnimations], which is the default, and runs a
-     * normal layout operation during [.onLayoutChildren], the
-     * RecyclerView will have enough information to run those animations in a simple
-     * way. For example, the default ItemAnimator, [DefaultItemAnimator], will
-     * simply fade views in and out, whether they are actually added/removed or whether
-     * they are moved on or off the screen due to other add/remove operations.
-     *
-     *
-     * A LayoutManager wanting a better item animation experience, where items can be
-     * animated onto and off of the screen according to where the items exist when they
-     * are not on screen, then the LayoutManager should return true from
-     * [.supportsPredictiveItemAnimations] and add additional logic to
-     * [.onLayoutChildren]. Supporting predictive animations
-     * means that [.onLayoutChildren] will be called twice;
-     * once as a "pre" layout step to determine where items would have been prior to
-     * a real layout, and again to do the "real" layout. In the pre-layout phase,
-     * items will remember their pre-layout positions to allow them to be laid out
-     * appropriately. Also, [removed][LayoutParams.isItemRemoved] items will
-     * be returned from the scrap to help determine correct placement of other items.
-     * These removed items should not be added to the child list, but should be used
-     * to help calculate correct positioning of other views, including views that
-     * were not previously onscreen (referred to as APPEARING views), but whose
-     * pre-layout offscreen position can be determined given the extra
-     * information about the pre-layout removed views.
-     *
-     *
-     * The second layout pass is the real layout in which only non-removed views
-     * will be used. The only additional requirement during this pass is, if
-     * [.supportsPredictiveItemAnimations] returns true, to note which
-     * views exist in the child list prior to layout and which are not there after
-     * layout (referred to as DISAPPEARING views), and to position/layout those views
-     * appropriately, without regard to the actual bounds of the RecyclerView. This allows
-     * the animation system to know the location to which to animate these disappearing
-     * views.
-     *
-     *
-     * The default LayoutManager implementations for RecyclerView handle all of these
-     * requirements for animations already. Clients of RecyclerView can either use one
-     * of these layout managers directly or look at their implementations of
-     * onLayoutChildren() to see how they account for the APPEARING and
-     * DISAPPEARING views.
-     *
-     * @param recycler Recycler to use for fetching potentially cached views for a
-     * position
-     * @param state    Transient state of RecyclerView
-     */
     override fun onLayoutChildren(recycler: Recycler, state: State) {
+        // We have nothing to show for an empty data set but clear any existing views.
         if (itemCount == 0) {
             detachAndScrapAttachedViews(recycler)
             return
         }
+        if (state.isPreLayout) {
+            return
+        }
+        // ...on empty layout, update child size measurements.
         if (childCount == 0) {
             val scrap = recycler.getViewForPosition(0)
             addView(scrap)
             measureChildWithMargins(scrap, 0, 0)
+            /*
+             * We make some assumptions in this code based on every child
+             * view being the same size (i.e. a uniform grid). This allows
+             * us to compute the following values up front because they
+             * won't change.
+             */
             decoratedChildWidth = getDecoratedMeasuredWidth(scrap)
             decoratedChildHeight = getDecoratedMeasuredHeight(scrap)
-            interval = 10
-            middle = (getHorizontalSpace() - decoratedChildWidth) / 2
+            detachAndScrapView(scrap, recycler)
         }
-        var property = 0
-        for (i in 0 until itemCount) {
-            offsetList.add(property)
-            property += decoratedChildWidth + interval
+
+        var offsetX = 0
+        totalWidth = 0
+
+        repeat(itemCount) {
+            val view = recycler.getViewForPosition(it)
+            addView(view)
+            measureChildWithMargins(view, 0, 0)
+            val width = getDecoratedMeasuredWidth(view)
+            val height = getDecoratedMeasuredHeight(view)
+
+            // Calculate the total width of all items.
+            totalWidth += width
+            val frame = allItemFrames.getOrDefault(it, Rect())
+            frame.set(offsetX, 0, width + offsetX, height)
+            // Keep the item frame position.
+            allItemFrames.put(it, frame)
+            hasAttachedItems.put(it, false)
+
+            offsetX += width
         }
-        detachAndScrapAttachedViews(recycler)
-        layoutItems(recycler, state, 0)
+        // If the all items' width is smaller than the recyclerview component, get the longer one.
+        totalWidth = max(totalWidth, getHorizontalSpace())
+
+        recycleAndFillItems(recycler, state)
     }
 
-    /**
-     * Called if the RecyclerView this LayoutManager is bound to has a different adapter set via
-     * [RecyclerView.setAdapter] or
-     * [RecyclerView.swapAdapter]. The LayoutManager may use this
-     * opportunity to clear caches and configure state such that it can relayout appropriately
-     * with the new data and potentially new view types.
-     *
-     *
-     * The default implementation removes all currently attached views.
-     *
-     * @param oldAdapter The previous adapter instance. Will be null if there was previously no
-     * adapter.
-     * @param newAdapter The new adapter instance. Might be null if
-     * [RecyclerView.setAdapter] is called with
-     * `null`.
-     */
     override fun onAdapterChanged(oldAdapter: Adapter<*>?, newAdapter: Adapter<*>?) {
+        // Completely scrap the existing layout.
         removeAllViews()
     }
 
-    /**
-     * Query if horizontal scrolling is currently supported. The default implementation
-     * returns false.
-     *
-     * @return True if this LayoutManager can scroll the current contents horizontally
-     */
     override fun canScrollHorizontally() = true
 
-    /**
-     * Scroll horizontally by dx pixels in screen coordinates and return the distance traveled.
-     * The default implementation does nothing and returns 0.
-     *
-     * @param dx       distance to scroll by in pixels. X increases as scroll position
-     * approaches the right.
-     * @param recycler Recycler to use for fetching potentially cached views for a
-     * position
-     * @param state    Transient state of RecyclerView
-     * @return The actual distance scrolled. The return value will be negative if dx was
-     * negative and scrolling proceeeded in that direction.
-     * `Math.abs(result)` may be less than dx if a boundary was reached.
-     */
     override fun scrollHorizontallyBy(dx: Int, recycler: Recycler, state: State): Int {
-        offset += dx
-        if (offset < 0 || offset > offsetList[offsetList.size - 1]) return 0
-        layoutItems(recycler, state, dx)
-        return dx
-    }
-
-    private fun layoutItems(recycler: Recycler, state: State, dy: Int) {
-        for (i in 0 until childCount) {
-            val view = requireNotNull(getChildAt(i))
-            val pos = getPosition(view)
-            if (outOfRange(offsetList[pos] - offset.toFloat())) {
-                removeAndRecycleView(view, recycler)
-            }
-        }
         detachAndScrapAttachedViews(recycler)
-        val left = 100
-        var selectedView: View? = null
-        var maxScale = Float.MIN_VALUE
-        for (i in 0 until itemCount) {
-            val top = offsetList[i]
-            if (outOfRange(top - offset.toFloat())) continue
-            val scrap: View = recycler.getViewForPosition(i)
-            measureChildWithMargins(scrap, 0, 0)
-            if (dy >= 0) addView(scrap) else addView(scrap, 0)
-            val deltaY = Math.abs(top - offset - middle)
-            scrap.scaleX = 1f
-            scrap.scaleY = 1f
-            val scale = 1 + decoratedChildHeight / (deltaY + 1)
-            if (scale > maxScale) {
-                maxScale = scale.toFloat()
-                selectedView = scrap
-            }
-            layoutDecorated(scrap,
-                            left,
-                            top - offset,
-                            left + decoratedChildWidth,
-                            top - offset + decoratedChildHeight)
+
+        var interval = dx
+        // If scroll to the top.
+        if (horizontalScrollOffset + dx < 0) {
+            interval = -horizontalScrollOffset
         }
-        if (selectedView != null) {
-            maxScale = if (maxScale > 2) 2f else maxScale
-            selectedView.scaleX = maxScale
-            selectedView.scaleY = maxScale
+        // If scroll to the bottom.
+        else if (horizontalScrollOffset + dx > totalWidth - getHorizontalSpace()) {
+            interval = totalWidth - getHorizontalSpace() - horizontalScrollOffset
+        }
+        // Keep the horizontal offset all the time.
+        horizontalScrollOffset += interval
+        offsetChildrenHorizontal(-interval)
+        recycleAndFillItems(recycler, state)
+        return interval
+    }
+
+    private fun recycleAndFillItems(recycler: Recycler, state: State) {
+        // The displaying views' frame.
+        val displayFrame = Rect(
+            horizontalScrollOffset,
+            0,
+            getHorizontalSpace() + horizontalScrollOffset,
+            getVerticalSpace()
+        )
+        // Recycle the views are out of the recyclerview to the buffer.
+        val childFrame = Rect()
+        repeat(childCount) {
+            val child = getChildAt(it) ?: return@repeat
+            childFrame.apply {
+                left = getDecoratedLeft(child)
+                top = getDecoratedTop(child)
+                right = getDecoratedRight(child)
+                bottom = getDecoratedBottom(child)
+            }
+            // If it's not in the displaying area, it will be recycled.
+            if (!Rect.intersects(displayFrame, childFrame)) {
+                removeAndRecycleView(child, recycler)
+            }
+        }
+        // Redisplay the children view.
+        var view: View? = null
+        var scalableView: View? = null
+        repeat(itemCount) {
+            val frame = allItemFrames[it]
+            if (Rect.intersects(displayFrame, frame)) {
+                val scrap = recycler.getViewForPosition(it)
+                measureChildWithMargins(scrap, 0, 0)
+                // *** Do some customization here. ***
+                val height = (frame.bottom - frame.top).toFloat()
+                val width = (frame.right - frame.left).toFloat()
+                val gap = (height / 2) * SCALE_SIZE
+                scrap.pivotY = (height / 2) + gap + (gap / 4)
+                scrap.pivotX = (width / 2) + gap + (gap / 4)
+                if (!firstTime || it != 0) {
+                    scrap.scaleX = SCALE_SIZE
+                    scrap.scaleY = SCALE_SIZE
+                    // The first time come this layout should keep the first item's size.
+                    firstTime = false
+                }
+                if (-scrap.width < frame.left - horizontalScrollOffset && frame.left - horizontalScrollOffset < 0) {
+                    view = scrap
+                }
+                if (0 <= frame.left - horizontalScrollOffset && frame.left - horizontalScrollOffset < scrap.width) {
+                    scalableView = scrap
+                }
+
+                addView(scrap)
+                // Layout the view.
+                layoutDecorated(
+                    scrap,
+                    frame.left - horizontalScrollOffset,
+                    frame.top,
+                    frame.right - horizontalScrollOffset,
+                    frame.bottom
+                )
+            }
+            // The first view
+            view?.apply {
+                scaleX = 1f
+                scaleY = 1f
+            }
+            // The second view
+            scalableView?.apply {
+                val threshold = min(width - left, width / 2).toFloat() / // to the half
+                                (width / 2) * // reg
+                                (1 - SCALE_SIZE) // reg to the scale
+                scaleX = SCALE_SIZE + threshold
+                scaleY = SCALE_SIZE + threshold
+            }
         }
     }
 
-    private fun outOfRange(targetOffSet: Float) =
-        targetOffSet > getHorizontalSpace() + decoratedChildHeight || targetOffSet < -decoratedChildHeight
-
-    private fun getHorizontalSpace() = width - paddingLeft - paddingRight
+    private fun getHorizontalSpace() = width - paddingStart - paddingEnd
 
     private fun getVerticalSpace() = height - paddingTop - paddingBottom
 }

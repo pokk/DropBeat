@@ -51,6 +51,7 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAd
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.view.find
+import taiwan.no.one.widget.recyclerviews.layoutmanagers.FirstBigSizeLayoutManager
 import java.lang.ref.WeakReference
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
