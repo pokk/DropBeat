@@ -59,7 +59,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
-    private val playlistLayoutManager by lazy { FirstBigSizeLayoutManager() }
+    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
     private val exploreAdapter by lazy { ExploreAdapter() }
     private val playlistAdapter by lazy { PlaylistAdapter() }
 

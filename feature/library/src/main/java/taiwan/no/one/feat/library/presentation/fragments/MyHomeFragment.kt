@@ -75,7 +75,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
-    private val playlistLayoutManager by lazy { FirstBigSizeLayoutManager() }
+    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
     private val playlistAdapter by lazy { PlaylistAdapter() }
     //endregion
 
