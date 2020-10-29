@@ -39,7 +39,7 @@ import kotlin.math.min
 
 class FirstBigSizeLayoutManager : LayoutManager() {
     companion object Constant {
-        private const val SCALE_SIZE = 0.75f
+        private const val SCALE_SIZE = 0.78f
     }
 
     private var decoratedChildWidth = 0
@@ -55,6 +55,8 @@ class FirstBigSizeLayoutManager : LayoutManager() {
             RecyclerView.LayoutParams.WRAP_CONTENT,
             RecyclerView.LayoutParams.WRAP_CONTENT
         )
+
+    override fun isAutoMeasureEnabled() = true
 
     override fun onLayoutChildren(recycler: Recycler, state: State) {
         // We have nothing to show for an empty data set but clear any existing views.

@@ -42,7 +42,7 @@
             android:id="@+id/include_playlist"
             layout="@layout/include_layout_trend"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="144dp"
             android:layout_marginTop="@dimen/md_five_unit"
             app:layout_constraintTop_toBottomOf="@id/btn_setting"/>
 

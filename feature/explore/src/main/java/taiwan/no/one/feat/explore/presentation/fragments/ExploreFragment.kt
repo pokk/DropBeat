@@ -59,9 +59,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
-    private val playlistLayoutManager: () -> LinearLayoutManager by provider {
-        LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
-    }
+    private val playlistLayoutManager by lazy { FirstBigSizeLayoutManager() }
     private val exploreAdapter by lazy { ExploreAdapter() }
     private val playlistAdapter by lazy { PlaylistAdapter() }
 
@@ -93,7 +91,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                     adapter = playlistAdapter
                 }
                 if (layoutManager == null) {
-                    layoutManager = playlistLayoutManager()
+                    layoutManager = playlistLayoutManager
                 }
             }
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"

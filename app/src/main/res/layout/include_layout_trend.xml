@@ -58,12 +58,31 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Playlist"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_musics"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginTop="@dimen/md_one_unit"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/g_line_recyclerview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:itemCount="4"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_trend"
+        tools:orientation="horizontal"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_more"
         style="@style/Taiwan.No.One.TextButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/md_four_unit"
         android:layout_marginEnd="@dimen/md_two_unit"
+        android:gravity="top"
+        android:insetTop="@dimen/md_zero_unit"
         android:text="View all"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button2"
         android:textColor="?colorAccent"
@@ -81,17 +100,4 @@
         android:textColor="?colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_musics"
-        android:layout_width="@dimen/md_zero_unit"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/g_line_recyclerview"
-        app:layout_constraintTop_toBottomOf="@id/btn_more"
-        tools:itemCount="4"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_trend"
-        tools:orientation="horizontal"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
