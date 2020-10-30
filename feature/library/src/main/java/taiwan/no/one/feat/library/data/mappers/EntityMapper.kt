@@ -50,7 +50,7 @@ internal object EntityMapper {
             it.name,
             it.artist,
             it.uri,
-            DEFAULT_STR,
+            it.thumbUri,
             it.duration,
             it.isFavorite,
         )
