@@ -43,4 +43,16 @@ internal object EntityMapper {
             it.hasOwn,
         )
     }
+
+    fun simpleToSongEntity(entity: SimpleTrackEntity) = entity.let {
+        SongEntity(
+            it.id,
+            it.name,
+            it.artist,
+            it.uri,
+            DEFAULT_STR,
+            it.duration,
+            it.isFavorite,
+        )
+    }
 }

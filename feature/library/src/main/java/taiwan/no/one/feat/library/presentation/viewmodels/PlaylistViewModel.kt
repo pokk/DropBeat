@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
@@ -82,5 +83,10 @@ internal class PlaylistViewModel(
     fun updateSong(songId: Int, isFavorite: Boolean) = viewModelScope.launch {
         _resultOfFavorite.value =
             runCatching { updateSongCase.execute(UpdateSongReq(songId = songId, isFavorite = isFavorite)) }
+    }
+
+    fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {
+        _resultOfFavorite.value =
+            runCatching { updateSongCase.execute(UpdateSongReq(song = song, isFavorite = isFavorite)) }
     }
 }

@@ -24,8 +24,11 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
+import com.devrapid.kotlinknifer.loge
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
@@ -34,22 +37,55 @@ internal class UpdateSongOneShotCase(
     private val songRepo: SongRepo,
 ) : UpdateSongCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        if (songId != null && isFavorite != null) {
-            songRepo.updateMusic(songId, isFavorite)
-            val song = songRepo.getMusic(songId)
-            if (isFavorite) {
-                // Add into the favorite playlist.
-                playlistRepo.addMusic(song, 2)
+        if (song != null && isFavorite != null) {
+            // This is the song isn't in the playlist.
+            if (song.id == 0) {
+                songNotInLocalCase(song, isFavorite)
             }
             else {
-                // Remove the song from the favorite playlist.
-                playlistRepo.deleteMusic(songId, 2)
+                songHasDownloadedCase(song.id, isFavorite)
             }
+        }
+        else if (songId != null && isFavorite != null) {
+            songHasDownloadedCase(songId, isFavorite)
         }
         true
     }
 
-    internal class Request(
+    private suspend fun songNotInLocalCase(entity: SimpleTrackEntity, isFavorite: Boolean) {
+        try {
+            if (isFavorite) {
+                // When the song is not in our playlist, will add. Otherwise, will go below exception.
+                songRepo.addMusics(listOf(EntityMapper.simpleToSongEntity(entity)))
+            }
+        }
+        catch (e: Exception) {
+            loge("This will be add abort from the playlist, will ignore.")
+        }
+        finally {
+            val addedSong = songRepo.getMusic(entity.uri)
+            updateFavoritePlaylist(addedSong, isFavorite)
+        }
+    }
+
+    private suspend fun songHasDownloadedCase(songId: Int, isFavorite: Boolean) {
+        songRepo.updateMusic(songId, isFavorite)
+        val song = songRepo.getMusic(songId)
+        updateFavoritePlaylist(song, isFavorite)
+    }
+
+    private suspend fun updateFavoritePlaylist(song: SongEntity, isFavorite: Boolean) {
+        if (isFavorite) {
+            // Add into the favorite playlist.
+            playlistRepo.addMusic(song, 2)
+        }
+        else {
+            // Remove the song from the favorite playlist.
+            playlistRepo.deleteMusic(song.id, 2)
+        }
+    }
+
+    internal data class Request(
         val song: SimpleTrackEntity? = null,
         val songId: Int? = null,
         val isFavorite: Boolean? = null,

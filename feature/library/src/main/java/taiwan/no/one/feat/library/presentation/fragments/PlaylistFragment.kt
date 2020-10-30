@@ -124,7 +124,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             setOptionClickListener { }
             setFavoriteClickListener {
                 willRemoveEntity = it
-                vm.updateSong(it.id, it.isFavorite)
+                vm.updateSong(it, it.isFavorite)
             }
         }
     }
