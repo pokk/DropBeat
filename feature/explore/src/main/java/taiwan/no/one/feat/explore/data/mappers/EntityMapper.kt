@@ -40,7 +40,7 @@ internal object EntityMapper {
             (it.images?.find { it.size == "cover" }?.text ?: entity.images?.get(0)?.text).orEmpty(),
             DEFAULT_STR,
             it.duration?.toInt() ?: 0,
-            false,
+            entity.isFavorite ?: false,
             false,
         )
     }
@@ -55,7 +55,7 @@ internal object EntityMapper {
             album?.coverPhotoUrl.orEmpty(),
             DEFAULT_STR,
             album?.popularTrackThisWeek?.duration?.toInt() ?: 0,
-            false,
+            album?.popularTrackThisWeek?.isFavorite ?: false,
             false
         )
     }

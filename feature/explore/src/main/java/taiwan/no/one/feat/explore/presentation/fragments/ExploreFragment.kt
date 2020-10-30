@@ -152,12 +152,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"
         }
-        binding.mtvTitle.setOnClickListener {
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlayer())
-        }
     }
 
     override fun componentListenersBinding() {
+        binding.mtvTitle.setOnClickListener {
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlayer())
+        }
         exploreAdapter.setOnClickListener {
             it.name?.takeIf { it.isNotEmpty() }?.also {
                 findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylistSongsOfTag(it))
