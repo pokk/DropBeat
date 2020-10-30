@@ -28,7 +28,6 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
-import com.devrapid.kotlinknifer.logw
 import com.google.gson.Gson
 import org.kodein.di.DI
 import org.kodein.di.DIAware
@@ -39,6 +38,7 @@ import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.KEY_E
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_KEY_RESULT_OF_SONGS
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_TAG_OF_NAME
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 
 internal class GetSongsOfTagWorker(
     context: Context,
@@ -50,6 +50,7 @@ internal class GetSongsOfTagWorker(
     }
     private val gson by instance<Gson>()
     private val exploreProvider by instance<ExploreMethodsProvider>()
+    private val libraryProvider by instance<LibraryMethodsProvider>()
 
     override suspend fun doWork(): Result {
         val tagName = inputData.getString(PARAM_TAG_OF_NAME)
@@ -58,9 +59,16 @@ internal class GetSongsOfTagWorker(
             return Result.failure(data.putString(KEY_EXCEPTION, "parameters aren't found").build())
         }
         return try {
-            val entities = exploreProvider.getTopTracksOfTag(tagName)
+            val entities = exploreProvider.getTopTracksOfTag(tagName).onEach {
+                val isFavorite = try {
+                    libraryProvider.isFavoriteTrack(it.uri, 2).getOrNull() ?: false
+                }
+                catch (e: Exception) {
+                    false
+                }
+                it.isFavorite = isFavorite
+            }
             val json = gson.toJson(entities)
-            logw(json)
             Result.success(data.putString(PARAM_KEY_RESULT_OF_SONGS, json).build())
         }
         catch (e: Exception) {

@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,10 +52,12 @@ import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfTagBinding
 import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
+import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import java.lang.ref.WeakReference
 
 internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
     private val merge get() = MergeLayoutSongsOfTypeBinding.bind(binding.root)
+    private val vm by viewModels<PlaylistViewModel>()
     private val navArgs by navArgs<SongsOfTagPlaylistFragmentArgs>()
     private val workManager by instance<WorkManager>()
     private val oneTimeWorker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_GET_SONGS_OF_TAG)
@@ -113,6 +116,11 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     }
 
     override fun componentListenersBinding() {
+        adapter.apply {
+            setOnClickListener { }
+            setOptionClickListener { }
+            setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
+        }
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
     }
 
