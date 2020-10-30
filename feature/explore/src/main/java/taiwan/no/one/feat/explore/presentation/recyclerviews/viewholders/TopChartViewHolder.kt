@@ -24,7 +24,9 @@
 
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
+import androidx.core.content.ContextCompat
 import coil.loadAny
+import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
@@ -46,6 +48,7 @@ internal class TopChartViewHolder(
         binding.apply {
             mtvArtistName.text = entity.artist?.name.orEmpty()
             mtvAlbumName.text = entity.name.orEmpty()
+            entity.isFavorite?.let(this@TopChartViewHolder::setFavoriteIcon)
             sivAlbumThumb.loadAny(
                 (entity.images?.find { it.size == "cover" }?.text ?: entity.images?.get(0)?.text).orEmpty()
             )
@@ -56,9 +59,17 @@ internal class TopChartViewHolder(
         binding.apply {
             mtvArtistName.text = entity.first.name.orEmpty()
             entity.second?.apply {
+                popularTrackThisWeek.isFavorite?.let(this@TopChartViewHolder::setFavoriteIcon)
                 mtvAlbumName.text = popularTrackThisWeek.name.orEmpty()
                 sivAlbumThumb.loadAny(coverPhotoUrl)
             }
         }
+    }
+
+    private fun setFavoriteIcon(isFavorite: Boolean) {
+        binding.btnFavorite.icon = ContextCompat.getDrawable(
+            context,
+            if (isFavorite) AppResDrawable.ic_heart_solid else AppResDrawable.ic_heart
+        )
     }
 }

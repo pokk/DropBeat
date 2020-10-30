@@ -28,10 +28,10 @@ import com.devrapid.kotlinshaver.trimMarginAndNewLine
 import com.google.gson.annotations.SerializedName
 
 internal data class TrackInfoEntity(
-    val track: TrackEntity?
+    val track: TrackEntity?,
 ) {
     internal data class TrackEntity(
-        val streamable: CommonLastFmEntity.StreamableEntity?
+        val streamable: CommonLastFmEntity.StreamableEntity?,
     ) : BaseTrackEntity() {
         override fun toString() = """
             |${this::class.java.simpleName}(
@@ -41,7 +41,7 @@ internal data class TrackInfoEntity(
     }
 
     internal data class TrackWithStreamableEntity(
-        val streamable: String?
+        val streamable: String?,
     ) : BaseTrackEntity() {
         override fun toString() = """
             |${this::class.java.simpleName}(
@@ -68,7 +68,9 @@ internal data class TrackInfoEntity(
         var topTag: CommonLastFmEntity.TagsEntity? = null,
         var url: String? = null,
         var realUrl: String? = null,
-        var wiki: CommonLastFmEntity.WikiEntity? = null
+        var wiki: CommonLastFmEntity.WikiEntity? = null,
+        // Other
+        var isFavorite: Boolean? = null,
     ) {
         override fun toString() = """
             |album: $album
@@ -85,6 +87,7 @@ internal data class TrackInfoEntity(
             |url: $url
             |realUrl: $realUrl
             |wiki: $wiki
+            |isFavorite: $isFavorite
             |""".trimMarginAndNewLine()
     }
 }

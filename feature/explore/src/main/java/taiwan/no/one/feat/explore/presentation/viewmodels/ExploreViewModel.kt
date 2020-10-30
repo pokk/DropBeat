@@ -51,9 +51,33 @@ internal class ExploreViewModel(
         emit(runCatching { fetchChartTopTagCase.execute(FetchChartTopTagReq(1, 10)) })
     }
     val topTracks = liveData {
-        emit(runCatching { fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, 10, 4)) })
+        emit(runCatching {
+            fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, 10, 4)).apply {
+                tracks.onEach {
+                    val url = it.url ?: return@onEach
+                    val isFavorite = try {
+                        libraryProvider.isFavoriteTrack(url, 2)
+                    }
+                    catch (e: Exception) {
+                        return@onEach
+                    }
+                    it.isFavorite = isFavorite.getOrNull()
+                }
+            }
+        })
     }
     val topArtists = liveData {
-        emit(runCatching { fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, 10, 4)) })
+        emit(runCatching {
+            fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, 10, 4)).onEach {
+                val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
+                val isFavorite = try {
+                    libraryProvider.isFavoriteTrack(url, 2)
+                }
+                catch (e: Exception) {
+                    return@onEach
+                }
+                it.second?.popularTrackThisWeek?.isFavorite = isFavorite.getOrNull()
+            }
+        })
     }
 }
