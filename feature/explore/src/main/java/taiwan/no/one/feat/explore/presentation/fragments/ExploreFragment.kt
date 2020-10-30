@@ -51,7 +51,6 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAd
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.view.find
-import taiwan.no.one.widget.recyclerviews.layoutmanagers.FirstBigSizeLayoutManager
 import java.lang.ref.WeakReference
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
@@ -59,7 +58,10 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
-    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
+
+    // FIXME(jieyi): 10/30/20 This still has bug after update the layout manager.
+    //    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
+    private val playlistLayoutManager get() = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
     private val exploreAdapter by lazy { ExploreAdapter() }
     private val playlistAdapter by lazy { PlaylistAdapter() }
 
@@ -73,6 +75,42 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         super.onCreate(savedInstanceState)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
+    override fun bindLiveData() {
+        vm.playlists.observe(this) { res ->
+            res.onSuccess {
+                playlistAdapter.data = it
+            }.onFailure { loge(it) }
+        }
+        vm.topTags.observe(this) { res ->
+            res.onSuccess {
+                it.tags?.takeIf { it.isNotEmpty() }?.also {
+                    exploreAdapter.data = it
+                }
+            }.onFailure { loge(it) }
+        }
+        vm.topArtists.observe(this) { res ->
+            res.onSuccess {
+                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
+                val list = it.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
+                includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
+                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
+                }
+            }.onFailure { loge(it) }
+            includeTopArtist.find<View>(AppResId.pb_progress).gone()
+        }
+        vm.topTracks.observe(this) { res ->
+            res.onSuccess {
+                includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
+                    TopChartAdapter(it.tracks.subList(0, 4))
+                val list = it.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
+                includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
+                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
+                }
+            }.onFailure { loge(it) }
+            includeTopTrack.find<View>(AppResId.pb_progress).gone()
+        }
     }
 
     override fun viewComponentBinding() {
@@ -131,38 +169,8 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        vm.playlists.observe(viewLifecycleOwner) { res ->
-            res.onSuccess {
-                playlistAdapter.data = it
-            }.onFailure { loge(it) }
-        }
-        vm.topTags.observe(viewLifecycleOwner) { res ->
-            res.onSuccess {
-                it.tags?.takeIf { it.isNotEmpty() }?.also {
-                    exploreAdapter.data = it
-                }
-            }.onFailure { loge(it) }
-        }
-        vm.topArtists.observe(viewLifecycleOwner) { res ->
-            res.onSuccess {
-                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
-                val list = it.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
-                includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
-                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
-                }
-            }.onFailure { loge(it) }
-            includeTopArtist.find<View>(AppResId.pb_progress).gone()
-        }
-        vm.topTracks.observe(viewLifecycleOwner) { res ->
-            res.onSuccess {
-                includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
-                    TopChartAdapter(it.tracks.subList(0, 4))
-                val list = it.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
-                includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
-                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
-                }
-            }.onFailure { loge(it) }
-            includeTopTrack.find<View>(AppResId.pb_progress).gone()
-        }
+        vm.getPlaylists()
+        vm.getTopTracks()
+        vm.getTopArtists()
     }
 }

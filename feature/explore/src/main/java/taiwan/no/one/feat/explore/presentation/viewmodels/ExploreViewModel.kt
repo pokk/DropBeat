@@ -27,15 +27,22 @@ package taiwan.no.one.feat.explore.presentation.viewmodels
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.kodein.di.instance
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
+import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
+import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistReq
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTagCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTagReq
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopTrackReq
+import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class ExploreViewModel(
     application: Application,
@@ -45,13 +52,22 @@ internal class ExploreViewModel(
     private val fetchChartTopTrackCase by instance<FetchChartTopTrackCase>()
     private val fetchChartTopArtistCase by instance<FetchChartTopArtistCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
-    val playlists = liveData { emit(libraryProvider.getPlaylists()) }
-
+    private val _playlists by lazy { ResultLiveData<List<SimplePlaylistEntity>>() }
+    val playlists get() = _playlists.toLiveData()
+    private val _topTracks by lazy { ResultLiveData<TracksEntity>() }
+    val topTracks get() = _topTracks.toLiveData()
+    private val _topArtists by lazy { ResultLiveData<ArtistWithMoreDetailEntities>() }
+    val topArtists get() = _topArtists.toLiveData()
     val topTags = liveData {
         emit(runCatching { fetchChartTopTagCase.execute(FetchChartTopTagReq(1, 10)) })
     }
-    val topTracks = liveData {
-        emit(runCatching {
+
+    fun getPlaylists() = viewModelScope.launch {
+        _playlists.value = libraryProvider.getPlaylists()
+    }
+
+    fun getTopTracks() = launchBehind {
+        _topTracks.postValue(runCatching {
             fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, 10, 4)).apply {
                 tracks.onEach {
                     val url = it.url ?: return@onEach
@@ -66,8 +82,9 @@ internal class ExploreViewModel(
             }
         })
     }
-    val topArtists = liveData {
-        emit(runCatching {
+
+    fun getTopArtists() = launchBehind {
+        _topArtists.postValue(runCatching {
             fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, 10, 4)).onEach {
                 val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
                 val isFavorite = try {
