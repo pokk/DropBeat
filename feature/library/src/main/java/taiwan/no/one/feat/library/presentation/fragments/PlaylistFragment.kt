@@ -107,6 +107,9 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                     if (playlistAdapter.data.isEmpty()) {
                         displayNoSongs()
                     }
+                    else {
+                        displaySongs(playlistAdapter.data)
+                    }
                 }
             }
         }
