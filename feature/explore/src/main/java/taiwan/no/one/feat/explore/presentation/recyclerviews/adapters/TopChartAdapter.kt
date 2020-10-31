@@ -28,12 +28,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.AppResLayout
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChartViewHolder
 
 internal class TopChartAdapter(
     private val itemList: List<Any>,
 ) : RecyclerView.Adapter<TopChartViewHolder>() {
+    var clickListener: ((SimpleTrackEntity) -> Unit)? = null
+        private set
+    var optionListener: (() -> Unit)? = null
+        private set
+    var favoriteListener: ((SimpleTrackEntity) -> Unit)? = null
+        private set
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
             .inflate(AppResLayout.item_type_of_music, parent, false)
@@ -43,4 +51,16 @@ internal class TopChartAdapter(
         holder.initView(itemList[position], this)
 
     override fun getItemCount() = itemList.size
+
+    fun setOnClickListener(listener: (SimpleTrackEntity) -> Unit) {
+        clickListener = listener
+    }
+
+    fun setOptionClickListener(listener: () -> Unit) {
+        optionListener = listener
+    }
+
+    fun setFavoriteClickListener(listener: (SimpleTrackEntity) -> Unit) {
+        favoriteListener = listener
+    }
 }

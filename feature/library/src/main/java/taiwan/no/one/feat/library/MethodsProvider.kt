@@ -29,6 +29,7 @@ import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.data.mappers.TrackMapper
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
@@ -47,6 +48,8 @@ import taiwan.no.one.feat.library.domain.usecases.FetchSongCase
 import taiwan.no.one.feat.library.domain.usecases.FetchSongReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
+import taiwan.no.one.feat.library.domain.usecases.UpdateSongCase
+import taiwan.no.one.feat.library.domain.usecases.UpdateSongReq
 import taiwan.no.one.mediaplayer.MusicInfo
 
 @AutoService(LibraryMethodsProvider::class)
@@ -57,6 +60,7 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     private val addSongsAndPlaylistCase by instance<AddSongsAndPlaylistCase>()
     private val addPlaylistCase by instance<AddPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
+    private val updateSongCase by instance<UpdateSongCase>()
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
     private val fetchSongCase by instance<FetchSongCase>()
     private val fetchIsInThePlaylistCase by instance<FetchIsInThePlaylistCase>()
@@ -106,5 +110,10 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
 
     override suspend fun createPlaylist(name: String): Result<Boolean> = runCatching {
         addPlaylistCase.execute(AddPlaylistReq(PlayListEntity(name = name)))
+    }
+
+    override suspend fun updateSongWithFavorite(song: SimpleTrackEntity, isFavorite: Boolean): Boolean {
+        updateSongCase.execute(UpdateSongReq(song, isFavorite = isFavorite))
+        return true
     }
 }

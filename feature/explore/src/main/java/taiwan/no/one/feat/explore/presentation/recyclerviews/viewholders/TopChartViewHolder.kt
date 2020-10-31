@@ -26,9 +26,11 @@ package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
 import androidx.core.content.ContextCompat
 import coil.loadAny
+import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
@@ -41,6 +43,26 @@ internal class TopChartViewHolder(
         (entity as? ArtistWithMoreDetailEntity)?.let(::initArtistType)
         binding.apply {
             mtvNumber.text = (absoluteAdapterPosition + 1).toString()
+            // XXX(jieyi): 10/31/20 We might be able to do better.
+            btnFavorite.setOnClickListener {
+                (entity as? TrackEntity)?.let { trackEntity ->
+                    btnFavorite.setOnClickListener {
+                        trackEntity.isFavorite = !(trackEntity.isFavorite ?: false)
+                        setFavoriteIcon(requireNotNull(trackEntity.isFavorite))
+                        adapter.favoriteListener?.invoke(EntityMapper.exploreToSimpleTrackEntity(trackEntity))
+                    }
+                }
+                (entity as? ArtistWithMoreDetailEntity)?.let { artistWithMoreDetailEntity ->
+                    btnFavorite.setOnClickListener {
+                        logw(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite)
+                        artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite =
+                            !(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite ?: false)
+                        setFavoriteIcon(requireNotNull(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite))
+                        adapter.favoriteListener?.invoke(EntityMapper.artistToSimpleTrackEntity(
+                            artistWithMoreDetailEntity))
+                    }
+                }
+            }
         }
     }
 

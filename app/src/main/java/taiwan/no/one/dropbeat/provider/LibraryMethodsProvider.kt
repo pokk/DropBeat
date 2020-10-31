@@ -26,6 +26,7 @@ package taiwan.no.one.dropbeat.provider
 
 import androidx.annotation.WorkerThread
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.mediaplayer.MusicInfo
 
 interface LibraryMethodsProvider {
@@ -58,4 +59,7 @@ interface LibraryMethodsProvider {
 
     @WorkerThread
     suspend fun createPlaylist(name: String): Result<Boolean>
+
+    @WorkerThread
+    suspend fun updateSongWithFavorite(song: SimpleTrackEntity, isFavorite: Boolean): Boolean
 }

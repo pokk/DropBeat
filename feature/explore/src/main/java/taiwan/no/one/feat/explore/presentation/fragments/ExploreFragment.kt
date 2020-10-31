@@ -92,7 +92,14 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
-                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = TopChartAdapter(it.subList(0, 4))
+                // After the response will set all actions.
+                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter =
+                    TopChartAdapter(it.subList(0, 4)).apply {
+                        // FIXME(jieyi): 10/31/20 The first clicking doesn't work.
+                        setOnClickListener { }
+                        setOptionClickListener { }
+                        setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
+                    }
                 val list = it.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
                 includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
                     findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
@@ -102,6 +109,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topTracks.observe(this) { res ->
             res.onSuccess {
+                // After the response will set all actions.
                 includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
                     TopChartAdapter(it.tracks.subList(0, 4))
                 val list = it.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()

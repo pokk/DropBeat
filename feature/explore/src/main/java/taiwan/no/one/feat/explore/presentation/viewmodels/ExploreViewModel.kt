@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.presentation.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
@@ -33,6 +34,7 @@ import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
@@ -61,6 +63,8 @@ internal class ExploreViewModel(
     val topTags = liveData {
         emit(runCatching { fetchChartTopTagCase.execute(FetchChartTopTagReq(1, 10)) })
     }
+    private val _resultOfFavorite by lazy { MutableLiveData<Boolean>() }
+    val resultOfFavorite get() = _resultOfFavorite.toLiveData()
 
     fun getPlaylists() = viewModelScope.launch {
         _playlists.value = libraryProvider.getPlaylists()
@@ -96,5 +100,9 @@ internal class ExploreViewModel(
                 it.second?.popularTrackThisWeek?.isFavorite = isFavorite.getOrNull()
             }
         })
+    }
+
+    fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {
+        _resultOfFavorite.value = libraryProvider.updateSongWithFavorite(song, isFavorite)
     }
 }
