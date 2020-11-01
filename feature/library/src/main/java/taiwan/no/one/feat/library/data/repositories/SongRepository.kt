@@ -36,6 +36,8 @@ internal class SongRepository(
 
     override suspend fun getMusic(remoteUri: String?, localUri: String?) = local.getMusic(remoteUri, localUri)
 
+    override suspend fun addMusic(song: SongEntity) = local.createMusic(song)
+
     override suspend fun addMusics(songs: List<SongEntity>) = local.createMusics(songs)
 
     override suspend fun updateMusic(songId: Int, isFavorite: Boolean) = local.modifyMusic(songId, isFavorite)

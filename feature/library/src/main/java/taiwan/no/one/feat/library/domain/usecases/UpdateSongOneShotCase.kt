@@ -56,7 +56,7 @@ internal class UpdateSongOneShotCase(
         try {
             if (isFavorite) {
                 // When the song is not in our playlist, will add. Otherwise, will go below exception.
-                songRepo.addMusics(listOf(EntityMapper.simpleToSongEntity(entity)))
+                songRepo.addMusic(EntityMapper.simpleToSongEntity(entity))
             }
         }
         catch (e: Exception) {
@@ -85,7 +85,7 @@ internal class UpdateSongOneShotCase(
         }
     }
 
-    internal data class Request(
+    internal class Request(
         val song: SimpleTrackEntity? = null,
         val songId: Int? = null,
         val isFavorite: Boolean? = null,

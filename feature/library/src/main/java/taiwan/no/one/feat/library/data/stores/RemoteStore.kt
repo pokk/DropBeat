@@ -42,6 +42,8 @@ internal class RemoteStore : DataStore {
 
     override suspend fun modifyMusic(songId: Int, isFavorite: Boolean) = UnsupportedOperation()
 
+    override suspend fun createMusic(song: SongEntity) = UnsupportedOperation()
+
     override suspend fun createMusics(songs: List<SongEntity>) = UnsupportedOperation()
 
     override suspend fun createMusic(song: SongEntity, playlistId: Int) = UnsupportedOperation()

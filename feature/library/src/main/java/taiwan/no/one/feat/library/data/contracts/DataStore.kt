@@ -40,6 +40,8 @@ internal interface DataStore {
 
     suspend fun modifyMusic(songId: Int, isFavorite: Boolean)
 
+    suspend fun createMusic(song: SongEntity)
+
     suspend fun createMusics(songs: List<SongEntity>)
 
     suspend fun createMusic(song: SongEntity, playlistId: Int)
