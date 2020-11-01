@@ -35,5 +35,5 @@ internal class DeletePlaylistOneShotCase(
         true
     }
 
-    class Request : RequestValues
+    internal class Request : RequestValues
 }

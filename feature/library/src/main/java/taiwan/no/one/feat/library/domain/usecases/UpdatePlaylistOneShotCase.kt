@@ -82,7 +82,7 @@ internal class UpdatePlaylistOneShotCase(
         return request.songsPaths?.map { songRepository.getMusic(null, it).id } ?: throw NullPointerException()
     }
 
-    data class Request(
+    internal data class Request(
         val playlistId: Int?,
         val name: String? = null,
         val songIds: List<Int>? = null,

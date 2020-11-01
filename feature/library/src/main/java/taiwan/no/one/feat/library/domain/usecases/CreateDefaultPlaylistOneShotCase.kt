@@ -44,5 +44,5 @@ internal class CreateDefaultPlaylistOneShotCase(
         return true
     }
 
-    class Request : RequestValues
+    internal class Request : RequestValues
 }

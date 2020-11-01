@@ -85,7 +85,7 @@ internal class UpdateSongOneShotCase(
         }
     }
 
-    internal class Request(
+    internal data class Request(
         val song: SimpleTrackEntity? = null,
         val songId: Int? = null,
         val isFavorite: Boolean? = null,
