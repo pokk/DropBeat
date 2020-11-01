@@ -64,6 +64,8 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private val playlistLayoutManager get() = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
     private val exploreAdapter by lazy { ExploreAdapter() }
     private val playlistAdapter by lazy { PlaylistAdapter() }
+    private val topArtistAdapter by lazy { TopChartAdapter() }
+    private val topTrackAdapter by lazy { TopChartAdapter() }
 
     // NOTE(Jieyi): 8/11/20 Because the layout xml is not in the module,
     //  viewbinding can't use for `include` xml from other modules.
@@ -92,14 +94,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
-                // After the response will set all actions.
-                includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter =
-                    TopChartAdapter(it.subList(0, 4)).apply {
-                        // FIXME(jieyi): 10/31/20 The first clicking doesn't work.
-                        setOnClickListener { }
-                        setOptionClickListener { }
-                        setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
-                    }
+                topArtistAdapter.data = it.subList(0, 4)
                 val list = it.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
                 includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
                     findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
@@ -109,9 +104,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topTracks.observe(this) { res ->
             res.onSuccess {
-                // After the response will set all actions.
-                includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter =
-                    TopChartAdapter(it.tracks.subList(0, 4))
+                topTrackAdapter.data = it.tracks.subList(0, 4)
                 val list = it.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
                 includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
                     findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
@@ -149,6 +142,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 if (layoutManager == null) {
                     layoutManager = linearLayoutManager()
                 }
+                if (adapter == null) {
+                    adapter = topArtistAdapter
+                }
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopArtist"
         }
@@ -156,6 +152,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             find<RecyclerView>(AppResId.rv_musics).apply {
                 if (layoutManager == null) {
                     layoutManager = linearLayoutManager()
+                }
+                if (adapter == null) {
+                    adapter = topTrackAdapter
                 }
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"
@@ -173,6 +172,11 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         playlistAdapter.setOnClickListener {
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id))
+        }
+        listOf(topTrackAdapter, topArtistAdapter).forEach {
+            it.setOnClickListener { }
+            it.setOptionClickListener { }
+            it.setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
         }
     }
 

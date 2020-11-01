@@ -30,11 +30,23 @@ import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChartViewHolder
+import taiwan.no.one.widget.recyclerviews.AutoUpdatable
+import kotlin.properties.Delegates
 
-internal class TopChartAdapter(
-    private val itemList: List<Any>,
-) : RecyclerView.Adapter<TopChartViewHolder>() {
+internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>(), AutoUpdatable {
+    var data: List<Any> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { o, n ->
+            (o as? TrackEntity)?.let {
+                it.name == (n as? TrackEntity)?.name
+            } ?: let {
+                (o as? ArtistWithMoreDetailEntity)?.second?.popularTrackThisWeek?.name ==
+                    (n as? ArtistWithMoreDetailEntity)?.second?.popularTrackThisWeek?.name
+            }
+        }
+    }
     var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
     var optionListener: (() -> Unit)? = null
@@ -48,9 +60,9 @@ internal class TopChartAdapter(
             .let { TopChartViewHolder(ItemTypeOfMusicBinding.bind(it)) }
 
     override fun onBindViewHolder(holder: TopChartViewHolder, position: Int) =
-        holder.initView(itemList[position], this)
+        holder.initView(data[position], this)
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = data.size
 
     fun setOnClickListener(listener: (SimpleTrackEntity) -> Unit) {
         clickListener = listener
