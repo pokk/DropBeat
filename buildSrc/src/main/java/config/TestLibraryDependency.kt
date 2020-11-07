@@ -26,11 +26,11 @@ package config
 
 object TestLibraryDependency {
     private object Version {
-        const val KTX_CORE = "1.3.0"
+        const val KTX_CORE = "1.3.1-alpha02"
         const val CORE = "2.1.0"
-        const val JUNIT = "1.1.2"
+        const val JUNIT = "1.1.3-alpha02"
         const val ASSERTK = "0.23"
-        const val ESPRESSO = "3.3.0"
+        const val ESPRESSO = "3.4.0-alpha02"
         const val KAKAO = "2.1.0"
         const val MOCKK = "1.10.2"
     }
