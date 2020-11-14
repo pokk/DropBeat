@@ -35,12 +35,12 @@ object LibraryDependency {
         const val APP_STARTUP = "1.0.0"
         const val CARDVIEW = ANDROIDX
         const val RECYCLERVIEW = "1.2.0-alpha06"
-        const val PAGING = "3.0.0-alpha08"
+        const val PAGING = "3.0.0-alpha09"
         const val CONSTRAINTLAYOUT = "2.0.4"
         const val COORDINATORLAYOUT = "1.1.0"
         const val AAC_LIFECYCLE = "2.3.0-beta01"
         const val KODEIN = "7.1.0"
-        const val KTX = "1.5.0-alpha04"
+        const val KTX = "1.5.0-alpha05"
         const val ACTIVITY_KTX = "1.2.0-beta01"
         const val FRAGMENT_KTX = "1.3.0-beta01"
         const val PALETTE_KTX = "1.0.0"
@@ -49,7 +49,7 @@ object LibraryDependency {
         const val WORK_KTX = "2.5.0-beta01"
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.3.0-alpha03"
-        const val MMKV = "1.2.4"
+        const val MMKV = "1.2.5"
         const val GSON = "2.8.6"
         const val PLAY_CORE = "1.8.3"
         const val COIL = "1.0.0"
@@ -65,12 +65,12 @@ object LibraryDependency {
         const val FIREBASE_FIRESTORE = "22.0.0"
         const val FIREBASE_MESSAGING = "21.0.0"
         const val FIREBASE_ML = "24.0.3"
-        const val FIREBASE_AUTH_GOOGLE = "18.1.0"
+        const val FIREBASE_AUTH_GOOGLE = "19.0.0"
         const val FIREBASE_AUTH_FACEBOOK = "8.1.0"
         const val EXOPLAYER = "2.12.1"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
-        const val LOTTIE = "3.4.4"
+        const val LOTTIE = "3.5.0"
     }
 
     object Jieyi {
