@@ -176,10 +176,10 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(id))
             }
         }
-        (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.setOnClickListener {
-        }
-        (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.setOnClickListener {
-        }
+        listOf(
+            includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
+            includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
+        ).forEach { it?.let(::setListClickListener) }
         mergeTopControllerBinding.btnMore.setOnClickListener { showMenu(it) }
     }
 
@@ -189,6 +189,14 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             mergeTopControllerBinding.btnLogin.gone()
         }
         vm.getAllPlaylists()
+    }
+
+    private fun setListClickListener(trackAdapter: TrackAdapter) {
+        trackAdapter.apply {
+            setOnClickListener { }
+            setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
+            setOptionClickListener { }
+        }
     }
 
     private fun showMenu(anchor: View) =
