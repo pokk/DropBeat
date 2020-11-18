@@ -200,5 +200,20 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     }
 
     private fun showMenu(anchor: View) =
-        popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_setting).show()
+        popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_setting).apply {
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.item_playlist -> Unit
+                    R.id.item_favorite ->
+                        findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(2))
+                    R.id.item_downloaded ->
+                        findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(1))
+                    R.id.item_local_music -> Unit
+                    R.id.item_setting ->
+                        findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToSettingGraph())
+                    R.id.item_about -> Unit
+                }
+                true
+            }
+        }.show()
 }
