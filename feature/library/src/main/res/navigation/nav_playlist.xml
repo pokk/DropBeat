@@ -60,6 +60,11 @@
             android:defaultValue="@null"
             app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
             app:nullable="true"/>
+        <argument
+            android:name="title"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_playlist_to_rename"
             app:destination="@id/rename_fragment"/>

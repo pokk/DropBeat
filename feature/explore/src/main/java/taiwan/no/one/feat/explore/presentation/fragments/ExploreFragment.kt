@@ -97,7 +97,10 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 topArtistAdapter.data = it.subList(0, 4)
                 val list = it.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
                 includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
-                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
+                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
+                        songs = list,
+                        title = includeTopArtist.find<TextView>(AppResId.mtv_explore_title).text.toString(),
+                    ))
                 }
             }.onFailure { loge(it) }
             includeTopArtist.find<View>(AppResId.pb_progress).gone()
@@ -107,7 +110,10 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 topTrackAdapter.data = it.tracks.subList(0, 4)
                 val list = it.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
                 includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
-                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(songs = list))
+                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
+                        songs = list,
+                        title = includeTopTrack.find<TextView>(AppResId.mtv_explore_title).text.toString(),
+                    ))
                 }
             }.onFailure { loge(it) }
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
