@@ -35,7 +35,6 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo.State
 import androidx.work.WorkManager
 import com.devrapid.kotlinknifer.gone
-import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
 import com.google.gson.Gson
 import org.kodein.di.factory
@@ -84,7 +83,6 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
 
     override fun bindLiveData() {
         workManager.getWorkInfoByIdLiveData(worker.id).observe(this) { workInfo ->
-            logw(workInfo)
             when (workInfo.state) {
                 State.SUCCEEDED -> {
                     val json = workInfo.outputData.getString(PARAM_KEY_RESULT_OF_SONGS)
