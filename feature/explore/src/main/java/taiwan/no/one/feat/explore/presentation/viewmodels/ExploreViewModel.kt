@@ -72,7 +72,7 @@ internal class ExploreViewModel(
 
     fun getTopTracks() = launchBehind {
         _topTracks.postValue(runCatching {
-            fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, 10, 4)).apply {
+            fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, 10, 10)).apply {
                 tracks.onEach {
                     val url = it.url ?: return@onEach
                     val isFavorite = try {
@@ -89,7 +89,7 @@ internal class ExploreViewModel(
 
     fun getTopArtists() = launchBehind {
         _topArtists.postValue(runCatching {
-            fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, 10, 4)).onEach {
+            fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, 10, 10)).onEach {
                 val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
                 val isFavorite = try {
                     libraryProvider.isFavoriteTrack(url, 2)

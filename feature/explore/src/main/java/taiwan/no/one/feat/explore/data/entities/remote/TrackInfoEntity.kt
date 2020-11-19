@@ -35,7 +35,7 @@ internal data class TrackInfoEntity(
     ) : BaseTrackEntity() {
         override fun toString() = """
             |${this::class.java.simpleName}(
-            |streamable: $streamable
+            |streamable: $streamable,
             |${super.toString()})
             |""".trimMarginAndNewLine()
     }
@@ -45,7 +45,7 @@ internal data class TrackInfoEntity(
     ) : BaseTrackEntity() {
         override fun toString() = """
             |${this::class.java.simpleName}(
-            |streamable: $streamable
+            |streamable: $streamable,
             |${super.toString()})
             |""".trimMarginAndNewLine()
     }
@@ -73,21 +73,21 @@ internal data class TrackInfoEntity(
         var isFavorite: Boolean? = null,
     ) {
         override fun toString() = """
-            |album: $album
-            |attr: $attr
-            |artist: $artist
-            |duration: $duration
-            |images: $images
-            |listeners: $listeners
-            |match: $match
-            |mbid: $mbid
-            |name: $name
-            |playcount: $playcount
-            |topTag: $topTag
-            |url: $url
-            |realUrl: $realUrl
-            |wiki: $wiki
-            |isFavorite: $isFavorite
+            |album: $album,
+            | attr: $attr,
+            | artist: $artist,
+            | duration: $duration,
+            | images: $images,
+            | listeners: $listeners,
+            | match: $match,
+            | mbid: $mbid,
+            | name: $name,
+            | playcount: $playcount,
+            | topTag: $topTag,
+            | url: $url,
+            | realUrl: $realUrl,
+            | wiki: $wiki,
+            | isFavorite: $isFavorite
             |""".trimMarginAndNewLine()
     }
 }

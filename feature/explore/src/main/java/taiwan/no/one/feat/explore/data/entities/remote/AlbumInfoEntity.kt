@@ -29,12 +29,12 @@ import com.google.gson.annotations.SerializedName
 import taiwan.no.one.ext.DEFAULT_INT
 
 internal data class AlbumInfoEntity(
-    val album: AlbumEntity?
+    val album: AlbumEntity?,
 ) {
     internal data class AlbumEntity(
         val artist: String?,
         @SerializedName("playcount")
-        val playCount: String? = null
+        val playCount: String? = null,
     ) : BaseAlbumEntity() {
         override fun toString() = """
             |${this::class.java.simpleName}(
@@ -48,7 +48,7 @@ internal data class AlbumInfoEntity(
         val artist: ArtistInfoEntity.ArtistEntity?,
         @SerializedName("playcount")
         val playCount: String? = null,
-        val index: Int = DEFAULT_INT
+        val index: Int = DEFAULT_INT,
     ) : BaseAlbumEntity() {
         override fun toString() = """
             |${this::class.java.simpleName}(
@@ -72,18 +72,18 @@ internal data class AlbumInfoEntity(
         @SerializedName("tracks")
         var tracks: TopTrackInfoEntity.TracksEntity? = null,
         var url: String? = null,
-        var wiki: CommonLastFmEntity.WikiEntity? = null
+        var wiki: CommonLastFmEntity.WikiEntity? = null,
     ) {
         override fun toString() = """
-            |attr=$attr
-            |images=$images
-            |listeners=$listeners
-            |mbid=$mbid
-            |name=$name
-            |tags=$tags
-            |title=$title
-            |tracks=$tracks
-            |url=$url
+            |attr=$attr,
+            |images=$images,
+            |listeners=$listeners,
+            |mbid=$mbid,
+            |name=$name,
+            |tags=$tags,
+            |title=$title,
+            |tracks=$tracks,
+            |url=$url,
             |wiki=$wiki
             |""".trimMarginAndNewLine()
     }

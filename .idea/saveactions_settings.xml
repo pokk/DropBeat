@@ -9,8 +9,14 @@
         <option value="noActionIfCompileErrors" />
         <option value="reformat" />
         <option value="rearrange" />
+        <option value="executeAction" />
       </set>
     </option>
     <option name="configurationPath" value="" />
+    <option name="quickLists">
+      <list>
+        <option value="787475714" />
+      </list>
+    </option>
   </component>
 </project>
