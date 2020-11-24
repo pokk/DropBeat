@@ -91,13 +91,12 @@ subprojects {
             in features -> {
                 plugin("com.android.dynamic-feature")
                 plugin("kotlin-android")
-                plugin("kotlin-android-extensions")
+                plugin("kotlin-parcelize")
                 plugin("kotlin-kapt")
                 plugin("androidx.navigation.safeargs.kotlin")
             }
         }
         if (this@subprojects.name == "core") {
-            plugin("kotlin-android-extensions")
             plugin("org.jetbrains.kotlin.kapt")
         }
         plugin(config.GradleDependency.DETEKT)

@@ -34,11 +34,6 @@ android {
     buildFeatures.viewBinding = true
 }
 
-androidExtensions {
-    isExperimental = true
-    defaultCacheImplementation = CacheImplementation.SPARSE_ARRAY
-}
-
 kapt {
     useBuildCache = true
     correctErrorTypes = true

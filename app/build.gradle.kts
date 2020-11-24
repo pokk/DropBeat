@@ -34,8 +34,8 @@ import resources.FeatureRes
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
+    id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -56,11 +56,6 @@ android {
     }
     buildFeatures.viewBinding = true
     dynamicFeatures = CommonModuleDependency.getDynamicFeatureModules()
-}
-
-androidExtensions {
-    isExperimental = true
-    defaultCacheImplementation = CacheImplementation.SPARSE_ARRAY
 }
 
 kapt {

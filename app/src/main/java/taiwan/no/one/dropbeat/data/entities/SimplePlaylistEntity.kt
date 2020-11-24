@@ -25,7 +25,7 @@
 package taiwan.no.one.dropbeat.data.entities
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * [SimplePlaylistEntity] is for global usage and it only keeps brief information.
