@@ -51,20 +51,14 @@ internal class ExploreViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
-    var playlistFirstChildPosition
-        get() = handle.get<Int>("playlist first child position")
-        set(value) {
-            handle["playlist first child position"] = value
-        }
-    var playlistOffset
-        get() = handle.get<Int>("playlist recyclerview offset")
-        set(value) {
-            handle["playlist recyclerview offset"] = value
-        }
+    companion object Constant {
+        private const val PLAYLIST_SAVED_STATE = "playlist recycler view saved state"
+    }
+
     var playlistState
-        get() = handle.get<Parcelable>("playlist state")
+        get() = handle.get<Parcelable>(PLAYLIST_SAVED_STATE)
         set(value) {
-            handle["playlist state"] = value
+            handle[PLAYLIST_SAVED_STATE] = value
         }
     private val fetchChartTopTagCase by instance<FetchChartTopTagCase>()
     private val fetchChartTopTrackCase by instance<FetchChartTopTrackCase>()
