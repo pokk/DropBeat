@@ -30,28 +30,18 @@ import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
-import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
+import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChartViewHolder
-import taiwan.no.one.widget.recyclerviews.AutoUpdatable
-import kotlin.properties.Delegates
 
-internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>(), AutoUpdatable {
-    var data: List<Any> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n ->
-            (o as? TrackEntity)?.let {
-                it.name == (n as? TrackEntity)?.name
-            } ?: let {
-                (o as? ArtistWithMoreDetailEntity)?.second?.popularTrackThisWeek?.name ==
-                    (n as? ArtistWithMoreDetailEntity)?.second?.popularTrackThisWeek?.name
-            }
-        }
-    }
+internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>() {
     var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
     var optionListener: (() -> Unit)? = null
         private set
     var favoriteListener: ((SimpleTrackEntity) -> Unit)? = null
+        private set
+    var data = emptyList<Any>()
         private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -63,6 +53,13 @@ internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>(), Aut
         holder.initView(data[position], this)
 
     override fun getItemCount() = data.size
+
+    fun setDataset(dataset: Any) {
+        data = ((dataset as? TracksEntity)?.tracks ?: (dataset as? ArtistWithMoreDetailEntities))
+            ?.subList(0, 4)
+            .orEmpty()
+        notifyDataSetChanged()
+    }
 
     fun setOnClickListener(listener: (SimpleTrackEntity) -> Unit) {
         clickListener = listener

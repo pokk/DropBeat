@@ -35,8 +35,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
-import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.provider
@@ -45,8 +45,12 @@ import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
+import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
+import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
+import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
@@ -80,13 +84,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        logd(findNavController().currentBackStackEntry?.savedStateHandle?.get("playlist"))
-    }
-
     override fun onPause() {
         super.onPause()
+        // Keep the recyclerview state.
         vm.playlistState = includePlaylist.find<RecyclerView>(AppResId.rv_musics).layoutManager?.onSaveInstanceState()
     }
 
@@ -109,27 +109,15 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
-                topArtistAdapter.data = it.subList(0, 4)
-                val list = it.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
-                includeTopArtist.find<Button>(AppResId.btn_more).setOnClickListener {
-                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
-                        songs = list,
-                        title = includeTopArtist.find<TextView>(AppResId.mtv_explore_title).text.toString(),
-                    ))
-                }
+                topArtistAdapter.setDataset(it)
+                setOnTopViewAllClick(includeTopArtist, it)
             }.onFailure(::loge)
             includeTopArtist.find<View>(AppResId.pb_progress).gone()
         }
         vm.topTracks.observe(this) { res ->
             res.onSuccess {
-                topTrackAdapter.data = it.tracks.subList(0, 4)
-                val list = it.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
-                includeTopTrack.find<Button>(AppResId.btn_more).setOnClickListener {
-                    findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
-                        songs = list,
-                        title = includeTopTrack.find<TextView>(AppResId.mtv_explore_title).text.toString(),
-                    ))
-                }
+                topTrackAdapter.setDataset(it)
+                setOnTopViewAllClick(includeTopTrack, it)
             }.onFailure(::loge)
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
         }
@@ -205,5 +193,34 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         vm.getPlaylists()
         vm.getTopTracks()
         vm.getTopArtists()
+    }
+
+    private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {
+        var isTopArtist = false
+        val list =
+            ((entities as? ArtistWithMoreDetailEntities)
+                 ?.apply { isTopArtist = true }
+                 ?.map(EntityMapper::artistToSimpleTrackEntity)
+                 ?.toTypedArray() ?: (entities as? TracksEntity)?.tracks
+                 ?.map(EntityMapper::exploreToSimpleTrackEntity)
+                 ?.toTypedArray()) ?: return
+        layout.find<Button>(AppResId.btn_more).setOnClickListener {
+            if (isTopArtist) {
+                topArtistAdapter.data.forEachIndexed { index, entity ->
+                    list[index].isFavorite =
+                        (entity as ArtistWithMoreDetailEntity).second?.popularTrackThisWeek?.isFavorite ?: false
+                }
+            }
+            else {
+                topTrackAdapter.data.forEachIndexed { index, entity ->
+                    logw(entity)
+                    list[index].isFavorite = (entity as TrackEntity).isFavorite ?: false
+                }
+            }
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
+                songs = list,
+                title = layout.find<TextView>(AppResId.mtv_explore_title).text.toString(),
+            ))
+        }
     }
 }
