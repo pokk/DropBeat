@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
+import com.devrapid.kotlinknifer.logd
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
@@ -79,10 +80,24 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        logd(findNavController().currentBackStackEntry?.savedStateHandle?.get("playlist"))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        vm.playlistState = includePlaylist.find<RecyclerView>(AppResId.rv_musics).layoutManager?.onSaveInstanceState()
+    }
+
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
                 playlistAdapter.data = it
+                // Restore the recyclerview state.
+                includePlaylist.find<RecyclerView>(AppResId.rv_musics)
+                    .layoutManager
+                    ?.onRestoreInstanceState(vm.playlistState)
             }.onFailure { loge(it) }
         }
         vm.topTags.observe(this) { res ->
@@ -90,7 +105,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 it.tags?.takeIf { it.isNotEmpty() }?.also {
                     exploreAdapter.data = it
                 }
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
@@ -102,7 +117,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                         title = includeTopArtist.find<TextView>(AppResId.mtv_explore_title).text.toString(),
                     ))
                 }
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
             includeTopArtist.find<View>(AppResId.pb_progress).gone()
         }
         vm.topTracks.observe(this) { res ->
@@ -115,7 +130,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                         title = includeTopTrack.find<TextView>(AppResId.mtv_explore_title).text.toString(),
                     ))
                 }
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
         }
     }

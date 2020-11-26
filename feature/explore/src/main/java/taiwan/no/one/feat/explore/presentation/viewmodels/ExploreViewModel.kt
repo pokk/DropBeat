@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.presentation.viewmodels
 
 import android.app.Application
+import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
@@ -50,6 +51,21 @@ internal class ExploreViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
+    var playlistFirstChildPosition
+        get() = handle.get<Int>("playlist first child position")
+        set(value) {
+            handle["playlist first child position"] = value
+        }
+    var playlistOffset
+        get() = handle.get<Int>("playlist recyclerview offset")
+        set(value) {
+            handle["playlist recyclerview offset"] = value
+        }
+    var playlistState
+        get() = handle.get<Parcelable>("playlist state")
+        set(value) {
+            handle["playlist state"] = value
+        }
     private val fetchChartTopTagCase by instance<FetchChartTopTagCase>()
     private val fetchChartTopTrackCase by instance<FetchChartTopTrackCase>()
     private val fetchChartTopArtistCase by instance<FetchChartTopArtistCase>()
