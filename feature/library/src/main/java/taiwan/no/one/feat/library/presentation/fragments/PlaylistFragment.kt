@@ -30,6 +30,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,6 +63,7 @@ import java.lang.ref.WeakReference
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
     private var playlist: PlayListEntity? = null
+    private var prevSavedState: SavedStateHandle? = null
 
     //region Variable of View Binding
     private val noSongsBinding get() = StubNoSongsBinding.bind(binding.root)
@@ -84,6 +86,19 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // NOTE(jieyi): 11/26/20 [previousBackStackEntry?.savedStateHandle] will be null after onPause() so it
+        //  should be kept. Still don't know the reason why it will be null after onPause().
+        prevSavedState = findNavController().previousBackStackEntry?.savedStateHandle
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        prevSavedState?.set("playlist", playlistAdapter.data)
+        prevSavedState = null
     }
 
     override fun bindLiveData() {
@@ -157,8 +172,9 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             if (layoutManager == null) {
                 layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
             }
-            (adapter as? TrackAdapter)?.data = songs
         }
+        // Set the song into the adapter.
+        playlistAdapter.data = songs
         // Set the section title.
         find<TextView>(AppResId.mtv_explore_title).text = "All Songs"
         // Hide the view more button.
