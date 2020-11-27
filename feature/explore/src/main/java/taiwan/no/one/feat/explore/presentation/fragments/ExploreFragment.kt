@@ -121,6 +121,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             }.onFailure(::loge)
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
         }
+        vm.resultOfFavorite.observe(this) {
+            if (it) {
+                // Update the playlist information.
+                vm.getPlaylists()
+            }
+        }
     }
 
     override fun viewComponentBinding() {
