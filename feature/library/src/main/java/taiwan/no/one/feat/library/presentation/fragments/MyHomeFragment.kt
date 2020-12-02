@@ -79,7 +79,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val playlistAdapter by lazy { PlaylistAdapter() }
     //endregion
 
-    private val userEntity get() = privacyVm.userInfo.value.getOrNull()
+    private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -184,12 +184,12 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         listOf(
             includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
             includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
-        ).forEach { it.let(::setListClickListener) }
+        ).forEach { it?.let(::setListClickListener) }
         mergeTopControllerBinding.btnMore.setOnClickListener { showMenu(it) }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        userEntity.takeIf { it.uid.isNotNull() }.let {
+        userEntity.takeIf { it?.uid.isNotNull() }?.let {
             mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
         }
