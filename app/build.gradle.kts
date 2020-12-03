@@ -50,11 +50,6 @@ android {
         renderscriptTargetApi = AndroidConfiguration.MIN_SDK
         renderscriptSupportModeEnabled = true
     }
-    packagingOptions {
-        exclude("META-INF/atomicfu.kotlin_module")
-        exclude("META-INF/kotlinx-coroutines-core.kotlin_module")
-    }
-    buildFeatures.viewBinding = true
     dynamicFeatures = CommonModuleDependency.getDynamicFeatureModules()
 }
 

@@ -26,10 +26,6 @@ import config.CommonModuleDependency
 import config.annotationDependencies
 import config.firebaseAuthDependencies
 
-android {
-    buildFeatures.viewBinding = true
-}
-
 kapt {
     useBuildCache = true
     correctErrorTypes = true

@@ -25,10 +25,6 @@
 import config.CommonModuleDependency
 import config.annotationDependencies
 
-android {
-    buildFeatures.viewBinding = true
-}
-
 kapt {
     useBuildCache = true
     correctErrorTypes = true

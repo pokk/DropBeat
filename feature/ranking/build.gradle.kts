@@ -57,7 +57,6 @@ android {
                              gradleLocalProperties(rootDir).getProperty("seek_song_param_1"))
         }
     }
-    buildFeatures.viewBinding = true
 }
 
 kapt {

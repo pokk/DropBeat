@@ -28,7 +28,6 @@ import config.annotationDependencies
 import config.coreDependencies
 import config.debugDependencies
 import config.unitTestDependencies
-import org.jetbrains.kotlin.gradle.internal.CacheImplementation
 
 android {
     buildFeatures.viewBinding = true
