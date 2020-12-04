@@ -25,13 +25,12 @@
 package taiwan.no.one.core.presentation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import org.kodein.di.DIAware
 import org.kodein.di.DITrigger
 import org.kodein.di.android.x.di
 import taiwan.no.one.core.BuildConfig
 
-abstract class InjectableFragment : Fragment(), DIAware {
+abstract class InjectableFragment : PrintLifecycleFragment(), DIAware {
     override val di by di()
     override val diTrigger = if (BuildConfig.DEBUG) DITrigger() else super.diTrigger
 
