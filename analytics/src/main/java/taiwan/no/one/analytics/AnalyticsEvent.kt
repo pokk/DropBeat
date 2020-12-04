@@ -21,12 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ktx", ":ext", ":widget", ":mediaplayer", ":device", ":core", ":analytics", ":test")
-include(":feature:search",
-        ":feature:ranking",
-        ":feature:login",
-        ":feature:library",
-        ":feature:explore",
-        ":feature:player",
-        ":feature:setting")
+
+package taiwan.no.one.analytics
+
+abstract class AnalyticsEvent(
+    val eventName: String, // Name of the event
+    val params: Map<String, Any?> = emptyMap(), // Key values pair of params, where key- is a name of event
+    // the list of supported providers for this event. By default, we can send
+    // this event to all analytics providers
+    val providers: List<AnalyticsProvider> = listOf(
+        AnalyticsProvider.ANALYTICS_FIREBASE, // A couple of dummy providers.
+    ),
+)

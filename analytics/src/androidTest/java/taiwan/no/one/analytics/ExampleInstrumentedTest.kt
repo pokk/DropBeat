@@ -21,12 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ktx", ":ext", ":widget", ":mediaplayer", ":device", ":core", ":analytics", ":test")
-include(":feature:search",
-        ":feature:ranking",
-        ":feature:login",
-        ":feature:library",
-        ":feature:explore",
-        ":feature:player",
-        ":feature:setting")
+
+package taiwan.no.one.analytics
+
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
+
+import org.junit.Test
+import org.junit.runner.RunWith
+
+import org.junit.Assert.*
+
+/**
+ * Instrumented test, which will execute on an Android device.
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+@RunWith(AndroidJUnit4::class)
+class ExampleInstrumentedTest {
+    @Test
+    fun useAppContext() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("taiwan.no.one.analytics.test", appContext.packageName)
+    }
+}

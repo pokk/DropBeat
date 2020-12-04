@@ -26,7 +26,6 @@ package taiwan.no.one.dropbeat.presentation.viewmodels
 
 import android.app.Application
 import androidx.annotation.UiThread
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -45,7 +44,7 @@ class PrivacyViewModel(
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo = _userInfo.toLiveData()
 
-    @WorkerThread
+    @UiThread
     fun getUserInfo() = viewModelScope.launch {
         _userInfo.value = runCatching { fetchLoginInfoCase.execute() }
     }

@@ -21,12 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ktx", ":ext", ":widget", ":mediaplayer", ":device", ":core", ":analytics", ":test")
-include(":feature:search",
-        ":feature:ranking",
-        ":feature:login",
-        ":feature:library",
-        ":feature:explore",
-        ":feature:player",
-        ":feature:setting")
+
+package taiwan.no.one.analytics
+
+import android.util.Log
+import com.google.firebase.analytics.FirebaseAnalytics
+
+class AnalyticsSender(
+    private val analytics: FirebaseAnalytics,
+) {
+    fun sendEvent(event: AnalyticsEvent) {
+        if (event.providers.contains(AnalyticsProvider.ANALYTICS_FIREBASE)) {
+            analytics.logEvent(event.eventName, event.params.toBundle())
+        }
+        Log.d("ArchAnalytics",
+              "Event was sent: ${event.eventName}. Params: ${event.params}. Providers: ${event.providers}")
+    }
+
+    fun setUserProperty(property: AnalyticsProperty) {
+        if (property.providers.contains(AnalyticsProvider.ANALYTICS_FIREBASE)) {
+            analytics.setUserProperty(property.propertyName, property.toString())
+        }
+    }
+}

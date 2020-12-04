@@ -96,6 +96,11 @@ fun DependencyHandlerScope.firebaseAuthDependencies() {
     DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
 }
 
+fun DependencyHandlerScope.analyticsDependencies() {
+    kotlinDependencies(DepEnvImpl)
+    DepEnvApi(LibraryDependency.Firebase.FIREBASE_ANALYTICS)
+}
+
 fun DependencyHandlerScope.testDependencies() {
     kotlinDependencies(DepEnvImpl)
     DepEnvImpl(TestLibraryDependency.JUNIT)
@@ -178,7 +183,6 @@ fun DependencyHandlerScope.internetDependencies(env: String) {
 }
 
 fun DependencyHandlerScope.firebaseDependencies(env: String) {
-    env(LibraryDependency.Firebase.FIREBASE_ANALYTICS)
     env(LibraryDependency.Firebase.FIREBASE_CRASHLYTICS)
     env(LibraryDependency.Firebase.FIREBASE_CONFIG)
     env(LibraryDependency.Firebase.FIREBASE_MESSAGING)
