@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.work.WorkManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -40,6 +41,7 @@ import org.kodein.di.factory
 import org.kodein.di.instance
 import org.kodein.di.provider
 import org.kodein.di.singleton
+import taiwan.no.one.analytics.AnalyticsSender
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 import java.lang.ref.WeakReference
 
@@ -57,6 +59,12 @@ object UtilModules {
         bind<MMKV>() with singleton { MMKV.defaultMMKV() }
     }
 
+    fun provideAnalytics(context: Context) = DI.Module("Analytics Module") {
+        bind<FirebaseAnalytics>() with singleton { FirebaseAnalytics.getInstance(context) }
+
+        bind<AnalyticsSender>() with singleton { AnalyticsSender(instance()) }
+    }
+
     fun provideUi() = DI.Module("Util UI Module") {
         // Linear Layout Manager.
         bind<LinearLayoutManager>() with factory { params: LayoutManagerParams ->
@@ -70,6 +78,8 @@ object UtilModules {
         }
         bind<LinearLoadMoreScrollListener>() with provider { LinearLoadMoreScrollListener() }
     }
+
+    fun provideAll(context: Context) = listOf(provide(context), provideAnalytics(context), provideUi())
 
     data class LayoutManagerParams(
         val context: WeakReference<Context>,

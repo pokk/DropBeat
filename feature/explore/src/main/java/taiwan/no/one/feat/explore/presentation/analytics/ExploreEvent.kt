@@ -22,10 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.analytics
+package taiwan.no.one.feat.explore.presentation.analytics
 
-abstract class AnalyticsEvent(
-    val eventName: String,
-    val params: Map<String, Any?> = emptyMap(),
-    val providers: List<AnalyticsProvider> = listOf(AnalyticsProvider.ANALYTICS_FIREBASE),
-)
+import taiwan.no.one.analytics.AnalyticsEvent
+import taiwan.no.one.analytics.Constant
+import java.util.Date
+
+internal object ExploreEvent {
+    internal class SendClicked(
+        timestamp: Date,
+    ) : AnalyticsEvent(Constant.Events.SendClicked.name,
+                       mapOf(Constant.Events.SendClicked.Params.TIME_OF_CLICKS to timestamp))
+}

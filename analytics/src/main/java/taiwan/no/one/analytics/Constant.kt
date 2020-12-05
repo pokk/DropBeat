@@ -48,7 +48,7 @@ object Constant {
 
         object SendClicked : Events("send_clicked") {
             object Params {
-                const val TIME_BETWEEN_CLICKS = "time_between_clicks"
+                const val TIME_OF_CLICKS = "time_of_clicks"
             }
         }
 

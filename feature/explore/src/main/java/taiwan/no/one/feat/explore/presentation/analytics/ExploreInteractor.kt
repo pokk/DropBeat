@@ -22,10 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.analytics
+package taiwan.no.one.feat.explore.presentation.analytics
 
-abstract class AnalyticsEvent(
-    val eventName: String,
-    val params: Map<String, Any?> = emptyMap(),
-    val providers: List<AnalyticsProvider> = listOf(AnalyticsProvider.ANALYTICS_FIREBASE),
-)
+import taiwan.no.one.analytics.AnalyticsSender
+import java.util.Calendar
+
+class ExploreInteractor(
+    private val sender: AnalyticsSender,
+) {
+    fun sendClickedEvent() {
+        sender.sendEvent(ExploreEvent.SendClicked(Calendar.getInstance().time))
+    }
+}

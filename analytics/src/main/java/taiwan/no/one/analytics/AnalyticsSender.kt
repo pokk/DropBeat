@@ -34,8 +34,8 @@ class AnalyticsSender(
         if (event.providers.contains(AnalyticsProvider.ANALYTICS_FIREBASE)) {
             analytics.logEvent(event.eventName, event.params.toBundle())
         }
-        Log.d("ArchAnalytics",
-              "Event was sent: ${event.eventName}. Params: ${event.params}. Providers: ${event.providers}")
+        Log.d("Analytics",
+              "\uD83D\uDCE9 Event was sent: ${event.eventName}. Params: ${event.params}. Providers: ${event.providers}")
     }
 
     fun setUserProperty(property: AnalyticsProperty) {

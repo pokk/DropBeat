@@ -31,8 +31,7 @@ import org.kodein.di.android.x.androidXModule
 object Dispatcher {
     fun importIntoApp(app: Application) = DI.lazy {
         import(androidXModule(app))
-        import(UtilModules.provide(app))
-        import(UtilModules.provideUi())
+        importAll(UtilModules.provideAll(app))
         import(CacheModule.provide(app))
         import(AppModules.provide(app))
         import(FeatModuleHelper.provide())
