@@ -51,6 +51,7 @@ import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
+import taiwan.no.one.feat.explore.presentation.analytics.AnalyticsViewModel
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
@@ -60,6 +61,7 @@ import java.lang.ref.WeakReference
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
     private val vm by viewModels<ExploreViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
@@ -179,14 +181,17 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     override fun componentListenersBinding() {
         binding.mtvTitle.setOnClickListener {
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlayer())
+            analyticsVm.navigatedToPlayer()
         }
         exploreAdapter.setOnClickListener {
             it.name?.takeIf { it.isNotEmpty() }?.also {
                 findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylistSongsOfTag(it))
+                analyticsVm.navigatedToPlaylist("song tag: $it")
             }
         }
         playlistAdapter.setOnClickListener {
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id))
+            analyticsVm.navigatedToPlaylist("playlist name: ${it.name}")
         }
         listOf(topTrackAdapter, topArtistAdapter).forEach {
             it.setOnClickListener { }
@@ -204,12 +209,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {
         var isTopArtist = false
         val list =
-            ((entities as? ArtistWithMoreDetailEntities)
-                 ?.apply { isTopArtist = true }
-                 ?.map(EntityMapper::artistToSimpleTrackEntity)
-                 ?.toTypedArray() ?: (entities as? TracksEntity)?.tracks
-                 ?.map(EntityMapper::exploreToSimpleTrackEntity)
-                 ?.toTypedArray()) ?: return
+            (entities as? ArtistWithMoreDetailEntities)
+                ?.apply { isTopArtist = true }
+                ?.map(EntityMapper::artistToSimpleTrackEntity)
+                ?.toTypedArray() ?: (entities as? TracksEntity)?.tracks
+                ?.map(EntityMapper::exploreToSimpleTrackEntity)
+                ?.toTypedArray() ?: return
         layout.find<Button>(AppResId.btn_more).setOnClickListener {
             if (isTopArtist) {
                 topArtistAdapter.data.forEachIndexed { index, entity ->
@@ -223,10 +228,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                     list[index].isFavorite = (entity as TrackEntity).isFavorite ?: false
                 }
             }
+            val playlistName = layout.find<TextView>(AppResId.mtv_explore_title).text.toString()
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
                 songs = list,
-                title = layout.find<TextView>(AppResId.mtv_explore_title).text.toString(),
+                title = playlistName,
             ))
+            analyticsVm.navigatedToPlaylist("playlist name: $playlistName")
         }
     }
 }

@@ -24,13 +24,29 @@
 
 package taiwan.no.one.feat.explore.presentation.analytics
 
+import androidx.lifecycle.SavedStateHandle
+import org.kodein.di.instance
 import taiwan.no.one.analytics.AnalyticsSender
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.EXPLORE
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYER
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYLIST
 import java.util.Calendar
 
-class ExploreInteractor(
-    private val sender: AnalyticsSender,
-) {
-    fun sendClickedEvent() {
-        sender.sendEvent(ExploreEvent.SendClicked(Calendar.getInstance().time))
+internal class AnalyticsViewModel(override val handle: SavedStateHandle) : BehindViewModel() {
+    private val sender by instance<AnalyticsSender>()
+
+    fun navigatedToPlayer() = navigated(EXPLORE, PLAYER)
+
+    fun navigatedToPlaylist(extra: String) = navigated(EXPLORE, PLAYLIST, extra)
+
+    fun sendClickedEvent(which: String) {
+        sender.sendEvent(ClickedEvent.SendClicked(which, Calendar.getInstance().time))
+    }
+
+    fun navigated(from: NavigationSource, to: NavigationSource, extra: String? = null) {
+        sender.sendEvent(ClickedEvent.Navigated(from, to, extra, Calendar.getInstance().time))
     }
 }

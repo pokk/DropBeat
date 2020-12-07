@@ -38,16 +38,14 @@ object Constant {
             object Params {
                 const val FROM = "from"
                 const val TO = "to"
-            }
-
-            // this are possible values of event parameters from and to.
-            object NavigationSources {
-                const val NOTIFICATIONS = "notifications"
+                const val EXTRA_INFO = "extra_information"
+                const val TIME_OF_CLICKS = "time_of_clicks"
             }
         }
 
         object SendClicked : Events("send_clicked") {
             object Params {
+                const val WHICH = "which"
                 const val TIME_OF_CLICKS = "time_of_clicks"
             }
         }
