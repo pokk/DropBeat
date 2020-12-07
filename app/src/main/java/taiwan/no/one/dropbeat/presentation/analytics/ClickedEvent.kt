@@ -36,7 +36,14 @@ object ClickedEvent {
                        mapOf(
                            Constant.Events.SendClicked.Params.TIME_OF_CLICKS to timestamp,
                            Constant.Events.SendClicked.Params.WHICH to which,
-                       ))
+                       )) {
+        enum class TypeSource {
+            PLAY,
+            OPTION,
+            UNFAVORITE,
+            FAVORITE,
+        }
+    }
 
     class Navigated(
         from: NavigationSource,

@@ -31,7 +31,7 @@ import org.kodein.di.instance
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Companion.FEAT_NAME
-import taiwan.no.one.feat.explore.presentation.analytics.AnalyticsViewModel
+import taiwan.no.one.feat.explore.presentation.viewmodels.AnalyticsViewModel
 
 internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}PreziModule") {

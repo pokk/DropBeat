@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.presentation.analytics
+package taiwan.no.one.feat.explore.presentation.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
@@ -33,6 +33,10 @@ import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSour
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.EXPLORE
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYER
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYLIST
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.FAVORITE
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.OPTION
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.PLAY
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.UNFAVORITE
 import java.util.Calendar
 
 internal class AnalyticsViewModel(override val handle: SavedStateHandle) : BehindViewModel() {
@@ -41,6 +45,14 @@ internal class AnalyticsViewModel(override val handle: SavedStateHandle) : Behin
     fun navigatedToPlayer() = navigated(EXPLORE, PLAYER)
 
     fun navigatedToPlaylist(extra: String) = navigated(EXPLORE, PLAYLIST, extra)
+
+    fun clickedPlayAMusic(which: String) = sendClickedEvent("$PLAY: $which")
+
+    fun clickedOption(which: String) = sendClickedEvent("$OPTION: $which")
+
+    fun clickedFavorite(isFavorite: Boolean, which: String) = sendClickedEvent("${
+        if (isFavorite) FAVORITE else UNFAVORITE
+    }: $which")
 
     fun sendClickedEvent(which: String) {
         sender.sendEvent(ClickedEvent.SendClicked(which, Calendar.getInstance().time))

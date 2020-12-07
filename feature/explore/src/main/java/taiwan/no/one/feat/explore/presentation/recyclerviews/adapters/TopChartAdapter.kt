@@ -37,7 +37,7 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChar
 internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>() {
     var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
-    var optionListener: (() -> Unit)? = null
+    var optionListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
     var favoriteListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
@@ -65,7 +65,7 @@ internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>() {
         clickListener = listener
     }
 
-    fun setOptionClickListener(listener: () -> Unit) {
+    fun setOptionClickListener(listener: (SimpleTrackEntity) -> Unit) {
         optionListener = listener
     }
 

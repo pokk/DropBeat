@@ -36,7 +36,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.provider
@@ -51,10 +50,10 @@ import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
-import taiwan.no.one.feat.explore.presentation.analytics.AnalyticsViewModel
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
+import taiwan.no.one.feat.explore.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.view.find
 import java.lang.ref.WeakReference
@@ -194,9 +193,16 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             analyticsVm.navigatedToPlaylist("playlist name: ${it.name}")
         }
         listOf(topTrackAdapter, topArtistAdapter).forEach {
-            it.setOnClickListener { }
-            it.setOptionClickListener { }
-            it.setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
+            it.setOnClickListener {
+                analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
+            }
+            it.setOptionClickListener {
+                analyticsVm.clickedOption(it.obtainTrackAndArtistName())
+            }
+            it.setFavoriteClickListener {
+                vm.updateSong(it, it.isFavorite)
+                analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
+            }
         }
     }
 
@@ -208,13 +214,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
 
     private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {
         var isTopArtist = false
-        val list =
-            (entities as? ArtistWithMoreDetailEntities)
-                ?.apply { isTopArtist = true }
-                ?.map(EntityMapper::artistToSimpleTrackEntity)
-                ?.toTypedArray() ?: (entities as? TracksEntity)?.tracks
-                ?.map(EntityMapper::exploreToSimpleTrackEntity)
-                ?.toTypedArray() ?: return
+        val list = (entities as? ArtistWithMoreDetailEntities)
+                       ?.apply { isTopArtist = true }
+                       ?.map(EntityMapper::artistToSimpleTrackEntity)
+                       ?.toTypedArray() ?: (entities as? TracksEntity)?.tracks
+                       ?.map(EntityMapper::exploreToSimpleTrackEntity)
+                       ?.toTypedArray() ?: return
         layout.find<Button>(AppResId.btn_more).setOnClickListener {
             if (isTopArtist) {
                 topArtistAdapter.data.forEachIndexed { index, entity ->
@@ -224,7 +229,6 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             }
             else {
                 topTrackAdapter.data.forEachIndexed { index, entity ->
-                    logw(entity)
                     list[index].isFavorite = (entity as TrackEntity).isFavorite ?: false
                 }
             }
