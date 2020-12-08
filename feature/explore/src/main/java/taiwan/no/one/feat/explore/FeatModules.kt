@@ -34,7 +34,7 @@ import taiwan.no.one.feat.explore.presentation.PresentationModules
 
 @AutoService(ModuleProvider::class)
 class FeatModules : ModuleProvider {
-    companion object {
+    companion object Constant {
         internal const val FEAT_NAME = "explore"
     }
 

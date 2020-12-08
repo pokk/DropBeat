@@ -29,7 +29,7 @@ import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.explore.FeatModules.Companion.FEAT_NAME
+import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.presentation.viewmodels.AnalyticsViewModel
 
 internal object PresentationModules : ModuleProvider {

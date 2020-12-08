@@ -34,7 +34,7 @@ import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.di.Constant.TAG_FEAT_REPO_SHARED_PREFS
 import taiwan.no.one.dropbeat.provider.ModuleProvider
-import taiwan.no.one.feat.explore.FeatModules.Companion.FEAT_NAME
+import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
