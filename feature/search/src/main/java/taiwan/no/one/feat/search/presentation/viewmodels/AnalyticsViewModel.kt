@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.presentation.viewmodels
+package taiwan.no.one.feat.search.presentation.viewmodels
 
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.EXPLORE
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYER
