@@ -24,6 +24,7 @@
 
 plugins {
     `kotlin-dsl`
+    kotlin("jvm") version "1.4.21"
 }
 
 // gradle versions above 4.10.
