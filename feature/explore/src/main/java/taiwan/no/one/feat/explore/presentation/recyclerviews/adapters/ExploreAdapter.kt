@@ -26,29 +26,29 @@ package taiwan.no.one.feat.explore.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
 import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.ExploreViewHolder
-import taiwan.no.one.widget.recyclerviews.AutoUpdatable
-import kotlin.properties.Delegates
 
-internal class ExploreAdapter : RecyclerView.Adapter<ExploreViewHolder>(), AutoUpdatable {
-    var data by Delegates.observable(emptyList<TagEntity>()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.name == n.name }
-    }
+internal class ExploreAdapter : ListAdapter<TagEntity, ExploreViewHolder>(DiffItemCallback) {
     var clickListener: ((TagEntity) -> Unit)? = null
         private set
+
+    private object DiffItemCallback : DiffUtil.ItemCallback<TagEntity>() {
+        override fun areItemsTheSame(oldItem: TagEntity, newItem: TagEntity) = oldItem.name == newItem.name
+
+        override fun areContentsTheSame(oldItem: TagEntity, newItem: TagEntity) = oldItem == newItem
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
         .inflate(R.layout.item_explore, parent, false)
         .let { ExploreViewHolder(ItemExploreBinding.bind(it)) }
 
     override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) =
-        holder.initView(data[position], this)
-
-    override fun getItemCount() = data.size
+        holder.initView(getItem(position), this)
 
     fun setOnClickListener(listener: (entity: TagEntity) -> Unit) {
         clickListener = listener

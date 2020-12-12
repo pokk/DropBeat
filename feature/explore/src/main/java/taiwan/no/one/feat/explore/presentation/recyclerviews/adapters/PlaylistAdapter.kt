@@ -26,20 +26,24 @@ package taiwan.no.one.feat.explore.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.PlaylistViewHolder
-import taiwan.no.one.widget.recyclerviews.AutoUpdatable
-import kotlin.properties.Delegates
 
-internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), AutoUpdatable {
-    var data by Delegates.observable(emptyList<SimplePlaylistEntity>()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
-    }
+internal class PlaylistAdapter : ListAdapter<SimplePlaylistEntity, PlaylistViewHolder>(DiffItemCallback) {
     var clickListener: ((SimplePlaylistEntity) -> Unit)? = null
         private set
+
+    private object DiffItemCallback : DiffUtil.ItemCallback<SimplePlaylistEntity>() {
+        override fun areItemsTheSame(oldItem: SimplePlaylistEntity, newItem: SimplePlaylistEntity) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: SimplePlaylistEntity, newItem: SimplePlaylistEntity) =
+            oldItem == newItem
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
@@ -47,9 +51,7 @@ internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), Aut
             .let { PlaylistViewHolder(ItemTrendBinding.bind(it)) }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
-        holder.initView(data[position], this)
-
-    override fun getItemCount() = data.size
+        holder.initView(getItem(position), this)
 
     fun setOnClickListener(listener: (SimplePlaylistEntity) -> Unit) {
         clickListener = listener

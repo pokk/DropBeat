@@ -94,7 +94,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
-                playlistAdapter.data = it
+                playlistAdapter.submitList(it)
                 // Restore the recyclerview state.
                 includePlaylist.find<RecyclerView>(AppResId.rv_musics)
                     .layoutManager
@@ -103,9 +103,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         vm.topTags.observe(this) { res ->
             res.onSuccess {
-                it.tags?.takeIf { it.isNotEmpty() }?.also {
-                    exploreAdapter.data = it
-                }
+                it.tags?.takeIf { it.isNotEmpty() }?.also(exploreAdapter::submitList)
             }.onFailure(::loge)
         }
         vm.topArtists.observe(this) { res ->
