@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="KtlintProjectConfiguration">
+    <androidMode>true</androidMode>
+    <useExperimental>true</useExperimental>
+    <treatAsErrors>false</treatAsErrors>
+    <disabledRules>
+      <list>
+        <option value="keyword-spacing" />
+        <option value="indent" />
+      </list>
+    </disabledRules>
+    <editorConfigPath>$PROJECT_DIR$</editorConfigPath>
+  </component>
+</project>

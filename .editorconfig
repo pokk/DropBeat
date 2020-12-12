@@ -1,11 +1,25 @@
 root = true
 
 [*]
+indent_style = space
+
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{kt, kts}]
-end_of_line = lf
+[*.{java, kt, kts, scala, rs, xml, kt.spec, kts.spec}]
+indent_size = 4
 max_line_length = 120
+
+[*.{kt, kts}]
+kotlin_imports_layout = ascii
+
+[*.md]
+trim_trailing_whitespace = false
+
+[gradle/verification-metadata.xml]
+indent_size = 4
 
 # Starting from ktlint 0.34.2 There is a problem with import "import-ordering" rule - ktlint contradicts
 # default AS import arrangement rules, so we have to disable ktlint it.
@@ -13,4 +27,4 @@ max_line_length = 120
 # Since IDE complains about unknown `disabled_rules` key we have to disable it as well:
 
 # noinspection EditorConfigKeyCorrectness
-disabled_rules = import-ordering
+disabled_rules = no-wildcard-imports, experimental:annotation
