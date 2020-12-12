@@ -25,12 +25,6 @@
 import config.CommonModuleDependency
 import config.annotationDependencies
 
-kapt {
-    useBuildCache = true
-    correctErrorTypes = true
-    mapDiagnosticLocations = true
-}
-
 dependencies {
     implementation(project(CommonModuleDependency.APP))
     implementation(project(CommonModuleDependency.FEAT_RANKING))

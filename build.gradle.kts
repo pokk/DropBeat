@@ -23,9 +23,11 @@
  */
 
 import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.internal.dsl.DefaultConfig
 import config.AndroidConfiguration
 import config.CommonModuleDependency
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -123,7 +125,7 @@ subprojects {
         //region Common Setting
         if (name !in listOf("ext", "feature")) {
             // BaseExtension is common parent for application, library and test modules
-            extensions.configure(BaseExtension::class.java) {
+            extensions.configure<BaseExtension> {
                 compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
                 defaultConfig {
                     minSdkVersion(AndroidConfiguration.MIN_SDK)
@@ -156,29 +158,20 @@ subprojects {
                         isCrunchPngs = false // Enabled by default for RELEASE build type
                     }
                 }
-                dexOptions {
-                    jumboMode = true
-                    preDexLibraries = true
-                    threadCount = 8
-                }
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_1_8
-                    targetCompatibility = JavaVersion.VERSION_1_8
-                }
-                lintOptions {
-                    isAbortOnError = false
-                    isIgnoreWarnings = true
-                    isQuiet = true
-                }
-                testOptions {
-                    unitTests {
-                        isReturnDefaultValues = true
-                        isIncludeAndroidResources = true
-                    }
-                }
+                applyDexOptions()
+                applyLintOptions()
+                applyCompileOptions()
+                applyTestOptions()
                 if (this@subprojects.name !in modules) {
                     buildFeatures.viewBinding = true
                 }
+            }
+        }
+        if (name in features + listOf("app", "core")) {
+            extensions.configure<KaptExtension> {
+                useBuildCache = true
+                correctErrorTypes = true
+                mapDiagnosticLocations = true
             }
         }
         //endregion
@@ -223,12 +216,44 @@ subprojects {
 //    }
 }
 
-fun com.android.build.gradle.internal.dsl.DefaultConfig.applyRoomSetting() {
+fun DefaultConfig.applyRoomSetting() {
     javaCompileOptions {
         annotationProcessorOptions {
             arguments["room.schemaLocation"] = "$projectDir/schemas"
             arguments["room.incremental"] = "true"
             arguments["room.expandProjection"] = "true"
+        }
+    }
+}
+
+fun BaseExtension.applyDexOptions() {
+    dexOptions {
+        jumboMode = true
+        preDexLibraries = true
+        threadCount = 8
+    }
+}
+
+fun BaseExtension.applyCompileOptions() {
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+fun BaseExtension.applyLintOptions() {
+    lintOptions {
+        isAbortOnError = false
+        isIgnoreWarnings = true
+        isQuiet = true
+    }
+}
+
+fun BaseExtension.applyTestOptions() {
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+            isIncludeAndroidResources = true
         }
     }
 }

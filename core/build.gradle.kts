@@ -33,12 +33,6 @@ android {
     buildFeatures.viewBinding = true
 }
 
-kapt {
-    useBuildCache = true
-    correctErrorTypes = true
-    mapDiagnosticLocations = true
-}
-
 dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_KTX), project(CommonModuleDependency.LIB_DEVICE)).forEach(::api)

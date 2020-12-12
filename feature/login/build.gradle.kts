@@ -26,12 +26,6 @@ import config.CommonModuleDependency
 import config.annotationDependencies
 import config.firebaseAuthDependencies
 
-kapt {
-    useBuildCache = true
-    correctErrorTypes = true
-    mapDiagnosticLocations = true
-}
-
 dependencies {
     implementation(project(CommonModuleDependency.APP))
     firebaseAuthDependencies()
