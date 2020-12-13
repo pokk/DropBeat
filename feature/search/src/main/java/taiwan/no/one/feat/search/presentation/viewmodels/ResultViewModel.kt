@@ -61,7 +61,11 @@ internal class ResultViewModel(
             curPage = page
         }
         if (curKeyword.isBlank()) return@launch
-        _musics.value = runCatching { fetchMusicCase.execute(FetchMusicReq(curKeyword, curPage)) }
+        _musics.value = runCatching {
+            val newResult = fetchMusicCase.execute(FetchMusicReq(curKeyword, curPage))
+            // Add the new result top on the old list.
+            _musics.value?.getOrNull()?.toMutableList()?.apply { addAll(newResult) } ?: newResult
+        }
     }
 
     fun add(keyword: String) = viewModelScope.launch {

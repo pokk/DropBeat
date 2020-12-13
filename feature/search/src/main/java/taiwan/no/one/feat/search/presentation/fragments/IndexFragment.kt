@@ -78,8 +78,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     //endregion
 
     //region Variable of Recycler View
-    private val searchHistoryAdapter by lazy { HistoryAdapter() }
-    private val musicAdapter by lazy { ResultAdapter() }
+    private val searchHistoryAdapter by lazy(::HistoryAdapter)
+    private val musicAdapter by lazy(::ResultAdapter)
     private val rvMusics get() = mergeBinding.rvMusics
     private val loadMoreListener by instance<LinearLoadMoreScrollListener>()
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
@@ -87,7 +87,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
     //endregion
 
-    private val clickFlag by lazy { TouchHelper.ClickFlag() }
+    private val clickFlag by lazy(TouchHelper::ClickFlag)
     private val jobs = mutableListOf<Job>()
 
     //region Lifecycle
@@ -109,7 +109,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 // TODO(Jieyi): 8/5/20 The action needs to be confirmed again.
             }
             else {
-                searchHistoryAdapter.data = it
+                searchHistoryAdapter.submitList(it)
                 rvMusics.smoothScrollToPosition(0)
             }
         }
@@ -123,12 +123,10 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 else {
                     binding.gNoResult.invisible()
                     binding.gResult.visible()
-                    musicAdapter.addExtraEntities(it)
+                    musicAdapter.submitList(it)
                 }
                 hideLoading()
-            }.onFailure {
-                loge(it)
-            }
+            }.onFailure(::loge)
         }
     }
 
@@ -152,7 +150,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     @SuppressLint("ClickableViewAccessibility")
     override fun componentListenersBinding() {
         binding.root.setOnTouchListener { v, event ->
-            TouchHelper.simulateClickEvent(event, clickFlag) { v.hideSoftKeyboard() }
+            TouchHelper.simulateClickEvent(event, clickFlag, v::hideSoftKeyboard)
             false
         }
         rvMusics.apply {
@@ -167,7 +165,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 }
             })
             setOnTouchListener { v, event ->
-                TouchHelper.simulateClickEvent(event, clickFlag) { v.hideSoftKeyboard() }
+                TouchHelper.simulateClickEvent(event, clickFlag, v::hideSoftKeyboard)
                 false
             }
         }
@@ -220,7 +218,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         resetMotionAnimation()
         // 1. Pre-handle and finish the music adapter's process.
         cancelJobs()
-        if (musicAdapter.data.isNotEmpty()) {
+        if (musicAdapter.currentList.isNotEmpty()) {
             musicAdapter.clear()
         }
         // Remove the item decoration.

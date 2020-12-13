@@ -26,38 +26,38 @@ package taiwan.no.one.feat.search.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 import taiwan.no.one.feat.search.databinding.ItemRencentSearchBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.HistoryViewHolder
-import taiwan.no.one.widget.recyclerviews.AutoUpdatable
 import taiwan.no.one.widget.recyclerviews.helpers.AdapterItemTouchHelper
-import kotlin.properties.Delegates
 
-internal class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>(),
-                                AutoUpdatable,
+internal class HistoryAdapter : ListAdapter<SearchHistoryEntity, HistoryViewHolder>(DiffItemCallback),
                                 AdapterItemTouchHelper {
     private var onSwipeListener: ((entity: SearchHistoryEntity, direction: Int) -> Unit)? = null
-    var data: List<SearchHistoryEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
-    }
     var onClickListener: ((keyword: String) -> Unit)? = null
         private set
+
+    private object DiffItemCallback : DiffUtil.ItemCallback<SearchHistoryEntity>() {
+        override fun areItemsTheSame(oldItem: SearchHistoryEntity, newItem: SearchHistoryEntity) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: SearchHistoryEntity, newItem: SearchHistoryEntity) = oldItem == newItem
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
         .inflate(R.layout.item_rencent_search, parent, false)
         .let { HistoryViewHolder(ItemRencentSearchBinding.bind(it)) }
 
-    override fun getItemCount() = data.size
-
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.initView(data[position], this)
+        holder.initView(getItem(position), this)
     }
 
     override fun onItemSwiped(position: Int, direction: Int) {
-        onSwipeListener?.invoke(data[position], direction)
+        onSwipeListener?.invoke(getItem(position), direction)
     }
 
     override fun onItemMoved(fromPosition: Int, toPosition: Int) = UnsupportedOperation()

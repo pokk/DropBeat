@@ -28,28 +28,28 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.view.updateLayoutParams
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.devrapid.kotlinknifer.getDimen
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder
 import taiwan.no.one.widget.WidgetResDimen
-import taiwan.no.one.widget.recyclerviews.AutoUpdatable
-import kotlin.properties.Delegates
 
-internal class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>(), AutoUpdatable {
+internal class ResultAdapter : ListAdapter<SongEntity, ResultViewHolder>(DiffItemCallback) {
     var onClickListener: ((SongEntity) -> Unit)? = null
         private set
-    var data: List<SongEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.url == n.url }
+
+    private object DiffItemCallback : DiffUtil.ItemCallback<SongEntity>() {
+        override fun areItemsTheSame(oldItem: SongEntity, newItem: SongEntity) = oldItem.url == newItem.url
+
+        override fun areContentsTheSame(oldItem: SongEntity, newItem: SongEntity) = oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
         .inflate(R.layout.item_search_result, parent, false)
         .let { ResultViewHolder(ItemSearchResultBinding.bind(it)) }
-
-    override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
         // Adjust the margin
@@ -60,20 +60,14 @@ internal class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>(), AutoUpd
                 .getDimen(if (position == 0) WidgetResDimen.md_two_unit else WidgetResDimen.md_two_half_unit)
                 .toInt()
         }
-        holder.initView(data[position], this)
+        holder.initView(getItem(position), this)
     }
 
     fun setOnClickListener(block: (songEntity: SongEntity) -> Unit) {
         onClickListener = block
     }
 
-    fun addExtraEntities(entities: List<SongEntity>) {
-        data = data.toMutableList().apply {
-            addAll(entities)
-        }
-    }
-
     fun clear() {
-        data = emptyList()
+        submitList(emptyList())
     }
 }
