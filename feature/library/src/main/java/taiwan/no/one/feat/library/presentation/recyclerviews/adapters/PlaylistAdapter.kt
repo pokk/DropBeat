@@ -26,20 +26,24 @@ package taiwan.no.one.feat.library.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.PlaylistViewHolder
-import taiwan.no.one.widget.recyclerviews.AutoUpdatable
-import kotlin.properties.Delegates
 
-internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), AutoUpdatable {
-    var data by Delegates.observable(emptyList<PlayListEntity>()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.id == n.id }
-    }
+internal class PlaylistAdapter : ListAdapter<PlayListEntity, PlaylistViewHolder>(DiffItemCallback) {
     var clickListener: ((PlayListEntity) -> Unit)? = null
         private set
+
+    private object DiffItemCallback : DiffUtil.ItemCallback<PlayListEntity>() {
+        override fun areItemsTheSame(oldItem: PlayListEntity, newItem: PlayListEntity) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: PlayListEntity, newItem: PlayListEntity) =
+            oldItem == newItem
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
@@ -47,9 +51,7 @@ internal class PlaylistAdapter : RecyclerView.Adapter<PlaylistViewHolder>(), Aut
             .let { PlaylistViewHolder(ItemTrendBinding.bind(it)) }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
-        holder.initView(data[position], this)
-
-    override fun getItemCount() = data.size
+        holder.initView(getItem(position), this)
 
     fun setOnClickListener(listener: (PlayListEntity) -> Unit) {
         clickListener = listener

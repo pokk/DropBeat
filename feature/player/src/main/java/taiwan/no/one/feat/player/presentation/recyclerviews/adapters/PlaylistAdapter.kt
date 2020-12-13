@@ -26,26 +26,31 @@ package taiwan.no.one.feat.player.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.ItemPlaylistBinding
 import taiwan.no.one.feat.player.presentation.recyclerviews.viewholders.PlaylistViewHolder
 
-internal class PlaylistAdapter(
-    private val playlists: List<SimplePlaylistEntity>,
-) : RecyclerView.Adapter<PlaylistViewHolder>() {
+internal class PlaylistAdapter : ListAdapter<SimplePlaylistEntity, PlaylistViewHolder>(DiffItemCallback) {
     var onClickListener: ((entity: SimplePlaylistEntity) -> Unit)? = null
         private set
+
+    private object DiffItemCallback : DiffUtil.ItemCallback<SimplePlaylistEntity>() {
+        override fun areItemsTheSame(oldItem: SimplePlaylistEntity, newItem: SimplePlaylistEntity) =
+            oldItem.name == newItem.name
+
+        override fun areContentsTheSame(oldItem: SimplePlaylistEntity, newItem: SimplePlaylistEntity) =
+            oldItem == newItem
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).inflate(R.layout.item_playlist, parent, false)
             .let { PlaylistViewHolder(ItemPlaylistBinding.bind(it)) }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) =
-        holder.initView(playlists[position], this)
-
-    override fun getItemCount() = playlists.size
+        holder.initView(getItem(position), this)
 
     fun setOnClickListener(listener: (entity: SimplePlaylistEntity) -> Unit) {
         onClickListener = listener

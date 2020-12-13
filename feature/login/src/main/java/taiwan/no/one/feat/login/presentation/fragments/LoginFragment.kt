@@ -64,12 +64,13 @@ import taiwan.no.one.widget.toast.showTopToast
 internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBinding>() {
     private val vm by viewModels<LoginViewModel>()
     private val privacyVm by activityViewModels<PrivacyViewModel>()
-    private val snsAdapter by lazy { ThirdPartyLoginAdapter(snsList) }
-    private val snsList by lazy {
-        listOf(R.drawable.ic_facebook,
-               R.drawable.ic_google,
-               R.drawable.ic_twitter,
-               R.drawable.ic_instagram)
+    private val snsAdapter by lazy {
+        ThirdPartyLoginAdapter().apply {
+            submitList(listOf(R.drawable.ic_facebook,
+                              R.drawable.ic_google,
+                              R.drawable.ic_twitter,
+                              R.drawable.ic_instagram))
+        }
     }
 
     //region Third-party Authorization
@@ -135,7 +136,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
             it.onSuccess {
                 // Make the activity viewmodel has the newest user information.
                 privacyVm.getUserInfo()
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
         }
         privacyVm.userInfo.observe(this) { res ->
             hideLoading()
@@ -145,7 +146,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                 requireActivity().showTopToast("Welcome back, $name", R.drawable.ic_login_arrow)
                 // Go back to the previous screen.
                 findNavController().navigateUp()
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
         }
     }
 

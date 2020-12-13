@@ -264,7 +264,8 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
             findNavController().navigate(PlayerFragmentDirections.actionPlayerToPlaylistCreate())
         }
         rvPlaylist.apply {
-            adapter = PlaylistAdapter(vm.playlists.value?.getOrNull().orEmpty()).apply {
+            adapter = PlaylistAdapter().apply {
+                submitList(vm.playlists.value?.getOrNull().orEmpty())
                 setOnClickListener { playlist ->
                     player.curPlayingInfo?.let { music -> vm.addSongToPlaylist(music, playlist.id) }
                 }

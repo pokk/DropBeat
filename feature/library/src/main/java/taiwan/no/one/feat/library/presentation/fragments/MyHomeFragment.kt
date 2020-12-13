@@ -90,7 +90,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
-                playlistAdapter.data = it
+                playlistAdapter.submitList(it)
                 vm.extractMainPlaylist(it)
             }.onFailure {
                 loge(it)

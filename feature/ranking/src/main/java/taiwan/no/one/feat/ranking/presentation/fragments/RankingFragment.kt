@@ -56,6 +56,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
 
     override fun componentListenersBinding() {
         (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener {
+
 //            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }
@@ -63,7 +64,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
     override fun rendered(savedInstanceState: Bundle?) {
         vm.rankings.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
-                (binding.rvMusics.adapter as? RankAdapter)?.data = it
+                (binding.rvMusics.adapter as? RankAdapter)?.submitList(it)
                 parent.hideLoading()
             }.onFailure {
                 parent.showError(it.message.toString())

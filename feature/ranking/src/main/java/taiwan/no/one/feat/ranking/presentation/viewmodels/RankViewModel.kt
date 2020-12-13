@@ -50,6 +50,12 @@ internal class RankViewModel(
     val musics = _musics.toLiveData()
 
     fun getMusics(rankId: String) = viewModelScope.launch {
-        _musics.value = runCatching { fetchMusicRankCase.execute(FetchMusicRankReq(rankId)) }
+        _musics.value = runCatching {
+            _musics.value
+                ?.getOrNull()
+                ?.toMutableList()
+                ?.apply { addAll(fetchMusicRankCase.execute(FetchMusicRankReq(rankId))) }
+                .orEmpty()
+        }
     }
 }

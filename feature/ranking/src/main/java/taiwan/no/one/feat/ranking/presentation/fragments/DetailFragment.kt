@@ -42,7 +42,7 @@ internal class DetailFragment : BaseFragment<MainActivity, FragmentRankingDetail
     override fun bindLiveData() {
         vm.musics.observe(this) { res ->
             res.onSuccess {
-                (binding.rvSongs.adapter as? SongAdapter)?.addExtraEntities(it)
+                (binding.rvSongs.adapter as? SongAdapter)?.submitList(it)
                 parent.hideLoading()
             }.onFailure {
                 parent.showError(it.message.toString())
