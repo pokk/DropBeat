@@ -54,6 +54,7 @@ import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
 import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
+import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
@@ -75,6 +76,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     //region Variable of Recycler View
     private val playlistAdapter by lazy { TrackAdapter() }
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
     //endregion
 
@@ -135,14 +137,22 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     }
 
     override fun componentListenersBinding() {
-        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            analyticsVm.navigatedGoBackFromPlaylist()
+        }
         binding.btnMore.setOnClickListener { showMoreMenu(binding.btnMore) }
         playlistAdapter.apply {
-            setOnClickListener {}
-            setOptionClickListener { }
+            setOnClickListener {
+                analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
+            }
+            setOptionClickListener {
+                analyticsVm.clickedOption(it.obtainTrackAndArtistName())
+            }
             setFavoriteClickListener {
                 willRemoveEntity = it
                 vm.updateSong(it, it.isFavorite)
+                analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
             }
         }
     }
@@ -193,6 +203,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         binding.vsNoSongs.takeIf { !it.isVisible }?.inflate()
         noSongsBinding.btnSearch.setOnClickListener {
             // Go to the search page.
+            analyticsVm.navigatedToSearch()
         }
         binding.mtvSubtitle.text = "0 Songs"
     }
@@ -204,15 +215,21 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             }
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.item_duplicate -> playlist?.let {
-                        val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, "")
-                        findNavController()
-                            .navigate(PlaylistFragmentDirections.actionPlaylistToCreate(simplePlaylist))
+                    R.id.item_duplicate -> {
+                        playlist?.let {
+                            val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, "")
+                            findNavController()
+                                .navigate(PlaylistFragmentDirections.actionPlaylistToCreate(simplePlaylist))
+                        }
+                        analyticsVm.navigatedToCreate()
                     }
                     R.id.item_share -> Unit
                     R.id.item_download_all -> Unit
-                    R.id.item_rename -> findNavController()
-                        .navigate(PlaylistFragmentDirections.actionPlaylistToRename(navArgs.playlistId))
+                    R.id.item_rename -> {
+                        findNavController()
+                            .navigate(PlaylistFragmentDirections.actionPlaylistToRename(navArgs.playlistId))
+                        analyticsVm.navigatedToRename()
+                    }
                     R.id.item_delete -> Unit
                 }
                 true

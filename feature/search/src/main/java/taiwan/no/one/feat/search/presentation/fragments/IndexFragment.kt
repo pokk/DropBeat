@@ -58,6 +58,7 @@ import taiwan.no.one.feat.search.databinding.MergeSearchHasNoResultBinding
 import taiwan.no.one.feat.search.databinding.MergeSearchHasResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.HistoryAdapter
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
+import taiwan.no.one.feat.search.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.SongViewModel
@@ -75,6 +76,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private val vm by viewModels<RecentViewModel>()
     private val searchVm by viewModels<ResultViewModel>()
     private val songVm by viewModels<SongViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
     //region Variable of Recycler View
@@ -192,6 +194,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
         mergeNoResultBinding.btnClear.setOnClickListener {
             binding.tietSearch.text?.clear()
+            analyticsVm.clickedClear()
         }
         if (loadMoreListener.fetchMoreBlock == null) {
             loadMoreListener.fetchMoreBlock = ::getMoreMusics
@@ -290,10 +293,12 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private fun clickedOnSongItem(song: SongEntity) {
         val filename = "${song.artist} - ${song.title}"
         DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
+        analyticsVm.clickedDownload(filename)
     }
 
     private fun clickedOnHistoryItem(keyword: String) {
         binding.tietSearch.setText(keyword)
         searchMusic(keyword)
+        analyticsVm.clickedSearch(keyword)
     }
 }

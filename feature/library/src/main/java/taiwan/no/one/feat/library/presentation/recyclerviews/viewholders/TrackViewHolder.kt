@@ -42,7 +42,7 @@ internal class TrackViewHolder(
             mtvAlbumName.text = entity.name
             mtvArtistName.text = entity.artist
             setFavoriteIcon(entity.isFavorite)
-            btnOption.setOnClickListener { adapter.optionListener?.invoke() }
+            btnOption.setOnClickListener { adapter.optionListener?.invoke(entity) }
             btnFavorite.setOnClickListener {
                 entity.isFavorite = !entity.isFavorite
                 setFavoriteIcon(entity.isFavorite)

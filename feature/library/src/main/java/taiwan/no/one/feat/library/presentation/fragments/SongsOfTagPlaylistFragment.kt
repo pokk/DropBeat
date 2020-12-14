@@ -51,12 +51,14 @@ import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfTagBinding
 import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
+import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import java.lang.ref.WeakReference
 
 internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
     private val merge get() = MergeLayoutSongsOfTypeBinding.bind(binding.root)
     private val vm by viewModels<PlaylistViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val navArgs by navArgs<SongsOfTagPlaylistFragmentArgs>()
     private val workManager by instance<WorkManager>()
     private val oneTimeWorker: (Data) -> OneTimeWorkRequest by factory(TAG_WORKER_GET_SONGS_OF_TAG)
@@ -119,7 +121,10 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
             setOptionClickListener { }
             setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
         }
-        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            analyticsVm.navigatedGoBackFromTagPlaylist()
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

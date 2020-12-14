@@ -24,25 +24,17 @@
 
 package taiwan.no.one.feat.search.presentation.viewmodels
 
-import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.EXPLORE
-import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYER
-import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYLIST
-import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.FAVORITE
-import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.OPTION
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.DOWNLOAD
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.PLAY
-import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.UNFAVORITE
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.SEARCH
 import taiwan.no.one.dropbeat.presentation.viewmodels.BaseAnalyticsViewModel
 
 internal class AnalyticsViewModel : BaseAnalyticsViewModel() {
-    fun navigatedToPlayer() = navigated(EXPLORE, PLAYER)
-
-    fun navigatedToPlaylist(extra: String) = navigated(EXPLORE, PLAYLIST, extra)
-
     fun clickedPlayAMusic(which: String) = sendClickedEvent("$PLAY: $which")
 
-    fun clickedOption(which: String) = sendClickedEvent("$OPTION: $which")
+    fun clickedDownload(which: String) = sendClickedEvent("$DOWNLOAD: $which")
 
-    fun clickedFavorite(isFavorite: Boolean, which: String) = sendClickedEvent("${
-        if (isFavorite) FAVORITE else UNFAVORITE
-    }: $which")
+    fun clickedSearch(which: String) = sendClickedEvent("$SEARCH: $which")
+
+    fun clickedClear() = sendClickedEvent("$SEARCH: No Result and Clear Keyword")
 }

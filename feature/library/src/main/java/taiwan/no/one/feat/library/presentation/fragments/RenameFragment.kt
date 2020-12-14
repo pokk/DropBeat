@@ -30,15 +30,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.library.databinding.FragmentRenameBinding
+import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 
 internal class RenameFragment : BaseFragment<BaseActivity<*>, FragmentRenameBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val navArgs by navArgs<RenameFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +54,10 @@ internal class RenameFragment : BaseFragment<BaseActivity<*>, FragmentRenameBind
         vm.playlist.observe(this) { res ->
             res.onSuccess {
                 binding.tietPlaylistName.setText(it.name)
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
         }
         vm.result.observe(this) {
-            it.onSuccess { findNavController().navigateUp() }.onFailure { loge(it) }
+            it.onSuccess { findNavController().navigateUp() }.onFailure(::loge)
         }
     }
 
@@ -68,9 +69,14 @@ internal class RenameFragment : BaseFragment<BaseActivity<*>, FragmentRenameBind
         binding.tietPlaylistName.addTextChangedListener {
             binding.btnUpdate.isEnabled = !it.isNullOrBlank()
         }
-        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            analyticsVm.navigatedGoBackFromRename()
+        }
         binding.btnUpdate.setOnClickListener {
-            vm.updatePlaylist(navArgs.playlistId, binding.tietPlaylistName.text.toString())
+            val newName = binding.tietPlaylistName.text.toString()
+            vm.updatePlaylist(navArgs.playlistId, newName)
+            analyticsVm.clickedRename(newName)
         }
     }
 

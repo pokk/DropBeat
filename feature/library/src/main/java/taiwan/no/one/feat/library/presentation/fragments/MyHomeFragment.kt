@@ -51,6 +51,7 @@ import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
+import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
@@ -68,6 +69,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     //region Variable of View Model
     private val privacyVm by activityViewModels<PrivacyViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val vm by viewModels<MyHomeViewModel>()
     //endregion
 
@@ -76,7 +78,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
     private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
-    private val playlistAdapter by lazy { PlaylistAdapter() }
+    private val playlistAdapter by lazy(::PlaylistAdapter)
     //endregion
 
     private val userEntity get() = privacyVm.userInfo.value?.getOrNull()
@@ -92,9 +94,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             res.onSuccess {
                 playlistAdapter.submitList(it)
                 vm.extractMainPlaylist(it)
-            }.onFailure {
-                loge(it)
-            }
+            }.onFailure(::loge)
         }
         vm.downloaded.observe(this) {
             if (it.songs.isEmpty()) {
@@ -119,9 +119,8 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             includeFavorite.find<View>(AppResId.pb_progress).gone()
         }
         vm.resultOfFavorite.observe(this) {
-            if (it) {
-                vm.getAllPlaylists()
-            }
+            if (!it) return@observe
+            vm.getAllPlaylists()
         }
     }
 
@@ -163,13 +162,16 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     override fun componentListenersBinding() {
         playlistAdapter.setOnClickListener {
             findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(it.id))
+            analyticsVm.navigatedToPlaylist()
         }
         mergeTopControllerBinding.apply {
             btnLogin.setOnClickListener {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToLoginGraph())
+                analyticsVm.navigatedToLogin()
             }
             btnSetting.setOnClickListener {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToSettingGraph())
+                analyticsVm.navigatedToSetting()
             }
         }
         listOf(
@@ -179,13 +181,18 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         ).forEach { (button, id) ->
             button.setOnClickListener {
                 findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(id))
+                analyticsVm.navigatedToPlaylist()
             }
         }
         listOf(
             includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
-            includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
+            includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
+            includeHistory.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
         ).forEach { it?.let(::setListClickListener) }
-        mergeTopControllerBinding.btnMore.setOnClickListener { showMenu(it) }
+        mergeTopControllerBinding.btnMore.setOnClickListener {
+            showMenu(it)
+            analyticsVm.clickedMore()
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
@@ -198,9 +205,16 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     private fun setListClickListener(trackAdapter: TrackAdapter) {
         trackAdapter.apply {
-            setOnClickListener { }
-            setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
-            setOptionClickListener { }
+            setOnClickListener {
+                analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
+            }
+            setOptionClickListener {
+                analyticsVm.clickedOption(it.obtainTrackAndArtistName())
+            }
+            setFavoriteClickListener {
+                vm.updateSong(it, it.isFavorite)
+                analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
+            }
         }
     }
 
@@ -209,13 +223,19 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.item_playlist -> Unit
-                    R.id.item_favorite ->
+                    R.id.item_favorite -> {
                         findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(2))
-                    R.id.item_downloaded ->
+                        analyticsVm.navigatedToPlaylist()
+                    }
+                    R.id.item_downloaded -> {
                         findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToPlaylist(1))
+                        analyticsVm.navigatedToPlaylist()
+                    }
                     R.id.item_local_music -> Unit
-                    R.id.item_setting ->
+                    R.id.item_setting -> {
                         findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToSettingGraph())
+                        analyticsVm.navigatedToSetting()
+                    }
                     R.id.item_about -> Unit
                 }
                 true

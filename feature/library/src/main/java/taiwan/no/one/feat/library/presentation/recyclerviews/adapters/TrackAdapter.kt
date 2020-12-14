@@ -43,7 +43,7 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
     }
     var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
-    var optionListener: (() -> Unit)? = null
+    var optionListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
     var favoriteListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
@@ -76,7 +76,7 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
         clickListener = listener
     }
 
-    fun setOptionClickListener(listener: () -> Unit) {
+    fun setOptionClickListener(listener: (SimpleTrackEntity) -> Unit) {
         optionListener = listener
     }
 

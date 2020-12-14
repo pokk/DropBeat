@@ -35,10 +35,12 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.databinding.FragmentCreateBinding
+import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 
 internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBinding>() {
     private val vm by viewModels<PlaylistViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val navArgs by navArgs<CreateFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +70,10 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
     }
 
     override fun componentListenersBinding() {
-        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            analyticsVm.navigatedGoBackFromCreate()
+        }
         binding.btnCreate.setOnClickListener {
             val playlistName = if (binding.tietPlaylistName.text.isNullOrBlank()) {
                 "unnamed playlist"
@@ -80,6 +85,7 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
                 PlayListEntity(name = playlistName, songIds = it.songIds, count = it.songIds.size)
             } ?: PlayListEntity(name = playlistName)
             vm.createPlaylist(newPlaylist)
+            analyticsVm.clickedCreateNewPlaylist(playlistName)
         }
     }
 }

@@ -121,10 +121,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             includeTopTrack.find<View>(AppResId.pb_progress).gone()
         }
         vm.resultOfFavorite.observe(this) {
-            if (it) {
-                // Update the playlist information.
-                vm.getPlaylists()
-            }
+            if (!it) return@observe
+            // Update the playlist information.
+            vm.getPlaylists()
         }
     }
 

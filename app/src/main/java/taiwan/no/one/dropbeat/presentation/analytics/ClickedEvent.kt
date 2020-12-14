@@ -42,6 +42,11 @@ object ClickedEvent {
             OPTION,
             UNFAVORITE,
             FAVORITE,
+            SEARCH,
+            DOWNLOAD,
+            UPDATE_PLAYLIST,
+            NEW_PLAYLIST,
+            MORE,
         }
     }
 
@@ -65,6 +70,7 @@ object ClickedEvent {
         // Explore features.
         EXPLORE,
         PLAYLIST,
+        TAG_PLAYLIST,
         CREATE_PLAYLIST,
         RENAME_PLAYLIST,
         RANKING_DETAIL,
@@ -82,5 +88,8 @@ object ClickedEvent {
 
         // Player features.
         PLAYER,
+
+        // Others
+        PREVIOUS_SCREEN,
     }
 }
