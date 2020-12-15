@@ -39,6 +39,9 @@ object ClickedEvent {
                        )) {
         enum class TypeSource {
             PLAY,
+            STOP_TRACK,
+            PREVIOUS_TRACK,
+            NEXT_TRACK,
             OPTION,
             UNFAVORITE,
             FAVORITE,
@@ -47,6 +50,10 @@ object ClickedEvent {
             UPDATE_PLAYLIST,
             NEW_PLAYLIST,
             MORE,
+            REGISTER,
+            RESET_PASSWORD,
+            LOGIN_APP,
+            LOGOUT,
         }
     }
 

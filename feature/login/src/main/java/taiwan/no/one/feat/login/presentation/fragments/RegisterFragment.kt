@@ -30,19 +30,17 @@ import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentRegisterBinding
+import taiwan.no.one.feat.login.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
 
 internal class RegisterFragment : BaseFragment<BaseActivity<*>, FragmentRegisterBinding>() {
     private val vm by viewModels<LoginViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
         vm.userInfo.observe(this) { res ->
-            res.onSuccess {
-                logw(it)
-            }.onFailure {
-                loge(it)
-            }
+            res.onSuccess(::logw).onFailure(::loge)
         }
     }
 
@@ -53,6 +51,7 @@ internal class RegisterFragment : BaseFragment<BaseActivity<*>, FragmentRegister
         binding.apply {
             btnRegister.setOnClickListener {
                 vm.register(tietEmail.text.toString(), tietPassword.text.toString())
+                analyticsVm.clickedRegister()
             }
         }
     }

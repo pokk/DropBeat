@@ -57,13 +57,18 @@ import taiwan.no.one.feat.login.databinding.FragmentLoginBinding
 import taiwan.no.one.feat.login.presentation.auths.GoogleConfig
 import taiwan.no.one.feat.login.presentation.recyclerviews.adapters.ThirdPartyLoginAdapter
 import taiwan.no.one.feat.login.presentation.recyclerviews.decorators.SnsItemDecorator
+import taiwan.no.one.feat.login.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.toast.showTopToast
 
 internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBinding>() {
+    //region Variable of View Model
     private val vm by viewModels<LoginViewModel>()
     private val privacyVm by activityViewModels<PrivacyViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
+    //endregion
+
     private val snsAdapter by lazy {
         ThirdPartyLoginAdapter().apply {
             submitList(listOf(R.drawable.ic_facebook,
@@ -168,26 +173,53 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     override fun componentListenersBinding() {
         snsAdapter.setOnClickListener {
             when (it) {
-                R.drawable.ic_facebook -> LoginManager.getInstance()
-                    .logInWithReadPermissions(this, listOf("email", "public_profile"))
-                R.drawable.ic_google -> googleLauncher.launch(GoogleConfig.getIntent(requireActivity()))
+                R.drawable.ic_facebook -> {
+                    LoginManager.getInstance()
+                        .logInWithReadPermissions(this, listOf("email", "public_profile"))
+                    analyticsVm.clickedLogin("Facebook")
+                }
+                R.drawable.ic_google -> {
+                    googleLauncher.launch(GoogleConfig.getIntent(requireActivity()))
+                    analyticsVm.clickedLogin("Google")
+                }
                 R.drawable.ic_twitter -> {
                     val provider = OAuthProvider.newBuilder("twitter.com")
-                    provider.addCustomParameter("lang", "en")
+                        .addCustomParameter("lang", "en")
+                        // Force re-consent.
+                        .addCustomParameter("prompt", "consent")
+
+                    val scopes = buildList {
+                        add("mail.read")
+                        add("calendars.read")
+                    }
+                    provider.scopes = scopes
+
+                    Firebase.auth.startActivityForSignInWithProvider(requireActivity(), provider.build())
+                        .addOnSuccessListener {
+                            logw(it.credential)
+                        }
+                        .addOnFailureListener(::loge)
+                    analyticsVm.clickedLogin("Twitter")
                 }
                 R.drawable.ic_instagram -> {
+                    analyticsVm.clickedLogin("Instagram")
                 }
                 else -> Unit
             }
         }
         binding.apply {
-            btnBack.setOnClickListener { findNavController().navigateUp() }
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
+                analyticsVm.navigatedGoBackFromLogin()
+            }
             btnForgotPassword.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginToForgotPassword())
+                analyticsVm.navigatedToForgotPassword()
             }
             btnLogin.setOnClickListener {
                 showLoading()
                 vm.login(tietEmail.text.toString(), tietPassword.text.toString())
+                analyticsVm.clickedLogin("Firebase Auth")
             }
         }
     }

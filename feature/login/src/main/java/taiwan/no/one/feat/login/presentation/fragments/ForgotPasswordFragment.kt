@@ -32,10 +32,12 @@ import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentForgotPasswordBinding
+import taiwan.no.one.feat.login.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
 
 internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentForgotPasswordBinding>() {
     private val vm by viewModels<LoginViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
 
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     override fun bindLiveData() {
@@ -43,9 +45,8 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
             it.onSuccess {
                 logw(it)
                 findNavController().popBackStack()
-            }.onFailure {
-                loge(it)
-            }
+                analyticsVm.navigatedGoBackFromReset()
+            }.onFailure(::loge)
         }
     }
 
@@ -55,6 +56,7 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
     override fun componentListenersBinding() {
         binding.btnReset.setOnClickListener {
             vm.resetPassword(binding.tietEmail.text.toString())
+            analyticsVm.clickedResetPassword()
         }
     }
 

@@ -46,6 +46,7 @@ import taiwan.no.one.feat.setting.databinding.MergeSettingMusicBlockBinding
 import taiwan.no.one.feat.setting.databinding.MergeSettingOtherBlockBinding
 import taiwan.no.one.feat.setting.databinding.MergeSettingSyncBinding
 import taiwan.no.one.feat.setting.databinding.MergeSettingUserBlockBinding
+import taiwan.no.one.feat.setting.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.setting.presentation.viewmodels.SettingViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
@@ -62,6 +63,7 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
     //region Variable of View Model
     private val vm by viewModels<SettingViewModel>()
     private val privacyVm by activityViewModels<PrivacyViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -137,10 +139,17 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
     }
 
     override fun componentListenersBinding() {
-        binding.btnLogout.setOnClickListener { vm.logout() }
-        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.btnLogout.setOnClickListener {
+            vm.logout()
+            analyticsVm.clickedLogout()
+        }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            analyticsVm.navigatedGoBackFromSetting()
+        }
         mergeSyncBlock.includeSync.root.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingToLogin())
+            analyticsVm.navigatedToLogin()
         }
     }
 }
