@@ -30,7 +30,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.work.WorkManager
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -60,9 +61,7 @@ object UtilModules {
     }
 
     fun provideAnalytics(context: Context) = DI.Module("Analytics Module") {
-        bind<FirebaseAnalytics>() with singleton { FirebaseAnalytics.getInstance(context) }
-
-        bind<AnalyticsSender>() with singleton { AnalyticsSender(instance()) }
+        bind<AnalyticsSender>() with singleton { AnalyticsSender(Firebase.analytics) }
     }
 
     fun provideUi() = DI.Module("Util UI Module") {
