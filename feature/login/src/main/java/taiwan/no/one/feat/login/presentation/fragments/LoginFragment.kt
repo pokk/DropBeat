@@ -36,7 +36,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -118,6 +117,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     val account = task.getResult(ApiException::class.java) ?: throw NullPointerException()
+                    showLoading()
                     vm.login(Credential.Google(account.idToken.orEmpty()))
                 }
                 catch (apiException: ApiException) {
@@ -187,16 +187,11 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                         .addCustomParameter("lang", "en")
                         // Force re-consent.
                         .addCustomParameter("prompt", "consent")
+                        .build()
 
-                    val scopes = buildList {
-                        add("mail.read")
-                        add("calendars.read")
-                    }
-                    provider.scopes = scopes
-
-                    Firebase.auth.startActivityForSignInWithProvider(requireActivity(), provider.build())
-                        .addOnSuccessListener {
-                            logw(it.credential)
+                    Firebase.auth.startActivityForSignInWithProvider(requireActivity(), provider)
+                        .addOnSuccessListener { result ->
+                            result.credential?.let { vm.login(Credential.Other(it)) }
                         }
                         .addOnFailureListener(::loge)
                     analyticsVm.clickedLogin("Twitter")

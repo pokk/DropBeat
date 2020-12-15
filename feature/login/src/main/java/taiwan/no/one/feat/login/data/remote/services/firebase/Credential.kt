@@ -37,5 +37,9 @@ internal sealed class Credential(val token: String) {
         override fun getAuthCredential() = FacebookAuthProvider.getCredential(token)
     }
 
+    internal class Other(private val authCredential: AuthCredential) : Credential("") {
+        override fun getAuthCredential() = authCredential
+    }
+
     abstract fun getAuthCredential(): AuthCredential
 }
