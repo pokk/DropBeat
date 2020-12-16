@@ -142,11 +142,11 @@ subprojects {
                 buildTypes {
                     getByName("release") {
                         // This is exceptions.
-                        if (this@subprojects.name !in features) {
-                            isMinifyEnabled = true
-                        }
-                        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
-                                      file("proguard-rules.pro"))
+//                        if (this@subprojects.name !in features) {
+//                            isMinifyEnabled = true
+//                        }
+//                        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
+//                                      file("proguard-rules.pro"))
                     }
                     getByName("debug") {
                         splits.abi.isEnable = false

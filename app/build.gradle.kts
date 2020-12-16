@@ -40,6 +40,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("../taiwanno1_release.keystore")
+            storePassword = ""
+            keyAlias = ""
+            keyPassword = ""
+        }
+    }
     defaultConfig {
         applicationId = AndroidConfiguration.ID
         versionCode = 1
@@ -47,6 +55,12 @@ android {
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi = AndroidConfiguration.MIN_SDK
         renderscriptSupportModeEnabled = true
+    }
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+            isDebuggable = false
+        }
     }
     dynamicFeatures = CommonModuleDependency.getDynamicFeatureModules()
 }
