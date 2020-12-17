@@ -165,7 +165,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_mini_next"
         style="@style/Taiwan.No.One.Button.IconOnly"
-        app:icon="@drawable/ic_next"
+        app:icon="@drawable/ic_next_track"
         app:layout_constraintEnd_toStartOf="@id/btn_mini_play"
         app:layout_constraintTop_toTopOf="@id/btn_mini_play"/>
 

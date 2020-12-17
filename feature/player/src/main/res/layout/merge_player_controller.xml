@@ -120,7 +120,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_previous"
                 style="@style/Taiwan.No.One.Button.IconOnly"
-                app:icon="@drawable/ic_back"
+                app:icon="@drawable/ic_back_track"
                 app:layout_constraintBottom_toBottomOf="@id/btn_play"
                 app:layout_constraintEnd_toStartOf="@id/btn_play"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -144,7 +144,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_next"
                 style="@style/Taiwan.No.One.Button.IconOnly"
-                app:icon="@drawable/ic_next"
+                app:icon="@drawable/ic_next_track"
                 app:layout_constraintBottom_toBottomOf="@id/btn_play"
                 app:layout_constraintEnd_toStartOf="@id/btn_repeat"
                 app:layout_constraintStart_toEndOf="@id/btn_play"

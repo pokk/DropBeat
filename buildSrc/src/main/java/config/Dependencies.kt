@@ -33,6 +33,9 @@ const val DepEnvKapt = "kapt"
 const val DepEnvTest = "testImplementation"
 const val DepEnvAndroidTest = "androidTestImplementation"
 
+// This is only for auto-service.
+const val DepAnnotationProcessor = "annotationProcessor"
+
 /**********************************************************
  * Below functions will be used in each Gradles directly. *
  **********************************************************/
@@ -40,7 +43,7 @@ const val DepEnvAndroidTest = "androidTestImplementation"
 fun DependencyHandlerScope.annotationDependencies() {
     DepEnvKapt(LibraryDependency.Database.ROOM_ANNOTATION)
     DepEnvKapt(LibraryDependency.JetPack.LIFECYCLE_COMPILER)
-    DepEnvKapt(LibraryDependency.Tool.AUTO_SERVICE)
+    DepAnnotationProcessor(LibraryDependency.Tool.AUTO_SERVICE)
 }
 
 fun DependencyHandlerScope.coreDependencies() {
