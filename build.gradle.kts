@@ -158,6 +158,9 @@ subprojects {
                         isCrunchPngs = false // Enabled by default for RELEASE build type
                     }
                 }
+                packagingOptions {
+                    exclude("META-INF/services/*")
+                }
                 applyDexOptions()
                 applyLintOptions()
                 applyCompileOptions()
