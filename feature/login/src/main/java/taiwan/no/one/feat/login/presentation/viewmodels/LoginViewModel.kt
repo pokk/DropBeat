@@ -25,6 +25,8 @@
 package taiwan.no.one.feat.login.presentation.viewmodels
 
 import android.app.Application
+import android.util.Patterns
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -50,9 +52,11 @@ internal class LoginViewModel(
     private val createUserCase by instance<CreateUserCase>()
     private val modifyPasswordCase by instance<ModifyPasswordCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
-    val userInfo = _userInfo.toLiveData()
+    val userInfo get() = _userInfo.toLiveData()
     private val _resetResp by lazy { ResultLiveData<Boolean>() }
-    val resetResp = _resetResp.toLiveData()
+    val resetResp get() = _resetResp.toLiveData()
+    private val _isValidEmail by lazy { MutableLiveData<Boolean>() }
+    val isValidEmail get() = _isValidEmail.toLiveData()
 
     fun login(email: String, password: String) = viewModelScope.launch {
         _userInfo.value = runCatching { loginCase.execute(LoginReq(email, password)) }
@@ -68,5 +72,9 @@ internal class LoginViewModel(
 
     fun resetPassword(email: String) = viewModelScope.launch {
         _resetResp.value = runCatching { modifyPasswordCase.execute(ModifyPasswordReq(email)) }
+    }
+
+    fun validEmailFormat(email: String) = viewModelScope.launch {
+        _isValidEmail.value = Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

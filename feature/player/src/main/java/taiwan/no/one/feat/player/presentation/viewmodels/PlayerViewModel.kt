@@ -40,9 +40,9 @@ internal class PlayerViewModel(
 ) : BehindAndroidViewModel(application) {
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<SimplePlaylistEntity>>() }
-    val playlists = _playlists.toLiveData()
+    val playlists get() = _playlists.toLiveData()
     private val _isFavorite by lazy { ResultLiveData<Boolean>() }
-    val isFavorite = _isFavorite.toLiveData()
+    val isFavorite get() = _isFavorite.toLiveData()
 
     fun download(uri: String) = launchBehind { libraryProvider.downloadTrack(uri) }
 

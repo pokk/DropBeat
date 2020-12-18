@@ -46,9 +46,9 @@ internal class ResultViewModel(
     private val fetchMusicCase by instance<FetchMusicCase>()
     private val addOrUpdateHistoryCase by instance<AddOrUpdateHistoryCase>()
     private val _musics by lazy { ResultLiveData<List<SongEntity>>() }
-    val musics = _musics.toLiveData()
+    val musics get() = _musics.toLiveData()
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
-    val addOrUpdateResult = _addOrUpdateResult.toLiveData()
+    val addOrUpdateResult get() = _addOrUpdateResult.toLiveData()
     private var curPage = 1
     var curKeyword = ""
         private set
