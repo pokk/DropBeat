@@ -27,13 +27,13 @@ package taiwan.no.one.feat.login
 import android.content.Context
 import com.google.auto.service.AutoService
 import org.kodein.di.DI
-import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.dropbeat.provider.LoginModuleProvider
 import taiwan.no.one.feat.login.data.DataModules
 import taiwan.no.one.feat.login.domain.DomainModules
 import taiwan.no.one.feat.login.presentation.PresentationModules
 
-@AutoService(ModuleProvider::class)
-class FeatModules : ModuleProvider {
+@AutoService(LoginModuleProvider::class)
+class FeatModules : LoginModuleProvider {
     companion object Constant {
         internal const val FEAT_NAME = "Login"
     }

@@ -30,3 +30,17 @@ import org.kodein.di.DI
 interface ModuleProvider {
     fun provide(context: Context): DI.Module
 }
+
+interface ExploreModuleProvider : ModuleProvider
+
+interface LibraryModuleProvider : ModuleProvider
+
+interface LoginModuleProvider : ModuleProvider
+
+interface PlayerModuleProvider : ModuleProvider
+
+interface RankingModuleProvider : ModuleProvider
+
+interface SearchModuleProvider : ModuleProvider
+
+interface SettingModuleProvider : ModuleProvider

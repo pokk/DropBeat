@@ -27,13 +27,13 @@ package taiwan.no.one.feat.search
 import android.content.Context
 import com.google.auto.service.AutoService
 import org.kodein.di.DI
-import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.dropbeat.provider.SearchModuleProvider
 import taiwan.no.one.feat.search.data.DataModules
 import taiwan.no.one.feat.search.domain.DomainModules
 import taiwan.no.one.feat.search.presentation.PresentationModules
 
-@AutoService(ModuleProvider::class)
-class FeatModules : ModuleProvider {
+@AutoService(SearchModuleProvider::class)
+class FeatModules : SearchModuleProvider {
     companion object Constant {
         internal const val FEAT_NAME = "SearchMusic"
     }

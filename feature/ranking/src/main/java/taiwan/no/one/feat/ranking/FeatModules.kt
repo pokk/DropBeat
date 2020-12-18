@@ -27,13 +27,13 @@ package taiwan.no.one.feat.ranking
 import android.content.Context
 import com.google.auto.service.AutoService
 import org.kodein.di.DI
-import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.dropbeat.provider.RankingModuleProvider
 import taiwan.no.one.feat.ranking.data.DataModules
 import taiwan.no.one.feat.ranking.domain.DomainModules
 import taiwan.no.one.feat.ranking.presentation.PresentationModules
 
-@AutoService(ModuleProvider::class)
-class FeatModules : ModuleProvider {
+@AutoService(RankingModuleProvider::class)
+class FeatModules : RankingModuleProvider {
     companion object Constant {
         internal const val FEAT_NAME = "Ranking"
     }

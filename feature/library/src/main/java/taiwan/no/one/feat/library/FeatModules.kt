@@ -27,13 +27,13 @@ package taiwan.no.one.feat.library
 import android.content.Context
 import com.google.auto.service.AutoService
 import org.kodein.di.DI
-import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.dropbeat.provider.LibraryModuleProvider
 import taiwan.no.one.feat.library.data.DataModules
 import taiwan.no.one.feat.library.domain.DomainModules
 import taiwan.no.one.feat.library.presentation.PresentationModules
 
-@AutoService(ModuleProvider::class)
-class FeatModules : ModuleProvider {
+@AutoService(LibraryModuleProvider::class)
+class FeatModules : LibraryModuleProvider {
     companion object Constant {
         internal const val FEAT_NAME = "library"
     }

@@ -139,3 +139,16 @@
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
+
+# Keep setters in Views so that animations can still work.
+-keepclassmembers public class * extends android.view.View {
+    void set*(***);
+    *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick.
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+
+-keepclassmembers class * { *** null(android.view.View); }

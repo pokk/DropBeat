@@ -26,24 +26,31 @@ package taiwan.no.one.dropbeat.di
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.DI.Module
 import org.kodein.di.bind
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 import taiwan.no.one.dropbeat.provider.ExploreModuleProvider
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.dropbeat.provider.LibraryModuleProvider
 import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
-import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.dropbeat.provider.LoginModuleProvider
+import taiwan.no.one.dropbeat.provider.PlayerModuleProvider
+import taiwan.no.one.dropbeat.provider.RankingModuleProvider
+import taiwan.no.one.dropbeat.provider.SearchModuleProvider
+import taiwan.no.one.dropbeat.provider.SettingModuleProvider
 import java.util.ServiceLoader
 
 object FeatModuleHelper {
-    fun kodeinModules(context: Context): List<Module> {
-        val explore = ServiceLoader.load(ExploreModuleProvider::class.java).toList().first().provide(context)
-        return ServiceLoader.load(ModuleProvider::class.java)
-            .map { it.provide(context) }
-            .toMutableList()
-            .apply { add(explore) }
-    }
+    fun kodeinModules(context: Context) =
+        listOf(
+            ExploreModuleProvider::class.java,
+            LibraryModuleProvider::class.java,
+            LoginModuleProvider::class.java,
+            PlayerModuleProvider::class.java,
+            RankingModuleProvider::class.java,
+            SearchModuleProvider::class.java,
+            SettingModuleProvider::class.java
+        ).map { ServiceLoader.load(it).toList().first().provide(context) }
 
     fun provide() = DI.Module("Feature Method Provider Module") {
         bind<LibraryMethodsProvider>() with singleton {

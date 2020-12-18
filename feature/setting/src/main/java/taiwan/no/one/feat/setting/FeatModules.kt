@@ -27,13 +27,13 @@ package taiwan.no.one.feat.setting
 import android.content.Context
 import com.google.auto.service.AutoService
 import org.kodein.di.DI
-import taiwan.no.one.dropbeat.provider.ModuleProvider
+import taiwan.no.one.dropbeat.provider.SettingModuleProvider
 import taiwan.no.one.feat.setting.data.DataModules
 import taiwan.no.one.feat.setting.domain.DomainModules
 import taiwan.no.one.feat.setting.presentation.PresentationModules
 
-@AutoService(ModuleProvider::class)
-class FeatModules : ModuleProvider {
+@AutoService(SettingModuleProvider::class)
+class FeatModules : SettingModuleProvider {
     companion object Constant {
         internal const val FEAT_NAME = "setting"
     }
