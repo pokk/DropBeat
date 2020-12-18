@@ -105,8 +105,7 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         app:boxBackgroundMode="none"
-        app:endIconDrawable="@drawable/ic_visibility_off"
-        app:endIconMode="custom"
+        app:endIconMode="password_toggle"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="@id/til_email"
         app:layout_constraintStart_toStartOf="@id/til_email"
@@ -117,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Your Password"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingHorizontal="@dimen/md_two_unit"
             android:paddingVertical="@dimen/md_one_unit"
             android:textAppearance="@style/Taiwan.No.One.TextAppearance.Body1"/>
