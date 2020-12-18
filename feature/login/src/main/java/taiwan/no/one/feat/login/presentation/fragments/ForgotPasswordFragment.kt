@@ -29,6 +29,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentForgotPasswordBinding
@@ -39,7 +40,14 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
     private val vm by viewModels<LoginViewModel>()
     private val analyticsVm by viewModels<AnalyticsViewModel>()
 
-    /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
     override fun bindLiveData() {
         vm.resetResp.observe(this) {
             it.onSuccess {
@@ -50,21 +58,21 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
         }
     }
 
-    /**
-     * For separating the huge function code in [rendered]. Initialize all component listeners here.
-     */
+    override fun viewComponentBinding() {
+        addStatusBarHeightMarginTop(binding.btnBack)
+    }
+
     override fun componentListenersBinding() {
         binding.btnReset.setOnClickListener {
             vm.resetPassword(binding.tietEmail.text.toString())
             analyticsVm.clickedResetPassword()
         }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            analyticsVm.navigatedGoBackFromForgotPassword()
+        }
     }
 
-    /**
-     * Initialize doing some methods or actions here.
-     *
-     * @param savedInstanceState previous status.
-     */
     override fun rendered(savedInstanceState: Bundle?) {
 //        Firebase.firestore.collection("users")
 //            .document(Firebase.auth.currentUser?.uid.orEmpty())

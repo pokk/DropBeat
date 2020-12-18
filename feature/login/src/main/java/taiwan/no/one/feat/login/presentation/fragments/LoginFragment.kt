@@ -141,7 +141,10 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
             it.onSuccess {
                 // Make the activity viewmodel has the newest user information.
                 privacyVm.getUserInfo()
-            }.onFailure(::loge)
+            }.onFailure {
+                loge(it)
+                hideLoading()
+            }
         }
         privacyVm.userInfo.observe(this) { res ->
             hideLoading()

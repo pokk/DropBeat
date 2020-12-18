@@ -14,11 +14,11 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
 
 # Retrofit
 # Gson specific classes
@@ -48,7 +48,6 @@
 -dontwarn okio.**
 -dontwarn org.codehaus.mojo.**
 -keep class retrofit2.** { *; }
--keepattributes Exceptions
 -keepattributes RuntimeVisibleAnnotations
 -keepattributes RuntimeInvisibleAnnotations
 -keepattributes RuntimeVisibleParameterAnnotations
@@ -67,10 +66,6 @@
 -dontnote retrofit2.Platform$IOS$MainThreadExecutor
 # Platform used when running on Java 8 VMs. Will not be used at runtime.
 -dontwarn retrofit2.Platform$Java8
-# Retain generic type information for use by reflection by converters and adapters.
--keepattributes Signature
-# Retain declared checked exceptions for use by a Proxy instance.
--keepattributes Exceptions
 
 # Prevent proguard from stripping interface information from TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
@@ -104,8 +99,7 @@
 -dontwarn androidx.room.paging.**
 
 # MMKV
--renamesourcefileattribute SourceFile
--keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,EnclosingMethod
+-keepattributes InnerClasses,Deprecated,EnclosingMethod
 # Preserve all public classes, and their public and protected fields and
 # methods.
 -keep public class * {
@@ -147,8 +141,6 @@
 }
 
 # We want to keep methods in Activity that could be used in the XML attribute onClick.
--keepclassmembers class * extends android.app.Activity {
+-keepclassmembers class * extends * {
     public void *(android.view.View);
 }
-
--keepclassmembers class * { *** null(android.view.View); }

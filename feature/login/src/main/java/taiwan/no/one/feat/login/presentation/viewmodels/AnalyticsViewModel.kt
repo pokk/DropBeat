@@ -37,6 +37,8 @@ internal class AnalyticsViewModel : BaseAnalyticsViewModel() {
 
     fun navigatedGoBackFromLogin() = navigated(LOGIN, PREVIOUS_SCREEN)
 
+    fun navigatedGoBackFromForgotPassword() = navigated(FORGOT_PASSWORD, PREVIOUS_SCREEN)
+
     fun navigatedGoBackFromReset() = navigated(FORGOT_PASSWORD, PREVIOUS_SCREEN)
 
     fun clickedLogin(which: String) = sendClickedEvent("$LOGIN_APP: $which")
