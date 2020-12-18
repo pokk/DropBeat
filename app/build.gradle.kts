@@ -50,8 +50,8 @@ android {
     }
     defaultConfig {
         applicationId = AndroidConfiguration.ID
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = AndroidConfiguration.VERSION_CODE
+        versionName = AndroidConfiguration.VERSION_NAME
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi = AndroidConfiguration.MIN_SDK
         renderscriptSupportModeEnabled = true
