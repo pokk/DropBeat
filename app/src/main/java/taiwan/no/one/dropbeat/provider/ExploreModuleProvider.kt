@@ -22,25 +22,6 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore
+package taiwan.no.one.dropbeat.provider
 
-import android.content.Context
-import com.google.auto.service.AutoService
-import org.kodein.di.DI
-import taiwan.no.one.dropbeat.provider.ExploreModuleProvider
-import taiwan.no.one.feat.explore.data.DataModules
-import taiwan.no.one.feat.explore.domain.DomainModules
-import taiwan.no.one.feat.explore.presentation.PresentationModules
-
-@AutoService(ExploreModuleProvider::class)
-class FeatModules : ExploreModuleProvider {
-    companion object Constant {
-        internal const val FEAT_NAME = "explore"
-    }
-
-    override fun provide(context: Context) = DI.Module("${FEAT_NAME}Module") {
-        import(DataModules.provide(context))
-        import(DomainModules.provide(context))
-        import(PresentationModules.provide(context))
-    }
-}
+interface ExploreModuleProvider : ModuleProvider

@@ -43,7 +43,7 @@ const val DepAnnotationProcessor = "annotationProcessor"
 fun DependencyHandlerScope.annotationDependencies() {
     DepEnvKapt(LibraryDependency.Database.ROOM_ANNOTATION)
     DepEnvKapt(LibraryDependency.JetPack.LIFECYCLE_COMPILER)
-    DepAnnotationProcessor(LibraryDependency.Tool.AUTO_SERVICE)
+    DepEnvKapt(LibraryDependency.Tool.AUTO_SERVICE)
 }
 
 fun DependencyHandlerScope.coreDependencies() {

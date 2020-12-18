@@ -26,16 +26,24 @@ package taiwan.no.one.dropbeat.di
 
 import android.content.Context
 import org.kodein.di.DI
+import org.kodein.di.DI.Module
 import org.kodein.di.bind
 import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
+import taiwan.no.one.dropbeat.provider.ExploreModuleProvider
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import java.util.ServiceLoader
 
 object FeatModuleHelper {
-    fun kodeinModules(context: Context) = ServiceLoader.load(ModuleProvider::class.java).map { it.provide(context) }
+    fun kodeinModules(context: Context): List<Module> {
+        val explore = ServiceLoader.load(ExploreModuleProvider::class.java).toList().first().provide(context)
+        return ServiceLoader.load(ModuleProvider::class.java)
+            .map { it.provide(context) }
+            .toMutableList()
+            .apply { add(explore) }
+    }
 
     fun provide() = DI.Module("Feature Method Provider Module") {
         bind<LibraryMethodsProvider>() with singleton {
