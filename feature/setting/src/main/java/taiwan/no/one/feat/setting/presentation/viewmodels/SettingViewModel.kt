@@ -38,7 +38,7 @@ internal class SettingViewModel(
 ) : BehindAndroidViewModel(application) {
     private val loginProvider by instance<LoginMethodsProvider>()
     private val _logoutRes by lazy { ResultLiveData<Boolean>() }
-    val logoutRes = _logoutRes.toLiveData()
+    val logoutRes get() = _logoutRes.toLiveData()
 
     fun logout() = launchBehind {
         _logoutRes.postValue(loginProvider.logout())

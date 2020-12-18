@@ -46,13 +46,13 @@ internal class MyHomeViewModel(
     private val libraryProvider by instance<LibraryMethodsProvider>()
 
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
-    val playlists = _playlists.toLiveData()
+    val playlists get() = _playlists.toLiveData()
     private val _favorites by lazy { MutableLiveData<PlayListEntity>() }
-    val favorites = _favorites.toLiveData()
+    val favorites get() = _favorites.toLiveData()
     private val _downloaded by lazy { MutableLiveData<PlayListEntity>() }
-    val downloaded = _downloaded.toLiveData()
+    val downloaded get() = _downloaded.toLiveData()
     private val _histories by lazy { MutableLiveData<PlayListEntity>() }
-    val histories = _histories.toLiveData()
+    val histories get() = _histories.toLiveData()
     private val _resultOfFavorite by lazy { MutableLiveData<Boolean>() }
     val resultOfFavorite get() = _resultOfFavorite.toLiveData()
 

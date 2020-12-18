@@ -42,7 +42,7 @@ internal class SplashViewModel(
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
     private val _configs by lazy { ResultLiveData<Boolean>() }
-    val configs = _configs.toLiveData()
+    val configs get() = _configs.toLiveData()
 
     // TODO(jieyiwu): 6/10/20 Those should move to data layer.
     fun getConfigs() = Firebase.remoteConfig.apply {

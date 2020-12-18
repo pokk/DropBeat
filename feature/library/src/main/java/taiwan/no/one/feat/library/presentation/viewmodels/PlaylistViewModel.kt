@@ -56,11 +56,11 @@ internal class PlaylistViewModel(
     private val addSongsCase by instance<AddSongsCase>()
     private val updateSongCase by instance<UpdateSongCase>()
     private val _result by lazy { ResultLiveData<Boolean>() }
-    val result = _result.toLiveData()
+    val result get() = _result.toLiveData()
     private val _resultOfFavorite by lazy { ResultLiveData<Boolean>() }
-    val resultOfFavorite = _resultOfFavorite.toLiveData()
+    val resultOfFavorite get() = _resultOfFavorite.toLiveData()
     private val _playlist by lazy { ResultLiveData<PlayListEntity>() }
-    val playlist = _playlist.toLiveData()
+    val playlist get() = _playlist.toLiveData()
 
     fun getSongs(playlistId: Int) = viewModelScope.launch {
         _playlist.value = runCatching { fetchPlaylistCase.execute(FetchPlaylistReq(playlistId)) }

@@ -42,7 +42,7 @@ class PrivacyViewModel(
 ) : BehindAndroidViewModel(application) {
     private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
-    val userInfo = _userInfo.toLiveData()
+    val userInfo get() = _userInfo.toLiveData()
 
     @UiThread
     fun getUserInfo() = viewModelScope.launch {

@@ -26,15 +26,20 @@ package taiwan.no.one.feat.login.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.login.databinding.FragmentForgotPasswordBinding
 import taiwan.no.one.feat.login.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.login.presentation.viewmodels.LoginViewModel
+import taiwan.no.one.ktx.view.afterTextChanges
 
 internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentForgotPasswordBinding>() {
     private val vm by viewModels<LoginViewModel>()
@@ -56,6 +61,9 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
                 analyticsVm.navigatedGoBackFromReset()
             }.onFailure(::loge)
         }
+        vm.isValidEmail.observe(this) {
+            binding.btnReset.isEnabled = it
+        }
     }
 
     override fun viewComponentBinding() {
@@ -71,9 +79,13 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
             findNavController().navigateUp()
             analyticsVm.navigatedGoBackFromForgotPassword()
         }
+        binding.tietEmail.afterTextChanges().debounce(200).onEach {
+            vm.validEmailFormat(it.toString())
+        }.launchIn(lifecycleScope)
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
+        vm.validEmailFormat(binding.tietEmail.toString())
 //        Firebase.firestore.collection("users")
 //            .document(Firebase.auth.currentUser?.uid.orEmpty())
 //            .addSnapshotListener(requireActivity()) { documentSnapshot, firebaseFirestoreException ->
