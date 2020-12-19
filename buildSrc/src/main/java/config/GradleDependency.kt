@@ -31,6 +31,7 @@ object GradleDependency {
         const val SAFE_ARGS = NAVIGATION_KTX
         const val GOOGLE_SERVICE = "4.3.4"
         const val CRASHLYTICS = "2.4.1"
+        const val PERFORMANCE = "1.3.4"
         const val DETEKT = "1.15.0-RC2"
         const val VERSION_UPDATER = "0.36.0"
     }
@@ -39,6 +40,7 @@ object GradleDependency {
     const val SAFE_ARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.SAFE_ARGS}"
     const val GOOGLE_SERVICE = "com.google.gms:google-services:${Version.GOOGLE_SERVICE}"
     const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics-gradle:${Version.CRASHLYTICS}"
+    const val PERFORMANCE = "com.google.firebase:perf-plugin:${Version.PERFORMANCE}"
     const val DETEKT = "io.gitlab.arturbosch.detekt"
     const val DETEKT_FORMAT = "io.gitlab.arturbosch.detekt:detekt-formatting:${Version.DETEKT}"
     const val GRADLE_VERSION_UPDATER = "com.github.ben-manes.versions"

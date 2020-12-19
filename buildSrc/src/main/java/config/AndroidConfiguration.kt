@@ -30,7 +30,7 @@ object AndroidConfiguration {
     const val COMPILE_SDK = TARGET_SDK
     const val RELEASE_VERSION = 1
     const val FEATURE_VERSION = 0
-    const val VERSION_CODE = 3
+    const val VERSION_CODE = 4
     const val VERSION_NAME = "$RELEASE_VERSION.$FEATURE_VERSION.$VERSION_CODE"
 
     const val ID = "taiwan.no.one.dropbeat"

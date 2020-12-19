@@ -140,8 +140,9 @@ object LibraryDependency {
         const val FIREBASE_AUTH_FACEBOOK = "com.facebook.android:facebook-android-sdk:${Version.FIREBASE_AUTH_FACEBOOK}"
         const val FIREBASE_DB = "com.google.firebase:firebase-database-ktx"
         const val FIREBASE_FIRESTORE = "com.google.firebase:firebase-firestore-ktx"
-        const val FIREBASE_MESSAGING = "com.google.firebase:firebase-messaging"
-        const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics"
+        const val FIREBASE_MESSAGING = "com.google.firebase:firebase-messaging-ktx"
+        const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics-ktx"
+        const val FIREBASE_PERFORMANCE = "com.google.firebase:firebase-perf-ktx"
         const val FIREBASE_CONFIG = "com.google.firebase:firebase-config-ktx"
         const val FIREBASE_ML = "com.google.firebase:firebase-ml-vision"
     }
