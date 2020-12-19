@@ -40,7 +40,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_back"
-            style="@style/Taiwan.No.One.Back.Button"/>
+            style="@style/Taiwan.No.One.Back.Button"
+            android:layout_marginStart="@dimen/md_zero_unit"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mtv_title"

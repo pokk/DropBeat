@@ -128,11 +128,15 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                     musicAdapter.submitList(it)
                 }
                 hideLoading()
-            }.onFailure(::loge)
+            }.onFailure {
+                hideLoading()
+                loge(it)
+            }
         }
     }
 
     override fun viewComponentBinding() {
+        addStatusBarHeightMarginTop(binding.mtvTitle)
         mergeBinding.mtvRvTitle.doOnPreDraw {
             val halfWidth = it.width / 2
             // anchor 3 is top margin, it didn't define inside setMargin

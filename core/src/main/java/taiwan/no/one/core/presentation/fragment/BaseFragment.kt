@@ -32,6 +32,8 @@ import android.view.ViewGroup.MarginLayoutParams
 import androidx.annotation.StyleRes
 import androidx.annotation.UiThread
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -155,8 +157,16 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
         val statusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
                                   .takeIf { 0 < it }
                                   ?.let { resources.getDimensionPixelSize(it) } ?: 0
-        (view.layoutParams as MarginLayoutParams)
-            .setMargins(view.left, view.top + statusBarHeight, view.right, view.bottom)
+        if (view.layoutParams is ConstraintLayout.LayoutParams) {
+            view.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topMargin = view.top + statusBarHeight
+            }
+        }
+        else {
+            view.updateLayoutParams<MarginLayoutParams> {
+                setMargins(view.left, view.top + statusBarHeight, view.right, view.bottom)
+            }
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
