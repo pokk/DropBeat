@@ -32,7 +32,7 @@ object GradleDependency {
         const val GOOGLE_SERVICE = "4.3.4"
         const val CRASHLYTICS = "2.4.1"
         const val PERFORMANCE = "1.3.4"
-        const val DETEKT = "1.15.0-RC2"
+        const val DETEKT = "1.15.0"
         const val VERSION_UPDATER = "0.36.0"
     }
 
