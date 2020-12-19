@@ -28,6 +28,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingBinding
@@ -65,9 +66,10 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
         vm.rankings.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
                 (binding.rvMusics.adapter as? RankAdapter)?.submitList(it)
-                parent.hideLoading()
+//                parent.hideLoading()
             }.onFailure {
-                parent.showError(it.message.toString())
+                logw(it)
+//                parent.showError(it.message.toString())
             }
         }
     }

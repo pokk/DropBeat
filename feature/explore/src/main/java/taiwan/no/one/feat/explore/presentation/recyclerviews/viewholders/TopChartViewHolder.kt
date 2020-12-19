@@ -26,7 +26,6 @@ package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
 import androidx.core.content.ContextCompat
 import coil.loadAny
-import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
@@ -46,21 +45,16 @@ internal class TopChartViewHolder(
             // XXX(jieyi): 10/31/20 We might be able to do better.
             btnFavorite.setOnClickListener {
                 (entity as? TrackEntity)?.let { trackEntity ->
-                    btnFavorite.setOnClickListener {
-                        trackEntity.isFavorite = !(trackEntity.isFavorite ?: false)
-                        setFavoriteIcon(requireNotNull(trackEntity.isFavorite))
-                        adapter.favoriteListener?.invoke(EntityMapper.exploreToSimpleTrackEntity(trackEntity))
-                    }
+                    trackEntity.isFavorite = !(trackEntity.isFavorite ?: false)
+                    setFavoriteIcon(requireNotNull(trackEntity.isFavorite))
+                    adapter.favoriteListener?.invoke(EntityMapper.exploreToSimpleTrackEntity(trackEntity))
                 }
                 (entity as? ArtistWithMoreDetailEntity)?.let { artistWithMoreDetailEntity ->
-                    btnFavorite.setOnClickListener {
-                        logw(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite)
-                        artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite =
-                            !(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite ?: false)
-                        setFavoriteIcon(requireNotNull(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite))
-                        adapter.favoriteListener?.invoke(EntityMapper.artistToSimpleTrackEntity(
-                            artistWithMoreDetailEntity))
-                    }
+                    artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite =
+                        !(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite ?: false)
+                    setFavoriteIcon(requireNotNull(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite))
+                    adapter.favoriteListener?.invoke(EntityMapper.artistToSimpleTrackEntity(
+                        artistWithMoreDetailEntity))
                 }
             }
         }
