@@ -31,6 +31,7 @@ import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import taiwan.no.one.core.data.remote.interceptor.MockRequestInterceptor
+import taiwan.no.one.core.data.remote.util.SelfSigningClientBuilder
 import java.util.concurrent.TimeUnit
 
 abstract class OkHttpClientProvider(
@@ -55,6 +56,8 @@ abstract class OkHttpClientProvider(
                                       ConnectionSpec.COMPATIBLE_TLS,
             // This is for HTTP protocol.
                                       ConnectionSpec.CLEARTEXT))
+        sslSocketFactory(SelfSigningClientBuilder.initSSL(context),
+                         SelfSigningClientBuilder.systemDefaultTrustManager())
     }
 
     open fun provideCache() = Cache(context.cacheDir, cacheMaxSize)

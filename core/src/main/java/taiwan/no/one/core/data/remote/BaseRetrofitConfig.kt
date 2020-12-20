@@ -35,7 +35,7 @@ import taiwan.no.one.core.data.remote.provider.RetrofitProvider
 abstract class BaseRetrofitConfig(
     private val context: Context,
     private val clientProvider: OkHttpClientProvider,
-    private val retrofitProvider: RetrofitProvider
+    private val retrofitProvider: RetrofitProvider,
 ) : RetrofitConfig {
     companion object Constant {
         private const val TIME_OUT = 10L
