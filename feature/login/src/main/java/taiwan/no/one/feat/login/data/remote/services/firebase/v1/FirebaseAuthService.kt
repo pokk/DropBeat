@@ -26,33 +26,48 @@ package taiwan.no.one.feat.login.data.remote.services.firebase.v1
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 internal class FirebaseAuthService(
     private val auth: FirebaseAuth,
 ) : AuthService {
-    override suspend fun getLogin(email: String, password: String): UserInfoEntity {
-        val result = auth.signInWithEmailAndPassword(email, password).await()
-        return extractUserInfoEntity(result)
-    }
+    override suspend fun getLogin(email: String, password: String) =
+        suspendCancellableCoroutine<UserInfoEntity> { continuation ->
+            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                continuation.resume(extractUserInfoEntity(it))
+            }.addOnFailureListener {
+                continuation.resumeWithException(it)
+            }
+        }
 
-    override suspend fun getLogin(credential: Credential): UserInfoEntity {
-        val result = auth.signInWithCredential(credential.getAuthCredential()).await()
-        return extractUserInfoEntity(result)
-    }
+    override suspend fun getLogin(credential: Credential) =
+        suspendCancellableCoroutine<UserInfoEntity> { continuation ->
+            auth.signInWithCredential(credential.getAuthCredential()).addOnSuccessListener {
+                continuation.resume(extractUserInfoEntity(it))
+            }.addOnFailureListener {
+                continuation.resumeWithException(it)
+            }
+        }
 
     override suspend fun getLogout(): Boolean {
         auth.signOut()
         return true
     }
 
-    override suspend fun createUser(email: String, password: String): UserInfoEntity {
-        val result = auth.createUserWithEmailAndPassword(email, password).await()
-        return extractUserInfoEntity(result)
-    }
+    override suspend fun createUser(email: String, password: String) =
+        suspendCancellableCoroutine<UserInfoEntity> { continuation ->
+            auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
+                continuation.resume(extractUserInfoEntity(it))
+            }.addOnFailureListener {
+                continuation.resumeWithException(it)
+            }
+        }
 
     override suspend fun modifyPassword(email: String) {
         auth.sendPasswordResetEmail(email).await()
