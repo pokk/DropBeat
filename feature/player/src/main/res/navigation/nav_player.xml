@@ -40,6 +40,12 @@
             app:destination="@id/nav_playlist_create"/>
     </dialog>
 
+    <activity
+        android:id="@+id/player_activity"
+        android:name="taiwan.no.one.feat.player.presentation.activities.PlayerActivity"
+        android:label="PlayerActivity"
+        tools:layout="@layout/fragment_player"/>
+
     <include-dynamic
         android:id="@+id/nav_playlist_create"
         app:graphResName="nav_create"
