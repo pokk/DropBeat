@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -42,6 +43,8 @@ import org.kodein.di.instance
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_GET_SONGS_OF_TAG
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
@@ -53,6 +56,7 @@ import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
+import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
 internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
@@ -117,9 +121,17 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
 
     override fun componentListenersBinding() {
         adapter.apply {
-            setOnClickListener { }
-            setOptionClickListener { }
-            setFavoriteClickListener { vm.updateSong(it, it.isFavorite) }
+            setOnClickListener {
+                analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
+            }
+            setOptionClickListener { v, entity ->
+                showOptionMenu(v)
+                analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
+            }
+            setFavoriteClickListener {
+                vm.updateSong(it, it.isFavorite)
+                analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
+            }
         }
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
@@ -130,4 +142,15 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     override fun rendered(savedInstanceState: Bundle?) {
         workManager.enqueue(worker)
     }
+
+    private fun showOptionMenu(anchor: View) =
+        popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    AppResId.item_information -> Unit
+                    AppResId.item_share -> Unit
+                }
+                true
+            }
+        }.show()
 }

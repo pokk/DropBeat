@@ -42,6 +42,7 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
@@ -56,6 +57,7 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAd
 import taiwan.no.one.feat.explore.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.view.find
+import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
@@ -193,8 +195,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             it.setOnClickListener {
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
-            it.setOptionClickListener {
-                analyticsVm.clickedOption(it.obtainTrackAndArtistName())
+            it.setOptionClickListener { v, entity ->
+                showMenu(v)
+                analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             it.setFavoriteClickListener {
                 vm.updateSong(it, it.isFavorite)
@@ -237,4 +240,15 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             analyticsVm.navigatedToPlaylist("playlist name: $playlistName")
         }
     }
+
+    private fun showMenu(anchor: View) =
+        popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    AppResId.item_information -> Unit
+                    AppResId.item_share -> Unit
+                }
+                true
+            }
+        }.show()
 }

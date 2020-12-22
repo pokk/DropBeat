@@ -28,3 +28,4 @@ typealias AppResId = R.id
 typealias AppResString = R.string
 typealias AppResLayout = R.layout
 typealias AppResDrawable = R.drawable
+typealias AppResMenu = R.menu

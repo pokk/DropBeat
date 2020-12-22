@@ -44,6 +44,7 @@ import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
@@ -146,8 +147,9 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             setOnClickListener {
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
-            setOptionClickListener {
-                analyticsVm.clickedOption(it.obtainTrackAndArtistName())
+            setOptionClickListener { v, entity ->
+                showOptionMenu(v)
+                analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             setFavoriteClickListener {
                 willRemoveEntity = it
@@ -231,6 +233,17 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                         analyticsVm.navigatedToRename()
                     }
                     R.id.item_delete -> Unit
+                }
+                true
+            }
+        }.show()
+
+    private fun showOptionMenu(anchor: View) =
+        popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    AppResId.item_information -> Unit
+                    AppResId.item_share -> Unit
                 }
                 true
             }

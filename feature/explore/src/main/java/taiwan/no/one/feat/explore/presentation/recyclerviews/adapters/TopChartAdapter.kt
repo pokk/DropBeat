@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.AppResLayout
@@ -37,7 +38,7 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChar
 internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>() {
     var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
-    var optionListener: ((SimpleTrackEntity) -> Unit)? = null
+    var optionListener: ((View, SimpleTrackEntity) -> Unit)? = null
         private set
     var favoriteListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
@@ -65,7 +66,7 @@ internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>() {
         clickListener = listener
     }
 
-    fun setOptionClickListener(listener: (SimpleTrackEntity) -> Unit) {
+    fun setOptionClickListener(listener: (View, SimpleTrackEntity) -> Unit) {
         optionListener = listener
     }
 

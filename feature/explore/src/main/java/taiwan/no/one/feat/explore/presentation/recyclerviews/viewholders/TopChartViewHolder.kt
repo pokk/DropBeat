@@ -53,8 +53,16 @@ internal class TopChartViewHolder(
                     artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite =
                         !(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite ?: false)
                     setFavoriteIcon(requireNotNull(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite))
-                    adapter.favoriteListener?.invoke(EntityMapper.artistToSimpleTrackEntity(
-                        artistWithMoreDetailEntity))
+                    adapter.favoriteListener?.invoke(EntityMapper.artistToSimpleTrackEntity(artistWithMoreDetailEntity))
+                }
+            }
+            btnOption.setOnClickListener {
+                (entity as? TrackEntity)?.let { trackEntity ->
+                    adapter.optionListener?.invoke(it, EntityMapper.exploreToSimpleTrackEntity(trackEntity))
+                }
+                (entity as? ArtistWithMoreDetailEntity)?.let { artistWithMoreDetailEntity ->
+                    adapter.optionListener?.invoke(it,
+                                                   EntityMapper.artistToSimpleTrackEntity(artistWithMoreDetailEntity))
                 }
             }
         }

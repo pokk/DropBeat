@@ -43,6 +43,7 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.library.R
@@ -211,8 +212,9 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
             setOnClickListener {
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
-            setOptionClickListener {
-                analyticsVm.clickedOption(it.obtainTrackAndArtistName())
+            setOptionClickListener { v, entity ->
+                showOptionMenu(v)
+                analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             setFavoriteClickListener {
                 vm.updateSong(it, it.isFavorite)
@@ -240,6 +242,17 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                         analyticsVm.navigatedToSetting()
                     }
                     R.id.item_about -> Unit
+                }
+                true
+            }
+        }.show()
+
+    private fun showOptionMenu(anchor: View) =
+        popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    AppResId.item_information -> Unit
+                    AppResId.item_share -> Unit
                 }
                 true
             }

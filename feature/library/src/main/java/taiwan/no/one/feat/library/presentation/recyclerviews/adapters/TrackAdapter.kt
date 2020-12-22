@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.presentation.recyclerviews.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +44,7 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
     }
     var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
-    var optionListener: ((SimpleTrackEntity) -> Unit)? = null
+    var optionListener: ((View, SimpleTrackEntity) -> Unit)? = null
         private set
     var favoriteListener: ((SimpleTrackEntity) -> Unit)? = null
         private set
@@ -76,7 +77,7 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
         clickListener = listener
     }
 
-    fun setOptionClickListener(listener: (SimpleTrackEntity) -> Unit) {
+    fun setOptionClickListener(listener: (View, SimpleTrackEntity) -> Unit) {
         optionListener = listener
     }
 
