@@ -55,7 +55,6 @@ import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import taiwan.no.one.widget.recyclerviews.layoutmanagers.FirstBigSizeLayoutManager
 import java.lang.ref.WeakReference
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
@@ -77,7 +76,11 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
-    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
+
+    //    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
+    private val playlistLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
+    }
     private val playlistAdapter by lazy(::PlaylistAdapter)
     //endregion
 
@@ -134,7 +137,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                     adapter = playlistAdapter
                 }
                 if (layoutManager == null) {
-                    layoutManager = playlistLayoutManager
+                    layoutManager = playlistLayoutManager()
                 }
             }
         }
