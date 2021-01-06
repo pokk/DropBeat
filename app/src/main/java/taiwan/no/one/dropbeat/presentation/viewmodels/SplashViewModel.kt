@@ -52,11 +52,12 @@ internal class SplashViewModel(
         setDefaultsAsync(R.xml.remote_config_defaults)
         fetchAndActivate().addOnCompleteListener {
             _configs.value = if (it.isSuccessful) {
-                MMKV.defaultMMKV().putString(context.getString(R.string.config_lastfm_key),
-                                             getString(context.getString(R.string.config_lastfm_key)))
+                requireNotNull(MMKV.defaultMMKV()).putString(
+                    context.getString(R.string.config_lastfm_key),
+                    getString(context.getString(R.string.config_lastfm_key))
+                )
                 Result.success(true)
-            }
-            else {
+            } else {
                 Result.failure(IllegalArgumentException())
             }
         }
