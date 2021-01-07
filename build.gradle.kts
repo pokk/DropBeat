@@ -188,10 +188,10 @@ subprojects {
                 jvmTarget = JavaVersion.VERSION_1_8.toString()
                 suppressWarnings = false
                 freeCompilerArgs = listOf(
-                    "-Xuse-experimental=kotlin.Experimental",
-                    "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
-                    "-Xuse-experimental=kotlin.ExperimentalContracts",
-                    "-Xuse-experimental=org.mylibrary.ExperimentalMarker",
+                    "-Xopt-in=kotlin.RequiresOptIn",
+                    "-Xopt-in=kotlin.ExperimentalStdlibApi",
+                    "-Xopt-in=kotlin.ExperimentalContracts",
+                    "-Xopt-in=org.mylibrary.ExperimentalMarker",
                     "-Xallow-result-return-type",
                     "-Xjvm-default=all"
                 )
