@@ -88,6 +88,11 @@ fun DependencyHandlerScope.widgetDependencies() {
 //    DepEnvImpl(Deps.Widget.quickDialog)
 }
 
+fun DependencyHandlerScope.settingDependencies() {
+    // Others
+    DepEnvImpl(LibraryDependency.JetPack.DATASTORE)
+}
+
 fun DependencyHandlerScope.mediaDependencies() {
     kotlinAndroidDependencies(DepEnvImpl)
     commonAndroidxDependencies(DepEnvImpl)

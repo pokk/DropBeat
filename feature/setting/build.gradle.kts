@@ -24,8 +24,10 @@
 
 import config.CommonModuleDependency
 import config.annotationDependencies
+import config.settingDependencies
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
+    settingDependencies()
     annotationDependencies()
 }

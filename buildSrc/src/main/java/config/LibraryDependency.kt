@@ -39,6 +39,7 @@ object LibraryDependency {
         const val CONSTRAINTLAYOUT = "2.1.0-alpha2"
         const val COORDINATORLAYOUT = "1.1.0"
         const val AAC_LIFECYCLE = "2.3.0-rc01"
+        const val DATASTORE = "1.0.0-alpha05"
         const val KODEIN = "7.2.0"
         const val KTX = "1.5.0-alpha05"
         const val ACTIVITY_KTX = "1.2.0-rc01"
@@ -94,6 +95,7 @@ object LibraryDependency {
         const val LIFECYCLE_PROCESS = "androidx.lifecycle:lifecycle-process:${Version.AAC_LIFECYCLE}"
         const val NAVIGATION_DYNAMIC_FEATURE =
             "androidx.navigation:navigation-dynamic-features-fragment:${Version.NAVIGATION_KTX}"
+        const val DATASTORE = "androidx.datastore:datastore:${Version.DATASTORE}"
     }
 
     object AndroidKtx {
