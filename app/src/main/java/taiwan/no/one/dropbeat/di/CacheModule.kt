@@ -46,7 +46,7 @@ object CacheModule {
     fun provide(context: Context) = DI.Module("Cache Module") {
         constant(TAG_CACHE_SIZE) with 40
 
-        bind<DiskCache>() with singleton { MmkvCache(MMKV.defaultMMKV()) }
+        bind<DiskCache>() with singleton { MmkvCache(requireNotNull(MMKV.defaultMMKV())) }
         bind<MemoryCache>() with singleton { LruMemoryCache(lruCache(instance(TAG_CACHE_SIZE))) }
         bind<SharedPreferences>(TAG_FEAT_REPO_SHARED_PREFS) with singleton {
             context.getSharedPreferences(TAG_REPO_SHARED_PREFS, Context.MODE_PRIVATE)

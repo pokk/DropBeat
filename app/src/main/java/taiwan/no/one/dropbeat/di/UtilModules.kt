@@ -57,7 +57,7 @@ object UtilModules {
                 create()
             }
         }
-        bind<MMKV>() with singleton { MMKV.defaultMMKV() }
+        bind<MMKV>() with singleton { requireNotNull(MMKV.defaultMMKV()) }
     }
 
     fun provideAnalytics(context: Context) = DI.Module("Analytics Module") {

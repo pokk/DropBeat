@@ -39,7 +39,7 @@ object LibraryDependency {
         const val CONSTRAINTLAYOUT = "2.1.0-alpha2"
         const val COORDINATORLAYOUT = "1.1.0"
         const val AAC_LIFECYCLE = "2.3.0-rc01"
-        const val KODEIN = "7.1.0"
+        const val KODEIN = "7.2.0"
         const val KTX = "1.5.0-alpha05"
         const val ACTIVITY_KTX = "1.2.0-rc01"
         const val FRAGMENT_KTX = "1.3.0-rc01"
@@ -49,7 +49,7 @@ object LibraryDependency {
         const val WORK_KTX = "2.5.0-beta02"
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.3.0-alpha04"
-        const val MMKV = "1.2.6"
+        const val MMKV = "1.2.7"
         const val GSON = "2.8.6"
         const val PLAY_CORE = "1.9.0"
         const val COIL = "1.1.0"
@@ -63,7 +63,7 @@ object LibraryDependency {
         const val EXOPLAYER = "2.12.2"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
-        const val LOTTIE = "3.5.0"
+        const val LOTTIE = "3.6.0"
     }
 
     object Jieyi {
