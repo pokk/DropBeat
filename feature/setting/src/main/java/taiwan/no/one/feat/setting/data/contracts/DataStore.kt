@@ -33,19 +33,19 @@ import kotlinx.coroutines.flow.Flow
 internal interface DataStore {
     fun getSleepingTimer(): Flow<Boolean>
 
-    suspend fun setSleepingTimer(enable: Boolean)
+    suspend fun setSleepingTimer(isCheck: Boolean)
 
     fun getLockScreenPlayer(): Flow<Boolean>
 
-    suspend fun setLockScreenPlayer(enable: Boolean)
+    suspend fun setLockScreenPlayer(isCheck: Boolean)
 
     fun getPlayOfflineOnly(): Flow<Boolean>
 
-    suspend fun setPlayOfflineOnly(enable: Boolean)
+    suspend fun setPlayOfflineOnly(isCheck: Boolean)
 
     fun getNotificationPlayer(): Flow<Boolean>
 
-    suspend fun setNotificationPlayer(enable: Boolean)
+    suspend fun setNotificationPlayer(isCheck: Boolean)
 
 //    fun getQualityOfMusic(): Flow<Int>
 
@@ -53,5 +53,5 @@ internal interface DataStore {
 
     fun getAutoDisplayMv(): Flow<Boolean>
 
-    suspend fun setAutoDisplayMv(enable: Boolean)
+    suspend fun setAutoDisplayMv(isCheck: Boolean)
 }

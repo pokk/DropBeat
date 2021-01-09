@@ -34,19 +34,19 @@ import taiwan.no.one.core.domain.repository.Repository
 internal interface SettingRepo : Repository {
     fun fetchSleepingTimer(): Flow<Boolean>
 
-    suspend fun addSleepingTimer(enable: Boolean)
+    suspend fun addSleepingTimer(isCheck: Boolean)
 
     fun fetchLockScreenPlayer(): Flow<Boolean>
 
-    suspend fun addLockScreenPlayer(enable: Boolean)
+    suspend fun addLockScreenPlayer(isCheck: Boolean)
 
     fun fetchPlayOfflineOnly(): Flow<Boolean>
 
-    suspend fun addPlayOfflineOnly(enable: Boolean)
+    suspend fun addPlayOfflineOnly(isCheck: Boolean)
 
     fun fetchNotificationPlayer(): Flow<Boolean>
 
-    suspend fun addNotificationPlayer(enable: Boolean)
+    suspend fun addNotificationPlayer(isCheck: Boolean)
 
 //    fun fetchQualityOfMusic(): Flow<Int>
 
@@ -54,5 +54,5 @@ internal interface SettingRepo : Repository {
 
     fun fetchAutoDisplayMv(): Flow<Boolean>
 
-    suspend fun addAutoDisplayMv(enable: Boolean)
+    suspend fun addAutoDisplayMv(isCheck: Boolean)
 }

@@ -31,9 +31,9 @@ internal class AddAutoDisplayMvOneShotCase(
     private val repository: SettingRepo,
 ) : AddAutoDisplayMvCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addAutoDisplayMv(enable)
+        repository.addAutoDisplayMv(isCheck)
         true
     }
 
-    internal data class Request(val enable: Boolean) : RequestValues
+    internal data class Request(val isCheck: Boolean) : RequestValues
 }

@@ -36,21 +36,21 @@ internal class LocalStore(
 ) : DataStore {
     override fun getSleepingTimer() = preference.getSleepingTimer()
 
-    override suspend fun setSleepingTimer(enable: Boolean) = preference.setSleepingTimer(enable)
+    override suspend fun setSleepingTimer(isCheck: Boolean) = preference.setSleepingTimer(isCheck)
 
     override fun getLockScreenPlayer() = preference.getLockScreenPlayer()
 
-    override suspend fun setLockScreenPlayer(enable: Boolean) = preference.setLockScreenPlayer(enable)
+    override suspend fun setLockScreenPlayer(isCheck: Boolean) = preference.setLockScreenPlayer(isCheck)
 
     override fun getPlayOfflineOnly() = preference.getPlayOfflineOnly()
 
-    override suspend fun setPlayOfflineOnly(enable: Boolean) = preference.setPlayOfflineOnly(enable)
+    override suspend fun setPlayOfflineOnly(isCheck: Boolean) = preference.setPlayOfflineOnly(isCheck)
 
     override fun getNotificationPlayer() = preference.getNotificationPlayer()
 
-    override suspend fun setNotificationPlayer(enable: Boolean) = preference.setNotificationPlayer(enable)
+    override suspend fun setNotificationPlayer(isCheck: Boolean) = preference.setNotificationPlayer(isCheck)
 
     override fun getAutoDisplayMv() = preference.getAutoDisplayMv()
 
-    override suspend fun setAutoDisplayMv(enable: Boolean) = preference.setAutoDisplayMv(enable)
+    override suspend fun setAutoDisplayMv(isCheck: Boolean) = preference.setAutoDisplayMv(isCheck)
 }

@@ -31,9 +31,9 @@ internal class AddSleepingTimerOneShotCase(
     private val repository: SettingRepo,
 ) : AddSleepingTimerCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addSleepingTimer(enable)
+        repository.addSleepingTimer(isCheck)
         true
     }
 
-    internal data class Request(val enable: Boolean) : RequestValues
+    internal data class Request(val isCheck: Boolean) : RequestValues
 }

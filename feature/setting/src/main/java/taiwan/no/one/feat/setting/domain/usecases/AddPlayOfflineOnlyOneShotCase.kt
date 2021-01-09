@@ -31,9 +31,9 @@ internal class AddPlayOfflineOnlyOneShotCase(
     private val repository: SettingRepo,
 ) : AddPlayOfflineOnlyCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addPlayOfflineOnly(enable)
+        repository.addPlayOfflineOnly(isCheck)
         true
     }
 
-    internal data class Request(val enable: Boolean) : RequestValues
+    internal data class Request(val isCheck: Boolean) : RequestValues
 }

@@ -31,9 +31,9 @@ internal class AddLockScreenPlayerOneShotCase(
     private val repository: SettingRepo,
 ) : AddLockScreenPlayerCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addLockScreenPlayer(enable)
+        repository.addLockScreenPlayer(isCheck)
         true
     }
 
-    internal data class Request(val enable: Boolean) : RequestValues
+    internal data class Request(val isCheck: Boolean) : RequestValues
 }

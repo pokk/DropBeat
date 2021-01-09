@@ -53,12 +53,28 @@ import taiwan.no.one.feat.setting.domain.usecases.FetchSleepingTimerCase
 import taiwan.no.one.feat.setting.domain.usecases.FetchSleepingTimerObservableCase
 
 internal object DomainModules : ModuleProvider {
+    const val TAG_SLEEPING_TIMER = "sleeping timer"
+    const val TAG_LOCK_SCREEN_PLAYER = "lock screen player"
+    const val TAG_PLAY_OFFLINE_ONLY = "play offline only"
+    const val TAG_NOTIFICATION_PLAYER = "notification player"
+    const val TAG_AUTO_DISPLAY_MV = "auto display mv"
+
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
-        bind<FetchSleepingTimerCase>() with singleton { FetchSleepingTimerObservableCase(instance()) }
-        bind<FetchLockScreenPlayerCase>() with singleton { FetchLockScreenPlayerObservableCase(instance()) }
-        bind<FetchPlayOfflineOnlyCase>() with singleton { FetchPlayOfflineOnlyObservableCase(instance()) }
-        bind<FetchNotificationPlayerCase>() with singleton { FetchNotificationPlayerObservableCase(instance()) }
-        bind<FetchAutoDisplayMvCase>() with singleton { FetchAutoDisplayMvObservableCase(instance()) }
+        bind<FetchSleepingTimerCase>(TAG_SLEEPING_TIMER) with singleton {
+            FetchSleepingTimerObservableCase(instance())
+        }
+        bind<FetchLockScreenPlayerCase>(TAG_LOCK_SCREEN_PLAYER) with singleton {
+            FetchLockScreenPlayerObservableCase(instance())
+        }
+        bind<FetchPlayOfflineOnlyCase>(TAG_PLAY_OFFLINE_ONLY) with singleton {
+            FetchPlayOfflineOnlyObservableCase(instance())
+        }
+        bind<FetchNotificationPlayerCase>(TAG_NOTIFICATION_PLAYER) with singleton {
+            FetchNotificationPlayerObservableCase(instance())
+        }
+        bind<FetchAutoDisplayMvCase>(TAG_AUTO_DISPLAY_MV) with singleton {
+            FetchAutoDisplayMvObservableCase(instance())
+        }
         bind<AddSleepingTimerCase>() with singleton { AddSleepingTimerOneShotCase(instance()) }
         bind<AddLockScreenPlayerCase>() with singleton { AddLockScreenPlayerOneShotCase(instance()) }
         bind<AddPlayOfflineOnlyCase>() with singleton { AddPlayOfflineOnlyOneShotCase(instance()) }

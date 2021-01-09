@@ -31,9 +31,9 @@ internal class AddNotificationPlayerOneShotCase(
     private val repository: SettingRepo,
 ) : AddNotificationPlayerCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.addNotificationPlayer(enable)
+        repository.addNotificationPlayer(isCheck)
         true
     }
 
-    internal data class Request(val enable: Boolean) : RequestValues
+    internal data class Request(val isCheck: Boolean) : RequestValues
 }

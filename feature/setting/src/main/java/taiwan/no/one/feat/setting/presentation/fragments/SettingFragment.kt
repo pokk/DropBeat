@@ -33,6 +33,7 @@ import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.transition.MaterialSharedAxis
@@ -79,7 +80,43 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
             res.onSuccess {
                 privacyVm.clearUseInfo()
                 findNavController().navigateUp()
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
+        }
+        vm.sleepTimerCheckRes.observe(this) { res ->
+            res.onSuccess(::logw).onFailure(::loge)
+        }
+        vm.lockScreenCheckRes.observe(this) { res ->
+            res.onSuccess(::logw).onFailure(::loge)
+        }
+        vm.offlineCheckRes.observe(this) { res ->
+            res.onSuccess(::logw).onFailure(::loge)
+        }
+        vm.notificationPlayerCheckRes.observe(this) { res ->
+            res.onSuccess(::logw).onFailure(::loge)
+        }
+        vm.autoMvCheckRes.observe(this) { res ->
+            res.onSuccess(::logw).onFailure(::loge)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vm.sleepTimerChecked.observe(viewLifecycleOwner) {
+            mergeAppBlock.includeSleepTimer.sSwitch.isChecked = it
+        }
+        vm.lockScreenChecked.observe(viewLifecycleOwner) {
+            logw(it)
+            mergeAppBlock.includeLockScreen.sSwitch.isChecked = it
+        }
+        vm.offlineChecked.observe(viewLifecycleOwner) {
+            logw(it)
+            mergeAppBlock.includeOffline.sSwitch.isChecked = it
+        }
+        vm.notificationPlayerChecked.observe(viewLifecycleOwner) {
+            mergeAppBlock.includeNotificationPlayer.sSwitch.isChecked = it
+        }
+        vm.autoMvChecked.observe(viewLifecycleOwner) {
+            mergeMusicBlock.includeAutoMv.sSwitch.isChecked = it
         }
     }
 
@@ -150,6 +187,26 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
         mergeSyncBlock.includeSync.root.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingToLogin())
             analyticsVm.navigatedToLogin()
+        }
+        mergeAppBlock.includeSleepTimer.sSwitch.setOnCheckedChangeListener { button, isChecked ->
+            if (!button.isPressed) return@setOnCheckedChangeListener
+            vm.setSleepTimerSwitch(isChecked)
+        }
+        mergeAppBlock.includeLockScreen.sSwitch.setOnCheckedChangeListener { button, isChecked ->
+            if (!button.isPressed) return@setOnCheckedChangeListener
+            vm.setLockScreenSwitch(isChecked)
+        }
+        mergeAppBlock.includeOffline.sSwitch.setOnCheckedChangeListener { button, isChecked ->
+            if (!button.isPressed) return@setOnCheckedChangeListener
+            vm.setOfflineSwitch(isChecked)
+        }
+        mergeAppBlock.includeNotificationPlayer.sSwitch.setOnCheckedChangeListener { button, isChecked ->
+            if (!button.isPressed) return@setOnCheckedChangeListener
+            vm.setNotificationPlayerSwitch(isChecked)
+        }
+        mergeMusicBlock.includeAutoMv.sSwitch.setOnCheckedChangeListener { button, isChecked ->
+            if (!button.isPressed) return@setOnCheckedChangeListener
+            vm.setAutoMvSwitch(isChecked)
         }
     }
 }

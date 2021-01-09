@@ -33,21 +33,21 @@ import taiwan.no.one.feat.setting.data.contracts.DataStore
 internal class RemoteStore : DataStore {
     override fun getSleepingTimer() = TODO()
 
-    override suspend fun setSleepingTimer(enable: Boolean) = TODO()
+    override suspend fun setSleepingTimer(isCheck: Boolean) = TODO()
 
     override fun getLockScreenPlayer() = TODO()
 
-    override suspend fun setLockScreenPlayer(enable: Boolean) = TODO()
+    override suspend fun setLockScreenPlayer(isCheck: Boolean) = TODO()
 
     override fun getPlayOfflineOnly() = TODO()
 
-    override suspend fun setPlayOfflineOnly(enable: Boolean) = TODO()
+    override suspend fun setPlayOfflineOnly(isCheck: Boolean) = TODO()
 
     override fun getNotificationPlayer() = TODO()
 
-    override suspend fun setNotificationPlayer(enable: Boolean) = TODO()
+    override suspend fun setNotificationPlayer(isCheck: Boolean) = TODO()
 
     override fun getAutoDisplayMv() = TODO()
 
-    override suspend fun setAutoDisplayMv(enable: Boolean) = TODO()
+    override suspend fun setAutoDisplayMv(isCheck: Boolean) = TODO()
 }

@@ -42,23 +42,23 @@ internal class SettingDatastore(
 
     override fun getSleepingTimer() = getBooleanValue(keySleepingTimer)
 
-    override suspend fun setSleepingTimer(enable: Boolean) = setBooleanValue(keySleepingTimer, enable)
+    override suspend fun setSleepingTimer(isCheck: Boolean) = setBooleanValue(keySleepingTimer, isCheck)
 
     override fun getLockScreenPlayer() = getBooleanValue(keyLockScreenPlayer)
 
-    override suspend fun setLockScreenPlayer(enable: Boolean) = setBooleanValue(keyLockScreenPlayer, enable)
+    override suspend fun setLockScreenPlayer(isCheck: Boolean) = setBooleanValue(keyLockScreenPlayer, isCheck)
 
     override fun getPlayOfflineOnly() = getBooleanValue(keyPlayOfflineOnly)
 
-    override suspend fun setPlayOfflineOnly(enable: Boolean) = setBooleanValue(keyPlayOfflineOnly, enable)
+    override suspend fun setPlayOfflineOnly(isCheck: Boolean) = setBooleanValue(keyPlayOfflineOnly, isCheck)
 
     override fun getNotificationPlayer() = getBooleanValue(keyNotificationPlayer)
 
-    override suspend fun setNotificationPlayer(enable: Boolean) = setBooleanValue(keyNotificationPlayer, enable)
+    override suspend fun setNotificationPlayer(isCheck: Boolean) = setBooleanValue(keyNotificationPlayer, isCheck)
 
     override fun getAutoDisplayMv() = getBooleanValue(keyAutoDisplayMv)
 
-    override suspend fun setAutoDisplayMv(enable: Boolean) = setBooleanValue(keyAutoDisplayMv, enable)
+    override suspend fun setAutoDisplayMv(isCheck: Boolean) = setBooleanValue(keyAutoDisplayMv, isCheck)
 
     private inline fun getBooleanValue(key: Preferences.Key<Boolean>) = dataStore.data.map { it[key] ?: false }
 
