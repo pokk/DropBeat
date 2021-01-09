@@ -24,8 +24,34 @@
 
 package taiwan.no.one.feat.setting.data.contracts
 
+import kotlinx.coroutines.flow.Flow
+
 /**
  * This interface will common the all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
-internal interface DataStore
+internal interface DataStore {
+    suspend fun getSleepingTimer(): Flow<Boolean>
+
+    suspend fun setSleepingTimer(enable: Boolean)
+
+    suspend fun getLockScreenPlayer(): Flow<Boolean>
+
+    suspend fun setLockScreenPlayer(enable: Boolean)
+
+    suspend fun getPlayOfflineOnly(): Flow<Boolean>
+
+    suspend fun setPlayOfflineOnly(enable: Boolean)
+
+    suspend fun getNotificationPlayer(): Flow<Boolean>
+
+    suspend fun setNotificationPlayer(enable: Boolean)
+
+//    suspend fun getQualityOfMusic(): Flow<Int>
+
+//    suspend fun getQualityOfMusic(quality: Int)
+
+    suspend fun getAutoDisplayMv(): Flow<Boolean>
+
+    suspend fun setAutoDisplayMv(enable: Boolean)
+}

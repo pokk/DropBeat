@@ -22,32 +22,37 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.setting.data.stores
+package taiwan.no.one.feat.setting.data.local.services
 
-import taiwan.no.one.feat.setting.data.contracts.DataStore
+import kotlinx.coroutines.flow.Flow
 
 /**
- * The implementation of the remote data store. The responsibility is selecting a correct
- * remote service to access the data.
+ * Using the local [androidx.datastore.core.DataStore] to set the setting flag.
+ * Using prefix name (get), (set), (update), (remove) as following
+ * the rule of [androidx.datastore.core.DataStore]'s operations.
  */
-internal class RemoteStore : DataStore {
-    override suspend fun getSleepingTimer() = TODO()
+internal interface SettingPreference {
+    suspend fun getSleepingTimer(): Flow<Boolean>
 
-    override suspend fun setSleepingTimer(enable: Boolean) = TODO()
+    suspend fun setSleepingTimer(enable: Boolean)
 
-    override suspend fun getLockScreenPlayer() = TODO()
+    suspend fun getLockScreenPlayer(): Flow<Boolean>
 
-    override suspend fun setLockScreenPlayer(enable: Boolean) = TODO()
+    suspend fun setLockScreenPlayer(enable: Boolean)
 
-    override suspend fun getPlayOfflineOnly() = TODO()
+    suspend fun getPlayOfflineOnly(): Flow<Boolean>
 
-    override suspend fun setPlayOfflineOnly(enable: Boolean) = TODO()
+    suspend fun setPlayOfflineOnly(enable: Boolean)
 
-    override suspend fun getNotificationPlayer() = TODO()
+    suspend fun getNotificationPlayer(): Flow<Boolean>
 
-    override suspend fun setNotificationPlayer(enable: Boolean) = TODO()
+    suspend fun setNotificationPlayer(enable: Boolean)
 
-    override suspend fun getAutoDisplayMv() = TODO()
+//    suspend fun getQualityOfMusic(): Flow<Int>
 
-    override suspend fun setAutoDisplayMv(enable: Boolean) = TODO()
+//    suspend fun getQualityOfMusic(quality: Int)
+
+    suspend fun getAutoDisplayMv(): Flow<Boolean>
+
+    suspend fun setAutoDisplayMv(enable: Boolean)
 }

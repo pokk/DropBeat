@@ -29,14 +29,20 @@ import androidx.room.Query
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 
+/**
+ * Integrated the base [androidx.room.Room] database operations.
+ * Thru [androidx.room.Room] we can just define the interfaces that we want to
+ * access for from a local database.
+ * Using prefix name (get), (insert), (update), (delete)
+ */
 @Dao
 internal abstract class RankingDao : BaseDao<RankingIdEntity> {
     /**
      * Get all data from the Ranking table.
      */
     @Query("SELECT * FROM table_ranking")
-    abstract fun retrieveRankings(): List<RankingIdEntity>
+    abstract fun getRankings(): List<RankingIdEntity>
 
     @Query("UPDATE table_ranking SET top_track_uri=:uri, track_number=:numOfTracks WHERE id=:rankId")
-    abstract fun replaceBy(rankId: Int, uri: String, numOfTracks: Int)
+    abstract fun updateBy(rankId: Int, uri: String, numOfTracks: Int)
 }

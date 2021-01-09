@@ -64,9 +64,9 @@ internal class LocalStore(
         rankingDao.insert(*entities.toTypedArray())
     }
 
-    override suspend fun getRankingEntity() = rankingDao.retrieveRankings()
+    override suspend fun getRankingEntity() = rankingDao.getRankings()
 
     override suspend fun modifyRankingEntity(id: Int, uri: String, number: Int) = tryWrapper {
-        rankingDao.replaceBy(id, uri, number)
+        rankingDao.updateBy(id, uri, number)
     }
 }

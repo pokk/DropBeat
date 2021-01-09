@@ -95,7 +95,7 @@ object LibraryDependency {
         const val LIFECYCLE_PROCESS = "androidx.lifecycle:lifecycle-process:${Version.AAC_LIFECYCLE}"
         const val NAVIGATION_DYNAMIC_FEATURE =
             "androidx.navigation:navigation-dynamic-features-fragment:${Version.NAVIGATION_KTX}"
-        const val DATASTORE = "androidx.datastore:datastore:${Version.DATASTORE}"
+        const val DATASTORE = "androidx.datastore:datastore-preferences:${Version.DATASTORE}"
     }
 
     object AndroidKtx {

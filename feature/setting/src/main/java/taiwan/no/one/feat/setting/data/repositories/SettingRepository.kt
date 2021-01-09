@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.setting.domain.repositories
+package taiwan.no.one.feat.setting.data.repositories
 
-import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.setting.data.contracts.DataStore
+import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
 
-/**
- * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-internal interface PlaylistRepo : Repository
+internal class SettingRepository(
+    private val local: DataStore,
+    private val remote: DataStore,
+) : SettingRepo
