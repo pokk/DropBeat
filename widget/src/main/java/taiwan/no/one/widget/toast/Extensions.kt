@@ -31,6 +31,8 @@ import android.view.LayoutInflater
 import android.view.WindowManager.LayoutParams
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -40,6 +42,7 @@ import kotlinx.coroutines.flow.onEach
 import taiwan.no.one.widget.R
 import taiwan.no.one.widget.databinding.PartTopToastBinding
 
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @SuppressLint("DiscouragedPrivateApi")
 fun Context.showTopToast(text: String, @DrawableRes icon: Int = R.drawable.ic_close) = Toast(this).apply toast@{
     val binding = PartTopToastBinding
