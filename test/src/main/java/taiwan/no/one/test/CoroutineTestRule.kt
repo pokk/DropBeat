@@ -25,13 +25,15 @@
 package taiwan.no.one.test
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-class CoroutineTestRule(
+@OptIn(ExperimentalCoroutinesApi::class)
+class CoroutineTestRule constructor(
     private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
 ) : TestWatcher() {
     override fun starting(description: Description?) {

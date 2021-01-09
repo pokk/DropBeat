@@ -25,8 +25,9 @@
 package taiwan.no.one.feat.setting.presentation.fragments
 
 import android.os.Bundle
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -164,8 +165,11 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
             // Set components to visible.
             binding.btnLogout.visible()
             mergeUserBlock.llUser.visible()
-            (mergeAppBlock.llApp.layoutParams as MarginLayoutParams).topMargin =
-                getDimen(WidgetResDimen.md_four_unit).toInt()
+            if (mergeAppBlock.llApp.layoutParams is ConstraintLayout.LayoutParams) {
+                mergeAppBlock.llApp.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    topMargin = getDimen(WidgetResDimen.md_four_unit).toInt()
+                }
+            }
             mergeSyncBlock.includeLoggedInSync.root.visible()
             mergeSyncBlock.includeSync.root.gone()
             // Set the user information.
