@@ -31,23 +31,23 @@ import taiwan.no.one.feat.setting.data.contracts.DataStore
  * remote service to access the data.
  */
 internal class RemoteStore : DataStore {
-    override suspend fun getSleepingTimer() = TODO()
+    override fun getSleepingTimer() = TODO()
 
     override suspend fun setSleepingTimer(enable: Boolean) = TODO()
 
-    override suspend fun getLockScreenPlayer() = TODO()
+    override fun getLockScreenPlayer() = TODO()
 
     override suspend fun setLockScreenPlayer(enable: Boolean) = TODO()
 
-    override suspend fun getPlayOfflineOnly() = TODO()
+    override fun getPlayOfflineOnly() = TODO()
 
     override suspend fun setPlayOfflineOnly(enable: Boolean) = TODO()
 
-    override suspend fun getNotificationPlayer() = TODO()
+    override fun getNotificationPlayer() = TODO()
 
     override suspend fun setNotificationPlayer(enable: Boolean) = TODO()
 
-    override suspend fun getAutoDisplayMv() = TODO()
+    override fun getAutoDisplayMv() = TODO()
 
     override suspend fun setAutoDisplayMv(enable: Boolean) = TODO()
 }

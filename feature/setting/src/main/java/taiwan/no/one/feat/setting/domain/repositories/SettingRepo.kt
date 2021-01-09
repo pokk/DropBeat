@@ -24,10 +24,35 @@
 
 package taiwan.no.one.feat.setting.domain.repositories
 
+import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.core.domain.repository.Repository
 
 /**
  * This interface will be the similar to [taiwan.no.one.feat.setting.data.contracts.DataStore].
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
-internal interface SettingRepo : Repository
+internal interface SettingRepo : Repository {
+    fun fetchSleepingTimer(): Flow<Boolean>
+
+    suspend fun addSleepingTimer(enable: Boolean)
+
+    fun fetchLockScreenPlayer(): Flow<Boolean>
+
+    suspend fun addLockScreenPlayer(enable: Boolean)
+
+    fun fetchPlayOfflineOnly(): Flow<Boolean>
+
+    suspend fun addPlayOfflineOnly(enable: Boolean)
+
+    fun fetchNotificationPlayer(): Flow<Boolean>
+
+    suspend fun addNotificationPlayer(enable: Boolean)
+
+//    fun fetchQualityOfMusic(): Flow<Int>
+
+//    suspend fun addQualityOfMusic(quality: Int)
+
+    fun fetchAutoDisplayMv(): Flow<Boolean>
+
+    suspend fun addAutoDisplayMv(enable: Boolean)
+}

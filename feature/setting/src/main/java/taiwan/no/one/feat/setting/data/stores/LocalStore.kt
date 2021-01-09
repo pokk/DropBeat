@@ -34,23 +34,23 @@ import taiwan.no.one.feat.setting.data.local.services.SettingPreference
 internal class LocalStore(
     private val preference: SettingPreference,
 ) : DataStore {
-    override suspend fun getSleepingTimer() = preference.getSleepingTimer()
+    override fun getSleepingTimer() = preference.getSleepingTimer()
 
     override suspend fun setSleepingTimer(enable: Boolean) = preference.setSleepingTimer(enable)
 
-    override suspend fun getLockScreenPlayer() = preference.getLockScreenPlayer()
+    override fun getLockScreenPlayer() = preference.getLockScreenPlayer()
 
     override suspend fun setLockScreenPlayer(enable: Boolean) = preference.setLockScreenPlayer(enable)
 
-    override suspend fun getPlayOfflineOnly() = preference.getPlayOfflineOnly()
+    override fun getPlayOfflineOnly() = preference.getPlayOfflineOnly()
 
     override suspend fun setPlayOfflineOnly(enable: Boolean) = preference.setPlayOfflineOnly(enable)
 
-    override suspend fun getNotificationPlayer() = preference.getNotificationPlayer()
+    override fun getNotificationPlayer() = preference.getNotificationPlayer()
 
     override suspend fun setNotificationPlayer(enable: Boolean) = preference.setNotificationPlayer(enable)
 
-    override suspend fun getAutoDisplayMv() = preference.getAutoDisplayMv()
+    override fun getAutoDisplayMv() = preference.getAutoDisplayMv()
 
     override suspend fun setAutoDisplayMv(enable: Boolean) = preference.setAutoDisplayMv(enable)
 }

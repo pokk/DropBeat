@@ -23,3 +23,25 @@
  */
 
 package taiwan.no.one.feat.setting.domain.usecases
+
+import kotlinx.coroutines.flow.Flow
+import taiwan.no.one.core.domain.parameter.NonRequest
+import taiwan.no.one.core.domain.usecase.ObservableUsecase
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+
+internal typealias FetchSleepingTimerCase = ObservableUsecase<Flow<Boolean>, NonRequest>
+internal typealias FetchLockScreenPlayerCase = ObservableUsecase<Flow<Boolean>, NonRequest>
+internal typealias FetchPlayOfflineOnlyCase = ObservableUsecase<Flow<Boolean>, NonRequest>
+internal typealias FetchNotificationPlayerCase = ObservableUsecase<Flow<Boolean>, NonRequest>
+internal typealias FetchAutoDisplayMvCase = ObservableUsecase<Flow<Boolean>, NonRequest>
+
+internal typealias AddSleepingTimerCase = OneShotUsecase<Boolean, AddSleepingTimerReq>
+internal typealias AddSleepingTimerReq = AddSleepingTimerOneShotCase.Request
+internal typealias AddLockScreenPlayerCase = OneShotUsecase<Boolean, AddLockScreenPlayerReq>
+internal typealias AddLockScreenPlayerReq = AddLockScreenPlayerOneShotCase.Request
+internal typealias AddPlayOfflineOnlyCase = OneShotUsecase<Boolean, AddPlayOfflineOnlyReq>
+internal typealias AddPlayOfflineOnlyReq = AddPlayOfflineOnlyOneShotCase.Request
+internal typealias AddNotificationPlayerCase = OneShotUsecase<Boolean, AddNotificationPlayerReq>
+internal typealias AddNotificationPlayerReq = AddNotificationPlayerOneShotCase.Request
+internal typealias AddAutoDisplayMvCase = OneShotUsecase<Boolean, AddAutoDisplayMvReq>
+internal typealias AddAutoDisplayMvReq = AddAutoDisplayMvOneShotCase.Request

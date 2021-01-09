@@ -40,23 +40,23 @@ internal class SettingDatastore(
     private val keyNotificationPlayer = preferencesKey<Boolean>("notification player")
     private val keyAutoDisplayMv = preferencesKey<Boolean>("auto display mv")
 
-    override suspend fun getSleepingTimer() = getBooleanValue(keySleepingTimer)
+    override fun getSleepingTimer() = getBooleanValue(keySleepingTimer)
 
     override suspend fun setSleepingTimer(enable: Boolean) = setBooleanValue(keySleepingTimer, enable)
 
-    override suspend fun getLockScreenPlayer() = getBooleanValue(keyLockScreenPlayer)
+    override fun getLockScreenPlayer() = getBooleanValue(keyLockScreenPlayer)
 
     override suspend fun setLockScreenPlayer(enable: Boolean) = setBooleanValue(keyLockScreenPlayer, enable)
 
-    override suspend fun getPlayOfflineOnly() = getBooleanValue(keyPlayOfflineOnly)
+    override fun getPlayOfflineOnly() = getBooleanValue(keyPlayOfflineOnly)
 
     override suspend fun setPlayOfflineOnly(enable: Boolean) = setBooleanValue(keyPlayOfflineOnly, enable)
 
-    override suspend fun getNotificationPlayer() = getBooleanValue(keyNotificationPlayer)
+    override fun getNotificationPlayer() = getBooleanValue(keyNotificationPlayer)
 
     override suspend fun setNotificationPlayer(enable: Boolean) = setBooleanValue(keyNotificationPlayer, enable)
 
-    override suspend fun getAutoDisplayMv() = getBooleanValue(keyAutoDisplayMv)
+    override fun getAutoDisplayMv() = getBooleanValue(keyAutoDisplayMv)
 
     override suspend fun setAutoDisplayMv(enable: Boolean) = setBooleanValue(keyAutoDisplayMv, enable)
 

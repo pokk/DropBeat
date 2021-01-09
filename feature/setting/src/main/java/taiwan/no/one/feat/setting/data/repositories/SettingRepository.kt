@@ -30,4 +30,28 @@ import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
 internal class SettingRepository(
     private val local: DataStore,
     private val remote: DataStore,
-) : SettingRepo
+) : SettingRepo {
+    override fun fetchSleepingTimer() = local.getSleepingTimer()
+
+    override suspend fun addSleepingTimer(enable: Boolean) = local.setSleepingTimer(enable)
+
+    override fun fetchLockScreenPlayer() = local.getLockScreenPlayer()
+
+    override suspend fun addLockScreenPlayer(enable: Boolean) {
+    }
+
+    override fun fetchPlayOfflineOnly() = local.getPlayOfflineOnly()
+
+    override suspend fun addPlayOfflineOnly(enable: Boolean) {
+    }
+
+    override fun fetchNotificationPlayer() = local.getNotificationPlayer()
+
+    override suspend fun addNotificationPlayer(enable: Boolean) {
+    }
+
+    override fun fetchAutoDisplayMv() = local.getAutoDisplayMv()
+
+    override suspend fun addAutoDisplayMv(enable: Boolean) {
+    }
+}

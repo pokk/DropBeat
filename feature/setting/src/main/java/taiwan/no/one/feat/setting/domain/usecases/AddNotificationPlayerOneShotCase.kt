@@ -22,37 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.setting.data.local.services
+package taiwan.no.one.feat.setting.domain.usecases
 
-import kotlinx.coroutines.flow.Flow
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
 
-/**
- * Using the local [androidx.datastore.core.DataStore] to set the setting flag.
- * Using prefix name (get), (set), (update), (remove) as following
- * the rule of [androidx.datastore.core.DataStore]'s operations.
- */
-internal interface SettingPreference {
-    fun getSleepingTimer(): Flow<Boolean>
+internal class AddNotificationPlayerOneShotCase(
+    private val repository: SettingRepo,
+) : AddNotificationPlayerCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        repository.addNotificationPlayer(enable)
+        true
+    }
 
-    suspend fun setSleepingTimer(enable: Boolean)
-
-    fun getLockScreenPlayer(): Flow<Boolean>
-
-    suspend fun setLockScreenPlayer(enable: Boolean)
-
-    fun getPlayOfflineOnly(): Flow<Boolean>
-
-    suspend fun setPlayOfflineOnly(enable: Boolean)
-
-    fun getNotificationPlayer(): Flow<Boolean>
-
-    suspend fun setNotificationPlayer(enable: Boolean)
-
-//    fun getQualityOfMusic(): Flow<Int>
-
-//    suspend fun getQualityOfMusic(quality: Int)
-
-    fun getAutoDisplayMv(): Flow<Boolean>
-
-    suspend fun setAutoDisplayMv(enable: Boolean)
+    internal data class Request(val enable: Boolean) : RequestValues
 }

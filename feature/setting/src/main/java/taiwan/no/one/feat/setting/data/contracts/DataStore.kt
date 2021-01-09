@@ -31,27 +31,27 @@ import kotlinx.coroutines.flow.Flow
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface DataStore {
-    suspend fun getSleepingTimer(): Flow<Boolean>
+    fun getSleepingTimer(): Flow<Boolean>
 
     suspend fun setSleepingTimer(enable: Boolean)
 
-    suspend fun getLockScreenPlayer(): Flow<Boolean>
+    fun getLockScreenPlayer(): Flow<Boolean>
 
     suspend fun setLockScreenPlayer(enable: Boolean)
 
-    suspend fun getPlayOfflineOnly(): Flow<Boolean>
+    fun getPlayOfflineOnly(): Flow<Boolean>
 
     suspend fun setPlayOfflineOnly(enable: Boolean)
 
-    suspend fun getNotificationPlayer(): Flow<Boolean>
+    fun getNotificationPlayer(): Flow<Boolean>
 
     suspend fun setNotificationPlayer(enable: Boolean)
 
-//    suspend fun getQualityOfMusic(): Flow<Int>
+//    fun getQualityOfMusic(): Flow<Int>
 
 //    suspend fun getQualityOfMusic(quality: Int)
 
-    suspend fun getAutoDisplayMv(): Flow<Boolean>
+    fun getAutoDisplayMv(): Flow<Boolean>
 
     suspend fun setAutoDisplayMv(enable: Boolean)
 }
