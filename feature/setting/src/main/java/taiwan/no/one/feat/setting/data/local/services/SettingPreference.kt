@@ -24,35 +24,33 @@
 
 package taiwan.no.one.feat.setting.data.local.services
 
-import kotlinx.coroutines.flow.Flow
-
 /**
  * Using the local [androidx.datastore.core.DataStore] to set the setting flag.
  * Using prefix name (get), (set), (update), (remove) as following
  * the rule of [androidx.datastore.core.DataStore]'s operations.
  */
 internal interface SettingPreference {
-    fun getSleepingTimer(): Flow<Boolean>
+    suspend fun getSleepingTimer(): Boolean
 
     suspend fun setSleepingTimer(isCheck: Boolean)
 
-    fun getLockScreenPlayer(): Flow<Boolean>
+    suspend fun getLockScreenPlayer(): Boolean
 
     suspend fun setLockScreenPlayer(isCheck: Boolean)
 
-    fun getPlayOfflineOnly(): Flow<Boolean>
+    suspend fun getPlayOfflineOnly(): Boolean
 
     suspend fun setPlayOfflineOnly(isCheck: Boolean)
 
-    fun getNotificationPlayer(): Flow<Boolean>
+    suspend fun getNotificationPlayer(): Boolean
 
     suspend fun setNotificationPlayer(isCheck: Boolean)
 
-//    fun getQualityOfMusic(): Flow<Int>
+//   suspend fun getQualityOfMusic(): Flow<Int>
 
 //    suspend fun getQualityOfMusic(quality: Int)
 
-    fun getAutoDisplayMv(): Flow<Boolean>
+    suspend fun getAutoDisplayMv(): Boolean
 
     suspend fun setAutoDisplayMv(isCheck: Boolean)
 }

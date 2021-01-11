@@ -27,8 +27,8 @@ package taiwan.no.one.feat.setting.domain.usecases
 import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
 
-internal class FetchLockScreenPlayerObservableCase(
+internal class FetchLockScreenPlayerOneShotCase(
     private val repository: SettingRepo,
 ) : FetchLockScreenPlayerCase() {
-    override fun acquireCase(parameter: NonRequest?) = repository.fetchLockScreenPlayer()
+    override suspend fun acquireCase(parameter: NonRequest?) = repository.fetchLockScreenPlayer()
 }

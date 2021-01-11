@@ -28,6 +28,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.preferencesKey
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import taiwan.no.one.feat.setting.data.local.services.SettingPreference
 
@@ -40,27 +41,28 @@ internal class SettingDatastore(
     private val keyNotificationPlayer = preferencesKey<Boolean>("notification player")
     private val keyAutoDisplayMv = preferencesKey<Boolean>("auto display mv")
 
-    override fun getSleepingTimer() = getBooleanValue(keySleepingTimer)
+    override suspend fun getSleepingTimer() = getBooleanValue(keySleepingTimer)
 
     override suspend fun setSleepingTimer(isCheck: Boolean) = setBooleanValue(keySleepingTimer, isCheck)
 
-    override fun getLockScreenPlayer() = getBooleanValue(keyLockScreenPlayer)
+    override suspend fun getLockScreenPlayer() = getBooleanValue(keyLockScreenPlayer)
 
     override suspend fun setLockScreenPlayer(isCheck: Boolean) = setBooleanValue(keyLockScreenPlayer, isCheck)
 
-    override fun getPlayOfflineOnly() = getBooleanValue(keyPlayOfflineOnly)
+    override suspend fun getPlayOfflineOnly() = getBooleanValue(keyPlayOfflineOnly)
 
     override suspend fun setPlayOfflineOnly(isCheck: Boolean) = setBooleanValue(keyPlayOfflineOnly, isCheck)
 
-    override fun getNotificationPlayer() = getBooleanValue(keyNotificationPlayer)
+    override suspend fun getNotificationPlayer() = getBooleanValue(keyNotificationPlayer)
 
     override suspend fun setNotificationPlayer(isCheck: Boolean) = setBooleanValue(keyNotificationPlayer, isCheck)
 
-    override fun getAutoDisplayMv() = getBooleanValue(keyAutoDisplayMv)
+    override suspend fun getAutoDisplayMv() = getBooleanValue(keyAutoDisplayMv)
 
     override suspend fun setAutoDisplayMv(isCheck: Boolean) = setBooleanValue(keyAutoDisplayMv, isCheck)
 
-    private inline fun getBooleanValue(key: Preferences.Key<Boolean>) = dataStore.data.map { it[key] ?: false }
+    private suspend inline fun getBooleanValue(key: Preferences.Key<Boolean>) =
+        dataStore.data.map { it[key] ?: false }.first()
 
     private suspend inline fun setBooleanValue(key: Preferences.Key<Boolean>, value: Boolean) {
         dataStore.edit {

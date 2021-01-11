@@ -24,16 +24,14 @@
 
 package taiwan.no.one.feat.setting.domain.usecases
 
-import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.core.domain.parameter.NonRequest
-import taiwan.no.one.core.domain.usecase.ObservableUsecase
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 
-internal typealias FetchSleepingTimerCase = ObservableUsecase<Flow<Boolean>, NonRequest>
-internal typealias FetchLockScreenPlayerCase = ObservableUsecase<Flow<Boolean>, NonRequest>
-internal typealias FetchPlayOfflineOnlyCase = ObservableUsecase<Flow<Boolean>, NonRequest>
-internal typealias FetchNotificationPlayerCase = ObservableUsecase<Flow<Boolean>, NonRequest>
-internal typealias FetchAutoDisplayMvCase = ObservableUsecase<Flow<Boolean>, NonRequest>
+internal typealias FetchSleepingTimerCase = OneShotUsecase<Boolean, NonRequest>
+internal typealias FetchLockScreenPlayerCase = OneShotUsecase<Boolean, NonRequest>
+internal typealias FetchPlayOfflineOnlyCase = OneShotUsecase<Boolean, NonRequest>
+internal typealias FetchNotificationPlayerCase = OneShotUsecase<Boolean, NonRequest>
+internal typealias FetchAutoDisplayMvCase = OneShotUsecase<Boolean, NonRequest>
 
 internal typealias AddSleepingTimerCase = OneShotUsecase<Boolean, AddSleepingTimerReq>
 internal typealias AddSleepingTimerReq = AddSleepingTimerOneShotCase.Request

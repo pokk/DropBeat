@@ -31,23 +31,23 @@ internal class SettingRepository(
     private val local: DataStore,
     private val remote: DataStore,
 ) : SettingRepo {
-    override fun fetchSleepingTimer() = local.getSleepingTimer()
+    override suspend fun fetchSleepingTimer() = local.getSleepingTimer()
 
     override suspend fun addSleepingTimer(isCheck: Boolean) = local.setSleepingTimer(isCheck)
 
-    override fun fetchLockScreenPlayer() = local.getLockScreenPlayer()
+    override suspend fun fetchLockScreenPlayer() = local.getLockScreenPlayer()
 
     override suspend fun addLockScreenPlayer(isCheck: Boolean) = local.setLockScreenPlayer(isCheck)
 
-    override fun fetchPlayOfflineOnly() = local.getPlayOfflineOnly()
+    override suspend fun fetchPlayOfflineOnly() = local.getPlayOfflineOnly()
 
     override suspend fun addPlayOfflineOnly(isCheck: Boolean) = local.setPlayOfflineOnly(isCheck)
 
-    override fun fetchNotificationPlayer() = local.getNotificationPlayer()
+    override suspend fun fetchNotificationPlayer() = local.getNotificationPlayer()
 
     override suspend fun addNotificationPlayer(isCheck: Boolean) = local.setNotificationPlayer(isCheck)
 
-    override fun fetchAutoDisplayMv() = local.getAutoDisplayMv()
+    override suspend fun fetchAutoDisplayMv() = local.getAutoDisplayMv()
 
     override suspend fun addAutoDisplayMv(isCheck: Boolean) = local.setAutoDisplayMv(isCheck)
 }

@@ -102,22 +102,30 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
 
     override fun onResume() {
         super.onResume()
-        vm.sleepTimerChecked.observe(viewLifecycleOwner) {
-            mergeAppBlock.includeSleepTimer.sSwitch.isChecked = it
+        vm.sleepTimerChecked.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                mergeAppBlock.includeSleepTimer.sSwitch.isChecked = it
+            }.onFailure(::loge)
         }
-        vm.lockScreenChecked.observe(viewLifecycleOwner) {
-            logw(it)
-            mergeAppBlock.includeLockScreen.sSwitch.isChecked = it
+        vm.lockScreenChecked.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                mergeAppBlock.includeLockScreen.sSwitch.isChecked = it
+            }.onFailure(::loge)
         }
-        vm.offlineChecked.observe(viewLifecycleOwner) {
-            logw(it)
-            mergeAppBlock.includeOffline.sSwitch.isChecked = it
+        vm.offlineChecked.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                mergeAppBlock.includeOffline.sSwitch.isChecked = it
+            }
         }
-        vm.notificationPlayerChecked.observe(viewLifecycleOwner) {
-            mergeAppBlock.includeNotificationPlayer.sSwitch.isChecked = it
+        vm.notificationPlayerChecked.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                mergeAppBlock.includeNotificationPlayer.sSwitch.isChecked = it
+            }.onFailure(::loge)
         }
-        vm.autoMvChecked.observe(viewLifecycleOwner) {
-            mergeMusicBlock.includeAutoMv.sSwitch.isChecked = it
+        vm.autoMvChecked.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                mergeMusicBlock.includeAutoMv.sSwitch.isChecked = it
+            }.onFailure(::loge)
         }
     }
 
@@ -158,7 +166,11 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
             mergeOtherBlock.includeCoffeeToMe,
             mergeOtherBlock.includeStar,
             mergeOtherBlock.includeFeedback,
-        ).forEach { it.root.find<MaterialButton>(R.id.btn_next).apply { setIconResource(R.drawable.ic_chevron_right) } }
+        ).forEach {
+            it.root
+                .find<MaterialButton>(R.id.btn_next)
+                .apply { setIconResource(R.drawable.ic_chevron_right) }
+        }
         mergeUserBlock.includeEmail.btnNext.icon = null
         // Change the margin if has the user information.
         privacyVm.userInfo.value?.getOrNull()?.also {

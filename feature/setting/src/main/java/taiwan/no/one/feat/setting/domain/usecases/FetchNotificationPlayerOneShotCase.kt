@@ -27,8 +27,8 @@ package taiwan.no.one.feat.setting.domain.usecases
 import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
 
-internal class FetchSleepingTimerObservableCase(
+internal class FetchNotificationPlayerOneShotCase(
     private val repository: SettingRepo,
-) : FetchSleepingTimerCase() {
-    override fun acquireCase(parameter: NonRequest?) = repository.fetchSleepingTimer()
+) : FetchNotificationPlayerCase() {
+    override suspend fun acquireCase(parameter: NonRequest?) = repository.fetchNotificationPlayer()
 }

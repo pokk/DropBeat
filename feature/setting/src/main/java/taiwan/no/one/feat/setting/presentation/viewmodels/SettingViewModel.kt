@@ -26,7 +26,7 @@ package taiwan.no.one.feat.setting.presentation.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
@@ -69,19 +69,24 @@ internal class SettingViewModel(
     private val addAutoDisplayMvCase by instance<AddAutoDisplayMvCase>()
     private val _logoutRes by lazy { ResultLiveData<Boolean>() }
     val logoutRes get() = _logoutRes.toLiveData()
-    val sleepTimerChecked = fetchSleepingTimerCase.execute().asLiveData(viewModelScope.coroutineContext)
+    val sleepTimerChecked =
+        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchSleepingTimerCase.execute() }) }
     private val _sleepingTimerCheckRes by lazy { ResultLiveData<Boolean>() }
     val sleepTimerCheckRes get() = _sleepingTimerCheckRes.toLiveData()
-    val lockScreenChecked = fetchLockScreenPlayerCase.execute().asLiveData(viewModelScope.coroutineContext)
+    val lockScreenChecked =
+        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchLockScreenPlayerCase.execute() }) }
     private val _lockScreenCheckRes by lazy { ResultLiveData<Boolean>() }
     val lockScreenCheckRes get() = _lockScreenCheckRes.toLiveData()
-    val offlineChecked = fetchPlayOfflineOnlyCase.execute().asLiveData(viewModelScope.coroutineContext)
+    val offlineChecked =
+        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchPlayOfflineOnlyCase.execute() }) }
     private val _offlineCheckRes by lazy { ResultLiveData<Boolean>() }
     val offlineCheckRes get() = _offlineCheckRes.toLiveData()
-    val notificationPlayerChecked = fetchNotificationPlayerCase.execute().asLiveData(viewModelScope.coroutineContext)
+    val notificationPlayerChecked =
+        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchNotificationPlayerCase.execute() }) }
     private val _notificationPlayerCheckRes by lazy { ResultLiveData<Boolean>() }
     val notificationPlayerCheckRes get() = _notificationPlayerCheckRes.toLiveData()
-    val autoMvChecked = fetchAutoDisplayMvCase.execute().asLiveData(viewModelScope.coroutineContext)
+    val autoMvChecked =
+        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchAutoDisplayMvCase.execute() }) }
     private val _autoMvCheckRes by lazy { ResultLiveData<Boolean>() }
     val autoMvCheckRes get() = _autoMvCheckRes.toLiveData()
 

@@ -42,15 +42,15 @@ import taiwan.no.one.feat.setting.domain.usecases.AddPlayOfflineOnlyOneShotCase
 import taiwan.no.one.feat.setting.domain.usecases.AddSleepingTimerCase
 import taiwan.no.one.feat.setting.domain.usecases.AddSleepingTimerOneShotCase
 import taiwan.no.one.feat.setting.domain.usecases.FetchAutoDisplayMvCase
-import taiwan.no.one.feat.setting.domain.usecases.FetchAutoDisplayMvObservableCase
+import taiwan.no.one.feat.setting.domain.usecases.FetchAutoDisplayMvOneShotCase
 import taiwan.no.one.feat.setting.domain.usecases.FetchLockScreenPlayerCase
-import taiwan.no.one.feat.setting.domain.usecases.FetchLockScreenPlayerObservableCase
+import taiwan.no.one.feat.setting.domain.usecases.FetchLockScreenPlayerOneShotCase
 import taiwan.no.one.feat.setting.domain.usecases.FetchNotificationPlayerCase
-import taiwan.no.one.feat.setting.domain.usecases.FetchNotificationPlayerObservableCase
+import taiwan.no.one.feat.setting.domain.usecases.FetchNotificationPlayerOneShotCase
 import taiwan.no.one.feat.setting.domain.usecases.FetchPlayOfflineOnlyCase
-import taiwan.no.one.feat.setting.domain.usecases.FetchPlayOfflineOnlyObservableCase
+import taiwan.no.one.feat.setting.domain.usecases.FetchPlayOfflineOnlyOneShotCase
 import taiwan.no.one.feat.setting.domain.usecases.FetchSleepingTimerCase
-import taiwan.no.one.feat.setting.domain.usecases.FetchSleepingTimerObservableCase
+import taiwan.no.one.feat.setting.domain.usecases.FetchSleepingTimerOneShotCase
 
 internal object DomainModules : ModuleProvider {
     const val TAG_SLEEPING_TIMER = "sleeping timer"
@@ -61,19 +61,19 @@ internal object DomainModules : ModuleProvider {
 
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
         bind<FetchSleepingTimerCase>(TAG_SLEEPING_TIMER) with singleton {
-            FetchSleepingTimerObservableCase(instance())
+            FetchSleepingTimerOneShotCase(instance())
         }
         bind<FetchLockScreenPlayerCase>(TAG_LOCK_SCREEN_PLAYER) with singleton {
-            FetchLockScreenPlayerObservableCase(instance())
+            FetchLockScreenPlayerOneShotCase(instance())
         }
         bind<FetchPlayOfflineOnlyCase>(TAG_PLAY_OFFLINE_ONLY) with singleton {
-            FetchPlayOfflineOnlyObservableCase(instance())
+            FetchPlayOfflineOnlyOneShotCase(instance())
         }
         bind<FetchNotificationPlayerCase>(TAG_NOTIFICATION_PLAYER) with singleton {
-            FetchNotificationPlayerObservableCase(instance())
+            FetchNotificationPlayerOneShotCase(instance())
         }
         bind<FetchAutoDisplayMvCase>(TAG_AUTO_DISPLAY_MV) with singleton {
-            FetchAutoDisplayMvObservableCase(instance())
+            FetchAutoDisplayMvOneShotCase(instance())
         }
         bind<AddSleepingTimerCase>() with singleton { AddSleepingTimerOneShotCase(instance()) }
         bind<AddLockScreenPlayerCase>() with singleton { AddLockScreenPlayerOneShotCase(instance()) }

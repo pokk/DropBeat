@@ -24,7 +24,6 @@
 
 package taiwan.no.one.feat.setting.domain.repositories
 
-import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.core.domain.repository.Repository
 
 /**
@@ -32,27 +31,27 @@ import taiwan.no.one.core.domain.repository.Repository
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface SettingRepo : Repository {
-    fun fetchSleepingTimer(): Flow<Boolean>
+    suspend fun fetchSleepingTimer(): Boolean
 
     suspend fun addSleepingTimer(isCheck: Boolean)
 
-    fun fetchLockScreenPlayer(): Flow<Boolean>
+    suspend fun fetchLockScreenPlayer(): Boolean
 
     suspend fun addLockScreenPlayer(isCheck: Boolean)
 
-    fun fetchPlayOfflineOnly(): Flow<Boolean>
+    suspend fun fetchPlayOfflineOnly(): Boolean
 
     suspend fun addPlayOfflineOnly(isCheck: Boolean)
 
-    fun fetchNotificationPlayer(): Flow<Boolean>
+    suspend fun fetchNotificationPlayer(): Boolean
 
     suspend fun addNotificationPlayer(isCheck: Boolean)
 
-//    fun fetchQualityOfMusic(): Flow<Int>
+//   suspend fun fetchQualityOfMusic(): Flow<Int>
 
 //    suspend fun addQualityOfMusic(quality: Int)
 
-    fun fetchAutoDisplayMv(): Flow<Boolean>
+    suspend fun fetchAutoDisplayMv(): Boolean
 
     suspend fun addAutoDisplayMv(isCheck: Boolean)
 }

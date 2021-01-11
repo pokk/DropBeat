@@ -27,8 +27,8 @@ package taiwan.no.one.feat.setting.domain.usecases
 import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
 
-internal class FetchAutoDisplayMvObservableCase(
+internal class FetchPlayOfflineOnlyOneShotCase(
     private val repository: SettingRepo,
-) : FetchAutoDisplayMvCase() {
-    override fun acquireCase(parameter: NonRequest?) = repository.fetchAutoDisplayMv()
+) : FetchPlayOfflineOnlyCase() {
+    override suspend fun acquireCase(parameter: NonRequest?) = repository.fetchPlayOfflineOnly()
 }
