@@ -60,6 +60,7 @@ internal class SplashActivity : AppCompatActivity(), DIAware {
 
         SplitCompat.install(this)
 
+        // HACK(jieyi): 1/13/21 This should move to viewmodel.
         workManager.getWorkInfoByIdLiveData(worker.id).observe(this) {
             if (!it.state.isFinished) {
                 return@observe

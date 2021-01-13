@@ -215,11 +215,11 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {
         var isTopArtist = false
         val list = (entities as? ArtistWithMoreDetailEntities)
-                       ?.apply { isTopArtist = true }
-                       ?.map(EntityMapper::artistToSimpleTrackEntity)
-                       ?.toTypedArray() ?: (entities as? TracksEntity)?.tracks
-                       ?.map(EntityMapper::exploreToSimpleTrackEntity)
-                       ?.toTypedArray() ?: return
+            ?.apply { isTopArtist = true }
+            ?.map(EntityMapper::artistToSimpleTrackEntity)
+            ?.toTypedArray() ?: (entities as? TracksEntity)?.tracks
+            ?.map(EntityMapper::exploreToSimpleTrackEntity)
+            ?.toTypedArray() ?: return
         layout.find<Button>(AppResId.btn_more).setOnClickListener {
             if (isTopArtist) {
                 topArtistAdapter.data.forEachIndexed { index, entity ->
