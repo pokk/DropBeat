@@ -107,6 +107,9 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
                 playlistViewModel.updateSong(it, it.isFavorite)
                 analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
             }
+            setRequestPicCallback {
+                // TODO(jieyi): 1/13/21 Send the pic request to the backend server thru a viewmodel.
+            }
         }
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()

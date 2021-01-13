@@ -35,6 +35,11 @@ import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 internal class TrackViewHolder(
     private val binding: ItemTypeOfMusicBinding,
 ) : ViewHolderBinding<SimpleTrackEntity, TrackAdapter>(binding.root) {
+    companion object Constant {
+        private const val EMPTY_THUMB_URI =
+            "https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png"
+    }
+
     override fun initView(entity: SimpleTrackEntity, adapter: TrackAdapter) {
         binding.apply {
             mtvNumber.text = "#${absoluteAdapterPosition + 1}"
@@ -42,6 +47,10 @@ internal class TrackViewHolder(
             mtvAlbumName.text = entity.name
             mtvArtistName.text = entity.artist
             setFavoriteIcon(entity.isFavorite)
+            // Request the track thumb.
+            if (entity.thumbUri == EMPTY_THUMB_URI) {
+                adapter.requestPictureCallback?.invoke(entity)
+            }
             btnOption.setOnClickListener { adapter.optionListener?.invoke(it, entity) }
             btnFavorite.setOnClickListener {
                 entity.isFavorite = !entity.isFavorite
