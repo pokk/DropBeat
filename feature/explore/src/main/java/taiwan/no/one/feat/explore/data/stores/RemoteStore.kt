@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.data.stores
 
 import android.content.Context
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
@@ -79,6 +80,9 @@ internal class RemoteStore(
 
     override suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity) =
         lastFmExtraService.retrieveTrackCover(trackUrl, trackEntity)
+
+    override suspend fun getTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) =
+        lastFmExtraService.retrieveTrackCover(trackUrl, simpleTrackEntity)
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
         lastFmService.retrieveChartTopTrack(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_TRACKS, page, limit))

@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
 
 import org.jsoup.Jsoup
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
 import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity.ImageEntity
@@ -66,9 +67,7 @@ internal class LastFmExtraImpl : LastFmExtraService {
     }
 
     override suspend fun retrieveTrackCover(url: String, trackEntity: TrackEntity): TrackEntity {
-        val doc = Jsoup.connect(url).get()
-
-        val photoUrl = doc.select("div.header-new-background-image").attr("content")
+        val photoUrl = retrieveCoverThumbnail(url)
 
         val images = trackEntity.images.orEmpty().toMutableList().apply {
             add(ImageEntity(photoUrl, "cover"))
@@ -76,4 +75,12 @@ internal class LastFmExtraImpl : LastFmExtraService {
         trackEntity.images = images
         return trackEntity
     }
+
+    override suspend fun retrieveTrackCover(url: String, simpleTrackEntity: SimpleTrackEntity): SimpleTrackEntity {
+        val photoUrl = retrieveCoverThumbnail(url)
+        return simpleTrackEntity.copy(thumbUri = photoUrl)
+    }
+
+    private fun retrieveCoverThumbnail(url: String) =
+        Jsoup.connect(url).get().select("div.header-new-background-image").attr("content")
 }

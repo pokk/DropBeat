@@ -28,6 +28,7 @@ import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.core.data.store.tryWrapper
 import taiwan.no.one.core.exceptions.NotFoundException
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
@@ -71,6 +72,8 @@ internal class LocalStore(
     override suspend fun getSimilarTrackInfo(mbid: String) = UnsupportedOperation()
 
     override suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity) = UnsupportedOperation()
+
+    override suspend fun getTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) = UnsupportedOperation()
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
         mmkvCache.get(convertToKey(page, limit, TYPE_CHART_TOP_TRACK),

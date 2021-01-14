@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity.ArtistPhotoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
@@ -39,4 +40,6 @@ internal interface LastFmExtraRepo : Repository {
     suspend fun fetchArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
 
     suspend fun fetchTrackCover(trackUrl: String, trackEntity: TrackEntity): TrackEntity
+
+    suspend fun fetchTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity): SimpleTrackEntity
 }

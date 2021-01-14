@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.explore.data.contracts
 
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
@@ -72,6 +73,8 @@ internal interface DataStore {
     suspend fun getSimilarTrackInfo(mbid: String): TrackSimilarEntity
 
     suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity): TrackEntity
+
+    suspend fun getTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity): SimpleTrackEntity
     //endregion
 
     //region Chart

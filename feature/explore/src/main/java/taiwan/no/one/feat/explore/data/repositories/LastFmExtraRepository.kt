@@ -28,6 +28,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
@@ -67,4 +68,7 @@ internal class LastFmExtraRepository(
 
     override suspend fun fetchTrackCover(trackUrl: String, trackEntity: TrackEntity) =
         remote.getTrackCover(trackUrl, trackEntity)
+
+    override suspend fun fetchTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) =
+        remote.getTrackCover(trackUrl, simpleTrackEntity)
 }
