@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
@@ -68,3 +69,5 @@ internal typealias FetchTagTopTrackCase = OneShotUsecase<TopTrackInfoEntity.Trac
 internal typealias FetchTagTopTrackReq = FetchTagTopTrackOneShotCase.Request
 internal typealias FetchTrackCase = OneShotUsecase<TrackInfoEntity.TrackEntity, FetchTrackReq>
 internal typealias FetchTrackReq = FetchTrackOneShotCase.Request
+internal typealias FetchTrackCoverCase = OneShotUsecase<SimpleTrackEntity, FetchTrackCoverReq>
+internal typealias FetchTrackCoverReq = FetchTrackCoverOneShotCase.Request

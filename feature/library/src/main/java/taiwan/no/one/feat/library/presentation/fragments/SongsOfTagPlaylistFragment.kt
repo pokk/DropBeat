@@ -109,6 +109,7 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
             }
             setRequestPicCallback {
                 // TODO(jieyi): 1/13/21 Send the pic request to the backend server thru a viewmodel.
+                vm.getCoverThumb(it)
             }
         }
         binding.btnBack.setOnClickListener {

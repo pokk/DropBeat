@@ -28,16 +28,23 @@ import com.google.auto.service.AutoService
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackReq
+import taiwan.no.one.feat.explore.domain.usecases.FetchTrackCoverCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTrackCoverReq
 
 @AutoService(ExploreMethodsProvider::class)
 class MethodsProvider : ExploreMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val fetchTagTopTrackCase by instance<FetchTagTopTrackCase>()
+    private val fetchTrackCoverCase by instance<FetchTrackCoverCase>()
 
     override suspend fun getTopTracksOfTag(tagName: String) =
         fetchTagTopTrackCase.execute(FetchTagTopTrackReq(tagName)).tracks.map(EntityMapper::exploreToSimpleTrackEntity)
+
+    override suspend fun getTrackCover(simpleTrackEntity: SimpleTrackEntity) =
+        fetchTrackCoverCase.execute(FetchTrackCoverReq(simpleTrackEntity))
 }

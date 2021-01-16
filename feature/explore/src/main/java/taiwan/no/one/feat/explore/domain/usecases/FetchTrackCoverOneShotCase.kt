@@ -22,15 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.provider
+package taiwan.no.one.feat.explore.domain.usecases
 
-import androidx.annotation.WorkerThread
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
 
-interface ExploreMethodsProvider {
-    @WorkerThread
-    suspend fun getTopTracksOfTag(tagName: String): List<SimpleTrackEntity>
+internal class FetchTrackCoverOneShotCase(
+    private val repository: LastFmExtraRepo,
+) : FetchTrackCoverCase() {
+    override suspend fun acquireCase(parameter: FetchTrackCoverReq?) = parameter.ensure {
+        repository.fetchTrackCover(track.uri, track)
+    }
 
-    @WorkerThread
-    suspend fun getTrackCover(simpleTrackEntity: SimpleTrackEntity): SimpleTrackEntity
+    internal data class Request(val track: SimpleTrackEntity) : RequestValues
 }

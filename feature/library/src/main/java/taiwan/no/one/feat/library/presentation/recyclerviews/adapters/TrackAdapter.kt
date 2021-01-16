@@ -40,7 +40,7 @@ import kotlin.properties.Delegates
 
 internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdatable {
     var data: List<SimpleTrackEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { o, n -> o.uri == n.uri }
+        autoNotify(oldValue, newValue) { o, n -> o.uri == n.uri && o.thumbUri == n.thumbUri }
     }
     var clickListener: ((SimpleTrackEntity) -> Unit)? = null
         private set

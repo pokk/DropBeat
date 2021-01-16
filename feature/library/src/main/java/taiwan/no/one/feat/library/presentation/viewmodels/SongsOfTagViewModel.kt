@@ -25,9 +25,9 @@
 package taiwan.no.one.feat.library.presentation.viewmodels
 
 import android.app.Application
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.work.Data
@@ -35,22 +35,25 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo.State
 import androidx.work.WorkManager
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.factory
 import org.kodein.di.instance
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant
+import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 
 class SongsOfTagViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
+    private val exploreProvider by instance<ExploreMethodsProvider>()
     private val workManager by instance<WorkManager>()
     private val oneTimeWorker: (Data) -> OneTimeWorkRequest by factory(Constant.TAG_WORKER_GET_SONGS_OF_TAG)
     private val gson by instance<Gson>()
+    private val _songs by lazy { ResultLiveData<List<SimpleTrackEntity>>() }
     var songs: LiveData<Result<List<SimpleTrackEntity>>>? = null
         private set
 
@@ -59,23 +62,31 @@ class SongsOfTagViewModel(
         val worker = oneTimeWorker(request)
         workManager.apply {
             songs = getWorkInfoByIdLiveData(worker.id).switchMap { workInfo ->
-                liveData(Dispatchers.Default) {
-                    when (workInfo.state) {
-                        State.SUCCEEDED -> {
-                            val json = workInfo.outputData.getString(WorkerConstant.PARAM_KEY_RESULT_OF_SONGS)
-                            val result = gson.fromJson(json, Array<SimpleTrackEntity>::class.java).toList()
-                            emit(Result.success(result))
-                        }
-                        State.FAILED -> {
-                            val errorMsg = workInfo.outputData.getString(WorkerConstant.KEY_EXCEPTION)
-                            emit(Result.failure<List<SimpleTrackEntity>>(Exception(errorMsg)))
-                        }
-                        else -> Unit
+                when (workInfo.state) {
+                    State.SUCCEEDED -> {
+                        val json = workInfo.outputData.getString(WorkerConstant.PARAM_KEY_RESULT_OF_SONGS)
+                        val result = gson.fromJson(json, Array<SimpleTrackEntity>::class.java).toList()
+                        _songs.value = Result.success(result)
                     }
+                    State.FAILED -> {
+                        val errorMsg = workInfo.outputData.getString(WorkerConstant.KEY_EXCEPTION)
+                        _songs.value = Result.failure(Exception(errorMsg))
+                    }
+                    else -> Unit
                 }
+                _songs
             }
             enqueue(worker)
         }
+    }
+
+    @WorkerThread
+    fun getCoverThumb(entity: SimpleTrackEntity) = launchBehind {
+        val newEntity = exploreProvider.getTrackCover(entity)
+        val updatedList = _songs.value?.getOrNull()?.map {
+            if (it.uri == entity.uri) newEntity else it
+        } ?: return@launchBehind
+        _songs.postValue(Result.success(updatedList))
     }
 
     override fun onCleared() {

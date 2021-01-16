@@ -60,6 +60,8 @@ import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopArtistOneShotCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackOneShotCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchTrackCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTrackCoverCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchTrackCoverOneShotCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchTrackOneShotCase
 
 internal object DomainModules : ModuleProvider {
@@ -79,5 +81,6 @@ internal object DomainModules : ModuleProvider {
         bind<FetchTagTopArtistCase>() with singleton { FetchTagTopArtistOneShotCase(instance()) }
         bind<FetchTagTopTrackCase>() with singleton { FetchTagTopTrackOneShotCase(instance()) }
         bind<FetchTrackCase>() with singleton { FetchTrackOneShotCase(instance()) }
+        bind<FetchTrackCoverCase>() with singleton { FetchTrackCoverOneShotCase(instance()) }
     }
 }
