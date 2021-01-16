@@ -62,8 +62,14 @@ internal class ResultViewModel(
         if (curKeyword.isBlank()) return@launch
         _musics.value = runCatching {
             val newResult = fetchMusicCase.execute(FetchMusicReq(curKeyword, curPage))
-            // Add the new result top on the old list.
-            _musics.value?.getOrNull()?.toMutableList()?.apply { addAll(newResult) } ?: newResult
+            // Research a new keyword, it shouldn't append onto the old list.
+            if (page == 0) {
+                newResult
+            }
+            else {
+                // Add the new result top on the old list.
+                _musics.value?.getOrNull()?.toMutableList()?.apply { addAll(newResult) } ?: newResult
+            }
         }
     }
 
