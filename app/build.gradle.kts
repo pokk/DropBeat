@@ -69,7 +69,7 @@ dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_CORE),
            project(CommonModuleDependency.LIB_MEDIA_PLAYER),
-           project(CommonModuleDependency.LIB_ANALYTICS)).forEach(::api)
+           project(CommonModuleDependency.LIB_ANALYTICS)).forEach { api(it) }
     testImplementation(project(CommonModuleDependency.LIB_TEST))
     appDependencies()
     annotationDependencies()

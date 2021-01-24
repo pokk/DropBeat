@@ -35,7 +35,7 @@ android {
 
 dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    listOf(project(CommonModuleDependency.LIB_KTX), project(CommonModuleDependency.LIB_DEVICE)).forEach(::api)
+    listOf(project(CommonModuleDependency.LIB_KTX), project(CommonModuleDependency.LIB_DEVICE)).forEach { api(it) }
     testImplementation(project(CommonModuleDependency.LIB_TEST))
     coreDependencies()
     annotationDependencies()
