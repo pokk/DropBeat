@@ -30,32 +30,23 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotNull
 import assertk.assertions.prop
-import io.mockk.MockKAnnotations
+import io.mockk.clearAllMocks
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.unmockkAll
+import io.mockk.mockk
 import junit.framework.TestCase
 import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.Interceptor
 import okhttp3.Response
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 class MockRequestInterceptorTest : TestCase() {
-    @MockK
-    private lateinit var chain: Interceptor.Chain
-
-    @MockK
-    private lateinit var context: Context
-
-    private lateinit var interceptor: MockRequestInterceptor
+    private val chain = mockk<Interceptor.Chain>(relaxed = true)
+    private val context = mockk<Context>()
+    private val interceptor = MockRequestInterceptor(context)
 
     @Before
-    public override fun setUp() {
-        MockKAnnotations.init(this, relaxed = true)
-        interceptor = MockRequestInterceptor(context)
-    }
+    public override fun setUp() = clearAllMocks()
 
     @Test
     fun `test has mock header with false value`() = runBlockingTest {
@@ -91,10 +82,5 @@ class MockRequestInterceptorTest : TestCase() {
         assertThat(response).isNotNull().all {
             prop(Response::code).isEqualTo(200)
         }
-    }
-
-    @After
-    public override fun tearDown() {
-        unmockkAll()
     }
 }

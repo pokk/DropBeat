@@ -25,9 +25,8 @@
 package taiwan.no.one.ktx.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
-import io.mockk.MockKAnnotations
+import io.mockk.clearAllMocks
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase
 import org.junit.Before
@@ -39,16 +38,11 @@ class ExtensionsKtTest : TestCase() {
     @Rule
     val rule = CoroutineTestRule()
 
-    @MockK
-    private lateinit var recyclerView: RecyclerView
-
-    @MockK
-    private lateinit var decorator: RecyclerView.ItemDecoration
+    private val recyclerView = mockk<RecyclerView>()
+    private val decorator = mockk<RecyclerView.ItemDecoration>()
 
     @Before
-    public override fun setUp() {
-        MockKAnnotations.init(this)
-    }
+    public override fun setUp() = clearAllMocks()
 
     @Test
     fun `test success of containing`() {
