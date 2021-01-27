@@ -26,8 +26,8 @@ package taiwan.no.one.feat.setting.data.local.services.datastore.v1
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.preferencesKey
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import taiwan.no.one.feat.setting.data.local.services.SettingPreference
@@ -35,11 +35,11 @@ import taiwan.no.one.feat.setting.data.local.services.SettingPreference
 internal class SettingDatastore(
     private val dataStore: DataStore<Preferences>,
 ) : SettingPreference {
-    private val keySleepingTimer = preferencesKey<Boolean>("sleeping timer")
-    private val keyLockScreenPlayer = preferencesKey<Boolean>("lock screen player")
-    private val keyPlayOfflineOnly = preferencesKey<Boolean>("play offline only")
-    private val keyNotificationPlayer = preferencesKey<Boolean>("notification player")
-    private val keyAutoDisplayMv = preferencesKey<Boolean>("auto display mv")
+    private val keySleepingTimer = booleanPreferencesKey("sleeping timer")
+    private val keyLockScreenPlayer = booleanPreferencesKey("lock screen player")
+    private val keyPlayOfflineOnly = booleanPreferencesKey("play offline only")
+    private val keyNotificationPlayer = booleanPreferencesKey("notification player")
+    private val keyAutoDisplayMv = booleanPreferencesKey("auto display mv")
 
     override suspend fun getSleepingTimer() = getBooleanValue(keySleepingTimer)
 
