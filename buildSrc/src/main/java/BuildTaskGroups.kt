@@ -22,25 +22,7 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import config.LibraryDependency
-import config.ktxDependencies
-import config.unitTestDependencies
-
-plugins {
-    jacoco
-    id("plugins.jacocoReport")
-}
-
-jacoco {
-    toolVersion = "0.8.6"
-}
-
-dependencies {
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    listOf(project(CommonModuleDependency.LIB_WIDGET), project(CommonModuleDependency.LIB_PURE_EXT)).forEach { api(it) }
-    testImplementation(project(CommonModuleDependency.LIB_TEST))
-    ktxDependencies()
-    implementation(LibraryDependency.Jieyi.KNIFER)
-    unitTestDependencies()
+object BuildTaskGroups {
+    const val VERIFICATION = "verification"
+    const val FORMATTING = "formatting"
 }
