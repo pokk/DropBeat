@@ -22,26 +22,17 @@
  * SOFTWARE.
  */
 
-plugins {
-    `kotlin-dsl`
-    kotlin("jvm") version "1.4.21"
-}
+package utils
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
+import org.gradle.api.artifacts.dsl.RepositoryHandler
+import org.gradle.kotlin.dsl.maven
 
-// gradle versions above 4.10.
-repositories {
-    // The org.jetbrains.kotlin.jvm plugin requires a repository
-    // where to download the Kotlin compiler dependencies from.
+fun RepositoryHandler.addDefaults() {
     google()
     jcenter()
     mavenCentral()
-    maven("https://plugins.gradle.org/m2/")
-}
-
-dependencies {
-    implementation("com.android.tools.build:gradle:4.1.2")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21")
+    // required to find the project's artifacts
+    maven("https://dl.bintray.com/pokk/maven")
+    maven("https://dl.bintray.com/kotlin/kotlin-eap")
+    maven("https://dl.bintray.com/kodein-framework/Kodein-DI")
 }

@@ -22,26 +22,23 @@
  * SOFTWARE.
  */
 
-plugins {
-    `kotlin-dsl`
-    kotlin("jvm") version "1.4.21"
-}
+package plugins
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
-
-// gradle versions above 4.10.
-repositories {
-    // The org.jetbrains.kotlin.jvm plugin requires a repository
-    // where to download the Kotlin compiler dependencies from.
-    google()
-    jcenter()
-    mavenCentral()
-    maven("https://plugins.gradle.org/m2/")
-}
-
-dependencies {
-    implementation("com.android.tools.build:gradle:4.1.2")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21")
+subprojects {
+    tasks.whenObjectAdded {
+        if (
+            name.contains("lint") ||
+            name == "clean" ||
+            name.contains("jacoco") ||
+            name.contains("lintVitalRelease") ||
+            name.contains("Aidl") ||
+            name.contains("mockableAndroidJar") ||
+            name.contains("UnitTest") ||
+            name.contains("AndroidTest") ||
+            name.contains("Ndk") ||
+            name.contains("Jni")
+        ) {
+            enabled = false
+        }
+    }
 }

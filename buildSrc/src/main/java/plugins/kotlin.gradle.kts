@@ -22,26 +22,23 @@
  * SOFTWARE.
  */
 
-plugins {
-    `kotlin-dsl`
-    kotlin("jvm") version "1.4.21"
-}
+package plugins
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// gradle versions above 4.10.
-repositories {
-    // The org.jetbrains.kotlin.jvm plugin requires a repository
-    // where to download the Kotlin compiler dependencies from.
-    google()
-    jcenter()
-    mavenCentral()
-    maven("https://plugins.gradle.org/m2/")
-}
-
-dependencies {
-    implementation("com.android.tools.build:gradle:4.1.2")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21")
+subprojects {
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            suppressWarnings = false
+            freeCompilerArgs = listOf(
+                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xopt-in=kotlin.ExperimentalStdlibApi",
+                "-Xopt-in=kotlin.ExperimentalContracts",
+                "-Xopt-in=org.mylibrary.ExperimentalMarker",
+                "-Xallow-result-return-type",
+                "-Xjvm-default=all"
+            )
+        }
+    }
 }
