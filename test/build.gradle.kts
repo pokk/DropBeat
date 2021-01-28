@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import config.testDependencies
+import utils.testDependencies
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))

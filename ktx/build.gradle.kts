@@ -24,8 +24,8 @@
 
 import config.CommonModuleDependency
 import config.LibraryDependency
-import config.ktxDependencies
-import config.unitTestDependencies
+import utils.ktxDependencies
+import utils.unitTestDependencies
 
 // plugins {
 //    jacoco

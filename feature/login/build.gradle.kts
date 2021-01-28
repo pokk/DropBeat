@@ -23,8 +23,8 @@
  */
 
 import config.CommonModuleDependency
-import config.annotationDependencies
-import config.firebaseAuthDependencies
+import utils.annotationDependencies
+import utils.firebaseAuthDependencies
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))

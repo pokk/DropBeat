@@ -23,8 +23,8 @@
  */
 
 import config.CommonModuleDependency
-import config.annotationDependencies
-import config.settingDependencies
+import utils.annotationDependencies
+import utils.settingDependencies
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))

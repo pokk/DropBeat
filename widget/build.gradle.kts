@@ -23,7 +23,7 @@
  */
 
 import config.CommonModuleDependency
-import config.widgetDependencies
+import utils.widgetDependencies
 
 android {
     buildFeatures.viewBinding = true

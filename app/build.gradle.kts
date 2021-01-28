@@ -24,10 +24,10 @@
 
 import config.AndroidConfiguration
 import config.CommonModuleDependency
-import config.androidTestDependencies
-import config.annotationDependencies
-import config.appDependencies
-import config.unitTestDependencies
+import utils.androidTestDependencies
+import utils.annotationDependencies
+import utils.appDependencies
+import utils.unitTestDependencies
 
 plugins {
     id("com.android.application")

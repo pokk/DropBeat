@@ -23,11 +23,11 @@
  */
 
 import config.CommonModuleDependency
-import config.androidTestDependencies
-import config.annotationDependencies
-import config.coreDependencies
-import config.debugDependencies
-import config.unitTestDependencies
+import utils.androidTestDependencies
+import utils.annotationDependencies
+import utils.coreDependencies
+import utils.debugDependencies
+import utils.unitTestDependencies
 
 android {
     buildFeatures.viewBinding = true
@@ -39,7 +39,7 @@ dependencies {
     testImplementation(project(CommonModuleDependency.LIB_TEST))
     coreDependencies()
     annotationDependencies()
-    debugDependencies(config.DepEnvDebugApi)
+    debugDependencies(utils.DepEnvDebugApi)
     unitTestDependencies()
     androidTestDependencies()
 }

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import config.analyticsDependencies
+import utils.analyticsDependencies
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))

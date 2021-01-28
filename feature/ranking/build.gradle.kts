@@ -24,7 +24,7 @@
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import config.CommonModuleDependency
-import config.annotationDependencies
+import utils.annotationDependencies
 
 android {
     buildTypes {

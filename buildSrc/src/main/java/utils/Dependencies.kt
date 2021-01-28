@@ -22,8 +22,21 @@
  * SOFTWARE.
  */
 
-package config
+package utils
 
+import config.CoreDependency
+import config.DebugDependency
+import config.LibraryDependency.AndroidKtx
+import config.LibraryDependency.Database
+import config.LibraryDependency.Di
+import config.LibraryDependency.Firebase
+import config.LibraryDependency.Internet
+import config.LibraryDependency.JetPack
+import config.LibraryDependency.Jieyi
+import config.LibraryDependency.Media
+import config.LibraryDependency.Tool
+import config.LibraryDependency.Ui
+import config.TestLibraryDependency
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 const val DepEnvImpl = "implementation"
@@ -41,9 +54,9 @@ const val DepAnnotationProcessor = "annotationProcessor"
  **********************************************************/
 
 fun DependencyHandlerScope.annotationDependencies() {
-    DepEnvKapt(LibraryDependency.Database.ROOM_ANNOTATION)
-    DepEnvKapt(LibraryDependency.JetPack.LIFECYCLE_COMPILER)
-    DepEnvKapt(LibraryDependency.Tool.AUTO_SERVICE)
+    DepEnvKapt(Database.ROOM_ANNOTATION)
+    DepEnvKapt(JetPack.LIFECYCLE_COMPILER)
+    DepEnvKapt(Tool.AUTO_SERVICE)
 }
 
 fun DependencyHandlerScope.coreDependencies() {
@@ -54,7 +67,7 @@ fun DependencyHandlerScope.coreDependencies() {
     internetDependencies(DepEnvApi)
     localDependencies(DepEnvApi)
     // Others
-    DepEnvApi(LibraryDependency.Tool.GSON)
+    DepEnvApi(Tool.GSON)
 }
 
 fun DependencyHandlerScope.appDependencies() {
@@ -62,10 +75,10 @@ fun DependencyHandlerScope.appDependencies() {
     uiDependencies(DepEnvApi)
     firebaseDependencies(DepEnvApi)
     // Others
-    DepEnvApi(LibraryDependency.Firebase.PLAY_CORE)
-    DepEnvApi(LibraryDependency.Jieyi.KNIFER)
-    DepEnvApi(LibraryDependency.Database.MMKV)
-    DepEnvApi(LibraryDependency.Internet.COIL)
+    DepEnvApi(Firebase.PLAY_CORE)
+    DepEnvApi(Jieyi.KNIFER)
+    DepEnvApi(Database.MMKV)
+    DepEnvApi(Internet.COIL)
 }
 
 fun DependencyHandlerScope.ktxDependencies() {
@@ -76,38 +89,38 @@ fun DependencyHandlerScope.widgetDependencies() {
     kotlinAndroidDependencies(DepEnvImpl)
     commonAndroidxDependencies(DepEnvImpl)
     // Auto Service
-    DepEnvApi(LibraryDependency.Tool.AUTO_SERVICE)
+    DepEnvApi(Tool.AUTO_SERVICE)
     // Others
-    DepEnvImpl(LibraryDependency.JetPack.RECYCLERVIEW)
-    DepEnvImpl(LibraryDependency.JetPack.PAGING)
-    DepEnvImpl(LibraryDependency.JetPack.MATERIAL_DESIGN)
-    DepEnvImpl(LibraryDependency.JetPack.CARDVIEW)
-    DepEnvImpl(LibraryDependency.JetPack.CONSTRAINT_LAYOUT)
-    DepEnvImpl(LibraryDependency.Ui.LOTTIE)
+    DepEnvImpl(JetPack.RECYCLERVIEW)
+    DepEnvImpl(JetPack.PAGING)
+    DepEnvImpl(JetPack.MATERIAL_DESIGN)
+    DepEnvImpl(JetPack.CARDVIEW)
+    DepEnvImpl(JetPack.CONSTRAINT_LAYOUT)
+    DepEnvImpl(Ui.LOTTIE)
 //    DepEnvImpl(Deps.Presentation.arv)
 //    DepEnvImpl(Deps.Widget.quickDialog)
 }
 
 fun DependencyHandlerScope.settingDependencies() {
     // Others
-    DepEnvImpl(LibraryDependency.JetPack.DATASTORE)
+    DepEnvImpl(JetPack.DATASTORE)
 }
 
 fun DependencyHandlerScope.mediaDependencies() {
     kotlinAndroidDependencies(DepEnvImpl)
     commonAndroidxDependencies(DepEnvImpl)
-    DepEnvImpl(LibraryDependency.Media.EXOPLAYER_CORE)
+    DepEnvImpl(Media.EXOPLAYER_CORE)
 }
 
 fun DependencyHandlerScope.firebaseAuthDependencies() {
-    DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_GOOGLE)
-    DepEnvImpl(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
+    DepEnvImpl(Firebase.FIREBASE_AUTH_GOOGLE)
+    DepEnvImpl(Firebase.FIREBASE_AUTH_FACEBOOK)
 }
 
 fun DependencyHandlerScope.analyticsDependencies() {
     kotlinDependencies(DepEnvImpl)
-    DepEnvApi(platform(LibraryDependency.Firebase.FIREBASE_BOM))
-    DepEnvApi(LibraryDependency.Firebase.FIREBASE_ANALYTICS)
+    DepEnvApi(platform(Firebase.FIREBASE_BOM))
+    DepEnvApi(Firebase.FIREBASE_ANALYTICS)
 }
 
 fun DependencyHandlerScope.testDependencies() {
@@ -116,7 +129,7 @@ fun DependencyHandlerScope.testDependencies() {
     DepEnvImpl(TestLibraryDependency.COROUTINE)
     DepEnvImpl(TestLibraryDependency.ESPRESSO_CORE)
 
-    DepEnvImpl(LibraryDependency.JetPack.MATERIAL_DESIGN)
+    DepEnvImpl(JetPack.MATERIAL_DESIGN)
 }
 
 /************************************
@@ -136,33 +149,33 @@ fun DependencyHandlerScope.kotlinAndroidDependencies(env: String) {
 }
 
 fun DependencyHandlerScope.androidJetpackDependencies(env: String) {
-    env(LibraryDependency.JetPack.APPCOMPAT)
-    env(LibraryDependency.JetPack.LIFECYCLE_SAVEDSTATE)
-    env(LibraryDependency.JetPack.LIFECYCLE_SERVICE)
-    env(LibraryDependency.JetPack.LIFECYCLE_PROCESS)
-    env(LibraryDependency.JetPack.NAVIGATION_DYNAMIC_FEATURE)
-    env(LibraryDependency.JetPack.RECYCLERVIEW)
-    env(LibraryDependency.JetPack.PAGING)
+    env(JetPack.APPCOMPAT)
+    env(JetPack.LIFECYCLE_SAVEDSTATE)
+    env(JetPack.LIFECYCLE_SERVICE)
+    env(JetPack.LIFECYCLE_PROCESS)
+    env(JetPack.NAVIGATION_DYNAMIC_FEATURE)
+    env(JetPack.RECYCLERVIEW)
+    env(JetPack.PAGING)
 }
 
 fun DependencyHandlerScope.commonKtxDependencies(env: String) {
-    env(LibraryDependency.AndroidKtx.KTX)
-    env(LibraryDependency.AndroidKtx.ACTIVITY_KTX)
-    env(LibraryDependency.AndroidKtx.FRAGMENT_KTX)
-    env(LibraryDependency.AndroidKtx.VIEWMODEL_KTX)
-    env(LibraryDependency.AndroidKtx.LIVEDATA_KTX)
-    env(LibraryDependency.AndroidKtx.RUNTIME_KTX)
+    env(AndroidKtx.KTX)
+    env(AndroidKtx.ACTIVITY_KTX)
+    env(AndroidKtx.FRAGMENT_KTX)
+    env(AndroidKtx.VIEWMODEL_KTX)
+    env(AndroidKtx.LIVEDATA_KTX)
+    env(AndroidKtx.RUNTIME_KTX)
 }
 
 fun DependencyHandlerScope.androidxKtxDependencies(env: String) {
     commonKtxDependencies(env)
-    env(LibraryDependency.AndroidKtx.PALETTE_KTX)
-    env(LibraryDependency.AndroidKtx.COLLECTION_KTX)
-    env(LibraryDependency.AndroidKtx.NAVIGATION_COMMON_KTX)
-    env(LibraryDependency.AndroidKtx.NAVIGATION_FRAGMENT_KTX)
-    env(LibraryDependency.AndroidKtx.NAVIGATION_UI_KTX)
-    env(LibraryDependency.AndroidKtx.WORKER_KTX)
-    env(LibraryDependency.JetPack.APP_STARTUP)
+    env(AndroidKtx.PALETTE_KTX)
+    env(AndroidKtx.COLLECTION_KTX)
+    env(AndroidKtx.NAVIGATION_COMMON_KTX)
+    env(AndroidKtx.NAVIGATION_FRAGMENT_KTX)
+    env(AndroidKtx.NAVIGATION_UI_KTX)
+    env(AndroidKtx.WORKER_KTX)
+    env(JetPack.APP_STARTUP)
 }
 
 fun DependencyHandlerScope.commonAndroidxDependencies(env: String) {
@@ -171,48 +184,48 @@ fun DependencyHandlerScope.commonAndroidxDependencies(env: String) {
 }
 
 fun DependencyHandlerScope.androidxUiDependencies(env: String) {
-    env(LibraryDependency.JetPack.MATERIAL_DESIGN)
-    env(LibraryDependency.JetPack.RECYCLERVIEW)
-    env(LibraryDependency.JetPack.PAGING)
-    env(LibraryDependency.JetPack.CARDVIEW)
-    env(LibraryDependency.JetPack.COORDINATOR_LAYOUT)
-    env(LibraryDependency.JetPack.CONSTRAINT_LAYOUT)
-    env(LibraryDependency.JetPack.ANNOT)
+    env(JetPack.MATERIAL_DESIGN)
+    env(JetPack.RECYCLERVIEW)
+    env(JetPack.PAGING)
+    env(JetPack.CARDVIEW)
+    env(JetPack.COORDINATOR_LAYOUT)
+    env(JetPack.CONSTRAINT_LAYOUT)
+    env(JetPack.ANNOT)
 }
 
 fun DependencyHandlerScope.diDependencies(env: String) {
-    env(LibraryDependency.Di.KODEIN_ANDROID_X)
+    env(Di.KODEIN_ANDROID_X)
 }
 
 fun DependencyHandlerScope.internetDependencies(env: String) {
-    env(LibraryDependency.Internet.OKHTTP)
-    env(LibraryDependency.Internet.OKHTTP_INTERCEPTOR)
-    env(LibraryDependency.Internet.RETROFIT2)
-    env(LibraryDependency.Internet.RETROFIT2_CONVERTER_GSON)
+    env(Internet.OKHTTP)
+    env(Internet.OKHTTP_INTERCEPTOR)
+    env(Internet.RETROFIT2)
+    env(Internet.RETROFIT2_CONVERTER_GSON)
 }
 
 fun DependencyHandlerScope.firebaseDependencies(env: String) {
-    env(platform(LibraryDependency.Firebase.FIREBASE_BOM))
-    env(LibraryDependency.Firebase.FIREBASE_CRASHLYTICS)
-    env(LibraryDependency.Firebase.FIREBASE_PERFORMANCE)
-    env(LibraryDependency.Firebase.FIREBASE_CONFIG)
-    env(LibraryDependency.Firebase.FIREBASE_MESSAGING)
-    env(LibraryDependency.Firebase.FIREBASE_DB)
-    env(LibraryDependency.Firebase.FIREBASE_FIRESTORE)
+    env(platform(Firebase.FIREBASE_BOM))
+    env(Firebase.FIREBASE_CRASHLYTICS)
+    env(Firebase.FIREBASE_PERFORMANCE)
+    env(Firebase.FIREBASE_CONFIG)
+    env(Firebase.FIREBASE_MESSAGING)
+    env(Firebase.FIREBASE_DB)
+    env(Firebase.FIREBASE_FIRESTORE)
     env("com.google.guava:guava:27.0.1-android") // For fixing firestore dependency error
-    env(LibraryDependency.Firebase.FIREBASE_AUTH)
-    env(LibraryDependency.Firebase.FIREBASE_AUTH_FACEBOOK)
+    env(Firebase.FIREBASE_AUTH)
+    env(Firebase.FIREBASE_AUTH_FACEBOOK)
 }
 
 fun DependencyHandlerScope.localDependencies(env: String) {
-    env(LibraryDependency.Database.ROOM)
-    env(LibraryDependency.Database.ROOM_KTX)
+    env(Database.ROOM)
+    env(Database.ROOM_KTX)
 }
 
 fun DependencyHandlerScope.uiDependencies(env: String) {
-    env(LibraryDependency.Ui.LOTTIE)
-    env(LibraryDependency.Ui.SHAPE_OF_VIEW)
-    env(LibraryDependency.Jieyi.ARV)
+    env(Ui.LOTTIE)
+    env(Ui.SHAPE_OF_VIEW)
+    env(Jieyi.ARV)
 }
 
 fun DependencyHandlerScope.debugDependencies(env: String) {
