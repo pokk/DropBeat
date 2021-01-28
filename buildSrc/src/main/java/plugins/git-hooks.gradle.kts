@@ -22,9 +22,45 @@
  * SOFTWARE.
  */
 
-import utils.kotlinDependencies
+package plugins
 
-dependencies {
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    kotlinDependencies(utils.DepEnvImpl)
+import utils.isLinuxOrMacOs
+
+val GROUP = "git hooks"
+
+tasks {
+    register<Copy>("copyGitHooks") {
+        description = "Copies the git hooks from script/git-hooks to the .git folder."
+        group = GROUP
+        from("$rootDir/script/git-hooks/") {
+            include("**/*.sh")
+            rename("(.*).sh", "$1")
+        }
+        into("$rootDir/.git/hooks")
+    }
+
+    register<Exec>("installGitHooks") {
+        description = "Installs the pre-commit git hooks from script/git-hooks."
+        group = GROUP
+        workingDir(rootDir)
+        commandLine("chmod")
+        args("-R", "+x", ".git/hooks/")
+        dependsOn(named("copyGitHooks"))
+        onlyIf {
+            isLinuxOrMacOs()
+        }
+        doLast {
+            logger.info("Git hooks installed successfully.")
+        }
+    }
+
+    register<Delete>("deleteGitHooks") {
+        description = "Delete the pre-commit git hooks."
+        group = GROUP
+        delete(fileTree(".git/hooks/"))
+    }
+
+    afterEvaluate {
+        tasks["clean"].dependsOn(tasks.named("installGitHooks"))
+    }
 }

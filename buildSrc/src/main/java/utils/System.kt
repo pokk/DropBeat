@@ -22,9 +22,13 @@
  * SOFTWARE.
  */
 
-import utils.kotlinDependencies
+package utils
 
-dependencies {
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    kotlinDependencies(utils.DepEnvImpl)
-}
+import org.gradle.internal.os.OperatingSystem
+
+/**
+ * Util to check if the project run on Linux or Mac operating system
+ *
+ * @return true if the operating system is one of them
+ */
+fun isLinuxOrMacOs() = OperatingSystem.current().run { isLinux || isUnix || isMacOsX }

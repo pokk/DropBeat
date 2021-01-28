@@ -23,10 +23,10 @@
  */
 
 import config.CommonModuleDependency
-import config.kotlinDependencies
+import utils.kotlinDependencies
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(CommonModuleDependency.LIB_PURE_EXT))
-    kotlinDependencies(config.DepEnvImpl)
+    kotlinDependencies(utils.DepEnvImpl)
 }
