@@ -22,21 +22,8 @@
  * SOFTWARE.
  */
 
-package config
+package plugins
 
-import config.LibraryDependency.Version.NAVIGATION_KTX
+import com.github.benmanes.gradle.versions.VersionsPlugin
 
-object GradleDependency {
-    object Version {
-        const val SAFE_ARGS = NAVIGATION_KTX
-        const val GOOGLE_SERVICE = "4.3.4"
-        const val CRASHLYTICS = "2.4.1"
-        const val PERFORMANCE = "1.3.4"
-    }
-
-    const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${CoreDependency.Version.KOTLIN}"
-    const val SAFE_ARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.SAFE_ARGS}"
-    const val GOOGLE_SERVICE = "com.google.gms:google-services:${Version.GOOGLE_SERVICE}"
-    const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics-gradle:${Version.CRASHLYTICS}"
-    const val PERFORMANCE = "com.google.firebase:perf-plugin:${Version.PERFORMANCE}"
-}
+apply<VersionsPlugin>()

@@ -22,11 +22,15 @@
  * SOFTWARE.
  */
 
-import io.gitlab.arturbosch.detekt.Detekt
 import utils.addDefaults
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins.apply("plugins.git-hooks")
+plugins.apply("plugins.header")
+plugins.apply("plugins.common")
+plugins.apply("plugins.kotlin")
+plugins.apply("plugins.detekt")
+plugins.apply("plugins.update-dependency")
 
 buildscript {
     repositories {
@@ -51,42 +55,8 @@ buildscript {
     }
 }
 
-plugins {
-    id(config.GradleDependency.DETEKT).version(config.GradleDependency.Version.DETEKT)
-    id(config.GradleDependency.GRADLE_VERSION_UPDATER).version(config.GradleDependency.Version.VERSION_UPDATER)
-}
-
-dependencies {
-    detektPlugins(config.GradleDependency.DETEKT_FORMAT)
-}
-
-//region Detekt
-val detektVersion = config.GradleDependency.Version.DETEKT
-detekt {
-    toolVersion = detektVersion
-    failFast = true
-    debug = true
-    parallel = true
-    input = files("src/main/java", "src/main/kotlin")
-    config = files("$rootDir/config/detekt/detekt.yml")
-    baseline = file("$rootDir/config/detekt/baseline.xml")
-    buildUponDefaultConfig = true
-}
-//endregion
-
 allprojects {
     repositories.addDefaults()
-}
-
-plugins.apply("plugins.header")
-plugins.apply("plugins.common")
-plugins.apply("plugins.kotlin")
-
-subprojects {
-    tasks.withType<Detekt> {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
-    }
 }
 
 tasks.register("clean", Delete::class) {

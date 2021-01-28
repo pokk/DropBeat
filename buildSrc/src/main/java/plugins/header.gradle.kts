@@ -52,7 +52,6 @@ subprojects {
             if (this@subprojects.name == "core") {
                 plugin("org.jetbrains.kotlin.kapt")
             }
-            plugin(config.GradleDependency.DETEKT)
         }
     }
 }
