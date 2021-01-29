@@ -22,30 +22,32 @@
 
 We still would like to use the clean architecture with the dynamic feature so the mixed patteren happened here.
 
-There are so many strict rules in the origin clean architecture, eg. an object on the **presentation layer** can't access a class on the **data layer**, each layer has their own data classes, the mapper classes, ...etc.
+There are so many strict rules in the origin clean architecture, eg. an object on the **presentation layer** can't
+access a class on the **data layer**, each layer has their own data classes, the mapper classes, ...etc.
 
-If keeping the rules here, this project will be a hugh project and only one maintainer is me 😢. This project is still keeping the basic rules but we need to have a compromise with those features. 
+If keeping the rules here, this project will be a hugh project and only one maintainer is me 😢. This project is still
+keeping the basic rules but we need to have a compromise with those features.
 
 ![Feature Module Architecture](https://user-images.githubusercontent.com/5198104/85557159-7e493a80-b662-11ea-84e8-fc2e16198b21.png)
 
 ### Detail of Presentation Layer
 
 - Activity/Fragment:
-- ViewModel:
-It handles the view state and data, and the view logic. Also, it helps a view to connect a usecase. Three types of them, **ViewModel**, **AndroidViewModel**, **SavedStateViewModel** will be used.
+- ViewModel: It handles the view state and data, and the view logic. Also, it helps a view to connect a usecase. Three
+  types of them, **ViewModel**, **AndroidViewModel**, **SavedStateViewModel** will be used.
 
 ### Detail of Domain Layer
 
-- OneShot UseCase:
-Basically, this is one time fetching, just send a request and get a response, eg. normal restful api request.
-- Observable UseCase:
-For the local database, once the data we are observing is changed, the obserable usecase will keep receiving the changing until the observing finishes.
+- OneShot UseCase: Basically, this is one time fetching, just send a request and get a response, eg. normal restful api
+  request.
+- Observable UseCase: For the local database, once the data we are observing is changed, the obserable usecase will keep
+  receiving the changing until the observing finishes.
 
 ### Detail of Data Layer
 
 - Repository:
-- 3 Layer Cache:
-We would like to have a cache system. One path is for fetching data from the remote server; another path is for the local database.
+- 3 Layer Cache: We would like to have a cache system. One path is for fetching data from the remote server; another
+  path is for the local database.
 
 ![Cache Strategy](https://user-images.githubusercontent.com/5198104/86508600-383b6600-be1c-11ea-8cc1-259930d5820b.png)
 - Data Model:
@@ -75,3 +77,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
