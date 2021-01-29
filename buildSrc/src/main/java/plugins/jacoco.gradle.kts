@@ -24,6 +24,10 @@
 
 package plugins
 
+plugins {
+    jacoco
+}
+
 tasks.withType<Test> {
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true

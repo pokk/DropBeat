@@ -27,15 +27,6 @@ import config.LibraryDependency
 import utils.ktxDependencies
 import utils.unitTestDependencies
 
-// plugins {
-//    jacoco
-//    id("plugins.jacocoReport")
-// }
-//
-// jacoco {
-//    toolVersion = "0.8.6"
-// }
-
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_WIDGET), project(CommonModuleDependency.LIB_PURE_EXT)).forEach { api(it) }

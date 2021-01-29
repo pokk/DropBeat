@@ -30,6 +30,7 @@ plugins.apply("plugins.header")
 plugins.apply("plugins.common")
 plugins.apply("plugins.kotlin")
 plugins.apply("plugins.detekt")
+plugins.apply("plugins.ktlint")
 plugins.apply("plugins.update-dependency")
 
 buildscript {
@@ -50,13 +51,20 @@ buildscript {
         classpath(config.GradleDependency.GOOGLE_SERVICE)
         classpath(config.GradleDependency.CRASHLYTICS)
         classpath(config.GradleDependency.PERFORMANCE)
-//        classpath "org.jacoco:org.jacoco.core:0.8.4"
-//        classpath("io.fabric.tools:gradle:1.31.1")
     }
 }
 
 allprojects {
     repositories.addDefaults()
+    plugins.withType<JacocoPlugin> {
+        the<JacocoPluginExtension>().toolVersion = "0.8.6"
+    }
+}
+
+subprojects {
+    beforeEvaluate {
+        plugins.apply("plugins.jacoco")
+    }
 }
 
 tasks.register("clean", Delete::class) {
