@@ -23,8 +23,12 @@
  */
 
 import utils.analyticsDependencies
+import utils.androidTestDependencies
+import utils.unitTestDependencies
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     analyticsDependencies()
+    unitTestDependencies()
+    androidTestDependencies()
 }
