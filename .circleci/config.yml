@@ -33,19 +33,19 @@ jobs:
             #            echo ${TWITTER_KEYS} | base64 --decode > ${HOME}/workspace/app/src/main/res/values/twitter_key.xml
             echo ${LASTFM_KEYS} | base64 --decode > ${HOME}/workspace/feature/explore/src/main/res/values/keys.xml
             echo ${SSL_CERTFICATION} | base64 --decode > ${HOME}/workspace/core/src/main/res/raw/mycertfile.crt
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradlew
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-      #      - run:
-      #          name: Run Unit Tests
-      #          command: ./gradlew test
       - run:
           name: Assemble Debug APK
           command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
+      - run:
+          name: Generate JaCoCo report
+          command: ./gradlew jacocoTestReport
+      - run:
+          name: Upload coverage report to CodeCov
+          command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts:
           path: app/build/outputs/apk
           destination: apk
