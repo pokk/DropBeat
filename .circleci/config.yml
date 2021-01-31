@@ -44,11 +44,8 @@ jobs:
       #          name: Assemble Debug APK
       #          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
       - run:
-          name: Show the gradle tasks
-          command: ./gradlew tasks
-      - run:
           name: Generate JaCoCo report
-          command: ./gradlew jacocoTestReport
+          command: ./gradlew jacocoAndroidTestReport
       - run:
           name: Upload coverage report to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
