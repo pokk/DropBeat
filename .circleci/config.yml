@@ -33,6 +33,9 @@ jobs:
             #            echo ${TWITTER_KEYS} | base64 --decode > ${HOME}/workspace/app/src/main/res/values/twitter_key.xml
             echo ${LASTFM_KEYS} | base64 --decode > ${HOME}/workspace/feature/explore/src/main/res/values/keys.xml
             echo ${SSL_CERTFICATION} | base64 --decode > ${HOME}/workspace/core/src/main/res/raw/mycertfile.crt
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradlew
