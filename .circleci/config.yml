@@ -41,6 +41,9 @@ jobs:
       #          name: Assemble Debug APK
       #          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
       - run:
+          name: Show the gradle tasks
+          command: ./gradlew :workspace:tasks
+      - run:
           name: Generate JaCoCo report
           command: ./gradlew jacocoTestReport
       - run:
