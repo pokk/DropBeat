@@ -37,9 +37,9 @@ jobs:
           paths:
             - ~/.gradlew
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-      - run:
-          name: Assemble Debug APK
-          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
+      #      - run:
+      #          name: Assemble Debug APK
+      #          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
       - run:
           name: Generate JaCoCo report
           command: ./gradlew jacocoTestReport
