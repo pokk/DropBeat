@@ -13,7 +13,7 @@ jobs:
       ANDROID_TARGET: android-$ANDROID_API_LEVEL
       ADB_INSTALL_TIMEOUT: 20 # minutes (2 minutes by default)
     docker:
-      - image: circleci/android:api-30
+      - image: circleci/android:api-29
     steps:
       - checkout
       - run:
