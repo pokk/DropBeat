@@ -45,7 +45,7 @@ jobs:
       #          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
       - run:
           name: Generate JaCoCo report
-          command: ./gradlew :ktx:jacocoAndroidTestReport
+          command: ./gradlew testDebugUnitTest
       - run:
           name: Upload coverage report to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
