@@ -13,7 +13,7 @@ jobs:
       ANDROID_TARGET: android-$ANDROID_API_LEVEL
       ADB_INSTALL_TIMEOUT: 20 # minutes (2 minutes by default)
     docker:
-      - image: circleci/android:api-30
+      - image: circleci/android@sha256:061e2535826cc3fe4c4a440e716bf06c36c80401ee635c339c6803b3e427ebb3
     steps:
       - checkout
       - run:
@@ -41,11 +41,14 @@ jobs:
             - ~/.gradlew
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       #      - run:
-      #          name: Run Unit Tests
-      #          command: ./gradlew test
+      #          name: Assemble Debug APK
+      #          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
       - run:
-          name: Assemble Debug APK
-          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
+          name: Generate JaCoCo report
+          command: ./gradlew jacocoAndroidTestReport
+      - run:
+          name: Upload coverage report to CodeCov
+          command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts:
           path: app/build/outputs/apk
           destination: apk
