@@ -6,6 +6,7 @@
 <a href="https://www.codefactor.io/repository/github/smashks/stationmusicfm"><img src="https://www.codefactor.io/repository/github/smashks/stationmusicfm/badge" alt="CodeFactor" /></a>
 <a href="https://codeclimate.com/github/pokk/DropBeat/maintainability"><img src="https://api.codeclimate.com/v1/badges/f9ef124dc3df905b7fc4/maintainability" /></a>
 <a href="https://codeclimate.com/github/pokk/DropBeat/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f9ef124dc3df905b7fc4/test_coverage" /></a>
+<a href="https://codecov.io/gh/SmashKs/OneShoot"><img src="https://codecov.io/gh/SmashKs/OneShoot/branch/master/graph/badge.svg?token=XEdOPjdOQn"/></a>
 <a href="https://opensource.org/licenses/MIT"><img alt="Licence" src="https://img.shields.io/badge/license-MIT-green.svg" />
 </p>
 
