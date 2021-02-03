@@ -42,7 +42,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
           name: Assemble Debug APK
-          command: ./gradlew assembleDebug
+          command: ./gradlew build
       - run:
           name: Generate JaCoCo report
           command: ./gradlew jacocoAndroidTestReport
