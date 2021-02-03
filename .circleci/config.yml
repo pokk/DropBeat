@@ -35,14 +35,14 @@ jobs:
             echo ${SSL_CERTFICATION} | base64 --decode > ${HOME}/workspace/core/src/main/res/raw/mycertfile.crt
       - run:
           name: Check Dependencies
-          command: ./gradlew androidDependencies
+          command: ./gradlew
       - save_cache:
           paths:
             - ~/.gradlew
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
           name: Assemble Debug APK
-          command: ./gradlew clean assembleDebug -xlint -PdisablePreDex --no-daemon
+          command: ./gradlew assembleDebug
       - run:
           name: Generate JaCoCo report
           command: ./gradlew jacocoAndroidTestReport
