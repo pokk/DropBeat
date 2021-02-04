@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/workspace
     environment:
       JVM_OPTS: -Xms512m -Xmx4096m
-      GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.caching=true -Dorg.gradle.configureondemand=true -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false
+      GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4096m -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.caching=true -Dorg.gradle.configureondemand=true -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false
       ANDROID_API_LEVEL: 30
       EMULATOR_API_LEVEL: 22
       ANDROID_ABI: armeabi-v7a
