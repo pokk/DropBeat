@@ -1,0 +1,35 @@
+name: Build Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v1
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      # Decode All configuration files
+      - name: Decode all configuration files
+        run: |
+          echo ${{ secrets.FIREBASE_CONFIG }} > app/google-services.json
+          echo ${{ secrets.MUSIC_URI }} > local.properties
+          echo ${{ secrets.FACEBOOK_KEYS }} > app/src/main/res/values/facebook_key.xml
+          echo ${{ secrets.LASTFM_KEYS }} > feature/explore/src/main/res/values/keys.xml
+          echo ${{ secrets.SSL_CERTFICATION }} > core/src/main/res/raw/mycertfile.crt
+
+      # Step 4: Yun your unit tests
+      #      - name: Run Unit Tests
+      #        run: ./gradlew testStagingDebugUnitTest
+
+      # Step 4: Assemble debug apk to send to firebase test lab
+      - name: Assemble Debug APK
+        run: ./gradlew assembleDebug
