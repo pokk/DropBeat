@@ -40,15 +40,15 @@ jobs:
           paths:
             - ~/.gradlew
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+      - run:
+          name: Assemble Debug APK
+          command: ./gradlew assembleDebug
       #      - run:
-      #          name: Assemble Debug APK
-      #          command: ./gradlew build
-      - run:
-          name: Generate JaCoCo report
-          command: ./gradlew jacocoAndroidTestReport
-      - run:
-          name: Upload coverage report to CodeCov
-          command: bash <(curl -s https://codecov.io/bash)
+      #          name: Generate JaCoCo report
+      #          command: ./gradlew jacocoAndroidTestReport
+      #      - run:
+      #          name: Upload coverage report to CodeCov
+      #          command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts:
           path: app/build/outputs/apk
           destination: apk
