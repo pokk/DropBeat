@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="KtlintProjectConfiguration">
+    <androidMode>true</androidMode>
     <treatAsErrors>false</treatAsErrors>
     <disabledRules>
       <list>
@@ -9,6 +10,6 @@
         <option value="import-ordering" />
       </list>
     </disabledRules>
-    <editorConfigPath>$PROJECT_DIR$</editorConfigPath>
+    <editorConfigPath>$PROJECT_DIR$/.editorconfig</editorConfigPath>
   </component>
 </project>
