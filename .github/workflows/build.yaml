@@ -9,6 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Notify slack success
+        if: success()
+        id: slack # IMPORTANT: reference this step ID value in future Slack steps
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: app-alerts
+          status: STARTING
+          color: warning
+
       - name: Clone Repo
         uses: actions/checkout@v1
 
@@ -27,7 +38,7 @@ jobs:
           SSL_CERTFICATION: ${{ secrets.SSL_CERTFICATION }}
         run: |
           echo FIREBASE_CONFIG > app/google-services.json
-          echo LOCAL_PROPERTIES > local.properties
+          echo LOCAL_PROPERTIES > ./local.properties
           echo FACEBOOK_KEYS > app/src/main/res/values/facebook_key.xml
           echo LASTFM_KEYS > feature/explore/src/main/res/values/keys.xml
           echo SSL_CERTFICATION > core/src/main/res/raw/mycertfile.crt
@@ -41,8 +52,22 @@ jobs:
         run: ./gradlew assembleDebug
 
       # Send the notification to slack
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+      - name: Notify slack success
+        if: success()
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: Bot DiDi
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: app-alerts
+          status: SUCCESS
+          color: good
+
+      - name: Notify slack fail
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: app-alerts
+          status: FAILED
+          color: danger
