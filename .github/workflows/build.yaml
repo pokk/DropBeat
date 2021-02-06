@@ -1,6 +1,6 @@
 name: Build Workflow
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
@@ -21,13 +21,13 @@ jobs:
       - name: Decode all configuration files
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-          MUSIC_URI: ${{ secrets.MUSIC_URI }}
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
           FACEBOOK_KEYS: ${{ secrets.FACEBOOK_KEYS }}
           LASTFM_KEYS: ${{ secrets.LASTFM_KEYS }}
           SSL_CERTFICATION: ${{ secrets.SSL_CERTFICATION }}
         run: |
           echo FIREBASE_CONFIG > app/google-services.json
-          echo MUSIC_URI > local.properties
+          echo LOCAL_PROPERTIES > local.properties
           echo FACEBOOK_KEYS > app/src/main/res/values/facebook_key.xml
           echo LASTFM_KEYS > feature/explore/src/main/res/values/keys.xml
           echo SSL_CERTFICATION > core/src/main/res/raw/mycertfile.crt
@@ -39,3 +39,10 @@ jobs:
       # Step 4: Assemble debug apk to send to firebase test lab
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug
+
+      # Send the notification to slack
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: Bot DiDi
