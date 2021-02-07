@@ -56,6 +56,9 @@ jobs:
           LYRIC_URI_REQUEST: ${{ secrets.API.LYRIC_URI_REQUEST }}
           RANKING_URI_REQUEST: ${{ secrets.API.RANKING_URI_REQUEST }}
           RANKING_URI_DOMAIN: ${{ secrets.API.RANKING_URI_DOMAIN }}
+          KEYSTORE_PASSWORD: ${{ secrets.RELEASE.RANKING_URI_DOMAIN }}
+          KEY_ALIAS: ${{ secrets.RELEASE.RANKING_URI_DOMAIN }}
+          KEY_PASSWORD: ${{ secrets.RELEASE.RANKING_URI_DOMAIN }}
         run: |
           echo -e "\nseek_song_uri_request=\"$SEEK_SONG_URI_REQUEST\"" >> local.properties
           echo -e "\nseek_song_uri_domain=\"$SEEK_SONG_URI_DOMAIN\"" >> local.properties
