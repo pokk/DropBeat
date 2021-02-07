@@ -60,7 +60,7 @@ jobs:
           KEY_ALIAS: ${{ secrets.RANKING_URI_DOMAIN }}
           KEY_PASSWORD: ${{ secrets.RANKING_URI_DOMAIN }}
         run: |
-          echo -e "\nseek_song_uri_request=\"$SEEK_SONG_URI_REQUEST\"" >> local.properties
+          echo -e "seek_song_uri_request=\"$SEEK_SONG_URI_REQUEST\"" >> local.properties
           echo -e "\nseek_song_uri_domain=\"$SEEK_SONG_URI_DOMAIN\"" >> local.properties
           echo -e "\nseek_song_query_2=\"$SEEK_SONG_QUERY_2\"" >> local.properties
           echo -e "\nseek_song_query_1=\"$SEEK_SONG_QUERY_1\"" >> local.properties
@@ -75,15 +75,12 @@ jobs:
           echo -e "\nstore_password=$KEYSTORE_PASSWORD" >> local.properties
           echo -e "\nkey_alias=$KEY_ALIAS" >> local.properties
           echo -e "\nkey_password=$KEY_PASSWORD" >> local.properties
-          echo "=========================="
-          cat local.properties
-          echo "=========================="
 
       #      - name: Run Unit Tests
       #        run: ./gradlew test
 
       - name: Assemble Debug APK
-        run: ./gradlew build
+        run: ./gradlew compileDebugSources
 
       - uses: 8398a7/action-slack@v3
         with:
