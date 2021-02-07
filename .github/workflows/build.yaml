@@ -6,7 +6,7 @@ jobs:
   build:
     name: Build
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Cancel Previous Runs
@@ -79,6 +79,7 @@ jobs:
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
+          job_name: Build
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
