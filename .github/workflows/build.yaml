@@ -75,6 +75,9 @@ jobs:
           echo -e "\nstore_password=$KEYSTORE_PASSWORD" >> local.properties
           echo -e "\nkey_alias=$KEY_ALIAS" >> local.properties
           echo -e "\nkey_password=$KEY_PASSWORD" >> local.properties
+          echo "=========================="
+          cat local.properties
+          echo "=========================="
 
       #      - name: Run Unit Tests
       #        run: ./gradlew test
