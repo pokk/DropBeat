@@ -37,11 +37,32 @@ jobs:
 
       - name: Creating local properties file
         env:
-          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+          SEEK_SONG_URI_REQUEST: ${{ secretes.SEEK_SONG_URI_REQUEST }}
+          SEEK_SONG_URI_DOMAIN: ${{ secretes.SEEK_SONG_URI_DOMAIN }}
+          SEEK_SONG_QUERY_2: ${{ secretes.SEEK_SONG_QUERY_2 }}
+          SEEK_SONG_QUERY_1: ${{ secretes.SEEK_SONG_QUERY_1 }}
+          SEEK_SONG_PARAM_2: ${{ secretes.SEEK_SONG_PARAM_2 }}
+          SEEK_SONG_PARAM_1: ${{ secretes.SEEK_SONG_PARAM_1 }}
+          LYRIC_URI_DOMAIN: ${{ secretes.LYRIC_URI_DOMAIN }}
+          SONG_URI_DOMAIN: ${{ secretes.SONG_URI_DOMAIN }}
+          SONG_URI_REQUEST: ${{ secretes.SONG_URI_REQUEST }}
+          LYRIC_URI_REQUEST: ${{ secretes.LYRIC_URI_REQUEST }}
+          RANKING_URI_REQUEST: ${{ secretes.RANKING_URI_REQUEST }}
+          RANKING_URI_DOMAIN: ${{ secrets.RANKING_URI_DOMAIN }}
         run: |
-          echo LOCAL_PROPERTIES >> local.properties
+          echo -e "\nseek_song_uri_request=\"$SEEK_SONG_URI_REQUEST\"" >> local.properties
+          echo -e "\nseek_song_uri_domain=\"$SEEK_SONG_URI_DOMAIN\"" >> local.properties
+          echo -e "\nseek_song_query_2=\"$SEEK_SONG_QUERY_2\"" >> local.properties
+          echo -e "\nseek_song_query_1=\"$SEEK_SONG_QUERY_1\"" >> local.properties
+          echo -e "\nseek_song_param_2=\"$SEEK_SONG_PARAM_2\"" >> local.properties
+          echo -e "\nseek_song_param_1=\"$SEEK_SONG_PARAM_1\"" >> local.properties
+          echo -e "\nlyric_uri_domain=\"$LYRIC_URI_DOMAIN\"" >> local.properties
+          echo -e "\nsong_uri_domain=\"$SONG_URI_DOMAIN\"" >> local.properties
+          echo -e "\nsong_uri_request=\"$SONG_URI_REQUEST\"" >> local.properties
+          echo -e "\nlyric_uri_request=\"$LYRIC_URI_REQUEST\"" >> local.properties
+          echo -e "\nranking_uri_request=\"$RANKING_URI_REQUEST\"" >> local.properties
+          echo -e "\nranking_uri_domain=\"$RANKING_URI_DOMAIN\"" >> local.properties
           more local.properties
-          ls
 
       # Step 4: Yun your unit tests
       #      - name: Run Unit Tests
