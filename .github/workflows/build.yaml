@@ -22,14 +22,12 @@ jobs:
         with:
           java-version: 1.8
 
-      # Decode All configuration files
-      - name: Decode all configuration files
+      - name: Decode firebase configuration file
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
-      # Decode All configuration files
-      - name: Decode all configuration files
+      - name: Decode other configuration files
         env:
           FACEBOOK_KEYS: ${{ secrets.FACEBOOK_KEYS }}
           LASTFM_KEYS: ${{ secrets.LASTFM_KEYS }}
@@ -66,7 +64,6 @@ jobs:
           echo -e "\nlyric_uri_request=\"$LYRIC_URI_REQUEST\"" >> local.properties
           echo -e "\nranking_uri_request=\"$RANKING_URI_REQUEST\"" >> local.properties
           echo -e "\nranking_uri_domain=\"$RANKING_URI_DOMAIN\"" >> local.properties
-          more local.properties
 
       # Step 4: Yun your unit tests
       #      - name: Run Unit Tests
@@ -74,7 +71,7 @@ jobs:
 
       # Step 4: Assemble debug apk to send to firebase test lab
       - name: Assemble Debug APK
-        run: ./gradlew assembleDebug
+        run: ./gradlew build
 
       - uses: 8398a7/action-slack@v3
         with:
