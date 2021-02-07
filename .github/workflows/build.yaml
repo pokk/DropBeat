@@ -70,13 +70,11 @@ jobs:
           echo -e "\nranking_uri_request=\"$RANKING_URI_REQUEST\"" >> local.properties
           echo -e "\nranking_uri_domain=\"$RANKING_URI_DOMAIN\"" >> local.properties
 
-      # Step 4: Yun your unit tests
-      #      - name: Run Unit Tests
-      #        run: ./gradlew testStagingDebugUnitTest
+      - name: Run Unit Tests
+        run: ./gradlew test
 
-      # Step 4: Assemble debug apk to send to firebase test lab
-      - name: Assemble Debug APK
-        run: ./gradlew build
+      #      - name: Assemble Debug APK
+      #        run: ./gradlew build
 
       - uses: 8398a7/action-slack@v3
         with:
