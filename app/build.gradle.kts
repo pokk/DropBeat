@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import config.AndroidConfiguration
 import config.CommonModuleDependency
 import utils.androidTestDependencies
@@ -43,9 +44,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = file("../taiwanno1_release.keystore")
-            storePassword = ""
-            keyAlias = ""
-            keyPassword = ""
+            storePassword = gradleLocalProperties(rootDir).getProperty("store_password")
+            keyAlias = gradleLocalProperties(rootDir).getProperty("key_alias")
+            keyPassword = gradleLocalProperties(rootDir).getProperty("key_password")
         }
     }
     defaultConfig {
