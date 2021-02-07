@@ -30,10 +30,10 @@ jobs:
           LASTFM_KEYS: ${{ secrets.LASTFM_KEYS }}
           SSL_CERTFICATION: ${{ secrets.SSL_CERTFICATION }}
         run: |
-          echo FIREBASE_CONFIG > app/google-services.json
-          echo FACEBOOK_KEYS > app/src/main/res/values/facebook_key.xml
-          echo LASTFM_KEYS > feature/explore/src/main/res/values/keys.xml
-          echo SSL_CERTFICATION > core/src/main/res/raw/mycertfile.crt
+          echo $FIREBASE_CONFIG > app/google-services.json
+          echo $FACEBOOK_KEYS > app/src/main/res/values/facebook_key.xml
+          echo $LASTFM_KEYS > feature/explore/src/main/res/values/keys.xml
+          echo $SSL_CERTFICATION > core/src/main/res/raw/mycertfile.crt
 
       - name: Creating local properties file
         env:
