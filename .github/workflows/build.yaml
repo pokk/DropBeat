@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Notify slack success
+      - name: Notify slack starting
         if: success()
         id: slack # IMPORTANT: reference this step ID value in future Slack steps
         env:
@@ -51,7 +51,6 @@ jobs:
       - name: Assemble Debug APK
         run: ./gradlew assembleDebug
 
-      # Send the notification to slack
       - name: Notify slack success
         if: success()
         env:
