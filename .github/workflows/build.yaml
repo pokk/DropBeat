@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.7.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Clone Repo
         uses: actions/checkout@v1
 
@@ -21,16 +26,21 @@ jobs:
       - name: Decode all configuration files
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
           FACEBOOK_KEYS: ${{ secrets.FACEBOOK_KEYS }}
           LASTFM_KEYS: ${{ secrets.LASTFM_KEYS }}
           SSL_CERTFICATION: ${{ secrets.SSL_CERTFICATION }}
         run: |
           echo FIREBASE_CONFIG > app/google-services.json
-          echo LOCAL_PROPERTIES > ./local.properties
           echo FACEBOOK_KEYS > app/src/main/res/values/facebook_key.xml
           echo LASTFM_KEYS > feature/explore/src/main/res/values/keys.xml
           echo SSL_CERTFICATION > core/src/main/res/raw/mycertfile.crt
+
+      - name: Creating local properties file
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo LOCAL_PROPERTIES >> local.properties
+          ls
 
       # Step 4: Yun your unit tests
       #      - name: Run Unit Tests
