@@ -22,6 +22,11 @@ jobs:
         with:
           java-version: 1.8
 
+      - name: Setup keystore
+        env:
+          SIGNING_KEY: ${{ secrets.RELEASE_KEYSTORE }}
+        run: echo $SIGNING_KEY | base64 -di > taiwanno1_release.keystore
+
       - name: Decode firebase configuration file
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
