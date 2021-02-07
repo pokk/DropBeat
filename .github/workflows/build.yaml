@@ -37,18 +37,18 @@ jobs:
 
       - name: Creating local properties file
         env:
-          SEEK_SONG_URI_REQUEST: ${{ secretes.SEEK_SONG_URI_REQUEST }}
-          SEEK_SONG_URI_DOMAIN: ${{ secretes.SEEK_SONG_URI_DOMAIN }}
-          SEEK_SONG_QUERY_2: ${{ secretes.SEEK_SONG_QUERY_2 }}
-          SEEK_SONG_QUERY_1: ${{ secretes.SEEK_SONG_QUERY_1 }}
-          SEEK_SONG_PARAM_2: ${{ secretes.SEEK_SONG_PARAM_2 }}
-          SEEK_SONG_PARAM_1: ${{ secretes.SEEK_SONG_PARAM_1 }}
-          LYRIC_URI_DOMAIN: ${{ secretes.LYRIC_URI_DOMAIN }}
-          SONG_URI_DOMAIN: ${{ secretes.SONG_URI_DOMAIN }}
-          SONG_URI_REQUEST: ${{ secretes.SONG_URI_REQUEST }}
-          LYRIC_URI_REQUEST: ${{ secretes.LYRIC_URI_REQUEST }}
-          RANKING_URI_REQUEST: ${{ secretes.RANKING_URI_REQUEST }}
-          RANKING_URI_DOMAIN: ${{ secrets.RANKING_URI_DOMAIN }}
+          SEEK_SONG_URI_REQUEST: ${{ API.SEEK_SONG_URI_REQUEST }}
+          SEEK_SONG_URI_DOMAIN: ${{ API.SEEK_SONG_URI_DOMAIN }}
+          SEEK_SONG_QUERY_2: ${{ API.SEEK_SONG_QUERY_2 }}
+          SEEK_SONG_QUERY_1: ${{ API.SEEK_SONG_QUERY_1 }}
+          SEEK_SONG_PARAM_2: ${{ API.SEEK_SONG_PARAM_2 }}
+          SEEK_SONG_PARAM_1: ${{ API.SEEK_SONG_PARAM_1 }}
+          LYRIC_URI_DOMAIN: ${{ API.LYRIC_URI_DOMAIN }}
+          SONG_URI_DOMAIN: ${{ API.SONG_URI_DOMAIN }}
+          SONG_URI_REQUEST: ${{ API.SONG_URI_REQUEST }}
+          LYRIC_URI_REQUEST: ${{ API.LYRIC_URI_REQUEST }}
+          RANKING_URI_REQUEST: ${{ API.RANKING_URI_REQUEST }}
+          RANKING_URI_DOMAIN: ${{ API.RANKING_URI_DOMAIN }}
         run: |
           echo -e "\nseek_song_uri_request=\"$SEEK_SONG_URI_REQUEST\"" >> local.properties
           echo -e "\nseek_song_uri_domain=\"$SEEK_SONG_URI_DOMAIN\"" >> local.properties
