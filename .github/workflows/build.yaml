@@ -34,6 +34,7 @@ jobs:
           echo $FACEBOOK_KEYS > app/src/main/res/values/facebook_key.xml
           echo $LASTFM_KEYS > feature/explore/src/main/res/values/keys.xml
           echo $SSL_CERTFICATION > core/src/main/res/raw/mycertfile.crt
+          cat app/google-services.json
 
       - name: Creating local properties file
         env:
