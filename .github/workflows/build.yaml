@@ -44,21 +44,21 @@ jobs:
 
       - name: Creating local properties file
         env:
-          SEEK_SONG_URI_REQUEST: ${{ secrets.API.SEEK_SONG_URI_REQUEST }}
-          SEEK_SONG_URI_DOMAIN: ${{ secrets.API.SEEK_SONG_URI_DOMAIN }}
-          SEEK_SONG_QUERY_2: ${{ secrets.API.SEEK_SONG_QUERY_2 }}
-          SEEK_SONG_QUERY_1: ${{ secrets.API.SEEK_SONG_QUERY_1 }}
-          SEEK_SONG_PARAM_2: ${{ secrets.API.SEEK_SONG_PARAM_2 }}
-          SEEK_SONG_PARAM_1: ${{ secrets.API.SEEK_SONG_PARAM_1 }}
-          LYRIC_URI_DOMAIN: ${{ secrets.API.LYRIC_URI_DOMAIN }}
-          SONG_URI_DOMAIN: ${{ secrets.API.SONG_URI_DOMAIN }}
-          SONG_URI_REQUEST: ${{ secrets.API.SONG_URI_REQUEST }}
-          LYRIC_URI_REQUEST: ${{ secrets.API.LYRIC_URI_REQUEST }}
-          RANKING_URI_REQUEST: ${{ secrets.API.RANKING_URI_REQUEST }}
-          RANKING_URI_DOMAIN: ${{ secrets.API.RANKING_URI_DOMAIN }}
-          KEYSTORE_PASSWORD: ${{ secrets.RELEASE.RANKING_URI_DOMAIN }}
-          KEY_ALIAS: ${{ secrets.RELEASE.RANKING_URI_DOMAIN }}
-          KEY_PASSWORD: ${{ secrets.RELEASE.RANKING_URI_DOMAIN }}
+          SEEK_SONG_URI_REQUEST: ${{ secrets.SEEK_SONG_URI_REQUEST }}
+          SEEK_SONG_URI_DOMAIN: ${{ secrets.SEEK_SONG_URI_DOMAIN }}
+          SEEK_SONG_QUERY_2: ${{ secrets.SEEK_SONG_QUERY_2 }}
+          SEEK_SONG_QUERY_1: ${{ secrets.SEEK_SONG_QUERY_1 }}
+          SEEK_SONG_PARAM_2: ${{ secrets.SEEK_SONG_PARAM_2 }}
+          SEEK_SONG_PARAM_1: ${{ secrets.SEEK_SONG_PARAM_1 }}
+          LYRIC_URI_DOMAIN: ${{ secrets.LYRIC_URI_DOMAIN }}
+          SONG_URI_DOMAIN: ${{ secrets.SONG_URI_DOMAIN }}
+          SONG_URI_REQUEST: ${{ secrets.SONG_URI_REQUEST }}
+          LYRIC_URI_REQUEST: ${{ secrets.LYRIC_URI_REQUEST }}
+          RANKING_URI_REQUEST: ${{ secrets.RANKING_URI_REQUEST }}
+          RANKING_URI_DOMAIN: ${{ secrets.RANKING_URI_DOMAIN }}
+          KEYSTORE_PASSWORD: ${{ secrets.RANKING_URI_DOMAIN }}
+          KEY_ALIAS: ${{ secrets.RANKING_URI_DOMAIN }}
+          KEY_PASSWORD: ${{ secrets.RANKING_URI_DOMAIN }}
         run: |
           echo -e "\nseek_song_uri_request=\"$SEEK_SONG_URI_REQUEST\"" >> local.properties
           echo -e "\nseek_song_uri_domain=\"$SEEK_SONG_URI_DOMAIN\"" >> local.properties
