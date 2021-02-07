@@ -80,7 +80,7 @@ jobs:
       #        run: ./gradlew test
 
       - name: Assemble Debug APK
-        run: ./gradlew compileDebugSources
+        run: ./gradlew
 
       - uses: 8398a7/action-slack@v3
         with:
