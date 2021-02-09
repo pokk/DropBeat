@@ -76,8 +76,8 @@ jobs:
           echo -e "\nkey_alias=$KEY_ALIAS" >> local.properties
           echo -e "\nkey_password=$KEY_PASSWORD" >> local.properties
 
-      - name: Run Unit Tests
-        run: ./gradlew test
+      #      - name: Run Unit Tests
+      #        run: ./gradlew test
 
       - name: Assemble Debug APK
         run: ./gradlew
