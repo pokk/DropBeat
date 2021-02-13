@@ -29,7 +29,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_11.toString()
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
             suppressWarnings = false
             freeCompilerArgs = listOf(
                 "-Xopt-in=kotlin.RequiresOptIn",
