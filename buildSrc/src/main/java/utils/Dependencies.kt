@@ -151,9 +151,8 @@ fun DependencyHandlerScope.kotlinAndroidDependencies(env: String) {
 fun DependencyHandlerScope.androidJetpackDependencies(env: String) {
     env(JetPack.APPCOMPAT)
     env(JetPack.LIFECYCLE_SAVEDSTATE)
-    env(JetPack.LIFECYCLE_COMPILER)
+    env(JetPack.LIFECYCLE_JAVA8)
     env(JetPack.LIFECYCLE_SERVICE)
-    env(JetPack.LIFECYCLE_PROCESS)
     env(JetPack.NAVIGATION_DYNAMIC_FEATURE)
     env(JetPack.RECYCLERVIEW)
     env(JetPack.PAGING)
