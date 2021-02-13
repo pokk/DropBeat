@@ -48,7 +48,7 @@ subprojects {
     }
 
     tasks.withType<Detekt>().configureEach {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
         exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
     }
 
