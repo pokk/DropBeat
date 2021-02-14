@@ -33,10 +33,11 @@ import androidx.navigation.fragment.findNavController
 import taiwan.no.one.widget.databinding.FragmentErrorBinding
 
 class ErrorFragment : Fragment() {
-    private lateinit var binding: FragmentErrorBinding
+    private var _binding: FragmentErrorBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentErrorBinding.inflate(inflater)
+        _binding = FragmentErrorBinding.inflate(inflater)
         return binding.root
     }
 
@@ -46,5 +47,10 @@ class ErrorFragment : Fragment() {
         binding.btnTry.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

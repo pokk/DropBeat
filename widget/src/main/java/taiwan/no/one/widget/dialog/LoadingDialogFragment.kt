@@ -32,10 +32,16 @@ import androidx.fragment.app.DialogFragment
 import taiwan.no.one.widget.databinding.DialogLoadingBinding
 
 class LoadingDialogFragment : DialogFragment() {
-    private lateinit var binding: DialogLoadingBinding
+    private var _binding: DialogLoadingBinding? = null
+    private val binding get() = requireNotNull(_binding) { "The view binding is a null pointer." }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DialogLoadingBinding.inflate(inflater)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = DialogLoadingBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }
