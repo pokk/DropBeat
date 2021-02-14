@@ -40,6 +40,7 @@ import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
+import java.lang.ref.WeakReference
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -60,7 +61,6 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
@@ -148,7 +148,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
             setOptionClickListener { v, entity ->
-                showOptionMenu(v)
+                showOptionMenu(v, entity)
                 analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             setFavoriteClickListener {
@@ -238,11 +238,12 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             }
         }.show()
 
-    private fun showOptionMenu(anchor: View) =
+    private fun showOptionMenu(anchor: View, entity: SimpleTrackEntity) =
         popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    AppResId.item_information -> Unit
+                    AppResId.item_information ->
+                        findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToSongOfArtist(entity))
                     AppResId.item_share -> Unit
                 }
                 true

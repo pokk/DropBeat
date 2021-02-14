@@ -24,8 +24,11 @@
 
 package taiwan.no.one.feat.library.presentation.fragments
 
+import androidx.navigation.fragment.navArgs
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfArticleBinding
 
-class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticleBinding>()
+class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticleBinding>() {
+    private val navArgs by navArgs<SongOfArtistFragmentArgs>()
+}
