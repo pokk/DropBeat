@@ -30,7 +30,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".presentation.fragments.PlaylistFragment">
+    tools:context=".presentation.fragments.SongsOfTagPlaylistFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_backdrop"
