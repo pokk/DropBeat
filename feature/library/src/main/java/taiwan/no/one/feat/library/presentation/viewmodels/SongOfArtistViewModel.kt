@@ -22,26 +22,13 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.presentation.fragments
+package taiwan.no.one.feat.library.presentation.viewmodels
 
-import android.os.Bundle
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
-import com.google.android.material.transition.MaterialSharedAxis
-import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.feat.library.databinding.FragmentSongsOfArticleBinding
-import taiwan.no.one.feat.library.presentation.viewmodels.SongOfArtistViewModel
+import android.app.Application
+import androidx.lifecycle.SavedStateHandle
+import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 
-class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticleBinding>() {
-    private val vm by viewModels<SongOfArtistViewModel>()
-    private val navArgs by navArgs<SongOfArtistFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-    }
-}
+internal class SongOfArtistViewModel(
+    application: Application,
+    override val handle: SavedStateHandle,
+) : BehindAndroidViewModel(application)
