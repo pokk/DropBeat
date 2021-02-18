@@ -44,7 +44,7 @@ internal interface LastFmRepo : Repository {
     //endregion
 
     //region ArtistEntity
-    suspend fun fetchArtist(mbid: String): ArtistInfoEntity.ArtistEntity
+    suspend fun fetchArtist(name: String?, mbid: String?): ArtistInfoEntity.ArtistEntity
 
     suspend fun fetchArtistTopAlbum(mbid: String): CommonLastFmEntity.TopAlbumsEntity
 

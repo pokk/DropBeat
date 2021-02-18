@@ -44,4 +44,10 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
+
+    override fun bindLiveData() {
+    }
+
+    override fun viewComponentBinding() {
+    }
 }

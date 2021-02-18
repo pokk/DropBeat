@@ -31,6 +31,8 @@ import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistReq
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchTagTopTrackReq
 import taiwan.no.one.feat.explore.domain.usecases.FetchTrackCoverCase
@@ -41,10 +43,15 @@ class MethodsProvider : ExploreMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val fetchTagTopTrackCase by instance<FetchTagTopTrackCase>()
     private val fetchTrackCoverCase by instance<FetchTrackCoverCase>()
+    private val fetchArtistCase by instance<FetchArtistCase>()
 
     override suspend fun getTopTracksOfTag(tagName: String) =
         fetchTagTopTrackCase.execute(FetchTagTopTrackReq(tagName)).tracks.map(EntityMapper::exploreToSimpleTrackEntity)
 
     override suspend fun getTrackCover(simpleTrackEntity: SimpleTrackEntity) =
         fetchTrackCoverCase.execute(FetchTrackCoverReq(simpleTrackEntity))
+
+    // TODO(jieyi): 2/18/21 populating the artist info, albums, tracks, ...etc
+    override suspend fun getArticleInfo(name: String) =
+        fetchArtistCase.execute(FetchArtistReq(name)).let(EntityMapper::artistToSimpleArtistEntity)
 }

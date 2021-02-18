@@ -34,6 +34,8 @@ internal object Constants {
     const val LASTFM_QUERY_PAGE = "page"
     const val LASTFM_QUERY_LIMIT = "limit"
 
+    const val LASTFM_QUERY_ARTIST_NAME = "artist"
+
     const val LASTFM_PARAM_ALBUM_GET_INFO = "album.getInfo"
     const val LASTFM_PARAM_ARTIST_GET_INFO = "artist.getInfo"
     const val LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS = "artist.getTopAlbums"

@@ -22,17 +22,31 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.presentation.viewmodels
+package taiwan.no.one.dropbeat.data.entities
 
-import android.app.Application
-import androidx.lifecycle.SavedStateHandle
-import org.kodein.di.instance
-import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
-import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
+import android.os.Parcelable
+import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
 
-internal class SongOfArtistViewModel(
-    application: Application,
-    override val handle: SavedStateHandle,
-) : BehindAndroidViewModel(application) {
-    private val exploreMethodsProvider by instance<ExploreMethodsProvider>()
+/**
+ * [SimpleArtistEntity] is for global usage and it only keeps brief information.
+ */
+@Keep
+@Parcelize
+data class SimpleArtistEntity(
+    val id: Int,
+    val name: String,
+    val thumbnail: String,
+    val url: String,
+    val listener: Int,
+    val playCount: Int,
+    val bioEntity: SimpleBioEntity,
+) : Parcelable {
+
+    @Keep
+    @Parcelize
+    data class SimpleBioEntity(
+        val summary: String,
+        val content: String,
+    ) : Parcelable
 }

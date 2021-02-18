@@ -31,8 +31,11 @@ internal class FetchArtistOneShotCase(
     private val repository: LastFmRepo,
 ) : FetchArtistCase() {
     override suspend fun acquireCase(parameter: FetchArtistReq?) = parameter.ensure {
-        repository.fetchArtist(mbid)
+        repository.fetchArtist(name, mbid)
     }
 
-    internal data class Request(val mbid: String) : RequestValues
+    internal data class Request(
+        val name: String? = null,
+        val mbid: String? = null,
+    ) : RequestValues
 }

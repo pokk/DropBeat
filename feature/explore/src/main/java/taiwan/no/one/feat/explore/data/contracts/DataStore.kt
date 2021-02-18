@@ -52,7 +52,7 @@ internal interface DataStore {
     //endregion
 
     //region Artist Data
-    suspend fun getArtistInfo(mbid: String): ArtistInfoEntity
+    suspend fun getArtistInfo(name: String?, mbid: String?): ArtistInfoEntity
 
     suspend fun getArtistTopAlbum(mbid: String): ArtistTopAlbumInfoEntity
 

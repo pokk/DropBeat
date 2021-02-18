@@ -24,8 +24,12 @@
 
 package taiwan.no.one.feat.explore.data.mappers
 
+import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
+import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity.SimpleBioEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 
@@ -57,6 +61,20 @@ internal object EntityMapper {
             album?.popularTrackThisWeek?.duration?.toInt() ?: 0,
             album?.popularTrackThisWeek?.isFavorite ?: false,
             false
+        )
+    }
+
+    fun artistToSimpleArtistEntity(entity: ArtistEntity) = entity.let {
+        SimpleArtistEntity(
+            0,
+            it.name.orEmpty(),
+            DEFAULT_STR,
+            it.url.orEmpty(),
+            it.stats?.listeners?.toInt() ?: DEFAULT_INT,
+            it.stats?.playCount?.toInt() ?: DEFAULT_INT,
+            it.bio?.let { bio ->
+                SimpleBioEntity(bio.content.orEmpty(), bio.summary.orEmpty())
+            } ?: SimpleBioEntity(DEFAULT_STR, DEFAULT_STR)
         )
     }
 }

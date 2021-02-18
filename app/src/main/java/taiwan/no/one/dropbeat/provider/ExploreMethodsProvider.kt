@@ -25,6 +25,7 @@
 package taiwan.no.one.dropbeat.provider
 
 import androidx.annotation.WorkerThread
+import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 
 interface ExploreMethodsProvider {
@@ -33,4 +34,7 @@ interface ExploreMethodsProvider {
 
     @WorkerThread
     suspend fun getTrackCover(simpleTrackEntity: SimpleTrackEntity): SimpleTrackEntity
+
+    @WorkerThread
+    suspend fun getArticleInfo(name: String): SimpleArtistEntity
 }
