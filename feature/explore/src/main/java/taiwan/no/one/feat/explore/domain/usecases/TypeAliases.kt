@@ -41,8 +41,8 @@ internal typealias ArtistWithMoreDetailEntities = List<ArtistWithMoreDetailEntit
 
 internal typealias FetchAlbumCase = OneShotUsecase<AlbumInfoEntity.AlbumEntity, FetchAlbumReq>
 internal typealias FetchAlbumReq = FetchAlbumOneShotCase.Request
-internal typealias FetchArtistCase = OneShotUsecase<ArtistInfoEntity.ArtistEntity, FetchArtistReq>
-internal typealias FetchArtistReq = FetchArtistOneShotCase.Request
+internal typealias FetchArtistInfoCase = OneShotUsecase<ArtistInfoEntity.ArtistEntity, FetchArtistReq>
+internal typealias FetchArtistReq = FetchArtistInfoOneShotCase.Request
 internal typealias FetchArtistPhotoCase = OneShotUsecase<List<ArtistPhotoEntity>, FetchArtistPhotoReq>
 internal typealias FetchArtistPhotoReq = FetchArtistPhotoOneShotCase.Request
 internal typealias FetchArtistTopAlbumCase = OneShotUsecase<CommonLastFmEntity.TopAlbumsEntity, FetchArtistTopAlbumReq>
