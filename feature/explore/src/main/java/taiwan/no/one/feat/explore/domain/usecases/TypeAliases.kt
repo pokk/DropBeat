@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
@@ -49,6 +50,8 @@ internal typealias FetchArtistTopAlbumCase = OneShotUsecase<CommonLastFmEntity.T
 internal typealias FetchArtistTopAlbumReq = FetchArtistTopAlbumOneShotCase.Request
 internal typealias FetchArtistTopTrackCase = OneShotUsecase<TopTrackInfoEntity.TracksEntity, FetchArtistTopTrackReq>
 internal typealias FetchArtistTopTrackReq = FetchArtistTopTrackOneShotCase.Request
+internal typealias FetchArtistCompleteInfoCase = OneShotUsecase<SimpleArtistEntity, FetchArtistCompleteInfoReq>
+internal typealias FetchArtistCompleteInfoReq = FetchArtistCompleteInfoOneShotCase.Request
 internal typealias FetchChartTopArtistCase = OneShotUsecase<ArtistWithMoreDetailEntities, FetchChartTopArtistReq>
 internal typealias FetchChartTopArtistReq = FetchChartTopArtistOneShotCase.Request
 internal typealias FetchChartTopTagCase = OneShotUsecase<CommonLastFmEntity.TagsEntity, FetchChartTopTagReq>
