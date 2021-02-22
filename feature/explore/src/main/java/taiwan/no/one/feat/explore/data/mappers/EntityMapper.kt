@@ -24,13 +24,16 @@
 
 package taiwan.no.one.feat.explore.data.mappers
 
+import taiwan.no.one.dropbeat.data.entities.SimpleAlbumEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity.SimpleBioEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity.AlbumWithArtistEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackWithStreamableEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 
 internal object EntityMapper {
@@ -46,6 +49,31 @@ internal object EntityMapper {
             it.duration?.toInt() ?: 0,
             entity.isFavorite ?: false,
             false,
+        )
+    }
+
+    fun trackToSimpleTrackEntity(entity: TrackWithStreamableEntity) = entity.let {
+        SimpleTrackEntity(
+            0,
+            it.name.orEmpty(),
+            it.artist?.name.orEmpty(),
+            it.url.orEmpty(),
+            DEFAULT_STR,
+            it.images?.firstOrNull()?.text.orEmpty(),
+            DEFAULT_STR,
+            it.duration?.toInt() ?: DEFAULT_INT,
+            isFavorite = false,
+            isOwn = false
+        )
+    }
+
+    fun albumToSimpleAlbumEntity(entity: AlbumWithArtistEntity) = entity.let {
+        SimpleAlbumEntity(
+            it.mbid.orEmpty(),
+            it.title.orEmpty(),
+            it.images?.firstOrNull()?.text.orEmpty(),
+            it.playCount?.toIntOrNull() ?: DEFAULT_INT,
+            it.listeners?.toIntOrNull() ?: DEFAULT_INT,
         )
     }
 
@@ -72,6 +100,8 @@ internal object EntityMapper {
             it.url.orEmpty(),
             it.stats?.listeners?.toInt() ?: DEFAULT_INT,
             it.stats?.playCount?.toInt() ?: DEFAULT_INT,
+            emptyList(),
+            emptyList(),
             it.bio?.let { bio ->
                 SimpleBioEntity(bio.content.orEmpty(), bio.summary.orEmpty())
             } ?: SimpleBioEntity(DEFAULT_STR, DEFAULT_STR)

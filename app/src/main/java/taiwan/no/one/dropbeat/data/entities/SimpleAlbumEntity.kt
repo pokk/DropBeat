@@ -29,26 +29,14 @@ import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 
 /**
- * [SimpleArtistEntity] is for global usage and it only keeps brief information.
+ * [SimpleAlbumEntity] is for global usage and it only keeps brief album info.
  */
 @Keep
 @Parcelize
-data class SimpleArtistEntity(
-    val id: Int,
+data class SimpleAlbumEntity(
+    val id: String,
     val name: String,
     val thumbnail: String,
-    val url: String,
-    val listener: Int,
     val playCount: Int,
-    val topAlbums: List<SimpleAlbumEntity>,
-    val topTracks: List<SimpleTrackEntity>,
-    val bio: SimpleBioEntity,
-) : Parcelable {
-
-    @Keep
-    @Parcelize
-    data class SimpleBioEntity(
-        val summary: String,
-        val content: String,
-    ) : Parcelable
-}
+    val listener: Int,
+) : Parcelable
