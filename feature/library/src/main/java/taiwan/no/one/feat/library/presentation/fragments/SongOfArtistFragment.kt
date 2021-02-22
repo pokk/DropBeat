@@ -27,6 +27,8 @@ package taiwan.no.one.feat.library.presentation.fragments
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -46,8 +48,15 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
     }
 
     override fun bindLiveData() {
+        vm.artistInfo.observe(this) { res ->
+            res.onSuccess(::logw).onFailure(::loge)
+        }
     }
 
     override fun viewComponentBinding() {
+    }
+
+    override fun rendered(savedInstanceState: Bundle?) {
+        vm.getArtistInfo(navArgs.track.artist)
     }
 }

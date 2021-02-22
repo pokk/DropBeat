@@ -27,12 +27,21 @@ package taiwan.no.one.feat.library.presentation.viewmodels
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
+import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
+import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
+import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class SongOfArtistViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
     private val exploreMethodsProvider by instance<ExploreMethodsProvider>()
+    private val _artistInfo by lazy { ResultLiveData<SimpleArtistEntity>() }
+    val artistInfo get() = _artistInfo.toLiveData()
+
+    fun getArtistInfo(name: String) = launchBehind {
+        _artistInfo.postValue(runCatching { exploreMethodsProvider.getArticleInfo(name) })
+    }
 }

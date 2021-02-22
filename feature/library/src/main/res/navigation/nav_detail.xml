@@ -45,5 +45,18 @@
             android:defaultValue="@null"
             app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
             app:nullable="true"/>
+        <action
+            android:id="@+id/action_playlist_to_song_of_artist"
+            app:destination="@id/song_of_artist_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/song_of_artist_fragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.SongOfArtistFragment"
+        android:label="SongOfArtistFragment"
+        tools:layout="@layout/fragment_songs_of_article">
+        <argument
+            android:name="track"
+            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
     </fragment>
 </navigation>
