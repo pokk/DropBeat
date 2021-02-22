@@ -53,8 +53,8 @@ internal class RemoteStore(
 
     override suspend fun getArtistInfo(name: String?, mbid: String?) =
         lastFmService.retrieveArtistInfo(combineLastFmQuery(Constants.LASTFM_PARAM_ARTIST_GET_INFO) {
-            name.takeIf(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_ARTIST_NAME, it) }
-            mbid.takeIf(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_MBID, it) }
+            name.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_ARTIST_NAME, it) }
+            mbid.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_MBID, it) }
         })
 
     override suspend fun getArtistTopAlbum(mbid: String) =

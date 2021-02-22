@@ -33,6 +33,8 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.domain.usecases.FetchAlbumCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchAlbumOneShotCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistCompleteInfoCase
+import taiwan.no.one.feat.explore.domain.usecases.FetchArtistCompleteInfoOneShotCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchArtistInfoCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchArtistInfoOneShotCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchArtistPhotoCase
@@ -67,6 +69,7 @@ import taiwan.no.one.feat.explore.domain.usecases.FetchTrackOneShotCase
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
         bind<FetchAlbumCase>() with singleton { FetchAlbumOneShotCase(instance()) }
+        bind<FetchArtistCompleteInfoCase>() with singleton { FetchArtistCompleteInfoOneShotCase(instance()) }
         bind<FetchArtistInfoCase>() with singleton { FetchArtistInfoOneShotCase(instance()) }
         bind<FetchArtistPhotoCase>() with singleton { FetchArtistPhotoOneShotCase(instance()) }
         bind<FetchArtistTopAlbumCase>() with singleton { FetchArtistTopAlbumOneShotCase(instance()) }
