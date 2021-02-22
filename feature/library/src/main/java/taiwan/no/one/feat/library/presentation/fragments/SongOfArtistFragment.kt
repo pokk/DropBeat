@@ -27,15 +27,18 @@ package taiwan.no.one.feat.library.presentation.fragments
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import coil.loadAny
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfArticleBinding
+import taiwan.no.one.feat.library.databinding.MergeArticleInformationBinding
 import taiwan.no.one.feat.library.presentation.viewmodels.SongOfArtistViewModel
 
 class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticleBinding>() {
+    private val mergeArticleInformationBinding get() = MergeArticleInformationBinding.bind(binding.root)
     private val vm by viewModels<SongOfArtistViewModel>()
     private val navArgs by navArgs<SongOfArtistFragmentArgs>()
 
@@ -49,14 +52,26 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
 
     override fun bindLiveData() {
         vm.artistInfo.observe(this) { res ->
-            res.onSuccess(::logw).onFailure(::loge)
+            res.onSuccess {
+                displayArtistInfo(it)
+            }.onFailure(::loge)
         }
     }
 
     override fun viewComponentBinding() {
+        addStatusBarHeightMarginTop(binding.btnBack)
+        binding.mtvTitle.text = navArgs.track.artist
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
         vm.getArtistInfo(navArgs.track.artist)
+    }
+
+    private fun displayArtistInfo(entity: SimpleArtistEntity) {
+        binding.sivBackdrop.loadAny(entity.topAlbums.firstOrNull()?.thumbnail)
+        mergeArticleInformationBinding.apply {
+            mtvPlaylist.text = entity.topAlbums.size.toString()
+            mtvFollower.text = entity.listener.toString()
+        }
     }
 }
