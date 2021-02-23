@@ -86,7 +86,7 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
     }
 
     private fun displayArtistInfo(entity: SimpleArtistEntity) {
-        binding.sivBackdrop.loadAny(entity.topAlbums.firstOrNull()?.thumbnail)
+        binding.sivBackdrop.loadAny(entity.thumbnail)
         mergeArticleInformationBinding.apply {
             mtvPlaylist.text = entity.topAlbums.size.toString()
             mtvFollower.text = entity.listener.toString()

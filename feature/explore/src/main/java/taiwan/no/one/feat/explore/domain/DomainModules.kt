@@ -69,7 +69,10 @@ import taiwan.no.one.feat.explore.domain.usecases.FetchTrackOneShotCase
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
         bind<FetchAlbumCase>() with singleton { FetchAlbumOneShotCase(instance()) }
-        bind<FetchArtistCompleteInfoCase>() with singleton { FetchArtistCompleteInfoOneShotCase(instance()) }
+        bind<FetchArtistCompleteInfoCase>() with singleton {
+            FetchArtistCompleteInfoOneShotCase(instance(),
+                                               instance())
+        }
         bind<FetchArtistInfoCase>() with singleton { FetchArtistInfoOneShotCase(instance()) }
         bind<FetchArtistPhotoCase>() with singleton { FetchArtistPhotoOneShotCase(instance()) }
         bind<FetchArtistTopAlbumCase>() with singleton { FetchArtistTopAlbumOneShotCase(instance()) }
