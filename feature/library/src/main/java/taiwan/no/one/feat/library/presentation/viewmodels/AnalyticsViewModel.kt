@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.library.presentation.viewmodels
 
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.ARTIST_DETAIL
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.CREATE_PLAYLIST
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.LOGIN
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.MYPAGE
@@ -62,6 +63,8 @@ internal class AnalyticsViewModel : BaseAnalyticsViewModel() {
     fun navigatedGoBackFromPlaylist() = navigated(PLAYLIST, PREVIOUS_SCREEN)
 
     fun navigatedGoBackFromTagPlaylist() = navigated(TAG_PLAYLIST, PREVIOUS_SCREEN)
+
+    fun navigatedGoBackFromArtist() = navigated(ARTIST_DETAIL, PREVIOUS_SCREEN)
 
     fun clickedMore() = sendClickedEvent("$MORE")
 

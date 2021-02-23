@@ -37,6 +37,7 @@ data class SimpleAlbumEntity(
     val id: String,
     val name: String,
     val thumbnail: String,
+    val url: String,
     val playCount: Int,
     val listener: Int,
 ) : Parcelable

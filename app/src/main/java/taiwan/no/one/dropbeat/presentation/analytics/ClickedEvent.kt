@@ -24,9 +24,9 @@
 
 package taiwan.no.one.dropbeat.presentation.analytics
 
+import java.util.Date
 import taiwan.no.one.analytics.AnalyticsEvent
 import taiwan.no.one.analytics.Constant
-import java.util.Date
 
 object ClickedEvent {
     class SendClicked(
@@ -80,6 +80,7 @@ object ClickedEvent {
         TAG_PLAYLIST,
         CREATE_PLAYLIST,
         RENAME_PLAYLIST,
+        ARTIST_DETAIL,
         RANKING_DETAIL,
 
         // Search features.

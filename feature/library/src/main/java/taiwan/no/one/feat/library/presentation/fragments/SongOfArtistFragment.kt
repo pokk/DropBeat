@@ -26,20 +26,30 @@ package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.loadAny
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfArticleBinding
 import taiwan.no.one.feat.library.databinding.MergeArticleInformationBinding
+import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.SongOfArtistViewModel
 
 class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticleBinding>() {
+    //region Variable of View Binding
     private val mergeArticleInformationBinding get() = MergeArticleInformationBinding.bind(binding.root)
+    //endregion
+
+    //region Variable of View Model
     private val vm by viewModels<SongOfArtistViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
+    //endregion
+
     private val navArgs by navArgs<SongOfArtistFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +63,7 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
     override fun bindLiveData() {
         vm.artistInfo.observe(this) { res ->
             res.onSuccess {
+                logw(it)
                 displayArtistInfo(it)
             }.onFailure(::loge)
         }
@@ -61,6 +72,13 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
     override fun viewComponentBinding() {
         addStatusBarHeightMarginTop(binding.btnBack)
         binding.mtvTitle.text = navArgs.track.artist
+    }
+
+    override fun componentListenersBinding() {
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+            analyticsVm.navigatedGoBackFromArtist()
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

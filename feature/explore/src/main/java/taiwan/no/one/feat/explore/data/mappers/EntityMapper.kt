@@ -70,8 +70,9 @@ internal object EntityMapper {
     fun albumToSimpleAlbumEntity(entity: AlbumWithArtistEntity) = entity.let {
         SimpleAlbumEntity(
             it.mbid.orEmpty(),
-            it.title.orEmpty(),
-            it.images?.firstOrNull()?.text.orEmpty(),
+            it.name.orEmpty(),
+            it.images?.lastOrNull()?.text.orEmpty(),
+            it.url.orEmpty(),
             it.playCount?.toIntOrNull() ?: DEFAULT_INT,
             it.listeners?.toIntOrNull() ?: DEFAULT_INT,
         )
