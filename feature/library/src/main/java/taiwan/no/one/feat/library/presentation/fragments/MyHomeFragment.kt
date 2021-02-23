@@ -254,6 +254,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 when (it.itemId) {
                     AppResId.item_information -> {
                         findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToNavArtist(entity))
+                        analyticsVm.navigatedFromPlaylistToArtist(entity.name)
                     }
                     AppResId.item_share -> Unit
                 }

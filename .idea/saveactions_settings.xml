@@ -7,6 +7,7 @@
         <option value="activateOnShortcut" />
         <option value="activateOnBatch" />
         <option value="noActionIfCompileErrors" />
+        <option value="organizeImports" />
         <option value="reformat" />
         <option value="rearrange" />
         <option value="executeAction" />
@@ -15,7 +16,7 @@
     <option name="configurationPath" value="" />
     <option name="quickLists">
       <list>
-        <option value="787475714" />
+        <option value="257917767" />
       </list>
     </option>
   </component>

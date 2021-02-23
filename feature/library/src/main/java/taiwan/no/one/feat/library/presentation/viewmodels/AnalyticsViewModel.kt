@@ -56,7 +56,7 @@ internal class AnalyticsViewModel : BaseAnalyticsViewModel() {
 
     fun navigatedToSearch() = navigated(PLAYLIST, SEARCH)
 
-    fun navigatedFromPlaylistToArtist() = navigated(PLAYLIST, ARTIST_DETAIL)
+    fun navigatedFromPlaylistToArtist(extra: String) = navigated(PLAYLIST, ARTIST_DETAIL, extra)
 
     fun navigatedGoBackFromRename() = navigated(RENAME_PLAYLIST, PREVIOUS_SCREEN)
 
