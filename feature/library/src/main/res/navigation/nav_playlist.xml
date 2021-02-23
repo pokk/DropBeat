@@ -27,25 +27,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/my_home_fragment">
-
-    <fragment
-        android:id="@+id/my_home_fragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.MyHomeFragment"
-        tools:layout="@layout/fragment_my_page">
-        <action
-            android:id="@+id/action_my_home_to_login_graph"
-            app:destination="@id/nav_login"/>
-        <action
-            android:id="@+id/action_my_home_to_setting_graph"
-            app:destination="@id/nav_setting"/>
-        <action
-            android:id="@+id/action_my_home_to_playlist"
-            app:destination="@id/playlist_fragment"/>
-        <action
-            android:id="@+id/action_my_home_to_song_of_artist"
-            app:destination="@id/song_of_artist_fragment"/>
-    </fragment>
+    android:id="@id/nav_playlist"
+    app:startDestination="@id/playlist_fragment">
 
     <fragment
         android:id="@+id/playlist_fragment"
@@ -73,10 +56,13 @@
             app:destination="@id/rename_fragment"/>
         <action
             android:id="@+id/action_playlist_to_create"
-            app:destination="@id/create_fragment"/>
-        <action
-            android:id="@+id/action_playlist_to_song_of_artist"
-            app:destination="@id/song_of_artist_fragment"/>
+            app:destination="@id/nav_create">
+            <argument
+                android:name="playlist"
+                android:defaultValue="@null"
+                app:argType="taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity"
+                app:nullable="true"/>
+        </action>
     </fragment>
 
     <fragment
@@ -89,35 +75,5 @@
             app:argType="integer"/>
     </fragment>
 
-    <fragment
-        android:id="@+id/create_fragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.CreateFragment"
-        android:label="fragment_create"
-        tools:layout="@layout/fragment_create">
-        <argument
-            android:name="playlist"
-            android:defaultValue="@null"
-            app:argType="taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity"
-            app:nullable="true"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/song_of_artist_fragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.SongOfArtistFragment"
-        android:label="SongOfArtistFragment"
-        tools:layout="@layout/fragment_songs_of_article">
-        <argument
-            android:name="track"
-            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
-    </fragment>
-
-    <include-dynamic
-        android:id="@+id/nav_login"
-        app:graphResName="nav_login"
-        app:moduleName="login"/>
-
-    <include-dynamic
-        android:id="@+id/nav_setting"
-        app:graphResName="nav_setting"
-        app:moduleName="setting"/>
+    <include app:graph="@navigation/nav_create"/>
 </navigation>

@@ -41,8 +41,8 @@
         app:moduleName="search"/>
 
     <include-dynamic
-        android:id="@+id/nav_playlist"
-        app:graphResName="nav_playlist"
+        android:id="@+id/nav_library"
+        app:graphResName="nav_library"
         app:moduleName="library"/>
 
     <include-dynamic

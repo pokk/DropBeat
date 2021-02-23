@@ -48,6 +48,6 @@
 
     <include-dynamic
         android:id="@+id/nav_playlist_create"
-        app:graphResName="nav_create"
+        app:graphResName="nav_dynamic_create"
         app:moduleName="library"/>
 </navigation>

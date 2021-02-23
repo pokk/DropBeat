@@ -26,17 +26,9 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_songs_of_tag"
-    app:startDestination="@id/songs_of_tag_fragment">
+    app:startDestination="@id/nav_playlist">
 
-    <fragment
-        android:id="@+id/songs_of_tag_fragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.SongsOfTagPlaylistFragment"
-        android:label="fragment_songs_of_tag"
-        tools:layout="@layout/fragment_songs_of_tag">
-        <argument
-            android:name="name"
-            app:argType="string"/>
-    </fragment>
+    <include
+        android:id="@+id/nav_playlist"
+        app:graph="@navigation/nav_playlist"/>
 </navigation>

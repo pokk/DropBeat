@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.explore.presentation.viewmodels
 
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.ARTIST_DETAIL
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.EXPLORE
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYER
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PLAYLIST
@@ -37,6 +38,8 @@ internal class AnalyticsViewModel : BaseAnalyticsViewModel() {
     fun navigatedToPlayer() = navigated(EXPLORE, PLAYER)
 
     fun navigatedToPlaylist(extra: String) = navigated(EXPLORE, PLAYLIST, extra)
+
+    fun navigatedToArtist(extra: String) = navigated(EXPLORE, ARTIST_DETAIL, extra)
 
     fun clickedPlayAMusic(which: String) = sendClickedEvent("$PLAY: $which")
 

@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_explore_to_playlist"
-            app:destination="@id/nav_playlist_detail"/>
+            app:destination="@+id/nav_playlist"/>
         <action
             android:id="@+id/action_explore_to_player"
             app:destination="@id/nav_player"/>
@@ -45,9 +45,10 @@
             app:destination="@id/nav_playlist_songs_of_tag"/>
     </fragment>
 
+    <!-- app:graphPackage="${applicationId}.library" -->
     <include-dynamic
-        android:id="@+id/nav_playlist_detail"
-        app:graphResName="nav_detail"
+        android:id="@+id/nav_playlist"
+        app:graphResName="nav_dynamic_playlist"
         app:moduleName="library">
         <argument
             android:name="playlistId"
@@ -67,7 +68,7 @@
 
     <include-dynamic
         android:id="@+id/nav_playlist_songs_of_tag"
-        app:graphResName="nav_songs_of_tag"
+        app:graphResName="nav_dynamic_songs_of_tag"
         app:moduleName="library">
         <argument
             android:name="name"

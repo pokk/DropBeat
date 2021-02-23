@@ -43,6 +43,7 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.AppResMenu
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
@@ -196,7 +197,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
             it.setOptionClickListener { v, entity ->
-                showMenu(v)
+                showMenu(v, entity)
                 analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             it.setFavoriteClickListener {
@@ -241,11 +242,14 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
     }
 
-    private fun showMenu(anchor: View) =
+    private fun showMenu(anchor: View, entity: SimpleTrackEntity) =
         popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    AppResId.item_information -> Unit
+                    AppResId.item_information -> {
+                        //                        findNavController().navigate(ExploreFragmentDirections.)
+                        analyticsVm.navigatedToArtist(entity.artist)
+                    }
                     AppResId.item_share -> Unit
                 }
                 true

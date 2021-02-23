@@ -242,8 +242,9 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    AppResId.item_information ->
-                        findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToSongOfArtist(entity))
+                    AppResId.item_information -> {
+                        //                        findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToSongOfArtist(entity))
+                    }
                     AppResId.item_share -> Unit
                 }
                 true

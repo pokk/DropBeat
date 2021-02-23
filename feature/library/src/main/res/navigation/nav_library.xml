@@ -27,26 +27,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/playlist_fragment">
+    app:startDestination="@id/my_home_fragment">
 
     <fragment
-        android:id="@+id/playlist_fragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
-        android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist">
-        <deepLink
-            app:uri="https://taiwan.no.one/library/playlist?id={playlistId}&amp;songs={songs}"/>
-        <argument
-            android:name="playlistId"
-            android:defaultValue="-1"
-            app:argType="integer"/>
-        <argument
-            android:name="songs"
-            android:defaultValue="@null"
-            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
-            app:nullable="true"/>
+        android:id="@+id/my_home_fragment"
+        android:name="taiwan.no.one.feat.library.presentation.fragments.MyHomeFragment"
+        tools:layout="@layout/fragment_my_page">
         <action
-            android:id="@+id/action_playlist_to_song_of_artist"
+            android:id="@+id/action_my_home_to_login_graph"
+            app:destination="@id/nav_login"/>
+        <action
+            android:id="@+id/action_my_home_to_setting_graph"
+            app:destination="@id/nav_setting"/>
+        <action
+            android:id="@+id/action_my_home_to_playlist"
+            app:destination="@id/nav_playlist">
+            <argument
+                android:name="playlistId"
+                android:defaultValue="-1"
+                app:argType="integer"/>
+            <argument
+                android:name="songs"
+                android:defaultValue="@null"
+                app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
+                app:nullable="true"/>
+            <argument
+                android:name="title"
+                android:defaultValue="@null"
+                app:argType="string"
+                app:nullable="true"/>
+        </action>
+        <action
+            android:id="@+id/action_my_home_to_song_of_artist"
             app:destination="@id/song_of_artist_fragment"/>
     </fragment>
 
@@ -59,4 +71,18 @@
             android:name="track"
             app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
     </fragment>
+
+    <include
+        android:id="@+id/nav_playlist"
+        app:graph="@navigation/nav_playlist"/>
+
+    <include-dynamic
+        android:id="@+id/nav_login"
+        app:graphResName="nav_login"
+        app:moduleName="login"/>
+
+    <include-dynamic
+        android:id="@+id/nav_setting"
+        app:graphResName="nav_setting"
+        app:moduleName="setting"/>
 </navigation>

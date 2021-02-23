@@ -27,11 +27,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_create"
     app:startDestination="@id/create_fragment">
 
     <fragment
         android:id="@+id/create_fragment"
         android:name="taiwan.no.one.feat.library.presentation.fragments.CreateFragment"
         android:label="fragmentCreate"
-        tools:layout="@layout/fragment_create"/>
+        tools:layout="@layout/fragment_create">
+        <argument
+            android:name="playlist"
+            android:defaultValue="@null"
+            app:argType="taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity"
+            app:nullable="true"/>
+    </fragment>
 </navigation>
