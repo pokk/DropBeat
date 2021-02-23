@@ -7,9 +7,7 @@
         <option value="activateOnShortcut" />
         <option value="activateOnBatch" />
         <option value="noActionIfCompileErrors" />
-        <option value="organizeImports" />
         <option value="reformat" />
-        <option value="rearrange" />
         <option value="executeAction" />
       </set>
     </option>
