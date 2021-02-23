@@ -36,44 +36,44 @@
         tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_explore_to_playlist"
-            app:destination="@+id/nav_playlist"/>
+            app:destination="@+id/nav_playlist">
+            <argument
+                android:name="playlistId"
+                android:defaultValue="-1"
+                app:argType="integer"/>
+            <argument
+                android:name="songs"
+                android:defaultValue="@null"
+                app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
+                app:nullable="true"/>
+            <argument
+                android:name="title"
+                android:defaultValue="@null"
+                app:argType="string"
+                app:nullable="true"/>
+        </action>
         <action
             android:id="@+id/action_explore_to_player"
             app:destination="@id/nav_player"/>
         <action
             android:id="@+id/action_explore_to_playlist_songs_of_tag"
-            app:destination="@id/nav_playlist_songs_of_tag"/>
+            app:destination="@id/nav_playlist_songs_of_tag">
+            <argument
+                android:name="name"
+                app:argType="string"/>
+        </action>
     </fragment>
 
     <!-- app:graphPackage="${applicationId}.library" -->
     <include-dynamic
         android:id="@+id/nav_playlist"
         app:graphResName="nav_dynamic_playlist"
-        app:moduleName="library">
-        <argument
-            android:name="playlistId"
-            android:defaultValue="-1"
-            app:argType="integer"/>
-        <argument
-            android:name="songs"
-            android:defaultValue="@null"
-            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
-            app:nullable="true"/>
-        <argument
-            android:name="title"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true"/>
-    </include-dynamic>
+        app:moduleName="library"/>
 
     <include-dynamic
         android:id="@+id/nav_playlist_songs_of_tag"
         app:graphResName="nav_dynamic_songs_of_tag"
-        app:moduleName="library">
-        <argument
-            android:name="name"
-            app:argType="string"/>
-    </include-dynamic>
+        app:moduleName="library"/>
 
     <include-dynamic
         android:id="@+id/nav_player"

@@ -58,23 +58,17 @@
                 app:nullable="true"/>
         </action>
         <action
-            android:id="@+id/action_my_home_to_song_of_artist"
-            app:destination="@id/song_of_artist_fragment"/>
+            android:id="@+id/action_my_home_to_nav_artist"
+            app:destination="@id/nav_artist">
+            <argument
+                android:name="track"
+                app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
+        </action>
     </fragment>
 
-    <fragment
-        android:id="@+id/song_of_artist_fragment"
-        android:name="taiwan.no.one.feat.library.presentation.fragments.SongOfArtistFragment"
-        android:label="SongOfArtistFragment"
-        tools:layout="@layout/fragment_songs_of_article">
-        <argument
-            android:name="track"
-            app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
-    </fragment>
+    <include app:graph="@navigation/nav_playlist"/>
 
-    <include
-        android:id="@+id/nav_playlist"
-        app:graph="@navigation/nav_playlist"/>
+    <include app:graph="@navigation/nav_artist"/>
 
     <include-dynamic
         android:id="@+id/nav_login"

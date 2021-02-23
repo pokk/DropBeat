@@ -63,6 +63,13 @@
                 app:argType="taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity"
                 app:nullable="true"/>
         </action>
+        <action
+            android:id="@+id/action_playlist_to_nav_artist"
+            app:destination="@id/nav_artist">
+            <argument
+                android:name="track"
+                app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
+        </action>
     </fragment>
 
     <fragment
@@ -76,4 +83,6 @@
     </fragment>
 
     <include app:graph="@navigation/nav_create"/>
+
+    <include app:graph="@navigation/nav_artist"/>
 </navigation>

@@ -39,6 +39,7 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
 import com.google.android.material.transition.MaterialSharedAxis
+import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -57,7 +58,6 @@ import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import java.lang.ref.WeakReference
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     //region Variable of View Binding
@@ -252,8 +252,9 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
         popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    AppResId.item_information ->
-                        findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToSongOfArtist(entity))
+                    AppResId.item_information -> {
+                        findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToNavArtist(entity))
+                    }
                     AppResId.item_share -> Unit
                 }
                 true

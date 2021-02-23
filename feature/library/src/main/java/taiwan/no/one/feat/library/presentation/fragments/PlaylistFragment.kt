@@ -40,7 +40,6 @@ import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
-import java.lang.ref.WeakReference
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -61,6 +60,7 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
+import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
@@ -243,7 +243,8 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     AppResId.item_information -> {
-                        //                        findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToSongOfArtist(entity))
+                        findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToNavArtist(entity))
+                        analyticsVm.navigatedFromPlaylistToArtist()
                     }
                     AppResId.item_share -> Unit
                 }
