@@ -62,6 +62,13 @@
                 android:name="name"
                 app:argType="string"/>
         </action>
+        <action
+            android:id="@+id/action_explore_to_nav_artist"
+            app:destination="@id/nav_artist">
+            <argument
+                android:name="track"
+                app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
+        </action>
     </fragment>
 
     <!-- app:graphPackage="${applicationId}.library" -->
@@ -73,6 +80,11 @@
     <include-dynamic
         android:id="@+id/nav_playlist_songs_of_tag"
         app:graphResName="nav_dynamic_songs_of_tag"
+        app:moduleName="library"/>
+
+    <include-dynamic
+        android:id="@+id/nav_artist"
+        app:graphResName="nav_dynamic_artist"
         app:moduleName="library"/>
 
     <include-dynamic

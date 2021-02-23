@@ -247,7 +247,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     AppResId.item_information -> {
-                        //                        findNavController().navigate(ExploreFragmentDirections.)
+                        findNavController().navigate(ExploreFragmentDirections.actionExploreToNavArtist(entity))
                         analyticsVm.navigatedToArtist(entity.artist)
                     }
                     AppResId.item_share -> Unit
