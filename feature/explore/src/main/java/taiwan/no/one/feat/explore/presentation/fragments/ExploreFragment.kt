@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.explore.presentation.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -250,7 +251,14 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                         findNavController().navigate(ExploreFragmentDirections.actionExploreToNavArtist(entity))
                         analyticsVm.navigatedToArtist(entity.artist)
                     }
-                    AppResId.item_share -> Unit
+                    AppResId.item_share -> {
+                        val sendIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "Check out this dope website! - ${entity.uri}")
+                            type = "text/plain"
+                        }
+                        requireActivity().startActivity(Intent.createChooser(sendIntent, "Select app to share with"))
+                    }
                 }
                 true
             }
