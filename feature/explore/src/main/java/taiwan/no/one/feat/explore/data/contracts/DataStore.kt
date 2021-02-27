@@ -54,9 +54,9 @@ internal interface DataStore {
     //region Artist Data
     suspend fun getArtistInfo(name: String?, mbid: String?): ArtistInfoEntity
 
-    suspend fun getArtistTopAlbum(mbid: String): ArtistTopAlbumInfoEntity
+    suspend fun getArtistTopAlbum(name: String?, mbid: String?): ArtistTopAlbumInfoEntity
 
-    suspend fun getArtistTopTrack(mbid: String): ArtistTopTrackInfoEntity
+    suspend fun getArtistTopTrack(name: String?, mbid: String?): ArtistTopTrackInfoEntity
 
     suspend fun getSimilarArtistInfo(mbid: String): ArtistSimilarEntity
 

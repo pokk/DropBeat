@@ -52,16 +52,17 @@ internal class RemoteStore(
         lastFmService.retrieveAlbumInfo(infoQuery(Constants.LASTFM_PARAM_ALBUM_GET_INFO, mbid))
 
     override suspend fun getArtistInfo(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistInfo(combineLastFmQuery(Constants.LASTFM_PARAM_ARTIST_GET_INFO) {
-            name.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_ARTIST_NAME, it) }
-            mbid.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_MBID, it) }
-        })
+        lastFmService.retrieveArtistInfo(combineArtistName(Constants.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid))
 
-    override suspend fun getArtistTopAlbum(mbid: String) =
-        lastFmService.retrieveArtistTopAlbum(infoQuery(Constants.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS, mbid))
+    override suspend fun getArtistTopAlbum(name: String?, mbid: String?) =
+        lastFmService.retrieveArtistTopAlbum(combineArtistName(Constants.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS,
+                                                               name,
+                                                               mbid))
 
-    override suspend fun getArtistTopTrack(mbid: String) =
-        lastFmService.retrieveArtistTopTrack(infoQuery(Constants.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS, mbid))
+    override suspend fun getArtistTopTrack(name: String?, mbid: String?) =
+        lastFmService.retrieveArtistTopTrack(combineArtistName(Constants.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS,
+                                                               name,
+                                                               mbid))
 
     override suspend fun getSimilarArtistInfo(mbid: String) =
         lastFmService.retrieveSimilarArtistInfo(infoQuery(Constants.LASTFM_PARAM_ARTIST_GET_SIMILAR, mbid))
@@ -122,6 +123,12 @@ internal class RemoteStore(
         Constants.LASTFM_QUERY_FORMAT to "json",
         Constants.LASTFM_QUERY_LANGUAGE to "en", // TODO(jieyiwu): 6/9/20 We can get from system.
     ).apply(block)
+
+    private fun combineArtistName(method: String, name: String?, mbid: String?) =
+        combineLastFmQuery(method) {
+            name.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_ARTIST_NAME, it) }
+            mbid.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_MBID, it) }
+        }
 
     private fun chartQuery(method: String, page: Int, limit: Int) = combineLastFmQuery(method) {
         put(Constants.LASTFM_QUERY_PAGE, page.toString())

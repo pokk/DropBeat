@@ -43,10 +43,10 @@ internal class FetchArtistCompleteInfoOneShotCase(
 ) : FetchArtistCompleteInfoCase() {
     override suspend fun acquireCase(parameter: FetchArtistCompleteInfoReq?) = parameter.ensure {
         val artistInfo = repository.fetchArtist(name, null)
-        val mbid = artistInfo.mbid?.takeUnless(String::isNullOrBlank) ?: throw NullPointerException("Can't find mbid.")
+        val mbid = artistInfo.mbid?.takeUnless(String::isNullOrBlank)
         coroutineScope {
-            val deferredAlbumOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopAlbum(mbid) }
-            val deferredTrackOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopTrack(mbid) }
+            val deferredAlbumOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopAlbum(name, mbid) }
+            val deferredTrackOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopTrack(name, mbid) }
             val deferredDetailOfArtist = async(Dispatchers.IO) {
                 extraRepository.fetchArtistMoreDetail(name?.replace(" ", "+").orEmpty())
             }

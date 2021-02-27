@@ -49,9 +49,11 @@ internal class LastFmRepository(
     override suspend fun fetchArtist(name: String?, mbid: String?) =
         remote.getArtistInfo(name, mbid).artist ?: throw Exception()
 
-    override suspend fun fetchArtistTopAlbum(mbid: String) = remote.getArtistTopAlbum(mbid).topAlbums
+    override suspend fun fetchArtistTopAlbum(name: String?, mbid: String?) =
+        remote.getArtistTopAlbum(name, mbid).topAlbums
 
-    override suspend fun fetchArtistTopTrack(mbid: String) = remote.getArtistTopTrack(mbid).topTracks
+    override suspend fun fetchArtistTopTrack(name: String?, mbid: String?) =
+        remote.getArtistTopTrack(name, mbid).topTracks
 
     override suspend fun fetchSimilarArtistInfo(mbid: String) = remote.getSimilarArtistInfo(mbid).similarArtist
 

@@ -52,9 +52,9 @@ internal class LocalStore(
 
     override suspend fun getArtistInfo(name: String?, mbid: String?) = UnsupportedOperation()
 
-    override suspend fun getArtistTopAlbum(mbid: String) = UnsupportedOperation()
+    override suspend fun getArtistTopAlbum(name: String?, mbid: String?) = UnsupportedOperation()
 
-    override suspend fun getArtistTopTrack(mbid: String) = UnsupportedOperation()
+    override suspend fun getArtistTopTrack(name: String?, mbid: String?) = UnsupportedOperation()
 
     override suspend fun getSimilarArtistInfo(mbid: String) = UnsupportedOperation()
 
