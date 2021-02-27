@@ -73,11 +73,11 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     //region Variable of View Model
     private val vm by viewModels<PlaylistViewModel>()
+    private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
     //region Variable of Recycler View
     private val playlistAdapter by lazy { TrackAdapter() }
-    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
     //endregion
 
