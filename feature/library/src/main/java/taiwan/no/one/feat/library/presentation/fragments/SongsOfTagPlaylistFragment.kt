@@ -105,7 +105,7 @@ internal class SongsOfTagPlaylistFragment : BaseLibraryFragment<BaseActivity<*>,
 
     override fun rendered(savedInstanceState: Bundle?) {
         vm.apply {
-            getSongs(navArgs.name)
+            if (songs?.value == null) getSongs(navArgs.name)
             songs?.observe(viewLifecycleOwner) { res ->
                 res.onSuccess {
                     adapter.data = it
