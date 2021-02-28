@@ -8,6 +8,8 @@
         <option value="activateOnBatch" />
         <option value="noActionIfCompileErrors" />
         <option value="reformat" />
+        <option value="rearrange" />
+        <option value="executeAction" />
       </set>
     </option>
     <option name="configurationPath" value="" />

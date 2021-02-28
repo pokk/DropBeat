@@ -25,12 +25,19 @@
 package taiwan.no.one.feat.library.presentation.viewmodels
 
 import android.app.Application
+import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
+import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class SongOfArtistViewModel(
@@ -38,10 +45,29 @@ internal class SongOfArtistViewModel(
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
     private val exploreMethodsProvider by instance<ExploreMethodsProvider>()
+    private val libraryMethodsProvider by instance<LibraryMethodsProvider>()
     private val _artistInfo by lazy { ResultLiveData<SimpleArtistEntity>() }
     val artistInfo get() = _artistInfo.toLiveData()
+    val artistTrack
+        get() = _artistInfo.switchMap {
+            liveData { emit(attachFavorite(it.getOrNull()?.topTracks.orEmpty())) }
+        }
+    val artistAlbums
+        get() = _artistInfo.map { it.getOrNull()?.topAlbums.orEmpty() }
 
+    @UiThread
     fun getArtistInfo(name: String) = launchBehind {
         _artistInfo.postValue(runCatching { exploreMethodsProvider.getArticleInfo(name) })
+    }
+
+    @WorkerThread
+    private suspend fun attachFavorite(tracks: List<SimpleTrackEntity>) = tracks.onEach {
+        val isFavorite = try {
+            libraryMethodsProvider.isFavoriteTrack(it.uri, 2).getOrNull() ?: false
+        }
+        catch (e: Exception) {
+            false
+        }
+        it.isFavorite = isFavorite
     }
 }

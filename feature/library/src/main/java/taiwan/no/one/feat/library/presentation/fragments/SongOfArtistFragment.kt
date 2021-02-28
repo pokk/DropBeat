@@ -36,6 +36,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.data.entities.SimpleAlbumEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
@@ -44,6 +45,7 @@ import taiwan.no.one.feat.library.databinding.MergeArticleInformationBinding
 import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
+import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.SongOfArtistViewModel
 import java.lang.ref.WeakReference
 
@@ -55,6 +57,7 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
 
     //region Variable of View Model
     private val vm by viewModels<SongOfArtistViewModel>()
+    private val playlistVm by viewModels<PlaylistViewModel>()
     private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
@@ -75,11 +78,10 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
 
     override fun bindLiveData() {
         vm.artistInfo.observe(this) { res ->
-            res.onSuccess {
-                displayArtistInfo(it)
-                displayTracks(it.topTracks)
-            }.onFailure(::loge)
+            res.onSuccess(::displayArtistInfo).onFailure(::loge)
         }
+        vm.artistTrack.observe(this, ::displayTracks)
+        vm.artistAlbums.observe(this, ::displayAlbums)
     }
 
     override fun viewComponentBinding() {
@@ -102,6 +104,12 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
             findNavController().navigateUp()
             analyticsVm.navigatedGoBackFromArtist()
         }
+        playlistAdapter.apply {
+            setFavoriteClickListener {
+                playlistVm.updateSong(it, it.isFavorite)
+                analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
+            }
+        }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
@@ -120,4 +128,6 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
         mergeLayoutSongsOfTypeBinding.pbProgress.gone()
         playlistAdapter.data = tracks
     }
+
+    private fun displayAlbums(albums: List<SimpleAlbumEntity>) = Unit
 }
