@@ -39,7 +39,6 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
 import com.google.android.material.transition.MaterialSharedAxis
-import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -56,8 +55,10 @@ import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAd
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
+import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
+import java.lang.ref.WeakReference
 
 class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     //region Variable of View Binding
@@ -256,7 +257,10 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                         findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToNavArtist(entity))
                         analyticsVm.navigatedFromPlaylistToArtist(entity.name)
                     }
-                    AppResId.item_share -> Unit
+                    AppResId.item_share -> {
+                        shareText(requireActivity(), entity.uri)
+                        analyticsVm.clickedShare(entity.uri)
+                    }
                 }
                 true
             }

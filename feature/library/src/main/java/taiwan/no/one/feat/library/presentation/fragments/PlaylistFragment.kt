@@ -57,6 +57,7 @@ import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
+import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
@@ -246,7 +247,10 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                         findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToNavArtist(entity))
                         analyticsVm.navigatedFromPlaylistToArtist(entity.name)
                     }
-                    AppResId.item_share -> Unit
+                    AppResId.item_share -> {
+                        shareText(requireActivity(), entity.uri)
+                        analyticsVm.clickedShare(entity.uri)
+                    }
                 }
                 true
             }

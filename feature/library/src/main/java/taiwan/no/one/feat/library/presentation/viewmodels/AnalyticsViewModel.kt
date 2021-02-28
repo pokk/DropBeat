@@ -81,4 +81,6 @@ internal class AnalyticsViewModel : BaseAnalyticsViewModel() {
     fun clickedFavorite(isFavorite: Boolean, which: String) = sendClickedEvent("${
         if (isFavorite) FAVORITE else UNFAVORITE
     }: $which")
+
+    fun clickedShare(uri: String) = sendClickedEvent(uri)
 }
