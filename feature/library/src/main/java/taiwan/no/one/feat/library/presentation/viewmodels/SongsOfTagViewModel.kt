@@ -45,7 +45,7 @@ import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 
-class SongsOfTagViewModel(
+internal class SongsOfTagViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {

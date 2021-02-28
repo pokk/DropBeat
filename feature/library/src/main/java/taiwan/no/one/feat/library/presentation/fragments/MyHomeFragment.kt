@@ -41,9 +41,7 @@ import com.devrapid.kotlinshaver.isNotNull
 import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
-import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
@@ -53,14 +51,12 @@ import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
-import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
-import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
-class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
+internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     //region Variable of View Binding
     private val mergeTopControllerBinding get() = MergeTopControllerBinding.bind(binding.root)
     private val includePlaylist get() = find<ConstraintLayout>(R.id.include_playlist)
@@ -71,7 +67,6 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     //region Variable of View Model
     private val privacyVm by activityViewModels<PrivacyViewModel>()
-    private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val vm by viewModels<MyHomeViewModel>()
     //endregion
 
@@ -91,6 +86,8 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enterTransition = null
+        returnTransition = null
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
@@ -215,7 +212,7 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
             setOptionClickListener { v, entity ->
-                showOptionMenu(v, entity)
+                showOptionMenu(v, entity) { navigateToArtist(entity) }
                 analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             setFavoriteClickListener {
@@ -223,6 +220,11 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                 analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
             }
         }
+    }
+
+    private fun navigateToArtist(entity: SimpleTrackEntity) {
+        findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToNavArtist(entity))
+        analyticsVm.navigatedFromPlaylistToArtist(entity.artist)
     }
 
     private fun showMenu(anchor: View) =
@@ -244,23 +246,6 @@ class MyHomeFragment : BaseFragment<BaseActivity<*>, FragmentMyPageBinding>() {
                         analyticsVm.navigatedToSetting()
                     }
                     R.id.item_about -> Unit
-                }
-                true
-            }
-        }.show()
-
-    private fun showOptionMenu(anchor: View, entity: SimpleTrackEntity) =
-        popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    AppResId.item_information -> {
-                        findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToNavArtist(entity))
-                        analyticsVm.navigatedFromPlaylistToArtist(entity.name)
-                    }
-                    AppResId.item_share -> {
-                        shareText(requireActivity(), entity.uri)
-                        analyticsVm.clickedShare(entity.uri)
-                    }
                 }
                 true
             }

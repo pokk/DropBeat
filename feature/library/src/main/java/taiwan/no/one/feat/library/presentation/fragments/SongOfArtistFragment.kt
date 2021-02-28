@@ -32,10 +32,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
-import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.data.entities.SimpleAlbumEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
@@ -44,12 +42,11 @@ import taiwan.no.one.feat.library.databinding.FragmentSongsOfArticleBinding
 import taiwan.no.one.feat.library.databinding.MergeArticleInformationBinding
 import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
-import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.SongOfArtistViewModel
 import java.lang.ref.WeakReference
 
-class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticleBinding>() {
+internal class SongOfArtistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentSongsOfArticleBinding>() {
     //region Variable of View Binding
     private val mergeArticleInformationBinding get() = MergeArticleInformationBinding.bind(binding.root)
     private val mergeLayoutSongsOfTypeBinding get() = MergeLayoutSongsOfTypeBinding.bind(binding.root)
@@ -58,7 +55,6 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
     //region Variable of View Model
     private val vm by viewModels<SongOfArtistViewModel>()
     private val playlistVm by viewModels<PlaylistViewModel>()
-    private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
     //region Variable of Recycler View
@@ -67,14 +63,6 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
     //endregion
 
     private val navArgs by navArgs<SongOfArtistFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-    }
 
     override fun bindLiveData() {
         vm.artistInfo.observe(this) { res ->
@@ -105,6 +93,10 @@ class SongOfArtistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfArticl
             analyticsVm.navigatedGoBackFromArtist()
         }
         playlistAdapter.apply {
+            setOptionClickListener { v, entity ->
+                showOptionMenu(v, entity)
+                analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
+            }
             setFavoriteClickListener {
                 playlistVm.updateSong(it, it.isFavorite)
                 analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())

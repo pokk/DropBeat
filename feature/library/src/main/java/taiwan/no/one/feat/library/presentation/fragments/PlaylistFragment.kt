@@ -39,12 +39,9 @@ import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
-import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
-import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.core.helpers.StringUtil
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
@@ -55,15 +52,13 @@ import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.databinding.FragmentPlaylistBinding
 import taiwan.no.one.feat.library.databinding.StubNoSongsBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
-import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
-import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
-internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
+internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
     private var playlist: PlayListEntity? = null
     private var prevSavedState: SavedStateHandle? = null
@@ -74,7 +69,6 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
 
     //region Variable of View Model
     private val vm by viewModels<PlaylistViewModel>()
-    private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
     //region Variable of Recycler View
@@ -83,14 +77,6 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
     //endregion
 
     private val navArgs by navArgs<PlaylistFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-    }
 
     override fun onResume() {
         super.onResume()
@@ -149,7 +135,7 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
             setOptionClickListener { v, entity ->
-                showOptionMenu(v, entity)
+                showOptionMenu(v, entity) { navigateToArtist(entity) }
                 analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             setFavoriteClickListener {
@@ -211,6 +197,11 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
         binding.mtvSubtitle.text = "0 Songs"
     }
 
+    private fun navigateToArtist(entity: SimpleTrackEntity) {
+        findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToNavArtist(entity))
+        analyticsVm.navigatedFromPlaylistToArtist(entity.name)
+    }
+
     private fun showMoreMenu(anchor: View) =
         popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_playlist).apply {
             if (navArgs.playlistId in listOf(1, 2)) {
@@ -234,23 +225,6 @@ internal class PlaylistFragment : BaseFragment<BaseActivity<*>, FragmentPlaylist
                         analyticsVm.navigatedToRename()
                     }
                     R.id.item_delete -> Unit
-                }
-                true
-            }
-        }.show()
-
-    private fun showOptionMenu(anchor: View, entity: SimpleTrackEntity) =
-        popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    AppResId.item_information -> {
-                        findNavController().navigate(PlaylistFragmentDirections.actionPlaylistToNavArtist(entity))
-                        analyticsVm.navigatedFromPlaylistToArtist(entity.name)
-                    }
-                    AppResId.item_share -> {
-                        shareText(requireActivity(), entity.uri)
-                        analyticsVm.clickedShare(entity.uri)
-                    }
                 }
                 true
             }

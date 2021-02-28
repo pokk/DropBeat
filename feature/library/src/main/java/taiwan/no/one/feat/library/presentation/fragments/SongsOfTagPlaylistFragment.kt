@@ -25,30 +25,24 @@
 package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
-import com.google.android.material.transition.MaterialSharedAxis
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
-import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.dropbeat.AppResId
-import taiwan.no.one.dropbeat.AppResMenu
+import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.library.databinding.FragmentSongsOfTagBinding
 import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
-import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.SongsOfTagViewModel
-import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
 
-internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
+internal class SongsOfTagPlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
     //region Variable of View Binding
     private val merge get() = MergeLayoutSongsOfTypeBinding.bind(binding.root)
     //endregion
@@ -56,7 +50,6 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     //region Variable of View Model
     private val vm by viewModels<SongsOfTagViewModel>()
     private val playlistViewModel by viewModels<PlaylistViewModel>()
-    private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
     //region Variable of Recycler View
@@ -67,14 +60,6 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
     //endregion
 
     private val navArgs by navArgs<SongsOfTagPlaylistFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-    }
 
     override fun onDestroyView() {
         merge.rvMusics.adapter = null
@@ -100,7 +85,7 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
                 analyticsVm.clickedPlayAMusic(it.obtainTrackAndArtistName())
             }
             setOptionClickListener { v, entity ->
-                showOptionMenu(v)
+                showOptionMenu(v, entity) { navigateToArtist(entity) }
                 analyticsVm.clickedOption(entity.obtainTrackAndArtistName())
             }
             setFavoriteClickListener {
@@ -132,14 +117,8 @@ internal class SongsOfTagPlaylistFragment : BaseFragment<BaseActivity<*>, Fragme
         }
     }
 
-    private fun showOptionMenu(anchor: View) =
-        popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    AppResId.item_information -> Unit
-                    AppResId.item_share -> Unit
-                }
-                true
-            }
-        }.show()
+    private fun navigateToArtist(entity: SimpleTrackEntity) {
+        findNavController().navigate(SongsOfTagPlaylistFragmentDirections.actionSongsOfTagToNavArtist(entity))
+        analyticsVm.navigatedFromPlaylistToArtist(entity.artist)
+    }
 }
