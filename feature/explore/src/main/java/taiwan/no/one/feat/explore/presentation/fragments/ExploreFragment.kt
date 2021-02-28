@@ -24,7 +24,6 @@
 
 package taiwan.no.one.feat.explore.presentation.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -58,6 +57,7 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAd
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
+import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 import java.lang.ref.WeakReference
@@ -252,12 +252,8 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                         analyticsVm.navigatedToArtist(entity.artist)
                     }
                     AppResId.item_share -> {
-                        val sendIntent = Intent().apply {
-                            action = Intent.ACTION_SEND
-                            putExtra(Intent.EXTRA_TEXT, "Check out this dope website! - ${entity.uri}")
-                            type = "text/plain"
-                        }
-                        requireActivity().startActivity(Intent.createChooser(sendIntent, "Select app to share with"))
+                        shareText(requireActivity(), entity.uri)
+                        analyticsVm.clickedShare(entity.uri)
                     }
                 }
                 true
