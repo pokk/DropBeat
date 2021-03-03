@@ -39,7 +39,7 @@ object LibraryDependency {
         const val CONSTRAINTLAYOUT = "2.1.0-alpha2"
         const val COORDINATORLAYOUT = "1.1.0"
         const val AAC_LIFECYCLE = "2.3.0"
-        const val DATASTORE = "1.0.0-alpha07"
+        const val DATASTORE = "1.0.0-alpha067"
         const val KODEIN = "7.3.1"
         const val KTX = "1.5.0-beta02"
         const val ACTIVITY_KTX = "1.3.0-alpha03"
