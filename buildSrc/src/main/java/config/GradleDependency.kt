@@ -31,7 +31,7 @@ object GradleDependency {
         const val SAFE_ARGS = NAVIGATION_KTX
         const val GOOGLE_SERVICE = "4.3.5"
         const val CRASHLYTICS = "2.5.0"
-        const val PERFORMANCE = "1.3.4"
+        const val PERFORMANCE = "1.3.5"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${CoreDependency.Version.KOTLIN}"

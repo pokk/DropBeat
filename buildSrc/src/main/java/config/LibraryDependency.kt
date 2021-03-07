@@ -58,7 +58,7 @@ object LibraryDependency {
         const val OKHTTP3 = "5.0.0-alpha.2"
         const val JSOUP = "1.13.1"
         const val AUTO_SERVICE = "1.0-rc7"
-        const val FIREBASE_BOM = "26.5.0"
+        const val FIREBASE_BOM = "26.6.0"
         const val FIREBASE_AUTH_GOOGLE = "19.0.0"
         const val FIREBASE_AUTH_FACEBOOK = "9.0.0"
         const val EXOPLAYER = "2.13.2"
