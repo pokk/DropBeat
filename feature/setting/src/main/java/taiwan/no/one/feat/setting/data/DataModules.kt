@@ -26,7 +26,7 @@ package taiwan.no.one.feat.setting.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.preferencesDataStore
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
@@ -40,12 +40,14 @@ import taiwan.no.one.feat.setting.data.repositories.SettingRepository
 import taiwan.no.one.feat.setting.data.stores.LocalStore
 import taiwan.no.one.feat.setting.data.stores.RemoteStore
 import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
+import androidx.datastore.core.DataStore as AndroidDataStore
 
 internal object DataModules : ModuleProvider {
     private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
     private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
     private const val TAG_DATASTORE_SETTING = "the datastore of setting"
     private const val NAME_OF_DATASTORE_SETTING = "app_setting"
+    private val Context.dataStore: AndroidDataStore<Preferences> by preferencesDataStore(NAME_OF_DATASTORE_SETTING)
 
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
         import(localProvide(context))
@@ -60,9 +62,7 @@ internal object DataModules : ModuleProvider {
     }
 
     private fun localProvide(context: Context) = DI.Module("${FEAT_NAME}LocalModule") {
-        bind<androidx.datastore.core.DataStore<Preferences>>(TAG_DATASTORE_SETTING) with singleton {
-            context.createDataStore(NAME_OF_DATASTORE_SETTING)
-        }
+        bind<AndroidDataStore<Preferences>>(TAG_DATASTORE_SETTING) with singleton { context.dataStore }
         bind<SettingPreference>() with singleton { SettingDatastore(instance(TAG_DATASTORE_SETTING)) }
     }
 
