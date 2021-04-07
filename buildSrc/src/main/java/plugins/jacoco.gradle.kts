@@ -28,15 +28,21 @@ plugins {
     jacoco
 }
 
+jacoco {
+    toolVersion = "0.8.6"
+}
+
 tasks.withType<Test> {
+    // Jacoco is back [https://issuetracker.google.com/issues/171125857]
     maxHeapSize = "3g"
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
         exclude("*")
+        include("com.application.*")
     }
 }
 
-private val sourceDirectoriesTree = fileTree("${project.buildDir}") {
+private val sourceDirectoriesTree = fileTree(project.projectDir) {
     include(
         "src/main/java/**",
         "src/main/kotlin/**",
@@ -45,30 +51,21 @@ private val sourceDirectoriesTree = fileTree("${project.buildDir}") {
     )
 }
 
-private val classDirectoriesTree = fileTree(project.buildDir) {
-    include(
-        "**/classes/**/main/**",
-        "**/intermediates/classes/debug/**",
-        "**/intermediates/javac/debug/*/classes/**", // Android Gradle Plugin 3.2.x support.
-        "**/tmp/kotlin-classes/debug/**")
+private val classDirectoriesTree = fileTree(project.layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
     exclude(
         "**/R.class",
         "**/R\$*.class",
         "**/BuildConfig.*",
         "**/Manifest*.*",
         "**/*Test*.*",
-        "android/**/*.*",
-        "**/*\$Lambda$*.*", // Jacoco can not handle several "$" in class name.
-        "**/*\$inlined$*.*" // Kotlin specific, Jacoco can not handle several "$" in class name.
+        "android/**/*.*"
     )
 }
 
 private val executionDataTree = fileTree(project.buildDir) {
     include(
-        "outputs/code_coverage/**/*.ec",
-        "jacoco/jacocoTestReportDebug.exec",
-        "jacoco/testDebugUnitTest.exec",
-        "jacoco/test.exec"
+        "outputs/code_coverage/connected/*coverage.ec",
+        "jacoco/testDebugUnitTest.exec"
     )
 }
 
@@ -82,13 +79,13 @@ fun JacocoReportsContainer.reports() {
 fun JacocoReport.setDirectories() {
     sourceDirectories.setFrom(sourceDirectoriesTree)
     classDirectories.setFrom(classDirectoriesTree)
-    executionData.setFrom(executionDataTree)
+    executionData.setFrom("${project.projectDir}/jacoco.exec", executionDataTree)
 }
 
 fun JacocoCoverageVerification.setDirectories() {
     sourceDirectories.setFrom(sourceDirectoriesTree)
     classDirectories.setFrom(classDirectoriesTree)
-    executionData.setFrom(executionDataTree)
+    executionData.setFrom("${project.projectDir}/jacoco.exec", executionDataTree)
 }
 
 private val taskJacocoAndroidTestReport = "jacocoAndroidTestReport"
@@ -96,7 +93,7 @@ private val taskJacocoAndroidCoverageVerification = "jacocoAndroidCoverageVerifi
 
 if (tasks.findByName(taskJacocoAndroidTestReport) == null) {
     tasks.register<JacocoReport>(taskJacocoAndroidTestReport) {
-        group = BuildTaskGroups.VERIFICATION
+        group = BuildTaskGroups.REPORTING
         description = "Code coverage report for both Android and Unit tests."
         dependsOn("testDebugUnitTest", "createDebugCoverageReport")
         reports {
@@ -108,7 +105,7 @@ if (tasks.findByName(taskJacocoAndroidTestReport) == null) {
 
 if (tasks.findByName(taskJacocoAndroidCoverageVerification) == null) {
     tasks.register<JacocoCoverageVerification>(taskJacocoAndroidCoverageVerification) {
-        group = BuildTaskGroups.VERIFICATION
+        group = BuildTaskGroups.REPORTING
         description = "Code coverage verification for Android both Android and Unit tests."
         dependsOn("testDebugUnitTest", "createDebugCoverageReport")
         violationRules {

@@ -23,6 +23,7 @@
  */
 
 object BuildTaskGroups {
+    const val REPORTING = "reporting"
     const val VERIFICATION = "verification"
     const val GIT_HOOK = "git hooks"
 }
