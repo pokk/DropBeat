@@ -23,8 +23,9 @@
  */
 
 plugins {
+    val kotlinVersion: String by System.getProperties()
     `kotlin-dsl`
-    kotlin("jvm") version "1.4.30"
+    kotlin("jvm") version kotlinVersion
 }
 
 kotlinDslPluginOptions {
@@ -36,15 +37,21 @@ repositories {
     // The org.jetbrains.kotlin.jvm plugin requires a repository
     // where to download the Kotlin compiler dependencies from.
     google()
-    jcenter()
     mavenCentral()
+    gradlePluginPortal()
+    jcenter()
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.0.0-alpha08")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21")
+    val kotlinVersion: String by System.getProperties()
+    val detektVersion: String by System.getProperties()
+    val updateVersion: String by System.getProperties()
+    val ktlintVersion: String by System.getProperties()
 
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.15.0")
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.36.0")
-    implementation("com.pinterest:ktlint:0.40.0")
+    implementation("com.android.tools.build:gradle:4.1.3")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
+    implementation("com.github.ben-manes:gradle-versions-plugin:$updateVersion")
+    implementation("com.pinterest:ktlint:$ktlintVersion")
 }

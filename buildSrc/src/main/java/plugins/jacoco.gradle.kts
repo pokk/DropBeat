@@ -32,7 +32,7 @@ tasks.withType<Test> {
     maxHeapSize = "3g"
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
-        exclude("jdk.internal.*")
+        exclude("*")
     }
 }
 
