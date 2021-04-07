@@ -28,13 +28,13 @@ object LibraryDependency {
     object Version {
         const val ARV = "1.0.16"
         const val KINFER = "2.2.0"
-        const val MATERIAL = "1.4.0-alpha01"
+        const val MATERIAL = "1.4.0-alpha02"
         const val ANDROIDX = "1.0.0"
         const val ANNOTATION = "1.3.0-alpha01"
         const val APPCOMPAT = "1.3.0-beta01"
         const val APP_STARTUP = "1.0.0"
         const val CARDVIEW = ANDROIDX
-        const val RECYCLERVIEW = "1.2.0-rc01"
+        const val RECYCLERVIEW = "1.2.0"
         const val PAGING = "3.0.0-beta03"
         const val CONSTRAINTLAYOUT = "2.1.0-beta01"
         const val COORDINATORLAYOUT = "1.1.0"
@@ -46,7 +46,7 @@ object LibraryDependency {
         const val FRAGMENT_KTX = "1.3.2"
         const val PALETTE_KTX = "1.0.0"
         const val COLLECTION_KTX = "1.2.0-alpha01"
-        const val NAVIGATION_KTX = "2.3.4"
+        const val NAVIGATION_KTX = "2.3.5"
         const val WORK_KTX = "2.7.0-alpha02"
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.3.0-rc01"
@@ -57,14 +57,14 @@ object LibraryDependency {
         const val RETROFIT2 = "2.9.0"
         const val OKHTTP3 = "5.0.0-alpha.2"
         const val JSOUP = "1.13.1"
-        const val AUTO_SERVICE = "1.0-rc7"
+        const val AUTO_SERVICE = "1.0"
         const val FIREBASE_BOM = "26.8.0"
         const val FIREBASE_AUTH_GOOGLE = "19.0.0"
         const val FIREBASE_AUTH_FACEBOOK = "9.1.0"
         const val EXOPLAYER = "2.13.2"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
-        const val LOTTIE = "3.6.1"
+        const val LOTTIE = "3.7.0"
     }
 
     object Jieyi {

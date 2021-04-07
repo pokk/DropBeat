@@ -26,7 +26,7 @@ package config
 
 object DebugDependency {
     private object Version {
-        const val STEHO = "1.5.1"
+        const val STEHO = "1.6.0"
         const val DEBUG_DB = "1.0.6"
     }
 
