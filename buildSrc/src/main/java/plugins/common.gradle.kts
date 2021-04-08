@@ -56,7 +56,7 @@ subprojects {
                     getByName("release") {
                         // This is exceptions.
                         if (this@subprojects.name == "app") {
-//                            isMinifyEnabled = true
+                            //                            isMinifyEnabled = true
                             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
                                           file("proguard-rules.pro"))
                         }
@@ -67,7 +67,7 @@ subprojects {
                         aaptOptions.cruncherEnabled = false
                         isTestCoverageEnabled = true
                         // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
-//                        ext.set("alwaysUpdateBuildId", false)
+                        //                        ext.set("alwaysUpdateBuildId", false)
                         isCrunchPngs = false // Enabled by default for RELEASE build type
                     }
                 }
@@ -126,9 +126,14 @@ fun BaseExtension.applyLintOptions() {
 
 fun BaseExtension.applyTestOptions() {
     testOptions {
-        unitTests {
+        unitTests.apply {
             isReturnDefaultValues = true
             isIncludeAndroidResources = true
+            //            all {
+            //                extensions
+            //                    .getByType(JacocoTaskExtension::class.java)
+            //                    .isIncludeNoLocationClasses = true
+            //            }
         }
     }
 }

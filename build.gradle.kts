@@ -56,9 +56,6 @@ buildscript {
 
 allprojects {
     repositories.addDefaults()
-    //    plugins.withType<JacocoPlugin> {
-    //        the<JacocoPluginExtension>().toolVersion = "0.8.6"
-    //    }
 }
 
 subprojects {

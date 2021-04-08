@@ -37,8 +37,7 @@ tasks.withType<Test> {
     maxHeapSize = "3g"
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
-        exclude("*")
-        include("com.application.*")
+        exclude("jdk.internal.*")
     }
 }
 
@@ -51,7 +50,7 @@ private val sourceDirectoriesTree = fileTree(project.projectDir) {
     )
 }
 
-private val classDirectoriesTree = fileTree(project.layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
+private val classDirectoriesTree = fileTree("$buildDir/tmp/kotlin-classes/stgDebug")) {
     exclude(
         "**/R.class",
         "**/R\$*.class",
@@ -62,30 +61,29 @@ private val classDirectoriesTree = fileTree(project.layout.buildDirectory.dir("t
     )
 }
 
-private val executionDataTree = fileTree(project.buildDir) {
+private val executionDataTree = fileTree(buildDir) {
     include(
-        "outputs/code_coverage/connected/*coverage.ec",
-        "jacoco/testDebugUnitTest.exec"
+        "jacoco/testDebugUnitTest.exec",
+        "outputs/code_coverage/connected/*coverage.ec"
     )
 }
 
 fun JacocoReportsContainer.reports() {
     xml.isEnabled = true
     html.isEnabled = true
-    xml.destination = file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
-    html.destination = file("$buildDir/reports/jacoco/jacocoTestReport/html")
+    csv.isEnabled = false
 }
 
 fun JacocoReport.setDirectories() {
     sourceDirectories.setFrom(sourceDirectoriesTree)
     classDirectories.setFrom(classDirectoriesTree)
-    executionData.setFrom("${project.projectDir}/jacoco.exec", executionDataTree)
+    executionData.setFrom(executionDataTree, "${project.projectDir}/jacoco.exec")
 }
 
 fun JacocoCoverageVerification.setDirectories() {
     sourceDirectories.setFrom(sourceDirectoriesTree)
     classDirectories.setFrom(classDirectoriesTree)
-    executionData.setFrom("${project.projectDir}/jacoco.exec", executionDataTree)
+    executionData.setFrom(executionDataTree, "${project.projectDir}/jacoco.exec")
 }
 
 private val taskJacocoAndroidTestReport = "jacocoAndroidTestReport"
