@@ -50,7 +50,7 @@ private val sourceDirectoriesTree = fileTree(project.projectDir) {
     )
 }
 
-private val classDirectoriesTree = fileTree("$buildDir/tmp/kotlin-classes/debug")) {
+private val classDirectoriesTree = fileTree("$buildDir/tmp/kotlin-classes/debug") {
     exclude(
         "**/R.class",
         "**/R\$*.class",
