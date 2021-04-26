@@ -48,7 +48,7 @@ dependencies {
     val updateVersion: String by System.getProperties()
     val ktlintVersion: String by System.getProperties()
 
-    implementation("com.android.tools.build:gradle:4.1.3")
+    implementation("com.android.tools.build:gradle:7.0.0-alpha14")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")

@@ -63,7 +63,7 @@ android {
             isDebuggable = false
         }
     }
-    dynamicFeatures = CommonModuleDependency.getDynamicFeatureModules()
+    setDynamicFeatures(CommonModuleDependency.getDynamicFeatureModules())
 }
 
 dependencies {
