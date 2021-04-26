@@ -1,48 +1,48 @@
+name: Unit Test Coverage Report
+
+# Controls when the action will run.
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches:
-      - main
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [master]
 
-name: test-coverage
-
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test-coverage:
-    runs-on: macOS-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@v1
-
-      - uses: r-lib/actions/setup-pandoc@v1
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Restore R package cache
-        uses: actions/cache@v2
+      # Execute unit tests
+      - name: Unit Test with Android Emulator Runner
+        uses: ReactiveCircus/android-emulator-runner@v2.14.3
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          api-level: 29
+          script: ./gradlew connectedCheck
 
-      - name: Install dependencies
-        run: |
-          install.packages(c("remotes"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("covr")
-        shell: Rscript {0}
+      #      run: ./gradlew testDebugUnitTest
+      - name: Run Jacoco Unit Test
+        run: ./gradlew jacocoAndroidTestReport
 
-      - name: Test coverage
-        run: covr::codecov()
-        shell: Rscript {0}
+      - name: Generate Eeport
+        uses: actions/upload-artifact@v2
+        with:
+          name: report
+          path: app/build/reports/coverage/debug
+
+
+      - name: Download Test Reports Folder
+        uses: actions/download-artifact@v2
+        with:
+          name: report
+          path: app/build/reports/coverage/debug
+
+      - name: Upload Test Report
+        run: bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/debug/report.xml"
