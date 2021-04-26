@@ -20,6 +20,55 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Decode firebase configuration file
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: echo $FIREBASE_CONFIG > app/google-services.json
+
+      - name: Decode other configuration files
+        env:
+          FACEBOOK_KEYS: ${{ secrets.FACEBOOK_KEYS }}
+          LASTFM_KEYS: ${{ secrets.LASTFM_KEYS }}
+          SSL_CERTFICATION: ${{ secrets.SSL_CERTFICATION }}
+        run: |
+          echo $FACEBOOK_KEYS > app/src/main/res/values/facebook_key.xml
+          echo $LASTFM_KEYS > feature/explore/src/main/res/values/keys.xml
+          echo $SSL_CERTFICATION > core/src/main/res/raw/mycertfile.crt
+
+      - name: Creating local properties file
+        env:
+          SEEK_SONG_URI_REQUEST: ${{ secrets.SEEK_SONG_URI_REQUEST }}
+          SEEK_SONG_URI_DOMAIN: ${{ secrets.SEEK_SONG_URI_DOMAIN }}
+          SEEK_SONG_QUERY_2: ${{ secrets.SEEK_SONG_QUERY_2 }}
+          SEEK_SONG_QUERY_1: ${{ secrets.SEEK_SONG_QUERY_1 }}
+          SEEK_SONG_PARAM_2: ${{ secrets.SEEK_SONG_PARAM_2 }}
+          SEEK_SONG_PARAM_1: ${{ secrets.SEEK_SONG_PARAM_1 }}
+          LYRIC_URI_DOMAIN: ${{ secrets.LYRIC_URI_DOMAIN }}
+          SONG_URI_DOMAIN: ${{ secrets.SONG_URI_DOMAIN }}
+          SONG_URI_REQUEST: ${{ secrets.SONG_URI_REQUEST }}
+          LYRIC_URI_REQUEST: ${{ secrets.LYRIC_URI_REQUEST }}
+          RANKING_URI_REQUEST: ${{ secrets.RANKING_URI_REQUEST }}
+          RANKING_URI_DOMAIN: ${{ secrets.RANKING_URI_DOMAIN }}
+          KEYSTORE_PASSWORD: ${{ secrets.RANKING_URI_DOMAIN }}
+          KEY_ALIAS: ${{ secrets.RANKING_URI_DOMAIN }}
+          KEY_PASSWORD: ${{ secrets.RANKING_URI_DOMAIN }}
+        run: |
+          echo -e "seek_song_uri_request=\"$SEEK_SONG_URI_REQUEST\"" >> local.properties
+          echo -e "\nseek_song_uri_domain=\"$SEEK_SONG_URI_DOMAIN\"" >> local.properties
+          echo -e "\nseek_song_query_2=\"$SEEK_SONG_QUERY_2\"" >> local.properties
+          echo -e "\nseek_song_query_1=\"$SEEK_SONG_QUERY_1\"" >> local.properties
+          echo -e "\nseek_song_param_2=\"$SEEK_SONG_PARAM_2\"" >> local.properties
+          echo -e "\nseek_song_param_1=\"$SEEK_SONG_PARAM_1\"" >> local.properties
+          echo -e "\nlyric_uri_domain=\"$LYRIC_URI_DOMAIN\"" >> local.properties
+          echo -e "\nsong_uri_domain=\"$SONG_URI_DOMAIN\"" >> local.properties
+          echo -e "\nsong_uri_request=\"$SONG_URI_REQUEST\"" >> local.properties
+          echo -e "\nlyric_uri_request=\"$LYRIC_URI_REQUEST\"" >> local.properties
+          echo -e "\nranking_uri_request=\"$RANKING_URI_REQUEST\"" >> local.properties
+          echo -e "\nranking_uri_domain=\"$RANKING_URI_DOMAIN\"" >> local.properties
+          echo -e "\nstore_password=$KEYSTORE_PASSWORD" >> local.properties
+          echo -e "\nkey_alias=$KEY_ALIAS" >> local.properties
+          echo -e "\nkey_password=$KEY_PASSWORD" >> local.properties
+
       # Execute unit tests
       #      - name: Unit Test with Android Emulator Runner
       #        uses: ReactiveCircus/android-emulator-runner@v2.14.3
@@ -31,7 +80,7 @@ jobs:
       - name: Run Jacoco Unit Test
         run: ./gradlew jacocoAndroidTestReport
 
-      - name: Generate Eeport
+      - name: Generate Report
         uses: actions/upload-artifact@v2
         with:
           name: report
