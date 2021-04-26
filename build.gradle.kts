@@ -61,7 +61,7 @@ allprojects {
 subprojects {
     beforeEvaluate {
         // TODO(jieyi): [app] has some issues for jacoco.
-        if (name !in listOf("ext", "app", "test", "feature")) plugins.apply("plugins.jacoco")
+        if (name !in listOf("ext", "app", "test", "feature", "analytics")) plugins.apply("plugins.jacoco")
     }
 }
 
