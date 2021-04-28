@@ -100,11 +100,11 @@ fun DefaultConfig.applyRoomSetting() {
     }
 }
 
-fun BaseExtension.applyDexOptions() {
-    dexOptions {
-        jumboMode = true
-        preDexLibraries = true
-        threadCount = 8
+fun BaseExtension.applyLintOptions() {
+    lintOptions {
+        isAbortOnError = false
+        isIgnoreWarnings = true
+        isQuiet = true
     }
 }
 
