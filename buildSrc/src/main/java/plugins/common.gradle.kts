@@ -71,7 +71,6 @@ subprojects {
                         isCrunchPngs = false // Enabled by default for RELEASE build type
                     }
                 }
-                applyDexOptions()
                 applyLintOptions()
                 applyCompileOptions()
                 applyTestOptions()
@@ -116,24 +115,11 @@ fun BaseExtension.applyCompileOptions() {
     }
 }
 
-fun BaseExtension.applyLintOptions() {
-    lintOptions {
-        isAbortOnError = false
-        isIgnoreWarnings = true
-        isQuiet = true
-    }
-}
-
 fun BaseExtension.applyTestOptions() {
     testOptions {
         unitTests.apply {
             isReturnDefaultValues = true
             isIncludeAndroidResources = true
-            //            all {
-            //                extensions
-            //                    .getByType(JacocoTaskExtension::class.java)
-            //                    .isIncludeNoLocationClasses = true
-            //            }
         }
     }
 }

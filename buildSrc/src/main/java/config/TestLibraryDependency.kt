@@ -28,7 +28,7 @@ object TestLibraryDependency {
     private object Version {
         const val KTX_CORE = "1.4.0-alpha05"
         const val CORE = "2.1.0"
-        const val JUNIT = "1.1.3-alpha04"
+        const val JUNIT = "1.1.3-alpha05"
         const val ASSERTK = "0.23.1"
         const val ESPRESSO = "3.4.0-alpha05"
         const val KAKAO = "2.1.0"
