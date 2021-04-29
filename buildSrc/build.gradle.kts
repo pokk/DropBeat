@@ -24,12 +24,8 @@
 
 plugins {
     val kotlinVersion: String by System.getProperties()
+    //    kotlin("jvm") version kotlinVersion
     `kotlin-dsl`
-    kotlin("jvm") version kotlinVersion
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }
 
 // gradle versions above 4.10.
@@ -39,7 +35,6 @@ repositories {
     google()
     mavenCentral()
     gradlePluginPortal()
-    jcenter()
 }
 
 dependencies {

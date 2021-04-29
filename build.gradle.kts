@@ -36,11 +36,7 @@ plugins.apply("plugins.update-dependency")
 buildscript {
     repositories {
         google()
-        maven {
-            url = uri("https://dl.bintray.com/kotlin/kotlin-eap")
-            url = uri("https://maven.fabric.io/public")
-        }
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.0-alpha14")

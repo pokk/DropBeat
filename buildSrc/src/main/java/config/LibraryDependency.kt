@@ -27,7 +27,7 @@ package config
 object LibraryDependency {
     object Version {
         const val ARV = "1.0.16"
-        const val KINFER = "2.2.0"
+        const val KINFER = "2.4.0"
         const val MATERIAL = "1.4.0-alpha02"
         const val ANDROIDX = "1.0.0"
         const val ANNOTATION = "1.3.0-alpha01"
@@ -68,7 +68,7 @@ object LibraryDependency {
     }
 
     object Jieyi {
-        const val KNIFER = "com.devrapid.jieyi:kotlinknifer:${Version.KINFER}"
+        const val KNIFER = "studio.pokkbaby:kotlinknifer:${Version.KINFER}"
         const val ARV = "com.devrapid.jieyi:adaptiverecyclerview:${Version.ARV}"
     }
 
@@ -154,7 +154,7 @@ object LibraryDependency {
     }
 
     object Ui {
-        const val SHAPE_OF_VIEW = "com.github.florent37:shapeofview:${Version.SHAPE_OF_VIEW}"
+        const val SHAPE_OF_VIEW = "io.github.florent37:shapeofview:${Version.SHAPE_OF_VIEW}"
         const val REALTIME_BLUR = "com.github.mmin18:realtimeblurview:${Version.REALTIME_BLUR}"
         const val LOTTIE = "com.airbnb.android:lottie:${Version.LOTTIE}"
     }
