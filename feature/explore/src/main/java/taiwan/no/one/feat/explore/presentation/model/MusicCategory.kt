@@ -22,24 +22,22 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
+package taiwan.no.one.feat.explore.presentation.model
 
-import coil.loadAny
-import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
-import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
-import taiwan.no.one.feat.explore.presentation.model.MusicCategory
-import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+import androidx.annotation.DrawableRes
+import taiwan.no.one.feat.explore.R
 
-internal class ExploreViewHolder(
-    private val binding: ItemExploreBinding,
-) : ViewHolderBinding<TagEntity, ExploreAdapter>(binding.root) {
-    override fun initView(entity: TagEntity, adapter: ExploreAdapter) {
-        binding.apply {
-            mtvTitle.text = entity.name
-            val image = MusicCategory.values().find { it.text == entity.name }?.imageResId
-            sivThumbnail.loadAny(image)
-            root.setOnClickListener { adapter.clickListener?.invoke(entity) }
-        }
-    }
+internal enum class MusicCategory(val text: String, @DrawableRes val imageResId: Int) {
+    ALTERNATIVE("alternative", R.drawable.bg_alt),
+    ALTERNATIVE_ROCK("alternative rock", R.drawable.bg_alt_rock),
+    CLASSIC("classic", R.drawable.bg_classic),
+    DANCE("dance", R.drawable.bg_dance),
+    ELECTRONIC("electronic", R.drawable.bg_ele),
+    FEMALE_VOC("female vocalists", R.drawable.bg_vocal),
+    INDIE("indie", R.drawable.bg_indie),
+    SEEN_LIVE("seen live", R.drawable.bg_concert),
+    JAZZ("jazz", R.drawable.bg_jazz),
+    METAL("metal", R.drawable.bg_metal),
+    POP("pop", R.drawable.bg_pop),
+    ROCK("rock", R.drawable.bg_rock),
 }
