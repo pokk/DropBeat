@@ -24,11 +24,15 @@
 
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
+import coil.loadAny
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
+import taiwan.no.one.dropbeat.presentation.models.PlaylistCategory
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
+// TODO(jieyi): 4/30/21 This might can have a common view holder
+//  [taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.PlaylistViewHolder].
 internal class PlaylistViewHolder(
     private val binding: ItemTrendBinding,
 ) : ViewHolderBinding<SimplePlaylistEntity, PlaylistAdapter>(binding.root) {
@@ -36,6 +40,7 @@ internal class PlaylistViewHolder(
         binding.apply {
             mtvTitle.text = entity.name
             mtvNumOfSongs.text = "${entity.songIds.size} songs"
+            sivThumbnail.loadAny(PlaylistCategory.getArrayMap()[entity.name.toLowerCase()]?.imageResId)
             root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }

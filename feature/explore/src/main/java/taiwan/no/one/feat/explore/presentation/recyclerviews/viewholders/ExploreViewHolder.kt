@@ -37,8 +37,7 @@ internal class ExploreViewHolder(
     override fun initView(entity: TagEntity, adapter: ExploreAdapter) {
         binding.apply {
             mtvTitle.text = entity.name
-            val image = MusicCategory.values().find { it.text == entity.name }?.imageResId
-            sivThumbnail.loadAny(image)
+            sivThumbnail.loadAny(MusicCategory.getArrayMap()[entity.name]?.imageResId)
             root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }

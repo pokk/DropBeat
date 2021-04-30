@@ -22,26 +22,23 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.presentation.recyclerviews.viewholders
+package taiwan.no.one.dropbeat.presentation.models
 
-import coil.loadAny
-import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
-import taiwan.no.one.dropbeat.presentation.models.PlaylistCategory
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
-import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+import androidx.annotation.DrawableRes
+import androidx.collection.ArrayMap
+import androidx.collection.arrayMapOf
+import taiwan.no.one.dropbeat.R
 
-// TODO(jieyi): 4/30/21 This might can have a common view holder
-//  [taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.PlaylistViewHolder].
-internal class PlaylistViewHolder(
-    private val binding: ItemTrendBinding,
-) : ViewHolderBinding<PlayListEntity, PlaylistAdapter>(binding.root) {
-    override fun initView(entity: PlayListEntity, adapter: PlaylistAdapter) {
-        binding.apply {
-            mtvTitle.text = entity.name
-            mtvNumOfSongs.text = "${entity.songIds.size} songs"
-            sivThumbnail.loadAny(PlaylistCategory.getArrayMap()[entity.name.toLowerCase()]?.imageResId)
-            root.setOnClickListener { adapter.clickListener?.invoke(entity) }
+enum class PlaylistCategory(val text: String, @DrawableRes val imageResId: Int) {
+    DOWNLOADED("downloaded", R.drawable.bg_downloaded),
+    FAVORITE("favorite", R.drawable.bg_favorite),
+    UNCATEGORIES("uncategory", R.drawable.bg_uncategory);
+
+    companion object {
+        fun getArrayMap(): ArrayMap<String, PlaylistCategory> {
+            val map = arrayMapOf<String, PlaylistCategory>()
+            values().forEach { map[it.text] = it }
+            return map
         }
     }
 }

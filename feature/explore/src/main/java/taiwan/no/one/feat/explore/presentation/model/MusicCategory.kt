@@ -25,6 +25,8 @@
 package taiwan.no.one.feat.explore.presentation.model
 
 import androidx.annotation.DrawableRes
+import androidx.collection.ArrayMap
+import androidx.collection.arrayMapOf
 import taiwan.no.one.feat.explore.R
 
 internal enum class MusicCategory(val text: String, @DrawableRes val imageResId: Int) {
@@ -39,5 +41,13 @@ internal enum class MusicCategory(val text: String, @DrawableRes val imageResId:
     JAZZ("jazz", R.drawable.bg_jazz),
     METAL("metal", R.drawable.bg_metal),
     POP("pop", R.drawable.bg_pop),
-    ROCK("rock", R.drawable.bg_rock),
+    ROCK("rock", R.drawable.bg_rock);
+
+    companion object {
+        fun getArrayMap(): ArrayMap<String, MusicCategory> {
+            val map = arrayMapOf<String, MusicCategory>()
+            values().forEach { map[it.text] = it }
+            return map
+        }
+    }
 }
