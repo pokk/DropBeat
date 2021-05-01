@@ -28,6 +28,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.logw
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
@@ -57,7 +58,6 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
 
     override fun componentListenersBinding() {
         (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener {
-
 //            findNavController().navigate(IndexFragmentDirections.actionIndexFragmentToDetailFragment(it.toString()))
         }
     }
@@ -66,7 +66,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
         vm.rankings.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
                 (binding.rvMusics.adapter as? RankAdapter)?.submitList(it)
-//                parent.hideLoading()
+                binding.pbProgress.gone()
             }.onFailure {
                 logw(it)
 //                parent.showError(it.message.toString())

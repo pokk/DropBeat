@@ -38,6 +38,7 @@ import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
+import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -60,7 +61,6 @@ import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
 import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import java.lang.ref.WeakReference
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
     private val vm by viewModels<ExploreViewModel>()
@@ -108,6 +108,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         vm.topTags.observe(this) { res ->
             res.onSuccess {
                 it.tags?.takeIf { it.isNotEmpty() }?.also(exploreAdapter::submitList)
+                binding.includeExplore.pbProgress.gone()
             }.onFailure(::loge)
         }
         vm.topArtists.observe(this) { res ->
