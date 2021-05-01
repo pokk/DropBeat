@@ -243,8 +243,8 @@ formatting:
     autoCorrect: true
     insertFinalNewLine: true
   ImportOrdering:
-    active: true
-    autoCorrect: true
+    active: false
+    autoCorrect: false
     layout: 'idea'
   Indentation:
     active: false
@@ -488,7 +488,7 @@ potential-bugs:
     active: false
   UnreachableCode:
     active: true
-  UnsafeCallOnNullableType:  # Check the `!!` force to call.
+  UnsafeCallOnNullableType: # Check the `!!` force to call.
     active: true
   UnsafeCast:
     active: true

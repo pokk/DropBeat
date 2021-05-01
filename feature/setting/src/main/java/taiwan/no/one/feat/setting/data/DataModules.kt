@@ -25,12 +25,13 @@
 package taiwan.no.one.feat.setting.data
 
 import android.content.Context
+import androidx.datastore.core.DataStore as AndroidDataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindInstance
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.setting.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.setting.data.contracts.DataStore
@@ -40,7 +41,6 @@ import taiwan.no.one.feat.setting.data.repositories.SettingRepository
 import taiwan.no.one.feat.setting.data.stores.LocalStore
 import taiwan.no.one.feat.setting.data.stores.RemoteStore
 import taiwan.no.one.feat.setting.domain.repositories.SettingRepo
-import androidx.datastore.core.DataStore as AndroidDataStore
 
 internal object DataModules : ModuleProvider {
     private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
@@ -53,17 +53,17 @@ internal object DataModules : ModuleProvider {
         import(localProvide(context))
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance()) }
-        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore() }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance()) }
+        bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore() }
 
-        bind<SettingRepo>() with singleton {
+        bindSingleton<SettingRepo> {
             SettingRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
         }
     }
 
     private fun localProvide(context: Context) = DI.Module("${FEAT_NAME}LocalModule") {
-        bind<AndroidDataStore<Preferences>>(TAG_DATASTORE_SETTING) with singleton { context.dataStore }
-        bind<SettingPreference>() with singleton { SettingDatastore(instance(TAG_DATASTORE_SETTING)) }
+        bindInstance(TAG_DATASTORE_SETTING) { context.dataStore }
+        bindSingleton<SettingPreference> { SettingDatastore(instance(TAG_DATASTORE_SETTING)) }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {

@@ -26,9 +26,9 @@ package taiwan.no.one.feat.ranking.data
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindInstance
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
@@ -37,7 +37,6 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.ranking.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.local.configs.RankingDatabase
-import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 import taiwan.no.one.feat.ranking.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.ranking.data.remote.configs.RankingConfig
 import taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1.RankingMusicService
@@ -54,10 +53,9 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance(), instance(), instance()) }
-        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
-
-        bind<RankingRepo>() with singleton {
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance(), instance()) }
+        bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance()) }
+        bindSingleton<RankingRepo> {
             RankingRepository(instance(TAG_LOCAL_DATA_STORE),
                               instance(TAG_REMOTE_DATA_STORE),
                               instance(TAG_FEAT_REPO_SHARED_PREFS))
@@ -65,20 +63,15 @@ internal object DataModules : ModuleProvider {
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
-        bind<RankingDatabase>() with singleton { RankingDatabase.getDatabase(instance()) }
-
-        bind<RankingDao>() with singleton { instance<RankingDatabase>().createRankingDao() }
+        bindSingleton { RankingDatabase.getDatabase(instance()) }
+        bindSingleton { instance<RankingDatabase>().createRankingDao() }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
-        bind<RankingConfig>() with instance(RestfulApiFactory().createSeekerConfig())
-
-        bind<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT) with singleton {
+        bindInstance { RestfulApiFactory().createSeekerConfig() }
+        bindSingleton<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT) {
             DefaultRetrofitConfig(context, instance<RankingConfig>().apiBaseUrl).provideRetrofitBuilder().build()
         }
-
-        bind<RankingMusicService>() with singleton {
-            instance<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT).create(RankingMusicService::class.java)
-        }
+        bindSingleton { instance<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT).create(RankingMusicService::class.java) }
     }
 }

@@ -25,9 +25,9 @@
 package taiwan.no.one.dropbeat.di
 
 import android.content.Context
+import java.util.ServiceLoader
 import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.singleton
+import org.kodein.di.bindInstance
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 import taiwan.no.one.dropbeat.provider.ExploreModuleProvider
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
@@ -38,7 +38,6 @@ import taiwan.no.one.dropbeat.provider.PlayerModuleProvider
 import taiwan.no.one.dropbeat.provider.RankingModuleProvider
 import taiwan.no.one.dropbeat.provider.SearchModuleProvider
 import taiwan.no.one.dropbeat.provider.SettingModuleProvider
-import java.util.ServiceLoader
 
 object FeatModuleHelper {
     fun kodeinModules(context: Context) =
@@ -53,14 +52,8 @@ object FeatModuleHelper {
         ).map { ServiceLoader.load(it).toList().first().provide(context) }
 
     fun provide() = DI.Module("Feature Method Provider Module") {
-        bind<LibraryMethodsProvider>() with singleton {
-            ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first()
-        }
-        bind<LoginMethodsProvider>() with singleton {
-            ServiceLoader.load(LoginMethodsProvider::class.java).toList().first()
-        }
-        bind<ExploreMethodsProvider>() with singleton {
-            ServiceLoader.load(ExploreMethodsProvider::class.java).toList().first()
-        }
+        bindInstance<LibraryMethodsProvider> { ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first() }
+        bindInstance<LoginMethodsProvider> { ServiceLoader.load(LoginMethodsProvider::class.java).toList().first() }
+        bindInstance<ExploreMethodsProvider> { ServiceLoader.load(ExploreMethodsProvider::class.java).toList().first() }
     }
 }

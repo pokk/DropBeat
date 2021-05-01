@@ -36,46 +36,44 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.tencent.mmkv.MMKV
+import java.lang.ref.WeakReference
 import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.factory
-import org.kodein.di.instance
-import org.kodein.di.provider
-import org.kodein.di.singleton
+import org.kodein.di.bindFactory
+import org.kodein.di.bindInstance
+import org.kodein.di.bindProvider
 import taiwan.no.one.analytics.AnalyticsSender
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
-import java.lang.ref.WeakReference
 
 object UtilModules {
     fun provide(context: Context) = DI.Module("Util Module") {
-        bind<WorkManager>() with instance(WorkManager.getInstance(context))
+        bindInstance { WorkManager.getInstance(context) }
         // OPTIMIZE(jieyi): 2018/10/16 We might use Gson for mapping data.
-        bind<Gson>() with singleton {
+        bindInstance<Gson> {
             with(GsonBuilder()) {
                 setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 setLenient()
                 create()
             }
         }
-        bind<MMKV>() with singleton { requireNotNull(MMKV.defaultMMKV()) }
+        bindInstance { requireNotNull(MMKV.defaultMMKV()) }
     }
 
     fun provideAnalytics(context: Context) = DI.Module("Analytics Module") {
-        bind<AnalyticsSender>() with singleton { AnalyticsSender(Firebase.analytics) }
+        bindInstance { AnalyticsSender(Firebase.analytics) }
     }
 
     fun provideUi() = DI.Module("Util UI Module") {
         // Linear Layout Manager.
-        bind<LinearLayoutManager>() with factory { params: LayoutManagerParams ->
+        bindFactory { params: LayoutManagerParams ->
             LinearLayoutManager(params.context.get(), params.orientation, params.reverseLayout)
         }
-        bind<GridLayoutManager>() with factory { params: LayoutManagerParams ->
+        bindFactory { params: LayoutManagerParams ->
             GridLayoutManager(params.context.get(), params.spanCount)
         }
-        bind<StaggeredGridLayoutManager>() with factory { params: LayoutManagerParams ->
+        bindFactory { params: LayoutManagerParams ->
             StaggeredGridLayoutManager(params.spanCount, params.orientation)
         }
-        bind<LinearLoadMoreScrollListener>() with provider { LinearLoadMoreScrollListener() }
+        bindProvider { LinearLoadMoreScrollListener() }
     }
 
     fun provideAll(context: Context) = listOf(provide(context), provideAnalytics(context), provideUi())

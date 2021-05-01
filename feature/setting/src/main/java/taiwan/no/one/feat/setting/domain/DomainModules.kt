@@ -26,9 +26,8 @@ package taiwan.no.one.feat.setting.domain
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.setting.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.setting.domain.usecases.AddAutoDisplayMvCase
@@ -60,25 +59,19 @@ internal object DomainModules : ModuleProvider {
     const val TAG_AUTO_DISPLAY_MV = "auto display mv"
 
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
-        bind<FetchSleepingTimerCase>(TAG_SLEEPING_TIMER) with singleton {
-            FetchSleepingTimerOneShotCase(instance())
-        }
-        bind<FetchLockScreenPlayerCase>(TAG_LOCK_SCREEN_PLAYER) with singleton {
+        bindSingleton<FetchSleepingTimerCase>(TAG_SLEEPING_TIMER) { FetchSleepingTimerOneShotCase(instance()) }
+        bindSingleton<FetchLockScreenPlayerCase>(TAG_LOCK_SCREEN_PLAYER) {
             FetchLockScreenPlayerOneShotCase(instance())
         }
-        bind<FetchPlayOfflineOnlyCase>(TAG_PLAY_OFFLINE_ONLY) with singleton {
-            FetchPlayOfflineOnlyOneShotCase(instance())
-        }
-        bind<FetchNotificationPlayerCase>(TAG_NOTIFICATION_PLAYER) with singleton {
+        bindSingleton<FetchPlayOfflineOnlyCase>(TAG_PLAY_OFFLINE_ONLY) { FetchPlayOfflineOnlyOneShotCase(instance()) }
+        bindSingleton<FetchNotificationPlayerCase>(TAG_NOTIFICATION_PLAYER) {
             FetchNotificationPlayerOneShotCase(instance())
         }
-        bind<FetchAutoDisplayMvCase>(TAG_AUTO_DISPLAY_MV) with singleton {
-            FetchAutoDisplayMvOneShotCase(instance())
-        }
-        bind<AddSleepingTimerCase>() with singleton { AddSleepingTimerOneShotCase(instance()) }
-        bind<AddLockScreenPlayerCase>() with singleton { AddLockScreenPlayerOneShotCase(instance()) }
-        bind<AddPlayOfflineOnlyCase>() with singleton { AddPlayOfflineOnlyOneShotCase(instance()) }
-        bind<AddNotificationPlayerCase>() with singleton { AddNotificationPlayerOneShotCase(instance()) }
-        bind<AddAutoDisplayMvCase>() with singleton { AddAutoDisplayMvOneShotCase(instance()) }
+        bindSingleton<FetchAutoDisplayMvCase>(TAG_AUTO_DISPLAY_MV) { FetchAutoDisplayMvOneShotCase(instance()) }
+        bindSingleton<AddSleepingTimerCase> { AddSleepingTimerOneShotCase(instance()) }
+        bindSingleton<AddLockScreenPlayerCase> { AddLockScreenPlayerOneShotCase(instance()) }
+        bindSingleton<AddPlayOfflineOnlyCase> { AddPlayOfflineOnlyOneShotCase(instance()) }
+        bindSingleton<AddNotificationPlayerCase> { AddNotificationPlayerOneShotCase(instance()) }
+        bindSingleton<AddAutoDisplayMvCase> { AddAutoDisplayMvOneShotCase(instance()) }
     }
 }

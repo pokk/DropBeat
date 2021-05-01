@@ -26,12 +26,10 @@ package taiwan.no.one.dropbeat.presentation
 
 import android.content.Context
 import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import org.kodein.di.DI
-import org.kodein.di.bind
-import org.kodein.di.factory
-import org.kodein.di.singleton
+import org.kodein.di.bindFactory
+import org.kodein.di.bindInstance
 import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_ADD_SONG_TO_DB
 import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_ADD_SONG_TO_PLAYLIST
@@ -46,16 +44,14 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 
 internal object PresentationModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID} PreziModule") {
-        bind<OneTimeWorkRequest>(TAG_WORKER_INIT_DATA) with singleton {
-            OneTimeWorkRequestBuilder<CreateDefaultPlaylistWorker>().build()
-        }
-        bind<OneTimeWorkRequest>(TAG_WORKER_ADD_SONG_TO_DB) with factory { params: Data ->
+        bindInstance(TAG_WORKER_INIT_DATA) { OneTimeWorkRequestBuilder<CreateDefaultPlaylistWorker>().build() }
+        bindFactory(TAG_WORKER_ADD_SONG_TO_DB) { params: Data ->
             OneTimeWorkRequestBuilder<AddSongToDatabaseWorker>().setInputData(params).build()
         }
-        bind<OneTimeWorkRequest>(TAG_WORKER_ADD_SONG_TO_PLAYLIST) with factory { params: Data ->
+        bindFactory(TAG_WORKER_ADD_SONG_TO_PLAYLIST) { params: Data ->
             OneTimeWorkRequestBuilder<AddSongToPlaylistWorker>().setInputData(params).build()
         }
-        bind<OneTimeWorkRequest>(TAG_WORKER_GET_SONGS_OF_TAG) with factory { params: Data ->
+        bindFactory(TAG_WORKER_GET_SONGS_OF_TAG) { params: Data ->
             OneTimeWorkRequestBuilder<GetSongsOfTagWorker>()
                 .addTag(WorkerConstant.Tag.TAG_SONGS_OF_TAG)
                 .setInputData(params)

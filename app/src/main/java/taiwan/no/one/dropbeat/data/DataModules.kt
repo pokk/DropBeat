@@ -26,9 +26,8 @@ package taiwan.no.one.dropbeat.data
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.data.contracts.DataStore
 import taiwan.no.one.dropbeat.data.local.services.PrivacyService
@@ -47,15 +46,15 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance()) }
-        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore() }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance()) }
+        bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore() }
     }
 
     private fun localProvide() = DI.Module("${BuildConfig.APPLICATION_ID}LocalModule") {
-        bind<PrivacyRepo>() with singleton {
+        bindSingleton<PrivacyRepo> {
             PrivacyRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
         }
-        bind<PrivacyService>() with singleton { MmkvService(instance(), instance()) }
+        bindSingleton<PrivacyService> { MmkvService(instance(), instance()) }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID}RemoteModule") {

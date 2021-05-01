@@ -225,14 +225,14 @@ fun DependencyHandlerScope.localDependencies(env: String) {
 fun DependencyHandlerScope.uiDependencies(env: String) {
     env(Ui.LOTTIE)
     env(Ui.SHAPE_OF_VIEW)
-    //    env(Jieyi.ARV)
+//    env(Jieyi.ARV)
 }
 
 fun DependencyHandlerScope.debugDependencies(env: String) {
     env(DebugDependency.STEHO)
     env(DebugDependency.STEHO_INTERCEPTOR)
-    //    env(DebugDependency.DEBUG_DB)
-    //    env(DebugDependency.OK_HTTP_PROFILER)
+//    env(DebugDependency.DEBUG_DB)
+//    env(DebugDependency.OK_HTTP_PROFILER)
 }
 
 fun DependencyHandlerScope.unitTestDependencies(env: String = DepEnvTest) {

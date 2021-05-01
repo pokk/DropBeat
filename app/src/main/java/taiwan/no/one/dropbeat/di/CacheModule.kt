@@ -29,10 +29,9 @@ import android.content.SharedPreferences
 import androidx.collection.lruCache
 import com.tencent.mmkv.MMKV
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindConstant
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
-import org.kodein.di.with
 import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 import taiwan.no.one.dropbeat.core.cache.LruMemoryCache
@@ -44,11 +43,11 @@ object CacheModule {
     private const val TAG_REPO_SHARED_PREFS = "repo timestamp shared preferences"
 
     fun provide(context: Context) = DI.Module("Cache Module") {
-        constant(TAG_CACHE_SIZE) with 40
+        bindConstant(TAG_CACHE_SIZE) { 40 }
 
-        bind<DiskCache>() with singleton { MmkvCache(requireNotNull(MMKV.defaultMMKV())) }
-        bind<MemoryCache>() with singleton { LruMemoryCache(lruCache(instance(TAG_CACHE_SIZE))) }
-        bind<SharedPreferences>(TAG_FEAT_REPO_SHARED_PREFS) with singleton {
+        bindSingleton<DiskCache> { MmkvCache(requireNotNull(MMKV.defaultMMKV())) }
+        bindSingleton<MemoryCache> { LruMemoryCache(lruCache(instance(TAG_CACHE_SIZE))) }
+        bindSingleton<SharedPreferences>(TAG_FEAT_REPO_SHARED_PREFS) {
             context.getSharedPreferences(TAG_REPO_SHARED_PREFS, Context.MODE_PRIVATE)
         }
     }

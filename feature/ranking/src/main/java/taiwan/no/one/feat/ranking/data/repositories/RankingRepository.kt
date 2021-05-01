@@ -26,15 +26,14 @@ package taiwan.no.one.feat.ranking.data.repositories
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.core.domain.repository.Repository.Constant
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
-import java.util.Date
 
 internal class RankingRepository(
     private val local: DataStore,

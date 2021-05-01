@@ -24,8 +24,8 @@
 
 package taiwan.no.one.core.data.repostory.cache
 
-import taiwan.no.one.core.exceptions.NotFoundException
 import java.util.Date
+import taiwan.no.one.core.exceptions.NotFoundException
 
 abstract class LayerCaching<RT> {
     protected open var timestamp = 0L

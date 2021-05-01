@@ -26,9 +26,9 @@ package taiwan.no.one.feat.search.data
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindInstance
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
@@ -37,7 +37,6 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.search.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.local.configs.BankDatabase
-import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
 import taiwan.no.one.feat.search.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
 import taiwan.no.one.feat.search.data.remote.services.retrofit.v1.SeekerBankService
@@ -56,31 +55,31 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance(), instance(), instance()) }
-        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance(), instance()) }
+        bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance()) }
 
-        bind<SearchMusicRepo>() with singleton {
+        bindSingleton<SearchMusicRepo> {
             SearchMusicRepository(instance(TAG_REMOTE_DATA_STORE),
                                   instance(TAG_LOCAL_DATA_STORE),
                                   instance(TAG_FEAT_REPO_SHARED_PREFS))
         }
-        bind<HistoryRepo>() with singleton { HistoryRepository(instance(TAG_LOCAL_DATA_STORE)) }
+        bindSingleton<HistoryRepo> { HistoryRepository(instance(TAG_LOCAL_DATA_STORE)) }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
-        bind<BankDatabase>() with singleton { BankDatabase.getDatabase(instance()) }
+        bindSingleton { BankDatabase.getDatabase(instance()) }
 
-        bind<SearchHistoryDao>() with singleton { instance<BankDatabase>().createSearchHistoryDao() }
+        bindSingleton { instance<BankDatabase>().createSearchHistoryDao() }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
-        bind<SeekerConfig>() with instance(RestfulApiFactory().createSeekerConfig())
+        bindInstance { RestfulApiFactory().createSeekerConfig() }
 
-        bind<Retrofit>(Constant.TAG_FEAT_SEARCH_RETROFIT) with singleton {
+        bindSingleton<Retrofit>(Constant.TAG_FEAT_SEARCH_RETROFIT) {
             DefaultRetrofitConfig(context, instance<SeekerConfig>().apiBaseUrl).provideRetrofitBuilder().build()
         }
 
-        bind<SeekerBankService>() with singleton {
+        bindSingleton<SeekerBankService> {
             instance<Retrofit>(Constant.TAG_FEAT_SEARCH_RETROFIT).create(SeekerBankService::class.java)
         }
     }

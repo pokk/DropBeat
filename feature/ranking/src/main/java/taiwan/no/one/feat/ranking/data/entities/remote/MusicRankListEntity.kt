@@ -33,7 +33,7 @@ internal data class MusicRankListEntity(
     @SerializedName("status")
     val status: String = DEFAULT_STR,
     @SerializedName("data")
-    val briefRankEntities: List<BriefRankEntity> = emptyList()
+    val briefRankEntities: List<BriefRankEntity> = emptyList(),
 ) {
     internal data class BriefRankEntity(
         @SerializedName("title")
@@ -49,6 +49,7 @@ internal data class MusicRankListEntity(
         @SerializedName("type")
         val type: Int = DEFAULT_INT,
         @SerializedName("rank_id")
-        val rankId: Int = DEFAULT_INT
+        val rankId: Int = DEFAULT_INT,
+        val numberOfSongs: Int = DEFAULT_INT,
     )
 }

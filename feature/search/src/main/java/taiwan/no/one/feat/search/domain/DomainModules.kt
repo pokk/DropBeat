@@ -26,9 +26,8 @@ package taiwan.no.one.feat.search.domain
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.search.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryCase
@@ -42,9 +41,9 @@ import taiwan.no.one.feat.search.domain.usecases.music.FetchMusicOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
-        bind<FetchMusicCase>() with singleton { FetchMusicOneShotCase(instance()) }
-        bind<FetchHistoryCase>() with singleton { FetchHistoryObservableCase(instance()) }
-        bind<AddOrUpdateHistoryCase>() with singleton { AddOrUpdateHistoryOneShotCase(instance()) }
-        bind<DeleteHistoryCase>() with singleton { DeleteHistoryOneShotCase(instance()) }
+        bindSingleton<FetchMusicCase> { FetchMusicOneShotCase(instance()) }
+        bindSingleton<FetchHistoryCase> { FetchHistoryObservableCase(instance()) }
+        bindSingleton<AddOrUpdateHistoryCase> { AddOrUpdateHistoryOneShotCase(instance()) }
+        bindSingleton<DeleteHistoryCase> { DeleteHistoryOneShotCase(instance()) }
     }
 }
