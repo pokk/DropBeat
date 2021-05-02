@@ -59,6 +59,7 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAd
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
+import taiwan.no.one.feat.ranking.presentation.fragments.RankingFragment
 import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
@@ -90,10 +91,24 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // HACK(jieyi): 5/2/21 Will set a callback function to [RankingFragment] until we find the
+        //  best solution to set the navigation destination.
+        findRankingFragment()?.navigationCallback = { title, songs ->
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
+                songs = songs.toTypedArray(),
+                title = title,
+            ))
+            analyticsVm.navigatedToPlaylist("playlist name: $title")
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         // Keep the recyclerview state.
         vm.playlistState = includePlaylist.find<RecyclerView>(AppResId.rv_musics).layoutManager?.onSaveInstanceState()
+        findRankingFragment()?.navigationCallback = null
     }
 
     override fun bindLiveData() {
@@ -215,6 +230,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             binding.includeExplore.pbProgress.gone()
         }
     }
+
+    private fun findRankingFragment() =
+        childFragmentManager.findFragmentByTag("part_explore") as? RankingFragment
 
     private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {
         var isTopArtist = false
