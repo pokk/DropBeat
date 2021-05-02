@@ -47,6 +47,7 @@ import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
+import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
@@ -104,12 +105,6 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                     .layoutManager
                     ?.onRestoreInstanceState(vm.playlistState)
             }.onFailure { loge(it) }
-        }
-        vm.topTags.observe(this) { res ->
-            res.onSuccess {
-                it.tags?.takeIf { it.isNotEmpty() }?.also(exploreAdapter::submitList)
-                binding.includeExplore.pbProgress.gone()
-            }.onFailure(::loge)
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
@@ -213,6 +208,12 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         vm.getPlaylists()
         vm.getTopTracks()
         vm.getTopArtists()
+        vm.topTags.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                it.tags?.takeIf(List<TagEntity>::isNotEmpty)?.also(exploreAdapter::submitList)
+            }.onFailure(::loge)
+            binding.includeExplore.pbProgress.gone()
+        }
     }
 
     private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {

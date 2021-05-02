@@ -39,12 +39,6 @@ import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
     private val vm by viewModels<RankViewModel>()
 
-//    init {
-//        lifecycleScope.launchWhenCreated {
-//            parent.showLoading()
-//        }
-//    }
-
     override fun viewComponentBinding() {
         binding.rvMusics.apply {
             if (adapter == null) {
@@ -69,7 +63,6 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
                 binding.pbProgress.gone()
             }.onFailure {
                 logw(it)
-//                parent.showError(it.message.toString())
             }
         }
     }

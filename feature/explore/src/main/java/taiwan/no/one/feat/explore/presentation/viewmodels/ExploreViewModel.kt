@@ -53,6 +53,7 @@ internal class ExploreViewModel(
 ) : BehindAndroidViewModel(application) {
     companion object Constant {
         private const val PLAYLIST_SAVED_STATE = "playlist recycler view saved state"
+        private const val SONG_LIMITATION = 10
     }
 
     var playlistState
@@ -71,7 +72,7 @@ internal class ExploreViewModel(
     private val _topArtists by lazy { ResultLiveData<ArtistWithMoreDetailEntities>() }
     val topArtists get() = _topArtists.toLiveData()
     val topTags = liveData {
-        emit(runCatching { fetchChartTopTagCase.execute(FetchChartTopTagReq(1, 10)) })
+        emit(runCatching { fetchChartTopTagCase.execute(FetchChartTopTagReq(1, SONG_LIMITATION)) })
     }
     private val _resultOfFavorite by lazy { MutableLiveData<Boolean>() }
     val resultOfFavorite get() = _resultOfFavorite.toLiveData()
@@ -82,7 +83,7 @@ internal class ExploreViewModel(
 
     fun getTopTracks() = launchBehind {
         _topTracks.postValue(runCatching {
-            fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, 10, 10)).apply {
+            fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, SONG_LIMITATION, SONG_LIMITATION)).apply {
                 tracks.onEach {
                     val url = it.url ?: return@onEach
                     val isFavorite = try {
@@ -99,7 +100,7 @@ internal class ExploreViewModel(
 
     fun getTopArtists() = launchBehind {
         _topArtists.postValue(runCatching {
-            fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, 10, 10)).onEach {
+            fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, SONG_LIMITATION, SONG_LIMITATION)).onEach {
                 val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
                 val isFavorite = try {
                     libraryProvider.isFavoriteTrack(url, 2)
