@@ -105,3 +105,5 @@ jobs:
 
       - name: Codecov
         uses: codecov/codecov-action@v1.5.0
+        with:
+          directory: ./
