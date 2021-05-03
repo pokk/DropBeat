@@ -231,6 +231,7 @@ fun DependencyHandlerScope.uiDependencies(env: String) {
 fun DependencyHandlerScope.debugDependencies(env: String) {
     env(DebugDependency.STEHO)
     env(DebugDependency.STEHO_INTERCEPTOR)
+    env(DebugDependency.LEAKCANARY)
 //    env(DebugDependency.DEBUG_DB)
 //    env(DebugDependency.OK_HTTP_PROFILER)
 }
