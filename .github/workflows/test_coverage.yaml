@@ -101,7 +101,7 @@ jobs:
       #          path: app/build/reports/coverage/debug
       #
       - name: Upload Test Report
-        run: bash <(curl -s https://codecov.io/bash) -f "ktx/build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml"
+        run: bash <(curl -s https://codecov.io/bash) -f "./ktx/build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml"
 
 #      - name: Codecov
 #        uses: codecov/codecov-action@v1.5.0
