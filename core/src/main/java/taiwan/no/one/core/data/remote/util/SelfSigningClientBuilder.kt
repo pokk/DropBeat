@@ -24,7 +24,6 @@
 package taiwan.no.one.core.data.remote.util
 
 import android.content.Context
-import taiwan.no.one.core.R.raw
 import java.io.IOException
 import java.io.InputStream
 import java.security.GeneralSecurityException
@@ -38,6 +37,7 @@ import java.util.Arrays
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
+import taiwan.no.one.core.R.raw
 
 object SelfSigningClientBuilder {
     fun initSSL(context: Context) =

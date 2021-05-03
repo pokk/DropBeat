@@ -32,13 +32,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.changeStatusBarColor
 import com.google.android.play.core.splitcompat.SplitCompat
+import java.util.Locale
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.R
 import taiwan.no.one.dropbeat.databinding.ActivityMainBinding
 import taiwan.no.one.dropbeat.presentation.lifecycle.SplitModuleAddLifecycle
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
-import java.util.Locale
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val vm by viewModels<PrivacyViewModel>()

@@ -27,11 +27,11 @@ package taiwan.no.one.dropbeat.core.cache
 import androidx.collection.LruCache
 import com.devrapid.kotlinshaver.LookUp
 import com.google.gson.GsonBuilder
-import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 import java.util.Date
+import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 
 class LruMemoryCache(
-    private val lruCache: LruCache<String, LookUp<String>>
+    private val lruCache: LruCache<String, LookUp<String>>,
 ) : MemoryCache {
     companion object Constant {
         private const val KEY_TIMESTAMP = "time stamp"

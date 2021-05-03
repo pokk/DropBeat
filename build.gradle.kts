@@ -30,7 +30,6 @@ plugins.apply("plugins.header")
 plugins.apply("plugins.common")
 plugins.apply("plugins.kotlin")
 plugins.apply("plugins.detekt")
-plugins.apply("plugins.ktlint")
 plugins.apply("plugins.update-dependency")
 
 buildscript {
@@ -51,6 +50,7 @@ buildscript {
 }
 
 allprojects {
+    plugins.apply("plugins.ktlint")
     repositories.addDefaults()
 }
 

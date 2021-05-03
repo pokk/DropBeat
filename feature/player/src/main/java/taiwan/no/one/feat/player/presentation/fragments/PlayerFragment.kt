@@ -41,6 +41,7 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.ofAlpha
 import com.google.android.material.slider.Slider
+import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseDialogFragment
@@ -59,7 +60,6 @@ import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import java.lang.ref.WeakReference
 
 internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     private var isTouchingSlider = false

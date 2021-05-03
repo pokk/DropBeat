@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 SmashKs
+ * Copyright (c) 2020 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,19 +25,20 @@
 package taiwan.no.one.core.data.remote.provider
 
 import android.content.Context
+import java.util.concurrent.TimeUnit
 import okhttp3.Cache
 import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import java.util.concurrent.TimeUnit
 
 abstract class OkHttpClientProvider(
-    private val context: Context
+    private val context: Context,
 ) {
     var readTimeOut = 0L
     var writeTimeOut = 0L
     var connectTimeOut = 0L
-    protected open val cacheMaxSize = 10 * 1024 * 1024L  // 10 MiB
+
+    protected open val cacheMaxSize = 10 * 1024 * 1024L // 10 MiB
 
     open fun provideClientBuilder(vararg interceptors: Interceptor) = OkHttpClient.Builder().apply {
         cache(provideCache())
@@ -50,7 +51,8 @@ abstract class OkHttpClientProvider(
                                       ConnectionSpec.MODERN_TLS,
                                       ConnectionSpec.COMPATIBLE_TLS,
             // This is for HTTP protocol.
-                                      ConnectionSpec.CLEARTEXT))
+                                      ConnectionSpec.CLEARTEXT
+        ))
     }
 
     open fun provideCache() = Cache(context.cacheDir, cacheMaxSize)

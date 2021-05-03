@@ -79,8 +79,10 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
     open suspend fun updateBy(id: Int, name: String = DEFAULT_STR, trackNumber: Int = DEFAULT_INT) {
         if (name == DEFAULT_STR && trackNumber == DEFAULT_INT) return
         val playlist = getPlaylist(id)
-        val newPlaylist = playlist.copy(name = name.takeIf { it != DEFAULT_STR } ?: playlist.name,
-                                        count = trackNumber.takeIf { it >= 0 } ?: playlist.count)
+        val newPlaylist = playlist.copy(
+            name = name.takeIf { it != DEFAULT_STR } ?: playlist.name,
+            count = trackNumber.takeIf { it >= 0 } ?: playlist.count
+        )
         update(newPlaylist)
     }
 

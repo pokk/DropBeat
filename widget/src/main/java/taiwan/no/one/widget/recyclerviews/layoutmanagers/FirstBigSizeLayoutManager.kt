@@ -203,8 +203,8 @@ class FirstBigSizeLayoutManager : LayoutManager() {
             // The second view
             scalableView?.apply {
                 val threshold = min(width - left, width / 2).toFloat() / // to the half
-                                (width / 2) * // reg
-                                (1 - SCALE_SIZE) // reg to the scale
+                    (width / 2) * // reg
+                    (1 - SCALE_SIZE) // reg to the scale
                 scaleX = SCALE_SIZE + threshold
                 scaleY = SCALE_SIZE + threshold
             }

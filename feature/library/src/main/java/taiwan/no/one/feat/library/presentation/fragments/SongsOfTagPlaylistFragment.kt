@@ -31,6 +31,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
+import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
@@ -40,7 +41,6 @@ import taiwan.no.one.feat.library.databinding.MergeLayoutSongsOfTypeBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapter
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.SongsOfTagViewModel
-import java.lang.ref.WeakReference
 
 internal class SongsOfTagPlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentSongsOfTagBinding>() {
     //region Variable of View Binding

@@ -61,8 +61,10 @@ internal class TopChartViewHolder(
                     adapter.optionListener?.invoke(it, EntityMapper.exploreToSimpleTrackEntity(trackEntity))
                 }
                 (entity as? ArtistWithMoreDetailEntity)?.let { artistWithMoreDetailEntity ->
-                    adapter.optionListener?.invoke(it,
-                                                   EntityMapper.artistToSimpleTrackEntity(artistWithMoreDetailEntity))
+                    adapter.optionListener?.invoke(
+                        it,
+                        EntityMapper.artistToSimpleTrackEntity(artistWithMoreDetailEntity)
+                    )
                 }
             }
         }

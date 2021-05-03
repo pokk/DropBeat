@@ -26,6 +26,7 @@ package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewStub
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -47,6 +48,7 @@ import taiwan.no.one.dropbeat.core.helpers.StringUtil
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
@@ -189,7 +191,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
         find<View>(AppResId.pb_progress).gone()
         find<View>(R.id.include_favorite).gone()
         binding.btnPlayAll.gone()
-        binding.vsNoSongs.takeIf { !it.isVisible }?.inflate()
+        binding.vsNoSongs.takeUnless(ViewStub::isVisible)?.inflate()
         noSongsBinding.btnSearch.setOnClickListener {
             // Go to the search page.
             analyticsVm.navigatedToSearch()
@@ -212,7 +214,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
                 when (it.itemId) {
                     R.id.item_duplicate -> {
                         playlist?.let {
-                            val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, "")
+                            val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, DEFAULT_STR)
                             findNavController()
                                 .navigate(PlaylistFragmentDirections.actionPlaylistToCreate(simplePlaylist))
                         }
