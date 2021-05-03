@@ -39,6 +39,7 @@ import com.devrapid.kotlinknifer.invisible
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -65,7 +66,6 @@ import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.SongViewModel
 import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
-import java.lang.ref.WeakReference
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     //region Variable of View Binding

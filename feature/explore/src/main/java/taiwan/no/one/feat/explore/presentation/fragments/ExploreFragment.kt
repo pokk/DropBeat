@@ -99,6 +99,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
                 songs = songs.toTypedArray(),
                 title = title,
+                isFixed = true,
             ))
             analyticsVm.navigatedToPlaylist("playlist name: $title")
         }
@@ -201,7 +202,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             }
         }
         playlistAdapter.setOnClickListener {
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id))
+            // 1: favorite playlist, 2: downloaded playlist
+            val isFixedPlaylist = it.id in listOf(1, 2)
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id, isFixedPlaylist))
             analyticsVm.navigatedToPlaylist("playlist name: ${it.name}")
         }
         listOf(topTrackAdapter, topArtistAdapter).forEach {
@@ -258,6 +261,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
                 songs = list,
                 title = playlistName,
+                isFixed = true,
             ))
             analyticsVm.navigatedToPlaylist("playlist name: $playlistName")
         }

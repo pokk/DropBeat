@@ -204,8 +204,9 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
 
     private fun showMoreMenu(anchor: View) =
         popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_playlist).apply {
-            if (navArgs.playlistId in listOf(1, 2)) {
-                menu.removeItem(R.id.item_rename)
+            // If the playlist can't be modified, those button should be removed.
+            if (navArgs.isFixed) {
+                listOf(R.id.item_rename, R.id.item_delete).forEach(menu::removeItem)
             }
             setOnMenuItemClickListener {
                 when (it.itemId) {
