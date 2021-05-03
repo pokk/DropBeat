@@ -100,10 +100,10 @@ jobs:
       #          name: report
       #          path: app/build/reports/coverage/debug
       #
-      #      - name: Upload Test Report
-      #        run: bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/debug/report.xml"
+      - name: Upload Test Report
+        run: bash <(curl -s https://codecov.io/bash)
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.5.0
-        with:
-          directory: ./
+#      - name: Codecov
+#        uses: codecov/codecov-action@v1.5.0
+#        with:
+#          directory: ./
