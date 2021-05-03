@@ -2,7 +2,7 @@ name: Unit Test Coverage Report
 
 # Controls when the action will run.
 # Triggers the workflow on push or pull request events but only for the master branch
-on: [push, pull_request]
+on: [push]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -13,12 +13,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.7.0
+        uses: styfle/cancel-workflow-action@0.9.0
         with:
           access_token: ${{ github.token }}
 
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Clone Repo
         uses: actions/checkout@v2
 
@@ -87,18 +87,20 @@ jobs:
       - name: Run Jacoco Unit Test
         run: ./gradlew jacocoAndroidTestReport
 
-      - name: Generate Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: report
-          path: app/build/reports/coverage/debug
+      #      - name: Generate Report
+      #        uses: actions/upload-artifact@v2
+      #        with:
+      #          name: report
+      #          path: app/build/reports/coverage/debug
+      #
+      #      - name: Download Test Reports Folder
+      #        uses: actions/download-artifact@v2
+      #        with:
+      #          name: report
+      #          path: app/build/reports/coverage/debug
+      #
+      #      - name: Upload Test Report
+      #        run: bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/debug/report.xml"
 
-
-      - name: Download Test Reports Folder
-        uses: actions/download-artifact@v2
-        with:
-          name: report
-          path: app/build/reports/coverage/debug
-
-      - name: Upload Test Report
-        run: bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/debug/report.xml"
+      - name: Codecov
+        uses: codecov/codecov-action@v1.5.0
