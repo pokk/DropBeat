@@ -65,6 +65,7 @@ object LibraryDependency {
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
         const val LOTTIE = "3.7.0"
+        const val SENTRY = "4.3.0"
     }
 
     object Jieyi {
@@ -136,7 +137,6 @@ object LibraryDependency {
     object Firebase {
         const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Version.FIREBASE_BOM}"
         const val PLAY_CORE = "com.google.android.play:core:${Version.PLAY_CORE}"
-        const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
         const val FIREBASE_AUTH = "com.google.firebase:firebase-auth-ktx"
         const val FIREBASE_AUTH_GOOGLE = "com.google.android.gms:play-services-auth:${Version.FIREBASE_AUTH_GOOGLE}"
         const val FIREBASE_AUTH_FACEBOOK = "com.facebook.android:facebook-login:${Version.FIREBASE_AUTH_FACEBOOK}"
@@ -147,6 +147,11 @@ object LibraryDependency {
         const val FIREBASE_PERFORMANCE = "com.google.firebase:firebase-perf-ktx"
         const val FIREBASE_CONFIG = "com.google.firebase:firebase-config-ktx"
         const val FIREBASE_ML = "com.google.firebase:firebase-ml-vision"
+    }
+
+    object Analytics {
+        const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
+        const val SENTRY = "io.sentry:sentry-android:${Version.SENTRY}"
     }
 
     object Media {

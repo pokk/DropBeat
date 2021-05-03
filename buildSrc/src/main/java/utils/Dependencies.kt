@@ -26,6 +26,7 @@ package utils
 
 import config.CoreDependency
 import config.DebugDependency
+import config.LibraryDependency.Analytics
 import config.LibraryDependency.AndroidKtx
 import config.LibraryDependency.Database
 import config.LibraryDependency.Di
@@ -120,7 +121,8 @@ fun DependencyHandlerScope.firebaseAuthDependencies() {
 fun DependencyHandlerScope.analyticsDependencies() {
     kotlinDependencies(DepEnvImpl)
     DepEnvApi(platform(Firebase.FIREBASE_BOM))
-    DepEnvApi(Firebase.FIREBASE_ANALYTICS)
+    DepEnvApi(Analytics.FIREBASE_ANALYTICS)
+    DepEnvApi(Analytics.SENTRY)
 }
 
 fun DependencyHandlerScope.testDependencies() {

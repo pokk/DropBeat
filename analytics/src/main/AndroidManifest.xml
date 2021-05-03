@@ -23,4 +23,13 @@
   ~ SOFTWARE.
   -->
 
-<manifest package="taiwan.no.one.analytics"/>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="taiwan.no.one.analytics">
+
+    <application>
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://58d2e0eaf0aa496690c7edfa5cac4ce0@o608676.ingest.sentry.io/5745650"/>
+    </application>
+</manifest>
