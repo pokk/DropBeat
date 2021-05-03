@@ -31,8 +31,8 @@ object TimeUtils {
         val hour = TimeUnit.SECONDS.toHours(duration)
         val min = TimeUnit.SECONDS.toMinutes(duration) - TimeUnit.HOURS.toMinutes(hour)
         val sec = TimeUnit.SECONDS.toSeconds(duration) -
-                  TimeUnit.HOURS.toSeconds(hour) -
-                  TimeUnit.MINUTES.toSeconds(min)
+            TimeUnit.HOURS.toSeconds(hour) -
+            TimeUnit.MINUTES.toSeconds(min)
         return Triple(hour, min, sec)
     }
 }

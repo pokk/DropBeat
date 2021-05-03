@@ -26,13 +26,13 @@ package taiwan.no.one.feat.login.data.remote.services.firebase.v1
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 internal class FirebaseAuthService(
     private val auth: FirebaseAuth,

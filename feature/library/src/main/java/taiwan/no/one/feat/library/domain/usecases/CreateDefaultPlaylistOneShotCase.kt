@@ -35,8 +35,8 @@ internal class CreateDefaultPlaylistOneShotCase(
 ) : CreateDefaultPlaylistCase() {
     override suspend fun acquireCase(parameter: Request?): Boolean {
         val list = DropBeatApp.appContext
-                       .parseObjectFromJson<List<PlayListEntity>>("json/default_playlist.json")
-                   ?: throw Exception()
+            .parseObjectFromJson<List<PlayListEntity>>("json/default_playlist.json")
+            ?: throw Exception()
         val ids = list.map(PlayListEntity::id)
         val names = list.map(PlayListEntity::name)
         ids.zip(names)

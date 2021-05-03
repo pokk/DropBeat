@@ -29,6 +29,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +37,6 @@ import org.kodein.di.DI
 import org.kodein.di.DI.Module
 import org.kodein.di.DIAware
 import org.kodein.di.LateInitDI
-import kotlin.coroutines.CoroutineContext
 
 abstract class BehindAndroidViewModel(application: Application) : AndroidViewModel(application), DIAware {
     override val di = LateInitDI()

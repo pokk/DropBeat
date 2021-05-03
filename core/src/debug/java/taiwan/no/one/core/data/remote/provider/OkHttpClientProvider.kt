@@ -26,13 +26,13 @@ package taiwan.no.one.core.data.remote.provider
 
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import java.util.concurrent.TimeUnit
 import okhttp3.Cache
 import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import taiwan.no.one.core.data.remote.interceptor.MockRequestInterceptor
 import taiwan.no.one.core.data.remote.util.SelfSigningClientBuilder
-import java.util.concurrent.TimeUnit
 
 abstract class OkHttpClientProvider(
     private val context: Context,
@@ -40,6 +40,7 @@ abstract class OkHttpClientProvider(
     var readTimeOut = 0L
     var writeTimeOut = 0L
     var connectTimeOut = 0L
+
     protected open val cacheMaxSize = 10 * 1024 * 1024L // 10 MiB
 
     open fun provideClientBuilder(vararg interceptors: Interceptor) = OkHttpClient.Builder().apply {

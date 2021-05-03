@@ -60,11 +60,13 @@ internal class AddSongToDatabaseWorker(
             append('[')
             val jsonArray = JSONArray(newStream)
             repeat(jsonArray.length()) {
-                append(buildString {
-                    append(jsonArray[it].toString())
-                    insert(1, "\"has_own\":true,")
-                    insert(1, "\"local_uri\":\"${path[it]}\",")
-                })
+                append(
+                    buildString {
+                        append(jsonArray[it].toString())
+                        insert(1, "\"has_own\":true,")
+                        insert(1, "\"local_uri\":\"${path[it]}\",")
+                    }
+                )
             }
             append(']')
         }

@@ -26,12 +26,12 @@ package taiwan.no.one.dropbeat.core.cache
 
 import com.google.gson.GsonBuilder
 import com.tencent.mmkv.MMKV
+import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.Caching.Constant.TIME_STAMP
 import taiwan.no.one.core.data.repostory.cache.local.DiskCache
-import java.util.Date
 
 class MmkvCache(
-    private val mmkv: MMKV
+    private val mmkv: MMKV,
 ) : DiskCache {
     private val gson by lazy { GsonBuilder().create() }
 

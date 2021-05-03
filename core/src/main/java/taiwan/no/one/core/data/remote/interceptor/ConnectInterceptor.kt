@@ -30,7 +30,7 @@ import okhttp3.Response
 import taiwan.no.one.ktx.internet.hasNetwork
 
 class ConnectInterceptor(
-    private val context: Context
+    private val context: Context,
 ) : Interceptor {
     companion object {
         private const val AWeekTime = 60 * 60 * 24 * 7

@@ -30,9 +30,9 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.util.Date
 import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_STR
-import java.util.Date
 
 internal data class LibraryEntity(
     val count: Int,

@@ -36,9 +36,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.lang.Math.abs
 import taiwan.no.one.dropbeat.R
 import taiwan.no.one.widget.WidgetResDimen
-import java.lang.Math.abs
 
 class BottomNavigationViewWithIndicator :
     BottomNavigationView, BottomNavigationView.OnNavigationItemSelectedListener {

@@ -25,17 +25,17 @@
 package taiwan.no.one.dropbeat.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
+import java.util.Calendar
 import org.kodein.di.DIAware
-import org.kodein.di.android.di
+import org.kodein.di.android.closestDI
 import org.kodein.di.instance
 import taiwan.no.one.analytics.AnalyticsSender
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource
-import java.util.Calendar
 
 open class BaseAnalyticsViewModel : ViewModel(), DIAware {
-    override val di by di(DropBeatApp.appContext)
+    override val di by closestDI(DropBeatApp.appContext)
     protected val sender by instance<AnalyticsSender>()
 
     protected open fun sendClickedEvent(which: String) {
