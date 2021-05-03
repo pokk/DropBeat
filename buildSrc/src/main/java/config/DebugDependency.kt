@@ -28,9 +28,11 @@ object DebugDependency {
     private object Version {
         const val STEHO = "1.6.0"
         const val DEBUG_DB = "1.0.6"
+        const val LEAKCANARY = "2.7"
     }
 
     const val STEHO = "com.facebook.stetho:stetho:${Version.STEHO}"
     const val STEHO_INTERCEPTOR = "com.facebook.stetho:stetho-okhttp3:${Version.STEHO}"
     const val DEBUG_DB = "com.amitshekhar.android:debug-db:${Version.DEBUG_DB}"
+    const val LEAKCANARY = "com.squareup.leakcanary:leakcanary-android:${Version.LEAKCANARY}"
 }

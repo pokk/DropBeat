@@ -35,12 +35,12 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import androidx.viewbinding.ViewBinding
+import java.lang.reflect.ParameterizedType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import taiwan.no.one.core.presentation.LoadView
 import taiwan.no.one.core.presentation.activity.BaseActivity
-import java.lang.reflect.ParameterizedType
 
 /**
  * The basic fragment is for the normal activity that prepares all necessary variables or functions.
@@ -115,6 +115,7 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
     //endregion
 
     //region Customized methods
+
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     @UiThread
     protected open fun bindLiveData() = Unit
@@ -155,8 +156,8 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
     @UiThread
     protected fun addStatusBarHeightMarginTop(view: View) {
         val statusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
-                                  .takeIf { 0 < it }
-                                  ?.let { resources.getDimensionPixelSize(it) } ?: 0
+            .takeIf { 0 < it }
+            ?.let { resources.getDimensionPixelSize(it) } ?: 0
         if (view.layoutParams is ConstraintLayout.LayoutParams) {
             view.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 topMargin = view.top + statusBarHeight

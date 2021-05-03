@@ -39,6 +39,7 @@ import com.devrapid.kotlinknifer.invisible
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -65,7 +66,6 @@ import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.SongViewModel
 import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
-import java.lang.ref.WeakReference
 
 internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndexBinding>() {
     //region Variable of View Binding
@@ -98,6 +98,11 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         super.onCreate(savedInstanceState)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
+    override fun onDestroyView() {
+        rvMusics.adapter = null
+        super.onDestroyView()
     }
 
     override fun onDetach() {
@@ -145,12 +150,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
         mergeBinding.mtvRvTitle.text = "History Search "
         rvMusics.apply {
-            if (adapter == null) {
-                adapter = searchHistoryAdapter
-            }
-            if (layoutManager == null) {
-                layoutManager = linearLayoutManager()
-            }
+            adapter = searchHistoryAdapter
+            layoutManager = linearLayoutManager()
         }
     }
 

@@ -26,9 +26,8 @@ package taiwan.no.one.dropbeat.domain
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.BuildConfig
 import taiwan.no.one.dropbeat.domain.usecases.FetchLoginInfoCase
 import taiwan.no.one.dropbeat.domain.usecases.FetchLoginInfoOneShotCase
@@ -36,6 +35,6 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${BuildConfig.APPLICATION_ID}DomainModule") {
-        bind<FetchLoginInfoCase>() with singleton { FetchLoginInfoOneShotCase(instance()) }
+        bindSingleton<FetchLoginInfoCase> { FetchLoginInfoOneShotCase(instance()) }
     }
 }

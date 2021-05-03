@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="@id/g_line_start"
         app:layout_constraintTop_toTopOf="@id/sov_backdrop"/>
 
-    <com.github.florent37.shapeofview.shapes.RoundRectView
+    <io.github.florent37.shapeofview.shapes.RoundRectView
         android:id="@+id/sov_backdrop"
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="106dp"
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/dark_slate_blue"/>
-    </com.github.florent37.shapeofview.shapes.RoundRectView>
+    </io.github.florent37.shapeofview.shapes.RoundRectView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_search_bar"

@@ -26,9 +26,8 @@ package taiwan.no.one.feat.library.domain
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.library.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
@@ -56,16 +55,16 @@ import taiwan.no.one.feat.library.domain.usecases.UpdateSongOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
-        bind<FetchPlaylistCase>() with singleton { FetchPlaylistOneShotCase(instance()) }
-        bind<FetchAllPlaylistsCase>() with singleton { FetchAllPlaylistsOneShotCase(instance()) }
-        bind<AddPlaylistCase>() with singleton { AddPlaylistOneShotCase(instance()) }
-        bind<UpdatePlaylistCase>() with singleton { UpdatePlaylistOneShotCase(instance(), instance()) }
-        bind<DeletePlaylistCase>() with singleton { DeletePlaylistOneShotCase(instance()) }
-        bind<FetchSongCase>() with singleton { FetchSongOneShotCase(instance()) }
-        bind<FetchIsInThePlaylistCase>() with singleton { FetchIsInThePlaylistOneShotCase(instance(), instance()) }
-        bind<AddSongsCase>() with singleton { AddSongsOneShotCase(instance()) }
-        bind<AddSongsAndPlaylistCase>() with singleton { AddSongsAndPlaylistOneShotCase(instance(), instance()) }
-        bind<UpdateSongCase>() with singleton { UpdateSongOneShotCase(instance(), instance()) }
-        bind<CreateDefaultPlaylistCase>() with singleton { CreateDefaultPlaylistOneShotCase(instance()) }
+        bindSingleton<FetchPlaylistCase> { FetchPlaylistOneShotCase(instance()) }
+        bindSingleton<FetchAllPlaylistsCase> { FetchAllPlaylistsOneShotCase(instance()) }
+        bindSingleton<AddPlaylistCase> { AddPlaylistOneShotCase(instance()) }
+        bindSingleton<UpdatePlaylistCase> { UpdatePlaylistOneShotCase(instance(), instance()) }
+        bindSingleton<DeletePlaylistCase> { DeletePlaylistOneShotCase(instance()) }
+        bindSingleton<FetchSongCase> { FetchSongOneShotCase(instance()) }
+        bindSingleton<FetchIsInThePlaylistCase> { FetchIsInThePlaylistOneShotCase(instance(), instance()) }
+        bindSingleton<AddSongsCase> { AddSongsOneShotCase(instance()) }
+        bindSingleton<AddSongsAndPlaylistCase> { AddSongsAndPlaylistOneShotCase(instance(), instance()) }
+        bindSingleton<UpdateSongCase> { UpdateSongOneShotCase(instance(), instance()) }
+        bindSingleton<CreateDefaultPlaylistCase> { CreateDefaultPlaylistOneShotCase(instance()) }
     }
 }

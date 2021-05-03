@@ -27,8 +27,8 @@ package taiwan.no.one.feat.explore.data.entities.remote
 import androidx.room.ColumnInfo
 import androidx.room.Ignore
 import com.google.gson.annotations.SerializedName
-import taiwan.no.one.ext.DEFAULT_STR
 import java.util.Date
+import taiwan.no.one.ext.DEFAULT_STR
 
 internal data class ArtistInfoEntity(
     val artist: ArtistEntity?,

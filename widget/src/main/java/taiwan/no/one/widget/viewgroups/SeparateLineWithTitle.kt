@@ -37,7 +37,7 @@ import taiwan.no.one.widget.textview.FontTextView
 class SeparateLineWithTitle @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : ViewGroup(context, attrs, defStyleAttr) {
     companion object {
         private const val TITLE_TEXT = ""

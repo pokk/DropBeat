@@ -25,10 +25,17 @@
 package taiwan.no.one.feat.ranking.domain.usecases
 
 import taiwan.no.one.core.domain.parameter.NonRequest
+import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal class FetchDetailOfRankingsOneShotCase(
     private val repository: RankingRepo,
 ) : FetchDetailOfRankingsCase() {
-    override suspend fun acquireCase(parameter: NonRequest?) = repository.fetchDetailOfRankings()
+    override suspend fun acquireCase(parameter: NonRequest?): List<BriefRankEntity> {
+        val ranking = repository.fetchDetailOfRankings()
+        return ranking.map {
+            val songs = repository.fetchMusicRanking(it.rankId.toString())
+            it.copy(numberOfSongs = songs.size)
+        }.sortedBy { it.rankId }
+    }
 }

@@ -29,6 +29,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="160dp"
+    tools:context=".presentation.fragments.ExploreFragment"
     tools:showIn="@layout/fragment_explore">
 
     <androidx.constraintlayout.widget.Guideline
@@ -71,4 +73,13 @@
         tools:listitem="@layout/item_explore"
         tools:orientation="horizontal"
         tools:spanCount="2"/>
+
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/g_line_recyclerview"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

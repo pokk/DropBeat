@@ -32,7 +32,6 @@ fun RepositoryHandler.addDefaults() {
     jcenter()
     mavenCentral()
     // required to find the project's artifacts
-    maven("https://dl.bintray.com/pokk/maven")
     maven("https://dl.bintray.com/kotlin/kotlin-eap")
     maven("https://dl.bintray.com/kodein-framework/Kodein-DI")
 }

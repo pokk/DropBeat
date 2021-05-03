@@ -34,7 +34,7 @@ import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.Brief
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.RankViewHolder
 
 internal class RankAdapter : ListAdapter<BriefRankEntity, RankViewHolder>(DiffItemCallback) {
-    var onClickListener: ((rankId: Int) -> Unit)? = null
+    var onClickListener: ((rankId: Int, title: String) -> Unit)? = null
         private set
 
     private object DiffItemCallback : DiffUtil.ItemCallback<BriefRankEntity>() {
@@ -53,7 +53,7 @@ internal class RankAdapter : ListAdapter<BriefRankEntity, RankViewHolder>(DiffIt
         holder.initView(getItem(position), this)
     }
 
-    fun setOnClickListener(listener: (rankId: Int) -> Unit) {
+    fun setOnClickListener(listener: (rankId: Int, title: String) -> Unit) {
         onClickListener = listener
     }
 }

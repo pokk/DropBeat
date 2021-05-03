@@ -39,6 +39,7 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
 import com.google.android.material.transition.MaterialSharedAxis
+import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.AppResId
@@ -54,7 +55,6 @@ import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.TrackAdapt
 import taiwan.no.one.feat.library.presentation.viewmodels.MyHomeViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import java.lang.ref.WeakReference
 
 internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyPageBinding>() {
     //region Variable of View Binding
@@ -90,6 +90,11 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         returnTransition = null
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
+    override fun onDestroyView() {
+        includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        super.onDestroyView()
     }
 
     override fun bindLiveData() {
@@ -133,32 +138,20 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
             find<View>(AppResId.btn_play_all).gone()
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (adapter == null) {
-                    adapter = playlistAdapter
-                }
-                if (layoutManager == null) {
-                    layoutManager = playlistLayoutManager()
-                }
+                adapter = playlistAdapter
+                layoutManager = playlistLayoutManager()
             }
         }
         includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite"
         includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
         includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
         includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
-            if (adapter == null) {
                 adapter = TrackAdapter()
-            }
-            if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
-            }
         }
         includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
-            if (adapter == null) {
                 adapter = TrackAdapter()
-            }
-            if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
-            }
         }
     }
 

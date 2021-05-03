@@ -65,7 +65,7 @@ suspend fun MotionLayout.awaitTransitionComplete(transitionId: Int, timeout: Lon
     }
     catch (tex: TimeoutCancellationException) {
         // Transition didn't happen in time. Remove our listener and throw a cancellation
-        // exception to let the coroutine know 
+        // exception to let the coroutine know
         listener?.let(::removeTransitionListener)
         throw CancellationException("Transition to state with id: $transitionId did not complete in timeout.", tex)
     }

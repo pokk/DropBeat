@@ -24,8 +24,10 @@
 
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
+import coil.loadAny
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
 import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
+import taiwan.no.one.feat.explore.presentation.model.MusicCategory
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
@@ -35,6 +37,7 @@ internal class ExploreViewHolder(
     override fun initView(entity: TagEntity, adapter: ExploreAdapter) {
         binding.apply {
             mtvTitle.text = entity.name
+            sivThumbnail.loadAny(MusicCategory.getArrayMap()[entity.name]?.imageResId)
             root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }

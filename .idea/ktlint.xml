@@ -7,7 +7,6 @@
       <list>
         <option value="keyword-spacing" />
         <option value="indent" />
-        <option value="import-ordering" />
       </list>
     </disabledRules>
     <editorConfigPath>$PROJECT_DIR$/.editorconfig</editorConfigPath>

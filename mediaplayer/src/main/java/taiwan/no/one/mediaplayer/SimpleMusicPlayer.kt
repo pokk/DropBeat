@@ -40,6 +40,8 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import kotlin.properties.Delegates
+import kotlin.random.Random
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -59,8 +61,6 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.mediaplayer.states.MusicState
 import taiwan.no.one.mediaplayer.states.MusicStateStandby
-import kotlin.properties.Delegates
-import kotlin.random.Random
 
 class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     companion object {
@@ -174,9 +174,11 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     private fun buildMediaSource(url: String): MediaSource {
         val uri = Uri.parse(url)
         // Produces DataSource instances through which media data is loaded.
-        val dataSourceFactory = DefaultDataSourceFactory(context,
-                                                         Util.getUserAgent(context, NAME),
-                                                         DefaultBandwidthMeter.Builder(context).build())
+        val dataSourceFactory = DefaultDataSourceFactory(
+            context,
+            Util.getUserAgent(context, NAME),
+            DefaultBandwidthMeter.Builder(context).build()
+        )
         // This is the MediaSource representing the media to be played.
         return ProgressiveMediaSource.Factory(dataSourceFactory)
             .setExtractorsFactory(DefaultExtractorsFactory())

@@ -26,6 +26,7 @@ package taiwan.no.one.feat.library.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewStub
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -39,6 +40,7 @@ import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
+import java.lang.ref.WeakReference
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.AppResId
@@ -46,6 +48,7 @@ import taiwan.no.one.dropbeat.core.helpers.StringUtil
 import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
@@ -56,7 +59,6 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import java.lang.ref.WeakReference
 
 internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
@@ -78,6 +80,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
 
     private val navArgs by navArgs<PlaylistFragmentArgs>()
 
+    //region Lifecycle
     override fun onResume() {
         super.onResume()
         // NOTE(jieyi): 11/26/20 [previousBackStackEntry?.savedStateHandle] will be null after onPause() so it
@@ -85,11 +88,17 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
         prevSavedState = findNavController().previousBackStackEntry?.savedStateHandle
     }
 
+    override fun onDestroyView() {
+        find<RecyclerView>(AppResId.rv_musics).adapter = null
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         prevSavedState?.set("playlist", playlistAdapter.data)
         prevSavedState = null
     }
+    //endregion
 
     override fun bindLiveData() {
         vm.playlist.observe(this) { res ->
@@ -165,12 +174,8 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
             updateLayoutParams {
                 height = getDimen(WidgetResDimen.md_zero_unit).toInt()
             }
-            if (adapter == null) {
-                adapter = playlistAdapter
-            }
-            if (layoutManager == null) {
-                layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
-            }
+            adapter = playlistAdapter
+            layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
         }
         // Set the song into the adapter.
         playlistAdapter.data = songs
@@ -189,7 +194,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
         find<View>(AppResId.pb_progress).gone()
         find<View>(R.id.include_favorite).gone()
         binding.btnPlayAll.gone()
-        binding.vsNoSongs.takeIf { !it.isVisible }?.inflate()
+        binding.vsNoSongs.takeUnless(ViewStub::isVisible)?.inflate()
         noSongsBinding.btnSearch.setOnClickListener {
             // Go to the search page.
             analyticsVm.navigatedToSearch()
@@ -204,14 +209,15 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
 
     private fun showMoreMenu(anchor: View) =
         popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more_playlist).apply {
-            if (navArgs.playlistId in listOf(1, 2)) {
-                menu.removeItem(R.id.item_rename)
+            // If the playlist can't be modified, those button should be removed.
+            if (navArgs.isFixed) {
+                listOf(R.id.item_rename, R.id.item_delete, R.id.item_duplicate).forEach(menu::removeItem)
             }
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.item_duplicate -> {
                         playlist?.let {
-                            val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, "")
+                            val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, DEFAULT_STR)
                             findNavController()
                                 .navigate(PlaylistFragmentDirections.actionPlaylistToCreate(simplePlaylist))
                         }

@@ -23,6 +23,7 @@
  */
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.android.build.gradle.internal.dsl.InternalApplicationExtension
 import config.AndroidConfiguration
 import config.CommonModuleDependency
 import utils.androidTestDependencies
@@ -63,7 +64,9 @@ android {
             isDebuggable = false
         }
     }
-    dynamicFeatures = CommonModuleDependency.getDynamicFeatureModules()
+    (this as InternalApplicationExtension).apply {
+        setDynamicFeatures(CommonModuleDependency.getDynamicFeatureModules())
+    }
 }
 
 dependencies {

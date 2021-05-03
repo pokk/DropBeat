@@ -28,9 +28,9 @@ import android.content.Context
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindInstance
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.login.data.contracts.DataStore
@@ -49,18 +49,16 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore() }
-        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore(instance()) }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore() }
+        bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance()) }
 
-        bind<AuthRepo>() with singleton {
-            AuthRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
-        }
+        bindSingleton<AuthRepo> { AuthRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE)) }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
-        bind<AuthService>() with singleton { FirebaseAuthService(Firebase.auth) }
+        bindInstance<AuthService> { FirebaseAuthService(Firebase.auth) }
     }
 }

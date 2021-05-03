@@ -26,15 +26,12 @@ package taiwan.no.one.feat.library.data
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.library.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.local.configs.MusicLibraryDatabase
-import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
-import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 import taiwan.no.one.feat.library.data.repositories.PlaylistRepository
 import taiwan.no.one.feat.library.data.repositories.SongRepository
 import taiwan.no.one.feat.library.data.stores.LocalStore
@@ -50,22 +47,20 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bind<DataStore>(TAG_LOCAL_DATA_STORE) with singleton { LocalStore(instance(), instance()) }
-        bind<DataStore>(TAG_REMOTE_DATA_STORE) with singleton { RemoteStore() }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance()) }
+        bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore() }
 
-        bind<PlaylistRepo>() with singleton {
+        bindSingleton<PlaylistRepo> {
             PlaylistRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
         }
-        bind<SongRepo>() with singleton {
-            SongRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
-        }
+        bindSingleton<SongRepo> { SongRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE)) }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
-        bind<MusicLibraryDatabase>() with singleton { MusicLibraryDatabase.getDatabase(instance()) }
+        bindSingleton { MusicLibraryDatabase.getDatabase(instance()) }
 
-        bind<PlaylistDao>() with singleton { instance<MusicLibraryDatabase>().createPlaylistDao() }
-        bind<SongDao>() with singleton { instance<MusicLibraryDatabase>().createSongDao() }
+        bindSingleton { instance<MusicLibraryDatabase>().createPlaylistDao() }
+        bindSingleton { instance<MusicLibraryDatabase>().createSongDao() }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {

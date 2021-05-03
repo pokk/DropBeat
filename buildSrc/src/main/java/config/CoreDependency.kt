@@ -26,7 +26,7 @@ package config
 
 object CoreDependency {
     object Version {
-        const val KOTLIN = "1.5.0-RC"
+        const val KOTLIN = "1.5.0"
         const val KOTLIN_COROUTINE = "1.4.3"
     }
 

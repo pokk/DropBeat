@@ -26,9 +26,8 @@ package taiwan.no.one.feat.explore.domain
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.domain.usecases.FetchAlbumCase
@@ -68,25 +67,22 @@ import taiwan.no.one.feat.explore.domain.usecases.FetchTrackOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
-        bind<FetchAlbumCase>() with singleton { FetchAlbumOneShotCase(instance()) }
-        bind<FetchArtistCompleteInfoCase>() with singleton {
-            FetchArtistCompleteInfoOneShotCase(instance(),
-                                               instance())
-        }
-        bind<FetchArtistInfoCase>() with singleton { FetchArtistInfoOneShotCase(instance()) }
-        bind<FetchArtistPhotoCase>() with singleton { FetchArtistPhotoOneShotCase(instance()) }
-        bind<FetchArtistTopAlbumCase>() with singleton { FetchArtistTopAlbumOneShotCase(instance()) }
-        bind<FetchArtistTopTrackCase>() with singleton { FetchArtistTopTrackOneShotCase(instance()) }
-        bind<FetchChartTopArtistCase>() with singleton { FetchChartTopArtistOneShotCase(instance(), instance()) }
-        bind<FetchChartTopTagCase>() with singleton { FetchChartTopTagOneShotCase(instance()) }
-        bind<FetchChartTopTrackCase>() with singleton { FetchChartTopTrackOneShotCase(instance(), instance()) }
-        bind<FetchSimilarArtistCase>() with singleton { FetchSimilarArtistOneShotCase(instance()) }
-        bind<FetchSimilarTrackCase>() with singleton { FetchSimilarTrackOneShotCase(instance()) }
-        bind<FetchTagCase>() with singleton { FetchTagOneShotCase(instance()) }
-        bind<FetchTagTopAlbumCase>() with singleton { FetchTagTopAlbumOneShotCase(instance()) }
-        bind<FetchTagTopArtistCase>() with singleton { FetchTagTopArtistOneShotCase(instance()) }
-        bind<FetchTagTopTrackCase>() with singleton { FetchTagTopTrackOneShotCase(instance()) }
-        bind<FetchTrackCase>() with singleton { FetchTrackOneShotCase(instance()) }
-        bind<FetchTrackCoverCase>() with singleton { FetchTrackCoverOneShotCase(instance()) }
+        bindSingleton<FetchAlbumCase> { FetchAlbumOneShotCase(instance()) }
+        bindSingleton<FetchArtistCompleteInfoCase> { FetchArtistCompleteInfoOneShotCase(instance(), instance()) }
+        bindSingleton<FetchArtistInfoCase> { FetchArtistInfoOneShotCase(instance()) }
+        bindSingleton<FetchArtistPhotoCase> { FetchArtistPhotoOneShotCase(instance()) }
+        bindSingleton<FetchArtistTopAlbumCase> { FetchArtistTopAlbumOneShotCase(instance()) }
+        bindSingleton<FetchArtistTopTrackCase> { FetchArtistTopTrackOneShotCase(instance()) }
+        bindSingleton<FetchChartTopArtistCase> { FetchChartTopArtistOneShotCase(instance(), instance()) }
+        bindSingleton<FetchChartTopTagCase> { FetchChartTopTagOneShotCase(instance()) }
+        bindSingleton<FetchChartTopTrackCase> { FetchChartTopTrackOneShotCase(instance(), instance()) }
+        bindSingleton<FetchSimilarArtistCase> { FetchSimilarArtistOneShotCase(instance()) }
+        bindSingleton<FetchSimilarTrackCase> { FetchSimilarTrackOneShotCase(instance()) }
+        bindSingleton<FetchTagCase> { FetchTagOneShotCase(instance()) }
+        bindSingleton<FetchTagTopAlbumCase> { FetchTagTopAlbumOneShotCase(instance()) }
+        bindSingleton<FetchTagTopArtistCase> { FetchTagTopArtistOneShotCase(instance()) }
+        bindSingleton<FetchTagTopTrackCase> { FetchTagTopTrackOneShotCase(instance()) }
+        bindSingleton<FetchTrackCase> { FetchTrackOneShotCase(instance()) }
+        bindSingleton<FetchTrackCoverCase> { FetchTrackCoverOneShotCase(instance()) }
     }
 }

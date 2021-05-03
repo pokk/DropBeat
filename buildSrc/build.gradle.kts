@@ -24,12 +24,8 @@
 
 plugins {
     val kotlinVersion: String by System.getProperties()
+    //    kotlin("jvm") version kotlinVersion
     `kotlin-dsl`
-    kotlin("jvm") version kotlinVersion
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }
 
 // gradle versions above 4.10.
@@ -39,7 +35,6 @@ repositories {
     google()
     mavenCentral()
     gradlePluginPortal()
-    jcenter()
 }
 
 dependencies {
@@ -48,7 +43,7 @@ dependencies {
     val updateVersion: String by System.getProperties()
     val ktlintVersion: String by System.getProperties()
 
-    implementation("com.android.tools.build:gradle:4.1.3")
+    implementation("com.android.tools.build:gradle:7.0.0-alpha15")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")

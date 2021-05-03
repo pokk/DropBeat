@@ -26,9 +26,8 @@ package taiwan.no.one.feat.login.domain
 
 import android.content.Context
 import org.kodein.di.DI
-import org.kodein.di.bind
+import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.kodein.di.singleton
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.login.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.login.domain.usecases.CreateUserCase
@@ -42,9 +41,9 @@ import taiwan.no.one.feat.login.domain.usecases.ModifyPasswordOneShotCase
 
 internal object DomainModules : ModuleProvider {
     override fun provide(context: Context) = DI.Module("${FEAT_NAME}DomainModule") {
-        bind<LoginCase>() with singleton { LoginOneShotCase(instance(), instance()) }
-        bind<LogoutCase>() with singleton { LogoutUserOneShotCase(instance(), instance()) }
-        bind<CreateUserCase>() with singleton { CreateUserOneShotCase(instance()) }
-        bind<ModifyPasswordCase>() with singleton { ModifyPasswordOneShotCase(instance()) }
+        bindSingleton<LoginCase> { LoginOneShotCase(instance(), instance()) }
+        bindSingleton<LogoutCase> { LogoutUserOneShotCase(instance(), instance()) }
+        bindSingleton<CreateUserCase> { CreateUserOneShotCase(instance()) }
+        bindSingleton<ModifyPasswordCase> { ModifyPasswordOneShotCase(instance()) }
     }
 }

@@ -37,8 +37,9 @@ internal class RankViewHolder(
         binding.apply {
             mtvTitle.text = entity.title
             sivThumbnail.loadAny(entity.coverUrl)
+            mtvNumOfSongs.text = "${entity.numberOfSongs} songs"
             mcvMusic.setOnClickListener {
-                adapter.onClickListener?.invoke(entity.rankId)
+                adapter.onClickListener?.invoke(entity.rankId, entity.title)
             }
         }
     }

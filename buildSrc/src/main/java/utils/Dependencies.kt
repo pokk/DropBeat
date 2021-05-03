@@ -97,8 +97,8 @@ fun DependencyHandlerScope.widgetDependencies() {
     DepEnvImpl(JetPack.CARDVIEW)
     DepEnvImpl(JetPack.CONSTRAINT_LAYOUT)
     DepEnvImpl(Ui.LOTTIE)
-//    DepEnvImpl(Deps.Presentation.arv)
-//    DepEnvImpl(Deps.Widget.quickDialog)
+    //    DepEnvImpl(Deps.Presentation.arv)
+    //    DepEnvImpl(Deps.Widget.quickDialog)
 }
 
 fun DependencyHandlerScope.settingDependencies() {
@@ -225,13 +225,14 @@ fun DependencyHandlerScope.localDependencies(env: String) {
 fun DependencyHandlerScope.uiDependencies(env: String) {
     env(Ui.LOTTIE)
     env(Ui.SHAPE_OF_VIEW)
-    env(Jieyi.ARV)
+//    env(Jieyi.ARV)
 }
 
 fun DependencyHandlerScope.debugDependencies(env: String) {
     env(DebugDependency.STEHO)
     env(DebugDependency.STEHO_INTERCEPTOR)
-    env(DebugDependency.DEBUG_DB)
+    env(DebugDependency.LEAKCANARY)
+//    env(DebugDependency.DEBUG_DB)
 //    env(DebugDependency.OK_HTTP_PROFILER)
 }
 

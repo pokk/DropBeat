@@ -40,6 +40,7 @@
             android:id="@+id/mtv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/md_two_unit"
             android:text="Hi\nTime for Music?"
             android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline1"
             app:layout_constraintTop_toTopOf="parent"/>

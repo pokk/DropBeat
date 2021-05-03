@@ -38,6 +38,7 @@ import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
+import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -46,6 +47,7 @@ import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.explore.R
+import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
@@ -57,10 +59,10 @@ import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAd
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
 import taiwan.no.one.feat.explore.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.explore.presentation.viewmodels.ExploreViewModel
+import taiwan.no.one.feat.ranking.presentation.fragments.RankingFragment
 import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import java.lang.ref.WeakReference
 
 internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
     private val vm by viewModels<ExploreViewModel>()
@@ -89,10 +91,34 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // HACK(jieyi): 5/2/21 Will set a callback function to [RankingFragment] until we find the
+        //  best solution to set the navigation destination.
+        findRankingFragment()?.navigationCallback = { title, songs ->
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
+                songs = songs.toTypedArray(),
+                title = title,
+                isFixed = true,
+            ))
+            analyticsVm.navigatedToPlaylist("playlist name: $title")
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         // Keep the recyclerview state.
         vm.playlistState = includePlaylist.find<RecyclerView>(AppResId.rv_musics).layoutManager?.onSaveInstanceState()
+        findRankingFragment()?.navigationCallback = null
+    }
+
+    override fun onDestroyView() {
+        // Note that this recyclerView is an old one and different instance from the one in onViewCreated.
+        binding.includeExplore.rvMusics.adapter = null
+        includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        super.onDestroyView()
     }
 
     override fun bindLiveData() {
@@ -104,11 +130,6 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                     .layoutManager
                     ?.onRestoreInstanceState(vm.playlistState)
             }.onFailure { loge(it) }
-        }
-        vm.topTags.observe(this) { res ->
-            res.onSuccess {
-                it.tags?.takeIf { it.isNotEmpty() }?.also(exploreAdapter::submitList)
-            }.onFailure(::loge)
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
@@ -134,21 +155,13 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     override fun viewComponentBinding() {
         addStatusBarHeightMarginTop(binding.mtvTitle)
         binding.includeExplore.rvMusics.apply {
-            if (adapter == null) {
-                adapter = exploreAdapter
-            }
-            if (layoutManager == null) {
-                layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
-            }
+            adapter = exploreAdapter
+            layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
         }
         includePlaylist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (adapter == null) {
-                    adapter = playlistAdapter
-                }
-                if (layoutManager == null) {
-                    layoutManager = playlistLayoutManager
-                }
+                adapter = playlistAdapter
+                layoutManager = playlistLayoutManager
             }
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
             find<View>(AppResId.btn_play_all).visible()
@@ -156,23 +169,15 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         includeTopArtist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (layoutManager == null) {
-                    layoutManager = linearLayoutManager()
-                }
-                if (adapter == null) {
-                    adapter = topArtistAdapter
-                }
+                layoutManager = linearLayoutManager()
+                adapter = topArtistAdapter
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopArtist"
         }
         includeTopTrack.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (layoutManager == null) {
-                    layoutManager = linearLayoutManager()
-                }
-                if (adapter == null) {
-                    adapter = topTrackAdapter
-                }
+                layoutManager = linearLayoutManager()
+                adapter = topTrackAdapter
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"
         }
@@ -190,7 +195,9 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             }
         }
         playlistAdapter.setOnClickListener {
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id))
+            // 1: favorite playlist, 2: downloaded playlist
+            val isFixedPlaylist = it.id in listOf(1, 2)
+            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id, isFixedPlaylist))
             analyticsVm.navigatedToPlaylist("playlist name: ${it.name}")
         }
         listOf(topTrackAdapter, topArtistAdapter).forEach {
@@ -212,7 +219,16 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         vm.getPlaylists()
         vm.getTopTracks()
         vm.getTopArtists()
+        vm.topTags.observe(viewLifecycleOwner) { res ->
+            res.onSuccess {
+                it.tags?.takeIf(List<TagEntity>::isNotEmpty)?.also(exploreAdapter::submitList)
+            }.onFailure(::loge)
+            binding.includeExplore.pbProgress.gone()
+        }
     }
+
+    private fun findRankingFragment() =
+        childFragmentManager.findFragmentByTag("part_explore") as? RankingFragment
 
     private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {
         var isTopArtist = false
@@ -238,6 +254,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
                 songs = list,
                 title = playlistName,
+                isFixed = true,
             ))
             analyticsVm.navigatedToPlaylist("playlist name: $playlistName")
         }

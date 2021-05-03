@@ -44,9 +44,9 @@ internal class LocalStore(
 
     override suspend fun getMusic(remoteUri: String?, localUri: String?) = when {
         remoteUri != null -> songDao.getMusicByRemote(remoteUri)
-                             ?: throw NotFoundException("Couldn't find the track by the remote uri path.")
+            ?: throw NotFoundException("Couldn't find the track by the remote uri path.")
         localUri != null -> songDao.getMusicByLocal(localUri)
-                            ?: throw NotFoundException("Couldn't find the track by the local uri path.")
+            ?: throw NotFoundException("Couldn't find the track by the local uri path.")
         else -> throw ParameterNotMatchException()
     }
 
