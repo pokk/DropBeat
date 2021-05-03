@@ -64,6 +64,11 @@ internal class SongOfArtistFragment : BaseLibraryFragment<BaseActivity<*>, Fragm
 
     private val navArgs by navArgs<SongOfArtistFragmentArgs>()
 
+    override fun onDestroyView() {
+        mergeLayoutSongsOfTypeBinding.rvMusics.adapter = null
+        super.onDestroyView()
+    }
+
     override fun bindLiveData() {
         vm.artistInfo.observe(this) { res ->
             res.onSuccess(::displayArtistInfo).onFailure(::loge)
@@ -77,12 +82,8 @@ internal class SongOfArtistFragment : BaseLibraryFragment<BaseActivity<*>, Fragm
         binding.mtvTitle.text = navArgs.track.artist
         mergeLayoutSongsOfTypeBinding.apply {
             rvMusics.apply {
-                if (layoutManager == null) {
                     layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
-                }
-                if (adapter == null) {
                     adapter = playlistAdapter
-                }
             }
         }
     }

@@ -47,8 +47,11 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.lang.ref.WeakReference
+import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.feat.login.R
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
@@ -68,6 +71,9 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     private val analyticsVm by viewModels<AnalyticsViewModel>()
     //endregion
 
+    private val linearLayoutManager: () -> LinearLayoutManager by provider {
+        LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
+    }
     private val snsAdapter by lazy {
         ThirdPartyLoginAdapter().apply {
             submitList(listOf(R.drawable.ic_facebook,
@@ -97,6 +103,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     }
     //endregion
 
+    //region Fragment Lifecycle
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         facebookCallbackManager.onActivityResult(requestCode, resultCode, data)
@@ -131,10 +138,16 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
         }
     }
 
+    override fun onDestroyView() {
+        binding.rvSns.adapter = null
+        super.onDestroyView()
+    }
+
     override fun onDetach() {
         super.onDetach()
         LoginManager.getInstance().unregisterCallback(facebookCallbackManager)
     }
+    //endregion
 
     override fun bindLiveData() {
         vm.userInfo.observe(this) {
@@ -161,12 +174,8 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     override fun viewComponentBinding() {
         addStatusBarHeightMarginTop(binding.btnBack)
         binding.rvSns.apply {
-            if (adapter == null) {
-                adapter = snsAdapter
-            }
-            if (layoutManager == null) {
-                layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
-            }
+            adapter = snsAdapter
+            layoutManager = linearLayoutManager()
             if (itemDecorationCount <= 1) {
                 addItemDecoration(SnsItemDecorator(getDimen(WidgetResDimen.md_two_unit).toInt()))
             }

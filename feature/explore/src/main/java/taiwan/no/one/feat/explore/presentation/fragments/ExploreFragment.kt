@@ -112,6 +112,15 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         findRankingFragment()?.navigationCallback = null
     }
 
+    override fun onDestroyView() {
+        // Note that this recyclerView is an old one and different instance from the one in onViewCreated.
+        binding.includeExplore.rvMusics.adapter = null
+        includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        includeTopArtist.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        includeTopTrack.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        super.onDestroyView()
+    }
+
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
@@ -146,21 +155,13 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     override fun viewComponentBinding() {
         addStatusBarHeightMarginTop(binding.mtvTitle)
         binding.includeExplore.rvMusics.apply {
-            if (adapter == null) {
-                adapter = exploreAdapter
-            }
-            if (layoutManager == null) {
-                layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
-            }
+            adapter = exploreAdapter
+            layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
         }
         includePlaylist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (adapter == null) {
-                    adapter = playlistAdapter
-                }
-                if (layoutManager == null) {
-                    layoutManager = playlistLayoutManager
-                }
+                adapter = playlistAdapter
+                layoutManager = playlistLayoutManager
             }
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
             find<View>(AppResId.btn_play_all).visible()
@@ -168,23 +169,15 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
         }
         includeTopArtist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (layoutManager == null) {
-                    layoutManager = linearLayoutManager()
-                }
-                if (adapter == null) {
-                    adapter = topArtistAdapter
-                }
+                layoutManager = linearLayoutManager()
+                adapter = topArtistAdapter
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopArtist"
         }
         includeTopTrack.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (layoutManager == null) {
-                    layoutManager = linearLayoutManager()
-                }
-                if (adapter == null) {
-                    adapter = topTrackAdapter
-                }
+                layoutManager = linearLayoutManager()
+                adapter = topTrackAdapter
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"
         }

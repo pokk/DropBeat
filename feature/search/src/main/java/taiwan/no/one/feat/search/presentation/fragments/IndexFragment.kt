@@ -100,6 +100,11 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
+    override fun onDestroyView() {
+        rvMusics.adapter = null
+        super.onDestroyView()
+    }
+
     override fun onDetach() {
         super.onDetach()
         loadMoreListener.fetchMoreBlock = null
@@ -145,12 +150,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
         mergeBinding.mtvRvTitle.text = "History Search "
         rvMusics.apply {
-            if (adapter == null) {
-                adapter = searchHistoryAdapter
-            }
-            if (layoutManager == null) {
-                layoutManager = linearLayoutManager()
-            }
+            adapter = searchHistoryAdapter
+            layoutManager = linearLayoutManager()
         }
     }
 
