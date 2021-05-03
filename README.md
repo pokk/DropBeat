@@ -9,8 +9,6 @@
 <a href="https://opensource.org/licenses/MIT"><img alt="Licence" src="https://img.shields.io/badge/license-MIT-green.svg" />
 </p>
 
-# Introduction
-
 # System Overview
 
 ## Module Dependency Graph
