@@ -80,6 +80,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
 
     private val navArgs by navArgs<PlaylistFragmentArgs>()
 
+    //region Lifecycle
     override fun onResume() {
         super.onResume()
         // NOTE(jieyi): 11/26/20 [previousBackStackEntry?.savedStateHandle] will be null after onPause() so it
@@ -87,11 +88,17 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
         prevSavedState = findNavController().previousBackStackEntry?.savedStateHandle
     }
 
+    override fun onDestroyView() {
+        find<RecyclerView>(AppResId.rv_musics).adapter = null
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         prevSavedState?.set("playlist", playlistAdapter.data)
         prevSavedState = null
     }
+    //endregion
 
     override fun bindLiveData() {
         vm.playlist.observe(this) { res ->
@@ -167,12 +174,8 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
             updateLayoutParams {
                 height = getDimen(WidgetResDimen.md_zero_unit).toInt()
             }
-            if (adapter == null) {
-                adapter = playlistAdapter
-            }
-            if (layoutManager == null) {
-                layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
-            }
+            adapter = playlistAdapter
+            layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
         }
         // Set the song into the adapter.
         playlistAdapter.data = songs

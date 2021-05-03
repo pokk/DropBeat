@@ -92,6 +92,11 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
+    override fun onDestroyView() {
+        includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        super.onDestroyView()
+    }
+
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
@@ -133,32 +138,20 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
             find<View>(AppResId.btn_play_all).gone()
             find<RecyclerView>(AppResId.rv_musics).apply {
-                if (adapter == null) {
-                    adapter = playlistAdapter
-                }
-                if (layoutManager == null) {
-                    layoutManager = playlistLayoutManager()
-                }
+                adapter = playlistAdapter
+                layoutManager = playlistLayoutManager()
             }
         }
         includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite"
         includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
         includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
         includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
-            if (adapter == null) {
                 adapter = TrackAdapter()
-            }
-            if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
-            }
         }
         includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
-            if (adapter == null) {
                 adapter = TrackAdapter()
-            }
-            if (layoutManager == null) {
                 layoutManager = linearLayoutManager()
-            }
         }
     }
 

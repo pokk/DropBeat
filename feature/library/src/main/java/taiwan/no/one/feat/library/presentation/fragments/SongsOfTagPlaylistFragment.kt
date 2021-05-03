@@ -70,12 +70,8 @@ internal class SongsOfTagPlaylistFragment : BaseLibraryFragment<BaseActivity<*>,
         addStatusBarHeightMarginTop(binding.btnBack)
         binding.mtvTitle.text = navArgs.name
         merge.rvMusics.apply {
-            if (adapter == null) {
                 adapter = this@SongsOfTagPlaylistFragment.adapter
-            }
-            if (layoutManager == null) {
                 layoutManager = layoutManager()
-            }
         }
     }
 
