@@ -30,13 +30,13 @@ import android.view.ViewGroup
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.getDimen
+import kotlin.properties.Delegates
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.TrackViewHolder
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.recyclerviews.AutoUpdatable
-import kotlin.properties.Delegates
 
 internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdatable {
     var data: List<SimpleTrackEntity> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
