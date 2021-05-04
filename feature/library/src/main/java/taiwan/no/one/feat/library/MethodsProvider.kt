@@ -28,12 +28,12 @@ import com.google.auto.service.AutoService
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.data.mappers.TrackMapper
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.AddSongsAndPlaylistCase
@@ -105,8 +105,7 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     override suspend fun getPlaylists() = runCatching {
         fetchAllPlaylistsCase.execute()
     }.map { list ->
-        // TODO(jieyi): 5/4/21 Create a mapper for [SimplePlaylistEntity].
-        list.map { SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl) }
+        list.map(EntityMapper::playlistToSimplePlaylistEntity)
     }
 
     override suspend fun createPlaylist(name: String): Result<Boolean> = runCatching {

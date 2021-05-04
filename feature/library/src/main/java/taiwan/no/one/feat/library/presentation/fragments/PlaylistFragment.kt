@@ -45,7 +45,6 @@ import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.core.utils.StringUtil
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.library.R
@@ -216,7 +215,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
                 when (it.itemId) {
                     R.id.item_duplicate -> {
                         playlist?.let {
-                            val simplePlaylist = SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl)
+                            val simplePlaylist = EntityMapper.playlistToSimplePlaylistEntity(it)
                             findNavController()
                                 .navigate(PlaylistFragmentDirections.actionPlaylistToCreate(simplePlaylist))
                         }
