@@ -146,12 +146,12 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
         includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
         includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
-                adapter = TrackAdapter()
-                layoutManager = linearLayoutManager()
+            adapter = TrackAdapter()
+            layoutManager = linearLayoutManager()
         }
         includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
-                adapter = TrackAdapter()
-                layoutManager = linearLayoutManager()
+            adapter = TrackAdapter()
+            layoutManager = linearLayoutManager()
         }
     }
 

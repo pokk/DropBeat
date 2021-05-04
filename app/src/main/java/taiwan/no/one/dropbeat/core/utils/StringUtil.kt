@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.core.helpers
+package taiwan.no.one.dropbeat.core.utils
 
 import taiwan.no.one.ext.utils.TimeUtils
 

@@ -35,5 +35,5 @@ data class SimplePlaylistEntity(
     val id: Int,
     val name: String,
     val songIds: List<Int>,
-    val thumbUri: String,
+    val thumbUrl: String,
 ) : Parcelable
