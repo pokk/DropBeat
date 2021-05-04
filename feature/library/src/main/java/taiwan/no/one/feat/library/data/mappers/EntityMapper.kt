@@ -24,8 +24,10 @@
 
 package taiwan.no.one.feat.library.data.mappers
 
+import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 
 internal object EntityMapper {
@@ -54,5 +56,9 @@ internal object EntityMapper {
             it.duration,
             it.isFavorite,
         )
+    }
+
+    fun playlistToSimplePlaylistEntity(entity: PlayListEntity) = entity.let {
+        SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl)
     }
 }
