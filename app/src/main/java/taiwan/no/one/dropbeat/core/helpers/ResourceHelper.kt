@@ -22,23 +22,13 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.presentation.models
+package taiwan.no.one.dropbeat.core.helpers
 
+import android.net.Uri
 import androidx.annotation.DrawableRes
-import androidx.collection.ArrayMap
-import androidx.collection.arrayMapOf
-import taiwan.no.one.dropbeat.R
+import taiwan.no.one.dropbeat.BuildConfig
 
-enum class PlaylistCategory(val text: String, @DrawableRes val imageResId: Int) {
-    DOWNLOADED("downloaded", R.drawable.bg_downloaded),
-    FAVORITE("favorite", R.drawable.bg_favorite),
-    UNCATEGORIES("uncategory", R.drawable.bg_uncategory);
-
-    companion object {
-        fun getArrayMap(): ArrayMap<String, PlaylistCategory> {
-            val map = arrayMapOf<String, PlaylistCategory>()
-            values().forEach { map[it.text] = it }
-            return map
-        }
-    }
+object ResourceHelper {
+    fun getUriForDrawableResource(@DrawableRes resId: Int) =
+        Uri.parse("android.resource://${BuildConfig.APPLICATION_ID}/$resId")
 }

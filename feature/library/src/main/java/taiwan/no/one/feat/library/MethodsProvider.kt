@@ -105,7 +105,8 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     override suspend fun getPlaylists() = runCatching {
         fetchAllPlaylistsCase.execute()
     }.map { list ->
-        list.map { SimplePlaylistEntity(it.id, it.name, it.songIds, "") }
+        // TODO(jieyi): 5/4/21 Create a mapper for [SimplePlaylistEntity].
+        list.map { SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl) }
     }
 
     override suspend fun createPlaylist(name: String): Result<Boolean> = runCatching {

@@ -46,6 +46,8 @@ internal data class LibraryEntity(
         @ColumnInfo(name = "song_ids")
         val songIds: List<Int> = emptyList(),
         val count: Int = 0,
+        @ColumnInfo(name = "cover_url")
+        val coverUrl: String = DEFAULT_STR,
         @Embedded
         val time: TimeEntity = TimeEntity(),
     ) {
@@ -57,6 +59,7 @@ internal data class LibraryEntity(
             name: $name,
             songIds: $songIds,
             count: $count,
+            doverUrl: $coverUrl,
             time: $time,
             songs: $songs
         """.trimIndent()

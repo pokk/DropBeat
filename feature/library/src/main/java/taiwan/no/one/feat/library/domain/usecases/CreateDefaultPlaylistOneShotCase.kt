@@ -26,13 +26,19 @@ package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.data.extensions.parseObjectFromJson
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.core.helpers.ResourceHelper
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 
 internal class CreateDefaultPlaylistOneShotCase(
     private val repository: PlaylistRepo,
 ) : CreateDefaultPlaylistCase() {
+    val defaultPlaylistUrl = listOf(
+        AppResDrawable.bg_downloaded, AppResDrawable.bg_favorite, AppResDrawable.bg_uncategory
+    ).map(ResourceHelper::getUriForDrawableResource)
+
     override suspend fun acquireCase(parameter: Request?): Boolean {
         val list = DropBeatApp.appContext
             .parseObjectFromJson<List<PlayListEntity>>("json/default_playlist.json")
@@ -40,7 +46,11 @@ internal class CreateDefaultPlaylistOneShotCase(
         val ids = list.map(PlayListEntity::id)
         val names = list.map(PlayListEntity::name)
         ids.zip(names)
-            .map { (id, name) -> PlayListEntity(id, name) }
+            .zip(defaultPlaylistUrl)
+            .map { (basicInfo, uri) ->
+                val (id, name) = basicInfo
+                PlayListEntity(id, name, coverUrl = uri.toString())
+            }
             .forEach { repository.addPlaylist(it, true) }
         return true
     }

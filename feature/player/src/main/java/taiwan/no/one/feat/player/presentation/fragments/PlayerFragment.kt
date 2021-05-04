@@ -45,7 +45,7 @@ import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseDialogFragment
-import taiwan.no.one.dropbeat.core.helpers.StringUtil
+import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.drawable
