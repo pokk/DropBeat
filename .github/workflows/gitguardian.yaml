@@ -1,16 +1,22 @@
-name: GitGuardian scan
+name: GitGuardian Scan
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   scanning:
-    name: GitGuardian scan
+    name: GitGuardian Scan
     runs-on: ubuntu-latest
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # fetch all history so multiple commits can be scanned
+
       - name: GitGuardian scan
         uses: GitGuardian/gg-shield-action@master
         env:
