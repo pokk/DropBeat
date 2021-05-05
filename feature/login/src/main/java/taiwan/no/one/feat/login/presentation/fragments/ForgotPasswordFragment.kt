@@ -31,6 +31,8 @@ import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -70,6 +72,8 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
         addStatusBarHeightMarginTop(binding.btnBack)
     }
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     override fun componentListenersBinding() {
         binding.btnReset.setOnClickListener {
             vm.resetPassword(binding.tietEmail.text.toString())
@@ -79,9 +83,11 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
             findNavController().navigateUp()
             analyticsVm.navigatedGoBackFromForgotPassword()
         }
-        binding.tietEmail.afterTextChanges().debounce(200).onEach {
-            vm.validEmailFormat(it.toString())
-        }.launchIn(lifecycleScope)
+        binding.tietEmail
+            .afterTextChanges()
+            .debounce(taiwan.no.one.ktx.view.Constant.DEFAULT_DEBOUNCE_TEXT_CHANGE)
+            .onEach { vm.validEmailFormat(it.toString()) }
+            .launchIn(lifecycleScope)
     }
 
     override fun rendered(savedInstanceState: Bundle?) {

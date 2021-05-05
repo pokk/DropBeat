@@ -22,28 +22,9 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.test
+package taiwan.no.one.ktx.view
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
-
-@ExperimentalCoroutinesApi
-class CoroutineTestRule constructor(
-    private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
-) : TestWatcher() {
-    override fun starting(description: Description?) {
-        super.starting(description)
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    override fun finished(description: Description?) {
-        super.finished(description)
-        Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
-    }
+object Constant {
+    const val DEFAULT_DEBOUNCE_TIME = 300L
+    const val DEFAULT_DEBOUNCE_TEXT_CHANGE = 200L
 }

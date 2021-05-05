@@ -151,13 +151,17 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
     //endregion
 
     @UiThread
+    @Deprecated("Use callBackPressed instead", ReplaceWith("Unit"))
     open fun onBackPressed() = Unit
 
     @UiThread
+    protected fun getStatusBarHeight() = resources.getIdentifier("status_bar_height", "dimen", "android")
+        .takeIf { 0 < it }
+        ?.let { resources.getDimensionPixelSize(it) } ?: 0
+
+    @UiThread
     protected fun addStatusBarHeightMarginTop(view: View) {
-        val statusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
-            .takeIf { 0 < it }
-            ?.let { resources.getDimensionPixelSize(it) } ?: 0
+        val statusBarHeight = getStatusBarHeight()
         if (view.layoutParams is ConstraintLayout.LayoutParams) {
             view.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 topMargin = view.top + statusBarHeight

@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.explore.data.entities
 
-internal object Constants {
+internal object Constant {
     const val LASTFM_QUERY_TOKEN = "api_key"
     const val LASTFM_QUERY_METHOD = "method"
     const val LASTFM_QUERY_FORMAT = "format"
