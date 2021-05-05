@@ -3,9 +3,9 @@
 <a href="https://github.com/pokk/DropBeat/actions"><img src="https://github.com/pokk/DropBeat/workflows/Build Workflow/badge.svg"></a>
 <a href="https://codebeat.co/projects/github-com-pokk-dropbeat-master"><img alt="codebeat badge" src="https://codebeat.co/badges/7079a1bd-6e84-4a94-bf8a-b30f7c509114" /></a>
 <a href="https://www.codacy.com/manual/pokk/DropBeat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pokk/DropBeat&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/7aa04a1604444d4592ce22da25b2299a"/></a>
-<a href="https://www.codefactor.io/repository/github/smashks/stationmusicfm"><img src="https://www.codefactor.io/repository/github/smashks/stationmusicfm/badge" alt="CodeFactor" /></a>
+<a href="https://www.codefactor.io/repository/github/pokk/dropbeat"><img src="https://www.codefactor.io/repository/github/pokk/dropbeat/badge" alt="CodeFactor" /></a>
 <a href="https://codeclimate.com/github/pokk/DropBeat/maintainability"><img src="https://api.codeclimate.com/v1/badges/f9ef124dc3df905b7fc4/maintainability" /></a>
-<a href="https://codecov.io/gh/SmashKs/OneShoot"><img src="https://codecov.io/gh/SmashKs/OneShoot/branch/master/graph/badge.svg?token=XEdOPjdOQn"/></a>
+<a href="https://codecov.io/gh/pokk/DropBeat"><img src="https://codecov.io/gh/pokk/DropBeat/branch/master/graph/badge.svg?token=97V0QNONOT"/></a>
 <a href="https://opensource.org/licenses/MIT"><img alt="Licence" src="https://img.shields.io/badge/license-MIT-green.svg" />
 </p>
 
