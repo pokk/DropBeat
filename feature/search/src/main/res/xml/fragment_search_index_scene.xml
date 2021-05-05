@@ -46,7 +46,7 @@
         </KeyFrameSet>
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/sov_backdrop"/>
+            app:touchAnchorId="@id/rv_musics"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/expanded">
