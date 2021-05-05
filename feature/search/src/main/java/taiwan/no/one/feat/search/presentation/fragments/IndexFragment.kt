@@ -27,6 +27,7 @@ package taiwan.no.one.feat.search.presentation.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.widget.EditText
 import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
@@ -98,6 +99,14 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         super.onCreate(savedInstanceState)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Adjust the top margin with some devices.
+        binding.layoutParent.getConstraintSet(R.id.expanded)?.let {
+            it.getConstraint(R.id.mtv_title).layout.topMargin += getStatusBarHeight()
+        }
     }
 
     override fun onDestroyView() {
