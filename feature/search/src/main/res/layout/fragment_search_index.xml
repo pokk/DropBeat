@@ -84,7 +84,6 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="@dimen/md_zero_unit"
         android:layout_margin="@dimen/md_two_unit"
-        android:paddingHorizontal="@dimen/md_two_unit"
         app:boxBackgroundMode="none"
         app:endIconDrawable="@drawable/ic_ripple_search"
         app:endIconMode="custom"
