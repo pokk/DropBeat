@@ -42,7 +42,8 @@ import kotlinx.coroutines.flow.onEach
 import taiwan.no.one.widget.R
 import taiwan.no.one.widget.databinding.PartTopToastBinding
 
-@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+@ExperimentalCoroutinesApi
+@FlowPreview
 @SuppressLint("DiscouragedPrivateApi")
 fun Context.showTopToast(text: String, @DrawableRes icon: Int = R.drawable.ic_close) = Toast(this).apply toast@{
     val binding = PartTopToastBinding

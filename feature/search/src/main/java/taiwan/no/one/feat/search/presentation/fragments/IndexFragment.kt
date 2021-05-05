@@ -41,6 +41,7 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -65,6 +66,7 @@ import taiwan.no.one.feat.search.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.RecentViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.ResultViewModel
 import taiwan.no.one.feat.search.presentation.viewmodels.SongViewModel
+import taiwan.no.one.ktx.view.Constant as KtxConstant
 import taiwan.no.one.ktx.view.afterTextChanges
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 
@@ -164,7 +166,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
     }
 
-    @OptIn(FlowPreview::class)
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     @SuppressLint("ClickableViewAccessibility")
     override fun componentListenersBinding() {
         binding.root.setOnTouchListener { v, event ->
@@ -202,7 +205,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 }
                 false
             }
-            tietSearch.afterTextChanges().debounce(300).onEach {
+            tietSearch.afterTextChanges().debounce(KtxConstant.DEFAULT_DEBOUNCE_TEXT_CHANGE).onEach {
                 if (it.isNullOrBlank()) {
                     setAndDisplayHistory()
                 }

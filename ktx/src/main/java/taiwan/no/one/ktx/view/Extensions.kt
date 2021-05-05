@@ -39,21 +39,25 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 fun View.clicks(): Flow<Unit> = callbackFlow {
     setOnClickListener { offer(Unit) }
     awaitClose { setOnClickListener(null) }
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 fun TextView.afterTextChanges() = callbackFlow {
     val textWatcher = doAfterTextChanged { offer(it) }
     awaitClose { removeTextChangedListener(textWatcher) }
 }
 
-@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-fun View.setDebounceClicks(scope: CoroutineScope, timeoutMillis: Long = 300, action: suspend (Unit) -> Unit) =
-    clicks().debounce(timeoutMillis).onEach(action).launchIn(scope)
+@ExperimentalCoroutinesApi
+@FlowPreview
+fun View.setDebounceClicks(
+    scope: CoroutineScope,
+    timeoutMillis: Long = Constant.DEFAULT_DEBOUNCE_TIME,
+    action: suspend (Unit) -> Unit,
+) = clicks().debounce(timeoutMillis).onEach(action).launchIn(scope)
 
 fun <T> Flow<T>.throttleFirst(windowDuration: Long): Flow<T> = flow {
     var lastEmissionTime = 0L

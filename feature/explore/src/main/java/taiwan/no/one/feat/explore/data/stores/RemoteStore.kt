@@ -29,7 +29,7 @@ import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
-import taiwan.no.one.feat.explore.data.entities.Constants
+import taiwan.no.one.feat.explore.data.entities.Constant
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
@@ -49,23 +49,23 @@ internal class RemoteStore(
     private val lastFmToken by lazy { context.getString(R.string.lastfm_api_key) }
 
     override suspend fun getAlbumInfo(mbid: String) =
-        lastFmService.retrieveAlbumInfo(infoQuery(Constants.LASTFM_PARAM_ALBUM_GET_INFO, mbid))
+        lastFmService.retrieveAlbumInfo(infoQuery(Constant.LASTFM_PARAM_ALBUM_GET_INFO, mbid))
 
     override suspend fun getArtistInfo(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistInfo(combineArtistName(Constants.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid))
+        lastFmService.retrieveArtistInfo(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid))
 
     override suspend fun getArtistTopAlbum(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistTopAlbum(combineArtistName(Constants.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS,
+        lastFmService.retrieveArtistTopAlbum(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS,
                                                                name,
                                                                mbid))
 
     override suspend fun getArtistTopTrack(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistTopTrack(combineArtistName(Constants.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS,
+        lastFmService.retrieveArtistTopTrack(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS,
                                                                name,
                                                                mbid))
 
     override suspend fun getSimilarArtistInfo(mbid: String) =
-        lastFmService.retrieveSimilarArtistInfo(infoQuery(Constants.LASTFM_PARAM_ARTIST_GET_SIMILAR, mbid))
+        lastFmService.retrieveSimilarArtistInfo(infoQuery(Constant.LASTFM_PARAM_ARTIST_GET_SIMILAR, mbid))
 
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) =
         lastFmExtraService.retrieveArtistPhotosInfo(artistName, page)
@@ -77,10 +77,10 @@ internal class RemoteStore(
         UnsupportedOperation()
 
     override suspend fun getTrackInfo(mbid: String) =
-        lastFmService.retrieveTrackInfo(infoQuery(Constants.LASTFM_PARAM_TRACK_INFO, mbid))
+        lastFmService.retrieveTrackInfo(infoQuery(Constant.LASTFM_PARAM_TRACK_INFO, mbid))
 
     override suspend fun getSimilarTrackInfo(mbid: String) =
-        lastFmService.retrieveSimilarTrackInfo(infoQuery(Constants.LASTFM_PARAM_TRACK_GET_SIMILAR, mbid))
+        lastFmService.retrieveSimilarTrackInfo(infoQuery(Constant.LASTFM_PARAM_TRACK_GET_SIMILAR, mbid))
 
     override suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity) =
         lastFmExtraService.retrieveTrackCover(trackUrl, trackEntity)
@@ -89,53 +89,53 @@ internal class RemoteStore(
         lastFmExtraService.retrieveTrackCover(trackUrl, simpleTrackEntity)
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
-        lastFmService.retrieveChartTopTrack(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_TRACKS, page, limit))
+        lastFmService.retrieveChartTopTrack(chartQuery(Constant.LASTFM_PARAM_CHART_GET_TOP_TRACKS, page, limit))
 
     override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = UnsupportedOperation()
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
-        lastFmService.retrieveChartTopArtist(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_ARTISTS, page, limit))
+        lastFmService.retrieveChartTopArtist(chartQuery(Constant.LASTFM_PARAM_CHART_GET_TOP_ARTISTS, page, limit))
 
     override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) =
         UnsupportedOperation()
 
     override suspend fun getChartTopTag(page: Int, limit: Int) =
-        lastFmService.retrieveChartTopTag(chartQuery(Constants.LASTFM_PARAM_CHART_GET_TOP_TAGS, page, limit))
+        lastFmService.retrieveChartTopTag(chartQuery(Constant.LASTFM_PARAM_CHART_GET_TOP_TAGS, page, limit))
 
     override suspend fun getTagInfo(mbid: String) =
-        lastFmService.retrieveTagInfo(infoQuery(Constants.LASTFM_PARAM_TAG_GET_INFO, mbid))
+        lastFmService.retrieveTagInfo(infoQuery(Constant.LASTFM_PARAM_TAG_GET_INFO, mbid))
 
     override suspend fun getTagTopAlbum(mbid: String) =
-        lastFmService.retrieveTagTopAlbum(infoQuery(Constants.LASTFM_PARAM_TAG_GET_TOP_ALBUMS, mbid))
+        lastFmService.retrieveTagTopAlbum(infoQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_ALBUMS, mbid))
 
     override suspend fun getTagTopArtist(mbid: String) =
-        lastFmService.retrieveTagTopArtist(infoQuery(Constants.LASTFM_PARAM_TAG_GET_TOP_ARTISTS, mbid))
+        lastFmService.retrieveTagTopArtist(infoQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_ARTISTS, mbid))
 
     override suspend fun getTagTopTrack(tagName: String) =
-        lastFmService.retrieveTagTopTrack(combineLastFmQuery(Constants.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
+        lastFmService.retrieveTagTopTrack(combineLastFmQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
             put("tag", tagName)
-            put(Constants.LASTFM_QUERY_LIMIT, "20")
+            put(Constant.LASTFM_QUERY_LIMIT, "20")
         })
 
     private fun combineLastFmQuery(method: String, block: MutableMap<String, String>.() -> Unit) = hashMapOf(
-        Constants.LASTFM_QUERY_TOKEN to lastFmToken,
-        Constants.LASTFM_QUERY_METHOD to method,
-        Constants.LASTFM_QUERY_FORMAT to "json",
-        Constants.LASTFM_QUERY_LANGUAGE to "en", // TODO(jieyiwu): 6/9/20 We can get from system.
+        Constant.LASTFM_QUERY_TOKEN to lastFmToken,
+        Constant.LASTFM_QUERY_METHOD to method,
+        Constant.LASTFM_QUERY_FORMAT to "json",
+        Constant.LASTFM_QUERY_LANGUAGE to "en", // TODO(jieyiwu): 6/9/20 We can get from system.
     ).apply(block)
 
     private fun combineArtistName(method: String, name: String?, mbid: String?) =
         combineLastFmQuery(method) {
-            name.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_ARTIST_NAME, it) }
-            mbid.takeUnless(String?::isNullOrBlank)?.let { put(Constants.LASTFM_QUERY_MBID, it) }
+            name.takeUnless(String?::isNullOrBlank)?.let { put(Constant.LASTFM_QUERY_ARTIST_NAME, it) }
+            mbid.takeUnless(String?::isNullOrBlank)?.let { put(Constant.LASTFM_QUERY_MBID, it) }
         }
 
     private fun chartQuery(method: String, page: Int, limit: Int) = combineLastFmQuery(method) {
-        put(Constants.LASTFM_QUERY_PAGE, page.toString())
-        put(Constants.LASTFM_QUERY_LIMIT, limit.toString())
+        put(Constant.LASTFM_QUERY_PAGE, page.toString())
+        put(Constant.LASTFM_QUERY_LIMIT, limit.toString())
     }
 
     private fun infoQuery(method: String, mbid: String) = combineLastFmQuery(method) {
-        put(Constants.LASTFM_QUERY_MBID, mbid)
+        put(Constant.LASTFM_QUERY_MBID, mbid)
     }
 }
