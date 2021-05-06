@@ -24,22 +24,17 @@
 
 package taiwan.no.one.widget.popupmenu
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
+import android.widget.PopupMenu
 import androidx.annotation.MenuRes
-import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.view.MenuCompat
 
+@SuppressLint("RestrictedApi")
 fun popupMenuWithIcon(context: Context, anchor: View, @MenuRes res: Int) = PopupMenu(context, anchor).apply {
-    // Trick for displaying the icon.
-    try {
-        val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", Boolean::class.javaPrimitiveType)
-        method.isAccessible = true
-        method.invoke(menu, true)
-    }
-    catch (e: Exception) {
-        e.printStackTrace()
-    }
+    (menu as? MenuBuilder)?.setOptionalIconsVisible(true)
     menuInflater.inflate(res, menu)
     MenuCompat.setGroupDividerEnabled(menu, true)
 }

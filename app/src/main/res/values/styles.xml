@@ -107,7 +107,7 @@
     </style>
     <!--endregion-->
 
-    <style name="Taiwan.No.One.PopupMenu" parent="@android:style/Widget.PopupMenu">
+    <style name="Taiwan.No.One.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
         <item name="android:popupBackground">@drawable/bg_popup_menu</item>
     </style>
 </resources>
