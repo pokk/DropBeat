@@ -22,31 +22,24 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
+package taiwan.no.one.feat.player.presentation.recyclerviews.decorators
 
-import coil.loadAny
-import taiwan.no.one.dropbeat.core.helpers.TouchHelper
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
-import taiwan.no.one.feat.player.databinding.ItemPlaylistBinding
-import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
-internal class PlaylistViewHolder(
-    private val binding: ItemPlaylistBinding,
-) : ViewHolderBinding<SimplePlaylistEntity, PlaylistAdapter>(binding.root) {
-    private val clickFlag = TouchHelper.ClickFlag()
+internal class PlaylistItemDecorator(
+    private val topBottom: Int,
+    private val leftRight: Int = topBottom,
+) : RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+        val position: Int = parent.getChildAdapterPosition(view)
+        val childrenCount: Int = parent.childCount
 
-    override fun initView(entity: SimplePlaylistEntity, adapter: PlaylistAdapter) {
-        binding.apply {
-            mtvTitle.text = entity.name
-            mtvSubtitle.text = "${entity.songIds.size} songs"
-            sivPlaylistThumb.loadAny(entity.thumbUrl)
-            clParent.setOnTouchListener { v, event ->
-                TouchHelper.simulateClickEvent(event, clickFlag) {
-                    adapter.onClickListener?.invoke(entity)
-                }
-                true
-            }
+        when {
+            0 == position -> outRect.set(leftRight, 0, leftRight, topBottom / 2)
+            childrenCount - 1 != position -> outRect.set(leftRight, topBottom / 2, leftRight, 0)
+            else -> outRect.set(leftRight, topBottom / 2, leftRight, topBottom / 2)
         }
     }
 }

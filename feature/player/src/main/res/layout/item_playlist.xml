@@ -30,14 +30,14 @@
     android:id="@+id/cl_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:onClick="@null">
+    android:onClick="@null"
+    tools:showIn="@layout/popup_playlist">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/siv_playlist_thumb"
-        android:layout_width="@dimen/md_zero_unit"
+        android:layout_width="@dimen/md_five_unit"
         android:layout_height="@dimen/md_five_unit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"/>
@@ -48,6 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/md_two_unit"
         android:gravity="start"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Button1"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/mtv_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/siv_playlist_thumb"
@@ -60,6 +62,8 @@
         android:layout_width="@dimen/md_zero_unit"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Caption2"
+        android:textColor="#73FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/mtv_title"
         app:layout_constraintStart_toStartOf="@id/mtv_title"

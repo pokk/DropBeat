@@ -36,6 +36,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
+import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
@@ -53,12 +54,14 @@ import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
 import taiwan.no.one.feat.player.presentation.popups.PlaylistPopupWindow
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
+import taiwan.no.one.feat.player.presentation.recyclerviews.decorators.PlaylistItemDecorator
 import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
 import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
+import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 
 internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlayerBinding>() {
@@ -256,8 +259,7 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
         if (isPlaying) player.pause() else player.play()
     }
 
-    private fun handleFavorite() {
-    }
+    private fun handleFavorite() = Unit
 
     private fun popupPlaylist() = PlaylistPopupWindow(requireActivity()).builder {
         btnCreatePlaylist.setOnClickListener {
@@ -271,6 +273,7 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
                 }
             }
             layoutManager = linearLayoutManager()
+            addItemDecoration(PlaylistItemDecorator(getDimen(WidgetResDimen.md_two_unit).toInt(), 0))
         }
     }.anchorOn(merge.btnAddPlaylist).popup()
 
