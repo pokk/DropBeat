@@ -110,4 +110,7 @@
     <style name="Taiwan.No.One.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
         <item name="android:popupBackground">@drawable/bg_popup_menu</item>
     </style>
+
+    <style name="Taiwan.No.One.PopupWindow" parent="Widget.AppCompat.PopupWindow">
+    </style>
 </resources>
