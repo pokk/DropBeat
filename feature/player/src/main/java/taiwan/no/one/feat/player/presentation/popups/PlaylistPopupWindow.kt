@@ -32,6 +32,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.View
 import android.widget.PopupWindow
+import taiwan.no.one.dropbeat.AppResStyle
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.layout
 import taiwan.no.one.feat.player.databinding.PopupPlaylistBinding
@@ -51,6 +52,7 @@ internal class PlaylistPopupWindow(private val context: Context) {
             width = context.resources.getDimension(R.dimen.popup_playlist_width).toInt()
             contentView = binding.root
             isOutsideTouchable = true
+            animationStyle = AppResStyle.PopupWindow_Animation
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
         binding.buildBlock()
