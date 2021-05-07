@@ -24,46 +24,39 @@
 
 package taiwan.no.one.widget.popupwindow
 
+import android.app.ActionBar.LayoutParams
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Rect
-import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
+import android.util.Size
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
-import android.widget.TextView
-import taiwan.no.one.widget.R
+import androidx.annotation.UiThread
+import androidx.viewbinding.ViewBinding
 
-class TooltipWindow(context: Context) {
-    private val tipWindow: PopupWindow?
-    private val contentView: View
+abstract class CustomPopupWindow<VB : ViewBinding>(private val context: Context) {
+    protected open var _binding: VB? = null
+    protected var anchorPosX = 0
+    protected var anchorPosY = 0
+    protected val binding get() = requireNotNull(_binding)
+    private var anchor: View? = null
+    private val popup by lazy { PopupWindow(context) }
 
-    val isTooltipShown get() = tipWindow?.isShowing ?: false
+    @UiThread
+    abstract fun PopupWindow.buildPopup()
 
-    init {
-        tipWindow = PopupWindow(context)
-        contentView = View.inflate(context, R.layout.popup_tooltip, null)
-    }
+    @UiThread
+    abstract fun setAnchorPosition(contentSize: Size, anchorRect: Rect)
 
-    fun showToolTip(anchor: View, tip: String) {
-        if (tipWindow == null) return
-        tipWindow.apply {
-            height = LayoutParams.WRAP_CONTENT
-            width = LayoutParams.WRAP_CONTENT
-            isOutsideTouchable = true
-            isTouchable = true
-            isFocusable = true
-            setBackgroundDrawable(BitmapDrawable())
-            contentView = this@TooltipWindow.contentView
-            animationStyle = R.style.PopupWindow_Animation
-        }
-
-        contentView.findViewById<TextView>(R.id.tv_tip).text = tip
-
+    @UiThread
+    fun anchorOn(anchor: View): CustomPopupWindow<VB> {
+        this.anchor = anchor
         val screenPos = IntArray(2)
+
         // Get location of anchor view on screen
         anchor.getLocationOnScreen(screenPos)
-
         // Get rect for anchor view
         val anchorRect = Rect(
             screenPos[0],
@@ -71,24 +64,40 @@ class TooltipWindow(context: Context) {
             screenPos[0] + anchor.width,
             screenPos[1] + anchor.height
         )
-
         // Call view measure to calculate how big your view should be.
-        contentView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        binding.root.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
-        val contentViewHeight = contentView.measuredHeight
-        val contentViewWidth = contentView.measuredWidth
+        val contentViewHeight = binding.root.measuredHeight
+        val contentViewWidth = binding.root.measuredWidth
         // In this case , I don't need much calculation for x and y position of tooltip
         // For cases if anchor is near screen border, you need to take care of
         // direction as well to show left, right, above or below of anchor view
-        val positionX = anchorRect.centerX() - contentViewWidth / 2
-        val positionY = anchorRect.bottom + contentViewHeight / 3
+        setAnchorPosition(Size(contentViewWidth, contentViewHeight), anchorRect)
 
-        tipWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, positionX, positionY)
+        return this
     }
 
-    fun dismissTooltip() {
-        if (tipWindow != null && tipWindow.isShowing) {
-            tipWindow.dismiss()
+    @UiThread
+    fun builder(buildBlock: VB.() -> Unit): CustomPopupWindow<VB> {
+        popup.apply {
+            contentView = binding.root
+            isOutsideTouchable = true
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            buildPopup()
         }
+        binding.buildBlock()
+        return this
+    }
+
+    @UiThread
+    fun popup() {
+        popup.showAtLocation(anchor, Gravity.NO_GRAVITY, anchorPosX, anchorPosY)
+        anchor = null
+    }
+
+    @UiThread
+    fun dismiss() {
+        popup.dismiss()
+        _binding = null
     }
 }

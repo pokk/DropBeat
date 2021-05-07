@@ -22,19 +22,29 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.widget.popupmenu
+package taiwan.no.one.feat.player.presentation.popups
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Rect
+import android.util.Size
 import android.view.View
-import androidx.annotation.MenuRes
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.PopupMenu
-import androidx.core.view.MenuCompat
+import android.view.ViewGroup.LayoutParams
+import android.widget.PopupWindow
+import taiwan.no.one.feat.player.R.layout
+import taiwan.no.one.feat.player.databinding.PopupSettingBinding
+import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
-@SuppressLint("RestrictedApi")
-fun popupMenuWithIcon(context: Context, anchor: View, @MenuRes res: Int) = PopupMenu(context, anchor).apply {
-    menuInflater.inflate(res, menu)
-    (menu as? MenuBuilder)?.setOptionalIconsVisible(true)
-    MenuCompat.setGroupDividerEnabled(menu, true)
+internal class SettingPopupWindow(private val context: Context) : CustomPopupWindow<PopupSettingBinding>(context) {
+    override var _binding: PopupSettingBinding? =
+        PopupSettingBinding.bind(View.inflate(context, layout.popup_setting, null))
+
+    override fun PopupWindow.buildPopup() {
+        height = LayoutParams.WRAP_CONTENT
+        width = LayoutParams.WRAP_CONTENT
+    }
+
+    override fun setAnchorPosition(contentSize: Size, anchorRect: Rect) {
+        anchorPosX = anchorRect.centerX() - contentSize.width / 2
+        anchorPosY = anchorRect.bottom + contentSize.height / 3
+    }
 }

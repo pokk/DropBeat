@@ -34,7 +34,7 @@
             android:iconTintMode="screen"
             android:title="Show More song from same artist"/>
         <item
-            android:id="@+id/item_favorite"
+            android:id="@+id/item_share"
             android:icon="@drawable/ic_share"
             android:iconTint="@color/grapefruit"
             android:title="Share"/>

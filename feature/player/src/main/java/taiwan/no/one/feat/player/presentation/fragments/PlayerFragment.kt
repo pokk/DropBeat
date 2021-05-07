@@ -27,11 +27,18 @@ package taiwan.no.one.feat.player.presentation.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
+import androidx.core.view.children
+import androidx.core.view.forEach
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +48,7 @@ import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.ofAlpha
+import com.devrapid.kotlinknifer.resizeView
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
@@ -49,10 +57,10 @@ import taiwan.no.one.core.presentation.fragment.BaseDialogFragment
 import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.player.R
-import taiwan.no.one.feat.player.R.drawable
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
 import taiwan.no.one.feat.player.presentation.popups.PlaylistPopupWindow
+import taiwan.no.one.feat.player.presentation.popups.SettingPopupWindow
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.decorators.PlaylistItemDecorator
 import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
@@ -62,7 +70,6 @@ import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.widget.WidgetResDimen
-import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 
 internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlayerBinding>() {
     private var isTouchingSlider = false
@@ -250,7 +257,7 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
 
     private fun switchPlayIcon() {
         listOf(merge.btnPlay, binding.btnMiniPlay).forEach { btn ->
-            btn.icon = getDrawable(if (isPlaying) drawable.ic_pause else drawable.ic_play)
+            btn.icon = getDrawable(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
         }
     }
 
@@ -277,7 +284,44 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
         }
     }.anchorOn(merge.btnAddPlaylist).popup()
 
-    private fun popupMenu(anchor: View) = popupMenuWithIcon(requireActivity(), anchor, R.menu.menu_more).show()
+    private fun popupMenu(anchor: View) = SettingPopupWindow(requireActivity()).builder {
+        // Set the first group
+        var groupId = R.id.g_my_list
+        PopupMenu(requireContext(), anchor).apply {
+            menuInflater.inflate(R.menu.menu_more, menu)
+        }.menu.forEach {
+            if (groupId != it.groupId) {
+                groupId = it.groupId
+                llSettingMenu.addView(layoutInflater.inflate(R.layout.item_setting_divider, null).apply {
+                    post {
+                        resizeView(null, getDimen(WidgetResDimen.one_dp).toInt())
+                        updateLayoutParams<MarginLayoutParams> {
+                            topMargin = getDimen(WidgetResDimen.md_one_unit).toInt()
+                            bottomMargin = getDimen(WidgetResDimen.md_one_unit).toInt()
+                        }
+                    }
+                })
+            }
+            val item = (layoutInflater.inflate(R.layout.item_setting, null) as? TextView)?.apply {
+                text = it.title
+                tag = it.itemId
+                setCompoundDrawablesWithIntrinsicBounds(it.icon, null, null, null)
+            }
+            llSettingMenu.addView(item)
+        }
+        llSettingMenu.setOnClickListener { layout ->
+            (layout as ViewGroup).children.forEach {
+                when (it.tag) {
+                    R.id.item_more -> Unit
+                    R.id.item_share -> Unit
+                    R.id.item_download -> Unit
+                    R.id.item_add_favorite -> Unit
+                    R.id.item_cast -> Unit
+                    R.id.item_add_playlist -> Unit
+                }
+            }
+        }
+    }.anchorOn(anchor).popup()
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {
