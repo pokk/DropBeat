@@ -3,13 +3,7 @@ linter:
   detekt:
     baseline: "config/detekt/baseline.xml"
     config: "config/detekt/detekt.yml"
-    config-resource: []
     disable-default-rulesets: false
-    excludes:
-      - "**/excludes_dir/**"
-      - "**/another/excludes_dir/**"
-    input:
-      - "src/"
     parallel: true
 
 # https://help.sider.review/getting-started/custom-configuration#ignore
