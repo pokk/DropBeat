@@ -75,8 +75,8 @@ class TooltipWindow(context: Context) {
         // Call view measure to calculate how big your view should be.
         contentView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
-        val contentViewHeight = contentView.measuredHeight
-        val contentViewWidth = contentView.measuredWidth
+        val contentViewHeight = contentView.measuredHeight - contentView.paddingTop - contentView.paddingBottom
+        val contentViewWidth = contentView.measuredWidth - contentView.paddingStart - contentView.paddingEnd
         // In this case , I don't need much calculation for x and y position of tooltip
         // For cases if anchor is near screen border, you need to take care of
         // direction as well to show left, right, above or below of anchor view
