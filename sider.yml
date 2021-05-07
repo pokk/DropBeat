@@ -10,7 +10,7 @@ linter:
       - "**/another/excludes_dir/**"
     input:
       - "src/"
-  parallel: true
+    parallel: true
 
 # https://help.sider.review/getting-started/custom-configuration#ignore
 ignore:
