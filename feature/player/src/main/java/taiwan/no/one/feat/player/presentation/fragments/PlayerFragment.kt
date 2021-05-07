@@ -293,6 +293,8 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
             if (groupId != it.groupId) {
                 groupId = it.groupId
                 llSettingMenu.addView(layoutInflater.inflate(R.layout.item_setting_divider, null).apply {
+                    // OPTIMIZE(jieyi): 5/7/21 We might be able to do better here. Somehow, setting in
+                    //  the layout doesn't work.
                     post {
                         resizeView(null, getDimen(WidgetResDimen.one_dp).toInt())
                         updateLayoutParams<MarginLayoutParams> {

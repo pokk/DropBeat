@@ -24,7 +24,6 @@
 
 package taiwan.no.one.widget.popupwindow
 
-import android.app.ActionBar.LayoutParams
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
@@ -65,10 +64,10 @@ abstract class CustomPopupWindow<VB : ViewBinding>(private val context: Context)
             screenPos[1] + anchor.height
         )
         // Call view measure to calculate how big your view should be.
-        binding.root.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-
-        val contentViewHeight = binding.root.measuredHeight
-        val contentViewWidth = binding.root.measuredWidth
+        binding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        // Padding has be reduced.
+        val contentViewHeight = binding.root.measuredHeight - binding.root.paddingTop - binding.root.paddingBottom
+        val contentViewWidth = binding.root.measuredWidth - binding.root.paddingStart - binding.root.paddingEnd
         // In this case , I don't need much calculation for x and y position of tooltip
         // For cases if anchor is near screen border, you need to take care of
         // direction as well to show left, right, above or below of anchor view
@@ -97,7 +96,9 @@ abstract class CustomPopupWindow<VB : ViewBinding>(private val context: Context)
 
     @UiThread
     fun dismiss() {
-        popup.dismiss()
-        _binding = null
+        if (popup.isShowing) {
+            popup.dismiss()
+            _binding = null
+        }
     }
 }

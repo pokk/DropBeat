@@ -30,21 +30,22 @@ import android.util.Size
 import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
-import taiwan.no.one.feat.player.R.layout
+import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.PopupSettingBinding
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
 internal class SettingPopupWindow(private val context: Context) : CustomPopupWindow<PopupSettingBinding>(context) {
     override var _binding: PopupSettingBinding? =
-        PopupSettingBinding.bind(View.inflate(context, layout.popup_setting, null))
+        PopupSettingBinding.bind(View.inflate(context, R.layout.popup_setting, null))
 
     override fun PopupWindow.buildPopup() {
         height = LayoutParams.WRAP_CONTENT
         width = LayoutParams.WRAP_CONTENT
+        // TODO(jieyi): 5/8/21 Add the popup menu animation.
     }
 
     override fun setAnchorPosition(contentSize: Size, anchorRect: Rect) {
-        anchorPosX = anchorRect.centerX() - contentSize.width / 2
-        anchorPosY = anchorRect.bottom + contentSize.height / 3
+        anchorPosX = anchorRect.left - (contentSize.width - anchorRect.width())
+        anchorPosY = anchorRect.bottom
     }
 }
