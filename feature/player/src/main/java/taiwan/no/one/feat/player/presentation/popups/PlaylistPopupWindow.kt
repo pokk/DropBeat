@@ -24,74 +24,28 @@
 
 package taiwan.no.one.feat.player.presentation.popups
 
-import android.app.ActionBar.LayoutParams
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Rect
-import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
+import android.util.Size
 import android.view.View
 import android.widget.PopupWindow
-import taiwan.no.one.dropbeat.AppResStyle
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.R.layout
 import taiwan.no.one.feat.player.databinding.PopupPlaylistBinding
+import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
-internal class PlaylistPopupWindow(private val context: Context) {
-    private val popup by lazy { PopupWindow(context) }
-    private val binding by lazy {
+internal class PlaylistPopupWindow(private val context: Context) : CustomPopupWindow<PopupPlaylistBinding>(context) {
+    override var _binding: PopupPlaylistBinding? =
         PopupPlaylistBinding.bind(View.inflate(context, layout.popup_playlist, null))
-    }
-    private var anchorPosX = 0
-    private var anchorPosY = 0
-    private var anchor: View? = null
 
-    fun builder(buildBlock: PopupPlaylistBinding.() -> Unit): PlaylistPopupWindow {
-        popup.apply {
-            height = context.resources.getDimension(R.dimen.popup_playlist_height).toInt()
-            width = context.resources.getDimension(R.dimen.popup_playlist_width).toInt()
-            contentView = binding.root
-            isOutsideTouchable = true
-            animationStyle = AppResStyle.PopupWindow_Animation
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        }
-        binding.buildBlock()
-        return this@PlaylistPopupWindow
+    override fun PopupWindow.buildPopup() {
+        height = context.resources.getDimension(R.dimen.popup_playlist_height).toInt()
+        width = context.resources.getDimension(R.dimen.popup_playlist_width).toInt()
     }
 
-    fun anchorOn(anchor: View): PlaylistPopupWindow {
-        this@PlaylistPopupWindow.anchor = anchor
-        val screenPos = IntArray(2)
-
-        // Get location of anchor view on screen
-        anchor.getLocationOnScreen(screenPos)
-        // Get rect for anchor view
-        val anchorRect = Rect(
-            screenPos[0],
-            screenPos[1],
-            screenPos[0] + anchor.width,
-            screenPos[1] + anchor.height
-        )
-        // Call view measure to calculate how big your view should be.
-        binding.root.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-
-        val contentViewHeight = binding.root.measuredHeight
-        val contentViewWidth = binding.root.measuredWidth
-        // In this case , I don't need much calculation for x and y position of tooltip
-        // For cases if anchor is near screen border, you need to take care of
-        // direction as well to show left, right, above or below of anchor view
-        anchorPosX = anchorRect.centerX() - contentViewWidth / 2
-        anchorPosY = anchorRect.bottom + contentViewHeight / 3
-
-        return this@PlaylistPopupWindow
-    }
-
-    fun popup() {
-        popup.showAtLocation(anchor, Gravity.NO_GRAVITY, anchorPosX, anchorPosY)
-        anchor = null
-    }
-
-    fun dismiss() {
-        popup.dismiss()
+    override fun setAnchorPosition(contentSize: Size, anchorRect: Rect) {
+        // FIXME(jieyi): 5/7/21 The anchor position is incorrect from the design.
+        anchorPosX = anchorRect.centerX() - contentSize.width / 2
+        anchorPosY = anchorRect.bottom + contentSize.height / 3
     }
 }
