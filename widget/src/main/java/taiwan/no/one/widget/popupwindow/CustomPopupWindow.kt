@@ -31,6 +31,7 @@ import android.graphics.drawable.ColorDrawable
 import android.util.Size
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
 import androidx.annotation.UiThread
 import androidx.viewbinding.ViewBinding
@@ -79,6 +80,8 @@ abstract class CustomPopupWindow<VB : ViewBinding>(private val context: Context)
     @UiThread
     fun builder(buildBlock: VB.() -> Unit): CustomPopupWindow<VB> {
         popup.apply {
+            height = LayoutParams.WRAP_CONTENT
+            width = LayoutParams.WRAP_CONTENT
             contentView = binding.root
             isOutsideTouchable = true
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
