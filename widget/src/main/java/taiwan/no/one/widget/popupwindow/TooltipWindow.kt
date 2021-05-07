@@ -27,68 +27,25 @@ package taiwan.no.one.widget.popupwindow
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
-import android.view.Gravity
+import android.util.Size
 import android.view.View
-import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
-import android.widget.TextView
 import taiwan.no.one.widget.R
+import taiwan.no.one.widget.databinding.PopupTooltipBinding
 
-class TooltipWindow(context: Context) {
-    private val tipWindow: PopupWindow?
-    private val contentView: View
+class TooltipWindow(context: Context) : CustomPopupWindow<PopupTooltipBinding>(context) {
+    override var _binding: PopupTooltipBinding? =
+        PopupTooltipBinding.bind(View.inflate(context, R.layout.popup_tooltip, null))
 
-    val isTooltipShown get() = tipWindow?.isShowing ?: false
-
-    init {
-        tipWindow = PopupWindow(context)
-        contentView = View.inflate(context, R.layout.popup_tooltip, null)
+    override fun PopupWindow.buildPopup() {
+        isTouchable = true
+        isFocusable = true
+        setBackgroundDrawable(BitmapDrawable())
+        animationStyle = R.style.PopupWindow_Animation
     }
 
-    fun showToolTip(anchor: View, tip: String) {
-        if (tipWindow == null) return
-        tipWindow.apply {
-            height = LayoutParams.WRAP_CONTENT
-            width = LayoutParams.WRAP_CONTENT
-            isOutsideTouchable = true
-            isTouchable = true
-            isFocusable = true
-            setBackgroundDrawable(BitmapDrawable())
-            contentView = this@TooltipWindow.contentView
-            animationStyle = R.style.PopupWindow_Animation
-        }
-
-        contentView.findViewById<TextView>(R.id.tv_tip).text = tip
-
-        val screenPos = IntArray(2)
-        // Get location of anchor view on screen
-        anchor.getLocationOnScreen(screenPos)
-
-        // Get rect for anchor view
-        val anchorRect = Rect(
-            screenPos[0],
-            screenPos[1],
-            screenPos[0] + anchor.width,
-            screenPos[1] + anchor.height
-        )
-
-        // Call view measure to calculate how big your view should be.
-        contentView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-
-        val contentViewHeight = contentView.measuredHeight - contentView.paddingTop - contentView.paddingBottom
-        val contentViewWidth = contentView.measuredWidth - contentView.paddingStart - contentView.paddingEnd
-        // In this case , I don't need much calculation for x and y position of tooltip
-        // For cases if anchor is near screen border, you need to take care of
-        // direction as well to show left, right, above or below of anchor view
-        val positionX = anchorRect.centerX() - contentViewWidth / 2
-        val positionY = anchorRect.bottom + contentViewHeight / 3
-
-        tipWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, positionX, positionY)
-    }
-
-    fun dismissTooltip() {
-        if (tipWindow != null && tipWindow.isShowing) {
-            tipWindow.dismiss()
-        }
+    override fun setAnchorPosition(contentSize: Size, anchorRect: Rect) {
+        anchorPosX = anchorRect.centerX() - contentSize.width / 2
+        anchorPosY = anchorRect.bottom + contentSize.height / 3
     }
 }

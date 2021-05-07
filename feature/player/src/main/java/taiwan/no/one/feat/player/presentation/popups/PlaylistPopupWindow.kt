@@ -30,13 +30,12 @@ import android.util.Size
 import android.view.View
 import android.widget.PopupWindow
 import taiwan.no.one.feat.player.R
-import taiwan.no.one.feat.player.R.layout
 import taiwan.no.one.feat.player.databinding.PopupPlaylistBinding
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
 internal class PlaylistPopupWindow(private val context: Context) : CustomPopupWindow<PopupPlaylistBinding>(context) {
     override var _binding: PopupPlaylistBinding? =
-        PopupPlaylistBinding.bind(View.inflate(context, layout.popup_playlist, null))
+        PopupPlaylistBinding.bind(View.inflate(context, R.layout.popup_playlist, null))
 
     override fun PopupWindow.buildPopup() {
         height = context.resources.getDimension(R.dimen.popup_playlist_height).toInt()
