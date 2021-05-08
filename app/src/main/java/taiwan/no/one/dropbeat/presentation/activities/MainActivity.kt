@@ -32,6 +32,7 @@ import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.changeStatusBarColor
@@ -137,6 +138,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             return
         }
         super.onBackPressed()
+    }
+
+    fun changePlayerFragmentToMinimal(height: Int) {
+        binding.navPlayerFragment.updateLayoutParams {
+            this.height = height
+        }
     }
 
     private fun showPlayer() {

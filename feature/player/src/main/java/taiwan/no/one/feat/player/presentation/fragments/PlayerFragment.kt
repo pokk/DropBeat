@@ -48,10 +48,10 @@ import com.devrapid.kotlinknifer.logw
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
-import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
@@ -67,7 +67,7 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.widget.WidgetResDimen
 
-internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBinding>() {
+internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding>() {
     private var isTouchingSlider = false
     private var isRunningAnim = false
     private val vm by viewModels<PlayerViewModel>()
@@ -166,7 +166,7 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
         player.replacePlaylist(playlist)
     }
 
-    //region DialogFragment Lifecycle
+    //region Fragment Lifecycle
     override fun onDestroy() {
         super.onDestroy()
         player.setPlayerEventCallback(null)
@@ -193,17 +193,8 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
 
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                     isRunningAnim = false
-                    // TODO(jieyi): 9/28/20 wanna set the dialog
-//                    if (currentId == R.id.mini_player_end) {
-//                        val (width, height) = requireActivity().displayPixels()
-//                        requireDialog().window?.setLayout(width, getDimen(WidgetResDimen.md_eight_unit).toInt())
-//                        logw(requireDialog().window?.attributes)
-//                        requireDialog().window?.attributes?.gravity = Gravity.BOTTOM
-//                        requireDialog().window?.attributes?.flags =
-//                            requireNotNull(requireDialog().window?.attributes?.flags) and LayoutParams.FLAG_DIM_BEHIND.inv()
-//                        logw(requireDialog().window?.attributes)
-//                    }
                 }
+                // TODO(jieyi): 5/8/21 We have to set the parent fragment height.
             })
             btnClose.setOnClickListener { collapsePlayer() }
             btnOption.setOnClickListener { popupMenu(binding.btnOption) }
@@ -246,22 +237,6 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
 
     private fun handleFavorite() = Unit
 
-    private fun popupPlaylist() = PlaylistPopupWindow(requireActivity()).builder {
-        btnCreatePlaylist.setOnClickListener {
-            findNavController().navigate(PlayerFragmentDirections.actionPlayerToPlaylistCreate())
-        }
-        rvPlaylist.apply {
-            adapter = PlaylistAdapter().apply {
-                submitList(vm.playlists.value?.getOrNull().orEmpty())
-                setOnClickListener { playlist ->
-                    player.curPlayingInfo?.let { music -> vm.addSongToPlaylist(music, playlist.id) }
-                }
-            }
-            layoutManager = linearLayoutManager()
-            addItemDecoration(PlaylistItemDecorator(getDimen(WidgetResDimen.md_two_unit).toInt(), 0))
-        }
-    }.anchorOn(merge.btnAddPlaylist).popup()
-
     private fun popupMenu(anchor: View) = SettingPopupWindow(requireActivity()).builder {
         // Set the first group
         var groupId = R.id.g_my_list
@@ -297,6 +272,22 @@ internal class PlayerFragment : BaseFragment<BaseActivity<*>, FragmentPlayerBind
             }
         }
     }.anchorOn(anchor).popup()
+
+    private fun popupPlaylist() = PlaylistPopupWindow(requireActivity()).builder {
+        btnCreatePlaylist.setOnClickListener {
+            findNavController().navigate(PlayerFragmentDirections.actionPlayerToPlaylistCreate())
+        }
+        rvPlaylist.apply {
+            adapter = PlaylistAdapter().apply {
+                submitList(vm.playlists.value?.getOrNull().orEmpty())
+                setOnClickListener { playlist ->
+                    player.curPlayingInfo?.let { music -> vm.addSongToPlaylist(music, playlist.id) }
+                }
+            }
+            layoutManager = linearLayoutManager()
+            addItemDecoration(PlaylistItemDecorator(getDimen(WidgetResDimen.md_two_unit).toInt(), 0))
+        }
+    }.anchorOn(merge.btnAddPlaylist).popup()
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {
