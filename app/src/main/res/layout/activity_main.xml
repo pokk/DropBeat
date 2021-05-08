@@ -51,6 +51,7 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/bnv_navigator"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
         app:navGraph="@navigation/nav_app_player"
         tools:visibility="visible"/>
 
