@@ -55,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     toggle = !toggle
                     isMinimalPlayer = false
                     binding.bnvNavigator.gone()
-                    binding.fragPlayer.visible()
+                    binding.navPlayerFragment.visible()
                 }
 
                 override fun onAnimationEnd(animation: Animation?) = Unit
@@ -72,7 +72,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
 
                 override fun onAnimationEnd(animation: Animation?) {
-                    binding.fragPlayer.gone()
+                    binding.navPlayerFragment.gone()
                     binding.bnvNavigator.visible()
                 }
 
@@ -132,7 +132,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun onBackPressed() {
-        if (binding.fragPlayer.isVisible) {
+        if (binding.navPlayerFragment.isVisible) {
             dismissPlayer()
             return
         }
@@ -140,11 +140,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun showPlayer() {
-        binding.fragPlayer.startAnimation(slideInAnimation)
+        binding.navPlayerFragment.startAnimation(slideInAnimation)
     }
 
     private fun dismissPlayer() {
-        binding.fragPlayer.startAnimation(slideOutAnimation)
+        binding.navPlayerFragment.startAnimation(slideOutAnimation)
     }
 
     private fun dismissMinimalPlayer() = Unit

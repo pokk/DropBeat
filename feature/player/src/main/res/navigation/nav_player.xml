@@ -29,7 +29,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/player_fragment">
 
-    <dialog
+    <fragment
         android:id="@+id/player_fragment"
         android:name="taiwan.no.one.feat.player.presentation.fragments.PlayerFragment"
         android:label="PlayerFragment"
@@ -38,7 +38,7 @@
         <action
             android:id="@+id/action_player_to_playlist_create"
             app:destination="@id/nav_playlist_create"/>
-    </dialog>
+    </fragment>
 
     <activity
         android:id="@+id/player_activity"

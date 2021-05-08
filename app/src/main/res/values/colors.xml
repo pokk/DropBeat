@@ -42,7 +42,5 @@
     <!-- Special Button Background -->
     <color name="special_button_background">#25FFFFFF</color>
     <color name="bay_east">#43417D</color>
-
-    <color name="dusty_gray">#979797</color>
 </resources>
 
