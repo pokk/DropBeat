@@ -43,14 +43,15 @@
         app:navGraph="@navigation/nav_app"/>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/frag_player"
-        android:name="taiwan.no.one.dropbeat.presentation.fragments.PlayerFragment"
+        android:id="@+id/nav_player_fragment"
+        android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/md_zero_unit"
         android:visibility="gone"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/bnv_navigator"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_player"
+        app:navGraph="@navigation/nav_app_player"
         tools:visibility="visible"/>
 
     <com.google.android.material.button.MaterialButton

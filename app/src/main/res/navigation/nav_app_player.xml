@@ -23,15 +23,14 @@
   ~ SOFTWARE.
   -->
 
-<vector
+<navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_app_player"
+    app:startDestination="@id/nav_player">
 
-    <path
-        android:fillColor="#262345"
-        android:fillType="evenOdd"
-        android:pathData="M7.22222 5.58333V18.4167C7.22222 18.7387 6.94844 19 6.61111 19C6.27378 19 6 18.7387 6 18.4167V5.58333C6 5.26133 6.27378 5 6.61111 5C6.94844 5 7.22222 5.26133 7.22222 5.58333ZM18 17.8322V6.16783C18 5.69417 17.7039 5.27125 17.2456 5.09013C16.7866 4.90871 16.2641 5.00817 15.9167 5.33979L9.77628 11.1113C9.76497 11.1221 9.75397 11.1332 9.74358 11.1448C9.34728 11.5809 9.34728 12.2383 9.74358 12.674C9.75183 12.6834 9.76069 12.6924 9.76986 12.7012L15.9137 18.6573C16.148 18.881 16.4591 18.9997 16.7766 18.9997C16.9342 18.9997 17.0934 18.9703 17.2456 18.9102C17.7039 18.7288 18 18.3058 18 17.8322ZM10.6688 11.9096L16.7775 6.162C16.7775 6.162 16.7778 6.16375 16.7778 6.16754L16.7811 17.8351L10.6688 11.9096Z"/>
-</vector>
+    <include-dynamic
+        android:id="@+id/nav_player"
+        app:graphResName="nav_player"
+        app:moduleName="player"/>
+</navigation>
