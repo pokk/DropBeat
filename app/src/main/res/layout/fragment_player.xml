@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ml_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:clickable="false"
+    tools:context=".presentation.fragments.PlayerFragment">
+
+    <!--region Mini Player Background-->
+    <!-- This is for the Expanded Played -->
+    <io.github.florent37.shapeofview.shapes.RoundRectView
+        android:id="@+id/cl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/v_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_player_background"/>
+    </io.github.florent37.shapeofview.shapes.RoundRectView>
+
+    <!-- This is for the Mini Player -->
+    <!--    <io.github.florent37.shapeofview.shapes.RoundRectView-->
+    <!--        android:id="@+id/cl_mini_container"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/md_zero_unit"-->
+    <!--        android:alpha="0"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/cl_container"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/cl_container"-->
+    <!--        tools:alpha="1">-->
+
+    <!--        <View-->
+    <!--            android:id="@+id/v_mini_container"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@color/dusty_gray"/>-->
+    <!--    </io.github.florent37.shapeofview.shapes.RoundRectView>-->
+    <!--endregion-->
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_track"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_five_unit"
+        android:gravity="center"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline3"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_two_unit"
+        android:gravity="center"
+        android:textAppearance="@style/Taiwan.No.One.TextAppearance.Caption1"
+        app:layout_constraintTop_toBottomOf="@id/mtv_track"
+        tools:text="@tools:sample/full_names"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_close"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginStart="@dimen/md_two_unit"
+        app:icon="@drawable/ic_down_close"
+        app:layout_constraintEnd_toStartOf="@id/btn_option"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cl_container"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_option"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        app:icon="@drawable/ic_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_close"
+        app:layout_constraintTop_toTopOf="@id/btn_close"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_lyrics"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:layout_marginBottom="@dimen/md_three_unit"
+        android:background="#7f000000"
+        app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
+        app:layout_constraintTop_toTopOf="@id/barrier_lyric"
+        app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_lyric"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_three_unit"
+        app:layout_constraintBottom_toBottomOf="@id/siv_lyrics"
+        app:layout_constraintEnd_toEndOf="@id/siv_lyrics"
+        app:layout_constraintStart_toStartOf="@id/siv_lyrics"
+        app:layout_constraintTop_toTopOf="@id/siv_lyrics"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_lyric"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/siv_album"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="@dimen/md_zero_unit"
+        android:layout_marginHorizontal="@dimen/md_ten_unit"
+        android:layout_marginTop="@dimen/md_two_unit"
+        app:layout_constraintBottom_toTopOf="@id/btn_video"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mtv_artist"
+        app:layout_constraintVertical_bias="0.0"
+        app:shapeAppearanceOverlay="@style/roundFullThreeHalfUnit"
+        tools:src="@tools:sample/avatars"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_lyric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:barrierMargin="-40dp"
+        app:constraint_referenced_ids="siv_album"/>
+
+    <include layout="@layout/merge_player_controller"/>
+
+    <!--region Mini Player Components-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_mini_option"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_shuffle"
+        app:layout_constraintEnd_toStartOf="@id/btn_mini_next"
+        app:layout_constraintTop_toTopOf="@id/btn_mini_play"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_mini_next"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        app:icon="@drawable/ic_next_track"
+        app:layout_constraintEnd_toStartOf="@id/btn_mini_play"
+        app:layout_constraintTop_toTopOf="@id/btn_mini_play"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_mini_play"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        app:icon="@drawable/ic_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/siv_album"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_mini_progress"
+        android:layout_width="@dimen/md_zero_unit"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/md_two_unit"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@id/cl_container"
+        app:layout_constraintEnd_toEndOf="@id/cl_container"
+        app:layout_constraintStart_toStartOf="@id/cl_container"
+        app:layout_constraintTop_toTopOf="@id/cl_container"
+        app:thumbColor="@android:color/transparent"
+        app:thumbElevation="0dp"
+        app:trackColorActive="@color/grapefruit"
+        app:trackColorInactive="@android:color/white"/>
+    <!--endregion-->
+</androidx.constraintlayout.widget.ConstraintLayout>

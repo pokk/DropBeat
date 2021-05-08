@@ -1,0 +1,40 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Jieyi
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#262345"
+        android:pathData="M11.2356,6.4284C11.7331,6.357 12.2669,6.357 12.7644,6.4284C13.0724,6.4692 13.3567,6.2586 13.4006,5.9509C13.4445,5.6432 13.2307,5.3586 12.9231,5.3144C12.6218,5.2717 12.3113,5.25 12,5.25C11.6887,5.25 11.3782,5.2717 11.0769,5.3144C10.7695,5.3583 10.5555,5.6432 10.5994,5.9509C10.6432,6.2583 10.9279,6.4689 11.2356,6.4284V6.4284Z"/>
+    <path
+        android:fillColor="#262345"
+        android:pathData="M15.0684,5.9866C14.7925,5.846 14.4531,5.9548 14.3116,6.2316C14.1701,6.508 14.2798,6.8469 14.5566,6.9884C16.4491,7.9559 17.625,9.8763 17.625,12C17.625,15.1016 15.1016,17.625 12,17.625C8.8984,17.625 6.375,15.1016 6.375,12C6.375,9.8763 7.5509,7.9559 9.4434,6.9887C9.7202,6.8472 9.8299,6.5083 9.6884,6.2318C9.5888,6.0372 9.3917,5.9253 9.1872,5.9253C9.1009,5.9253 9.0137,5.945 8.9316,5.9869C6.6607,7.1476 5.25,9.4516 5.25,12C5.25,15.7218 8.2779,18.75 12,18.75C15.7221,18.75 18.75,15.7218 18.75,12C18.75,9.4516 17.3393,7.1476 15.0684,5.9866Z"/>
+    <path
+        android:fillColor="#262345"
+        android:pathData="M9.75,13.125C9.606,13.125 9.462,13.1798 9.3523,13.2898C9.1327,13.5095 9.1327,13.8655 9.3523,14.0852L11.6023,16.3352C11.8217,16.5548 12.1783,16.5548 12.3977,16.3352L14.6477,14.0852C14.8673,13.8655 14.8673,13.5095 14.6477,13.2898C14.4283,13.0702 14.0717,13.0702 13.8523,13.2898L12.5625,14.5796V8.0625C12.5625,7.752 12.3105,7.5 12,7.5C11.6895,7.5 11.4375,7.752 11.4375,8.0625V14.5796L10.1477,13.2898C10.038,13.1798 9.894,13.125 9.75,13.125Z"/>
+</vector>
