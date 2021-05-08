@@ -23,26 +23,15 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <!-- Theme Colors -->
-    <color name="dusk">#465180</color>
-    <color name="colorPrimaryDark">#262345</color>
-    <color name="coral">#FF5735</color>
-    <color name="pastel_pink">#E8BCD3</color>
-    <color name="colorText">#FFFFFF</color>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
 
-    <!-- Others -->
-    <color name="grapefruit">#FF5753</color>
-    <color name="pale_grey">#F4F6FC</color>
-
-    <color name="silver">#BCBAC6</color>
-    <color name="dark_slate_blue">#383676</color>
-    <color name="shark">#19191A</color>
-
-    <!-- Special Button Background -->
-    <color name="special_button_background">#25FFFFFF</color>
-    <color name="bay_east">#43417D</color>
-
-    <color name="dusty_gray">#979797</color>
-</resources>
-
+    <path
+        android:fillColor="#262345"
+        android:fillType="evenOdd"
+        android:pathData="M17.3889 5C17.0853 5 16.8332 5.21168 16.7858 5.48875L16.7778 5.58333V18.4167C16.7778 18.7387 17.0516 19 17.3889 19C17.6925 19 17.9446 18.7883 17.992 18.5112L18 18.4167V5.58333C18 5.26133 17.7262 5 17.3889 5ZM8.08328 5.33979C7.73586 5.00817 7.21336 4.90871 6.75442 5.09013C6.33775 5.25478 6.05517 5.61927 6.00724 6.04005L6 6.16783V17.8322C6 18.3058 6.29608 18.7287 6.75442 18.9102C6.90658 18.9702 7.06578 18.9997 7.22344 18.9997C7.49556 18.9997 7.76297 18.9125 7.9814 18.7467L8.08633 18.6573L14.2564 12.674C14.6527 12.2383 14.6527 11.5809 14.2564 11.1448L14.2237 11.1113L8.08328 5.33979ZM13.3312 11.9096L7.22253 6.162L7.21886 17.8351L13.3312 11.9096Z"/>
+</vector>

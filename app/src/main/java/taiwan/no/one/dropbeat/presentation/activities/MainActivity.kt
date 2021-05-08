@@ -27,10 +27,16 @@ package taiwan.no.one.dropbeat.presentation.activities
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.changeStatusBarColor
+import com.devrapid.kotlinknifer.gone
+import com.devrapid.kotlinknifer.visible
 import com.google.android.play.core.splitcompat.SplitCompat
 import java.util.Locale
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -42,6 +48,40 @@ import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val vm by viewModels<PrivacyViewModel>()
+    private val slideInAnimation by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.slide_in_up).apply {
+            setAnimationListener(object : AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {
+                    toggle = !toggle
+                    isMinimalPlayer = false
+                    binding.bnvNavigator.gone()
+                    binding.fragPlayer.visible()
+                }
+
+                override fun onAnimationEnd(animation: Animation?) = Unit
+
+                override fun onAnimationRepeat(animation: Animation?) = Unit
+            })
+        }
+    }
+    private val slideOutAnimation by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.slide_out_down).apply {
+            setAnimationListener(object : AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {
+                    toggle = !toggle
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    binding.fragPlayer.gone()
+                    binding.bnvNavigator.visible()
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) = Unit
+            })
+        }
+    }
+    private var isMinimalPlayer = false
+    private var toggle = false
 
     // If we are using [NavHostFragment], need to use this way for get the navController.
     private val navigator
@@ -68,6 +108,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun init(savedInstanceState: Bundle?) {
         vm.getUserInfo()
+        binding.btnActive.setOnClickListener {
+            if (toggle) {
+                if (isMinimalPlayer) dismissMinimalPlayer() else dismissPlayer()
+            }
+            else {
+                showPlayer()
+            }
+        }
     }
 
     override fun showLoading() {
@@ -82,4 +130,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun showError(message: String) {
         navigator.navigate(R.id.action_global_to_error_dialog)
     }
+
+    override fun onBackPressed() {
+        if (binding.fragPlayer.isVisible) {
+            dismissPlayer()
+            return
+        }
+        super.onBackPressed()
+    }
+
+    private fun showPlayer() {
+        binding.fragPlayer.startAnimation(slideInAnimation)
+    }
+
+    private fun dismissPlayer() {
+        binding.fragPlayer.startAnimation(slideOutAnimation)
+    }
+
+    private fun dismissMinimalPlayer() = Unit
 }

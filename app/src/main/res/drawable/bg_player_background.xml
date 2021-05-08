@@ -23,26 +23,12 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <!-- Theme Colors -->
-    <color name="dusk">#465180</color>
-    <color name="colorPrimaryDark">#262345</color>
-    <color name="coral">#FF5735</color>
-    <color name="pastel_pink">#E8BCD3</color>
-    <color name="colorText">#FFFFFF</color>
-
-    <!-- Others -->
-    <color name="grapefruit">#FF5753</color>
-    <color name="pale_grey">#F4F6FC</color>
-
-    <color name="silver">#BCBAC6</color>
-    <color name="dark_slate_blue">#383676</color>
-    <color name="shark">#19191A</color>
-
-    <!-- Special Button Background -->
-    <color name="special_button_background">#25FFFFFF</color>
-    <color name="bay_east">#43417D</color>
-
-    <color name="dusty_gray">#979797</color>
-</resources>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_main_oval"/>
+    <item
+        android:drawable="@drawable/bg_item_mid_rectangle"
+        android:gravity="top|end"
+        android:top="225dp"/>
+</layer-list>
 

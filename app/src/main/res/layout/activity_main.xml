@@ -42,6 +42,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_app"/>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frag_player"
+        android:name="taiwan.no.one.dropbeat.presentation.fragments.PlayerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_zero_unit"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bnv_navigator"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_player"
+        tools:visibility="visible"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Active"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <taiwan.no.one.dropbeat.presentation.BottomNavigationViewWithIndicator
         android:id="@+id/bnv_navigator"
         android:layout_width="match_parent"
