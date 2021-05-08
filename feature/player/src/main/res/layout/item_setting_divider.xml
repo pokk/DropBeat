@@ -27,4 +27,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/one_dp"
+    android:layout_marginVertical="@dimen/md_one_unit"
     android:background="#33ffffff"/>

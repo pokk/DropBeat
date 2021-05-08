@@ -38,6 +38,7 @@ internal class SettingPopupWindow(context: Context) : CustomPopupWindow<PopupSet
         PopupSettingBinding.bind(View.inflate(context, R.layout.popup_setting, null))
 
     override fun PopupWindow.buildPopup() {
+        isFocusable = true
         // TODO(jieyi): 5/8/21 Add the popup menu animation.
     }
 

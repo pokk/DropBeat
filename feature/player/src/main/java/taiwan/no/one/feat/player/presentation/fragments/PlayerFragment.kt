@@ -26,9 +26,9 @@ package taiwan.no.one.feat.player.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -38,7 +38,6 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.core.view.children
 import androidx.core.view.forEach
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +47,6 @@ import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.ofAlpha
-import com.devrapid.kotlinknifer.resizeView
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
@@ -290,28 +288,23 @@ internal class PlayerFragment : BaseDialogFragment<BaseActivity<*>, FragmentPlay
         PopupMenu(requireContext(), anchor).apply {
             menuInflater.inflate(R.menu.menu_more, menu)
         }.menu.forEach {
+            // Set the menu items
             if (groupId != it.groupId) {
                 groupId = it.groupId
-                llSettingMenu.addView(layoutInflater.inflate(R.layout.item_setting_divider, null).apply {
-                    // OPTIMIZE(jieyi): 5/7/21 We might be able to do better here. Somehow, setting in
-                    //  the layout doesn't work.
-                    post {
-                        resizeView(null, getDimen(WidgetResDimen.one_dp).toInt())
-                        updateLayoutParams<MarginLayoutParams> {
-                            topMargin = getDimen(WidgetResDimen.md_one_unit).toInt()
-                            bottomMargin = getDimen(WidgetResDimen.md_one_unit).toInt()
-                        }
-                    }
-                })
+                val divider =
+                    LayoutInflater.from(root.context).inflate(R.layout.item_setting_divider, root, false)
+                root.addView(divider)
             }
-            val item = (layoutInflater.inflate(R.layout.item_setting, null) as? TextView)?.apply {
+            val textview = LayoutInflater.from(root.context).inflate(R.layout.item_setting, root, false)
+            (textview as? TextView)?.apply {
                 text = it.title
                 tag = it.itemId
                 setCompoundDrawablesWithIntrinsicBounds(it.icon, null, null, null)
+                root.addView(this)
             }
-            llSettingMenu.addView(item)
         }
-        llSettingMenu.setOnClickListener { layout ->
+        // Set the click event
+        root.setOnClickListener { layout ->
             (layout as ViewGroup).children.forEach {
                 when (it.tag) {
                     R.id.item_more -> Unit
