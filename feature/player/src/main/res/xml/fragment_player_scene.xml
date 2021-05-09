@@ -41,6 +41,10 @@
             <KeyAttribute
                 android:alpha="0"
                 app:framePosition="40"
+                app:motionTarget="@id/btn_mini_close"/>
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="40"
                 app:motionTarget="@id/btn_mini_play"/>
             <KeyAttribute
                 android:alpha="0"
@@ -96,6 +100,7 @@
         app:duration="250">
     </Transition>
 
+    <!--region Click Mini Player Motion-->
     <ConstraintSet android:id="@+id/mini_player_start">
         <Constraint android:id="@+id/cl_container">
             <Layout
@@ -145,8 +150,13 @@
                 android:layout_marginTop="@dimen/md_five_unit"
                 app:layout_constraintTop_toTopOf="parent"/>
         </Constraint>
-        <Constraint android:id="@+id/btn_mini_play">
+        <Constraint android:id="@+id/btn_mini_close">
             <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
@@ -224,10 +234,11 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/cl_container"
                 app:layout_constraintEnd_toEndOf="@id/mtv_track"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="@id/mtv_track"
                 app:layout_constraintTop_toBottomOf="@id/mtv_track"/>
         </Constraint>
-        <Constraint android:id="@+id/btn_mini_play">
+        <Constraint android:id="@+id/btn_mini_close">
             <Layout
                 android:layout_width="@dimen/md_five_unit"
                 android:layout_height="@dimen/md_five_unit"
@@ -235,6 +246,11 @@
                 app:layout_constraintBottom_toBottomOf="@id/siv_album"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/siv_album"/>
+            <PropertySet
+                android:alpha="1"
+                android:visibility="visible"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
             <PropertySet
                 android:alpha="1"
                 android:visibility="visible"/>
@@ -286,6 +302,7 @@
             <PropertySet android:alpha="1"/>
         </Constraint>
     </ConstraintSet>
+    <!--endregion Click Mini Player Motion-->
 
     <!--region Click Lyric Motion-->
     <ConstraintSet android:id="@+id/lyric_expand_start">
@@ -314,8 +331,13 @@
                 app:layout_constraintTop_toBottomOf="@id/mtv_artist"
                 app:layout_constraintVertical_bias="0.0"/>
         </Constraint>
-        <Constraint android:id="@+id/btn_mini_play">
+        <Constraint android:id="@+id/btn_mini_close">
             <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>
@@ -356,8 +378,13 @@
                 app:layout_constraintTop_toBottomOf="@id/mtv_artist"
                 app:layout_constraintVertical_bias="0.0"/>
         </Constraint>
-        <Constraint android:id="@+id/btn_mini_play">
+        <Constraint android:id="@+id/btn_mini_close">
             <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_mini_play">
             <PropertySet
                 android:alpha="0"
                 android:visibility="gone"/>

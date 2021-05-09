@@ -24,17 +24,20 @@
 
 package taiwan.no.one.feat.player.presentation.fragments
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
+import androidx.core.animation.doOnEnd
 import androidx.core.view.children
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
@@ -69,6 +72,10 @@ import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.widget.WidgetResDimen
 
 internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding>() {
+    companion object Constant {
+        private const val FULL_PERCENTAGE = 100f
+    }
+
     private var isTouchingSlider = false
     private var isRunningAnim = false
     private val vm by viewModels<PlayerViewModel>()
@@ -117,14 +124,14 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-            player.seekTo((seekBar.progress / 100f * player.curDuration).toInt())
+            player.seekTo((seekBar.progress / FULL_PERCENTAGE * player.curDuration).toInt())
             isTouchingSlider = false
         }
 
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             if (!isTouchingSlider) return
             merge.mtvCurrentTime.text =
-                StringUtil.buildDurationToDigitalTime((progress * player.curDuration / 100f).toLong())
+                StringUtil.buildDurationToDigitalTime((progress * player.curDuration / FULL_PERCENTAGE).toLong())
         }
     }
     val player = SimpleMusicPlayer.getInstance()
@@ -196,6 +203,17 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             })
             btnClose.setOnClickListener { collapsePlayer() }
             btnOption.setOnClickListener { popupMenu(binding.btnOption) }
+            btnMiniClose.setOnClickListener {
+                ValueAnimator.ofFloat(0f, displayMetrics().widthPixels.toFloat()).apply {
+                    interpolator = AccelerateInterpolator()
+                    duration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+                    val currentPosition = root.x
+                    addUpdateListener { root.x = currentPosition - it.animatedValue as Float }
+                    // TODO(jieyi): 5/9/21 recover the player to the full screen
+                    doOnEnd {
+                    }
+                }.start()
+            }
             btnMiniPlay.setOnClickListener { handlePlayAction() }
             btnMiniNext.setOnClickListener { player.next() }
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
@@ -307,7 +325,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     }
 
     private fun setProgress(progress: Float) {
-        merge.sliderMusic.progress = (progress * 100).toInt()
+        merge.sliderMusic.progress = (progress * FULL_PERCENTAGE).toInt()
         binding.sliderMiniProgress.value = progress
     }
 
@@ -329,10 +347,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
 
     private fun collapsePlayer() {
         if (isRunningAnim) return
-        binding.root.apply {
-            setTransition(currentState, R.id.mini_player_end)
-            transitionToEnd()
-        }
+        binding.root.transitionToState(R.id.mini_player_end)
         parent.apply {
             showBottomNavigationBar()
             isMinimalPlayer = true
@@ -341,10 +356,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
 
     private fun expandPlayer() {
         if (isRunningAnim) return
-        binding.root.apply {
-            setTransition(currentState, R.id.mini_player_start)
-            transitionToEnd()
-        }
+        binding.root.transitionToState(R.id.mini_player_start)
         parent.apply {
             hideBottomNavigationBar()
             isMinimalPlayer = false
