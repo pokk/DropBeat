@@ -32,7 +32,6 @@ import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -51,15 +50,15 @@ import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.widget.WidgetResDimen
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+    var isMinimalPlayer = false
     private val vm by viewModels<PrivacyViewModel>()
     private val slideInAnimation by lazy {
         AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_up).apply {
             setAnimationListener(object : AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
                     toggle = !toggle
-                    isMinimalPlayer = false
                     binding.navPlayerFragment.visible()
-                    animatorSlideDown.start()
+                    hideBottomNavigationBar()
                 }
 
                 override fun onAnimationEnd(animation: Animation?) = Unit
@@ -73,7 +72,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             setAnimationListener(object : AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
                     toggle = !toggle
-                    isMinimalPlayer = true
                     showBottomNavigationBar()
                 }
 
@@ -94,7 +92,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
     }
-    private var isMinimalPlayer = false
     private var toggle = false
 
     // If we are using [NavHostFragment], need to use this way for get the navController.
@@ -122,14 +119,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun init(savedInstanceState: Bundle?) {
         vm.getUserInfo()
-        binding.btnActive.setOnClickListener {
-            if (toggle) {
-                if (isMinimalPlayer) dismissMinimalPlayer() else dismissPlayer()
-            }
-            else {
-                showPlayer()
-            }
-        }
+        binding.btnActive.setOnClickListener { if (toggle) dismissPlayer() else showPlayer() }
     }
 
     override fun showLoading() {
@@ -143,14 +133,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun showError(message: String) {
         navigator.navigate(R.id.action_global_to_error_dialog)
-    }
-
-    override fun onBackPressed() {
-        if (binding.navPlayerFragment.isVisible) {
-            dismissPlayer()
-            return
-        }
-        super.onBackPressed()
     }
 
     fun updatePlayerFragmentHeight(height: Int) {
@@ -170,9 +152,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.navPlayerFragment.startAnimation(slideInAnimation)
     }
 
+    // XXX(jieyi): 5/9/21 This is for testing.
     private fun dismissPlayer() {
-        binding.navPlayerFragment.startAnimation(slideOutAnimation)
+        if (isMinimalPlayer) {
+        }
+        else {
+            binding.navPlayerFragment.startAnimation(slideOutAnimation)
+        }
     }
-
-    private fun dismissMinimalPlayer() = Unit
 }

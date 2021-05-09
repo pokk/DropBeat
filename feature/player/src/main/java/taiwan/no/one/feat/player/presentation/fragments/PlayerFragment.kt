@@ -145,22 +145,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             "http://cdn.nilsonstorage.com/image/d9/1e448054cfcc9eab9c18fe256efc38.jpg",
             "",
         ),
-//        MusicInfo(
-//            "title3",
-//            "artist3",
-//            "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
-//            226,
-//            "https://cdn.musicappserver.com/image/1d/2b52438d2f91cb61814dff8a1c73a8.jpg",
-//            "",
-//        ),
-//        MusicInfo(
-//            "title4",
-//            "artist4",
-//            "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
-//            183,
-//            "https://cdn.musicappserver.com/image/4c/1b5f29b91a5a438b2c424102e8e5ab.jpg",
-//            "",
-//        ),
     )
 
     init {
@@ -349,7 +333,10 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             setTransition(currentState, R.id.mini_player_end)
             transitionToEnd()
         }
-        parent.showBottomNavigationBar()
+        parent.apply {
+            showBottomNavigationBar()
+            isMinimalPlayer = true
+        }
     }
 
     private fun expandPlayer() {
@@ -358,6 +345,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             setTransition(currentState, R.id.mini_player_start)
             transitionToEnd()
         }
-        parent.hideBottomNavigationBar()
+        parent.apply {
+            hideBottomNavigationBar()
+            isMinimalPlayer = false
+        }
     }
 }
