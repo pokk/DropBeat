@@ -161,20 +161,27 @@
         style="@style/Taiwan.No.One.Button.IconOnly"
         app:icon="@drawable/ic_shuffle"
         app:layout_constraintEnd_toStartOf="@id/btn_mini_next"
-        app:layout_constraintTop_toTopOf="@id/btn_mini_play"/>
+        app:layout_constraintTop_toTopOf="@id/btn_mini_close"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_mini_next"
         style="@style/Taiwan.No.One.Button.IconOnly"
         app:icon="@drawable/ic_next_track"
         app:layout_constraintEnd_toStartOf="@id/btn_mini_play"
-        app:layout_constraintTop_toTopOf="@id/btn_mini_play"/>
+        app:layout_constraintTop_toTopOf="@id/btn_mini_close"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_mini_play"
         style="@style/Taiwan.No.One.Button.IconOnly"
-        android:layout_marginEnd="@dimen/md_two_unit"
         app:icon="@drawable/ic_play"
+        app:layout_constraintEnd_toStartOf="@id/btn_mini_close"
+        app:layout_constraintTop_toTopOf="@id/btn_mini_close"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_mini_close"
+        style="@style/Taiwan.No.One.Button.IconOnly"
+        android:layout_marginEnd="@dimen/md_two_unit"
+        app:icon="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/siv_album"/>
 
