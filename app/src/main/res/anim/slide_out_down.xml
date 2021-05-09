@@ -25,7 +25,7 @@
 
 <set
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@android:integer/config_shortAnimTime"
+    android:duration="@android:integer/config_mediumAnimTime"
     android:interpolator="@anim/easing_interpolator">
     <translate
         android:fromYDelta="0"

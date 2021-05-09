@@ -41,6 +41,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.loadAny
+import com.devrapid.kotlinknifer.displayMetrics
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
@@ -131,35 +132,35 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         MusicInfo(
             "title1",
             "artist1",
-            "http://cdn.musicappserver.com/music/1d/2b52438d2f91cb61814dff8a1c73a8.mp3",
+            "http://cdn.nilsonstorage.com/music/1b/8f3e854275abf92aadffe4548d4ba3.mp3",
             196,
-            "https://cdn.musicappserver.com/image/88/ac2349d19d307f5c0f2228fa746cac.jpg",
+            "http://cdn.nilsonstorage.com/image/1b/8f3e854275abf92aadffe4548d4ba3.jpg",
             "",
         ),
         MusicInfo(
             "title2",
             "artist2",
-            "http://cdn.musicappserver.com/music/b1/4acbbb3567c3c35b33305a07dc693c.mp3",
+            "http://cdn.nilsonstorage.com/music/d9/1e448054cfcc9eab9c18fe256efc38.mp3",
             335,
-            "https://cdn.musicappserver.com/image/b1/3aa841c31193804b81b11be6c364b4.jpg",
+            "http://cdn.nilsonstorage.com/image/d9/1e448054cfcc9eab9c18fe256efc38.jpg",
             "",
         ),
-        MusicInfo(
-            "title3",
-            "artist3",
-            "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
-            226,
-            "https://cdn.musicappserver.com/image/1d/2b52438d2f91cb61814dff8a1c73a8.jpg",
-            "",
-        ),
-        MusicInfo(
-            "title4",
-            "artist4",
-            "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
-            183,
-            "https://cdn.musicappserver.com/image/4c/1b5f29b91a5a438b2c424102e8e5ab.jpg",
-            "",
-        ),
+//        MusicInfo(
+//            "title3",
+//            "artist3",
+//            "http://cdn.musicappserver.com/music/af/c0dda7cfc27778575f9c4abcb4604e.mp3",
+//            226,
+//            "https://cdn.musicappserver.com/image/1d/2b52438d2f91cb61814dff8a1c73a8.jpg",
+//            "",
+//        ),
+//        MusicInfo(
+//            "title4",
+//            "artist4",
+//            "http://cdn.musicappserver.com/music/29/b311e13f3cff6d3b23eb151038c745.mp3",
+//            183,
+//            "https://cdn.musicappserver.com/image/4c/1b5f29b91a5a438b2c424102e8e5ab.jpg",
+//            "",
+//        ),
     )
 
     init {
@@ -187,14 +188,27 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     override fun componentListenersBinding() {
         binding.apply {
             root.addTransitionListener(object : TransitionAdapter() {
+                val displaySize = requireContext().displayMetrics()
+                val statusHeight = getStatusBarHeight()
+
                 override fun onTransitionStarted(motionLayout: MotionLayout, startId: Int, endId: Int) {
                     isRunningAnim = true
+                    parent.updatePlayerFragmentHeight(displaySize.heightPixels + statusHeight)
                 }
 
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                     isRunningAnim = false
+                    when (currentId) {
+                        R.id.mini_player_start ->
+                            parent.updatePlayerFragmentHeight(displaySize.heightPixels + statusHeight)
+                        R.id.mini_player_end ->
+                            parent.updatePlayerFragmentHeight(
+                                getDimen(WidgetResDimen.md_eight_unit).toInt() * 2 +
+                                    getDimen(WidgetResDimen.one_dp).toInt()
+                            )
+                        else -> Unit
+                    }
                 }
-                // TODO(jieyi): 5/8/21 We have to set the parent fragment height.
             })
             btnClose.setOnClickListener { collapsePlayer() }
             btnOption.setOnClickListener { popupMenu(binding.btnOption) }
@@ -203,7 +217,14 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             btnMiniOption.setOnClickListener { player.mode = Mode.Shuffle }
             sliderMiniProgress.clearOnSliderTouchListeners()
             sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
-            sivAlbum.setOnClickListener { expandLyrics() }
+            sivAlbum.setOnClickListener {
+                if (root.currentState == R.id.mini_player_end) {
+                    expandPlayer()
+                }
+                else {
+                    expandLyrics()
+                }
+            }
             sivLyrics.setOnClickListener { collapseLyrics() }
         }
         merge.apply {
@@ -328,5 +349,15 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             setTransition(currentState, R.id.mini_player_end)
             transitionToEnd()
         }
+        parent.showBottomNavigationBar()
+    }
+
+    private fun expandPlayer() {
+        if (isRunningAnim) return
+        binding.root.apply {
+            setTransition(currentState, R.id.mini_player_start)
+            transitionToEnd()
+        }
+        parent.hideBottomNavigationBar()
     }
 }
