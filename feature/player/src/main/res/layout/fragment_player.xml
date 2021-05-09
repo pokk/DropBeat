@@ -40,7 +40,8 @@
     <io.github.florent37.shapeofview.shapes.RoundRectView
         android:id="@+id/cl_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/md_zero_unit">
 
         <View
             android:id="@+id/v_container"

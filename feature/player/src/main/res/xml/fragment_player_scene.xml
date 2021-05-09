@@ -30,10 +30,12 @@
     <Transition
         android:id="@+id/transition_mini_player"
         app:constraintSetEnd="@+id/mini_player_end"
-        app:constraintSetStart="@+id/mini_player_start">
-        <OnSwipe
-            app:dragDirection="dragDown"
-            app:touchAnchorId="@+id/cl_mini_container"/>
+        app:constraintSetStart="@+id/mini_player_start"
+        app:duration="@android:integer/config_mediumAnimTime">
+        <!-- TODO(jieyi): 5/9/21 OnSwip still has some issues when changing the fragment container -->
+        <!--        <OnSwipe-->
+        <!--            app:dragDirection="dragDown"-->
+        <!--            app:touchAnchorId="@+id/cl_mini_container"/>-->
 
         <KeyFrameSet>
             <KeyAttribute
@@ -186,6 +188,7 @@
             <Layout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/md_eight_unit"
+                android:layout_marginBottom="@dimen/md_eight_unit"
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <CustomAttribute
                 app:attributeName="topLeftRadiusDp"
