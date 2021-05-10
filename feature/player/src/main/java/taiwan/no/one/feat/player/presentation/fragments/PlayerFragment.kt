@@ -317,7 +317,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {
-            sivAlbum.loadAny(music.thumbUri.takeIf { it.isNotBlank() } ?: "")
+            sivAlbumInner.loadAny(music.thumbUri.takeIf { it.isNotBlank() } ?: "") {
+                allowHardware(false)
+            }
             mtvArtist.text = music.artist
             mtvTrack.text = music.title
         }

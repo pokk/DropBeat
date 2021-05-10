@@ -135,6 +135,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mtv_artist"
                 app:layout_constraintVertical_bias="0.0"/>
+            <CustomAttribute
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="24"/>
+            <CustomAttribute
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="24"/>
+            <CustomAttribute
+                app:attributeName="BottomLeftRadiusDp"
+                app:customFloatValue="24"/>
+            <CustomAttribute
+                app:attributeName="BottomRightRadiusDp"
+                app:customFloatValue="24"/>
         </Constraint>
         <Constraint android:id="@+id/mtv_artist">
             <Layout
@@ -179,7 +191,7 @@
                 android:layout_marginEnd="@dimen/md_two_unit"
                 android:layout_marginBottom="@dimen/md_three_unit"
                 app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
-                app:layout_constraintTop_toBottomOf="@id/siv_album"/>
+                app:layout_constraintTop_toBottomOf="@id/barrier_lyric"/>
             <PropertySet android:alpha="1"/>
         </Constraint>
         <Constraint android:id="@+id/btn_close">
@@ -234,9 +246,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/cl_container"
                 app:layout_constraintEnd_toEndOf="@id/mtv_track"
-                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="@id/mtv_track"
-                app:layout_constraintTop_toBottomOf="@id/mtv_track"/>
+                app:layout_constraintTop_toBottomOf="@id/mtv_track"
+                app:layout_constraintVertical_chainStyle="packed"/>
         </Constraint>
         <Constraint android:id="@+id/btn_mini_close">
             <Layout
@@ -274,6 +286,18 @@
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/cl_container"/>
+            <CustomAttribute
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="4"/>
+            <CustomAttribute
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="4"/>
+            <CustomAttribute
+                app:attributeName="BottomLeftRadiusDp"
+                app:customFloatValue="4"/>
+            <CustomAttribute
+                app:attributeName="BottomRightRadiusDp"
+                app:customFloatValue="4"/>
         </Constraint>
         <Constraint android:id="@+id/siv_lyrics">
             <Layout
@@ -306,7 +330,6 @@
 
     <!--region Click Lyric Motion-->
     <ConstraintSet android:id="@+id/lyric_expand_start">
-        <!-- FIXME(Jieyi): 2020/9/12 top to bottom is not correct, it should be constraint by a barrier -->
         <Constraint android:id="@+id/siv_lyrics">
             <Layout
                 android:layout_width="match_parent"
@@ -315,7 +338,19 @@
                 android:layout_marginEnd="@dimen/md_two_unit"
                 android:layout_marginBottom="@dimen/md_three_unit"
                 app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
-                app:layout_constraintTop_toBottomOf="@id/siv_album"/>
+                app:layout_constraintTop_toBottomOf="@id/barrier_lyric"/>
+        </Constraint>
+        <Constraint android:id="@+id/rv_lyric">
+            <Layout
+                android:layout_width="@dimen/md_zero_unit"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_three_unit"
+                android:layout_marginTop="@dimen/md_five_unit"
+                android:layout_marginEnd="@dimen/md_three_unit"
+                app:layout_constraintBottom_toBottomOf="@id/siv_lyrics"
+                app:layout_constraintEnd_toEndOf="@id/siv_lyrics"
+                app:layout_constraintStart_toStartOf="@id/siv_lyrics"
+                app:layout_constraintTop_toTopOf="@id/siv_lyrics"/>
         </Constraint>
         <Constraint android:id="@+id/siv_album">
             <Layout
@@ -330,6 +365,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mtv_artist"
                 app:layout_constraintVertical_bias="0.0"/>
+            <CustomAttribute
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="24"/>
+            <CustomAttribute
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="24"/>
+            <CustomAttribute
+                app:attributeName="BottomLeftRadiusDp"
+                app:customFloatValue="24"/>
+            <CustomAttribute
+                app:attributeName="BottomRightRadiusDp"
+                app:customFloatValue="24"/>
         </Constraint>
         <Constraint android:id="@+id/btn_mini_close">
             <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
@@ -366,6 +413,18 @@
                 app:layout_constraintBottom_toTopOf="@id/nsv_scrolling"
                 app:layout_constraintTop_toBottomOf="@id/mtv_artist"/>
         </Constraint>
+        <Constraint android:id="@+id/rv_lyric">
+            <Layout
+                android:layout_width="@dimen/md_zero_unit"
+                android:layout_height="@dimen/md_zero_unit"
+                android:layout_marginStart="@dimen/md_three_unit"
+                android:layout_marginTop="@dimen/md_zero_unit"
+                android:layout_marginEnd="@dimen/md_three_unit"
+                app:layout_constraintBottom_toBottomOf="@id/siv_lyrics"
+                app:layout_constraintEnd_toEndOf="@id/siv_lyrics"
+                app:layout_constraintStart_toStartOf="@id/siv_lyrics"
+                app:layout_constraintTop_toTopOf="@id/siv_lyrics"/>
+        </Constraint>
         <Constraint android:id="@+id/siv_album">
             <Layout
                 android:layout_width="84dp"
@@ -377,6 +436,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mtv_artist"
                 app:layout_constraintVertical_bias="0.0"/>
+            <CustomAttribute
+                app:attributeName="topLeftRadiusDp"
+                app:customFloatValue="16"/>
+            <CustomAttribute
+                app:attributeName="topRightRadiusDp"
+                app:customFloatValue="16"/>
+            <CustomAttribute
+                app:attributeName="BottomLeftRadiusDp"
+                app:customFloatValue="16"/>
+            <CustomAttribute
+                app:attributeName="BottomRightRadiusDp"
+                app:customFloatValue="16"/>
         </Constraint>
         <Constraint android:id="@+id/btn_mini_close">
             <Layout android:layout_marginEnd="@dimen/md_two_unit"/>
