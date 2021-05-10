@@ -51,14 +51,24 @@ import taiwan.no.one.widget.WidgetResDimen
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     var isMinimalPlayer = false
+    var isBottomNaviBarVisible = true
+        set(value) {
+            if (value) animatorSlideDown.reverse() else animatorSlideDown.start()
+            field = value
+        }
+    private var toggle = false
+    private var isPlayerFragmentVisible = false
+        set(value) {
+            if (value) binding.navPlayerFragment.visible() else binding.navPlayerFragment.gone()
+            field = value
+        }
     private val vm by viewModels<PrivacyViewModel>()
     private val slideInAnimation by lazy {
         AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_up).apply {
             setAnimationListener(object : AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
-                    toggle = !toggle
-                    binding.navPlayerFragment.visible()
-                    hideBottomNavigationBar()
+                    isPlayerFragmentVisible = true
+                    isBottomNaviBarVisible = false
                 }
 
                 override fun onAnimationEnd(animation: Animation?) = Unit
@@ -71,12 +81,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         AnimationUtils.loadAnimation(applicationContext, R.anim.slide_out_down).apply {
             setAnimationListener(object : AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
-                    toggle = !toggle
-                    showBottomNavigationBar()
+                    isBottomNaviBarVisible = true
                 }
 
                 override fun onAnimationEnd(animation: Animation?) {
-                    binding.navPlayerFragment.gone()
+                    isPlayerFragmentVisible = false
                 }
 
                 override fun onAnimationRepeat(animation: Animation?) = Unit
@@ -92,7 +101,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
     }
-    private var toggle = false
 
     // If we are using [NavHostFragment], need to use this way for get the navController.
     private val navigator
@@ -119,7 +127,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun init(savedInstanceState: Bundle?) {
         vm.getUserInfo()
-        binding.btnActive.setOnClickListener { if (toggle) dismissPlayer() else showPlayer() }
+        binding.btnActive.setOnClickListener {
+            if (toggle) dismissPlayer() else showPlayer()
+            toggle = !toggle
+        }
     }
 
     override fun showLoading() {
@@ -140,21 +151,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.navPlayerFragment.updateLayoutParams { this.height = height }
     }
 
-    fun showBottomNavigationBar() {
-        animatorSlideDown.reverse()
-    }
-
-    fun hideBottomNavigationBar() {
-        animatorSlideDown.start()
-    }
-
-    private fun showPlayer() {
+    fun showPlayer() {
         binding.navPlayerFragment.startAnimation(slideInAnimation)
     }
 
     // XXX(jieyi): 5/9/21 This is for testing.
-    private fun dismissPlayer() {
+    fun dismissPlayer() {
         if (isMinimalPlayer) {
+            isPlayerFragmentVisible = false
+            toggle = false
         }
         else {
             binding.navPlayerFragment.startAnimation(slideOutAnimation)
