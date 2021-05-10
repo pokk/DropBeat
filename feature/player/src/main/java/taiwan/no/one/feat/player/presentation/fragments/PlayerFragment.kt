@@ -211,6 +211,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                     addUpdateListener { root.x = currentPosition - it.animatedValue as Float }
                     // TODO(jieyi): 5/9/21 recover the player to the full screen
                     doOnEnd {
+                        parent.dismissPlayer()
+                        root.x = 0f
+                        expandPlayer(false)
                     }
                 }.start()
             }
@@ -345,20 +348,20 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
     }
 
-    private fun collapsePlayer() {
+    private fun collapsePlayer(shouldShowBottomNavBar: Boolean = true) {
         if (isRunningAnim) return
         binding.root.transitionToState(R.id.mini_player_end)
         parent.apply {
-            showBottomNavigationBar()
+            if (shouldShowBottomNavBar) isBottomNaviBarVisible = true
             isMinimalPlayer = true
         }
     }
 
-    private fun expandPlayer() {
+    private fun expandPlayer(shouldHideBottomNavBar: Boolean = true) {
         if (isRunningAnim) return
         binding.root.transitionToState(R.id.mini_player_start)
         parent.apply {
-            hideBottomNavigationBar()
+            if (shouldHideBottomNavBar) isBottomNaviBarVisible = false
             isMinimalPlayer = false
         }
     }
