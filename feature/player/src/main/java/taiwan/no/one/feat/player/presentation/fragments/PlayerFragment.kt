@@ -70,6 +70,7 @@ import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.widget.WidgetResDimen
+import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
 internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding>() {
     companion object Constant {
@@ -78,6 +79,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
 
     private var isTouchingSlider = false
     private var isRunningAnim = false
+    private var playlistPopupMenu: CustomPopupWindow<*>? = null
     private val vm by viewModels<PlayerViewModel>()
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
     private val isPlaying get() = player.isPlaying
@@ -240,7 +242,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             btnPrevious.setOnClickListener { player.previous() }
             btnShuffle.setOnClickListener { player.mode = Mode.Shuffle }
             btnRepeat.setOnClickListener { player.mode = Mode.RepeatAll }
-            btnAddPlaylist.setOnClickListener { popupPlaylist() }
+            btnAddPlaylist.setOnClickListener {
+                playlistPopupMenu = popupPlaylist().apply { popup() }
+            }
             sliderMusic.setOnSeekBarChangeListener(seekBarChangeListener)
         }
         player.setPlayerEventCallback(playerCallback)
@@ -302,18 +306,25 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private fun popupPlaylist() = PlaylistPopupWindow(requireActivity()).builder {
         btnCreatePlaylist.setOnClickListener {
             findNavController().navigate(PlayerFragmentDirections.actionPlayerToPlaylistCreate())
+            dismissPlaylistMenu()
         }
         rvPlaylist.apply {
             adapter = PlaylistAdapter().apply {
                 submitList(vm.playlists.value?.getOrNull().orEmpty())
                 setOnClickListener { playlist ->
                     player.curPlayingInfo?.let { music -> vm.addSongToPlaylist(music, playlist.id) }
+                    dismissPlaylistMenu()
                 }
             }
             layoutManager = linearLayoutManager()
             addItemDecoration(PlaylistItemDecorator(getDimen(WidgetResDimen.md_two_unit).toInt(), 0))
         }
-    }.anchorOn(merge.btnAddPlaylist).popup()
+    }.anchorOn(merge.btnAddPlaylist)
+
+    private fun dismissPlaylistMenu() {
+        playlistPopupMenu?.dismiss()
+        playlistPopupMenu = null
+    }
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {
