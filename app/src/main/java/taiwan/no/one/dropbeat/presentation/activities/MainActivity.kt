@@ -128,7 +128,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun init(savedInstanceState: Bundle?) {
         vm.getUserInfo()
         binding.btnActive.setOnClickListener {
-            if (toggle) dismissPlayer() else showPlayer()
+            if (toggle) dismissPlayer() else displayPlayer()
             toggle = !toggle
         }
     }
@@ -151,11 +151,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.navPlayerFragment.updateLayoutParams { this.height = height }
     }
 
-    fun showPlayer() {
+    fun displayPlayer() {
         binding.navPlayerFragment.startAnimation(slideInAnimation)
     }
 
-    // XXX(jieyi): 5/9/21 This is for testing.
     fun dismissPlayer() {
         if (isMinimalPlayer) {
             isPlayerFragmentVisible = false

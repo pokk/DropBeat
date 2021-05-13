@@ -22,39 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.data.mappers
+package taiwan.no.one.dropbeat.presentation.viewmodels
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
 import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
-import taiwan.no.one.mediaplayer.MusicInfo
 
-object TrackMapper {
-    fun musicInfoToSongEntitiesJson(music: MusicInfo) = buildString {
-        append("""[${musicInfoToSongEntityJson(music)}]""")
-    }
-
-    fun musicInfoListToSongEntitiesJson(musics: List<MusicInfo>) = buildString {
-        musics.joinToString(",", "[", "]") { musicInfoToSongEntityJson(it) }
-    }
-
-    fun simpleTrackToMusicEntity(simpleTrackEntity: SimpleTrackEntity) = simpleTrackEntity.let {
-        MusicInfo(
-            it.name,
-            it.artist,
-            it.uri,
-            it.duration,
-            it.thumbUri,
-            it.lyricUri,
-        )
-    }
-
-    private fun musicInfoToSongEntityJson(music: MusicInfo) = buildString {
-        append("""{
-    "title" : "${music.title}",
-    "artist" : "${music.artist}",
-    "uri" : "${music.uri}",
-    "cover_uri" : "${music.thumbUri}",
-    "duration" : ${music.duration},
-    "has_own" : false
-}""".trimIndent())
-    }
+class PlayerViewModel(override val handle: SavedStateHandle) : BehindViewModel() {
+    private val _playlist by lazy { MutableLiveData<List<SimpleTrackEntity>>() }
+    val playlist get() = _playlist
 }
