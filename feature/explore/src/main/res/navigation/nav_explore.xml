@@ -57,9 +57,6 @@
                 app:nullable="true"/>
         </action>
         <action
-            android:id="@+id/action_explore_to_player"
-            app:destination="@id/nav_player"/>
-        <action
             android:id="@+id/action_explore_to_playlist_songs_of_tag"
             app:destination="@id/nav_playlist_songs_of_tag">
             <argument
@@ -90,9 +87,4 @@
         android:id="@+id/nav_artist"
         app:graphResName="nav_dynamic_artist"
         app:moduleName="library"/>
-
-    <include-dynamic
-        android:id="@+id/nav_player"
-        app:graphResName="nav_player"
-        app:moduleName="player"/>
 </navigation>

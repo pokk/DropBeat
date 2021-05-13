@@ -184,10 +184,6 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
     }
 
     override fun componentListenersBinding() {
-        binding.mtvTitle.setOnClickListener {
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlayer())
-            analyticsVm.navigatedToPlayer()
-        }
         exploreAdapter.setOnClickListener {
             it.name?.takeIf { it.isNotEmpty() }?.also {
                 findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylistSongsOfTag(it))
