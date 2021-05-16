@@ -29,7 +29,7 @@ import org.gradle.kotlin.dsl.maven
 
 fun RepositoryHandler.addDefaults() {
     google()
-    jcenter()
+//    jcenter()
     mavenCentral()
     // required to find the project's artifacts
     maven("https://dl.bintray.com/kotlin/kotlin-eap")

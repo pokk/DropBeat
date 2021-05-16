@@ -86,7 +86,7 @@
 #
 #      #      run: ./gradlew testDebugUnitTest
 #      - name: Run Jacoco Unit Test
-#        run: ./gradlew jacocoAndroidTestReport
+#        run: ./gradlew jacocoAndroidTestReport --no-build-cache -x
 #
 #      #      - name: Generate Report
 #      #        uses: actions/upload-artifact@v2
@@ -101,9 +101,6 @@
 #      #          path: app/build/reports/coverage/debug
 #      #
 #      - name: Upload Test Report
-#        run: bash <(curl -s https://codecov.io/bash) -f "./ktx/build/reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml"
-#
-##      - name: Codecov
-##        uses: codecov/codecov-action@v1.5.0
-##        with:
-##          directory: ./
+#        if: success()
+#        run: bash <(curl -s https://codecov.io/bash)
+#        shell: bash
