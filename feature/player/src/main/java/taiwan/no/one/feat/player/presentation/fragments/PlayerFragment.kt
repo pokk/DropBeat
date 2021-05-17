@@ -173,6 +173,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             (player.curPlayingInfo ?: playlist.first()).also(this@PlayerFragment::setMusicInfo)
             merge.mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(player.curTrackSec)
             setProgress(player.curTrackSec / player.curDuration.toFloat())
+            binding.sliderMiniProgress.setLabelFormatter {
+                StringUtil.buildDurationToDigitalTime((it * player.curDuration).toLong())
+            }
         }
         switchPlayIcon()
     }
