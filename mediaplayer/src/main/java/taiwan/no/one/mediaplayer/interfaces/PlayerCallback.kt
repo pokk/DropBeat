@@ -30,6 +30,8 @@ import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 interface PlayerCallback {
     fun onTrackChanged(music: MusicInfo)
 
+    fun onStatusChanged(state: MusicPlayer.State)
+
     fun onPlayState(isPlaying: Boolean)
 
     fun onTrackCurrentPosition(second: Long)

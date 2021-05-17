@@ -53,7 +53,5 @@ internal class MusicStatePause(player: ExoPlayer) : MusicState(player) {
         return play()
     }
 
-    override fun resetPlaylist(): MusicState {
-        return MusicStatePause(player)
-    }
+    override fun resetPlaylist() = MusicStatePause(player)
 }
