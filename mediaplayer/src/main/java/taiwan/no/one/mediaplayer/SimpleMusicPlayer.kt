@@ -81,13 +81,20 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
         fun getInstance() = INSTANCE ?: throw Exception("Please call initialize(context) first...")
     }
 
-    private lateinit var playerState: MusicState
     private lateinit var timerJob: Job
     private lateinit var timer: ReceiveChannel<Unit>
+    private lateinit var _playerState: MusicState
+    private var playerState: MusicState
+        get() = _playerState
+        set(value) {
+            callback?.onStatusChanged(value.state)
+            _playerState = value
+        }
     private var callback: PlayerCallback? = null
     private val exoPlayer by lazy {
         SimpleExoPlayer.Builder(context).build().apply {
-            prepare(queue, true, true)
+            setMediaSource(queue, true)
+            prepare()
             addListener(MusicEventListener())
             playerState = MusicStateStandby(this)
         }
@@ -185,7 +192,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
             .createMediaSource(uri)
     }
 
-    internal inner class MusicEventListener : Player.EventListener {
+    internal inner class MusicEventListener : Player.Listener {
         override fun onPlayerError(error: ExoPlaybackException) =
             callback?.onErrorCallback(PlaybackException(error)) ?: Unit
 

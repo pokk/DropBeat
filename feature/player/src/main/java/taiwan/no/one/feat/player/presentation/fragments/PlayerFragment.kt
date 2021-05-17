@@ -68,6 +68,8 @@ import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
 import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State
+import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
@@ -90,6 +92,10 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         override fun onTrackChanged(music: MusicInfo) {
             logw(music)
             setMusicInfo(music)
+        }
+
+        override fun onStatusChanged(state: State) {
+            setSliderEnable(state)
         }
 
         override fun onPlayState(isPlaying: Boolean) {
@@ -250,6 +256,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             }
             sliderMusic.setOnSeekBarChangeListener(seekBarChangeListener)
         }
+        setSliderEnable(player.getState())
         player.setPlayerEventCallback(playerCallback)
     }
 
@@ -346,6 +353,12 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private fun setProgress(progress: Float) {
         merge.sliderMusic.progress = (progress * FULL_PERCENTAGE).toInt()
         binding.sliderMiniProgress.value = progress
+    }
+
+    private fun setSliderEnable(state: State) {
+        val isEnable = state !is Standby
+        merge.sliderMusic.isEnabled = isEnable
+        binding.sliderMiniProgress.isEnabled = isEnable
     }
 
     private fun collapseLyrics() {

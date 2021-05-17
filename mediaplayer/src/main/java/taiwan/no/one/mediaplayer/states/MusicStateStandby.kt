@@ -41,7 +41,5 @@ internal class MusicStateStandby(player: ExoPlayer) : MusicState(player) {
 
     override fun previous() = this
 
-    override fun resetPlaylist(): MusicState {
-        return this
-    }
+    override fun resetPlaylist() = this
 }
