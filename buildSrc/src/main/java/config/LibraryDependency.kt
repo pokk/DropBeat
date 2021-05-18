@@ -31,7 +31,7 @@ object LibraryDependency {
         const val MATERIAL = "1.4.0-beta01"
         const val ANDROIDX = "1.0.0"
         const val ANNOTATION = "1.3.0-alpha01"
-        const val APPCOMPAT = "1.3.0-rc01"
+        const val APPCOMPAT = "1.4.0-alpha01"
         const val APP_STARTUP = "1.1.0-alpha01"
         const val CARDVIEW = ANDROIDX
         const val RECYCLERVIEW = "1.2.0"
@@ -41,12 +41,12 @@ object LibraryDependency {
         const val AAC_LIFECYCLE = "2.4.0-alpha01"
         const val DATASTORE = "1.0.0-beta01"
         const val KODEIN = "7.5.0"
-        const val KTX = "1.6.0-alpha03"
-        const val ACTIVITY_KTX = "1.3.0-alpha07"
-        const val FRAGMENT_KTX = "1.3.3"
+        const val KTX = "1.6.0-beta01"
+        const val ACTIVITY_KTX = "1.3.0-alpha08"
+        const val FRAGMENT_KTX = "1.4.0-alpha01"
         const val PALETTE_KTX = "1.0.0"
         const val COLLECTION_KTX = "1.2.0-alpha01"
-        const val NAVIGATION_KTX = "2.3.5"
+        const val NAVIGATION_KTX = "2.4.0-alpha01"
         const val WORK_KTX = "2.7.0-alpha03"
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.4.0-alpha02"
@@ -65,7 +65,7 @@ object LibraryDependency {
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
         const val LOTTIE = "3.7.0"
-        const val SENTRY = "5.0.0-beta.3"
+        const val SENTRY = "5.0.0-beta.4"
     }
 
     object Jieyi {
