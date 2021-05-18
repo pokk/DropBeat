@@ -46,7 +46,7 @@ object LibraryDependency {
         const val FRAGMENT_KTX = "1.4.0-alpha01"
         const val PALETTE_KTX = "1.0.0"
         const val COLLECTION_KTX = "1.2.0-alpha01"
-        const val NAVIGATION_KTX = "2.4.0-alpha01"
+        const val NAVIGATION_KTX = "2.3.5"
         const val WORK_KTX = "2.7.0-alpha03"
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.4.0-alpha02"
