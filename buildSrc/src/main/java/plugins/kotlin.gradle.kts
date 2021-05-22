@@ -29,15 +29,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            jvmTarget = JavaVersion.VERSION_11.toString()
             suppressWarnings = false
             freeCompilerArgs = listOf(
                 "-Xopt-in=kotlin.RequiresOptIn",
                 "-Xopt-in=kotlin.ExperimentalStdlibApi",
-                "-Xopt-in=kotlin.ExperimentalContracts",
-                "-Xopt-in=org.mylibrary.ExperimentalMarker",
-                "-Xallow-result-return-type",
-                "-Xjvm-default=all"
             )
         }
     }

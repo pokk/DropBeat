@@ -37,35 +37,35 @@ tasks.withType<Test> {
     maxHeapSize = "3g"
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
-        exclude("jdk.internal.*")
+        excludes = listOf("jdk.internal.*")
     }
 }
 
 private val sourceDirectoriesTree = fileTree(project.projectDir) {
-    include(
+    setIncludes(listOf(
         "src/main/java/**",
         "src/main/kotlin/**",
         "src/debug/java/**",
         "src/debug/kotlin/**"
-    )
+    ))
 }
 
 private val classDirectoriesTree = fileTree("$buildDir/tmp/kotlin-classes/debug") {
-    exclude(
+    setExcludes(listOf(
         "**/R.class",
         "**/R\$*.class",
         "**/BuildConfig.*",
         "**/Manifest*.*",
         "**/*Test*.*",
         "android/**/*.*"
-    )
+    ))
 }
 
 private val executionDataTree = fileTree(buildDir) {
-    include(
+    setIncludes(listOf(
         "jacoco/testDebugUnitTest.exec",
         "outputs/code_coverage/connected/*coverage.ec"
-    )
+    ))
 }
 
 fun JacocoReportsContainer.reports() {

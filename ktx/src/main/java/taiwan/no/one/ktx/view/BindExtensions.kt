@@ -69,14 +69,14 @@ fun <vt : View> AppCompatDialog.findOptional(@IdRes idRes: Int) = findViewById<v
 
 //region Lazy Binding
 fun <vt : View> Activity.bindView(@IdRes idRes: Int): Lazy<vt> {
-    return lazy(LazyThreadSafetyMode.NONE) { find<vt>(idRes) }
+    return lazy(LazyThreadSafetyMode.NONE) { find(idRes) }
 }
 
 fun <vt : View> Fragment.bindView(@IdRes idRes: Int): Lazy<vt> {
-    return lazy(LazyThreadSafetyMode.NONE) { find<vt>(idRes) }
+    return lazy(LazyThreadSafetyMode.NONE) { find(idRes) }
 }
 
 fun <vt : View> View.bindView(@IdRes idRes: Int): Lazy<vt> {
-    return lazy(LazyThreadSafetyMode.NONE) { find<vt>(idRes) }
+    return lazy(LazyThreadSafetyMode.NONE) { find(idRes) }
 }
 //endregion
