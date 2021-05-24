@@ -31,5 +31,8 @@
         <meta-data
             android:name="io.sentry.dsn"
             android:value="https://58d2e0eaf0aa496690c7edfa5cac4ce0@o608676.ingest.sentry.io/5745650"/>
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1.0"/>
     </application>
 </manifest>
