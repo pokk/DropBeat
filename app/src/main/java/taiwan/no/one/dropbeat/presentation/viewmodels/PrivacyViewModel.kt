@@ -40,6 +40,7 @@ class PrivacyViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
+    var shouldDisplaySyncDialog = false
     private val fetchLoginInfoCase by instance<FetchLoginInfoCase>()
     private val _userInfo by lazy { ResultLiveData<UserInfoEntity>() }
     val userInfo get() = _userInfo.toLiveData()

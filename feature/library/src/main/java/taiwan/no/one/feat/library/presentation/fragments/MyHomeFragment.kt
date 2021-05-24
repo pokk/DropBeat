@@ -38,6 +38,7 @@ import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
@@ -195,6 +196,11 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         userEntity.takeIf { it?.uid.isNotNull() }?.let {
             mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
+            if (privacyVm.shouldDisplaySyncDialog) {
+                privacyVm.shouldDisplaySyncDialog = false
+                // Show sync dialog
+                showSyncDialog()
+            }
         }
         vm.getAllPlaylists()
     }
@@ -218,6 +224,19 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
     private fun navigateToArtist(entity: SimpleTrackEntity) {
         findNavController().navigate(MyHomeFragmentDirections.actionMyHomeToNavArtist(entity))
         analyticsVm.navigatedFromPlaylistToArtist(entity.artist)
+    }
+
+    private fun showSyncDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Information")
+            .setMessage("Would you like to sync your data")
+            .setNegativeButton(resources.getString(android.R.string.cancel)) { dialog, which ->
+                // Respond to negative button press
+            }
+            .setPositiveButton(resources.getString(android.R.string.ok)) { dialog, which ->
+                // Respond to positive button press
+            }
+            .show()
     }
 
     private fun showMenu(anchor: View) =

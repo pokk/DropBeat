@@ -27,6 +27,9 @@ package taiwan.no.one.dropbeat
 import android.app.Application
 import android.content.Context
 import com.facebook.stetho.Stetho
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import taiwan.no.one.dropbeat.di.Dispatcher
@@ -47,5 +50,9 @@ class DropBeatApp : Application(), DIAware {
     override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)
+        // Firebase setting
+        val localhost = "10.0.2.2"
+        Firebase.auth.useEmulator(localhost, 9099)
+        Firebase.firestore.useEmulator(localhost, 8080)
     }
 }

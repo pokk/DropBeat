@@ -126,12 +126,10 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                     val account = task.getResult(ApiException::class.java) ?: throw NullPointerException()
                     showLoading()
                     vm.login(Credential.Google(account.idToken.orEmpty()))
-                }
-                catch (apiException: ApiException) {
+                } catch (apiException: ApiException) {
                     // Google Sign In failed, update UI appropriately
                     loge(apiException)
-                }
-                catch (nullPointerException: NullPointerException) {
+                } catch (nullPointerException: NullPointerException) {
                     loge(nullPointerException)
                 }
             }
@@ -167,6 +165,8 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                 requireActivity().showTopToast("Welcome back, $name", R.drawable.ic_login_arrow)
                 // Go back to the previous screen.
                 findNavController().navigateUp()
+                // Raised the display flag
+                privacyVm.shouldDisplaySyncDialog = true
             }.onFailure(::loge)
         }
     }
