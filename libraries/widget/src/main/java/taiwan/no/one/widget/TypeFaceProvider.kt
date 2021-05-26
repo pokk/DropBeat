@@ -21,23 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ext")
-include(
-    ":libraries:analytics",
-    ":libraries:core",
-    ":libraries:device",
-    ":libraries:mediaplayer",
-    ":libraries:test",
-    ":libraries:widget",
-    ":libraries:ktx",
-)
-include(
-    ":features:search",
-    ":features:ranking",
-    ":features:login",
-    ":features:library",
-    ":features:explore",
-    ":features:player",
-    ":features:setting"
-)
+
+package taiwan.no.one.widget
+
+import android.content.Context
+import android.graphics.Typeface
+import java.util.*
+
+object TypeFaceProvider {
+    private const val TYPEFACE_FOLDER = "fonts"
+    private const val TYPEFACE_EXTENSION = ".ttf"
+
+    private val typeFaces = Hashtable<String, Typeface>(6)
+
+    fun getTypeFace(context: Context, fileName: String): Typeface {
+        var tempTypeface = typeFaces[fileName]
+
+        if (tempTypeface == null) {
+            val fontPath = "$TYPEFACE_FOLDER/$fileName"
+            tempTypeface = Typeface.createFromAsset(context.assets, fontPath)
+            typeFaces[fileName] = tempTypeface
+        }
+
+        return tempTypeface ?: throw NullPointerException()
+    }
+}

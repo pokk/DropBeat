@@ -36,7 +36,7 @@ val features = CommonModuleDependency.getFeatureModuleSimpleName()
 subprojects {
     afterEvaluate {
         //region Common Setting
-        if (name !in listOf("ext", "feature")) {
+        if (name !in listOf("ext", "features", "libraries")) {
             // BaseExtension is common parent for application, library and test modules
             extensions.configure<BaseExtension> {
                 compileSdkVersion(AndroidConfiguration.COMPILE_SDK)

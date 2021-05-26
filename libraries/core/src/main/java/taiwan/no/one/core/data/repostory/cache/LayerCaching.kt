@@ -21,23 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ext")
-include(
-    ":libraries:analytics",
-    ":libraries:core",
-    ":libraries:device",
-    ":libraries:mediaplayer",
-    ":libraries:test",
-    ":libraries:widget",
-    ":libraries:ktx",
-)
-include(
-    ":features:search",
-    ":features:ranking",
-    ":features:login",
-    ":features:library",
-    ":features:explore",
-    ":features:player",
-    ":features:setting"
-)
+
+package taiwan.no.one.core.data.repostory.cache
+
+import java.util.*
+import taiwan.no.one.core.exceptions.NotFoundException
+
+abstract class LayerCaching<RT> {
+    protected open var timestamp = 0L
+
+    suspend fun value() = try {
+        val dbSource = loadFromLocal()
+        if (dbSource == null || shouldFetch(dbSource)) {
+            timestamp = Date().time
+            fetchFromRemote()
+        }
+        else {
+            dbSource
+        }
+    } catch (notFoundException: NotFoundException) {
+        // If can't find from the cache or the local persistence, will throw the [NotFoundException].
+        timestamp = Date().time
+        fetchFromRemote()
+    } catch (e: Exception) {
+        timestamp = Date().time
+        fetchFromRemote()
+    }
+
+    private suspend fun fetchFromRemote() = createCall().apply { saveCallResult(this) }
+
+    protected abstract suspend fun saveCallResult(data: RT)
+
+    protected abstract suspend fun shouldFetch(data: RT): Boolean
+
+    protected abstract suspend fun loadFromLocal(): RT?
+
+    protected abstract suspend fun createCall(): RT
+}

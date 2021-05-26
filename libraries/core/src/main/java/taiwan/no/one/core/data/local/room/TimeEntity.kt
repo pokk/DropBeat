@@ -21,23 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ext")
-include(
-    ":libraries:analytics",
-    ":libraries:core",
-    ":libraries:device",
-    ":libraries:mediaplayer",
-    ":libraries:test",
-    ":libraries:widget",
-    ":libraries:ktx",
-)
-include(
-    ":features:search",
-    ":features:ranking",
-    ":features:login",
-    ":features:library",
-    ":features:explore",
-    ":features:player",
-    ":features:setting"
+
+package taiwan.no.one.core.data.local.room
+
+import androidx.room.ColumnInfo
+import java.util.*
+
+data class TimeEntity(
+    @ColumnInfo(name = "created_at")
+    val createdAt: Date = Date(),
+    @ColumnInfo(name = "updated_at")
+    val updatedAt: Date = Date(),
 )

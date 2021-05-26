@@ -21,23 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ext")
-include(
-    ":libraries:analytics",
-    ":libraries:core",
-    ":libraries:device",
-    ":libraries:mediaplayer",
-    ":libraries:test",
-    ":libraries:widget",
-    ":libraries:ktx",
-)
-include(
-    ":features:search",
-    ":features:ranking",
-    ":features:login",
-    ":features:library",
-    ":features:explore",
-    ":features:player",
-    ":features:setting"
-)
+
+package taiwan.no.one.core.data.local.room.convert
+
+import androidx.room.TypeConverter
+import java.util.*
+
+class DateConvert {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let(::Date)
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time
+    }
+}

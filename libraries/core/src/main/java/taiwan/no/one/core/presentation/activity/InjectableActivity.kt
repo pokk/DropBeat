@@ -21,23 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ext")
-include(
-    ":libraries:analytics",
-    ":libraries:core",
-    ":libraries:device",
-    ":libraries:mediaplayer",
-    ":libraries:test",
-    ":libraries:widget",
-    ":libraries:ktx",
-)
-include(
-    ":features:search",
-    ":features:ranking",
-    ":features:login",
-    ":features:library",
-    ":features:explore",
-    ":features:player",
-    ":features:setting"
-)
+
+package taiwan.no.one.core.presentation.activity
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import org.kodein.di.DIAware
+import org.kodein.di.DITrigger
+import org.kodein.di.android.closestDI
+import org.kodein.di.android.retainedDI
+import taiwan.no.one.core.BuildConfig
+
+abstract class InjectableActivity : AppCompatActivity(), DIAware {
+    override val di by retainedDI { extend(parentDi) }
+    override val diTrigger = if (BuildConfig.DEBUG) DITrigger() else super.diTrigger
+    private val parentDi by closestDI()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        diTrigger?.trigger()
+    }
+}

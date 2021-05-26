@@ -21,23 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// NOTE(jieyi): New sub-project need to be added here!
-include(":app", ":ext")
-include(
-    ":libraries:analytics",
-    ":libraries:core",
-    ":libraries:device",
-    ":libraries:mediaplayer",
-    ":libraries:test",
-    ":libraries:widget",
-    ":libraries:ktx",
-)
-include(
-    ":features:search",
-    ":features:ranking",
-    ":features:login",
-    ":features:library",
-    ":features:explore",
-    ":features:player",
-    ":features:setting"
+
+package taiwan.no.one.feat.search.data.entities.local
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.*
+import taiwan.no.one.ext.DEFAULT_STR
+
+@Entity(tableName = "table_history")
+internal data class SearchHistoryEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val keyword: String = DEFAULT_STR,
+    val updated: Date = Date(),
 )

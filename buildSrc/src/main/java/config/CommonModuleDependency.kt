@@ -27,19 +27,20 @@ package config
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
-private const val FEATURE_PREFIX = ":feature:"
+private const val FEATURE_PREFIX = ":features:"
+private const val LIBRARY_PREFIX = ":libraries:"
 
 object CommonModuleDependency {
     // NOTE(jieyi): New sub-project need to be added here!
     const val APP = ":app"
     const val LIB_PURE_EXT = ":ext"
-    const val LIB_KTX = ":ktx"
-    const val LIB_WIDGET = ":widget"
-    const val LIB_MEDIA_PLAYER = ":mediaplayer"
-    const val LIB_DEVICE = ":device"
-    const val LIB_CORE = ":core"
-    const val LIB_ANALYTICS = ":analytics"
-    const val LIB_TEST = ":test"
+    const val LIB_KTX = "${LIBRARY_PREFIX}ktx"
+    const val LIB_WIDGET = "${LIBRARY_PREFIX}widget"
+    const val LIB_MEDIA_PLAYER = "${LIBRARY_PREFIX}mediaplayer"
+    const val LIB_DEVICE = "${LIBRARY_PREFIX}device"
+    const val LIB_CORE = "${LIBRARY_PREFIX}core"
+    const val LIB_ANALYTICS = "${LIBRARY_PREFIX}analytics"
+    const val LIB_TEST = "${LIBRARY_PREFIX}test"
 
     // feature module name
     const val FEAT_SEARCH_MUSIC = "${FEATURE_PREFIX}search"
