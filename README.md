@@ -14,7 +14,7 @@
 
 ## Module Dependency Graph
 
-![Module Dependency Graph](https://user-images.githubusercontent.com/5198104/85551371-e7c64a80-b65c-11ea-9396-5537c8d22b21.png)
+![DropABeat Architecture@2x](https://user-images.githubusercontent.com/5198104/119675341-e9554f80-be77-11eb-84a3-6fe1f6791dab.png)
 
 ## Architecture of each module
 
@@ -55,7 +55,7 @@ keeping the basic rules but we need to have a compromise with those features.
 ```
 MIT License
 
-Copyright (c) 2019 SmashKs
+Copyright (c) 2021 Jieyi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
