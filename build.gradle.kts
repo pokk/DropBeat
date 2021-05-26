@@ -56,7 +56,7 @@ allprojects {
 
 subprojects {
     beforeEvaluate {
-        if (name !in listOf("ext", "entity", "test", "feature")) plugins.apply("plugins.jacoco")
+        if (name !in listOf("ext", "test", "feature")) plugins.apply("plugins.jacoco")
     }
 }
 
