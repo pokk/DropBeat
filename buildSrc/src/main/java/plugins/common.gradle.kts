@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ val features = CommonModuleDependency.getFeatureModuleSimpleName()
 subprojects {
     afterEvaluate {
         //region Common Setting
-        if (name !in listOf("ext", "features", "libraries")) {
+        if (name !in listOf("ext", "entity", "features", "libraries")) {
             // BaseExtension is common parent for application, library and test modules
             extensions.configure<BaseExtension> {
                 compileSdkVersion(AndroidConfiguration.COMPILE_SDK)

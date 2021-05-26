@@ -34,6 +34,7 @@ object CommonModuleDependency {
     // NOTE(jieyi): New sub-project need to be added here!
     const val APP = ":app"
     const val LIB_PURE_EXT = ":ext"
+    const val LIB_PURE_ENTITY = "${LIBRARY_PREFIX}entity"
     const val LIB_KTX = "${LIBRARY_PREFIX}ktx"
     const val LIB_WIDGET = "${LIBRARY_PREFIX}widget"
     const val LIB_MEDIA_PLAYER = "${LIBRARY_PREFIX}mediaplayer"
@@ -68,6 +69,6 @@ object CommonModuleDependency {
 
     fun getLibraryModuleSimpleName() = getAllModules()
         .filterNot { it.startsWith(FEATURE_PREFIX) }
-        .filterNot { it == APP || it == LIB_PURE_EXT }
+        .filterNot { it == APP || it == LIB_PURE_EXT || it == LIB_PURE_ENTITY }
         .map { it.split(":").last() }
 }

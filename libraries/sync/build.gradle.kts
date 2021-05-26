@@ -27,8 +27,9 @@ import utils.syncDependencies
 import utils.unitTestDependencies
 
 dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(project(CommonModuleDependency.LIB_CORE))
+    implementation(project(CommonModuleDependency.LIB_PURE_ENTITY))
     syncDependencies()
     unitTestDependencies()
 }

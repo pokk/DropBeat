@@ -22,36 +22,6 @@
  * SOFTWARE.
  */
 
-package plugins
+package taiwan.no.one.entity
 
-import config.CommonModuleDependency
-
-val modules = CommonModuleDependency.getLibraryModuleSimpleName()
-val features = CommonModuleDependency.getFeatureModuleSimpleName()
-
-subprojects {
-    beforeEvaluate {
-        apply {
-            when (name) {
-                in listOf("ext", "entity") -> {
-                    plugin("java-library")
-                    plugin("kotlin")
-                }
-                in modules -> {
-                    plugin("com.android.library")
-                    plugin("kotlin-android")
-                }
-                in features -> {
-                    plugin("com.android.dynamic-feature")
-                    plugin("kotlin-android")
-                    plugin("kotlin-parcelize")
-                    plugin("kotlin-kapt")
-                    plugin("androidx.navigation.safeargs.kotlin")
-                }
-            }
-            if (this@subprojects.name == "core") {
-                plugin("org.jetbrains.kotlin.kapt")
-            }
-        }
-    }
-}
+class MyClass

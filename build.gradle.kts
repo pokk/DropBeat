@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ allprojects {
 
 subprojects {
     beforeEvaluate {
-        if (name !in listOf("ext", "test", "feature")) plugins.apply("plugins.jacoco")
+        if (name !in listOf("ext", "entity", "test", "feature")) plugins.apply("plugins.jacoco")
     }
 }
 

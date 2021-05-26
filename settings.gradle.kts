@@ -27,6 +27,7 @@ include(
     ":libraries:analytics",
     ":libraries:core",
     ":libraries:device",
+    ":libraries:entity",
     ":libraries:mediaplayer",
     ":libraries:test",
     ":libraries:sync",
