@@ -128,6 +128,7 @@ fun DependencyHandlerScope.analyticsDependencies() {
 fun DependencyHandlerScope.syncDependencies() {
     kotlinDependencies(DepEnvImpl)
     DepEnvApi(platform(Firebase.FIREBASE_BOM))
+    DepEnvApi(Firebase.FIREBASE_FIRESTORE)
 }
 
 fun DependencyHandlerScope.testDependencies() {

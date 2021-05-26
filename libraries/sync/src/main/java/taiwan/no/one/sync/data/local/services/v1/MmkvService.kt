@@ -22,13 +22,11 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
+package taiwan.no.one.sync.data.local.services.v1
 
-dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    syncDependencies()
-    unitTestDependencies()
-}
+import com.google.gson.Gson
+import taiwan.no.one.sync.data.local.services.SyncService
+
+internal class MmkvService(
+    private val gson: Gson,
+) : SyncService

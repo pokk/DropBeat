@@ -22,13 +22,10 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
+package taiwan.no.one.sync.data.local.services
 
-dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    syncDependencies()
-    unitTestDependencies()
-}
+/**
+ * Thru a local cache mechanism, we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
+ */
+internal interface SyncService

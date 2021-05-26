@@ -22,13 +22,41 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
+package taiwan.no.one.sync.data.remote.services.firebase.v1
 
-dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    syncDependencies()
-    unitTestDependencies()
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.asDeferred
+import taiwan.no.one.sync.data.remote.services.SyncService
+
+internal class FirebaseSyncService(
+    private val firestore: FirebaseFirestore,
+) : SyncService {
+    companion object Constant {
+        private const val ACCOUNT_COLLECTION_PROVIDER = "provider"
+        private const val ACCOUNT_COLLECTION_EMAIL = "email"
+    }
+
+    override suspend fun createAccount(): Boolean {
+        firestore.collection(ACCOUNT_COLLECTION_PROVIDER)
+            .document()
+            .collection(ACCOUNT_COLLECTION_EMAIL)
+            .document()
+            .set("")
+            .asDeferred()
+        return true
+    }
+
+    override suspend fun getPlaylists() = TODO()
+
+    override suspend fun modifyPlaylist() = TODO()
+
+    override suspend fun createPlaylist() = TODO()
+
+    override suspend fun removePlaylist() = TODO()
+
+    override suspend fun getSongs() = TODO()
+
+    override suspend fun modifySong() = TODO()
+
+    override suspend fun createSong() = TODO()
 }

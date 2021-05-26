@@ -22,13 +22,28 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
+package taiwan.no.one.sync.data.repositories
 
-dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    syncDependencies()
-    unitTestDependencies()
+import taiwan.no.one.sync.data.contracts.DataStore
+import taiwan.no.one.sync.domain.repositories.SyncRepo
+
+internal class SyncRepository(
+    private val local: DataStore,
+    private val remote: DataStore,
+) : SyncRepo {
+    override suspend fun addAccount() = remote.createAccount()
+
+    override suspend fun fetchPlaylists() = TODO()
+
+    override suspend fun updatePlaylist() = TODO()
+
+    override suspend fun addPlaylist() = TODO()
+
+    override suspend fun deletePlaylist() = TODO()
+
+    override suspend fun fetchSongs() = TODO()
+
+    override suspend fun updateSong() = TODO()
+
+    override suspend fun addSong() = TODO()
 }

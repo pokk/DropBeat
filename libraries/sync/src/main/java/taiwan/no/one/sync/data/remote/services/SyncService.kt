@@ -22,13 +22,26 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
+package taiwan.no.one.sync.data.remote.services
 
-dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    syncDependencies()
-    unitTestDependencies()
+/**
+ * This interface will be the same as all data stores.
+ * Using prefix name (get), (create), (modify), (remove), (store)
+ */
+internal interface SyncService {
+    suspend fun createAccount(): Boolean
+
+    suspend fun getPlaylists(): List<Boolean>
+
+    suspend fun modifyPlaylist(): Boolean
+
+    suspend fun createPlaylist(): Boolean
+
+    suspend fun removePlaylist(): Boolean
+
+    suspend fun getSongs(): List<Boolean>
+
+    suspend fun modifySong(): Boolean
+
+    suspend fun createSong(): Boolean
 }

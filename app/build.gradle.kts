@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -73,6 +73,7 @@ dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_CORE),
            project(CommonModuleDependency.LIB_MEDIA_PLAYER),
+           project(CommonModuleDependency.LIB_SYNC),
            project(CommonModuleDependency.LIB_ANALYTICS)).forEach { api(it) }
     testImplementation(project(CommonModuleDependency.LIB_TEST))
     appDependencies()

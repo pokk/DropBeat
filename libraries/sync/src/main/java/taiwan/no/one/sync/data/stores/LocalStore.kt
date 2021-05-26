@@ -22,13 +22,47 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
+package taiwan.no.one.sync.data.stores
 
-dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    syncDependencies()
-    unitTestDependencies()
+import taiwan.no.one.sync.data.contracts.DataStore
+import taiwan.no.one.sync.data.local.services.SyncService
+
+/**
+ * The implementation of the local data store. The responsibility is selecting a correct
+ * local service(Database/Local file) to access the data.
+ */
+internal class LocalStore(
+    private val mmkvService: SyncService,
+) : DataStore {
+    override suspend fun createAccount(): Boolean {
+        TODO()
+    }
+
+    override suspend fun getPlaylists(): List<Boolean> {
+        TODO()
+    }
+
+    override suspend fun modifyPlaylist(): Boolean {
+        TODO()
+    }
+
+    override suspend fun createPlaylist(): Boolean {
+        TODO()
+    }
+
+    override suspend fun removePlaylist(): Boolean {
+        TODO()
+    }
+
+    override suspend fun getSongs(): List<Boolean> {
+        TODO()
+    }
+
+    override suspend fun modifySong(): Boolean {
+        TODO()
+    }
+
+    override suspend fun createSong(): Boolean {
+        TODO()
+    }
 }

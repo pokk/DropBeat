@@ -22,13 +22,28 @@
  * SOFTWARE.
  */
 
-import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
+package taiwan.no.one.sync.domain.repositories
 
-dependencies {
-    implementation(project(CommonModuleDependency.LIB_CORE))
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    syncDependencies()
-    unitTestDependencies()
+import taiwan.no.one.core.domain.repository.Repository
+
+/**
+ * This interface will be the similar to [taiwan.no.one.sync.data.contracts.DataStore].
+ * Using prefix name (fetch), (add), (update), (delete), (keep)
+ */
+interface SyncRepo : Repository {
+    suspend fun addAccount(): Boolean
+
+    suspend fun fetchPlaylists(): List<Boolean>
+
+    suspend fun updatePlaylist(): Boolean
+
+    suspend fun addPlaylist(): Boolean
+
+    suspend fun deletePlaylist(): Boolean
+
+    suspend fun fetchSongs(): List<Boolean>
+
+    suspend fun updateSong(): Boolean
+
+    suspend fun addSong(): Boolean
 }
