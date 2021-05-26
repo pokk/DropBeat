@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,7 @@ object CommonModuleDependency {
     const val LIB_DEVICE = "${LIBRARY_PREFIX}device"
     const val LIB_CORE = "${LIBRARY_PREFIX}core"
     const val LIB_ANALYTICS = "${LIBRARY_PREFIX}analytics"
+    const val LIB_SYNC = "${LIBRARY_PREFIX}sync"
     const val LIB_TEST = "${LIBRARY_PREFIX}test"
 
     // feature module name
