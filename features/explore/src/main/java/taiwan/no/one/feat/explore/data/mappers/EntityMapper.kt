@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,10 @@
 
 package taiwan.no.one.feat.explore.data.mappers
 
-import taiwan.no.one.dropbeat.data.entities.SimpleAlbumEntity
-import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity
-import taiwan.no.one.dropbeat.data.entities.SimpleArtistEntity.SimpleBioEntity
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.entity.SimpleAlbumEntity
+import taiwan.no.one.entity.SimpleArtistEntity
+import taiwan.no.one.entity.SimpleArtistEntity.SimpleBioEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity.AlbumWithArtistEntity

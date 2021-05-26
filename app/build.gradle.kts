@@ -74,7 +74,7 @@ dependencies {
     listOf(project(CommonModuleDependency.LIB_CORE),
            project(CommonModuleDependency.LIB_MEDIA_PLAYER),
            project(CommonModuleDependency.LIB_SYNC),
-           project(CommonModuleDependency.LIB_PURE_ENTITY),
+           project(CommonModuleDependency.LIB_ENTITY),
            project(CommonModuleDependency.LIB_ANALYTICS)).forEach { api(it) }
     testImplementation(project(CommonModuleDependency.LIB_TEST))
     appDependencies()

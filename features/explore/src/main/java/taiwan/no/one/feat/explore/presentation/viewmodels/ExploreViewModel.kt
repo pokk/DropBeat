@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,9 @@ import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase

@@ -33,7 +33,7 @@ subprojects {
     beforeEvaluate {
         apply {
             when (name) {
-                in listOf("ext", "entity") -> {
+                in listOf("ext") -> {
                     plugin("java-library")
                     plugin("kotlin")
                 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
-import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
+import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 

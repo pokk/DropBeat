@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
 import coil.loadAny
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
+import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 

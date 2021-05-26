@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,8 +45,8 @@ import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.core.utils.StringUtil
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper

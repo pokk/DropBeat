@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,33 +22,28 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.data.entities
+package taiwan.no.one.entity
 
 import android.os.Parcelable
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 
 /**
- * [SimpleArtistEntity] is for global usage and it only keeps brief information.
+ * [SimpleTrackEntity] is for global usage and it only keeps brief information.
  */
 @Keep
 @Parcelize
-data class SimpleArtistEntity(
+data class SimpleTrackEntity(
     val id: Int,
     val name: String,
-    val thumbnail: String,
-    val url: String,
-    val listener: Int,
-    val playCount: Int,
-    val topAlbums: List<SimpleAlbumEntity>,
-    val topTracks: List<SimpleTrackEntity>,
-    val bio: SimpleBioEntity,
+    val artist: String,
+    val uri: String,
+    val localUri: String,
+    val thumbUri: String,
+    val lyricUri: String,
+    val duration: Int,
+    var isFavorite: Boolean,
+    val isOwn: Boolean,
 ) : Parcelable {
-
-    @Keep
-    @Parcelize
-    data class SimpleBioEntity(
-        val summary: String,
-        val content: String,
-    ) : Parcelable
+    fun obtainTrackAndArtistName() = "$artist++$name"
 }

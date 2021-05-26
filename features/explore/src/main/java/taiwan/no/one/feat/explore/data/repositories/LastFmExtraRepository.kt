@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package taiwan.no.one.feat.explore.data.repositories
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import java.util.*
+import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity

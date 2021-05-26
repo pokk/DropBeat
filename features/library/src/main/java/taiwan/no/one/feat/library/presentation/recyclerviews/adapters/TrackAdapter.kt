@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.getDimen
 import kotlin.properties.Delegates
 import taiwan.no.one.dropbeat.AppResLayout
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.presentation.recyclerviews.viewholders.TrackViewHolder
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.recyclerviews.AutoUpdatable

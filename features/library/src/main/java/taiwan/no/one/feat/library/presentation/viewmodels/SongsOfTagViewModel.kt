@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,10 +40,10 @@ import org.kodein.di.factory
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
+import taiwan.no.one.entity.SimpleTrackEntity
 
 internal class SongsOfTagViewModel(
     application: Application,

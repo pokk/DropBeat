@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.dropbeat.AppResLayout
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChartViewHolder

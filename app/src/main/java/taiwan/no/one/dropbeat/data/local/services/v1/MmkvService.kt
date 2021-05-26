@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,8 @@ package taiwan.no.one.dropbeat.data.local.services.v1
 
 import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
-import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.dropbeat.data.local.services.PrivacyService
+import taiwan.no.one.entity.UserInfoEntity
 
 internal class MmkvService(
     private val mmkv: MMKV,

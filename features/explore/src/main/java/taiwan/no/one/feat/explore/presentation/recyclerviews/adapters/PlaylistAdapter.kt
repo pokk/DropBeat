@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.dropbeat.AppResLayout
-import taiwan.no.one.dropbeat.data.entities.SimplePlaylistEntity
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
+import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.PlaylistViewHolder
 
 internal class PlaylistAdapter : ListAdapter<SimplePlaylistEntity, PlaylistViewHolder>(DiffItemCallback) {

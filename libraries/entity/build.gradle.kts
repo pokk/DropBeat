@@ -22,9 +22,15 @@
  * SOFTWARE.
  */
 
+import config.LibraryDependency
 import utils.kotlinDependencies
+
+apply {
+    plugin("kotlin-parcelize")
+}
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     kotlinDependencies(utils.DepEnvImpl)
+    implementation(LibraryDependency.JetPack.ANNOT)
 }

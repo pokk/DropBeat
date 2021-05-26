@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,9 @@ import com.devrapid.kotlinknifer.logw
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter

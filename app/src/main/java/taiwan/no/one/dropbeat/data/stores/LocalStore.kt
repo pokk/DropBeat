@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@
 package taiwan.no.one.dropbeat.data.stores
 
 import taiwan.no.one.dropbeat.data.contracts.DataStore
-import taiwan.no.one.dropbeat.data.entities.UserInfoEntity
 import taiwan.no.one.dropbeat.data.local.services.PrivacyService
+import taiwan.no.one.entity.UserInfoEntity
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct

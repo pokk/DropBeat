@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ package taiwan.no.one.dropbeat.presentation.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import taiwan.no.one.dropbeat.core.viewmodel.BehindViewModel
-import taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 
 class PlayerViewModel(override val handle: SavedStateHandle) : BehindViewModel() {
     private val _playlist by lazy { MutableLiveData<List<SimpleTrackEntity>>() }

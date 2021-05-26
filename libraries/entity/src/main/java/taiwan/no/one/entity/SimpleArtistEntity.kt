@@ -24,4 +24,31 @@
 
 package taiwan.no.one.entity
 
-class MyClass
+import android.os.Parcelable
+import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
+
+/**
+ * [SimpleArtistEntity] is for global usage and it only keeps brief information.
+ */
+@Keep
+@Parcelize
+data class SimpleArtistEntity(
+    val id: Int,
+    val name: String,
+    val thumbnail: String,
+    val url: String,
+    val listener: Int,
+    val playCount: Int,
+    val topAlbums: List<SimpleAlbumEntity>,
+    val topTracks: List<SimpleTrackEntity>,
+    val bio: SimpleBioEntity,
+) : Parcelable {
+
+    @Keep
+    @Parcelize
+    data class SimpleBioEntity(
+        val summary: String,
+        val content: String,
+    ) : Parcelable
+}
