@@ -46,4 +46,14 @@ data class SimpleTrackEntity(
     val isOwn: Boolean,
 ) : Parcelable {
     fun obtainTrackAndArtistName() = "$artist++$name"
+
+    fun toSet() = mapOf(
+        "id" to id,
+        "name" to name,
+        "artist_name" to artist,
+        "uri" to uri,
+        "thumb_uri" to thumbUri,
+        "lyric_uri" to lyricUri,
+        "duration" to duration,
+    )
 }

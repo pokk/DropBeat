@@ -26,10 +26,17 @@ package taiwan.no.one.sync.data.remote.services.firebase.v1
 
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.asDeferred
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlinx.coroutines.suspendCancellableCoroutine
+import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.remote.services.SyncService
 
+// NOTE(jieyi): 5/26/21
+//  For one-shot async calls, use the [suspendCancellableCoroutine] API.
+//  For streaming data, use the [callbackFlow] API.
 internal class FirebaseSyncService(
     private val firestore: FirebaseFirestore,
 ) : SyncService {
@@ -37,24 +44,44 @@ internal class FirebaseSyncService(
         private const val COLLECTION_PROVIDER = "provider"
         private const val COLLECTION_EMAIL = "email"
         private const val FIELD_PLAYLIST = "playlists"
+        private const val COLLECTION_PLAYLIST = "playlist"
+        private const val FIELD_NAME = "name"
+        private const val FIELD_SONGS = "songs"
+        private const val COLLECTION_SONG = "song"
     }
 
-    override suspend fun createAccount(userInfo: UserInfoEntity): Boolean {
-        val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
-        firestore.collection(COLLECTION_PROVIDER)
-            .document(userInfo.providerId.orEmpty())
-            .collection(COLLECTION_EMAIL)
-            .document(userInfo.email.orEmpty())
-            .set(data)
-            .asDeferred()
-        return true
-    }
+    override suspend fun createAccount(userInfo: UserInfoEntity) =
+        suspendCancellableCoroutine<Boolean> { continuation ->
+            val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
+            getUserInfoDocument(userInfo).set(data)
+                .addOnSuccessListener { continuation.resume(false) }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
 
-    override suspend fun getPlaylists() = TODO()
+    override suspend fun getPlaylists(userInfo: UserInfoEntity) =
+        suspendCancellableCoroutine<List<SimplePlaylistEntity>> { continuation ->
+            getUserInfoDocument(userInfo).get()
+                .addOnSuccessListener {
+                    val playlists = (it[FIELD_PLAYLIST] as? List<*>)?.map {
+                        TODO()
+                    }
+                    continuation.resume(playlists.orEmpty())
+                }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
 
     override suspend fun modifyPlaylist() = TODO()
 
-    override suspend fun createPlaylist() = TODO()
+    override suspend fun createPlaylist(name: String) = suspendCancellableCoroutine<String> { continuation ->
+        val playlist = mapOf(
+            FIELD_NAME to name,
+            FIELD_SONGS to emptyList<DocumentReference>()
+        )
+        val doc = firestore.collection(COLLECTION_PLAYLIST).document()
+        doc.set(playlist)
+            .addOnSuccessListener { continuation.resume(doc.path) }
+            .addOnFailureListener(continuation::resumeWithException)
+    }
 
     override suspend fun removePlaylist() = TODO()
 
@@ -62,5 +89,15 @@ internal class FirebaseSyncService(
 
     override suspend fun modifySong() = TODO()
 
-    override suspend fun createSong() = TODO()
+    override suspend fun createSong(song: SimpleTrackEntity) = suspendCancellableCoroutine<String> { continuation ->
+        val doc = firestore.collection(COLLECTION_SONG).document(song.obtainTrackAndArtistName())
+        doc.set(song.toSet())
+            .addOnSuccessListener { continuation.resume(doc.path) }
+            .addOnFailureListener(continuation::resumeWithException)
+    }
+
+    private fun getUserInfoDocument(userInfo: UserInfoEntity) = firestore.collection(COLLECTION_PROVIDER)
+        .document(userInfo.providerId.orEmpty())
+        .collection(COLLECTION_EMAIL)
+        .document(userInfo.email.orEmpty())
 }

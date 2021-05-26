@@ -24,6 +24,8 @@
 
 package taiwan.no.one.sync.data.remote.services
 
+import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 
 /**
@@ -33,11 +35,11 @@ import taiwan.no.one.entity.UserInfoEntity
 internal interface SyncService {
     suspend fun createAccount(userInfo: UserInfoEntity): Boolean
 
-    suspend fun getPlaylists(): List<Boolean>
+    suspend fun getPlaylists(userInfo: UserInfoEntity): List<SimplePlaylistEntity>
 
     suspend fun modifyPlaylist(): Boolean
 
-    suspend fun createPlaylist(): Boolean
+    suspend fun createPlaylist(name: String): String
 
     suspend fun removePlaylist(): Boolean
 
@@ -45,5 +47,5 @@ internal interface SyncService {
 
     suspend fun modifySong(): Boolean
 
-    suspend fun createSong(): Boolean
+    suspend fun createSong(song: SimpleTrackEntity): String
 }

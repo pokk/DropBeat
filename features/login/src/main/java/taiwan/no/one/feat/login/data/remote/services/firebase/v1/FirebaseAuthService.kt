@@ -34,6 +34,9 @@ import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.login.data.remote.services.AuthService
 import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 
+// NOTE(jieyi): 5/26/21
+//  For one-shot async calls, use the [suspendCancellableCoroutine] API.
+//  For streaming data, use the [callbackFlow] API.
 internal class FirebaseAuthService(
     private val auth: FirebaseAuth,
 ) : AuthService {
@@ -41,18 +44,14 @@ internal class FirebaseAuthService(
         suspendCancellableCoroutine<UserInfoEntity> { continuation ->
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
                 continuation.resume(extractUserInfoEntity(it))
-            }.addOnFailureListener {
-                continuation.resumeWithException(it)
-            }
+            }.addOnFailureListener(continuation::resumeWithException)
         }
 
     override suspend fun getLogin(credential: Credential) =
         suspendCancellableCoroutine<UserInfoEntity> { continuation ->
             auth.signInWithCredential(credential.getAuthCredential()).addOnSuccessListener {
                 continuation.resume(extractUserInfoEntity(it))
-            }.addOnFailureListener {
-                continuation.resumeWithException(it)
-            }
+            }.addOnFailureListener(continuation::resumeWithException)
         }
 
     override suspend fun getLogout(): Boolean {
@@ -64,9 +63,7 @@ internal class FirebaseAuthService(
         suspendCancellableCoroutine<UserInfoEntity> { continuation ->
             auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
                 continuation.resume(extractUserInfoEntity(it))
-            }.addOnFailureListener {
-                continuation.resumeWithException(it)
-            }
+            }.addOnFailureListener(continuation::resumeWithException)
         }
 
     override suspend fun modifyPassword(email: String) {
