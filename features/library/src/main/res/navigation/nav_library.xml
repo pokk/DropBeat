@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@
             <argument
                 android:name="songs"
                 android:defaultValue="@null"
-                app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity[]"
+                app:argType="taiwan.no.one.entity.SimpleTrackEntity[]"
                 app:nullable="true"/>
             <argument
                 android:name="title"
@@ -62,7 +62,7 @@
             app:destination="@id/nav_artist">
             <argument
                 android:name="track"
-                app:argType="taiwan.no.one.dropbeat.data.entities.SimpleTrackEntity"/>
+                app:argType="taiwan.no.one.entity.SimpleTrackEntity"/>
         </action>
     </fragment>
 

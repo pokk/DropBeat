@@ -24,12 +24,14 @@
 
 package taiwan.no.one.sync.data.remote.services
 
+import taiwan.no.one.entity.UserInfoEntity
+
 /**
  * This interface will be the same as all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface SyncService {
-    suspend fun createAccount(): Boolean
+    suspend fun createAccount(userInfo: UserInfoEntity): Boolean
 
     suspend fun getPlaylists(): List<Boolean>
 

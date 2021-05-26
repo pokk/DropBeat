@@ -5,7 +5,7 @@
     <enableFormatting>true</enableFormatting>
     <buildUponDefaultConfig>true</buildUponDefaultConfig>
     <enableAllRules>true</enableAllRules>
-    <rulesPath>$PROJECT_DIR$/config/detekt/detekt.yml</rulesPath>
+    <configPaths>$PROJECT_DIR$/config/detekt/detekt.yml</configPaths>
     <baselinePath>$PROJECT_DIR$/config/detekt/baseline.xml</baselinePath>
   </component>
 </project>

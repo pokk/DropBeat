@@ -24,24 +24,28 @@
 
 package taiwan.no.one.sync.data.remote.services.firebase.v1
 
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.asDeferred
+import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.remote.services.SyncService
 
 internal class FirebaseSyncService(
     private val firestore: FirebaseFirestore,
 ) : SyncService {
     companion object Constant {
-        private const val ACCOUNT_COLLECTION_PROVIDER = "provider"
-        private const val ACCOUNT_COLLECTION_EMAIL = "email"
+        private const val COLLECTION_PROVIDER = "provider"
+        private const val COLLECTION_EMAIL = "email"
+        private const val FIELD_PLAYLIST = "playlists"
     }
 
-    override suspend fun createAccount(): Boolean {
-        firestore.collection(ACCOUNT_COLLECTION_PROVIDER)
-            .document()
-            .collection(ACCOUNT_COLLECTION_EMAIL)
-            .document()
-            .set("")
+    override suspend fun createAccount(userInfo: UserInfoEntity): Boolean {
+        val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
+        firestore.collection(COLLECTION_PROVIDER)
+            .document(userInfo.providerId.orEmpty())
+            .collection(COLLECTION_EMAIL)
+            .document(userInfo.email.orEmpty())
+            .set(data)
             .asDeferred()
         return true
     }
