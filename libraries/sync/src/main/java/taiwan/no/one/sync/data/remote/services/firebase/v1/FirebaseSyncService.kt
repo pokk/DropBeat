@@ -70,7 +70,12 @@ internal class FirebaseSyncService(
                 .addOnFailureListener(continuation::resumeWithException)
         }
 
-    override suspend fun modifyPlaylist() = TODO()
+    override suspend fun getPlaylist(userInfo: UserInfoEntity) = TODO()
+
+    override suspend fun modifyPlaylist() = suspendCancellableCoroutine<Boolean> { continuation ->
+        val doc = firestore.collection(COLLECTION_PLAYLIST).document()
+        TODO()
+    }
 
     override suspend fun createPlaylist(name: String) = suspendCancellableCoroutine<String> { continuation ->
         val playlist = mapOf(
