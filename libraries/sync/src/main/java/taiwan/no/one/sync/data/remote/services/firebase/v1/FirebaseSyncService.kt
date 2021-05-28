@@ -28,7 +28,10 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
@@ -58,24 +61,22 @@ internal class FirebaseSyncService(
                 .addOnFailureListener(continuation::resumeWithException)
         }
 
-    override suspend fun getPlaylists(userInfo: UserInfoEntity) =
+    override suspend fun getPlaylists(userInfo: UserInfoEntity) = coroutineScope {
         suspendCancellableCoroutine<List<SimplePlaylistEntity>> { continuation ->
             getUserInfoDocument(userInfo).get()
                 .addOnSuccessListener {
-                    val playlists = (it[FIELD_PLAYLIST] as? List<*>)?.map {
-                        TODO()
+                    launch {
+                        val playlists = (it[FIELD_PLAYLIST] as? List<DocumentReference>)?.mapNotNull {
+                            it.get().await().toObject(SimplePlaylistEntity::class.java)
+                        }
+                        continuation.resume(playlists.orEmpty())
                     }
-                    continuation.resume(playlists.orEmpty())
                 }
                 .addOnFailureListener(continuation::resumeWithException)
         }
-
-    override suspend fun getPlaylist(userInfo: UserInfoEntity) = TODO()
-
-    override suspend fun modifyPlaylist() = suspendCancellableCoroutine<Boolean> { continuation ->
-        val doc = firestore.collection(COLLECTION_PLAYLIST).document()
-        TODO()
     }
+
+    override suspend fun modifyPlaylist() = TODO()
 
     override suspend fun createPlaylist(name: String) = suspendCancellableCoroutine<String> { continuation ->
         val playlist = mapOf(

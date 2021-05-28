@@ -37,8 +37,6 @@ internal interface SyncService {
 
     suspend fun getPlaylists(userInfo: UserInfoEntity): List<SimplePlaylistEntity>
 
-    suspend fun getPlaylist(userInfo: UserInfoEntity): SimplePlaylistEntity
-
     suspend fun modifyPlaylist(): Boolean
 
     suspend fun createPlaylist(name: String): String

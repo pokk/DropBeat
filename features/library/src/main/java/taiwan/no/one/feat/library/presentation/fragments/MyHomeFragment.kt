@@ -36,17 +36,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.devrapid.kotlinshaver.isNotNull
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.entity.SimpleTrackEntity
+import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.library.R
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
@@ -196,6 +204,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         userEntity.takeIf { it?.uid.isNotNull() }?.let {
             mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
+            doSync(it)
             if (privacyVm.shouldDisplaySyncDialog) {
                 privacyVm.shouldDisplaySyncDialog = false
                 // Show sync dialog
@@ -263,26 +272,41 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             }
         }.show()
 
-//    private fun doSync(entity: UserInfoEntity) {
-// //        Firebase.firestore.collection("Provider").document("Firebase").collection("Email").document("test@test.test")
-// //            .get()
-// //            .addOnSuccessListener {
-// //                val a = it["playlists"] as List<DocumentReference>
-// //                a[0].get().addOnSuccessListener {
-// //                    logw(it.toObject(PL::class.java))
-// //                }.addOnFailureListener {
-// //                    loge(it)
-// //                }
-// //            }.addOnCompleteListener {
-// //                logw("????????????????????????")
-// //            }.addOnFailureListener {
-// //                loge(it)
-// //            }
-//        Firebase.firestore.collection("provider").document(entity.providerId.orEmpty()).collection("email")
-//            .document(entity.email.orEmpty()).set(mapOf("name" to "hello world")).addOnFailureListener {
-//                loge(it)
-//            }.addOnSuccessListener {
-//                logw(it)
-//            }
-//    }
+    private fun doSync(entity: UserInfoEntity) {
+        //        Firebase.firestore.collection("Provider").document("Firebase").collection("Email").document("test@test.test")
+        //            .get()
+        //            .addOnSuccessListener {
+        //                val a = it["playlists"] as List<DocumentReference>
+        //                a[0].get().addOnSuccessListener {
+        //                    logw(it.toObject(PL::class.java))
+        //                }.addOnFailureListener {
+        //                    loge(it)
+        //                }
+        //            }.addOnCompleteListener {
+        //                logw("????????????????????????")
+        //            }.addOnFailureListener {
+        //                loge(it)
+        //            }
+        launch {
+            Firebase.firestore.collection("provider")
+                .document("firebase")
+                .collection("email")
+                .document("test@test.test")
+                .get()
+                .addOnSuccessListener {
+                    logw(it)
+                    GlobalScope.launch {
+                        val a = (it["playlists"] as List<DocumentReference>).map {
+//                            suspendCancellableCoroutine<Map<String, Any>> { continuation ->
+//                                it.get().addOnSuccessListener {
+//                                    continuation.resume(it.data.orEmpty())
+//                                }.addOnFailureListener(continuation::resumeWithException)
+//                            }
+                            it.get().await().data
+                        }
+                        logw(a)
+                    }
+                }
+        }
+    }
 }
