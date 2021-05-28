@@ -41,9 +41,9 @@ internal interface SyncService {
 
     suspend fun createPlaylist(name: String): String
 
-    suspend fun removePlaylist(): Boolean
+    suspend fun removePlaylist(playlistPath: String): Boolean
 
-    suspend fun getSongs(): List<Boolean>
+    suspend fun getSongs(playlistPath: String): List<SimpleTrackEntity>
 
     suspend fun modifySong(): Boolean
 

@@ -89,9 +89,26 @@ internal class FirebaseSyncService(
             .addOnFailureListener(continuation::resumeWithException)
     }
 
-    override suspend fun removePlaylist() = TODO()
+    override suspend fun removePlaylist(playlistPath: String) = suspendCancellableCoroutine<Boolean> { continuation ->
+        firestore.document(playlistPath).delete().addOnSuccessListener {
+            continuation.resume(true)
+        }.addOnFailureListener(continuation::resumeWithException)
+    }
 
-    override suspend fun getSongs() = TODO()
+    override suspend fun getSongs(playlistPath: String) = coroutineScope {
+        suspendCancellableCoroutine<List<SimpleTrackEntity>> { continuation ->
+            firestore.document(playlistPath).get()
+                .addOnSuccessListener {
+                    launch {
+                        val songs = castDocList(it[FIELD_SONGS])?.mapNotNull {
+                            it.get().await().toObject(SimpleTrackEntity::class.java)
+                        }
+                        continuation.resume(songs.orEmpty())
+                    }
+                }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
+    }
 
     override suspend fun modifySong() = TODO()
 
@@ -106,4 +123,6 @@ internal class FirebaseSyncService(
         .document(userInfo.providerId.orEmpty())
         .collection(COLLECTION_EMAIL)
         .document(userInfo.email.orEmpty())
+
+    private fun castDocList(data: Any?) = data as? List<DocumentReference>
 }
