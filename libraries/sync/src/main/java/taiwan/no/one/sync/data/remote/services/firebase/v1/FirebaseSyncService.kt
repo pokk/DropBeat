@@ -25,6 +25,7 @@
 package taiwan.no.one.sync.data.remote.services.firebase.v1
 
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -66,7 +67,7 @@ internal class FirebaseSyncService(
             getUserInfoDocument(userInfo).get()
                 .addOnSuccessListener {
                     launch {
-                        val playlists = (it[FIELD_PLAYLIST] as? List<DocumentReference>)?.mapNotNull {
+                        val playlists = castDocList(it[FIELD_PLAYLIST])?.mapNotNull {
                             it.get().await().toObject(SimplePlaylistEntity::class.java)
                         }
                         continuation.resume(playlists.orEmpty())
@@ -76,7 +77,7 @@ internal class FirebaseSyncService(
         }
     }
 
-    override suspend fun modifyPlaylist() = TODO()
+    override suspend fun modifyPlaylist(userInfo: UserInfoEntity, playlist: SimplePlaylistEntity) = TODO()
 
     override suspend fun createPlaylist(name: String) = suspendCancellableCoroutine<String> { continuation ->
         val playlist = mapOf(
@@ -117,6 +118,22 @@ internal class FirebaseSyncService(
         doc.set(song.toSet())
             .addOnSuccessListener { continuation.resume(doc.path) }
             .addOnFailureListener(continuation::resumeWithException)
+    }
+
+    override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPath: String) =
+        suspendCancellableCoroutine<Boolean> { continuation ->
+            getUserInfoDocument(userInfo)
+                .update(FIELD_PLAYLIST, FieldValue.arrayUnion(firestore.document(refPlaylistPath)))
+                .addOnSuccessListener { continuation.resume(true) }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
+
+    override suspend fun createSongRefToPlaylist(
+        userInfo: UserInfoEntity,
+        playlistName: String,
+        refSongPath: String,
+    ) = suspendCancellableCoroutine<Boolean> { continuation ->
+        TODO()
     }
 
     private fun getUserInfoDocument(userInfo: UserInfoEntity) = firestore.collection(COLLECTION_PROVIDER)
