@@ -37,9 +37,9 @@ internal interface SyncService {
 
     suspend fun getPlaylists(userInfo: UserInfoEntity): List<SimplePlaylistEntity>
 
-    suspend fun modifyPlaylist(userInfo: UserInfoEntity, playlistEntity: SimplePlaylistEntity): Boolean
+    suspend fun modifyPlaylist(userInfo: UserInfoEntity, playlist: SimplePlaylistEntity): Boolean
 
-    suspend fun createPlaylist(name: String): String
+    suspend fun createPlaylist(playlist: SimplePlaylistEntity): String
 
     suspend fun removePlaylist(playlistPath: String): Boolean
 
@@ -49,7 +49,11 @@ internal interface SyncService {
 
     suspend fun createSong(song: SimpleTrackEntity): String
 
-    suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPath: String): Boolean
+    suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>): Boolean
 
-    suspend fun createSongRefToPlaylist(userInfo: UserInfoEntity, playlistName: String, refSongPath: String): Boolean
+    suspend fun createSongRefToPlaylist(
+        userInfo: UserInfoEntity,
+        refPlaylistPath: String,
+        refSongsPath: List<String>,
+    ): Boolean
 }
