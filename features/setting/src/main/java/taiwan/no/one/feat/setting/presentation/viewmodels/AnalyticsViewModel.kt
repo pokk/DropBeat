@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,15 @@ import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSour
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.PREVIOUS_SCREEN
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource.SETTING
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.LOGOUT
+import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.SendClicked.TypeSource.SYNC
 import taiwan.no.one.dropbeat.presentation.viewmodels.BaseAnalyticsViewModel
 
 internal class AnalyticsViewModel : BaseAnalyticsViewModel() {
     fun navigatedToLogin() = navigated(SETTING, LOGIN)
 
     fun navigatedGoBackFromSetting() = navigated(SETTING, PREVIOUS_SCREEN)
+
+    fun clickedSync() = sendClickedEvent("$SYNC")
 
     fun clickedLogout() = sendClickedEvent("$LOGOUT")
 }
