@@ -22,45 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.data.stores
+package taiwan.no.one.sync.domain.usecases
 
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.entity.UserInfoEntity
-import taiwan.no.one.sync.data.contracts.DataStore
+import taiwan.no.one.sync.domain.repositories.SyncRepo
 
-/**
- * The implementation of the local data store. The responsibility is selecting a correct
- * local service(Database/Local file) to access the data.
- */
-internal class LocalStore : DataStore {
-    override suspend fun createAccount(userInfo: UserInfoEntity): Boolean {
-        TODO()
-    }
-
-    override suspend fun getPlaylists(): List<Boolean> {
-        TODO()
-    }
-
-    override suspend fun modifyPlaylist(): Boolean {
-        TODO()
-    }
-
-    override suspend fun createPlaylist(): Boolean {
-        TODO()
-    }
-
-    override suspend fun removePlaylist(): Boolean {
-        TODO()
-    }
-
-    override suspend fun getSongs(): List<Boolean> {
-        TODO()
-    }
-
-    override suspend fun modifySong(): Boolean {
-        TODO()
-    }
-
-    override suspend fun createSong(): Boolean {
-        TODO()
+internal class AddAccountOneShotCase(
+    private val repo: SyncRepo,
+) : OneShotUsecase<Boolean, AddAccountRequest>() {
+    override suspend fun acquireCase(parameter: AddAccountRequest?) = parameter.ensure {
+        repo.addAccount(userInfo)
     }
 }
+
+data class AddAccountRequest(val userInfo: UserInfoEntity) : Usecase.RequestValues
