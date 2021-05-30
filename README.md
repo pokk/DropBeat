@@ -16,38 +16,54 @@
 
 ![DropABeat Architecture@2x](https://user-images.githubusercontent.com/5198104/119675341-e9554f80-be77-11eb-84a3-6fe1f6791dab.png)
 
-## Architecture of each module
+## Architecture of each feature module
 
-We still would like to use the clean architecture with the dynamic feature so the mixed patteren happened here.
+Basically, our project is using single activity and multiple fragments.
 
-There are so many strict rules in the origin clean architecture, eg. an object on the **presentation layer** can't
-access a class on the **data layer**, each layer has their own data classes, the mapper classes, ...etc.
+#### The Feature of Clean Architecture
+
+The **clean architecture** known to everyone, the purpose is dividing each layer and make them independent. I will say
+the **clean architecture** is separating modules **horizontally**.
+
+#### The Feature of Dynamic Feature
+
+**Dynamic Feature** were published by few yeas ago. Briefly, as the word says, it makes each feature to a module. I will
+say the **dynamic feature** is separating modules **vertically**.
+
+We decided to get both advantages with an easier way and mix them together to our project. To mix them, the **dynamic
+feature** will be the ***main*** architecture and **clean architecture** will be inside each feature module.
+
+There are so many strict rules in the origin clean architecture, e.g. an object on the **presentation layer** won't
+access a class from the **data layer**, or each layer has their own data classes, the mapper classes, ...etc.
 
 If keeping the rules here, this project will be a hugh project and only one maintainer is me 😢. This project is still
-keeping the basic rules but we need to have a compromise with those features.
+keeping the basic rules, but we need to have a compromise with those features.
 
 ![Feature Module Architecture](https://user-images.githubusercontent.com/5198104/85557159-7e493a80-b662-11ea-84e8-fc2e16198b21.png)
 
 ### Detail of Presentation Layer
 
 - Activity/Fragment:
-- ViewModel: It handles the view state and data, and the view logic. Also, it helps a view to connect a usecase. Three
-  types of them, **ViewModel**, **AndroidViewModel**, **SavedStateViewModel** will be used.
+- **ViewModel**: It handles the view state and data, and the **view logic**. Also, it helps a view to connect a usecase.
+  Three types of them, **ViewModel**, **AndroidViewModel**, **SavedStateViewModel** will be used.
 
 ### Detail of Domain Layer
 
-- OneShot UseCase: Basically, this is one time fetching, just send a request and get a response, eg. normal restful api
+The business logic will be here mostly.
+
+- **OneShot UseCase**: This is one time fetching, just send a request and get a response, eg. normal restful api
   request.
-- Observable UseCase: For the local database, once the data we are observing is changed, the obserable usecase will keep
-  receiving the changing until the observing finishes.
+- **Observable UseCase**: For the local database, once the data we are observing is changed, the observable usecases
+  will keep receiving the changing until the observing finishes.
 
 ### Detail of Data Layer
 
-- Repository:
+- **Repository**:
 - 3 Layer Cache: We would like to have a cache system. One path is for fetching data from the remote server; another
   path is for the local database.
 
 ![Cache Strategy](https://user-images.githubusercontent.com/5198104/86508600-383b6600-be1c-11ea-8cc1-259930d5820b.png)
+
 - Data Model:
 
 # Snapshot of App
