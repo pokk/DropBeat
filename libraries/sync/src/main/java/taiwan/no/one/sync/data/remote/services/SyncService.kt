@@ -45,10 +45,9 @@ internal interface SyncService {
 
     suspend fun getSongs(playlistPath: String): List<SimpleTrackEntity>
 
-    suspend fun modifySong(): Boolean
-
     suspend fun createSong(song: SimpleTrackEntity): String
 
+    // The combination behavior.
     suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>): Boolean
 
     suspend fun createSongRefToPlaylist(

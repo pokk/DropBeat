@@ -24,6 +24,7 @@
 
 package taiwan.no.one.sync.data.repositories
 
+import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.contracts.DataStore
 import taiwan.no.one.sync.domain.repositories.SyncRepo
@@ -38,7 +39,7 @@ internal class SyncRepository(
 
     override suspend fun updatePlaylist() = TODO()
 
-    override suspend fun addPlaylist() = TODO()
+    override suspend fun addPlaylist(playlist: SimplePlaylistEntity) = remote.createPlaylist(playlist)
 
     override suspend fun deletePlaylist() = TODO()
 

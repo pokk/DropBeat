@@ -24,6 +24,7 @@
 
 package taiwan.no.one.sync.data.stores
 
+import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.contracts.DataStore
 import taiwan.no.one.sync.data.remote.services.SyncService
@@ -37,31 +38,17 @@ internal class RemoteStore(
 ) : DataStore {
     override suspend fun createAccount(userInfo: UserInfoEntity) = service.createAccount(userInfo)
 
-    override suspend fun getPlaylists(): List<Boolean> {
-        TODO()
-    }
+    override suspend fun getPlaylists() = TODO()
 
-    override suspend fun modifyPlaylist(): Boolean {
-        TODO()
-    }
+    override suspend fun modifyPlaylist() = TODO()
 
-    override suspend fun createPlaylist(): Boolean {
-        TODO()
-    }
+    override suspend fun createPlaylist(playlist: SimplePlaylistEntity) = service.createPlaylist(playlist)
 
-    override suspend fun removePlaylist(): Boolean {
-        TODO()
-    }
+    override suspend fun removePlaylist() = TODO()
 
-    override suspend fun getSongs(): List<Boolean> {
-        TODO()
-    }
+    override suspend fun getSongs() = TODO()
 
-    override suspend fun modifySong(): Boolean {
-        TODO()
-    }
+    override suspend fun modifySong() = TODO()
 
-    override suspend fun createSong(): Boolean {
-        TODO()
-    }
+    override suspend fun createSong() = TODO()
 }
