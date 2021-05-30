@@ -49,10 +49,19 @@ internal class FirebaseSyncService(
         private const val COLLECTION_EMAIL = "email"
         private const val FIELD_PLAYLIST = "playlists"
         private const val COLLECTION_PLAYLIST = "playlist"
+        private const val FIELD_ID = "id"
         private const val FIELD_NAME = "name"
         private const val FIELD_SONGS = "songs"
         private const val COLLECTION_SONG = "song"
     }
+
+    /**
+     * Create a complete playlist flow,
+     *
+     * 1. Create songs' document and get all reference path of songs.
+     * 2. Create playlist document.
+     * 3. Attach the songs' path to the playlist field.
+     */
 
     override suspend fun createAccount(userInfo: UserInfoEntity) =
         suspendCancellableCoroutine<Boolean> { continuation ->
@@ -79,21 +88,21 @@ internal class FirebaseSyncService(
 
     override suspend fun modifyPlaylist(userInfo: UserInfoEntity, playlist: SimplePlaylistEntity) = TODO()
 
-    override suspend fun createPlaylist(name: String) = suspendCancellableCoroutine<String> { continuation ->
-        val playlist = mapOf(
-            FIELD_NAME to name,
-            FIELD_SONGS to emptyList<DocumentReference>()
-        )
-        val doc = firestore.collection(COLLECTION_PLAYLIST).document()
-        doc.set(playlist)
-            .addOnSuccessListener { continuation.resume(doc.path) }
-            .addOnFailureListener(continuation::resumeWithException)
-    }
+    override suspend fun createPlaylist(playlist: SimplePlaylistEntity) =
+        suspendCancellableCoroutine<String> { continuation ->
+            // Create a document of the playlist.
+            val doc = firestore.collection(COLLECTION_PLAYLIST).document()
+            // Set the field detail.
+            doc.set(playlist.toFieldMap())
+                .addOnSuccessListener { continuation.resume(doc.path) }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
 
     override suspend fun removePlaylist(playlistPath: String) = suspendCancellableCoroutine<Boolean> { continuation ->
-        firestore.document(playlistPath).delete().addOnSuccessListener {
-            continuation.resume(true)
-        }.addOnFailureListener(continuation::resumeWithException)
+        firestore.document(playlistPath)
+            .delete()
+            .addOnSuccessListener { continuation.resume(true) }
+            .addOnFailureListener(continuation::resumeWithException)
     }
 
     override suspend fun getSongs(playlistPath: String) = coroutineScope {
@@ -114,26 +123,33 @@ internal class FirebaseSyncService(
     override suspend fun modifySong() = TODO()
 
     override suspend fun createSong(song: SimpleTrackEntity) = suspendCancellableCoroutine<String> { continuation ->
+        // Create a document of a song.
         val doc = firestore.collection(COLLECTION_SONG).document(song.obtainTrackAndArtistName())
+        // Set the field detail.
         doc.set(song.toSet())
             .addOnSuccessListener { continuation.resume(doc.path) }
             .addOnFailureListener(continuation::resumeWithException)
     }
 
-    override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPath: String) =
+    override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>) =
         suspendCancellableCoroutine<Boolean> { continuation ->
+            val paths = refPlaylistPaths.map(firestore::document)
             getUserInfoDocument(userInfo)
-                .update(FIELD_PLAYLIST, FieldValue.arrayUnion(firestore.document(refPlaylistPath)))
+                .update(FIELD_PLAYLIST, FieldValue.arrayUnion(paths))
                 .addOnSuccessListener { continuation.resume(true) }
                 .addOnFailureListener(continuation::resumeWithException)
         }
 
     override suspend fun createSongRefToPlaylist(
         userInfo: UserInfoEntity,
-        playlistName: String,
-        refSongPath: String,
+        refPlaylistPath: String,
+        refSongsPath: List<String>,
     ) = suspendCancellableCoroutine<Boolean> { continuation ->
-        TODO()
+        val paths = refSongsPath.map(firestore::document)
+        firestore.document(refPlaylistPath)
+            .update(FIELD_SONGS, FieldValue.arrayUnion(paths))
+            .addOnSuccessListener { continuation.resume(true) }
+            .addOnFailureListener(continuation::resumeWithException)
     }
 
     private fun getUserInfoDocument(userInfo: UserInfoEntity) = firestore.collection(COLLECTION_PROVIDER)

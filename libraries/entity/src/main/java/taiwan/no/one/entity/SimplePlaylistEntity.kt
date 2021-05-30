@@ -36,4 +36,13 @@ data class SimplePlaylistEntity(
     val name: String,
     val songIds: List<Int>,
     val thumbUrl: String,
-) : Parcelable
+    // Those are for syncing.
+    val refPath: String = "",
+    val refOfSongs: List<String> = emptyList(),
+) : Parcelable {
+    fun toFieldMap() = mapOf(
+        "id" to id,
+        "name" to name,
+        "thumb_url" to thumbUrl,
+    )
+}
