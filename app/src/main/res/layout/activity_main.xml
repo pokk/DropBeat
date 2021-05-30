@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -55,11 +55,13 @@
         app:navGraph="@navigation/nav_app_player"
         tools:visibility="visible"/>
 
+    <!-- This is for testing -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Active"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -40,11 +40,11 @@ import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
-import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
+import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
@@ -64,7 +64,7 @@ import taiwan.no.one.ktx.intent.shareText
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
 
-internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBinding>() {
+internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBinding>() {
     private val vm by viewModels<ExploreViewModel>()
     private val analyticsVm by viewModels<AnalyticsViewModel>()
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
@@ -209,6 +209,7 @@ internal class ExploreFragment : BaseFragment<BaseActivity<*>, FragmentExploreBi
                 analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
             }
         }
+        binding.mtvTitle.setOnClickListener { parent.displayPlayer() }
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
