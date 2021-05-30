@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package taiwan.no.one.dropbeat.di
 import android.app.Application
 import org.kodein.di.DI
 import org.kodein.di.android.x.androidXModule
+import taiwan.no.one.sync.SyncModules
 
 object Dispatcher {
     fun importIntoApp(app: Application) = DI.lazy {
@@ -34,6 +35,7 @@ object Dispatcher {
         importAll(UtilModules.provideAll(app))
         import(CacheModule.provide(app))
         import(AppModules.provide(app))
+        import(SyncModules.provide(app))
         import(FeatModuleHelper.provide())
         importAll(FeatModuleHelper.kodeinModules(app))
     }

@@ -54,7 +54,6 @@ internal class FirebaseSyncService(
         private const val FIELD_SONGS = "songs"
         private const val COLLECTION_SONG = "song"
     }
-
     /**
      * Create a complete playlist flow,
      *
@@ -62,12 +61,11 @@ internal class FirebaseSyncService(
      * 2. Create playlist document.
      * 3. Attach the songs' path to the playlist field.
      */
-
     override suspend fun createAccount(userInfo: UserInfoEntity) =
         suspendCancellableCoroutine<Boolean> { continuation ->
             val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
             getUserInfoDocument(userInfo).set(data)
-                .addOnSuccessListener { continuation.resume(false) }
+                .addOnSuccessListener { continuation.resume(true) }
                 .addOnFailureListener(continuation::resumeWithException)
         }
 

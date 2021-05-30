@@ -22,4 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.domain.usecases
+package taiwan.no.one.sync
+
+import android.content.Context
+import org.kodein.di.DI
+import taiwan.no.one.sync.data.SyncDataModules
+import taiwan.no.one.sync.domain.SyncDomainModules
+
+object SyncModules {
+    private const val FEAT_NAME = "Sync"
+
+    fun provide(context: Context) = DI.Module("${FEAT_NAME}Module") {
+        import(SyncDataModules.provide(context))
+        import(SyncDomainModules.provide())
+    }
+}

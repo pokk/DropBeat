@@ -25,13 +25,14 @@
 package taiwan.no.one.sync.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.entity.UserInfoEntity
 
 /**
  * This interface will be the similar to [taiwan.no.one.sync.data.contracts.DataStore].
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 interface SyncRepo : Repository {
-    suspend fun addAccount(): Boolean
+    suspend fun addAccount(userInfo: UserInfoEntity): Boolean
 
     suspend fun fetchPlaylists(): List<Boolean>
 

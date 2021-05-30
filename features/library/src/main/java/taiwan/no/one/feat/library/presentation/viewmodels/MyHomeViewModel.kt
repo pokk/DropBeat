@@ -32,8 +32,11 @@ import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
+import taiwan.no.one.dropbeat.domain.usecases.AddAccountCase
+import taiwan.no.one.dropbeat.domain.usecases.AddAccountReq
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimpleTrackEntity
+import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
 import taiwan.no.one.ktx.livedata.toLiveData
@@ -43,8 +46,8 @@ internal class MyHomeViewModel(
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
+    private val addAccountCase by instance<AddAccountCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
-
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
     val playlists get() = _playlists.toLiveData()
     private val _favorites by lazy { MutableLiveData<PlayListEntity>() }
@@ -55,6 +58,8 @@ internal class MyHomeViewModel(
     val histories get() = _histories.toLiveData()
     private val _resultOfFavorite by lazy { MutableLiveData<Boolean>() }
     val resultOfFavorite get() = _resultOfFavorite.toLiveData()
+    private val _resultOfAddAccount by lazy { MutableLiveData<Boolean>() }
+    val resultOfAddAccount get() = _resultOfAddAccount.toLiveData()
 
     fun getAllPlaylists() = viewModelScope.launch {
         _playlists.value = runCatching { fetchAllPlaylistsCase.execute() }
@@ -67,5 +72,9 @@ internal class MyHomeViewModel(
 
     fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {
         _resultOfFavorite.value = libraryProvider.updateSongWithFavorite(song, isFavorite)
+    }
+
+    fun createAccountOnRemote(entity: UserInfoEntity) = viewModelScope.launch {
+        _resultOfAddAccount.value = addAccountCase.execute(AddAccountReq(entity))
     }
 }

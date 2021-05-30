@@ -26,6 +26,10 @@ package taiwan.no.one.dropbeat.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.entity.UserInfoEntity
+import taiwan.no.one.sync.domain.usecases.AddAccountRequest
 
 internal typealias FetchLoginInfoCase = OneShotUsecase<UserInfoEntity, FetchLoginInfoReq>
 internal typealias FetchLoginInfoReq = FetchLoginInfoOneShotCase.Request
+
+typealias AddAccountCase = OneShotUsecase<Boolean, AddAccountReq>
+typealias AddAccountReq = AddAccountRequest

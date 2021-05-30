@@ -22,45 +22,19 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.data.stores
+package taiwan.no.one.sync.domain
 
-import taiwan.no.one.entity.UserInfoEntity
-import taiwan.no.one.sync.data.contracts.DataStore
+import org.kodein.di.DI
+import org.kodein.di.bindSingleton
+import org.kodein.di.instance
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.sync.domain.usecases.AddAccountOneShotCase
+import taiwan.no.one.sync.domain.usecases.AddAccountRequest
 
-/**
- * The implementation of the local data store. The responsibility is selecting a correct
- * local service(Database/Local file) to access the data.
- */
-internal class LocalStore : DataStore {
-    override suspend fun createAccount(userInfo: UserInfoEntity): Boolean {
-        TODO()
-    }
+internal object SyncDomainModules {
+    private const val FEAT_NAME = "Sync"
 
-    override suspend fun getPlaylists(): List<Boolean> {
-        TODO()
-    }
-
-    override suspend fun modifyPlaylist(): Boolean {
-        TODO()
-    }
-
-    override suspend fun createPlaylist(): Boolean {
-        TODO()
-    }
-
-    override suspend fun removePlaylist(): Boolean {
-        TODO()
-    }
-
-    override suspend fun getSongs(): List<Boolean> {
-        TODO()
-    }
-
-    override suspend fun modifySong(): Boolean {
-        TODO()
-    }
-
-    override suspend fun createSong(): Boolean {
-        TODO()
+    fun provide() = DI.Module("${FEAT_NAME}DomainModule") {
+        bindSingleton<OneShotUsecase<Boolean, AddAccountRequest>> { AddAccountOneShotCase(instance()) }
     }
 }

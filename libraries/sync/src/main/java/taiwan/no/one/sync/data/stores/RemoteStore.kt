@@ -24,16 +24,18 @@
 
 package taiwan.no.one.sync.data.stores
 
+import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.contracts.DataStore
+import taiwan.no.one.sync.data.remote.services.SyncService
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
  * local service(Database/Local file) to access the data.
  */
-internal class RemoteStore : DataStore {
-    override suspend fun createAccount(): Boolean {
-        TODO()
-    }
+internal class RemoteStore(
+    private val service: SyncService,
+) : DataStore {
+    override suspend fun createAccount(userInfo: UserInfoEntity) = service.createAccount(userInfo)
 
     override suspend fun getPlaylists(): List<Boolean> {
         TODO()

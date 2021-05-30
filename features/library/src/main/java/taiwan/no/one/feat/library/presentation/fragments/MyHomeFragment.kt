@@ -204,7 +204,8 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         userEntity.takeIf { it?.uid.isNotNull() }?.let {
             mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
-            doSync(it)
+//            doSync(it)
+            vm.createAccountOnRemote(it)
             if (privacyVm.shouldDisplaySyncDialog) {
                 privacyVm.shouldDisplaySyncDialog = false
                 // Show sync dialog
@@ -212,6 +213,9 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             }
         }
         vm.getAllPlaylists()
+        vm.resultOfAddAccount.observe(this) {
+            logw(it)
+        }
     }
 
     private fun setListClickListener(trackAdapter: TrackAdapter) {
@@ -273,20 +277,6 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         }.show()
 
     private fun doSync(entity: UserInfoEntity) {
-        //        Firebase.firestore.collection("Provider").document("Firebase").collection("Email").document("test@test.test")
-        //            .get()
-        //            .addOnSuccessListener {
-        //                val a = it["playlists"] as List<DocumentReference>
-        //                a[0].get().addOnSuccessListener {
-        //                    logw(it.toObject(PL::class.java))
-        //                }.addOnFailureListener {
-        //                    loge(it)
-        //                }
-        //            }.addOnCompleteListener {
-        //                logw("????????????????????????")
-        //            }.addOnFailureListener {
-        //                loge(it)
-        //            }
         launch {
             Firebase.firestore.collection("provider")
                 .document("firebase")

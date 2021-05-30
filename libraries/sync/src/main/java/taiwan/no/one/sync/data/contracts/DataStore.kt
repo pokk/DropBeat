@@ -24,12 +24,14 @@
 
 package taiwan.no.one.sync.data.contracts
 
+import taiwan.no.one.entity.UserInfoEntity
+
 /**
  * This interface will common the all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface DataStore {
-    suspend fun createAccount(): Boolean
+    suspend fun createAccount(userInfo: UserInfoEntity): Boolean
 
     suspend fun getPlaylists(): List<Boolean>
 
