@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -203,6 +203,9 @@ internal class SettingFragment : BaseFragment<BaseActivity<*>, FragmentSettingBi
         mergeSyncBlock.includeSync.root.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingToLogin())
             analyticsVm.navigatedToLogin()
+        }
+        mergeSyncBlock.includeLoggedInSync.root.setOnClickListener {
+            analyticsVm.clickedSync()
         }
         mergeAppBlock.includeSleepTimer.sSwitch.setOnCheckedChangeListener { button, isChecked ->
             if (!button.isPressed) return@setOnCheckedChangeListener
