@@ -210,12 +210,10 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                 privacyVm.shouldDisplaySyncDialog = false
                 // Show sync dialog
                 showSyncDialog()
+                vm.createPlaylistOnRemote(requireNotNull(userEntity))
             }
         }
         vm.getAllPlaylists()
-        vm.resultOfAddAccount.observe(this) {
-            logw(it)
-        }
     }
 
     private fun setListClickListener(trackAdapter: TrackAdapter) {

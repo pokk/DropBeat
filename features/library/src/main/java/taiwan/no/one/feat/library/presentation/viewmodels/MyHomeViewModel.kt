@@ -34,10 +34,13 @@ import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.domain.usecases.AddAccountCase
 import taiwan.no.one.dropbeat.domain.usecases.AddAccountReq
+import taiwan.no.one.dropbeat.domain.usecases.AddPlaylistCase
+import taiwan.no.one.dropbeat.domain.usecases.AddPlaylistReq
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
+import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
 import taiwan.no.one.ktx.livedata.toLiveData
 
@@ -47,6 +50,7 @@ internal class MyHomeViewModel(
 ) : BehindAndroidViewModel(application) {
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
     private val addAccountCase by instance<AddAccountCase>()
+    private val addPlaylistCase by instance<AddPlaylistCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
     val playlists get() = _playlists.toLiveData()
@@ -76,5 +80,12 @@ internal class MyHomeViewModel(
 
     fun createAccountOnRemote(entity: UserInfoEntity) = viewModelScope.launch {
         _resultOfAddAccount.value = addAccountCase.execute(AddAccountReq(entity))
+    }
+
+    fun createPlaylistOnRemote(userInfo: UserInfoEntity) = viewModelScope.launch {
+        _playlists.value?.getOrNull()?.let {
+            val simplePlaylists = it.map(EntityMapper::playlistToSimplePlaylistEntity)
+            addPlaylistCase.execute(AddPlaylistReq(userInfo, simplePlaylists))
+        }
     }
 }
