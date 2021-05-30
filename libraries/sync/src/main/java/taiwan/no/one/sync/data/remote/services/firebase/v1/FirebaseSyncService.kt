@@ -118,8 +118,6 @@ internal class FirebaseSyncService(
         }
     }
 
-    override suspend fun modifySong() = TODO()
-
     override suspend fun createSong(song: SimpleTrackEntity) = suspendCancellableCoroutine<String> { continuation ->
         // Create a document of a song.
         val doc = firestore.collection(COLLECTION_SONG).document(song.obtainTrackAndArtistName())

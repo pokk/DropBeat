@@ -27,9 +27,14 @@ package taiwan.no.one.dropbeat.domain.usecases
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.domain.usecases.AddAccountRequest
+import taiwan.no.one.sync.domain.usecases.AddPlaylistRequest
 
 internal typealias FetchLoginInfoCase = OneShotUsecase<UserInfoEntity, FetchLoginInfoReq>
 internal typealias FetchLoginInfoReq = FetchLoginInfoOneShotCase.Request
 
+//region Those are aliased under the [taiwan.no.one.sync.domain.usecases] folder.
 typealias AddAccountCase = OneShotUsecase<Boolean, AddAccountReq>
 typealias AddAccountReq = AddAccountRequest
+typealias AddPlaylistCase = OneShotUsecase<Boolean, AddPlaylistRequest>
+typealias AddPlaylistReq = AddPlaylistRequest
+//endregion

@@ -24,6 +24,7 @@
 
 package taiwan.no.one.sync.data.contracts
 
+import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.UserInfoEntity
 
 /**
@@ -37,7 +38,7 @@ internal interface DataStore {
 
     suspend fun modifyPlaylist(): Boolean
 
-    suspend fun createPlaylist(): Boolean
+    suspend fun createPlaylist(playlist: SimplePlaylistEntity): String
 
     suspend fun removePlaylist(): Boolean
 

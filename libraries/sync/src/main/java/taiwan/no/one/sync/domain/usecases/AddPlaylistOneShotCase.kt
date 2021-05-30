@@ -22,19 +22,27 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.domain
+package taiwan.no.one.sync.domain.usecases
 
-import org.kodein.di.DI
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
-import taiwan.no.one.sync.domain.usecases.AddAccountOneShotCase
-import taiwan.no.one.sync.domain.usecases.AddAccountRequest
+import taiwan.no.one.core.domain.usecase.Usecase
+import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.entity.UserInfoEntity
+import taiwan.no.one.sync.domain.repositories.SyncRepo
 
-internal object SyncDomainModules {
-    private const val FEAT_NAME = "Sync"
-
-    fun provide() = DI.Module("${FEAT_NAME}DomainModule") {
-        bindSingleton<OneShotUsecase<Boolean, AddAccountRequest>> { AddAccountOneShotCase(instance()) }
+internal class AddPlaylistOneShotCase(
+    private val repo: SyncRepo,
+) : OneShotUsecase<Boolean, AddPlaylistRequest>() {
+    override suspend fun acquireCase(parameter: AddPlaylistRequest?) = parameter.ensure {
+        val playlistRefs = playlists.map { repo.addPlaylist(it) }
+        println("=================================================")
+        println(playlistRefs)
+        println("=================================================")
+        true
     }
 }
+
+data class AddPlaylistRequest(
+    val userInfo: UserInfoEntity,
+    val playlists: List<SimplePlaylistEntity>,
+) : Usecase.RequestValues

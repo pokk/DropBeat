@@ -25,6 +25,7 @@
 package taiwan.no.one.sync.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.UserInfoEntity
 
 /**
@@ -38,7 +39,7 @@ interface SyncRepo : Repository {
 
     suspend fun updatePlaylist(): Boolean
 
-    suspend fun addPlaylist(): Boolean
+    suspend fun addPlaylist(playlist: SimplePlaylistEntity): String
 
     suspend fun deletePlaylist(): Boolean
 

@@ -22,30 +22,23 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.data.stores
+package taiwan.no.one.sync.domain
 
-import taiwan.no.one.entity.SimplePlaylistEntity
-import taiwan.no.one.entity.UserInfoEntity
-import taiwan.no.one.sync.data.contracts.DataStore
+import org.kodein.di.DI
+import org.kodein.di.bindSingleton
+import org.kodein.di.instance
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.sync.domain.usecases.AddAccountOneShotCase
+import taiwan.no.one.sync.domain.usecases.AddAccountRequest
+import taiwan.no.one.sync.domain.usecases.AddPlaylistOneShotCase
+import taiwan.no.one.sync.domain.usecases.AddPlaylistRequest
 
-/**
- * The implementation of the local data store. The responsibility is selecting a correct
- * local service(Database/Local file) to access the data.
- */
-internal class LocalStore : DataStore {
-    override suspend fun createAccount(userInfo: UserInfoEntity) = TODO()
+internal object SyncDomainModules {
+    private const val FEAT_NAME = "Sync"
 
-    override suspend fun getPlaylists() = TODO()
-
-    override suspend fun modifyPlaylist() = TODO()
-
-    override suspend fun createPlaylist(playlist: SimplePlaylistEntity) = TODO()
-
-    override suspend fun removePlaylist() = TODO()
-
-    override suspend fun getSongs() = TODO()
-
-    override suspend fun modifySong() = TODO()
-
-    override suspend fun createSong() = TODO()
+    // NOTE(jieyi): [taiwan.no.one.dropbeat.domain.usecases.TypeAliasesKt] will be aliased here.
+    fun provide() = DI.Module("${FEAT_NAME}DomainModule") {
+        bindSingleton<OneShotUsecase<Boolean, AddAccountRequest>> { AddAccountOneShotCase(instance()) }
+        bindSingleton<OneShotUsecase<Boolean, AddPlaylistRequest>> { AddPlaylistOneShotCase(instance()) }
+    }
 }
