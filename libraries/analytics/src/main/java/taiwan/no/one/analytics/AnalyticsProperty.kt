@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,5 +27,5 @@ package taiwan.no.one.analytics
 abstract class AnalyticsProperty(
     val propertyName: String,
     val parameter: Any,
-    val providers: List<AnalyticsProvider> = listOf(AnalyticsProvider.ANALYTICS_FIREBASE),
+    val providers: List<AnalyticsProvider> = listOf(AnalyticsProvider.ANALYTICS_FIREBASE, AnalyticsProvider.SENTRY),
 )

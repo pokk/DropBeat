@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,11 @@ package taiwan.no.one.analytics
 
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
+import io.sentry.Sentry
+import io.sentry.SentryEvent
+import io.sentry.SentryLevel
+import io.sentry.protocol.Message
+import java.util.Date
 
 class AnalyticsSender(
     private val analytics: FirebaseAnalytics,
@@ -34,6 +39,14 @@ class AnalyticsSender(
         if (event.providers.contains(AnalyticsProvider.ANALYTICS_FIREBASE)) {
             analytics.logEvent(event.eventName, event.params.toBundle())
         }
+        if (event.providers.contains(AnalyticsProvider.SENTRY)) {
+            val sentryEvent = SentryEvent(Date()).apply {
+                level = SentryLevel.INFO
+                logger = event.eventName
+                message = Message().apply { acceptUnknownProperties(event.params) }
+            }
+            Sentry.captureEvent(sentryEvent)
+        }
         Log.d("Analytics",
               "\uD83D\uDCE9 Event was sent: ${event.eventName}. Params: ${event.params}. Providers: ${event.providers}")
     }
@@ -41,6 +54,8 @@ class AnalyticsSender(
     fun setUserProperty(property: AnalyticsProperty) {
         if (property.providers.contains(AnalyticsProvider.ANALYTICS_FIREBASE)) {
             analytics.setUserProperty(property.propertyName, property.toString())
+        }
+        if (property.providers.contains(AnalyticsProvider.SENTRY)) {
         }
     }
 }
