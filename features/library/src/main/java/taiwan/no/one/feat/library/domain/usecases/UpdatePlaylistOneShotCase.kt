@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
@@ -35,7 +36,7 @@ internal class UpdatePlaylistOneShotCase(
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         val oldPlaylist = playlistRepository.fetchPlaylist(playlistId!!)
         val newPlaylist = if (songIds == null && songsPaths == null) {
-            oldPlaylist.copy(name = name ?: oldPlaylist.name)
+            oldPlaylist.copy(name = name ?: oldPlaylist.name, refPath = refPath)
         }
         else {
             val set = oldPlaylist.songIds.toSet()
@@ -68,7 +69,8 @@ internal class UpdatePlaylistOneShotCase(
             oldPlaylist.copy(
                 name = name ?: oldPlaylist.name,
                 songIds = ids,
-                count = ids.size
+                count = ids.size,
+                refPath = refPath,
             )
         }
         playlistRepository.updatePlaylist(newPlaylist)
@@ -89,5 +91,6 @@ internal class UpdatePlaylistOneShotCase(
         val songsPaths: List<String>? = null,
         val isAddSongs: Boolean? = null,
         val isRemoveSongs: Boolean? = null,
+        val refPath: String = DEFAULT_STR,
     ) : RequestValues
 }

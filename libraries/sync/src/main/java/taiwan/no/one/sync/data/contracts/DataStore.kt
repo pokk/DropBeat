@@ -25,6 +25,7 @@
 package taiwan.no.one.sync.data.contracts
 
 import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 
 /**
@@ -46,5 +47,13 @@ internal interface DataStore {
 
     suspend fun modifySong(): Boolean
 
-    suspend fun createSong(): Boolean
+    suspend fun createSong(song: SimpleTrackEntity): String
+
+    // The combination behavior.
+    suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>): Boolean
+
+    suspend fun createSongRefToPlaylist(
+        refPlaylistPath: String,
+        refSongsPath: List<String>,
+    ): Boolean
 }

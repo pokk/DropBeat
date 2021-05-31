@@ -42,6 +42,8 @@ import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
+import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class MyHomeViewModel(
@@ -51,6 +53,7 @@ internal class MyHomeViewModel(
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
     private val addAccountCase by instance<AddAccountCase>()
     private val addPlaylistCase by instance<AddPlaylistCase>()
+    private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
     val playlists get() = _playlists.toLiveData()
@@ -83,9 +86,12 @@ internal class MyHomeViewModel(
     }
 
     fun createPlaylistOnRemote(userInfo: UserInfoEntity) = viewModelScope.launch {
-        _playlists.value?.getOrNull()?.let {
-            val simplePlaylists = it.map(EntityMapper::playlistToSimplePlaylistEntity)
+        runCatching {
+            val simplePlaylists =
+                _playlists.value?.getOrNull()?.map(EntityMapper::playlistToSimplePlaylistEntity).orEmpty()
             addPlaylistCase.execute(AddPlaylistReq(userInfo, simplePlaylists))
+            simplePlaylists.forEach { updatePlaylistCase.execute(UpdatePlaylistReq(it.id, refPath = it.refPath)) }
+            getAllPlaylists()
         }
     }
 }

@@ -32,6 +32,8 @@ import taiwan.no.one.sync.domain.usecases.AddAccountOneShotCase
 import taiwan.no.one.sync.domain.usecases.AddAccountRequest
 import taiwan.no.one.sync.domain.usecases.AddPlaylistOneShotCase
 import taiwan.no.one.sync.domain.usecases.AddPlaylistRequest
+import taiwan.no.one.sync.domain.usecases.AddSongOneShotCase
+import taiwan.no.one.sync.domain.usecases.AddSongRequest
 
 internal object SyncDomainModules {
     private const val FEAT_NAME = "Sync"
@@ -40,5 +42,6 @@ internal object SyncDomainModules {
     fun provide() = DI.Module("${FEAT_NAME}DomainModule") {
         bindSingleton<OneShotUsecase<Boolean, AddAccountRequest>> { AddAccountOneShotCase(instance()) }
         bindSingleton<OneShotUsecase<Boolean, AddPlaylistRequest>> { AddPlaylistOneShotCase(instance()) }
+        bindSingleton<OneShotUsecase<Boolean, AddSongRequest>> { AddSongOneShotCase(instance()) }
     }
 }

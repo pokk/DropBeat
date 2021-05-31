@@ -54,6 +54,7 @@ internal class FirebaseSyncService(
         private const val FIELD_SONGS = "songs"
         private const val COLLECTION_SONG = "song"
     }
+
     /**
      * Create a complete playlist flow,
      *
@@ -129,24 +130,21 @@ internal class FirebaseSyncService(
 
     override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>) =
         suspendCancellableCoroutine<Boolean> { continuation ->
-            val paths = refPlaylistPaths.map(firestore::document)
+            val paths = refPlaylistPaths.map(firestore::document).toTypedArray()
             getUserInfoDocument(userInfo)
-                .update(FIELD_PLAYLIST, FieldValue.arrayUnion(paths))
+                .update(FIELD_PLAYLIST, FieldValue.arrayUnion(*paths))
                 .addOnSuccessListener { continuation.resume(true) }
                 .addOnFailureListener(continuation::resumeWithException)
         }
 
-    override suspend fun createSongRefToPlaylist(
-        userInfo: UserInfoEntity,
-        refPlaylistPath: String,
-        refSongsPath: List<String>,
-    ) = suspendCancellableCoroutine<Boolean> { continuation ->
-        val paths = refSongsPath.map(firestore::document)
-        firestore.document(refPlaylistPath)
-            .update(FIELD_SONGS, FieldValue.arrayUnion(paths))
-            .addOnSuccessListener { continuation.resume(true) }
-            .addOnFailureListener(continuation::resumeWithException)
-    }
+    override suspend fun createSongRefToPlaylist(refPlaylistPath: String, refSongsPath: List<String>) =
+        suspendCancellableCoroutine<Boolean> { continuation ->
+            val paths = refSongsPath.map(firestore::document).toTypedArray()
+            firestore.document(refPlaylistPath)
+                .update(FIELD_SONGS, FieldValue.arrayUnion(*paths))
+                .addOnSuccessListener { continuation.resume(true) }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
 
     private fun getUserInfoDocument(userInfo: UserInfoEntity) = firestore.collection(COLLECTION_PROVIDER)
         .document(userInfo.providerId.orEmpty())
