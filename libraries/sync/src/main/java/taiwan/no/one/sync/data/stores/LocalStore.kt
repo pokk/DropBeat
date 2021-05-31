@@ -25,6 +25,7 @@
 package taiwan.no.one.sync.data.stores
 
 import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.contracts.DataStore
 
@@ -47,5 +48,12 @@ internal class LocalStore : DataStore {
 
     override suspend fun modifySong() = TODO()
 
-    override suspend fun createSong() = TODO()
+    override suspend fun createSong(song: SimpleTrackEntity) = TODO()
+
+    override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>) = TODO()
+
+    override suspend fun createSongRefToPlaylist(
+        refPlaylistPath: String,
+        refSongsPath: List<String>,
+    ) = TODO()
 }

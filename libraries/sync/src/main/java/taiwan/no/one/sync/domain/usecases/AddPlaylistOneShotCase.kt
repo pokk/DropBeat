@@ -35,11 +35,8 @@ internal class AddPlaylistOneShotCase(
 ) : OneShotUsecase<Boolean, AddPlaylistRequest>() {
     override suspend fun acquireCase(parameter: AddPlaylistRequest?) = parameter.ensure {
         // If there the playlist has been sync(i.e. has [refPath] value), will be filtered.
-        val playlistRefs = playlists.filter { it.refPath.isNotEmpty() }.map { repo.addPlaylist(it) }
-        println("=================================================")
-        println(playlistRefs)
-        println("=================================================")
-        true
+        val playlistRefs = playlists.filter { it.refPath.isNotEmpty() }.map { repo.addPlaylist(it).apply { it.refPath = this } }
+        repo.addPlaylistRefToAccount(userInfo, playlistRefs)
     }
 }
 

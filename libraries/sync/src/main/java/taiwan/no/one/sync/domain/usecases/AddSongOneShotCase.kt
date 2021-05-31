@@ -22,37 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.data.repositories
+package taiwan.no.one.sync.domain.usecases
 
+import taiwan.no.one.core.domain.usecase.OneShotUsecase
+import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.entity.UserInfoEntity
-import taiwan.no.one.sync.data.contracts.DataStore
 import taiwan.no.one.sync.domain.repositories.SyncRepo
 
-internal class SyncRepository(
-    private val local: DataStore,
-    private val remote: DataStore,
-) : SyncRepo {
-    override suspend fun addAccount(userInfo: UserInfoEntity) = remote.createAccount(userInfo)
-
-    override suspend fun fetchPlaylists() = TODO()
-
-    override suspend fun updatePlaylist() = TODO()
-
-    override suspend fun addPlaylist(playlist: SimplePlaylistEntity) = remote.createPlaylist(playlist)
-
-    override suspend fun deletePlaylist() = TODO()
-
-    override suspend fun fetchSongs() = TODO()
-
-    override suspend fun updateSong() = TODO()
-
-    override suspend fun addSong(song: SimpleTrackEntity) = remote.createSong(song)
-
-    override suspend fun addPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>) =
-        remote.createPlaylistRefToAccount(userInfo, refPlaylistPaths)
-
-    override suspend fun addSongRefToPlaylist(refPlaylistPath: String, refSongsPath: List<String>) =
-        remote.createSongRefToPlaylist(refPlaylistPath, refSongsPath)
+internal class AddSongOneShotCase(
+    private val repo: SyncRepo,
+) : OneShotUsecase<Boolean, AddSongRequest>() {
+    override suspend fun acquireCase(parameter: AddSongRequest?) = parameter.ensure {
+        val songRefs = songs.map { repo.addSong(it) }
+        playlist.refOfSongs = songRefs
+        repo.addSongRefToPlaylist(playlist.refPath, songRefs)
+    }
 }
+
+data class AddSongRequest(
+    val playlist: SimplePlaylistEntity,
+    val songs: List<SimpleTrackEntity>,
+) : Usecase.RequestValues

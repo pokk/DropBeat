@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.util.*
+import java.util.Date
 import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_STR
 
@@ -48,6 +48,8 @@ internal data class LibraryEntity(
         val count: Int = 0,
         @ColumnInfo(name = "cover_url")
         val coverUrl: String = DEFAULT_STR,
+        @ColumnInfo(name = "ref_path")
+        val refPath: String = DEFAULT_STR,
         @Embedded
         val time: TimeEntity = TimeEntity(),
     ) {
@@ -59,7 +61,8 @@ internal data class LibraryEntity(
             name: $name,
             songIds: $songIds,
             count: $count,
-            doverUrl: $coverUrl,
+            coverUrl: $coverUrl,
+            refPath: $refPath,
             time: $time,
             songs: $songs
         """.trimIndent()
@@ -88,5 +91,8 @@ internal data class LibraryEntity(
         val lastListenAt: Date = Date(),
         @ColumnInfo(name = "downloaded_at")
         val downloadedAt: Date = Date(),
+        // ↓↓↓ Remote sync path ↓↓↓
+        @ColumnInfo(name = "ref_path")
+        val refPath: String = DEFAULT_STR,
     )
 }

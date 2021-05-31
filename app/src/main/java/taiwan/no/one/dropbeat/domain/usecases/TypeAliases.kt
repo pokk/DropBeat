@@ -28,6 +28,7 @@ import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.domain.usecases.AddAccountRequest
 import taiwan.no.one.sync.domain.usecases.AddPlaylistRequest
+import taiwan.no.one.sync.domain.usecases.AddSongRequest
 
 internal typealias FetchLoginInfoCase = OneShotUsecase<UserInfoEntity, FetchLoginInfoReq>
 internal typealias FetchLoginInfoReq = FetchLoginInfoOneShotCase.Request
@@ -37,4 +38,6 @@ typealias AddAccountCase = OneShotUsecase<Boolean, AddAccountReq>
 typealias AddAccountReq = AddAccountRequest
 typealias AddPlaylistCase = OneShotUsecase<Boolean, AddPlaylistRequest>
 typealias AddPlaylistReq = AddPlaylistRequest
+typealias AddSongCase = OneShotUsecase<Boolean, AddSongRequest>
+typealias AddSongReq = AddSongRequest
 //endregion
