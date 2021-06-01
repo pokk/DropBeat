@@ -58,7 +58,23 @@ internal object EntityMapper {
         )
     }
 
+    fun songToSimpleEntity(entity: SongEntity) = entity.let {
+        SimpleTrackEntity(
+            it.id,
+            it.title,
+            it.artist,
+            it.uri,
+            DEFAULT_STR,
+            it.coverUri,
+            DEFAULT_STR,
+            it.duration,
+            false,
+            false,
+            DEFAULT_STR
+        )
+    }
+
     fun playlistToSimplePlaylistEntity(entity: PlayListEntity) = entity.let {
-        SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl)
+        SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl, it.refPath)
     }
 }
