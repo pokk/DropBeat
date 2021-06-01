@@ -86,12 +86,18 @@ internal class MyHomeViewModel(
     }
 
     fun createPlaylistOnRemote(userInfo: UserInfoEntity) = viewModelScope.launch {
-        runCatching {
-            val simplePlaylists =
-                _playlists.value?.getOrNull()?.map(EntityMapper::playlistToSimplePlaylistEntity).orEmpty()
-            addPlaylistCase.execute(AddPlaylistReq(userInfo, simplePlaylists))
-            simplePlaylists.forEach { updatePlaylistCase.execute(UpdatePlaylistReq(it.id, refPath = it.refPath)) }
-            getAllPlaylists()
+        val playlists = _playlists.value?.getOrNull().orEmpty()
+        val simplePlaylists = playlists.map(EntityMapper::playlistToSimplePlaylistEntity)
+        val songsOfPlaylists = playlists.map { it.songs.map(EntityMapper::songToSimpleEntity) }
+        val result = runCatching {
+            addPlaylistCase.execute(AddPlaylistReq(userInfo, simplePlaylists, songsOfPlaylists))
         }
+        if (result.isFailure) return@launch
+        // Update the local database.
+        simplePlaylists.filter { it.refPath.isNotEmpty() }
+            .forEach { updatePlaylistCase.execute(UpdatePlaylistReq(it.id, refPath = it.refPath)) }
+
+        // Refresh the view's data.
+        getAllPlaylists()
     }
 }

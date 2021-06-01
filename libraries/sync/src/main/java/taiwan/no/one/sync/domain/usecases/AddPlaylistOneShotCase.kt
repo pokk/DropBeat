@@ -27,6 +27,7 @@ package taiwan.no.one.sync.domain.usecases
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.domain.repositories.SyncRepo
 
@@ -35,12 +36,22 @@ internal class AddPlaylistOneShotCase(
 ) : OneShotUsecase<Boolean, AddPlaylistRequest>() {
     override suspend fun acquireCase(parameter: AddPlaylistRequest?) = parameter.ensure {
         // If there the playlist has been sync(i.e. has [refPath] value), will be filtered.
-        val playlistRefs = playlists.filter { it.refPath.isNotEmpty() }.map { repo.addPlaylist(it).apply { it.refPath = this } }
+        val playlistRefs = playlists.filter { it.refPath.isEmpty() }
+            .map { repo.addPlaylist(it).apply { it.refPath = this } }
+        // Add the songs to the remote.
+        val refOfSongs = songs.map { it.map { repo.addSong(it) } }
+        // Attach the songs ref to the each playlist.
+        playlists.map(SimplePlaylistEntity::refPath)
+            .zip(refOfSongs)
+            .forEach { (refOfPlaylist, refOfSongs) -> repo.addSongRefToPlaylist(refOfPlaylist, refOfSongs) }
+        // Attach all playlists to the account.
         repo.addPlaylistRefToAccount(userInfo, playlistRefs)
+        true
     }
 }
 
 data class AddPlaylistRequest(
     val userInfo: UserInfoEntity,
     val playlists: List<SimplePlaylistEntity>,
+    val songs: List<List<SimpleTrackEntity>>,
 ) : Usecase.RequestValues
