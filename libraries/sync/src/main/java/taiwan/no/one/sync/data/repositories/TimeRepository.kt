@@ -22,39 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.domain.repositories
+package taiwan.no.one.sync.data.repositories
 
-import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.entity.SimplePlaylistEntity
-import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.entity.UserInfoEntity
+import taiwan.no.one.sync.data.contracts.DataStore
+import taiwan.no.one.sync.domain.repositories.TimeRepo
 
-/**
- * This interface will be the similar to [taiwan.no.one.sync.data.contracts.DataStore].
- * Using prefix name (fetch), (add), (update), (delete), (keep)
- */
-internal interface SyncRepo : Repository {
-    suspend fun addAccount(userInfo: UserInfoEntity): Boolean
+internal class TimeRepository(
+    private val local: DataStore,
+) : TimeRepo {
+    override suspend fun fetchSyncStamp() = local.getSyncTimestamp()
 
-    suspend fun fetchPlaylists(): List<Boolean>
-
-    suspend fun updatePlaylist(): Boolean
-
-    suspend fun addPlaylist(playlist: SimplePlaylistEntity): String
-
-    suspend fun deletePlaylist(): Boolean
-
-    suspend fun fetchSongs(): List<Boolean>
-
-    suspend fun updateSong(): Boolean
-
-    suspend fun addSong(song: SimpleTrackEntity): String
-
-    // The combination behavior.
-    suspend fun addPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>): Boolean
-
-    suspend fun addSongRefToPlaylist(
-        refPlaylistPath: String,
-        refSongsPath: List<String>,
-    ): Boolean
+    override suspend fun updateSyncStamp(timestamp: Long) = local.modifySyncTimestamp(timestamp)
 }

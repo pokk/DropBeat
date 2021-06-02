@@ -27,6 +27,7 @@ package taiwan.no.one.sync.data.stores
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
+import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.sync.data.contracts.DataStore
 import taiwan.no.one.sync.data.remote.services.SyncService
 
@@ -58,4 +59,8 @@ internal class RemoteStore(
 
     override suspend fun createSongRefToPlaylist(refPlaylistPath: String, refSongsPath: List<String>) =
         service.createSongRefToPlaylist(refPlaylistPath, refSongsPath)
+
+    override suspend fun getSyncTimestamp() = UnsupportedOperation()
+
+    override suspend fun modifySyncTimestamp(timestamp: Long) = UnsupportedOperation()
 }

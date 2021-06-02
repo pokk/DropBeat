@@ -56,4 +56,9 @@ internal interface DataStore {
         refPlaylistPath: String,
         refSongsPath: List<String>,
     ): Boolean
+
+    // Timestamp
+    suspend fun getSyncTimestamp(): Long
+
+    suspend fun modifySyncTimestamp(timestamp: Long): Boolean
 }

@@ -25,6 +25,9 @@
 package taiwan.no.one.sync.data
 
 import android.content.Context
+import androidx.datastore.core.DataStore as AndroidDataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import org.kodein.di.DI
@@ -32,31 +35,39 @@ import org.kodein.di.bindInstance
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 import taiwan.no.one.sync.data.contracts.DataStore
+import taiwan.no.one.sync.data.local.services.TimestampService
+import taiwan.no.one.sync.data.local.services.v1.TimeService
 import taiwan.no.one.sync.data.remote.services.SyncService
 import taiwan.no.one.sync.data.remote.services.firebase.v1.FirebaseSyncService
 import taiwan.no.one.sync.data.repositories.SyncRepository
+import taiwan.no.one.sync.data.repositories.TimeRepository
 import taiwan.no.one.sync.data.stores.LocalStore
 import taiwan.no.one.sync.data.stores.RemoteStore
 import taiwan.no.one.sync.domain.repositories.SyncRepo
+import taiwan.no.one.sync.domain.repositories.TimeRepo
 
 internal object SyncDataModules {
     private const val FEAT_NAME = "Sync"
     private const val TAG_LOCAL_DATA_STORE = "$FEAT_NAME local data store"
     private const val TAG_REMOTE_DATA_STORE = "$FEAT_NAME remote data store"
+    private const val TAG_DATASTORE_TIMESTAMP = "the datastore of timestamp"
+    private const val NAME_OF_DATASTORE_TIMESTAMP = "timestamp"
+    private val Context.dataStore: AndroidDataStore<Preferences> by preferencesDataStore(NAME_OF_DATASTORE_TIMESTAMP)
 
     fun provide(context: Context) = DI.Module("${FEAT_NAME}DataModule") {
-        import(localProvide())
+        import(localProvide(context))
         import(remoteProvide())
 
-        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore() }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance()) }
         bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance()) }
 
-        bindSingleton<SyncRepo> {
-            SyncRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
-        }
+        bindSingleton<SyncRepo> { SyncRepository(instance(TAG_REMOTE_DATA_STORE)) }
+        bindSingleton<TimeRepo> { TimeRepository(instance(TAG_LOCAL_DATA_STORE)) }
     }
 
-    private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
+    private fun localProvide(context: Context) = DI.Module("${FEAT_NAME}LocalModule") {
+        bindInstance(TAG_DATASTORE_TIMESTAMP) { context.dataStore }
+        bindSingleton<TimestampService> { TimeService(instance(TAG_DATASTORE_TIMESTAMP)) }
     }
 
     private fun remoteProvide() = DI.Module("${FEAT_NAME}RemoteModule") {

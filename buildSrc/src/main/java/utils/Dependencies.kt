@@ -127,7 +127,8 @@ fun DependencyHandlerScope.analyticsDependencies() {
 
 fun DependencyHandlerScope.syncDependencies() {
     kotlinDependencies(DepEnvImpl)
-    DepEnvApi(CoreDependency.KOTLIN_DATETIME)
+    DepEnvImpl(JetPack.DATASTORE)
+    DepEnvImpl(CoreDependency.KOTLIN_DATETIME)
     DepEnvApi(platform(Firebase.FIREBASE_BOM))
     DepEnvApi(Firebase.FIREBASE_FIRESTORE)
 }

@@ -28,12 +28,15 @@ import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.contracts.DataStore
+import taiwan.no.one.sync.data.local.services.TimestampService
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
  * local service(Database/Local file) to access the data.
  */
-internal class LocalStore : DataStore {
+internal class LocalStore(
+    private val timeService: TimestampService,
+) : DataStore {
     override suspend fun createAccount(userInfo: UserInfoEntity) = TODO()
 
     override suspend fun getPlaylists() = TODO()
@@ -52,8 +55,9 @@ internal class LocalStore : DataStore {
 
     override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>) = TODO()
 
-    override suspend fun createSongRefToPlaylist(
-        refPlaylistPath: String,
-        refSongsPath: List<String>,
-    ) = TODO()
+    override suspend fun createSongRefToPlaylist(refPlaylistPath: String, refSongsPath: List<String>) = TODO()
+
+    override suspend fun getSyncTimestamp() = timeService.retrieveLastStamp()
+
+    override suspend fun modifySyncTimestamp(timestamp: Long) = timeService.replaceLastStamp(timestamp)
 }
