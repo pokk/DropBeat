@@ -24,9 +24,29 @@
 
 package taiwan.no.one.sync.data.local.services.v1
 
-import com.google.gson.Gson
-import taiwan.no.one.sync.data.local.services.SyncService
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import taiwan.no.one.ext.DEFAULT_LONG
+import taiwan.no.one.sync.data.local.services.TimestampService
 
-internal class MmkvService(
-    private val gson: Gson,
-) : SyncService
+internal class TimeService(
+    private val dataStore: DataStore<Preferences>,
+) : TimestampService {
+    companion object Constant {
+        private val KEY_OF_STAMP = longPreferencesKey("last synced time")
+    }
+
+    override suspend fun retrieveLastStamp() = dataStore.data.map { it[KEY_OF_STAMP] ?: DEFAULT_LONG }.first()
+
+    override suspend fun replaceLastStamp(timestamp: Long) = try {
+        dataStore.edit { it[KEY_OF_STAMP] = timestamp }
+        true
+    }
+    catch (e: Exception) {
+        false
+    }
+}

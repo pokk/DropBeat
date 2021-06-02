@@ -50,8 +50,5 @@ internal interface SyncService {
     // The combination behavior.
     suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>): Boolean
 
-    suspend fun createSongRefToPlaylist(
-        refPlaylistPath: String,
-        refSongsPath: List<String>,
-    ): Boolean
+    suspend fun createSongRefToPlaylist(refPlaylistPath: String, refSongsPath: List<String>): Boolean
 }

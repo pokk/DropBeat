@@ -28,4 +28,8 @@ package taiwan.no.one.sync.data.local.services
  * Thru a local cache mechanism, we can just define the interfaces which we want to access for.
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
-internal interface SyncService
+internal interface TimestampService {
+    suspend fun retrieveLastStamp(): Long
+
+    suspend fun replaceLastStamp(timestamp: Long): Boolean
+}

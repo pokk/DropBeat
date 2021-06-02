@@ -31,7 +31,6 @@ import taiwan.no.one.sync.data.contracts.DataStore
 import taiwan.no.one.sync.domain.repositories.SyncRepo
 
 internal class SyncRepository(
-    private val local: DataStore,
     private val remote: DataStore,
 ) : SyncRepo {
     override suspend fun addAccount(userInfo: UserInfoEntity) = remote.createAccount(userInfo)
