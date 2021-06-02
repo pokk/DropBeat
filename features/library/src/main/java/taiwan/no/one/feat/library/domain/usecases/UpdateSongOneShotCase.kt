@@ -24,8 +24,8 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
-import com.devrapid.kotlinknifer.loge
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.exceptions.NotFoundException
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
@@ -39,16 +39,19 @@ internal class UpdateSongOneShotCase(
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         if (song == null && songId == null) return@ensure false
         if (song != null && isFavorite != null) {
-            // This is the song isn't in the playlist.
+            // If there is no song id, will go to get and update process. The case will
+            // happen on as the following below
+            // 1. Local database doesn't have it.
+            // 2. Do this operation which is not on the favorite playlist screen.
             if (song.id == 0) {
-                songNotInLocalCase(song, isFavorite)
+                updateSongAndPlaylistProcess(song, isFavorite)
             }
             else {
-                songHasDownloadedCase(song.id, isFavorite)
+                updateSongAndPlaylistProcess(song.id, isFavorite)
             }
         }
         else if (songId != null && isFavorite != null) {
-            songHasDownloadedCase(songId, isFavorite)
+            updateSongAndPlaylistProcess(songId, isFavorite)
         }
         // Simply update the song entity.
         else if (song != null && isFavorite == null) {
@@ -57,23 +60,23 @@ internal class UpdateSongOneShotCase(
         true
     }
 
-    private suspend fun songNotInLocalCase(entity: SimpleTrackEntity, isFavorite: Boolean) {
-        try {
-            if (isFavorite) {
-                // When the song is not in our playlist, will add. Otherwise, will go below exception.
-                songRepo.addMusic(EntityMapper.simpleToSongEntity(entity))
+    private suspend fun updateSongAndPlaylistProcess(entity: SimpleTrackEntity, isFavorite: Boolean) {
+        val addedSong = try {
+            songRepo.run {
+                getMusic(entity.uri).apply { updateMusic(copy(isFavorite = isFavorite)) }
             }
         }
-        catch (e: Exception) {
-            loge("This will be add abort from the playlist, will ignore.")
+        catch (e: NotFoundException) {
+            // When the song is not in our playlist, will add.
+            songRepo.run {
+                addMusic(EntityMapper.simpleToSongEntity(entity.copy(isFavorite = isFavorite)))
+                getMusic(entity.uri)
+            }
         }
-        finally {
-            val addedSong = songRepo.getMusic(entity.uri)
-            updateFavoritePlaylist(addedSong, isFavorite)
-        }
+        updateFavoritePlaylist(addedSong, isFavorite)
     }
 
-    private suspend fun songHasDownloadedCase(songId: Int, isFavorite: Boolean) {
+    private suspend fun updateSongAndPlaylistProcess(songId: Int, isFavorite: Boolean) {
         songRepo.updateMusic(songId, isFavorite)
         val song = songRepo.getMusic(songId)
         updateFavoritePlaylist(song, isFavorite)
