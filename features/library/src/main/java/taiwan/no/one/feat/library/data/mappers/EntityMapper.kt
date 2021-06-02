@@ -43,6 +43,7 @@ internal object EntityMapper {
             it.duration,
             it.isFavorite,
             it.hasOwn,
+            it.refPath,
         )
     }
 
@@ -55,6 +56,7 @@ internal object EntityMapper {
             it.thumbUri,
             it.duration,
             it.isFavorite,
+            refPath = it.refPath,
         )
     }
 
@@ -64,13 +66,13 @@ internal object EntityMapper {
             it.title,
             it.artist,
             it.uri,
-            DEFAULT_STR,
+            it.localUri,
             it.coverUri,
             DEFAULT_STR,
             it.duration,
-            false,
-            false,
-            DEFAULT_STR
+            it.isFavorite,
+            it.hasOwn,
+            it.refPath,
         )
     }
 

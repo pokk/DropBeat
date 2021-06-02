@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,8 @@ internal class SongRepository(
     override suspend fun addMusic(song: SongEntity) = local.createMusic(song)
 
     override suspend fun addMusics(songs: List<SongEntity>) = local.createMusics(songs)
+
+    override suspend fun updateMusic(song: SongEntity) = local.modifyMusic(song)
 
     override suspend fun updateMusic(songId: Int, isFavorite: Boolean) = local.modifyMusic(songId, isFavorite)
 }
