@@ -37,6 +37,7 @@ internal class UpdateSongOneShotCase(
     private val songRepo: SongRepo,
 ) : UpdateSongCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        if (song == null && songId == null) return@ensure false
         if (song != null && isFavorite != null) {
             // This is the song isn't in the playlist.
             if (song.id == 0) {
@@ -48,6 +49,10 @@ internal class UpdateSongOneShotCase(
         }
         else if (songId != null && isFavorite != null) {
             songHasDownloadedCase(songId, isFavorite)
+        }
+        // Simply update the song entity.
+        else if (song != null && isFavorite == null) {
+            songRepo.updateMusic(EntityMapper.simpleToSongEntity(song))
         }
         true
     }

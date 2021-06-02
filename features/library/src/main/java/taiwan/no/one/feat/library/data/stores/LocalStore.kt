@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,6 +54,8 @@ internal class LocalStore(
         val playlist = playlistDao.getPlaylist(playlistId)
         return songDao.getMusics(playlist.songIds)
     }
+
+    override suspend fun modifyMusic(song: SongEntity) = songDao.update(song)
 
     override suspend fun modifyMusic(songId: Int, isFavorite: Boolean) = songDao.updateFavorite(songId, isFavorite)
 

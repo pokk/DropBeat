@@ -34,19 +34,20 @@ import taiwan.no.one.sync.domain.repositories.SyncRepo
 internal class AddPlaylistOneShotCase(
     private val repo: SyncRepo,
 ) : OneShotUsecase<Boolean, AddPlaylistRequest>() {
+    // TODO(jieyi): 6/2/21 This bunch of the operations should be done in a transaction.
     override suspend fun acquireCase(parameter: AddPlaylistRequest?) = parameter.ensure {
         // If there the playlist has been sync(i.e. has [refPath] value), will be filtered.
         val playlistRefs = playlists.filter { it.refPath.isEmpty() }
             .map { repo.addPlaylist(it).apply { it.refPath = this } }
         // Add the songs to the remote.
-        val refOfSongs = songs.map { it.map { repo.addSong(it) } }
+        val refOfSongs = songs.map { it.map { repo.addSong(it).apply { it.refPath = this } } }
+            .onEachIndexed { index, refOfSongs -> playlists[index].refOfSongs = refOfSongs }
         // Attach the songs ref to the each playlist.
         playlists.map(SimplePlaylistEntity::refPath)
             .zip(refOfSongs)
             .forEach { (refOfPlaylist, refOfSongs) -> repo.addSongRefToPlaylist(refOfPlaylist, refOfSongs) }
         // Attach all playlists to the account.
         repo.addPlaylistRefToAccount(userInfo, playlistRefs)
-        true
     }
 }
 

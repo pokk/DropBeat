@@ -44,6 +44,8 @@ import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
+import taiwan.no.one.feat.library.domain.usecases.UpdateSongCase
+import taiwan.no.one.feat.library.domain.usecases.UpdateSongReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class MyHomeViewModel(
@@ -54,6 +56,7 @@ internal class MyHomeViewModel(
     private val addAccountCase by instance<AddAccountCase>()
     private val addPlaylistCase by instance<AddPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
+    private val updateSongCase by instance<UpdateSongCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
     val playlists get() = _playlists.toLiveData()
@@ -87,17 +90,25 @@ internal class MyHomeViewModel(
 
     fun createPlaylistOnRemote(userInfo: UserInfoEntity) = viewModelScope.launch {
         val playlists = _playlists.value?.getOrNull().orEmpty()
+        // NOTE(jieyi): Will have a list of pair <playlist <-> songs>.
         val simplePlaylists = playlists.map(EntityMapper::playlistToSimplePlaylistEntity)
         val songsOfPlaylists = playlists.map { it.songs.map(EntityMapper::songToSimpleEntity) }
-        val result = runCatching {
-            addPlaylistCase.execute(AddPlaylistReq(userInfo, simplePlaylists, songsOfPlaylists))
+        runCatching { addPlaylistCase.execute(AddPlaylistReq(userInfo, simplePlaylists, songsOfPlaylists)) }.onSuccess {
+            // Update the local database.
+            simplePlaylists.filter { it.refPath.isNotEmpty() } // for playlists
+                .forEach { updatePlaylistCase.execute(UpdatePlaylistReq(it.id, refPath = it.refPath)) }
+            // for songs
+            simplePlaylists.forEachIndexed { index, playlist ->
+                playlist.refOfSongs.zip(playlists[index].songs).forEach { (ref, song) ->
+                    val track = EntityMapper.songToSimpleEntity(song.copy(isFavorite = song.isFavorite, refPath = ref))
+                    updateSongCase.execute(UpdateSongReq(track))
+                }
+            }
+            // Refresh the view's data.
+            getAllPlaylists()
         }
-        if (result.isFailure) return@launch
-        // Update the local database.
-        simplePlaylists.filter { it.refPath.isNotEmpty() }
-            .forEach { updatePlaylistCase.execute(UpdatePlaylistReq(it.id, refPath = it.refPath)) }
+    }
 
-        // Refresh the view's data.
-        getAllPlaylists()
+    fun syncPlaylistOnRemote(userInfo: UserInfoEntity) = viewModelScope.launch {
     }
 }

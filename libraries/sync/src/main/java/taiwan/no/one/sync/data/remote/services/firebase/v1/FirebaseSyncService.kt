@@ -140,10 +140,6 @@ internal class FirebaseSyncService(
     override suspend fun createSongRefToPlaylist(refPlaylistPath: String, refSongsPath: List<String>) =
         suspendCancellableCoroutine<Boolean> { continuation ->
             val paths = refSongsPath.map(firestore::document).toTypedArray()
-            println("=================================================")
-            println(refPlaylistPath + " ----------- " + paths)
-            println()
-            println("=================================================")
             firestore.document(refPlaylistPath)
                 .update(FIELD_SONGS, FieldValue.arrayUnion(*paths))
                 .addOnSuccessListener { continuation.resume(true) }

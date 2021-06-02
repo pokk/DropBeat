@@ -44,7 +44,7 @@ data class SimpleTrackEntity(
     val duration: Int,
     var isFavorite: Boolean,
     val isOwn: Boolean,
-    val refPath: String = "",
+    var refPath: String = "",
 ) : Parcelable {
     fun obtainTrackAndArtistName() = "$artist++$name"
 
