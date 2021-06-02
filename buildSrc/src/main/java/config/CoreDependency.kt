@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,12 @@ object CoreDependency {
     object Version {
         const val KOTLIN = "1.5.0"
         const val KOTLIN_COROUTINE = "1.5.0"
+        const val KOTLIN_DATETIME = "0.2.1"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib:${Version.KOTLIN}"
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect:${Version.KOTLIN}"
+    const val KOTLIN_DATETIME = "org.jetbrains.kotlinx:kotlinx-datetime:${Version.KOTLIN_DATETIME}"
     const val KOTLIN_COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.KOTLIN_COROUTINE}"
     const val ANDROID_COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.KOTLIN_COROUTINE}"
     const val GOOGLE_PLAY_COROUTINE =
