@@ -77,6 +77,6 @@ internal object EntityMapper {
     }
 
     fun playlistToSimplePlaylistEntity(entity: PlayListEntity) = entity.let {
-        SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl, it.refPath)
+        SimplePlaylistEntity(it.id, it.name, it.songIds, it.coverUrl, it.refPath, syncedStamp = it.syncdAt)
     }
 }
