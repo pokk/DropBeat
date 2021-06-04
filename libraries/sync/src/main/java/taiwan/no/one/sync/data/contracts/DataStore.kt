@@ -35,7 +35,7 @@ import taiwan.no.one.entity.UserInfoEntity
 internal interface DataStore {
     suspend fun createAccount(userInfo: UserInfoEntity): Boolean
 
-    suspend fun getPlaylists(): List<Boolean>
+    suspend fun getPlaylists(userInfo: UserInfoEntity): List<SimplePlaylistEntity>
 
     suspend fun modifyPlaylist(): Boolean
 

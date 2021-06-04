@@ -40,7 +40,7 @@ internal class RemoteStore(
 ) : DataStore {
     override suspend fun createAccount(userInfo: UserInfoEntity) = service.createAccount(userInfo)
 
-    override suspend fun getPlaylists() = TODO()
+    override suspend fun getPlaylists(userInfo: UserInfoEntity) = service.getPlaylists(userInfo)
 
     override suspend fun modifyPlaylist() = TODO()
 
