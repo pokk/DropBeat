@@ -35,7 +35,7 @@ internal class SyncRepository(
 ) : SyncRepo {
     override suspend fun addAccount(userInfo: UserInfoEntity) = remote.createAccount(userInfo)
 
-    override suspend fun fetchPlaylists() = TODO()
+    override suspend fun fetchPlaylists(userInfo: UserInfoEntity) = remote.getPlaylists(userInfo)
 
     override suspend fun updatePlaylist() = TODO()
 
