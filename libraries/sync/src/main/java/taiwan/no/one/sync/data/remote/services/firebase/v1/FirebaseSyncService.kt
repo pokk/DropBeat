@@ -64,24 +64,29 @@ internal class FirebaseSyncService(
      */
     override suspend fun createAccount(userInfo: UserInfoEntity) =
         suspendCancellableCoroutine<Boolean> { continuation ->
-            val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
-            getUserInfoDocument(userInfo).set(data)
-                .addOnSuccessListener { continuation.resume(true) }
-                .addOnFailureListener(continuation::resumeWithException)
+            val doc = getUserInfoDocument(userInfo)
+            doc.get().addOnSuccessListener {
+                if (it.exists()) {
+                    continuation.resume(false)
+                    return@addOnSuccessListener
+                }
+                val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
+                doc.set(data)
+                    .addOnSuccessListener { continuation.resume(true) }
+                    .addOnFailureListener(continuation::resumeWithException)
+            }.addOnFailureListener(continuation::resumeWithException)
         }
 
     override suspend fun getPlaylists(userInfo: UserInfoEntity) = coroutineScope {
         suspendCancellableCoroutine<List<SimplePlaylistEntity>> { continuation ->
-            getUserInfoDocument(userInfo).get()
-                .addOnSuccessListener {
-                    launch {
-                        val playlists = castDocList(it[FIELD_PLAYLIST])?.mapNotNull {
-                            it.get().await().toObject(SimplePlaylistEntity::class.java)
-                        }
-                        continuation.resume(playlists.orEmpty())
+            getUserInfoDocument(userInfo).get().addOnSuccessListener {
+                launch {
+                    val playlists = castDocList(it[FIELD_PLAYLIST])?.mapNotNull {
+                        it.get().await().toObject(SimplePlaylistEntity::class.java)
                     }
+                    continuation.resume(playlists.orEmpty())
                 }
-                .addOnFailureListener(continuation::resumeWithException)
+            }.addOnFailureListener(continuation::resumeWithException)
         }
     }
 
@@ -122,10 +127,16 @@ internal class FirebaseSyncService(
     override suspend fun createSong(song: SimpleTrackEntity) = suspendCancellableCoroutine<String> { continuation ->
         // Create a document of a song.
         val doc = firestore.collection(COLLECTION_SONG).document(song.obtainTrackAndArtistName())
-        // Set the field detail.
-        doc.set(song.toSet())
-            .addOnSuccessListener { continuation.resume(doc.path) }
-            .addOnFailureListener(continuation::resumeWithException)
+        doc.get().addOnSuccessListener {
+            if (!it.exists()) {
+                continuation.resumeWithException(Exception("${song.obtainTrackAndArtistName()} has been added!"))
+                return@addOnSuccessListener
+            }
+            // Set the field detail.
+            doc.set(song.toSet())
+                .addOnSuccessListener { continuation.resume(doc.path) }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
     }
 
     override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>) =
