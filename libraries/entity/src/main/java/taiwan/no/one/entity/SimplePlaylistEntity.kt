@@ -42,11 +42,4 @@ data class SimplePlaylistEntity(
     var refPath: String = "",
     var refOfSongs: List<String> = emptyList(),
     var syncedStamp: Long = 0L,
-) : Parcelable {
-    fun toFieldMap() = mapOf(
-        "id" to id,
-        "name" to name,
-        "thumb_url" to thumbUrl,
-        "last_synced_time" to syncedStamp,
-    )
-}
+) : Parcelable

@@ -49,16 +49,11 @@ internal class UpdatePlaylistsOneShotCase(
             }
         }.onEachIndexed { index, refOfSongs -> playlists[index].refOfSongs = refOfSongs }
 
+        // Get all playlists from the remote server.
         val remotePlaylists =
             syncRepo.fetchPlaylists(userInfo).associateBy(SimplePlaylistEntity::refPath).toMutableMap()
-        println("=================================================")
-        println(remotePlaylists)
-        println("=================================================")
         // Local playlist
         playlists.forEachIndexed { index, playlist ->
-            println("=================================================")
-            println(playlist)
-            println("=================================================")
             if (playlist.refPath.isEmpty()) {
                 // Create a new playlist from the local to the remote.
                 // Update the sync time.
@@ -67,9 +62,6 @@ internal class UpdatePlaylistsOneShotCase(
                 syncRepo.addSongRefToPlaylist(refOfPlaylist, refOfSongs[index])
             }
             else {
-                println("=================================================")
-                println("$remotePlaylists ------------------")
-                println("=================================================")
                 // Sync time is bigger means newer, and remove the synced playlist after it finished.
                 val remotePlaylist = remotePlaylists.remove(playlist.refPath) ?: return@forEachIndexed
                 // The remote playlist is newer than the local's.
@@ -77,10 +69,11 @@ internal class UpdatePlaylistsOneShotCase(
                     // The situation is that stays the same device and syncs it all the time.
                     remotePlaylist.syncedStamp == playlist.syncedStamp -> {
                         // only situation (update time > remote sync time)
+                        // FIXME(jieyi): the date formatting has some issue. 🚨
                         val playlistEpoch = playlist.updatedAt.toString().toInstant().toEpochMilliseconds()
-                        println("=================================================")
+                        println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                         println("$playlist      $remotePlaylist")
-                        println("=================================================")
+                        println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                         if (playlistEpoch > remotePlaylist.syncedStamp) {
                             // Update the sync time.
                             playlist.syncedStamp = currentTime.toEpochMilliseconds()
