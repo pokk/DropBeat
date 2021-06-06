@@ -83,8 +83,11 @@ internal class FirebaseSyncService(
         suspendCancellableCoroutine<List<SimplePlaylistEntity>> { continuation ->
             getUserInfoDocument(userInfo).get().addOnSuccessListener {
                 launch {
-                    val playlists = castToDocList(it[FIELD_PLAYLIST])?.mapNotNull {
-                        it.get().await().data?.let(FirebaseFieldMapper::fieldMapToSimplePlaylist)
+                    val playlists = castToDocList(it[FIELD_PLAYLIST])?.mapNotNull { docRef ->
+                        docRef.get()
+                            .await()
+                            .data
+                            ?.let { FirebaseFieldMapper.fieldMapToSimplePlaylist(it, docRef.path) }
                     }
                     continuation.resume(playlists.orEmpty())
                 }
@@ -136,7 +139,7 @@ internal class FirebaseSyncService(
                 return@addOnSuccessListener
             }
             // Set the field detail.
-            doc.set(song.toSet())
+            doc.set(FirebaseFieldMapper.simpleTrackToFieldMap(song))
                 .addOnSuccessListener { continuation.resume(doc.path) }
                 .addOnFailureListener(continuation::resumeWithException)
         }
