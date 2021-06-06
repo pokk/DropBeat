@@ -52,7 +52,7 @@ internal data class LibraryEntity(
         @ColumnInfo(name = "ref_path")
         val refPath: String = DEFAULT_STR,
         @ColumnInfo(name = "synced_at")
-        val syncdAt: Long = DEFAULT_LONG,
+        val syncedAt: Long = DEFAULT_LONG,
         @Embedded
         val time: TimeEntity = TimeEntity(),
     ) {
