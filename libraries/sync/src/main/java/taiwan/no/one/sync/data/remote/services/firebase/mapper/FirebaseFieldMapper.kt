@@ -42,8 +42,9 @@ object FirebaseFieldMapper {
     }
 
     fun fieldMapToSimplePlaylist(fieldMap: Map<String, Any>) = fieldMap.run {
+        println(this)
         SimplePlaylistEntity(
-            get("id") as? Int ?: DEFAULT_INT,
+            (get("id") as? Long)?.toInt() ?: DEFAULT_INT,
             get("name") as? String ?: DEFAULT_STR,
             emptyList(),
             get("thumb_url") as? String ?: DEFAULT_STR,
