@@ -205,11 +205,11 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
 //            doSync(it)
-            vm.createAccountOnRemote(it)
             if (privacyVm.shouldDisplaySyncDialog) {
                 privacyVm.shouldDisplaySyncDialog = false
                 // Show sync dialog
                 showSyncDialog()
+                vm.createAccountOnRemote(it)
                 vm.createPlaylistOnRemote(requireNotNull(userEntity))
             }
         }
