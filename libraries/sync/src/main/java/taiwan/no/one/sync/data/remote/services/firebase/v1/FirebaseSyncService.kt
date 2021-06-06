@@ -37,6 +37,8 @@ import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.remote.services.SyncService
+import taiwan.no.one.sync.data.remote.services.firebase.castToDocList
+import taiwan.no.one.sync.data.remote.services.firebase.mapper.FirebaseFieldMapper
 
 // NOTE(jieyi): 5/26/21
 //  For one-shot async calls, use the [suspendCancellableCoroutine] API.
@@ -81,8 +83,8 @@ internal class FirebaseSyncService(
         suspendCancellableCoroutine<List<SimplePlaylistEntity>> { continuation ->
             getUserInfoDocument(userInfo).get().addOnSuccessListener {
                 launch {
-                    val playlists = castDocList(it[FIELD_PLAYLIST])?.mapNotNull {
-                        it.get().await().toObject(SimplePlaylistEntity::class.java)
+                    val playlists = castToDocList(it[FIELD_PLAYLIST])?.mapNotNull {
+                        it.get().await().data?.let(FirebaseFieldMapper::fieldMapToSimplePlaylist)
                     }
                     continuation.resume(playlists.orEmpty())
                 }
@@ -97,7 +99,7 @@ internal class FirebaseSyncService(
             // Create a document of the playlist.
             val doc = firestore.collection(COLLECTION_PLAYLIST).document()
             // Set the field detail.
-            doc.set(playlist.toFieldMap())
+            doc.set(FirebaseFieldMapper.simplePlaylistToFieldMap(playlist))
                 .addOnSuccessListener { continuation.resume(doc.path) }
                 .addOnFailureListener(continuation::resumeWithException)
         }
@@ -114,7 +116,7 @@ internal class FirebaseSyncService(
             firestore.document(playlistPath).get()
                 .addOnSuccessListener {
                     launch {
-                        val songs = castDocList(it[FIELD_SONGS])?.mapNotNull {
+                        val songs = castToDocList(it[FIELD_SONGS])?.mapNotNull {
                             it.get().await().toObject(SimpleTrackEntity::class.java)
                         }
                         continuation.resume(songs.orEmpty())
@@ -162,6 +164,4 @@ internal class FirebaseSyncService(
         .document(userInfo.providerId.orEmpty())
         .collection(COLLECTION_EMAIL)
         .document(userInfo.email.orEmpty())
-
-    private fun castDocList(data: Any?) = data as? List<DocumentReference>
 }

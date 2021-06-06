@@ -22,31 +22,35 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.entity
+package taiwan.no.one.sync.data.remote.services.firebase.mapper
 
-import android.os.Parcelable
 import java.util.Date
-import kotlinx.parcelize.Parcelize
+import taiwan.no.one.entity.SimplePlaylistEntity
+import taiwan.no.one.ext.DEFAULT_INT
+import taiwan.no.one.ext.DEFAULT_LONG
+import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.sync.data.remote.services.firebase.castToDocList
 
-/**
- * [SimplePlaylistEntity] is for global usage and it only keeps brief information.
- */
-@Parcelize
-data class SimplePlaylistEntity(
-    val id: Int,
-    val name: String,
-    val songIds: List<Int>,
-    val thumbUrl: String,
-    val updatedAt: Date,
-    // Those are for syncing.
-    var refPath: String = "",
-    var refOfSongs: List<String> = emptyList(),
-    var syncedStamp: Long = 0L,
-) : Parcelable {
-    fun toFieldMap() = mapOf(
-        "id" to id,
-        "name" to name,
-        "thumb_url" to thumbUrl,
-        "last_synced_time" to syncedStamp,
-    )
+object FirebaseFieldMapper {
+    fun simplePlaylistToFieldMap(playlistEntity: SimplePlaylistEntity) = playlistEntity.run {
+        mapOf(
+            "id" to id,
+            "name" to name,
+            "thumb_url" to thumbUrl,
+            "last_synced_time" to syncedStamp,
+        )
+    }
+
+    fun fieldMapToSimplePlaylist(fieldMap: Map<String, Any>) = fieldMap.run {
+        SimplePlaylistEntity(
+            get("id") as? Int ?: DEFAULT_INT,
+            get("name") as? String ?: DEFAULT_STR,
+            emptyList(),
+            get("thumb_url") as? String ?: DEFAULT_STR,
+            Date(),
+            DEFAULT_STR,
+            castToDocList(get("songs")).orEmpty().map { it.path },
+            get("last_synced_time") as? Long ?: DEFAULT_LONG,
+        )
+    }
 }

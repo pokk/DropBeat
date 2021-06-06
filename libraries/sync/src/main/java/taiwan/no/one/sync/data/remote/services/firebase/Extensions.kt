@@ -22,31 +22,8 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.entity
+package taiwan.no.one.sync.data.remote.services.firebase
 
-import android.os.Parcelable
-import java.util.Date
-import kotlinx.parcelize.Parcelize
+import com.google.firebase.firestore.DocumentReference
 
-/**
- * [SimplePlaylistEntity] is for global usage and it only keeps brief information.
- */
-@Parcelize
-data class SimplePlaylistEntity(
-    val id: Int,
-    val name: String,
-    val songIds: List<Int>,
-    val thumbUrl: String,
-    val updatedAt: Date,
-    // Those are for syncing.
-    var refPath: String = "",
-    var refOfSongs: List<String> = emptyList(),
-    var syncedStamp: Long = 0L,
-) : Parcelable {
-    fun toFieldMap() = mapOf(
-        "id" to id,
-        "name" to name,
-        "thumb_url" to thumbUrl,
-        "last_synced_time" to syncedStamp,
-    )
-}
+fun castToDocList(data: Any?) = data as? List<DocumentReference>
