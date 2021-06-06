@@ -128,10 +128,8 @@ internal class FirebaseSyncService(
         // Create a document of a song.
         val doc = firestore.collection(COLLECTION_SONG).document(song.obtainTrackAndArtistName())
         doc.get().addOnSuccessListener {
-            if (it.exists()) {
-                continuation.resumeWithException(Exception("${song.obtainTrackAndArtistName()} has been added!"))
-                return@addOnSuccessListener
-            }
+            // If sending back the error exception, the whole coroutine will be stopped.
+            if (it.exists()) return@addOnSuccessListener
             // Set the field detail.
             doc.set(song.toSet())
                 .addOnSuccessListener { continuation.resume(doc.path) }
