@@ -41,7 +41,7 @@ internal class LocalStore(
 
     override suspend fun getPlaylists(userInfo: UserInfoEntity) = TODO()
 
-    override suspend fun modifyPlaylist() = TODO()
+    override suspend fun modifyPlaylist(playlist: SimplePlaylistEntity) = TODO()
 
     override suspend fun createPlaylist(playlist: SimplePlaylistEntity) = TODO()
 

@@ -37,7 +37,7 @@ internal interface DataStore {
 
     suspend fun getPlaylists(userInfo: UserInfoEntity): List<SimplePlaylistEntity>
 
-    suspend fun modifyPlaylist(): Boolean
+    suspend fun modifyPlaylist(playlist: SimplePlaylistEntity): Boolean
 
     suspend fun createPlaylist(playlist: SimplePlaylistEntity): String
 

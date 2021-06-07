@@ -37,7 +37,7 @@ internal class SyncRepository(
 
     override suspend fun fetchPlaylists(userInfo: UserInfoEntity) = remote.getPlaylists(userInfo)
 
-    override suspend fun updatePlaylist() = TODO()
+    override suspend fun updatePlaylist(playlist: SimplePlaylistEntity) = remote.modifyPlaylist(playlist)
 
     override suspend fun addPlaylist(playlist: SimplePlaylistEntity) = remote.createPlaylist(playlist)
 

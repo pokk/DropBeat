@@ -42,7 +42,7 @@ internal class RemoteStore(
 
     override suspend fun getPlaylists(userInfo: UserInfoEntity) = service.getPlaylists(userInfo)
 
-    override suspend fun modifyPlaylist() = TODO()
+    override suspend fun modifyPlaylist(playlist: SimplePlaylistEntity) = service.modifyPlaylist(playlist)
 
     override suspend fun createPlaylist(playlist: SimplePlaylistEntity) = service.createPlaylist(playlist)
 
