@@ -38,7 +38,7 @@ internal interface SyncRepo : Repository {
 
     suspend fun fetchPlaylists(userInfo: UserInfoEntity): List<SimplePlaylistEntity>
 
-    suspend fun updatePlaylist(): Boolean
+    suspend fun updatePlaylist(playlist: SimplePlaylistEntity): Boolean
 
     suspend fun addPlaylist(playlist: SimplePlaylistEntity): String
 

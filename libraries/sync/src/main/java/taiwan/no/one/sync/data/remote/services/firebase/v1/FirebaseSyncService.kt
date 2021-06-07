@@ -95,7 +95,21 @@ internal class FirebaseSyncService(
         }
     }
 
-    override suspend fun modifyPlaylist(userInfo: UserInfoEntity, playlist: SimplePlaylistEntity) = TODO()
+    override suspend fun modifyPlaylist(playlist: SimplePlaylistEntity) =
+        suspendCancellableCoroutine<Boolean> { continuation ->
+            // Get the document of the playlist.
+            val doc = firestore.document(playlist.refPath)
+            doc.get().addOnSuccessListener {
+                if (!it.exists()) {
+                    continuation.resume(false)
+                }
+                else {
+                    doc.set(FirebaseFieldMapper.simplePlaylistToFieldMap(playlist))
+                        .addOnSuccessListener { continuation.resume(true) }
+                        .addOnFailureListener(continuation::resumeWithException)
+                }
+            }.addOnFailureListener(continuation::resumeWithException)
+        }
 
     override suspend fun createPlaylist(playlist: SimplePlaylistEntity) =
         suspendCancellableCoroutine<String> { continuation ->
