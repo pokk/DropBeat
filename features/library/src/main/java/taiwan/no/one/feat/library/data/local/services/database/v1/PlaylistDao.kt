@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import java.util.Date
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
@@ -81,7 +82,8 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         val playlist = getPlaylist(id)
         val newPlaylist = playlist.copy(
             name = name.takeIf { it != DEFAULT_STR } ?: playlist.name,
-            count = trackNumber.takeIf { it >= 0 } ?: playlist.count
+            count = trackNumber.takeIf { it >= 0 } ?: playlist.count,
+            time = playlist.time.copy(updatedAt = Date())
         )
         update(newPlaylist)
     }
@@ -91,7 +93,7 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         val playlist = getPlaylist(id)
         val remained = tracksId - playlist.songIds
         val songIds = playlist.songIds.toMutableList().apply { addAll(remained) }
-        update(playlist.copy(songIds = songIds, count = songIds.size))
+        update(playlist.copy(songIds = songIds, count = songIds.size, time = playlist.time.copy(updatedAt = Date())))
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -122,7 +124,7 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         val playlist = getPlaylist(id)
         val songIds = playlist.songIds.toMutableList()
         songIds.remove(songId)
-        update(playlist.copy(songIds = songIds, count = songIds.size))
+        update(playlist.copy(songIds = songIds, count = songIds.size, time = playlist.time.copy(updatedAt = Date())))
     }
 
     /**
