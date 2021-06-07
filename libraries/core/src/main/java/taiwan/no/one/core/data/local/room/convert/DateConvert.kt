@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,12 @@
 package taiwan.no.one.core.data.local.room.convert
 
 import androidx.room.TypeConverter
-import java.util.*
+import java.util.Date
 
 class DateConvert {
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let(::Date)
-    }
+    fun fromTimestamp(value: Long?) = value?.let(::Date)
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
-    }
+    fun dateToTimestamp(date: Date?) = date?.time
 }

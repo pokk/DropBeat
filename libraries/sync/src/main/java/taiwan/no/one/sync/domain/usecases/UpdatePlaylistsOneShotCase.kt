@@ -25,7 +25,6 @@
 package taiwan.no.one.sync.domain.usecases
 
 import kotlinx.datetime.Clock
-import kotlinx.datetime.toInstant
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.core.domain.usecase.Usecase
 import taiwan.no.one.entity.SimplePlaylistEntity
@@ -70,9 +69,9 @@ internal class UpdatePlaylistsOneShotCase(
                     remotePlaylist.syncedStamp == playlist.syncedStamp -> {
                         // only situation (update time > remote sync time)
                         // FIXME(jieyi): the date formatting has some issue. 🚨
-                        val playlistEpoch = playlist.updatedAt.toString().toInstant().toEpochMilliseconds()
+                        val playlistEpoch = playlist.updatedAt.time
                         println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                        println("$playlist      $remotePlaylist")
+                        println("$playlistEpoch      ${remotePlaylist.syncedStamp}")
                         println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                         if (playlistEpoch > remotePlaylist.syncedStamp) {
                             // Update the sync time.
