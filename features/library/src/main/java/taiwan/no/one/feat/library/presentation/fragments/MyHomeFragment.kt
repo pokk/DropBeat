@@ -122,6 +122,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                     data = it.songs
                         .map(EntityMapper::libraryToSimpleTrackEntity)
                         .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+                    // It doesn't have many data, just reset all.
                     notifyDataSetChanged()
                 }
             }
@@ -136,6 +137,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                     data = it.songs
                         .map(EntityMapper::libraryToSimpleTrackEntity)
                         .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+                    // It doesn't have many data, just reset all.
                     notifyDataSetChanged()
                 }
             }
