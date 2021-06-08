@@ -25,6 +25,7 @@
 package taiwan.no.one.entity
 
 import android.os.Parcelable
+import java.util.Date
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -36,13 +37,9 @@ data class SimplePlaylistEntity(
     val name: String,
     val songIds: List<Int>,
     val thumbUrl: String,
+    val updatedAt: Date,
     // Those are for syncing.
     var refPath: String = "",
     var refOfSongs: List<String> = emptyList(),
-) : Parcelable {
-    fun toFieldMap() = mapOf(
-        "id" to id,
-        "name" to name,
-        "thumb_url" to thumbUrl,
-    )
-}
+    var syncedStamp: Long = 0L,
+) : Parcelable

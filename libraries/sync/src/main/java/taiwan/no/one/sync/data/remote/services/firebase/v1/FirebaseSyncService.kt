@@ -37,6 +37,8 @@ import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.remote.services.SyncService
+import taiwan.no.one.sync.data.remote.services.firebase.castToDocList
+import taiwan.no.one.sync.data.remote.services.firebase.mapper.FirebaseFieldMapper
 
 // NOTE(jieyi): 5/26/21
 //  For one-shot async calls, use the [suspendCancellableCoroutine] API.
@@ -64,35 +66,57 @@ internal class FirebaseSyncService(
      */
     override suspend fun createAccount(userInfo: UserInfoEntity) =
         suspendCancellableCoroutine<Boolean> { continuation ->
-            val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
-            getUserInfoDocument(userInfo).set(data)
-                .addOnSuccessListener { continuation.resume(true) }
-                .addOnFailureListener(continuation::resumeWithException)
+            val doc = getUserInfoDocument(userInfo)
+            doc.get().addOnSuccessListener {
+                if (it.exists()) {
+                    continuation.resume(false)
+                    return@addOnSuccessListener
+                }
+                val data = mapOf(FIELD_PLAYLIST to listOf<DocumentReference>())
+                doc.set(data)
+                    .addOnSuccessListener { continuation.resume(true) }
+                    .addOnFailureListener(continuation::resumeWithException)
+            }.addOnFailureListener(continuation::resumeWithException)
         }
 
     override suspend fun getPlaylists(userInfo: UserInfoEntity) = coroutineScope {
         suspendCancellableCoroutine<List<SimplePlaylistEntity>> { continuation ->
-            getUserInfoDocument(userInfo).get()
-                .addOnSuccessListener {
-                    launch {
-                        val playlists = castDocList(it[FIELD_PLAYLIST])?.mapNotNull {
-                            it.get().await().toObject(SimplePlaylistEntity::class.java)
-                        }
-                        continuation.resume(playlists.orEmpty())
+            getUserInfoDocument(userInfo).get().addOnSuccessListener {
+                launch {
+                    val playlists = castToDocList(it[FIELD_PLAYLIST])?.mapNotNull { docRef ->
+                        docRef.get()
+                            .await()
+                            .data
+                            ?.let { FirebaseFieldMapper.fieldMapToSimplePlaylist(it, docRef.path) }
                     }
+                    continuation.resume(playlists.orEmpty())
                 }
-                .addOnFailureListener(continuation::resumeWithException)
+            }.addOnFailureListener(continuation::resumeWithException)
         }
     }
 
-    override suspend fun modifyPlaylist(userInfo: UserInfoEntity, playlist: SimplePlaylistEntity) = TODO()
+    override suspend fun modifyPlaylist(playlist: SimplePlaylistEntity) =
+        suspendCancellableCoroutine<Boolean> { continuation ->
+            // Get the document of the playlist.
+            val doc = firestore.document(playlist.refPath)
+            doc.get().addOnSuccessListener {
+                if (!it.exists()) {
+                    continuation.resume(false)
+                }
+                else {
+                    doc.set(FirebaseFieldMapper.simplePlaylistToFieldMap(playlist))
+                        .addOnSuccessListener { continuation.resume(true) }
+                        .addOnFailureListener(continuation::resumeWithException)
+                }
+            }.addOnFailureListener(continuation::resumeWithException)
+        }
 
     override suspend fun createPlaylist(playlist: SimplePlaylistEntity) =
         suspendCancellableCoroutine<String> { continuation ->
             // Create a document of the playlist.
             val doc = firestore.collection(COLLECTION_PLAYLIST).document()
             // Set the field detail.
-            doc.set(playlist.toFieldMap())
+            doc.set(FirebaseFieldMapper.simplePlaylistToFieldMap(playlist))
                 .addOnSuccessListener { continuation.resume(doc.path) }
                 .addOnFailureListener(continuation::resumeWithException)
         }
@@ -109,7 +133,7 @@ internal class FirebaseSyncService(
             firestore.document(playlistPath).get()
                 .addOnSuccessListener {
                     launch {
-                        val songs = castDocList(it[FIELD_SONGS])?.mapNotNull {
+                        val songs = castToDocList(it[FIELD_SONGS])?.mapNotNull {
                             it.get().await().toObject(SimpleTrackEntity::class.java)
                         }
                         continuation.resume(songs.orEmpty())
@@ -122,10 +146,17 @@ internal class FirebaseSyncService(
     override suspend fun createSong(song: SimpleTrackEntity) = suspendCancellableCoroutine<String> { continuation ->
         // Create a document of a song.
         val doc = firestore.collection(COLLECTION_SONG).document(song.obtainTrackAndArtistName())
-        // Set the field detail.
-        doc.set(song.toSet())
-            .addOnSuccessListener { continuation.resume(doc.path) }
-            .addOnFailureListener(continuation::resumeWithException)
+        doc.get().addOnSuccessListener {
+            // If sending back the error exception, the whole coroutine will be stopped.
+            if (it.exists()) {
+                continuation.resume(doc.path)
+                return@addOnSuccessListener
+            }
+            // Set the field detail.
+            doc.set(FirebaseFieldMapper.simpleTrackToFieldMap(song))
+                .addOnSuccessListener { continuation.resume(doc.path) }
+                .addOnFailureListener(continuation::resumeWithException)
+        }
     }
 
     override suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>) =
@@ -150,6 +181,4 @@ internal class FirebaseSyncService(
         .document(userInfo.providerId.orEmpty())
         .collection(COLLECTION_EMAIL)
         .document(userInfo.email.orEmpty())
-
-    private fun castDocList(data: Any?) = data as? List<DocumentReference>
 }

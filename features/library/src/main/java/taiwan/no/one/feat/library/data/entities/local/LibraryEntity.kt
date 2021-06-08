@@ -32,6 +32,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.Date
 import taiwan.no.one.core.data.local.room.TimeEntity
+import taiwan.no.one.ext.DEFAULT_LONG
 import taiwan.no.one.ext.DEFAULT_STR
 
 internal data class LibraryEntity(
@@ -50,6 +51,8 @@ internal data class LibraryEntity(
         val coverUrl: String = DEFAULT_STR,
         @ColumnInfo(name = "ref_path")
         val refPath: String = DEFAULT_STR,
+        @ColumnInfo(name = "synced_at")
+        val syncedAt: Long = DEFAULT_LONG,
         @Embedded
         val time: TimeEntity = TimeEntity(),
     ) {

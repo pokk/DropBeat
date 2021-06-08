@@ -73,7 +73,9 @@ internal class UpdatePlaylistOneShotCase(
                 refPath = refPath,
             )
         }
-        playlistRepository.updatePlaylist(newPlaylist)
+        playlistRepository.updatePlaylist(
+            if (syncStamp != null) newPlaylist.copy(syncedAt = syncStamp) else newPlaylist
+        )
         true
     }
 
@@ -92,5 +94,6 @@ internal class UpdatePlaylistOneShotCase(
         val isAddSongs: Boolean? = null,
         val isRemoveSongs: Boolean? = null,
         val refPath: String = DEFAULT_STR,
+        val syncStamp: Long? = null,
     ) : RequestValues
 }

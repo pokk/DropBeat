@@ -39,9 +39,9 @@ internal class LocalStore(
 ) : DataStore {
     override suspend fun createAccount(userInfo: UserInfoEntity) = TODO()
 
-    override suspend fun getPlaylists() = TODO()
+    override suspend fun getPlaylists(userInfo: UserInfoEntity) = TODO()
 
-    override suspend fun modifyPlaylist() = TODO()
+    override suspend fun modifyPlaylist(playlist: SimplePlaylistEntity) = TODO()
 
     override suspend fun createPlaylist(playlist: SimplePlaylistEntity) = TODO()
 

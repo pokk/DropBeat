@@ -22,33 +22,8 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.data.remote.services
+package taiwan.no.one.sync.data.remote.services.firebase
 
-import taiwan.no.one.entity.SimplePlaylistEntity
-import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.entity.UserInfoEntity
+import com.google.firebase.firestore.DocumentReference
 
-/**
- * This interface will be the same as all data stores.
- * Using prefix name (get), (create), (modify), (remove), (store)
- */
-internal interface SyncService {
-    suspend fun createAccount(userInfo: UserInfoEntity): Boolean
-
-    suspend fun getPlaylists(userInfo: UserInfoEntity): List<SimplePlaylistEntity>
-
-    suspend fun modifyPlaylist(playlist: SimplePlaylistEntity): Boolean
-
-    suspend fun createPlaylist(playlist: SimplePlaylistEntity): String
-
-    suspend fun removePlaylist(playlistPath: String): Boolean
-
-    suspend fun getSongs(playlistPath: String): List<SimpleTrackEntity>
-
-    suspend fun createSong(song: SimpleTrackEntity): String
-
-    // The combination behavior.
-    suspend fun createPlaylistRefToAccount(userInfo: UserInfoEntity, refPlaylistPaths: List<String>): Boolean
-
-    suspend fun createSongRefToPlaylist(refPlaylistPath: String, refSongsPath: List<String>): Boolean
-}
+fun castToDocList(data: Any?) = data as? List<DocumentReference>

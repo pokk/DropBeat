@@ -35,7 +35,8 @@ import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.domain.usecases.AddAccountCase
 import taiwan.no.one.dropbeat.domain.usecases.AddAccountReq
 import taiwan.no.one.dropbeat.domain.usecases.AddPlaylistCase
-import taiwan.no.one.dropbeat.domain.usecases.AddPlaylistReq
+import taiwan.no.one.dropbeat.domain.usecases.SyncPlaylistCase
+import taiwan.no.one.dropbeat.domain.usecases.SyncPlaylistReq
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
@@ -55,6 +56,7 @@ internal class MyHomeViewModel(
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
     private val addAccountCase by instance<AddAccountCase>()
     private val addPlaylistCase by instance<AddPlaylistCase>()
+    private val syncPlaylistCase by instance<SyncPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val updateSongCase by instance<UpdateSongCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
@@ -93,10 +95,16 @@ internal class MyHomeViewModel(
         // NOTE(jieyi): Will have a list of pair <playlist <-> songs>.
         val simplePlaylists = playlists.map(EntityMapper::playlistToSimplePlaylistEntity)
         val songsOfPlaylists = playlists.map { it.songs.map(EntityMapper::songToSimpleEntity) }
-        runCatching { addPlaylistCase.execute(AddPlaylistReq(userInfo, simplePlaylists, songsOfPlaylists)) }.onSuccess {
+        runCatching {
+            syncPlaylistCase.execute(SyncPlaylistReq(userInfo, simplePlaylists, songsOfPlaylists))
+        }.onSuccess {
             // Update the local database.
             simplePlaylists.filter { it.refPath.isNotEmpty() } // for playlists
-                .forEach { updatePlaylistCase.execute(UpdatePlaylistReq(it.id, refPath = it.refPath)) }
+                .forEach {
+                    updatePlaylistCase.execute(
+                        UpdatePlaylistReq(it.id, refPath = it.refPath, syncStamp = it.syncedStamp)
+                    )
+                }
             // for songs
             simplePlaylists.forEachIndexed { index, playlist ->
                 playlist.refOfSongs.zip(playlists[index].songs).forEach { (ref, song) ->
