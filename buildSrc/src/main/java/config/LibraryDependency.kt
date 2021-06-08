@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,44 +28,44 @@ object LibraryDependency {
     object Version {
         const val ARV = "1.0.16"
         const val KINFER = "2.4.0"
-        const val MATERIAL = "1.4.0-beta01"
+        const val MATERIAL = "1.4.0-rc01"
         const val ANDROIDX = "1.0.0"
         const val ANNOTATION = "1.3.0-alpha01"
-        const val APPCOMPAT = "1.4.0-alpha01"
-        const val APP_STARTUP = "1.1.0-alpha01"
+        const val APPCOMPAT = "1.4.0-alpha02"
+        const val APP_STARTUP = "1.1.0-beta01"
         const val CARDVIEW = ANDROIDX
-        const val RECYCLERVIEW = "1.2.0"
-        const val PAGING = "3.0.0"
+        const val RECYCLERVIEW = "1.2.1"
+        const val PAGING = "3.1.0-alpha01"
         const val CONSTRAINTLAYOUT = "2.1.0-beta01"
         const val COORDINATORLAYOUT = "1.1.0"
         const val AAC_LIFECYCLE = "2.4.0-alpha01"
         const val DATASTORE = "1.0.0-beta01"
-        const val KODEIN = "7.5.0"
-        const val KTX = "1.6.0-beta01"
-        const val ACTIVITY_KTX = "1.3.0-alpha08"
-        const val FRAGMENT_KTX = "1.4.0-alpha01"
+        const val KODEIN = "7.6.0"
+        const val KTX = "1.6.0-beta02"
+        const val ACTIVITY_KTX = "1.3.0-beta01"
+        const val FRAGMENT_KTX = "1.4.0-alpha02"
         const val PALETTE_KTX = "1.0.0"
         const val COLLECTION_KTX = "1.2.0-alpha01"
         const val NAVIGATION_KTX = "2.3.5"
-        const val WORK_KTX = "2.7.0-alpha03"
+        const val WORK_KTX = "2.7.0-alpha04"
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.4.0-alpha02"
-        const val MMKV = "1.2.8"
-        const val GSON = "2.8.6"
+        const val MMKV = "1.2.9"
+        const val GSON = "2.8.7"
         const val PLAY_CORE = "1.10.0"
-        const val COIL = "1.2.1"
+        const val COIL = "1.2.2"
         const val RETROFIT2 = "2.9.0"
         const val OKHTTP3 = "5.0.0-alpha.2"
         const val JSOUP = "1.13.1"
         const val AUTO_SERVICE = "1.0"
-        const val FIREBASE_BOM = "28.0.1"
+        const val FIREBASE_BOM = "28.1.0"
         const val FIREBASE_AUTH_GOOGLE = "19.0.0"
         const val FIREBASE_AUTH_FACEBOOK = "9.1.1"
         const val EXOPLAYER = "2.14.0"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
         const val LOTTIE = "3.7.0"
-        const val SENTRY = "5.0.0-beta.4"
+        const val SENTRY = "5.0.1"
     }
 
     object Jieyi {

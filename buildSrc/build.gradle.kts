@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ dependencies {
     val updateVersion: String by System.getProperties()
     val ktlintVersion: String by System.getProperties()
 
-    implementation("com.android.tools.build:gradle:7.1.0-alpha01")
+    implementation("com.android.tools.build:gradle:7.1.0-alpha02")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
