@@ -72,7 +72,6 @@ internal class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>(), AutoUpdat
 
     fun removeItem(entity: SimpleTrackEntity) {
         data = data.toMutableList().apply { remove(entity) }
-        notifyDataSetChanged()
     }
 
     fun setOnClickListener(listener: (SimpleTrackEntity) -> Unit) {

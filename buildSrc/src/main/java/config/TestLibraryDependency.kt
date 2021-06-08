@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,11 @@ package config
 
 object TestLibraryDependency {
     private object Version {
-        const val KTX_CORE = "1.4.0-beta01"
+        const val KTX_CORE = "1.4.0-beta02"
         const val CORE = "2.1.0"
-        const val JUNIT = "1.1.3-beta01"
+        const val JUNIT = "1.1.3-beta02"
         const val ASSERTK = "0.24"
-        const val ESPRESSO = "3.4.0-beta01"
+        const val ESPRESSO = "3.4.0-beta02"
         const val KAKAO = "2.1.0"
         const val MOCKK = "1.11.0"
     }

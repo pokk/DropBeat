@@ -118,9 +118,12 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                 includeDownloaded.find<TextView>(AppResId.mtv_no_music).visible()
             }
             else {
-                (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
-                    .map(EntityMapper::libraryToSimpleTrackEntity)
-                    .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+                (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.apply {
+                    data = it.songs
+                        .map(EntityMapper::libraryToSimpleTrackEntity)
+                        .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+                    notifyDataSetChanged()
+                }
             }
             includeDownloaded.find<View>(AppResId.pb_progress).gone()
         }
@@ -129,9 +132,12 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                 includeFavorite.find<TextView>(AppResId.mtv_no_music).visible()
             }
             else {
-                (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.data = it.songs
-                    .map(EntityMapper::libraryToSimpleTrackEntity)
-                    .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+                (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.apply {
+                    data = it.songs
+                        .map(EntityMapper::libraryToSimpleTrackEntity)
+                        .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
+                    notifyDataSetChanged()
+                }
             }
             includeFavorite.find<View>(AppResId.pb_progress).gone()
         }
