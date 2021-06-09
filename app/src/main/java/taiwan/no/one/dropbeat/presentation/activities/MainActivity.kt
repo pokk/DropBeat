@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -115,6 +115,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val ctx = newBase?.createConfigurationContext(config)
         super.attachBaseContext(ctx)
         SplitCompat.install(this)
+    }
+
+    override fun onBackPressed() {
+        // MainActivity has two fragment container, if following the default [onBackPressed],
+        // the app will be closed directly. The main container should be handled by ourselves.
+        // Also, we will ignore the player container's stack. It will always be here and no
+        // more stacks into the player container.
+        if (!navigator.navigateUp()) {
+            super.onBackPressed()
+        }
     }
 
     override fun preSetContentView() {
