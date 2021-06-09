@@ -181,7 +181,6 @@ fun DependencyHandlerScope.androidxKtxDependencies(env: String) {
     commonKtxDependencies(env)
     env(AndroidKtx.PALETTE_KTX)
     env(AndroidKtx.COLLECTION_KTX)
-    env(AndroidKtx.NAVIGATION_COMMON_KTX)
     env(AndroidKtx.NAVIGATION_FRAGMENT_KTX)
     env(AndroidKtx.NAVIGATION_UI_KTX)
     env(AndroidKtx.WORKER_KTX)

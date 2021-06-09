@@ -108,7 +108,6 @@ object LibraryDependency {
         const val VIEWMODEL_KTX = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.AAC_LIFECYCLE}"
         const val LIVEDATA_KTX = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.AAC_LIFECYCLE}"
         const val RUNTIME_KTX = "androidx.lifecycle:lifecycle-runtime-ktx:${Version.AAC_LIFECYCLE}"
-        const val NAVIGATION_COMMON_KTX = "androidx.navigation:navigation-common-ktx:${Version.NAVIGATION_KTX}"
         const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:${Version.NAVIGATION_KTX}"
         const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${Version.NAVIGATION_KTX}"
         const val WORKER_KTX = "androidx.work:work-runtime-ktx:${Version.WORK_KTX}"

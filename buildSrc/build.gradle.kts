@@ -23,8 +23,6 @@
  */
 
 plugins {
-    val kotlinVersion: String by System.getProperties()
-    //    kotlin("jvm") version kotlinVersion
     `kotlin-dsl`
 }
 
@@ -38,15 +36,10 @@ repositories {
 }
 
 dependencies {
-    val kotlinVersion: String by System.getProperties()
-    val detektVersion: String by System.getProperties()
-    val updateVersion: String by System.getProperties()
-    val ktlintVersion: String by System.getProperties()
-
     implementation("com.android.tools.build:gradle:7.1.0-alpha02")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
 
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
-    implementation("com.github.ben-manes:gradle-versions-plugin:$updateVersion")
-    implementation("com.pinterest:ktlint:$ktlintVersion")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
+    implementation("com.github.ben-manes:gradle-versions-plugin:0.39.0")
+    implementation("com.pinterest:ktlint:0.41.0")
 }
