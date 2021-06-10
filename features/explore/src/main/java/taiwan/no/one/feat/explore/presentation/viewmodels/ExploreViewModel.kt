@@ -33,6 +33,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimplePlaylistEntity
@@ -87,7 +88,7 @@ internal class ExploreViewModel(
                 tracks.onEach {
                     val url = it.url ?: return@onEach
                     val isFavorite = try {
-                        libraryProvider.isFavoriteTrack(url, 2)
+                        libraryProvider.isFavoriteTrack(url, PlaylistConstant.FAVORITE)
                     }
                     catch (e: Exception) {
                         return@onEach
@@ -103,7 +104,7 @@ internal class ExploreViewModel(
             fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, SONG_LIMITATION, SONG_LIMITATION)).onEach {
                 val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
                 val isFavorite = try {
-                    libraryProvider.isFavoriteTrack(url, 2)
+                    libraryProvider.isFavoriteTrack(url, PlaylistConstant.FAVORITE)
                 }
                 catch (e: Exception) {
                     return@onEach

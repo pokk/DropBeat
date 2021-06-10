@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
@@ -61,7 +62,7 @@ internal class RankViewModel(
                 ?.map(EntityMapper::songToSimpleTrackEntity)
                 ?.onEach {
                     val isFavorite = try {
-                        libraryProvider.isFavoriteTrack(it.uri, 2)
+                        libraryProvider.isFavoriteTrack(it.uri, PlaylistConstant.FAVORITE)
                     }
                     catch (e: Exception) {
                         return@onEach

@@ -43,6 +43,7 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.AppResMenu
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.entity.SimpleTrackEntity
@@ -192,7 +193,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         }
         playlistAdapter.setOnClickListener {
             // 1: favorite playlist, 2: downloaded playlist
-            val isFixedPlaylist = it.id in listOf(1, 2)
+            val isFixedPlaylist = it.id in listOf(PlaylistConstant.DOWNLOADED, PlaylistConstant.FAVORITE)
             findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id, isFixedPlaylist))
             analyticsVm.navigatedToPlaylist("playlist name: ${it.name}")
         }
