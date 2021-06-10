@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
+import com.google.gson.JsonParseException
 import taiwan.no.one.core.data.extensions.parseObjectFromJson
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.dropbeat.AppResDrawable
@@ -35,14 +36,16 @@ import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 internal class CreateDefaultPlaylistOneShotCase(
     private val repository: PlaylistRepo,
 ) : CreateDefaultPlaylistCase() {
-    val defaultPlaylistUrl = listOf(
-        AppResDrawable.bg_downloaded, AppResDrawable.bg_favorite, AppResDrawable.bg_history
-    ).map(ResourceHelper::getUriForDrawableResource)
+    private val defaultPlaylistUrl by lazy {
+        listOf(
+            AppResDrawable.bg_downloaded, AppResDrawable.bg_favorite, AppResDrawable.bg_history
+        ).map(ResourceHelper::getUriForDrawableResource)
+    }
 
     override suspend fun acquireCase(parameter: Request?): Boolean {
         val list = DropBeatApp.appContext
             .parseObjectFromJson<List<PlayListEntity>>("json/default_playlist.json")
-            ?: throw Exception()
+            ?: throw JsonParseException("Parse the DEFAULT playlist failed.")
         val ids = list.map(PlayListEntity::id)
         val names = list.map(PlayListEntity::name)
         ids.zip(names)

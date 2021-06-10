@@ -82,11 +82,14 @@ internal class SongsOfTagViewModel(
 
     @WorkerThread
     fun getCoverThumb(entity: SimpleTrackEntity) = launchBehind {
-        val newEntity = exploreProvider.getTrackCover(entity)
-        val updatedList = _songs.value?.getOrNull()?.map {
-            if (it.uri == entity.uri) newEntity else it
-        } ?: return@launchBehind
-        _songs.postValue(Result.success(updatedList))
+        runCatching { exploreProvider.getTrackCover(entity) }.onSuccess { newEntity ->
+            val updatedList = _songs.value?.getOrNull()?.map {
+                if (it.uri == entity.uri) newEntity else it
+            } ?: return@launchBehind
+            _songs.postValue(Result.success(updatedList))
+        }.onFailure {
+            _songs.postValue(Result.failure(it))
+        }
     }
 
     override fun onCleared() {
