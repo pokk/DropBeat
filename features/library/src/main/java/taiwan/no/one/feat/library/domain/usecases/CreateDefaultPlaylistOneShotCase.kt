@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ internal class CreateDefaultPlaylistOneShotCase(
     private val repository: PlaylistRepo,
 ) : CreateDefaultPlaylistCase() {
     val defaultPlaylistUrl = listOf(
-        AppResDrawable.bg_downloaded, AppResDrawable.bg_favorite, AppResDrawable.bg_uncategory
+        AppResDrawable.bg_downloaded, AppResDrawable.bg_favorite, AppResDrawable.bg_history
     ).map(ResourceHelper::getUriForDrawableResource)
 
     override suspend fun acquireCase(parameter: Request?): Boolean {

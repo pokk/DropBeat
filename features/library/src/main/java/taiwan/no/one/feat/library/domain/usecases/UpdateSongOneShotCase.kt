@@ -26,6 +26,7 @@ package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.core.exceptions.NotFoundException
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
@@ -85,11 +86,11 @@ internal class UpdateSongOneShotCase(
     private suspend fun updateFavoritePlaylist(song: SongEntity, isFavorite: Boolean) {
         if (isFavorite) {
             // Add into the favorite playlist.
-            playlistRepo.addMusic(song, 2)
+            playlistRepo.addMusic(song, PlaylistConstant.FAVORITE)
         }
         else {
             // Remove the song from the favorite playlist.
-            playlistRepo.deleteMusic(song.id, 2)
+            playlistRepo.deleteMusic(song.id, PlaylistConstant.FAVORITE)
         }
     }
 

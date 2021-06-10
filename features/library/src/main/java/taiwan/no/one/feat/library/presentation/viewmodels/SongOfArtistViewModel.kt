@@ -33,6 +33,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
@@ -63,7 +64,7 @@ internal class SongOfArtistViewModel(
     @WorkerThread
     private suspend fun attachFavorite(tracks: List<SimpleTrackEntity>) = tracks.onEach {
         val isFavorite = try {
-            libraryMethodsProvider.isFavoriteTrack(it.uri, 2).getOrNull() ?: false
+            libraryMethodsProvider.isFavoriteTrack(it.uri, PlaylistConstant.FAVORITE).getOrNull() ?: false
         }
         catch (e: Exception) {
             false
