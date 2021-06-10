@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,6 +53,7 @@ import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
@@ -91,6 +92,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private val playerCallback = object : PlayerCallback {
         override fun onTrackChanged(music: MusicInfo) {
             logw(music)
+            vm.addSongToPlaylist(music, PlaylistConstant.HISTORY)
             setMusicInfo(music)
         }
 
