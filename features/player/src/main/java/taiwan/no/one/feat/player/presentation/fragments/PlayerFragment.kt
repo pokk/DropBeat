@@ -34,6 +34,7 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
@@ -144,7 +145,20 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 StringUtil.buildDurationToDigitalTime((progress * player.curDuration / FULL_PERCENTAGE).toLong())
         }
     }
-    val player = SimpleMusicPlayer.getInstance()
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            parent.apply {
+                if (!isBottomNaviBarVisible) {
+                    collapsePlayer()
+                }
+                else {
+                    isEnabled = false
+                    onBackPressed()
+                }
+            }
+        }
+    }
+    private val player = SimpleMusicPlayer.getInstance()
     val playlist = listOf(
         MusicInfo(
             "title1",
@@ -169,6 +183,11 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     }
 
     //region Fragment Lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parent.onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         player.setPlayerEventCallback(null)
@@ -382,6 +401,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private fun collapsePlayer(shouldShowBottomNavBar: Boolean = true) {
         if (isRunningAnim) return
         binding.root.transitionToState(R.id.mini_player_end)
+        backPressedCallback.isEnabled = false
         parent.apply {
             if (shouldShowBottomNavBar) isBottomNaviBarVisible = true
             isMinimalPlayer = true
@@ -391,6 +411,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private fun expandPlayer(shouldHideBottomNavBar: Boolean = true) {
         if (isRunningAnim) return
         binding.root.transitionToState(R.id.mini_player_start)
+        backPressedCallback.isEnabled = true
         parent.apply {
             if (shouldHideBottomNavBar) isBottomNaviBarVisible = false
             isMinimalPlayer = false
