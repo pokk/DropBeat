@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.presentation.viewmodels
 
 import android.app.Application
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -64,6 +65,8 @@ internal class MyHomeViewModel(
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
     val playlists get() = _playlists.toLiveData()
+    private val _nonDefaultPlaylist by lazy { MutableLiveData<List<PlayListEntity>>() }
+    val nonDefaultPlaylist get() = _nonDefaultPlaylist.toLiveData()
     private val _favorites by lazy { MutableLiveData<List<SimpleTrackEntity>>() }
     val favorites get() = _favorites.toLiveData()
     private val _downloaded by lazy { MutableLiveData<List<SimpleTrackEntity>>() }
@@ -79,7 +82,13 @@ internal class MyHomeViewModel(
         _playlists.value = runCatching { fetchAllPlaylistsCase.execute() }
     }
 
-    fun extractMainPlaylist(list: List<PlayListEntity>) = launchBehind(Dispatchers.Default) {
+    @WorkerThread
+    fun eliminateDefaultPlaylist(list: List<PlayListEntity>) = launchBehind(Dispatchers.Default) {
+        _nonDefaultPlaylist.postValue(list.filter { it.id !in PlaylistConstant.fixedPlaylistIds() })
+    }
+
+    @WorkerThread
+    fun extractDefaultPlaylist(list: List<PlayListEntity>) = launchBehind(Dispatchers.Default) {
         listOf(_downloaded, _favorites, _histories)
             .zip(PlaylistConstant.fixedPlaylistIds())
             .forEach { (livedata, index) ->
