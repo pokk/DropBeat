@@ -56,7 +56,6 @@ import taiwan.no.one.dropbeat.presentation.viewmodels.PrivacyViewModel
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.library.R
-import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.databinding.FragmentMyPageBinding
 import taiwan.no.one.feat.library.databinding.MergeTopControllerBinding
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
@@ -102,7 +101,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
     }
 
     override fun onDestroyView() {
-        includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = null
+        foreachSubviewPlaylist { find<RecyclerView>(AppResId.rv_musics).adapter = null }
         super.onDestroyView()
     }
 
@@ -113,36 +112,9 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                 vm.extractMainPlaylist(it)
             }.onFailure(::loge)
         }
-        vm.downloaded.observe(this) {
-            if (it.songs.isEmpty()) {
-                includeDownloaded.find<TextView>(AppResId.mtv_no_music).visible()
-            }
-            else {
-                (includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.apply {
-                    data = it.songs
-                        .map(EntityMapper::libraryToSimpleTrackEntity)
-                        .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
-                    // It doesn't have many data, just reset all.
-                    notifyDataSetChanged()
-                }
-            }
-            includeDownloaded.find<View>(AppResId.pb_progress).gone()
-        }
-        vm.favorites.observe(this) {
-            if (it.songs.isEmpty()) {
-                includeFavorite.find<TextView>(AppResId.mtv_no_music).visible()
-            }
-            else {
-                (includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.apply {
-                    data = it.songs
-                        .map(EntityMapper::libraryToSimpleTrackEntity)
-                        .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
-                    // It doesn't have many data, just reset all.
-                    notifyDataSetChanged()
-                }
-            }
-            includeFavorite.find<View>(AppResId.pb_progress).gone()
-        }
+        vm.downloaded.observe(this) { displayPlaylist(it, includeDownloaded) }
+        vm.favorites.observe(this) { displayPlaylist(it, includeFavorite) }
+        vm.histories.observe(this) { displayPlaylist(it, includeHistory) }
         vm.resultOfFavorite.observe(this) {
             if (!it) return@observe
             vm.getAllPlaylists()
@@ -159,16 +131,18 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                 layoutManager = playlistLayoutManager()
             }
         }
-        includeFavorite.find<TextView>(AppResId.mtv_explore_title).text = "Favorite"
-        includeDownloaded.find<TextView>(AppResId.mtv_explore_title).text = "Downloaded"
-        includeHistory.find<TextView>(AppResId.mtv_explore_title).text = "History"
-        includeFavorite.find<RecyclerView>(AppResId.rv_musics).apply {
-            adapter = TrackAdapter()
-            layoutManager = linearLayoutManager()
+        listOf(
+            includeFavorite to "Favorite",
+            includeDownloaded to "Downloaded",
+            includeHistory to "History"
+        ).forEach { (layout, txt) ->
+            layout.find<TextView>(AppResId.mtv_explore_title).text = txt
         }
-        includeDownloaded.find<RecyclerView>(AppResId.rv_musics).apply {
-            adapter = TrackAdapter()
-            layoutManager = linearLayoutManager()
+        foreachSubviewPlaylist {
+            find<RecyclerView>(AppResId.rv_musics).apply {
+                adapter = TrackAdapter()
+                layoutManager = linearLayoutManager()
+            }
         }
     }
 
@@ -238,6 +212,24 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                 analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
             }
         }
+    }
+
+    private fun foreachSubviewPlaylist(block: ConstraintLayout.() -> Unit) {
+        listOf(includeDownloaded, includeFavorite, includeHistory).forEach { it.block() }
+    }
+
+    private fun displayPlaylist(songs: List<SimpleTrackEntity>, layout: ConstraintLayout) {
+        if (songs.isEmpty()) {
+            layout.find<TextView>(AppResId.mtv_no_music).visible()
+        }
+        else {
+            (layout.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.apply {
+                data = songs
+                // It doesn't have many data, just reset all.
+                notifyDataSetChanged()
+            }
+        }
+        layout.find<View>(AppResId.pb_progress).gone()
     }
 
     private fun navigateToArtist(entity: SimpleTrackEntity) {

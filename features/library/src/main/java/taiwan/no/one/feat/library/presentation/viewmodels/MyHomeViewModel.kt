@@ -28,9 +28,11 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.domain.usecases.AddAccountCase
 import taiwan.no.one.dropbeat.domain.usecases.AddAccountReq
@@ -62,11 +64,11 @@ internal class MyHomeViewModel(
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
     val playlists get() = _playlists.toLiveData()
-    private val _favorites by lazy { MutableLiveData<PlayListEntity>() }
+    private val _favorites by lazy { MutableLiveData<List<SimpleTrackEntity>>() }
     val favorites get() = _favorites.toLiveData()
-    private val _downloaded by lazy { MutableLiveData<PlayListEntity>() }
+    private val _downloaded by lazy { MutableLiveData<List<SimpleTrackEntity>>() }
     val downloaded get() = _downloaded.toLiveData()
-    private val _histories by lazy { MutableLiveData<PlayListEntity>() }
+    private val _histories by lazy { MutableLiveData<List<SimpleTrackEntity>>() }
     val histories get() = _histories.toLiveData()
     private val _resultOfFavorite by lazy { MutableLiveData<Boolean>() }
     val resultOfFavorite get() = _resultOfFavorite.toLiveData()
@@ -77,9 +79,14 @@ internal class MyHomeViewModel(
         _playlists.value = runCatching { fetchAllPlaylistsCase.execute() }
     }
 
-    fun extractMainPlaylist(list: List<PlayListEntity>) = launchBehind {
-        _downloaded.postValue(list[0])
-        _favorites.postValue(list[1])
+    fun extractMainPlaylist(list: List<PlayListEntity>) = launchBehind(Dispatchers.Default) {
+        listOf(_downloaded, _favorites, _histories)
+            .zip(PlaylistConstant.fixedPlaylistIds())
+            .forEach { (livedata, index) ->
+                // [index - 1] because the id and index with different 1.
+                val playlist = list[index - 1]
+                livedata.postValue(getSongs(playlist))
+            }
     }
 
     fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {
@@ -119,4 +126,8 @@ internal class MyHomeViewModel(
 
     fun syncPlaylistOnRemote(userInfo: UserInfoEntity) = viewModelScope.launch {
     }
+
+    private fun getSongs(playlist: PlayListEntity) = playlist.songs
+        .map(EntityMapper::libraryToSimpleTrackEntity)
+        .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
 }
