@@ -29,6 +29,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.loge
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
@@ -80,6 +81,7 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
             else {
                 binding.tietPlaylistName.text.toString()
             }
+            it.hideSoftKeyboard()
             vm.createPlaylist(navArgs.playlist, playlistName)
             analyticsVm.clickedCreateNewPlaylist(playlistName)
         }
