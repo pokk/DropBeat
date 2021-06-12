@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -126,10 +126,12 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                     val account = task.getResult(ApiException::class.java) ?: throw NullPointerException()
                     showLoading()
                     vm.login(Credential.Google(account.idToken.orEmpty()))
-                } catch (apiException: ApiException) {
+                }
+                catch (apiException: ApiException) {
                     // Google Sign In failed, update UI appropriately
                     loge(apiException)
-                } catch (nullPointerException: NullPointerException) {
+                }
+                catch (nullPointerException: NullPointerException) {
                     loge(nullPointerException)
                 }
             }
@@ -184,6 +186,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
 
     override fun componentListenersBinding() {
         snsAdapter.setOnClickListener {
+            // TODO(jieyi): 6/12/21 They all should go to the viewmodel
             when (it) {
                 R.drawable.ic_facebook -> {
                     LoginManager.getInstance()

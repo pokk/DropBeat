@@ -77,9 +77,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
             res.onSuccess {
                 (binding.rvMusics.adapter as? RankAdapter)?.submitList(it)
                 binding.pbProgress.gone()
-            }.onFailure {
-                logw(it)
-            }
+            }.onFailure(::logw)
         }
     }
 }

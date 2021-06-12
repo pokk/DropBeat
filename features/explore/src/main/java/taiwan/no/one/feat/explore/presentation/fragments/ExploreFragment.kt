@@ -130,7 +130,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
                 includePlaylist.find<RecyclerView>(AppResId.rv_musics)
                     .layoutManager
                     ?.onRestoreInstanceState(vm.playlistState)
-            }.onFailure { loge(it) }
+            }.onFailure(::loge)
         }
         vm.topArtists.observe(this) { res ->
             res.onSuccess {
