@@ -25,11 +25,15 @@
 package taiwan.no.one.feat.library.presentation.viewmodels
 
 import android.app.Application
+import androidx.annotation.WorkerThread
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
@@ -61,6 +65,8 @@ internal class PlaylistViewModel(
     val resultOfFavorite get() = _resultOfFavorite.toLiveData()
     private val _playlist by lazy { ResultLiveData<PlayListEntity>() }
     val playlist get() = _playlist.toLiveData()
+    private val _playlistDuration by lazy { MutableLiveData<String>() }
+    val playlistDuration get() = _playlistDuration.toLiveData()
 
     fun getSongs(playlistId: Int) = viewModelScope.launch {
         _playlist.value = runCatching { fetchPlaylistCase.execute(FetchPlaylistReq(playlistId)) }
@@ -88,5 +94,14 @@ internal class PlaylistViewModel(
     fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {
         _resultOfFavorite.value =
             runCatching { updateSongCase.execute(UpdateSongReq(song = song, isFavorite = isFavorite)) }
+    }
+
+    @WorkerThread
+    fun countDuration(songs: List<SimpleTrackEntity>) = launchBehind(Dispatchers.Default) {
+        val duration = songs.fold(0) { acc, song -> acc + song.duration }
+        // Set the visibility for this fragment.
+        _playlistDuration.postValue(
+            "${songs.size} Songs・${StringUtil.buildDurationToTime(duration.toLong())}・30 mins ago played"
+        )
     }
 }

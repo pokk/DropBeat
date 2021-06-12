@@ -44,7 +44,6 @@ import java.lang.ref.WeakReference
 import org.kodein.di.factory
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.AppResId
-import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.R
@@ -161,9 +160,14 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
             binding.mtvTitle.text = navArgs.title
             navArgs.songs?.also { displaySongs(it.toList()) } ?: displayNoSongs()
         }
+        vm.playlistDuration.observe(viewLifecycleOwner) {
+            // Set the visibility for this fragment.
+            binding.mtvSubtitle.text = it
+        }
     }
 
     private fun displaySongs(songs: List<SimpleTrackEntity>) {
+        vm.countDuration(songs)
         find<View>(AppResId.pb_progress).gone()
         find<View>(R.id.include_favorite).visible()
         // Set the recycler view.
@@ -181,10 +185,6 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
         find<TextView>(AppResId.mtv_explore_title).text = "All Songs"
         // Hide the view more button.
         find<View>(AppResId.btn_more).gone()
-        val duration = songs.fold(0) { acc, song -> acc + song.duration }
-        // Set the visibility for this fragment.
-        binding.mtvSubtitle.text =
-            "${songs.size} Songs・${StringUtil.buildDurationToTime(duration.toLong())}・30 mins ago played"
         binding.btnPlayAll.visible()
     }
 
