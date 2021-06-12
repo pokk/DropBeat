@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
-import com.devrapid.kotlinknifer.logw
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -58,7 +57,6 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
     override fun bindLiveData() {
         vm.resetResp.observe(this) {
             it.onSuccess {
-                logw(it)
                 findNavController().popBackStack()
                 analyticsVm.navigatedGoBackFromReset()
             }.onFailure(::loge)

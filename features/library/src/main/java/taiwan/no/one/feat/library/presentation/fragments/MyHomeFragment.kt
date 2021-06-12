@@ -134,7 +134,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         listOf(
             includeFavorite to "Favorite",
             includeDownloaded to "Downloaded",
-            includeHistory to "History"
+            includeHistory to "History",
         ).forEach { (layout, txt) ->
             layout.find<TextView>(AppResId.mtv_explore_title).text = txt
         }

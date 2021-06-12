@@ -30,6 +30,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
@@ -72,8 +73,11 @@ internal class ExploreViewModel(
     val topTracks get() = _topTracks.toLiveData()
     private val _topArtists by lazy { ResultLiveData<ArtistWithMoreDetailEntities>() }
     val topArtists get() = _topArtists.toLiveData()
-    val topTags = liveData {
-        emit(runCatching { fetchChartTopTagCase.execute(FetchChartTopTagReq(1, SONG_LIMITATION)) })
+    val topTags = liveData(Dispatchers.Default) {
+        val res = runCatching {
+            fetchChartTopTagCase.execute(FetchChartTopTagReq(1, SONG_LIMITATION)).tags.orEmpty()
+        }
+        emit(res)
     }
     private val _resultOfFavorite by lazy { MutableLiveData<Boolean>() }
     val resultOfFavorite get() = _resultOfFavorite.toLiveData()

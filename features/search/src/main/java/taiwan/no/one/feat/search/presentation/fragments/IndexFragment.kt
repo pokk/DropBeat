@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.hideSoftKeyboard
 import com.devrapid.kotlinknifer.invisible
-import com.devrapid.kotlinknifer.loge
+import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
@@ -144,11 +144,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                     binding.gResult.visible()
                     musicAdapter.submitList(it)
                 }
-                hideLoading()
-            }.onFailure {
-                hideLoading()
-                loge(it)
-            }
+            }.onFailure(::logw)
+            hideLoading()
         }
     }
 
@@ -206,9 +203,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
                 false
             }
             tietSearch.afterTextChanges().debounce(KtxConstant.DEFAULT_DEBOUNCE_TEXT_CHANGE).onEach {
-                if (it.isNullOrBlank()) {
-                    setAndDisplayHistory()
-                }
+                if (!it.isNullOrBlank()) return@onEach
+                setAndDisplayHistory()
             }.launchIn(lifecycleScope)
         }
         mergeNoResultBinding.btnClear.setOnClickListener {
@@ -278,9 +274,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private fun disableMotion() {
         binding.root.apply {
             getTransition(R.id.transition_search_scene).apply {
-                if (isEnabled) {
-                    setEnable(false)
-                }
+                if (isEnabled) isEnabled = !isEnabled
             }
         }
     }
@@ -288,9 +282,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private fun enableMotion() {
         binding.root.apply {
             getTransition(R.id.transition_search_scene).apply {
-                if (!isEnabled) {
-                    setEnable(true)
-                }
+                if (!isEnabled) isEnabled = !isEnabled
             }
         }
     }

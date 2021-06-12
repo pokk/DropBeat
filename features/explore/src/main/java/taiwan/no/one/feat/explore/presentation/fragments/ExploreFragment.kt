@@ -48,7 +48,6 @@ import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.explore.R
-import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
@@ -97,11 +96,13 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         // HACK(jieyi): 5/2/21 Will set a callback function to [RankingFragment] until we find the
         //  best solution to set the navigation destination.
         findRankingFragment()?.navigationCallback = { title, songs ->
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
-                songs = songs.toTypedArray(),
-                title = title,
-                isFixed = true,
-            ))
+            findNavController().navigate(
+                ExploreFragmentDirections.actionExploreToPlaylist(
+                    songs = songs.toTypedArray(),
+                    title = title,
+                    isFixed = true,
+                )
+            )
             analyticsVm.navigatedToPlaylist("playlist name: $title")
         }
     }
@@ -218,9 +219,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         vm.getTopTracks()
         vm.getTopArtists()
         vm.topTags.observe(viewLifecycleOwner) { res ->
-            res.onSuccess {
-                it.tags?.takeIf(List<TagEntity>::isNotEmpty)?.also(exploreAdapter::submitList)
-            }.onFailure(::loge)
+            res.onSuccess(exploreAdapter::submitList).onFailure(::loge)
             binding.includeExplore.pbProgress.gone()
         }
     }
@@ -228,6 +227,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
     private fun findRankingFragment() =
         childFragmentManager.findFragmentByTag("part_explore") as? RankingFragment
 
+    // TODO(jieyi): 6/12/21 It should be refactored, the logic should be in a viewmodel.
     private fun setOnTopViewAllClick(layout: ConstraintLayout, entities: Any) {
         var isTopArtist = false
         val list = (entities as? ArtistWithMoreDetailEntities)
@@ -249,11 +249,13 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
                 }
             }
             val playlistName = layout.find<TextView>(AppResId.mtv_explore_title).text.toString()
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(
-                songs = list,
-                title = playlistName,
-                isFixed = true,
-            ))
+            findNavController().navigate(
+                ExploreFragmentDirections.actionExploreToPlaylist(
+                    songs = list,
+                    title = playlistName,
+                    isFixed = true,
+                )
+            )
             analyticsVm.navigatedToPlaylist("playlist name: $playlistName")
         }
     }

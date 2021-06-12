@@ -167,15 +167,14 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
     }
 
     private fun displaySongs(songs: List<SimpleTrackEntity>) {
+        // Calculate the total of all songs' duration.
         vm.countDuration(songs)
         find<View>(AppResId.pb_progress).gone()
         find<View>(R.id.include_favorite).visible()
         // Set the recycler view.
         find<RecyclerView>(AppResId.rv_musics).apply {
             // Make the height to fit the view height.
-            updateLayoutParams {
-                height = getDimen(WidgetResDimen.md_zero_unit).toInt()
-            }
+            updateLayoutParams { height = getDimen(WidgetResDimen.md_zero_unit).toInt() }
             adapter = playlistAdapter
             layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
         }

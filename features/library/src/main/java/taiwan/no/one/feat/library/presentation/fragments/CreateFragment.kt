@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,6 @@ import com.devrapid.kotlinknifer.loge
 import com.google.android.material.transition.MaterialSharedAxis
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
-import taiwan.no.one.dropbeat.AppResDrawable
-import taiwan.no.one.dropbeat.core.helpers.ResourceHelper
-import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.databinding.FragmentCreateBinding
 import taiwan.no.one.feat.library.presentation.viewmodels.AnalyticsViewModel
 import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
@@ -83,18 +80,7 @@ internal class CreateFragment : BaseFragment<BaseActivity<*>, FragmentCreateBind
             else {
                 binding.tietPlaylistName.text.toString()
             }
-            val newPlaylist = navArgs.playlist?.let {
-                PlayListEntity(name = playlistName,
-                               songIds = it.songIds,
-                               count = it.songIds.size,
-                               coverUrl = ResourceHelper
-                                   .getUriForDrawableResource(AppResDrawable.bg_default)
-                                   .toString())
-            } ?: PlayListEntity(name = playlistName,
-                                coverUrl = ResourceHelper
-                                    .getUriForDrawableResource(AppResDrawable.bg_default)
-                                    .toString())
-            vm.createPlaylist(newPlaylist)
+            vm.createPlaylist(navArgs.playlist, playlistName)
             analyticsVm.clickedCreateNewPlaylist(playlistName)
         }
     }

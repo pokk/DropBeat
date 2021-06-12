@@ -33,8 +33,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.AppResDrawable
+import taiwan.no.one.dropbeat.core.helpers.ResourceHelper
 import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
+import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
@@ -74,8 +77,22 @@ internal class PlaylistViewModel(
 
     fun getPlaylist(playlistId: Int) = getSongs(playlistId)
 
-    fun createPlaylist(playlist: PlayListEntity) = viewModelScope.launch {
-        _result.value = runCatching { addPlaylistCase.execute(AddPlaylistReq(playlist)) }
+    @WorkerThread
+    fun createPlaylist(playlist: SimplePlaylistEntity?, name: String) = launchBehind(Dispatchers.Default) {
+        _result.postValue(runCatching {
+            val param = playlist?.let {
+                PlayListEntity(
+                    name = name,
+                    songIds = it.songIds,
+                    count = it.songIds.size,
+                    coverUrl = ResourceHelper.getUriForDrawableResource(AppResDrawable.bg_default).toString()
+                )
+            } ?: PlayListEntity(
+                name = name,
+                coverUrl = ResourceHelper.getUriForDrawableResource(AppResDrawable.bg_default).toString()
+            )
+            addPlaylistCase.execute(AddPlaylistReq(param))
+        })
     }
 
     fun updatePlaylist(playlistId: Int, playlistName: String) = viewModelScope.launch {

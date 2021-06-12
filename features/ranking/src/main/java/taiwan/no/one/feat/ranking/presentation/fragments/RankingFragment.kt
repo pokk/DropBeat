@@ -52,9 +52,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
 
     override fun bindLiveData() {
         vm.musics.observe(this) { res ->
-            res.onSuccess {
-                navigationCallback?.invoke(albumTitle, it)
-            }.onFailure(::loge)
+            res.onSuccess { navigationCallback?.invoke(albumTitle, it) }.onFailure(::loge)
         }
     }
 
