@@ -108,8 +108,8 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
     override fun bindLiveData() {
         vm.playlists.observe(this) { res ->
             res.onSuccess {
-                playlistAdapter.submitList(it)
-                vm.extractMainPlaylist(it)
+                vm.eliminateDefaultPlaylist(it)
+                vm.extractDefaultPlaylist(it)
             }.onFailure(::loge)
         }
         vm.downloaded.observe(this) { displayPlaylist(it, includeDownloaded) }
@@ -119,6 +119,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             if (!it) return@observe
             vm.getAllPlaylists()
         }
+        vm.nonDefaultPlaylist.observe(this, playlistAdapter::submitList)
     }
 
     override fun viewComponentBinding() {
