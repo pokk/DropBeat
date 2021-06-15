@@ -221,7 +221,6 @@ fun DependencyHandlerScope.firebaseDependencies(env: String) {
     env(Firebase.FIREBASE_MESSAGING)
     env(Firebase.FIREBASE_DB)
     env(Firebase.FIREBASE_FIRESTORE)
-    env("com.google.guava:guava:27.0.1-android") // For fixing firestore dependency error
     env(Firebase.FIREBASE_AUTH)
     env(Firebase.FIREBASE_AUTH_FACEBOOK)
 }
@@ -234,15 +233,15 @@ fun DependencyHandlerScope.localDependencies(env: String) {
 fun DependencyHandlerScope.uiDependencies(env: String) {
     env(Ui.LOTTIE)
     env(Ui.SHAPE_OF_VIEW)
-//    env(Jieyi.ARV)
+    //    env(Jieyi.ARV)
 }
 
 fun DependencyHandlerScope.debugDependencies(env: String) {
     env(DebugDependency.STEHO)
     env(DebugDependency.STEHO_INTERCEPTOR)
-//    env(DebugDependency.LEAKCANARY)
-//    env(DebugDependency.DEBUG_DB)
-//    env(DebugDependency.OK_HTTP_PROFILER)
+    //    env(DebugDependency.LEAKCANARY)
+    //    env(DebugDependency.DEBUG_DB)
+    //    env(DebugDependency.OK_HTTP_PROFILER)
 }
 
 fun DependencyHandlerScope.unitTestDependencies(env: String = DepEnvTest) {
