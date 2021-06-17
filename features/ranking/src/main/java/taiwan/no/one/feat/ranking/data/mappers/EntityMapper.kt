@@ -29,16 +29,18 @@ import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
 
 internal object EntityMapper {
-    fun songToSimpleTrackEntity(entity: SongEntity) = SimpleTrackEntity(
-        0,
-        entity.title,
-        entity.artist,
-        entity.url,
-        DEFAULT_STR,
-        entity.coverURL,
-        entity.lyricURL,
-        0,
-        false,
-        false,
-    )
+    fun songToSimpleTrackEntity(entity: SongEntity) = entity.let {
+        SimpleTrackEntity(
+            0,
+            it.title,
+            it.artist,
+            it.url,
+            DEFAULT_STR,
+            it.coverURL,
+            it.lyricURL,
+            it.length,
+            false,
+            false,
+        )
+    }
 }

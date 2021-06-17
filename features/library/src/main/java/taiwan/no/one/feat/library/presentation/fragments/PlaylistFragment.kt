@@ -168,7 +168,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
 
     private fun displaySongs(songs: List<SimpleTrackEntity>) {
         // Calculate the total of all songs' duration.
-        vm.countDuration(songs)
+        vm.cumulateDuration(songs)
         find<View>(AppResId.pb_progress).gone()
         find<View>(R.id.include_favorite).visible()
         // Set the recycler view.
