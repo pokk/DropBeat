@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,8 @@
     android:id="@+id/nsv_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_main_oval">
+    android:background="@drawable/bg_main_oval"
+    tools:context=".presentation.fragments.ExploreFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

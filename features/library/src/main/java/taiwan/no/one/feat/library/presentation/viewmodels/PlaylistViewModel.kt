@@ -114,7 +114,7 @@ internal class PlaylistViewModel(
     }
 
     @WorkerThread
-    fun countDuration(songs: List<SimpleTrackEntity>) = launchBehind(Dispatchers.Default) {
+    fun cumulateDuration(songs: List<SimpleTrackEntity>) = launchBehind(Dispatchers.Default) {
         val duration = songs.fold(0) { acc, song -> acc + song.duration }
         // Set the visibility for this fragment.
         _playlistDuration.postValue(
