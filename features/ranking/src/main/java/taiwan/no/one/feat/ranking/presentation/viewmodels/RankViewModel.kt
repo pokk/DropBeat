@@ -42,6 +42,7 @@ import taiwan.no.one.feat.ranking.data.mappers.EntityMapper
 import taiwan.no.one.feat.ranking.domain.usecases.FetchDetailOfRankingsCase
 import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankCase
 import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankReq
+import taiwan.no.one.mediaplayer.utils.MediaUtil
 
 internal class RankViewModel(
     application: Application,
@@ -55,11 +56,22 @@ internal class RankViewModel(
     private val _musics by lazy { ResultLiveData<List<SongEntity>>() }
     val musics
         get() = _musics.asFlow().map {
+            // TODO(jieyi): 6/18/21 This should be change to a background thread.
             if (it.exceptionOrNull() != null) {
                 return@map Result.failure(requireNotNull(it.exceptionOrNull()))
             }
             val tracks = it.getOrNull()
                 ?.map(EntityMapper::songToSimpleTrackEntity)
+                ?.map {
+                    // TODO(jieyi): 6/18/21 move to the business logic.
+                    if (it.duration == 0) {
+                        val duration = MediaUtil.obtainDuration(it.uri)
+                        it.copy(duration = duration.toInt())
+                    }
+                    else {
+                        it
+                    }
+                }
                 ?.onEach {
                     val isFavorite = try {
                         libraryProvider.isFavoriteTrack(it.uri, PlaylistConstant.FAVORITE)
