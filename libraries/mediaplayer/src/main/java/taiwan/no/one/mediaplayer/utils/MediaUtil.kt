@@ -22,28 +22,13 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.search.domain.usecases.music
+package taiwan.no.one.mediaplayer.utils
 
-import taiwan.no.one.core.domain.usecase.Usecase
-import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
-import taiwan.no.one.feat.search.domain.usecases.FetchMusicCase
-import taiwan.no.one.mediaplayer.utils.MediaUtil
+import android.media.MediaMetadataRetriever
 
-internal class FetchMusicOneShotCase(
-    private val searchMusicRepo: SearchMusicRepo,
-) : FetchMusicCase() {
-    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        searchMusicRepo.fetchMusic(keyword, page).map {
-            // Fix the track with 0 duration.
-            if (it.length == 0) {
-                val duration = MediaUtil.obtainDuration(it.url)
-                it.copy(length = duration.toInt())
-            }
-            else {
-                it
-            }
-        }
+object MediaUtil {
+    fun obtainDuration(url: String) = MediaMetadataRetriever().run {
+        setDataSource(url, hashMapOf())
+        (extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0) / 1000
     }
-
-    internal data class Request(val keyword: String, val page: Int) : Usecase.RequestValues
 }
