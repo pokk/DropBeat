@@ -27,8 +27,10 @@ package taiwan.no.one.mediaplayer.utils
 import android.media.MediaMetadataRetriever
 
 object MediaUtil {
+    const val SECOND_UNIT = 1000L
+
     fun obtainDuration(url: String) = MediaMetadataRetriever().run {
         setDataSource(url, hashMapOf())
-        (extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0) / 1000
+        (extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0) / SECOND_UNIT
     }
 }
