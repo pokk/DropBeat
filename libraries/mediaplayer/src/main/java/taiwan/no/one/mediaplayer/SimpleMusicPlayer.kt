@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,11 +60,11 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.mediaplayer.states.MusicState
 import taiwan.no.one.mediaplayer.states.MusicStateStandby
+import taiwan.no.one.mediaplayer.utils.MediaUtil
 
 class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     companion object {
         private const val NAME = "LocalExoPlayer"
-        private const val SECOND_UNIT = 1000L
 
         @Volatile
         private var INSTANCE: SimpleMusicPlayer? = null
@@ -104,8 +104,8 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     private val curPlayingIndex get() = exoPlayer.currentWindowIndex
     override val isPlaying get() = exoPlayer.isPlaying
     override val curPlayingInfo get() = playlist.find { exoPlayer.currentTag == it.uri }
-    override val curTrackSec get() = exoPlayer.currentPosition / SECOND_UNIT
-    override val curDuration get() = exoPlayer.duration / SECOND_UNIT
+    override val curTrackSec get() = exoPlayer.currentPosition / MediaUtil.SECOND_UNIT
+    override val curDuration get() = exoPlayer.duration / MediaUtil.SECOND_UNIT
     override var mode: Mode by Delegates.observable(Default) { _, oldMode, newMode ->
         if (oldMode == Shuffle && newMode != Shuffle) {
             // reset the timeline of the player
@@ -150,7 +150,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
         if (playerState.state == Standby) {
             return false
         }
-        exoPlayer.seekTo(sec.times(SECOND_UNIT))
+        exoPlayer.seekTo(sec.times(MediaUtil.SECOND_UNIT))
         return true
     }
 
@@ -229,7 +229,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
                 }
                 // Raise a global coroutine for receiving the tick.
                 timerJob = CoroutineScope(Dispatchers.Main).launch {
-                    timer = ticker(SECOND_UNIT, SECOND_UNIT - playingMs)
+                    timer = ticker(MediaUtil.SECOND_UNIT, MediaUtil.SECOND_UNIT - playingMs)
                     timer.consumeAsFlow().collect {
                         val (s, ms) = getTimeOfTrack()
                         // The ms time is not always correct so we do need to round the ms.
@@ -248,6 +248,6 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
         }
 
         private fun getTimeOfTrack() =
-            exoPlayer.currentPosition / SECOND_UNIT to exoPlayer.currentPosition % SECOND_UNIT
+            exoPlayer.currentPosition / MediaUtil.SECOND_UNIT to exoPlayer.currentPosition % MediaUtil.SECOND_UNIT
     }
 }
