@@ -29,31 +29,21 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
-import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
-import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 
 class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
-    var navigationCallback: ((title: String, songs: List<SimpleTrackEntity>) -> Unit)? = null
-    private var albumTitle = DEFAULT_STR
+    var navigationCallback: ((title: String, rankId: Int) -> Unit)? = null
     private val vm by viewModels<RankViewModel>()
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
-    }
-
-    override fun bindLiveData() {
-        vm.musics.observe(this) { res ->
-            res.onSuccess { navigationCallback?.invoke(albumTitle, it) }.onFailure(::loge)
-        }
     }
 
     override fun viewComponentBinding() {
@@ -65,8 +55,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
 
     override fun componentListenersBinding() {
         (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener { id, title ->
-            albumTitle = title
-            vm.getMusics(id.toString())
+            navigationCallback?.invoke(title, id)
         }
     }
 

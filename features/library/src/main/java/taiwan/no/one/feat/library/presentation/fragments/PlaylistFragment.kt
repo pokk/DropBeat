@@ -110,6 +110,11 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
                 }
             }.onFailure(::loge)
         }
+        vm.tracks.observe(this) { res ->
+            res.onSuccess {
+                if (it.isEmpty()) displayNoSongs() else displaySongs(it)
+            }.onFailure(::loge)
+        }
         vm.resultOfFavorite.observe(this) { res ->
             res.onSuccess {
                 if (it && navArgs.playlistId == 2) {
@@ -153,12 +158,13 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        if (navArgs.playlistId != -1 && navArgs.songs == null) {
+        if (navArgs.playlistId != -1) {
             vm.getSongs(navArgs.playlistId)
         }
-        if (navArgs.playlistId == -1 && navArgs.songs != null) {
+        else if (navArgs.rankId != -1) {
             binding.mtvTitle.text = navArgs.title
-            navArgs.songs?.also { displaySongs(it.toList()) } ?: displayNoSongs()
+            binding.pbAllProgress.visible()
+            vm.getRankSongs(navArgs.rankId)
         }
         vm.playlistDuration.observe(viewLifecycleOwner) {
             // Set the visibility for this fragment.
@@ -169,6 +175,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
     private fun displaySongs(songs: List<SimpleTrackEntity>) {
         // Calculate the total of all songs' duration.
         vm.cumulateDuration(songs)
+        binding.pbAllProgress.gone()
         find<View>(AppResId.pb_progress).gone()
         find<View>(R.id.include_favorite).visible()
         // Set the recycler view.

@@ -46,10 +46,9 @@
             android:defaultValue="false"
             app:argType="boolean"/>
         <argument
-            android:name="songs"
-            android:defaultValue="@null"
-            app:argType="taiwan.no.one.entity.SimpleTrackEntity[]"
-            app:nullable="true"/>
+            android:name="rankId"
+            android:defaultValue="-1"
+            app:argType="integer"/>
         <argument
             android:name="title"
             android:defaultValue="@null"

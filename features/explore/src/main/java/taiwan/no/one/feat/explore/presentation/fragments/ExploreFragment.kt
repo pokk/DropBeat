@@ -95,10 +95,10 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         super.onResume()
         // HACK(jieyi): 5/2/21 Will set a callback function to [RankingFragment] until we find the
         //  best solution to set the navigation destination.
-        findRankingFragment()?.navigationCallback = { title, songs ->
+        findRankingFragment()?.navigationCallback = { title, rankId ->
             findNavController().navigate(
                 ExploreFragmentDirections.actionExploreToPlaylist(
-                    songs = songs.toTypedArray(),
+                    rankId = rankId,
                     title = title,
                     isFixed = true,
                 )
@@ -249,13 +249,14 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
                 }
             }
             val playlistName = layout.find<TextView>(AppResId.mtv_explore_title).text.toString()
-            findNavController().navigate(
-                ExploreFragmentDirections.actionExploreToPlaylist(
-                    songs = list,
-                    title = playlistName,
-                    isFixed = true,
-                )
-            )
+            // FIXME(jieyi): 6/21/21 Here should be fixed.
+            //            findNavController().navigate(
+            //                ExploreFragmentDirections.actionExploreToPlaylist(
+            //                    songs = list,
+            //                    title = playlistName,
+            //                    isFixed = true,
+            //                )
+            //            )
             analyticsVm.navigatedToPlaylist("playlist name: $playlistName")
         }
     }
