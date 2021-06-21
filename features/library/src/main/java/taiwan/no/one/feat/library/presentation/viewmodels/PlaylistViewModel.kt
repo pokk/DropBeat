@@ -81,6 +81,7 @@ internal class PlaylistViewModel(
 
     fun getPlaylist(playlistId: Int) = getSongs(playlistId)
 
+    @WorkerThread
     fun getRankSongs(rankId: Int) = launchBehind {
         _tracks.postValue(rankingMethodsProvider.getRankingSongs(rankId))
     }
