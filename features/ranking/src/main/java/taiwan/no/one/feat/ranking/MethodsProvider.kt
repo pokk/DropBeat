@@ -22,36 +22,47 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.presentation.viewmodels
+package taiwan.no.one.feat.ranking
 
-import android.app.Application
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import com.google.auto.service.AutoService
+import org.kodein.di.DIAware
 import org.kodein.di.instance
-import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
+import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
-import taiwan.no.one.feat.ranking.domain.usecases.FetchDetailOfRankingsCase
+import taiwan.no.one.dropbeat.provider.RankingMethodsProvider
+import taiwan.no.one.feat.ranking.data.mappers.EntityMapper
 import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankCase
 import taiwan.no.one.feat.ranking.domain.usecases.FetchMusicRankReq
-import taiwan.no.one.ktx.livedata.toLiveData
+import taiwan.no.one.mediaplayer.utils.MediaUtil
 
-internal class RankViewModel(
-    application: Application,
-    override val handle: SavedStateHandle,
-) : BehindAndroidViewModel(application) {
-    private val fetchDetailOfRankingsCase by instance<FetchDetailOfRankingsCase>()
+@AutoService(RankingMethodsProvider::class)
+class MethodsProvider : RankingMethodsProvider, DIAware {
+    override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val fetchMusicRankCase by instance<FetchMusicRankCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
 
-    val rankings = liveData { emit(runCatching { fetchDetailOfRankingsCase.execute() }) }
-    private val _musics by lazy { ResultLiveData<List<SongEntity>>() }
-    val musics get() = _musics.toLiveData()
-
-    fun getMusics(rankId: String) = viewModelScope.launch {
-        _musics.value = runCatching { fetchMusicRankCase.execute(FetchMusicRankReq(rankId)) }
+    override suspend fun getRankingSongs(rankId: Int) = runCatching {
+        fetchMusicRankCase.execute(FetchMusicRankReq(rankId.toString()))
+            .map(EntityMapper::songToSimpleTrackEntity)
+            .map {
+                // TODO(jieyi): 6/18/21 move to the business logic.
+                if (it.duration == 0) {
+                    val duration = MediaUtil.obtainDuration(it.uri)
+                    it.copy(duration = duration.toInt())
+                }
+                else {
+                    it
+                }
+            }
+            .onEach {
+                val isFavorite = try {
+                    libraryProvider.isFavoriteTrack(it.uri, PlaylistConstant.FAVORITE)
+                }
+                catch (e: Exception) {
+                    return@onEach
+                }
+                it.isFavorite = isFavorite.getOrNull() ?: false
+            }
     }
 }

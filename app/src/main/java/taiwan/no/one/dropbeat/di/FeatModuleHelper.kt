@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,7 @@ import taiwan.no.one.dropbeat.provider.LibraryModuleProvider
 import taiwan.no.one.dropbeat.provider.LoginMethodsProvider
 import taiwan.no.one.dropbeat.provider.LoginModuleProvider
 import taiwan.no.one.dropbeat.provider.PlayerModuleProvider
+import taiwan.no.one.dropbeat.provider.RankingMethodsProvider
 import taiwan.no.one.dropbeat.provider.RankingModuleProvider
 import taiwan.no.one.dropbeat.provider.SearchModuleProvider
 import taiwan.no.one.dropbeat.provider.SettingModuleProvider
@@ -55,5 +56,6 @@ object FeatModuleHelper {
         bindInstance<LibraryMethodsProvider> { ServiceLoader.load(LibraryMethodsProvider::class.java).toList().first() }
         bindInstance<LoginMethodsProvider> { ServiceLoader.load(LoginMethodsProvider::class.java).toList().first() }
         bindInstance<ExploreMethodsProvider> { ServiceLoader.load(ExploreMethodsProvider::class.java).toList().first() }
+        bindInstance<RankingMethodsProvider> { ServiceLoader.load(RankingMethodsProvider::class.java).toList().first() }
     }
 }

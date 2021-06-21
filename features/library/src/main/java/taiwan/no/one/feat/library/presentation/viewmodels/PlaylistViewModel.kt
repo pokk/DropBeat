@@ -37,6 +37,7 @@ import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.core.helpers.ResourceHelper
 import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
+import taiwan.no.one.dropbeat.provider.RankingMethodsProvider
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
@@ -62,6 +63,7 @@ internal class PlaylistViewModel(
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
     private val updateSongCase by instance<UpdateSongCase>()
+    private val rankingMethodsProvider by instance<RankingMethodsProvider>()
     private val _result by lazy { ResultLiveData<Boolean>() }
     val result get() = _result.toLiveData()
     private val _resultOfFavorite by lazy { ResultLiveData<Boolean>() }
@@ -70,12 +72,18 @@ internal class PlaylistViewModel(
     val playlist get() = _playlist.toLiveData()
     private val _playlistDuration by lazy { MutableLiveData<String>() }
     val playlistDuration get() = _playlistDuration.toLiveData()
+    private val _tracks by lazy { ResultLiveData<List<SimpleTrackEntity>>() }
+    val tracks get() = _tracks.toLiveData()
 
     fun getSongs(playlistId: Int) = viewModelScope.launch {
         _playlist.value = runCatching { fetchPlaylistCase.execute(FetchPlaylistReq(playlistId)) }
     }
 
     fun getPlaylist(playlistId: Int) = getSongs(playlistId)
+
+    fun getRankSongs(rankId: Int) = launchBehind {
+        _tracks.postValue(rankingMethodsProvider.getRankingSongs(rankId))
+    }
 
     @WorkerThread
     fun createPlaylist(playlist: SimplePlaylistEntity?, name: String) = launchBehind(Dispatchers.Default) {

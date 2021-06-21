@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -74,6 +74,17 @@
         android:text="Play All"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/mtv_subtitle"
+        tools:visibility="visible"/>
+
+    <ProgressBar
+        android:id="@+id/pb_all_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mtv_title"
         tools:visibility="visible"/>
 
     <include
