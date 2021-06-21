@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ internal class ResultViewModel(
             curPage = page
         }
         if (curKeyword.isBlank()) return@launch
-        _musics.value = runCatching {
+        _musics.value = kotlin.runCatching {
             val newResult = fetchMusicCase.execute(FetchMusicReq(curKeyword, curPage))
             // Research a new keyword, it shouldn't append onto the old list.
             if (page == 0) {
@@ -74,7 +74,7 @@ internal class ResultViewModel(
     }
 
     fun add(keyword: String) = viewModelScope.launch {
-        _addOrUpdateResult.value = runCatching { addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)) }
+        _addOrUpdateResult.value = kotlin.runCatching { addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)) }
     }
 
     fun goNextPage() = curPage++

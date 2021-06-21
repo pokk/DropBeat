@@ -58,19 +58,19 @@ internal class LoginViewModel(
     val isValidEmail get() = _isValidEmail.toLiveData()
 
     fun login(email: String, password: String) = viewModelScope.launch {
-        _userInfo.value = runCatching { loginCase.execute(LoginReq(email, password)) }
+        _userInfo.value = kotlin.runCatching { loginCase.execute(LoginReq(email, password)) }
     }
 
     fun login(credential: Credential) = viewModelScope.launch {
-        _userInfo.value = runCatching { loginCase.execute(LoginReq(credential = credential)) }
+        _userInfo.value = kotlin.runCatching { loginCase.execute(LoginReq(credential = credential)) }
     }
 
     fun register(email: String, password: String) = viewModelScope.launch {
-        _userInfo.value = runCatching { createUserCase.execute(CreateUserReq(email, password)) }
+        _userInfo.value = kotlin.runCatching { createUserCase.execute(CreateUserReq(email, password)) }
     }
 
     fun resetPassword(email: String) = viewModelScope.launch {
-        _resetResp.value = runCatching { modifyPasswordCase.execute(ModifyPasswordReq(email)) }
+        _resetResp.value = kotlin.runCatching { modifyPasswordCase.execute(ModifyPasswordReq(email)) }
     }
 
     fun validEmailFormat(email: String) = viewModelScope.launch {

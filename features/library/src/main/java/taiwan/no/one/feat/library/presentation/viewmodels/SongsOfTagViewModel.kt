@@ -82,7 +82,7 @@ internal class SongsOfTagViewModel(
 
     @WorkerThread
     fun getCoverThumb(entity: SimpleTrackEntity) = launchBehind {
-        runCatching { exploreProvider.getTrackCover(entity) }.onSuccess { newEntity ->
+        kotlin.runCatching { exploreProvider.getTrackCover(entity) }.onSuccess { newEntity ->
             val updatedList = _songs.value?.getOrNull()?.map {
                 if (it.uri == entity.uri) newEntity else it
             } ?: return@launchBehind

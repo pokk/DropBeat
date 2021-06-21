@@ -34,7 +34,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimplePlaylistEntity
@@ -74,7 +73,7 @@ internal class ExploreViewModel(
     private val _topArtists by lazy { ResultLiveData<ArtistWithMoreDetailEntities>() }
     val topArtists get() = _topArtists.toLiveData()
     val topTags = liveData(Dispatchers.Default) {
-        val res = runCatching {
+        val res = kotlin.runCatching {
             fetchChartTopTagCase.execute(FetchChartTopTagReq(1, SONG_LIMITATION)).tags.orEmpty()
         }
         emit(res)
@@ -87,16 +86,11 @@ internal class ExploreViewModel(
     }
 
     fun getTopTracks() = launchBehind {
-        _topTracks.postValue(runCatching {
+        _topTracks.postValue(kotlin.runCatching {
             fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, SONG_LIMITATION, SONG_LIMITATION)).apply {
                 tracks.onEach {
                     val url = it.url ?: return@onEach
-                    val isFavorite = try {
-                        libraryProvider.isFavoriteTrack(url, PlaylistConstant.FAVORITE)
-                    }
-                    catch (e: Exception) {
-                        return@onEach
-                    }
+                    val isFavorite = libraryProvider.isFavoriteTrack(url)
                     it.isFavorite = isFavorite.getOrNull()
                 }
             }
@@ -104,15 +98,10 @@ internal class ExploreViewModel(
     }
 
     fun getTopArtists() = launchBehind {
-        _topArtists.postValue(runCatching {
+        _topArtists.postValue(kotlin.runCatching {
             fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, SONG_LIMITATION, SONG_LIMITATION)).onEach {
                 val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
-                val isFavorite = try {
-                    libraryProvider.isFavoriteTrack(url, PlaylistConstant.FAVORITE)
-                }
-                catch (e: Exception) {
-                    return@onEach
-                }
+                val isFavorite = libraryProvider.isFavoriteTrack(url)
                 it.second?.popularTrackThisWeek?.isFavorite = isFavorite.getOrNull()
             }
         })

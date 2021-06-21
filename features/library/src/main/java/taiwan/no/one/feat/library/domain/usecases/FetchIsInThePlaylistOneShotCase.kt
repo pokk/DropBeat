@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.library.domain.usecases
 
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.exceptions.NotFoundException
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
@@ -33,7 +34,17 @@ internal class FetchIsInThePlaylistOneShotCase(
     private val songRepository: SongRepo,
 ) : FetchIsInThePlaylistCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        val id = if (trackUri != null) songRepository.getMusic(trackUri).id else trackId ?: -1
+        val id = if (trackUri != null) {
+            try {
+                songRepository.getMusic(trackUri).id
+            }
+            catch (nfe: NotFoundException) {
+                return@ensure false
+            }
+        }
+        else {
+            trackId
+        } ?: return@ensure false
         val playlist = repository.fetchPlaylist(playlistId)
         id in playlist.songIds
     }

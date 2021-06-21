@@ -32,7 +32,6 @@ import com.google.gson.Gson
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
-import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.di.FeatModuleHelper
 import taiwan.no.one.dropbeat.di.UtilModules
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.KEY_EXCEPTION
@@ -61,12 +60,7 @@ internal class GetSongsOfTagWorker(
         }
         return try {
             val entities = exploreProvider.getTopTracksOfTag(tagName).onEach {
-                val isFavorite = try {
-                    libraryProvider.isFavoriteTrack(it.uri, PlaylistConstant.FAVORITE).getOrNull() ?: false
-                }
-                catch (e: Exception) {
-                    false
-                }
+                val isFavorite = libraryProvider.isFavoriteTrack(it.uri).getOrNull() ?: false
                 it.isFavorite = isFavorite
             }
             val json = gson.toJson(entities)

@@ -47,7 +47,7 @@ class PrivacyViewModel(
 
     @UiThread
     fun getUserInfo() = viewModelScope.launch {
-        _userInfo.value = runCatching { fetchLoginInfoCase.execute() }
+        _userInfo.value = kotlin.runCatching { fetchLoginInfoCase.execute() }
     }
 
     @UiThread

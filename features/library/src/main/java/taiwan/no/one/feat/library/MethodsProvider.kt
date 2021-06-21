@@ -28,6 +28,7 @@ import com.google.auto.service.AutoService
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.data.mappers.TrackMapper
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimpleTrackEntity
@@ -82,7 +83,8 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
 
     override suspend fun addSongToPlaylist(musicInfo: MusicInfo, playlistId: Int): Boolean {
         addSongsAndPlaylistCase.execute(
-            AddSongsAndPlaylistReq(TrackMapper.musicInfoToSongEntitiesJson(musicInfo), playlistId))
+            AddSongsAndPlaylistReq(TrackMapper.musicInfoToSongEntitiesJson(musicInfo), playlistId)
+        )
         return true
     }
 
@@ -96,19 +98,20 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
         return true
     }
 
-    override suspend fun hasOwnTrack(uri: String) = runCatching { fetchSongCase.execute(FetchSongReq(uri)) }
+    override suspend fun hasOwnTrack(uri: String) = kotlin.runCatching { fetchSongCase.execute(FetchSongReq(uri)) }
         .map(SongEntity::hasOwn)
 
-    override suspend fun isFavoriteTrack(uri: String, playlistId: Int) =
-        runCatching { fetchIsInThePlaylistCase.execute(FetchIsInThePlaylistReq(null, uri, playlistId)) }
+    override suspend fun isFavoriteTrack(uri: String) = kotlin.runCatching {
+        fetchIsInThePlaylistCase.execute(FetchIsInThePlaylistReq(null, uri, PlaylistConstant.FAVORITE))
+    }
 
-    override suspend fun getPlaylists() = runCatching {
+    override suspend fun getPlaylists() = kotlin.runCatching {
         fetchAllPlaylistsCase.execute()
     }.map { list ->
         list.map(EntityMapper::playlistToSimplePlaylistEntity)
     }
 
-    override suspend fun createPlaylist(name: String): Result<Boolean> = runCatching {
+    override suspend fun createPlaylist(name: String): Result<Boolean> = kotlin.runCatching {
         addPlaylistCase.execute(AddPlaylistReq(PlayListEntity(name = name)))
     }
 

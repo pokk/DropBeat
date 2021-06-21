@@ -28,7 +28,6 @@ import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimplePlaylistEntity
@@ -52,7 +51,7 @@ internal class PlayerViewModel(
     fun removeFavorite() = launchBehind {}
 
     fun isFavorite(uri: String) = launchBehind {
-        _isFavorite.postValue(libraryProvider.isFavoriteTrack(uri, PlaylistConstant.FAVORITE))
+        _isFavorite.postValue(libraryProvider.isFavoriteTrack(uri))
     }
 
     fun getPlaylists() = launchBehind { _playlists.postValue(libraryProvider.getPlaylists()) }
