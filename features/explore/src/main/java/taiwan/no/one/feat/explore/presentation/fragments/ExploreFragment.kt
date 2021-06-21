@@ -49,11 +49,9 @@ import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.databinding.FragmentExploreBinding
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
-import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.ExploreAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
@@ -195,7 +193,9 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         playlistAdapter.setOnClickListener {
             // 1: favorite playlist, 2: downloaded playlist
             val isFixedPlaylist = it.id in listOf(PlaylistConstant.DOWNLOADED, PlaylistConstant.FAVORITE)
-            findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylist(it.id, isFixedPlaylist))
+            findNavController().navigate(
+                ExploreFragmentDirections.actionExploreToPlaylist(it.id, isFixed = isFixedPlaylist)
+            )
             analyticsVm.navigatedToPlaylist("playlist name: ${it.name}")
         }
         listOf(topTrackAdapter, topArtistAdapter).forEach {
@@ -237,26 +237,25 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
             ?.map(EntityMapper::exploreToSimpleTrackEntity)
             ?.toTypedArray() ?: return
         layout.find<Button>(AppResId.btn_more).setOnClickListener {
-            if (isTopArtist) {
-                topArtistAdapter.data.forEachIndexed { index, entity ->
-                    list[index].isFavorite =
-                        (entity as ArtistWithMoreDetailEntity).second?.popularTrackThisWeek?.isFavorite ?: false
-                }
-            }
-            else {
-                topTrackAdapter.data.forEachIndexed { index, entity ->
-                    list[index].isFavorite = (entity as TrackEntity).isFavorite ?: false
-                }
-            }
+            //            if (isTopArtist) {
+            //                topArtistAdapter.data.forEachIndexed { index, entity ->
+            //                    list[index].isFavorite =
+            //                        (entity as ArtistWithMoreDetailEntity).second?.popularTrackThisWeek?.isFavorite ?: false
+            //                }
+            //            }
+            //            else {
+            //                topTrackAdapter.data.forEachIndexed { index, entity ->
+            //                    list[index].isFavorite = (entity as TrackEntity).isFavorite ?: false
+            //                }
+            //            }
             val playlistName = layout.find<TextView>(AppResId.mtv_explore_title).text.toString()
-            // FIXME(jieyi): 6/21/21 Here should be fixed.
-            //            findNavController().navigate(
-            //                ExploreFragmentDirections.actionExploreToPlaylist(
-            //                    songs = list,
-            //                    title = playlistName,
-            //                    isFixed = true,
-            //                )
-            //            )
+            findNavController().navigate(
+                ExploreFragmentDirections.actionExploreToPlaylist(
+                    songs = list,
+                    title = playlistName,
+                    isFixed = true,
+                )
+            )
             analyticsVm.navigatedToPlaylist("playlist name: $playlistName")
         }
     }

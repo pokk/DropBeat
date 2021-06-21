@@ -30,6 +30,7 @@
     android:id="@id/nav_playlist"
     app:startDestination="@id/playlist_fragment">
 
+    <!-- NOTE: [library/nav_explore.xml] should be modified, too -->
     <fragment
         android:id="@+id/playlist_fragment"
         android:name="taiwan.no.one.feat.library.presentation.fragments.PlaylistFragment"
@@ -42,13 +43,18 @@
             android:defaultValue="-1"
             app:argType="integer"/>
         <argument
-            android:name="isFixed"
-            android:defaultValue="false"
-            app:argType="boolean"/>
-        <argument
             android:name="rankId"
             android:defaultValue="-1"
             app:argType="integer"/>
+        <argument
+            android:name="songs"
+            android:defaultValue="@null"
+            app:argType="taiwan.no.one.entity.SimpleTrackEntity[]"
+            app:nullable="true"/>
+        <argument
+            android:name="isFixed"
+            android:defaultValue="false"
+            app:argType="boolean"/>
         <argument
             android:name="title"
             android:defaultValue="@null"
