@@ -52,7 +52,7 @@ interface LibraryMethodsProvider {
     suspend fun hasOwnTrack(uri: String): Result<Boolean>
 
     @WorkerThread
-    suspend fun isFavoriteTrack(uri: String, playlistId: Int): Result<Boolean>
+    suspend fun isFavoriteTrack(uri: String): Result<Boolean>
 
     @WorkerThread
     suspend fun getPlaylists(): Result<List<SimplePlaylistEntity>>

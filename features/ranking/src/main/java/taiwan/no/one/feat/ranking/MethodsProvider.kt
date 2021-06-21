@@ -28,7 +28,6 @@ import com.google.auto.service.AutoService
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.DropBeatApp
-import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.dropbeat.provider.RankingMethodsProvider
 import taiwan.no.one.feat.ranking.data.mappers.EntityMapper
@@ -42,7 +41,7 @@ class MethodsProvider : RankingMethodsProvider, DIAware {
     private val fetchMusicRankCase by instance<FetchMusicRankCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
 
-    override suspend fun getRankingSongs(rankId: Int) = runCatching {
+    override suspend fun getRankingSongs(rankId: Int) = kotlin.runCatching {
         fetchMusicRankCase.execute(FetchMusicRankReq(rankId.toString()))
             .map(EntityMapper::songToSimpleTrackEntity)
             .map {
@@ -56,12 +55,7 @@ class MethodsProvider : RankingMethodsProvider, DIAware {
                 }
             }
             .onEach {
-                val isFavorite = try {
-                    libraryProvider.isFavoriteTrack(it.uri, PlaylistConstant.FAVORITE)
-                }
-                catch (e: Exception) {
-                    return@onEach
-                }
+                val isFavorite = libraryProvider.isFavoriteTrack(it.uri)
                 it.isFavorite = isFavorite.getOrNull() ?: false
             }
     }

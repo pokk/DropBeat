@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.AppResDrawable
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.helpers.ResourceHelper
 import taiwan.no.one.dropbeat.core.utils.StringUtil
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
@@ -46,6 +47,8 @@ import taiwan.no.one.feat.library.domain.usecases.AddPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.AddPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.AddSongsCase
 import taiwan.no.one.feat.library.domain.usecases.AddSongsReq
+import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
@@ -63,6 +66,7 @@ internal class PlaylistViewModel(
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val addSongsCase by instance<AddSongsCase>()
     private val updateSongCase by instance<UpdateSongCase>()
+    private val fetchIsInThePlaylistCase by instance<FetchIsInThePlaylistCase>()
     private val rankingMethodsProvider by instance<RankingMethodsProvider>()
     private val _result by lazy { ResultLiveData<Boolean>() }
     val result get() = _result.toLiveData()
@@ -76,7 +80,7 @@ internal class PlaylistViewModel(
     val tracks get() = _tracks.toLiveData()
 
     fun getSongs(playlistId: Int) = viewModelScope.launch {
-        _playlist.value = runCatching { fetchPlaylistCase.execute(FetchPlaylistReq(playlistId)) }
+        _playlist.value = kotlin.runCatching { fetchPlaylistCase.execute(FetchPlaylistReq(playlistId)) }
     }
 
     fun getPlaylist(playlistId: Int) = getSongs(playlistId)
@@ -87,8 +91,20 @@ internal class PlaylistViewModel(
     }
 
     @WorkerThread
+    fun attachFavoriteFlag(songs: List<SimpleTrackEntity>) = launchBehind {
+        val res = kotlin.runCatching {
+            songs.onEach {
+                it.isFavorite = fetchIsInThePlaylistCase.execute(
+                    FetchIsInThePlaylistReq(null, it.uri, PlaylistConstant.FAVORITE)
+                )
+            }
+        }
+        _tracks.postValue(res)
+    }
+
+    @WorkerThread
     fun createPlaylist(playlist: SimplePlaylistEntity?, name: String) = launchBehind(Dispatchers.Default) {
-        _result.postValue(runCatching {
+        _result.postValue(kotlin.runCatching {
             val param = playlist?.let {
                 PlayListEntity(
                     name = name,
@@ -105,21 +121,21 @@ internal class PlaylistViewModel(
     }
 
     fun updatePlaylist(playlistId: Int, playlistName: String) = viewModelScope.launch {
-        _result.value = runCatching { updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, playlistName)) }
+        _result.value = kotlin.runCatching { updatePlaylistCase.execute(UpdatePlaylistReq(playlistId, playlistName)) }
     }
 
     fun createSongs(songs: List<SongEntity>) = viewModelScope.launch {
-        _result.value = runCatching { addSongsCase.execute(AddSongsReq(songs)) }
+        _result.value = kotlin.runCatching { addSongsCase.execute(AddSongsReq(songs)) }
     }
 
     fun updateSong(songId: Int, isFavorite: Boolean) = viewModelScope.launch {
         _resultOfFavorite.value =
-            runCatching { updateSongCase.execute(UpdateSongReq(songId = songId, isFavorite = isFavorite)) }
+            kotlin.runCatching { updateSongCase.execute(UpdateSongReq(songId = songId, isFavorite = isFavorite)) }
     }
 
     fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {
         _resultOfFavorite.value =
-            runCatching { updateSongCase.execute(UpdateSongReq(song = song, isFavorite = isFavorite)) }
+            kotlin.runCatching { updateSongCase.execute(UpdateSongReq(song = song, isFavorite = isFavorite)) }
     }
 
     @WorkerThread

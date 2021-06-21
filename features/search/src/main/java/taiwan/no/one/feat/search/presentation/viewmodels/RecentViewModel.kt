@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -55,10 +55,10 @@ internal class RecentViewModel(
     val histories = fetchHistoryCase.execute(FetchHistoryReq(50)).asLiveData(viewModelScope.coroutineContext)
 
     fun delete(keyword: String?, entity: SearchHistoryEntity?) = viewModelScope.launch {
-        _deleteResult.value = runCatching { deleteHistoryCase.execute(DeleteHistoryReq(keyword, entity)) }
+        _deleteResult.value = kotlin.runCatching { deleteHistoryCase.execute(DeleteHistoryReq(keyword, entity)) }
     }
 
     fun add(keyword: String) = viewModelScope.launch {
-        _addOrUpdateResult.value = runCatching { addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)) }
+        _addOrUpdateResult.value = kotlin.runCatching { addOrUpdateHistoryCase.execute(AddOrUpdateHistoryReq(keyword)) }
     }
 }

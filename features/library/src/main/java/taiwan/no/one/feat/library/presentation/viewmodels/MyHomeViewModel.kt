@@ -79,7 +79,7 @@ internal class MyHomeViewModel(
     val resultOfAddAccount get() = _resultOfAddAccount.toLiveData()
 
     fun getAllPlaylists() = viewModelScope.launch {
-        _playlists.value = runCatching { fetchAllPlaylistsCase.execute() }
+        _playlists.value = kotlin.runCatching { fetchAllPlaylistsCase.execute() }
     }
 
     @WorkerThread
@@ -111,7 +111,7 @@ internal class MyHomeViewModel(
         // NOTE(jieyi): Will have a list of pair <playlist <-> songs>.
         val simplePlaylists = playlists.map(EntityMapper::playlistToSimplePlaylistEntity)
         val songsOfPlaylists = playlists.map { it.songs.map(EntityMapper::songToSimpleEntity) }
-        runCatching {
+        kotlin.runCatching {
             syncPlaylistCase.execute(SyncPlaylistReq(userInfo, simplePlaylists, songsOfPlaylists))
         }.onSuccess {
             // Update the local database.

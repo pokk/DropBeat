@@ -158,20 +158,15 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
     }
 
     override fun rendered(savedInstanceState: Bundle?) {
-        // TODO(jieyi): 6/21/21 To have the isFavorite value correctly, we will process isFavorite after we get
-        //  the list.
         when {
-            navArgs.playlistId != -1 -> {
-                vm.getSongs(navArgs.playlistId)
-            }
-            navArgs.rankId != -1 -> {
-                binding.mtvTitle.text = navArgs.title
-                binding.pbAllProgress.visible()
-                vm.getRankSongs(navArgs.rankId)
-            }
-            navArgs.songs != null -> {
-                displaySongs(navArgs.songs?.toList().orEmpty())
-            }
+            navArgs.playlistId != -1 -> vm.getSongs(navArgs.playlistId)
+            navArgs.rankId != -1 -> vm.getRankSongs(navArgs.rankId)
+            navArgs.songs != null -> vm.attachFavoriteFlag(navArgs.songs?.toList().orEmpty())
+        }
+        // Only this two cases.
+        if (navArgs.rankId != -1 || navArgs.songs != null) {
+            binding.mtvTitle.text = navArgs.title
+            binding.pbAllProgress.visible()
         }
         vm.playlistDuration.observe(viewLifecycleOwner) {
             // Set the visibility for this fragment.

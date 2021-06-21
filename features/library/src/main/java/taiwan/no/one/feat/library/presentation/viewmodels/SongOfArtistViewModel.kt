@@ -25,7 +25,6 @@
 package taiwan.no.one.feat.library.presentation.viewmodels
 
 import android.app.Application
-import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
@@ -33,7 +32,6 @@ import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
-import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
@@ -56,19 +54,14 @@ internal class SongOfArtistViewModel(
     val artistAlbums
         get() = _artistInfo.map { it.getOrNull()?.topAlbums.orEmpty() }
 
-    @UiThread
+    @WorkerThread
     fun getArtistInfo(name: String) = launchBehind {
-        _artistInfo.postValue(runCatching { exploreMethodsProvider.getArticleInfo(name) })
+        _artistInfo.postValue(kotlin.runCatching { exploreMethodsProvider.getArticleInfo(name) })
     }
 
     @WorkerThread
     private suspend fun attachFavorite(tracks: List<SimpleTrackEntity>) = tracks.onEach {
-        val isFavorite = try {
-            libraryMethodsProvider.isFavoriteTrack(it.uri, PlaylistConstant.FAVORITE).getOrNull() ?: false
-        }
-        catch (e: Exception) {
-            false
-        }
+        val isFavorite = libraryMethodsProvider.isFavoriteTrack(it.uri).getOrNull() ?: false
         it.isFavorite = isFavorite
     }
 }

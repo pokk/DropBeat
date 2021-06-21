@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,52 +70,52 @@ internal class SettingViewModel(
     private val _logoutRes by lazy { ResultLiveData<Boolean>() }
     val logoutRes get() = _logoutRes.toLiveData()
     val sleepTimerChecked =
-        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchSleepingTimerCase.execute() }) }
+        liveData(viewModelScope.coroutineContext) { emit(kotlin.runCatching { fetchSleepingTimerCase.execute() }) }
     private val _sleepingTimerCheckRes by lazy { ResultLiveData<Boolean>() }
     val sleepTimerCheckRes get() = _sleepingTimerCheckRes.toLiveData()
     val lockScreenChecked =
-        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchLockScreenPlayerCase.execute() }) }
+        liveData(viewModelScope.coroutineContext) { emit(kotlin.runCatching { fetchLockScreenPlayerCase.execute() }) }
     private val _lockScreenCheckRes by lazy { ResultLiveData<Boolean>() }
     val lockScreenCheckRes get() = _lockScreenCheckRes.toLiveData()
     val offlineChecked =
-        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchPlayOfflineOnlyCase.execute() }) }
+        liveData(viewModelScope.coroutineContext) { emit(kotlin.runCatching { fetchPlayOfflineOnlyCase.execute() }) }
     private val _offlineCheckRes by lazy { ResultLiveData<Boolean>() }
     val offlineCheckRes get() = _offlineCheckRes.toLiveData()
     val notificationPlayerChecked =
-        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchNotificationPlayerCase.execute() }) }
+        liveData(viewModelScope.coroutineContext) { emit(kotlin.runCatching { fetchNotificationPlayerCase.execute() }) }
     private val _notificationPlayerCheckRes by lazy { ResultLiveData<Boolean>() }
     val notificationPlayerCheckRes get() = _notificationPlayerCheckRes.toLiveData()
     val autoMvChecked =
-        liveData(viewModelScope.coroutineContext) { emit(runCatching { fetchAutoDisplayMvCase.execute() }) }
+        liveData(viewModelScope.coroutineContext) { emit(kotlin.runCatching { fetchAutoDisplayMvCase.execute() }) }
     private val _autoMvCheckRes by lazy { ResultLiveData<Boolean>() }
     val autoMvCheckRes get() = _autoMvCheckRes.toLiveData()
 
     fun setSleepTimerSwitch(isChecked: Boolean) = viewModelScope.launch {
-        _sleepingTimerCheckRes.value = runCatching {
+        _sleepingTimerCheckRes.value = kotlin.runCatching {
             addSleepingTimerCase.execute(AddSleepingTimerReq(isChecked))
         }
     }
 
     fun setLockScreenSwitch(isChecked: Boolean) = viewModelScope.launch {
-        _lockScreenCheckRes.value = runCatching {
+        _lockScreenCheckRes.value = kotlin.runCatching {
             addLockScreenPlayerCase.execute(AddLockScreenPlayerReq(isChecked))
         }
     }
 
     fun setOfflineSwitch(isChecked: Boolean) = viewModelScope.launch {
-        _offlineCheckRes.value = runCatching {
+        _offlineCheckRes.value = kotlin.runCatching {
             addPlayOfflineOnlyCase.execute(AddPlayOfflineOnlyReq(isChecked))
         }
     }
 
     fun setNotificationPlayerSwitch(isChecked: Boolean) = viewModelScope.launch {
-        _notificationPlayerCheckRes.value = runCatching {
+        _notificationPlayerCheckRes.value = kotlin.runCatching {
             addNotificationPlayerCase.execute(AddNotificationPlayerReq(isChecked))
         }
     }
 
     fun setAutoMvSwitch(isChecked: Boolean) = viewModelScope.launch {
-        _autoMvCheckRes.value = runCatching {
+        _autoMvCheckRes.value = kotlin.runCatching {
             addAutoDisplayMvCase.execute(AddAutoDisplayMvReq(isChecked))
         }
     }

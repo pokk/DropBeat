@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,5 +36,5 @@ class MethodsProvider : LoginMethodsProvider, DIAware {
     override val di by lazy { (DropBeatApp.appContext as DropBeatApp).di }
     private val logoutCase by instance<LogoutCase>()
 
-    override suspend fun logout() = runCatching { logoutCase.execute() }
+    override suspend fun logout() = kotlin.runCatching { logoutCase.execute() }
 }
