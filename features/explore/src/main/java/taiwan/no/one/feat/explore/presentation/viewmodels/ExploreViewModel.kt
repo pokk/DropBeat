@@ -32,9 +32,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
@@ -78,8 +77,8 @@ internal class ExploreViewModel(
     val topTracks get() = _topTracks.toLiveData()
     private val _topArtists by lazy { ResultLiveData<ArtistWithMoreDetailEntities>() }
     val topArtists get() = _topArtists.toLiveData()
-    private val _topSimpleEntities by lazy { MutableStateFlow<Pair<Int, Array<SimpleTrackEntity>>>(-1 to emptyArray()) }
-    val topSimpleEntities get() = _topSimpleEntities.buffer()
+    private val _topSimpleEntities by lazy { MutableLiveData<Pair<Int, Array<SimpleTrackEntity>>>(-1 to emptyArray()) }
+    val topSimpleEntities get() = _topSimpleEntities.toLiveData()
     val topTags = liveData(Dispatchers.Default) {
         val res = kotlin.runCatching {
             fetchChartTopTagCase.execute(FetchChartTopTagReq(1, SONG_LIMITATION)).tags.orEmpty()
@@ -121,15 +120,20 @@ internal class ExploreViewModel(
         _resultOfFavorite.value = libraryProvider.updateSongWithFavorite(song, isFavorite)
     }
 
+    // NOTE(jieyi): 6/23/21 postValue will drop the value when the value is sent in a short time.
+    //  Live data postValue [https://tinyurl.com/338ceeus]
+    //  postValue(1)
+    //  postValue(2)
+    //  postValue(3) ⇐ only this will be received.
     @WorkerThread
     private suspend fun transformData(entities: ArtistWithMoreDetailEntities) {
         val array = entities.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
-        _topSimpleEntities.emit(TOP_ARTIST to array)
+        withContext(Dispatchers.Main) { _topSimpleEntities.value = TOP_ARTIST to array }
     }
 
     @WorkerThread
     private suspend fun transformData(entities: TracksEntity) {
         val array = entities.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
-        _topSimpleEntities.emit(TOP_TRACK to array)
+        withContext(Dispatchers.Main) { _topSimpleEntities.value = TOP_TRACK to array }
     }
 }
