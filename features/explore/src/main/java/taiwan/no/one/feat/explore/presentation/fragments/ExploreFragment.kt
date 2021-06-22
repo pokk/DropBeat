@@ -30,7 +30,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +39,6 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
-import kotlinx.coroutines.flow.collect
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
@@ -136,15 +134,11 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         vm.topTracks.observe(this) { res ->
             res.onSuccess(topTrackAdapter::setDataset).onFailure(::loge)
         }
+        vm.topSimpleEntities.observe(this, this@ExploreFragment::setTopTracksClickEvent)
         vm.resultOfFavorite.observe(this) {
             if (!it) return@observe
             // Update the playlist information.
             vm.getPlaylists()
-        }
-        lifecycleScope.launchWhenCreated {
-            vm.topSimpleEntities.collect {
-                setTopTracksClickEvent(it)
-            }
         }
     }
 
