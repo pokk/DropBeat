@@ -26,11 +26,14 @@ package taiwan.no.one.feat.explore.presentation.viewmodels
 
 import android.app.Application
 import android.os.Parcelable
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
@@ -39,6 +42,7 @@ import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
+import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistReq
@@ -53,6 +57,8 @@ internal class ExploreViewModel(
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
     companion object Constant {
+        const val TOP_TRACK = 1
+        const val TOP_ARTIST = 2
         private const val PLAYLIST_SAVED_STATE = "playlist recycler view saved state"
         private const val SONG_LIMITATION = 10
     }
@@ -72,6 +78,8 @@ internal class ExploreViewModel(
     val topTracks get() = _topTracks.toLiveData()
     private val _topArtists by lazy { ResultLiveData<ArtistWithMoreDetailEntities>() }
     val topArtists get() = _topArtists.toLiveData()
+    private val _topSimpleEntities by lazy { MutableStateFlow<Pair<Int, Array<SimpleTrackEntity>>>(-1 to emptyArray()) }
+    val topSimpleEntities get() = _topSimpleEntities.buffer()
     val topTags = liveData(Dispatchers.Default) {
         val res = kotlin.runCatching {
             fetchChartTopTagCase.execute(FetchChartTopTagReq(1, SONG_LIMITATION)).tags.orEmpty()
@@ -85,6 +93,7 @@ internal class ExploreViewModel(
         _playlists.value = libraryProvider.getPlaylists()
     }
 
+    @WorkerThread
     fun getTopTracks() = launchBehind {
         _topTracks.postValue(kotlin.runCatching {
             fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, SONG_LIMITATION, SONG_LIMITATION)).apply {
@@ -93,21 +102,34 @@ internal class ExploreViewModel(
                     val isFavorite = libraryProvider.isFavoriteTrack(url)
                     it.isFavorite = isFavorite.getOrNull()
                 }
-            }
+            }.also { transformData(it) }
         })
     }
 
+    @WorkerThread
     fun getTopArtists() = launchBehind {
         _topArtists.postValue(kotlin.runCatching {
             fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, SONG_LIMITATION, SONG_LIMITATION)).onEach {
                 val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
                 val isFavorite = libraryProvider.isFavoriteTrack(url)
                 it.second?.popularTrackThisWeek?.isFavorite = isFavorite.getOrNull()
-            }
+            }.also { transformData(it) }
         })
     }
 
     fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {
         _resultOfFavorite.value = libraryProvider.updateSongWithFavorite(song, isFavorite)
+    }
+
+    @WorkerThread
+    private suspend fun transformData(entities: ArtistWithMoreDetailEntities) {
+        val array = entities.map(EntityMapper::artistToSimpleTrackEntity).toTypedArray()
+        _topSimpleEntities.emit(TOP_ARTIST to array)
+    }
+
+    @WorkerThread
+    private suspend fun transformData(entities: TracksEntity) {
+        val array = entities.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
+        _topSimpleEntities.emit(TOP_TRACK to array)
     }
 }
