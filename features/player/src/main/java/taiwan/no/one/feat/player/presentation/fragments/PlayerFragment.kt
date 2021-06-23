@@ -63,6 +63,7 @@ import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
 import taiwan.no.one.feat.player.presentation.popups.PlaylistPopupWindow
 import taiwan.no.one.feat.player.presentation.popups.SettingPopupWindow
+import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.decorators.PlaylistItemDecorator
 import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
@@ -202,6 +203,24 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             setProgress(player.curTrackSec / player.curDuration.toFloat())
             binding.sliderMiniProgress.setLabelFormatter {
                 StringUtil.buildDurationToDigitalTime((it * player.curDuration).toLong())
+            }
+            rvLyric.apply {
+                adapter = LyricAdapter(
+                    listOf(
+                        "Toruss prarere in audax berolinum!",
+                        "Nunquam reperire mortem.",
+                        "Abaculus noster parma est.",
+                        "Ignigena cadunts, tanquam emeritis clabulare.",
+                        "Salvus, raptus scutums etiam examinare de velox, superbus tumultumque.",
+                        "Candidatuss favere in emeritis quadrata!",
+                        "Ferox, bi-color byssuss recte imperium de varius, festus competition.",
+                        "Cur candidatus velum?",
+                        "Primus epos unus imperiums cannabis est.",
+                        "Musas sunt extums de domesticus fluctui.",
+                        "Tuss favere in germanus avenio!Cum mensa peregrinationes, omnes exemplares imperium magnum, albus hilotaees.",
+                    )
+                )
+                layoutManager = linearLayoutManager()
             }
         }
         switchPlayIcon()
