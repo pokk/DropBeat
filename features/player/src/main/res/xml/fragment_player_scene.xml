@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -154,6 +154,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/md_two_unit"
                 app:layout_constraintTop_toBottomOf="@id/mtv_track"/>
+            <CustomAttribute
+                app:attributeName="textColor"
+                app:customColorValue="@android:color/white"/>
         </Constraint>
         <Constraint android:id="@+id/mtv_track">
             <Layout
@@ -233,22 +236,25 @@
                 android:layout_width="@dimen/md_zero_unit"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/md_two_unit"
+                android:layout_marginTop="@dimen/md_one_unit"
                 android:layout_marginEnd="@dimen/md_two_unit"
                 app:layout_constraintBottom_toTopOf="@id/mtv_artist"
                 app:layout_constraintEnd_toStartOf="@id/btn_mini_option"
                 app:layout_constraintStart_toEndOf="@id/siv_album"
-                app:layout_constraintTop_toTopOf="@id/cl_container"
-                app:layout_constraintVertical_chainStyle="packed"/>
+                app:layout_constraintTop_toTopOf="@id/cl_container"/>
         </Constraint>
         <Constraint android:id="@+id/mtv_artist">
             <Layout
                 android:layout_width="@dimen/md_zero_unit"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/md_one_unit"
                 app:layout_constraintBottom_toBottomOf="@id/cl_container"
                 app:layout_constraintEnd_toEndOf="@id/mtv_track"
                 app:layout_constraintStart_toStartOf="@id/mtv_track"
-                app:layout_constraintTop_toBottomOf="@id/mtv_track"
-                app:layout_constraintVertical_chainStyle="packed"/>
+                app:layout_constraintTop_toBottomOf="@id/mtv_track"/>
+            <CustomAttribute
+                app:attributeName="textColor"
+                app:customColorValue="@color/pastel_pink"/>
         </Constraint>
         <Constraint android:id="@+id/btn_mini_close">
             <Layout
