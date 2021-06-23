@@ -134,7 +134,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         vm.topTracks.observe(this) { res ->
             res.onSuccess(topTrackAdapter::setDataset).onFailure(::loge)
         }
-        vm.topSimpleEntities.observe(this, this@ExploreFragment::setTopTracksClickEvent)
+        vm.topSimpleEntities.observe(this, ::setTopTracksClickEvent)
         vm.resultOfFavorite.observe(this) {
             if (!it) return@observe
             // Update the playlist information.

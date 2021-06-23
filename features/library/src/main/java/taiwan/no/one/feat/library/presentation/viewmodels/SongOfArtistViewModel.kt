@@ -30,26 +30,29 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
+import kotlinx.coroutines.Dispatchers
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
+import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
-import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimpleArtistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
+import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistCase
+import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistReq
 import taiwan.no.one.ktx.livedata.toLiveData
 
 internal class SongOfArtistViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
+    private val fetchIsInThePlaylistCase by instance<FetchIsInThePlaylistCase>()
     private val exploreMethodsProvider by instance<ExploreMethodsProvider>()
-    private val libraryMethodsProvider by instance<LibraryMethodsProvider>()
     private val _artistInfo by lazy { ResultLiveData<SimpleArtistEntity>() }
     val artistInfo get() = _artistInfo.toLiveData()
     val artistTrack
         get() = _artistInfo.switchMap {
-            liveData { emit(attachFavorite(it.getOrNull()?.topTracks.orEmpty())) }
+            liveData(Dispatchers.IO) { emit(attachFavorite(it.getOrNull()?.topTracks.orEmpty())) }
         }
     val artistAlbums
         get() = _artistInfo.map { it.getOrNull()?.topAlbums.orEmpty() }
@@ -61,7 +64,8 @@ internal class SongOfArtistViewModel(
 
     @WorkerThread
     private suspend fun attachFavorite(tracks: List<SimpleTrackEntity>) = tracks.onEach {
-        val isFavorite = libraryMethodsProvider.isFavoriteTrack(it.uri).getOrNull() ?: false
+        val isFavorite =
+            fetchIsInThePlaylistCase.execute(FetchIsInThePlaylistReq(null, it.uri, PlaylistConstant.FAVORITE))
         it.isFavorite = isFavorite
     }
 }
