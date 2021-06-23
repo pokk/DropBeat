@@ -119,7 +119,14 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             if (!it) return@observe
             vm.getAllPlaylists()
         }
-        vm.nonDefaultPlaylist.observe(this, playlistAdapter::submitList)
+        vm.nonDefaultPlaylist.observe(this) {
+            if (it.isEmpty()) {
+                // TODO(jieyi): 6/23/21 Display no playlist.
+            }
+            else {
+                playlistAdapter.submitList(it)
+            }
+        }
     }
 
     override fun viewComponentBinding() {
