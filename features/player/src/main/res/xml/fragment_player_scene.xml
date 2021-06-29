@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -345,8 +345,9 @@
                 android:layout_width="@dimen/md_zero_unit"
                 android:layout_height="@dimen/md_zero_unit"
                 android:layout_marginStart="@dimen/md_three_unit"
-                android:layout_marginTop="@dimen/md_five_unit"
+                android:layout_marginTop="@dimen/md_six_unit"
                 android:layout_marginEnd="@dimen/md_three_unit"
+                android:layout_marginBottom="@dimen/md_one_unit"
                 app:layout_constraintBottom_toBottomOf="@id/siv_lyrics"
                 app:layout_constraintEnd_toEndOf="@id/siv_lyrics"
                 app:layout_constraintStart_toStartOf="@id/siv_lyrics"
@@ -418,8 +419,9 @@
                 android:layout_width="@dimen/md_zero_unit"
                 android:layout_height="@dimen/md_zero_unit"
                 android:layout_marginStart="@dimen/md_three_unit"
-                android:layout_marginTop="@dimen/md_zero_unit"
+                android:layout_marginTop="@dimen/md_one_unit"
                 android:layout_marginEnd="@dimen/md_three_unit"
+                android:layout_marginBottom="@dimen/md_one_unit"
                 app:layout_constraintBottom_toBottomOf="@id/siv_lyrics"
                 app:layout_constraintEnd_toEndOf="@id/siv_lyrics"
                 app:layout_constraintStart_toStartOf="@id/siv_lyrics"
