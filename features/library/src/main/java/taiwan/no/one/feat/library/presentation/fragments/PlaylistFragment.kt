@@ -56,6 +56,7 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
+import taiwan.no.one.widget.recyclerviews.effectors.BounceEdgeEffectFactory
 
 internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
@@ -186,6 +187,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
             updateLayoutParams { height = getDimen(WidgetResDimen.md_zero_unit).toInt() }
             adapter = playlistAdapter
             layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
+            edgeEffectFactory = BounceEdgeEffectFactory()
         }
         // Set the song into the adapter.
         playlistAdapter.data = songs

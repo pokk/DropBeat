@@ -207,6 +207,8 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             rvLyric.apply {
                 adapter = LyricAdapter(
                     listOf(
+                        "",
+                        "",
                         "Toruss prarere in audax berolinum!",
                         "Nunquam reperire mortem.",
                         "Abaculus noster parma est.",
@@ -218,6 +220,8 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                         "Primus epos unus imperiums cannabis est.",
                         "Musas sunt extums de domesticus fluctui.",
                         "Tuss favere in germanus avenio!Cum mensa peregrinationes, omnes exemplares imperium magnum, albus hilotaees.",
+                        "",
+                        "",
                     )
                 )
                 layoutManager = linearLayoutManager()
