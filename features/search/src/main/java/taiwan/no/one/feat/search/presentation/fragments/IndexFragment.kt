@@ -54,6 +54,7 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.helpers.DownloadHelper
 import taiwan.no.one.dropbeat.core.helpers.TouchHelper
+import taiwan.no.one.dropbeat.di.Constant as DiConstant
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.search.R
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
@@ -91,6 +92,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
+    private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
     //endregion
 
     private val clickFlag by lazy(TouchHelper::ClickFlag)
@@ -160,6 +162,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         rvMusics.apply {
             adapter = searchHistoryAdapter
             layoutManager = linearLayoutManager()
+            edgeEffectFactory = noneEdgeEffectFactory()
         }
     }
 

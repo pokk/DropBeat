@@ -44,6 +44,7 @@ import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.AppResId
 import taiwan.no.one.dropbeat.AppResMenu
 import taiwan.no.one.dropbeat.core.PlaylistConstant
+import taiwan.no.one.dropbeat.di.Constant as DiConstant
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.entity.SimpleTrackEntity
@@ -65,6 +66,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
+    private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
 
     // FIXME(jieyi): 10/30/20 This still has bug after update the layout manager.
     //    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
@@ -170,11 +172,13 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
         binding.includeExplore.rvMusics.apply {
             adapter = exploreAdapter
             layoutManager = GridLayoutManager(requireActivity(), 2, RecyclerView.HORIZONTAL, false)
+            edgeEffectFactory = noneEdgeEffectFactory()
         }
         includePlaylist.apply {
             find<RecyclerView>(AppResId.rv_musics).apply {
                 adapter = playlistAdapter
                 layoutManager = playlistLayoutManager
+                edgeEffectFactory = noneEdgeEffectFactory()
             }
             find<TextView>(AppResId.mtv_explore_title).text = "Playlist"
             find<View>(AppResId.btn_play_all).visible()
