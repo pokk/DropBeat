@@ -66,12 +66,12 @@ class BounceEdgeEffectFactory(
                 // The finger is lifted. Start the animation to bring translation back to the resting state.
                 if (isVertical) {
                     if (recyclerView.translationY != 0f) {
-                        translationAnim = createAnim()?.also { it.start() }
+                        translationAnim = createAnim().also { it.start() }
                     }
                 }
                 else {
                     if (recyclerView.translationX != 0f) {
-                        translationAnim = createAnim()?.also { it.start() }
+                        translationAnim = createAnim().also { it.start() }
                     }
                 }
             }
@@ -117,24 +117,12 @@ class BounceEdgeEffectFactory(
                 translationAnim?.cancel()
             }
 
-            private fun createAnim() =
-                if (isVertical) {
-                    SpringAnimation(recyclerView, SpringAnimation.TRANSLATION_Y)
-                        .setSpring(
-                            SpringForce()
-                                .setFinalPosition(0f)
-                                .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
-                                .setStiffness(SpringForce.STIFFNESS_LOW)
-                        )
-                }
-                else {
-                    SpringAnimation(recyclerView, SpringAnimation.TRANSLATION_X)
-                        .setSpring(
-                            SpringForce()
-                                .setFinalPosition(0f)
-                                .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
-                                .setStiffness(SpringForce.STIFFNESS_LOW)
-                        )
-                }
+            private fun createAnim(): SpringAnimation {
+                val direct = if (isVertical) SpringAnimation.TRANSLATION_Y else SpringAnimation.TRANSLATION_X
+                SpringAnimation(recyclerView, direct).spring = SpringForce()
+                    .setFinalPosition(0f)
+                    .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
+                    .setStiffness(SpringForce.STIFFNESS_LOW)
+            }
         }
 }
