@@ -74,7 +74,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_five_unit"
+        android:ellipsize="end"
         android:gravity="center"
+        android:maxLines="1"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Headline3"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names"/>
@@ -84,7 +86,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/md_two_unit"
+        android:ellipsize="end"
         android:gravity="center"
+        android:maxLines="1"
         android:textAppearance="@style/Taiwan.No.One.TextAppearance.Caption1"
         app:layout_constraintTop_toBottomOf="@id/mtv_track"
         tools:text="@tools:sample/full_names"/>
