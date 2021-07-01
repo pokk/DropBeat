@@ -33,6 +33,7 @@ import com.devrapid.kotlinknifer.logw
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
+import taiwan.no.one.dropbeat.di.Constant as DiConstant
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.feat.ranking.databinding.FragmentRankingBinding
@@ -45,11 +46,13 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
+    private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
 
     override fun viewComponentBinding() {
         binding.rvMusics.apply {
             adapter = RankAdapter()
             layoutManager = linearLayoutManager()
+            edgeEffectFactory = noneEdgeEffectFactory()
         }
     }
 

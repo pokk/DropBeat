@@ -42,8 +42,10 @@ import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
 import java.lang.ref.WeakReference
 import org.kodein.di.factory
+import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.dropbeat.AppResId
+import taiwan.no.one.dropbeat.di.Constant as DiConstant
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.feat.library.R
@@ -56,7 +58,6 @@ import taiwan.no.one.feat.library.presentation.viewmodels.PlaylistViewModel
 import taiwan.no.one.ktx.view.find
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupmenu.popupMenuWithIcon
-import taiwan.no.one.widget.recyclerviews.effectors.BounceEdgeEffectFactory
 
 internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentPlaylistBinding>() {
     private var willRemoveEntity: SimpleTrackEntity? = null
@@ -74,6 +75,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
     //region Variable of Recycler View
     private val playlistAdapter by lazy { TrackAdapter() }
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
+    private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
     //endregion
 
     private val navArgs by navArgs<PlaylistFragmentArgs>()
@@ -187,7 +189,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
             updateLayoutParams { height = getDimen(WidgetResDimen.md_zero_unit).toInt() }
             adapter = playlistAdapter
             layoutManager = layoutManager(LayoutManagerParams(WeakReference(requireActivity())))
-            edgeEffectFactory = BounceEdgeEffectFactory()
+            edgeEffectFactory = noneEdgeEffectFactory()
         }
         // Set the song into the adapter.
         playlistAdapter.data = songs

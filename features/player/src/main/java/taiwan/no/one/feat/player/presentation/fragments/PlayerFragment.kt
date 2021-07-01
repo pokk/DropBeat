@@ -44,6 +44,7 @@ import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.loadAny
 import com.devrapid.kotlinknifer.displayMetrics
 import com.devrapid.kotlinknifer.getDimen
@@ -56,6 +57,7 @@ import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.PlaylistConstant
 import taiwan.no.one.dropbeat.core.utils.StringUtil
+import taiwan.no.one.dropbeat.di.Constant as DiConstant
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.feat.player.R
@@ -91,6 +93,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
+    private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
     private val playerCallback = object : PlayerCallback {
         override fun onTrackChanged(music: MusicInfo) {
             logw(music)
@@ -219,12 +222,13 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                         "Cur candidatus velum?",
                         "Primus epos unus imperiums cannabis est.",
                         "Musas sunt extums de domesticus fluctui.",
-                        "Tuss favere in germanus avenio!Cum mensa peregrinationes, omnes exemplares imperium magnum, albus hilotaees.",
+                        "Tuss favere in germanus avenio!Cum mensa peregrinationes, omnes exemplares albus hilotaees.",
                         "",
                         "",
                     )
                 )
                 layoutManager = linearLayoutManager()
+                edgeEffectFactory = noneEdgeEffectFactory()
             }
         }
         switchPlayIcon()

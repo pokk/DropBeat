@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,10 @@ import org.kodein.di.bindFactory
 import org.kodein.di.bindInstance
 import org.kodein.di.bindProvider
 import taiwan.no.one.analytics.AnalyticsSender
+import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_BOUNCED
+import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_NONE
+import taiwan.no.one.widget.recyclerviews.effectors.BounceEdgeEffectFactory
+import taiwan.no.one.widget.recyclerviews.effectors.NoneEdgeEffectFactory
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 
 object UtilModules {
@@ -74,6 +78,10 @@ object UtilModules {
             StaggeredGridLayoutManager(params.spanCount, params.orientation)
         }
         bindProvider { LinearLoadMoreScrollListener() }
+        bindProvider<RecyclerView.EdgeEffectFactory>(TAG_EDGE_FACTORY_NONE) { NoneEdgeEffectFactory() }
+        bindFactory<Boolean, RecyclerView.EdgeEffectFactory>(TAG_EDGE_FACTORY_BOUNCED) { isVertical ->
+            BounceEdgeEffectFactory(isVertical)
+        }
     }
 
     fun provideAll(context: Context) = listOf(provide(context), provideAnalytics(context), provideUi())

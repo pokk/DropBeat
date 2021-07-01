@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,4 +35,7 @@ object Constant {
     const val TAG_WORKER_ADD_SONG_TO_DB = "worker for adding a song to the database"
     const val TAG_WORKER_ADD_SONG_TO_PLAYLIST = "worker for adding a song to a playlist"
     const val TAG_WORKER_GET_SONGS_OF_TAG = "worker for getting songs of tag"
+
+    const val TAG_EDGE_FACTORY_NONE = "recyclerview none edge effect"
+    const val TAG_EDGE_FACTORY_BOUNCED = "recyclerview bounced edge effect"
 }
