@@ -115,10 +115,12 @@ class BounceEdgeEffectFactory(
 
             private fun createAnim(): SpringAnimation {
                 val direct = if (isVertical) SpringAnimation.TRANSLATION_Y else SpringAnimation.TRANSLATION_X
-                SpringAnimation(recyclerView, direct).spring = SpringForce()
-                    .setFinalPosition(0f)
-                    .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
-                    .setStiffness(SpringForce.STIFFNESS_LOW)
+                return SpringAnimation(recyclerView, direct).apply {
+                    spring = SpringForce()
+                        .setFinalPosition(0f)
+                        .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
+                        .setStiffness(SpringForce.STIFFNESS_LOW)
+                }
             }
         }
 }
