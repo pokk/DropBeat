@@ -78,20 +78,16 @@ class BounceEdgeEffectFactory(
 
             override fun onAbsorb(velocity: Int) {
                 super.onAbsorb(velocity)
-                translationAnim = if (isVertical) {
-                    // The list has reached the edge on fling.
-                    val sign = if (direction == DIRECTION_BOTTOM) -1 else 1
-                    val translationVelocity = sign * velocity * FLING_TRANSLATION_MAGNITUDE
-                    translationAnim?.cancel()
-                    createAnim().setStartVelocity(translationVelocity)?.also { it.start() }
+                // The list has reached the edge on fling.
+                val sign = if (isVertical) {
+                    if (direction == DIRECTION_BOTTOM) -1 else 1
                 }
                 else {
-                    // The list has reached the edge on fling.
-                    val sign = if (direction == DIRECTION_RIGHT) -1 else 1
-                    val translationVelocity = sign * velocity * FLING_TRANSLATION_MAGNITUDE
-                    translationAnim?.cancel()
-                    createAnim().setStartVelocity(translationVelocity)?.also { it.start() }
+                    if (direction == DIRECTION_RIGHT) -1 else 1
                 }
+                val translationVelocity = sign * velocity * FLING_TRANSLATION_MAGNITUDE
+                translationAnim?.cancel()
+                translationAnim = createAnim().setStartVelocity(translationVelocity)?.also { it.start() }
             }
 
             // don't paint the usual edge effect
