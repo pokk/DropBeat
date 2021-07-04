@@ -29,7 +29,7 @@ import androidx.annotation.WorkerThread
 /**
  * Parse the lyrics and get the collection of [taiwan.no.one.mediaplayer.lyric.LrcRowEntity].
  */
-interface ILrcBuilder {
+interface LrcBuilder {
     @WorkerThread
     fun getLrcRows(rawLrc: String): List<LrcRowEntity>
 }
