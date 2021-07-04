@@ -101,6 +101,8 @@ internal class LocalStore(
         }
     }
 
+    override suspend fun getLyric(url: String) = TODO()
+
     private suspend fun getArrangedSongs(originIds: List<Int>) = buildList {
         val songsMap = songDao.getMusics(originIds).map { it.id to it }.toMap()
         originIds.forEach {

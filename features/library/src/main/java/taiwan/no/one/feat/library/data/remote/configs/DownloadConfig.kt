@@ -22,13 +22,21 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.remote
+package taiwan.no.one.feat.library.data.remote.configs
 
-import taiwan.no.one.feat.library.data.remote.configs.DownloadConfig
+import taiwan.no.one.core.data.remote.config.ApiConfig
+import taiwan.no.one.ext.DEFAULT_STR
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.core.data.remote.config.ApiConfig].
+ * The configuration of a remote google news api service.
  */
-internal class RestfulApiFactory {
-    fun createDownloadConfig() = DownloadConfig()
+internal class DownloadConfig : ApiConfig {
+    companion object {
+        const val API_REQUEST = DEFAULT_STR
+
+        // All basic http api url of Search Music.
+        private const val BASE_URL = "https://localhost"
+    }
+
+    override val apiBaseUrl = BASE_URL
 }

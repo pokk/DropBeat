@@ -22,13 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.remote
+package taiwan.no.one.feat.library.data.repositories
 
-import taiwan.no.one.feat.library.data.remote.configs.DownloadConfig
+import taiwan.no.one.feat.library.data.contracts.DataStore
+import taiwan.no.one.feat.library.domain.repositories.LyricRepo
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.core.data.remote.config.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createDownloadConfig() = DownloadConfig()
+internal class LyricRepository(
+    private val local: DataStore,
+    private val remote: DataStore,
+) : LyricRepo {
+    override suspend fun fetchLyric(url: String) = remote.getLyric(url)
 }

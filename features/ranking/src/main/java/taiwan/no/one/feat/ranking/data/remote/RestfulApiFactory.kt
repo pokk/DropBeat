@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,8 @@ package taiwan.no.one.feat.ranking.data.remote
 import taiwan.no.one.feat.ranking.data.remote.configs.RankingConfig
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.feat.ranking.data.remote.configs.ApiConfig].
+ * Factory that creates different implementations of [taiwan.no.one.core.data.remote.config.ApiConfig].
  */
 internal class RestfulApiFactory {
-    fun createSeekerConfig() = RankingConfig()
+    fun createRankingConfig() = RankingConfig()
 }

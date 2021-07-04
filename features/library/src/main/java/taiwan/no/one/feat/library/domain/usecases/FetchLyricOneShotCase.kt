@@ -22,13 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.remote
+package taiwan.no.one.feat.library.domain.usecases
 
-import taiwan.no.one.feat.library.data.remote.configs.DownloadConfig
+import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.feat.library.domain.repositories.LyricRepo
 
-/**
- * Factory that creates different implementations of [taiwan.no.one.core.data.remote.config.ApiConfig].
- */
-internal class RestfulApiFactory {
-    fun createDownloadConfig() = DownloadConfig()
+internal class FetchLyricOneShotCase(
+    private val repository: LyricRepo,
+) : FetchLyricCase() {
+    override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
+        repository.fetchLyric(fileUrl)
+        ""
+    }
+
+    internal data class Request(val fileUrl: String) : RequestValues
 }

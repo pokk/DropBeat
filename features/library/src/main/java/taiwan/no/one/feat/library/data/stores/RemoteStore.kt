@@ -28,12 +28,15 @@ import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
+import taiwan.no.one.feat.library.data.remote.services.retofit.v1.DownloadService
 
 /**
  * The implementation of the remote data store. The responsibility is selecting a correct
  * remote service to access the data.
  */
-internal class RemoteStore : DataStore {
+internal class RemoteStore(
+    private val downloadService: DownloadService
+) : DataStore {
     override suspend fun getMusic(songId: Int) = UnsupportedOperation()
 
     override suspend fun getMusic(remoteUri: String?, localUri: String?) = UnsupportedOperation()
@@ -66,4 +69,6 @@ internal class RemoteStore : DataStore {
     override suspend fun modifyPlaylist(playlist: PlayListEntity) = UnsupportedOperation()
 
     override suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?) = UnsupportedOperation()
+
+    override suspend fun getLyric(url: String): ByteArray = downloadService.retrieveLyric(url).bytes()
 }

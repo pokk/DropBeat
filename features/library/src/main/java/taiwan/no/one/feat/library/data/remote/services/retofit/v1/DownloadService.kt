@@ -22,13 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.remote
+package taiwan.no.one.feat.library.data.remote.services.retofit.v1
 
-import taiwan.no.one.feat.library.data.remote.configs.DownloadConfig
+import com.squareup.okhttp.ResponseBody
+import retrofit2.http.GET
+import retrofit2.http.Url
 
 /**
- * Factory that creates different implementations of [taiwan.no.one.core.data.remote.config.ApiConfig].
+ * Thru [retrofit2.Retrofit] we can just define the interfaces which we want to access for.
+ * Using prefix name (retrieve), (insert), (replace), (release)
  */
-internal class RestfulApiFactory {
-    fun createDownloadConfig() = DownloadConfig()
+interface DownloadService {
+    @GET
+    suspend fun retrieveLyric(@Url fileUrl: String): ResponseBody
 }

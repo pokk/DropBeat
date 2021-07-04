@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,8 @@ import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsOneShotCase
 import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistOneShotCase
+import taiwan.no.one.feat.library.domain.usecases.FetchLyricCase
+import taiwan.no.one.feat.library.domain.usecases.FetchLyricOneShotCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchPlaylistOneShotCase
 import taiwan.no.one.feat.library.domain.usecases.FetchSongCase
@@ -66,5 +68,6 @@ internal object DomainModules : ModuleProvider {
         bindSingleton<AddSongsAndPlaylistCase> { AddSongsAndPlaylistOneShotCase(instance(), instance()) }
         bindSingleton<UpdateSongCase> { UpdateSongOneShotCase(instance(), instance()) }
         bindSingleton<CreateDefaultPlaylistCase> { CreateDefaultPlaylistOneShotCase(instance()) }
+        bindSingleton<FetchLyricCase> { FetchLyricOneShotCase(instance()) }
     }
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,21 +30,26 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.google.android.play.core.splitcompat.SplitCompat
+import org.jetbrains.annotations.TestOnly
 import org.kodein.di.DI
 import org.kodein.di.DIAware
-import org.kodein.di.android.di
+import org.kodein.di.android.closestDI
 import org.kodein.di.instance
+import taiwan.no.one.core.data.extensions.readFileFromAssets
 import taiwan.no.one.dropbeat.databinding.ActivitySplashBinding
 import taiwan.no.one.dropbeat.di.Constant.TAG_WORKER_INIT_DATA
 import taiwan.no.one.dropbeat.presentation.viewmodels.SplashViewModel
+import taiwan.no.one.mediaplayer.lyric.DefaultLrcBuilder
+import taiwan.no.one.mediaplayer.lyric.LrcBuilder
 
 internal class SplashActivity : AppCompatActivity(), DIAware {
     /**
      * A DI Aware class must be within reach of a [DI] object.
      */
-    override val di by di()
+    override val di by closestDI()
     private var binding: ActivitySplashBinding? = null
     private val vm by viewModels<SplashViewModel>()
     private val workManager by instance<WorkManager>()
@@ -80,5 +85,15 @@ internal class SplashActivity : AppCompatActivity(), DIAware {
     private fun launchApp() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    @TestOnly
+    private fun test() {
+        val lyrics = readFileFromAssets("lyrics/test.lrc")
+        // Analyze the lyrics constructor
+        val builder: LrcBuilder = DefaultLrcBuilder()
+        // Analyze the lyrics and return to the LrcRow collection
+        val rows = builder.getLrcRows(lyrics)
+        loge(rows)
     }
 }
