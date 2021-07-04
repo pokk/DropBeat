@@ -29,7 +29,7 @@ import java.io.StringReader
 /**
  * Parse the lyrics and get the collection of [LrcRowEntity].
  */
-class DefaultLrcBuilder : ILrcBuilder {
+class DefaultLrcBuilder : LrcBuilder {
     @WorkerThread
     override fun getLrcRows(rawLrc: String): List<LrcRowEntity> {
         if (rawLrc.isEmpty()) return emptyList()

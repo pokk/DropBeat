@@ -44,6 +44,8 @@ import org.kodein.di.bindProvider
 import taiwan.no.one.analytics.AnalyticsSender
 import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_BOUNCED
 import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_NONE
+import taiwan.no.one.mediaplayer.lyric.DefaultLrcBuilder
+import taiwan.no.one.mediaplayer.lyric.LrcBuilder
 import taiwan.no.one.widget.recyclerviews.effectors.BounceEdgeEffectFactory
 import taiwan.no.one.widget.recyclerviews.effectors.NoneEdgeEffectFactory
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
@@ -60,6 +62,7 @@ object UtilModules {
             }
         }
         bindInstance { requireNotNull(MMKV.defaultMMKV()) }
+        bindInstance<LrcBuilder> { DefaultLrcBuilder() }
     }
 
     fun provideAnalytics(context: Context) = DI.Module("Analytics Module") {
