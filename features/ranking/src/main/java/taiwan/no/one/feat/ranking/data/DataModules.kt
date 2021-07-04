@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,9 +56,11 @@ internal object DataModules : ModuleProvider {
         bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance(), instance()) }
         bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance()) }
         bindSingleton<RankingRepo> {
-            RankingRepository(instance(TAG_LOCAL_DATA_STORE),
-                              instance(TAG_REMOTE_DATA_STORE),
-                              instance(TAG_FEAT_REPO_SHARED_PREFS))
+            RankingRepository(
+                instance(TAG_LOCAL_DATA_STORE),
+                instance(TAG_REMOTE_DATA_STORE),
+                instance(TAG_FEAT_REPO_SHARED_PREFS)
+            )
         }
     }
 
@@ -68,7 +70,7 @@ internal object DataModules : ModuleProvider {
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
-        bindInstance { RestfulApiFactory().createSeekerConfig() }
+        bindInstance { RestfulApiFactory().createRankingConfig() }
         bindSingleton<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT) {
             DefaultRetrofitConfig(context, instance<RankingConfig>().apiBaseUrl).provideRetrofitBuilder().build()
         }

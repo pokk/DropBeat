@@ -63,4 +63,6 @@ internal interface DataStore {
     suspend fun modifyPlaylist(playlist: PlayListEntity)
 
     suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?)
+
+    suspend fun getLyric(url: String): ByteArray
 }
