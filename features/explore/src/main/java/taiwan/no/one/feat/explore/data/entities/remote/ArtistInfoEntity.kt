@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,12 @@ package taiwan.no.one.feat.explore.data.entities.remote
 
 import androidx.room.ColumnInfo
 import androidx.room.Ignore
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import java.util.Date
 import taiwan.no.one.ext.DEFAULT_STR
 
+@JsonClass(generateAdapter = true)
 internal data class ArtistInfoEntity(
     val artist: ArtistEntity?,
 ) {
@@ -38,13 +40,13 @@ internal data class ArtistInfoEntity(
         val mbid: String? = DEFAULT_STR,
         val match: String? = DEFAULT_STR,
         val url: String? = DEFAULT_STR,
-        @SerializedName("image")
+        @Json(name = "image")
         val images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
         val streamable: String? = DEFAULT_STR,
         val listeners: String? = DEFAULT_STR,
-        @SerializedName("ontour")
+        @Json(name = "ontour")
         val onTour: String? = DEFAULT_STR,
-        @SerializedName("playcount")
+        @Json(name = "playcount")
         val playCount: String? = DEFAULT_STR,
         @Ignore
         val stats: StatsEntity? = null,
@@ -74,7 +76,7 @@ internal data class ArtistInfoEntity(
     )
 
     internal data class LinkEntity(
-        @SerializedName("#text")
+        @Json(name = "#text")
         val text: String?,
         val rel: String?,
         val href: String?,
@@ -82,12 +84,12 @@ internal data class ArtistInfoEntity(
 
     internal data class StatsEntity(
         val listeners: String?,
-        @SerializedName("playcount")
+        @Json(name = "playcount")
         val playCount: String?,
     )
 
     internal data class SimilarEntity(
-        @SerializedName("artist")
+        @Json(name = "artist")
         val artists: List<ArtistEntity>?,
     )
 }

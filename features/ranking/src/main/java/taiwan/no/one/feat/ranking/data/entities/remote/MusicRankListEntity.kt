@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,31 +24,34 @@
 
 package taiwan.no.one.feat.ranking.data.entities.remote
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import taiwan.no.one.ext.DEFAULT_DOUBLE
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
 
+@JsonClass(generateAdapter = true)
 internal data class MusicRankListEntity(
-    @SerializedName("status")
+    @Json(name = "status")
     val status: String = DEFAULT_STR,
-    @SerializedName("data")
+    @Json(name = "data")
     val briefRankEntities: List<BriefRankEntity> = emptyList(),
 ) {
+    @JsonClass(generateAdapter = true)
     internal data class BriefRankEntity(
-        @SerializedName("title")
+        @Json(name = "title")
         val title: String = DEFAULT_STR,
-        @SerializedName("timestamp")
+        @Json(name = "timestamp")
         val timestamp: Double = DEFAULT_DOUBLE,
-        @SerializedName("sub_title")
+        @Json(name = "sub_title")
         val subTitle: String = DEFAULT_STR,
-        @SerializedName("cover_url")
+        @Json(name = "cover_url")
         val coverUrl: String = DEFAULT_STR,
-        @SerializedName("source_tip")
+        @Json(name = "source_tip")
         val sourceTip: String = DEFAULT_STR,
-        @SerializedName("type")
+        @Json(name = "type")
         val type: Int = DEFAULT_INT,
-        @SerializedName("rank_id")
+        @Json(name = "rank_id")
         val rankId: Int = DEFAULT_INT,
         val numberOfSongs: Int = DEFAULT_INT,
     )

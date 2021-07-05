@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,50 +24,57 @@
 
 package taiwan.no.one.feat.explore.data.entities.remote
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 object CommonLastFmEntity {
+    @JsonClass(generateAdapter = true)
     internal data class TopAlbumsEntity(
-        @SerializedName("album")
+        @Json(name = "album")
         val albums: List<AlbumInfoEntity.AlbumWithArtistEntity>,
-        @SerializedName("@attr")
-        val attr: CommonLastFmEntity.AttrEntity?
+        @Json(name = "@attr")
+        val attr: AttrEntity?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class TagsEntity(
-        @SerializedName("tag")
+        @Json(name = "tag")
         val tags: List<TagInfoEntity.TagEntity>?,
-        @SerializedName("@attr")
-        val attr: AttrEntity?
+        @Json(name = "@attr")
+        val attr: AttrEntity?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class ImageEntity(
-        @SerializedName("#text")
+        @Json(name = "#text")
         val text: String?,
-        val size: String?
+        val size: String?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class StreamableEntity(
-        @SerializedName("#text")
+        @Json(name = "#text")
         val text: String?,
-        val fulltrack: String?
+        val fulltrack: String?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class WikiEntity(
         val published: String?,
         val summary: String?,
-        val content: String?
+        val content: String?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class AttrEntity(
         val artist: String?,
-        @SerializedName("totalPages")
+        @Json(name = "totalPages")
         val totalPages: String?,
         val total: String?,
         val rank: String?,
         val position: String?,
-        @SerializedName("perPage")
+        @Json(name = "perPage")
         val perPage: String?,
-        val page: String?
+        val page: String?,
     )
 }

@@ -57,6 +57,7 @@ object LibraryDependency {
         const val RETROFIT2 = "2.9.0"
         const val OKHTTP3 = "5.0.0-alpha.2"
         const val JSOUP = "1.13.1"
+        const val MOSHI = "1.12.0"
         const val AUTO_SERVICE = "1.0"
         const val FIREBASE_BOM = "28.2.0"
         const val FIREBASE_AUTH_GOOGLE = "19.0.0"
@@ -76,6 +77,8 @@ object LibraryDependency {
     object Tool {
         const val GSON = "com.google.code.gson:gson:${Version.GSON}"
         const val JSOUP = "org.jsoup:jsoup:${Version.JSOUP}"
+        const val MOSHI = "com.squareup.moshi:moshi:${Version.MOSHI}"
+        const val MOSHI_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:${Version.MOSHI}"
 
         const val AUTO_SERVICE = "com.google.auto.service:auto-service:${Version.AUTO_SERVICE}"
     }
@@ -130,6 +133,7 @@ object LibraryDependency {
         const val OKHTTP_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Version.OKHTTP3}"
         const val RETROFIT2 = "com.squareup.retrofit2:retrofit:${Version.RETROFIT2}"
         const val RETROFIT2_CONVERTER_GSON = "com.squareup.retrofit2:converter-gson:${Version.RETROFIT2}"
+        const val RETROFIT2_CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:${Version.RETROFIT2}"
         const val COIL = "io.coil-kt:coil:${Version.COIL}"
     }
 
