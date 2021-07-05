@@ -35,7 +35,7 @@ import taiwan.no.one.feat.library.data.remote.services.retofit.v1.DownloadServic
  * remote service to access the data.
  */
 internal class RemoteStore(
-    private val downloadService: DownloadService
+    private val downloadService: DownloadService,
 ) : DataStore {
     override suspend fun getMusic(songId: Int) = UnsupportedOperation()
 

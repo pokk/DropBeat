@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.library.data.remote.services.retofit.v1
 
-import com.squareup.okhttp.ResponseBody
+import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Url
 

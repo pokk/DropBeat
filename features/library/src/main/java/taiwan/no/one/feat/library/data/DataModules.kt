@@ -39,10 +39,12 @@ import taiwan.no.one.feat.library.data.local.configs.MusicLibraryDatabase
 import taiwan.no.one.feat.library.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.library.data.remote.configs.DownloadConfig
 import taiwan.no.one.feat.library.data.remote.services.retofit.v1.DownloadService
+import taiwan.no.one.feat.library.data.repositories.LyricRepository
 import taiwan.no.one.feat.library.data.repositories.PlaylistRepository
 import taiwan.no.one.feat.library.data.repositories.SongRepository
 import taiwan.no.one.feat.library.data.stores.LocalStore
 import taiwan.no.one.feat.library.data.stores.RemoteStore
+import taiwan.no.one.feat.library.domain.repositories.LyricRepo
 import taiwan.no.one.feat.library.domain.repositories.PlaylistRepo
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
@@ -61,6 +63,7 @@ internal object DataModules : ModuleProvider {
             PlaylistRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE))
         }
         bindSingleton<SongRepo> { SongRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE)) }
+        bindSingleton<LyricRepo> { LyricRepository(instance(TAG_LOCAL_DATA_STORE), instance(TAG_REMOTE_DATA_STORE)) }
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {

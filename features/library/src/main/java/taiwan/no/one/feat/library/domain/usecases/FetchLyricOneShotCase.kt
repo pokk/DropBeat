@@ -24,6 +24,7 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
+import java.nio.charset.StandardCharsets
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.feat.library.domain.repositories.LyricRepo
 
@@ -31,8 +32,8 @@ internal class FetchLyricOneShotCase(
     private val repository: LyricRepo,
 ) : FetchLyricCase() {
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        repository.fetchLyric(fileUrl)
-        ""
+        val bytes = repository.fetchLyric(fileUrl)
+        bytes.toString(StandardCharsets.UTF_8)
     }
 
     internal data class Request(val fileUrl: String) : RequestValues
