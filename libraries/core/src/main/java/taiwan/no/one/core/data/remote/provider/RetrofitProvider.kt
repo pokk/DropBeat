@@ -24,6 +24,8 @@
 
 package taiwan.no.one.core.data.remote.provider
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -32,5 +34,7 @@ open class RetrofitProvider {
         .baseUrl(domainUrl)
         .addConverterFactory(provideJsonConverter())
 
-    open fun provideJsonConverter() = MoshiConverterFactory.create()
+    open fun provideJsonConverter() = MoshiConverterFactory.create(
+        Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+    )
 }

@@ -28,7 +28,8 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
@@ -39,6 +40,7 @@ import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM
 import taiwan.no.one.dropbeat.presentation.services.workers.WorkerConstant.PARAM_TAG_OF_NAME
 import taiwan.no.one.dropbeat.provider.ExploreMethodsProvider
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
+import taiwan.no.one.entity.SimpleTrackEntity
 
 internal class GetSongsOfTagWorker(
     context: Context,
@@ -48,7 +50,7 @@ internal class GetSongsOfTagWorker(
         import(UtilModules.provide(context))
         import(FeatModuleHelper.provide())
     }
-    private val gson by instance<Gson>()
+    private val moshi by instance<Moshi>()
     private val exploreProvider by instance<ExploreMethodsProvider>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
 
@@ -63,7 +65,8 @@ internal class GetSongsOfTagWorker(
                 val isFavorite = libraryProvider.isFavoriteTrack(it.uri).getOrNull() ?: false
                 it.isFavorite = isFavorite
             }
-            val json = gson.toJson(entities)
+            val type = Types.newParameterizedType(List::class.java, SimpleTrackEntity::class.java)
+            val json = moshi.adapter<List<SimpleTrackEntity>>(type).toJson(entities)
             Result.success(data.putString(PARAM_KEY_RESULT_OF_SONGS, json).build())
         }
         catch (e: Exception) {

@@ -51,7 +51,6 @@ object LibraryDependency {
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.4.0-alpha03"
         const val MMKV = "1.2.10"
-        const val GSON = "2.8.7"
         const val PLAY_CORE = "1.10.0"
         const val COIL = "1.2.2"
         const val RETROFIT2 = "2.9.0"
@@ -75,9 +74,9 @@ object LibraryDependency {
     }
 
     object Tool {
-        const val GSON = "com.google.code.gson:gson:${Version.GSON}"
         const val JSOUP = "org.jsoup:jsoup:${Version.JSOUP}"
         const val MOSHI = "com.squareup.moshi:moshi:${Version.MOSHI}"
+        const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Version.MOSHI}"
         const val MOSHI_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:${Version.MOSHI}"
 
         const val AUTO_SERVICE = "com.google.auto.service:auto-service:${Version.AUTO_SERVICE}"
@@ -132,7 +131,6 @@ object LibraryDependency {
         const val OKHTTP = "com.squareup.okhttp3:okhttp:${Version.OKHTTP3}"
         const val OKHTTP_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Version.OKHTTP3}"
         const val RETROFIT2 = "com.squareup.retrofit2:retrofit:${Version.RETROFIT2}"
-        const val RETROFIT2_CONVERTER_GSON = "com.squareup.retrofit2:converter-gson:${Version.RETROFIT2}"
         const val RETROFIT2_CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:${Version.RETROFIT2}"
         const val COIL = "io.coil-kt:coil:${Version.COIL}"
     }

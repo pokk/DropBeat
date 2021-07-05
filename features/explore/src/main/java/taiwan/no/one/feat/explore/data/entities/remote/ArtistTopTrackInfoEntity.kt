@@ -32,6 +32,7 @@ internal data class ArtistTopTrackInfoEntity(
     @Json(name = "toptracks")
     val topTracks: TracksWithStreamableEntity,
 ) {
+    @JsonClass(generateAdapter = true)
     internal data class TracksWithStreamableEntity(
         @Json(name = "track")
         val tracks: List<TrackInfoEntity.TrackWithStreamableEntity>,

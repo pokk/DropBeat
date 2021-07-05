@@ -32,10 +32,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.work.WorkManager
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tencent.mmkv.MMKV
 import java.lang.ref.WeakReference
 import org.kodein.di.DI
@@ -55,14 +53,7 @@ object UtilModules {
     fun provide(context: Context) = DI.Module("Util Module") {
         bindInstance { WorkManager.getInstance(context) }
         // OPTIMIZE(jieyi): 2018/10/16 We might use Gson for mapping data.
-        bindInstance<Gson> {
-            with(GsonBuilder()) {
-                setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                setLenient()
-                create()
-            }
-        }
-        bindInstance<Moshi> { Moshi.Builder().build() }
+        bindInstance<Moshi> { Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build() }
         bindInstance { requireNotNull(MMKV.defaultMMKV()) }
         bindInstance<LrcBuilder> { DefaultLrcBuilder() }
     }
