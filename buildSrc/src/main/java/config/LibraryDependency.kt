@@ -76,6 +76,7 @@ object LibraryDependency {
     object Tool {
         const val JSOUP = "org.jsoup:jsoup:${Version.JSOUP}"
         const val MOSHI = "com.squareup.moshi:moshi:${Version.MOSHI}"
+        const val MOSHI_ADAPTER = "com.squareup.moshi:moshi-adapters:${Version.MOSHI}"
         const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Version.MOSHI}"
         const val MOSHI_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:${Version.MOSHI}"
 

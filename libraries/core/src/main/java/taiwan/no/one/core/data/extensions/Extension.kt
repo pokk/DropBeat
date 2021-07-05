@@ -35,7 +35,7 @@ import android.content.Context
  */
 inline fun <reified T> Context.parseObjectFromJson(filePath: String): T? {
     var dataObj: T? = null
-
+    // FIXME(jieyi): 7/6/21 Use Moshi
 //    try {
 //        val moshi = Moshi.Builder().build()
 //        applicationContext.assets.open(filePath).use { inputStream ->

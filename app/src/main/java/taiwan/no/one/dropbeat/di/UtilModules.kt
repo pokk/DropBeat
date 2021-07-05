@@ -33,9 +33,11 @@ import androidx.work.WorkManager
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tencent.mmkv.MMKV
 import java.lang.ref.WeakReference
+import java.util.Date
 import org.kodein.di.DI
 import org.kodein.di.bindFactory
 import org.kodein.di.bindInstance
@@ -53,7 +55,12 @@ object UtilModules {
     fun provide(context: Context) = DI.Module("Util Module") {
         bindInstance { WorkManager.getInstance(context) }
         // OPTIMIZE(jieyi): 2018/10/16 We might use Gson for mapping data.
-        bindInstance<Moshi> { Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build() }
+        bindInstance<Moshi> {
+            Moshi.Builder()
+                .add(Date::class.java, Rfc3339DateJsonAdapter())
+                .addLast(KotlinJsonAdapterFactory())
+                .build()
+        }
         bindInstance { requireNotNull(MMKV.defaultMMKV()) }
         bindInstance<LrcBuilder> { DefaultLrcBuilder() }
     }
