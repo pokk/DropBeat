@@ -34,7 +34,8 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo.State
 import androidx.work.WorkManager
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import kotlinx.coroutines.launch
 import org.kodein.di.factory
 import org.kodein.di.instance
@@ -52,7 +53,7 @@ internal class SongsOfTagViewModel(
     private val exploreProvider by instance<ExploreMethodsProvider>()
     private val workManager by instance<WorkManager>()
     private val oneTimeWorker: (Data) -> OneTimeWorkRequest by factory(Constant.TAG_WORKER_GET_SONGS_OF_TAG)
-    private val gson by instance<Gson>()
+    private val moshi by instance<Moshi>()
     private val _songs by lazy { ResultLiveData<List<SimpleTrackEntity>>() }
     var songs: LiveData<Result<List<SimpleTrackEntity>>>? = null
         private set
@@ -64,8 +65,9 @@ internal class SongsOfTagViewModel(
             songs = getWorkInfoByIdLiveData(worker.id).switchMap { workInfo ->
                 when (workInfo.state) {
                     State.SUCCEEDED -> {
-                        val json = workInfo.outputData.getString(WorkerConstant.PARAM_KEY_RESULT_OF_SONGS)
-                        val result = gson.fromJson(json, Array<SimpleTrackEntity>::class.java).toList()
+                        val json = workInfo.outputData.getString(WorkerConstant.PARAM_KEY_RESULT_OF_SONGS).orEmpty()
+                        val type = Types.newParameterizedType(List::class.java, SimpleTrackEntity::class.java)
+                        val result = moshi.adapter<List<SimpleTrackEntity>>(type).fromJson(json).orEmpty()
                         _songs.value = Result.success(result)
                     }
                     State.FAILED -> {

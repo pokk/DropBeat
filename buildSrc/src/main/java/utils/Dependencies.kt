@@ -68,8 +68,8 @@ fun DependencyHandlerScope.coreDependencies() {
     internetDependencies(DepEnvApi)
     localDependencies(DepEnvApi)
     // Others
-    DepEnvApi(Tool.GSON)
     DepEnvApi(Tool.MOSHI)
+    DepEnvApi(Tool.MOSHI_KOTLIN)
     DepEnvKapt(Tool.MOSHI_CODEGEN)
 }
 
@@ -212,7 +212,6 @@ fun DependencyHandlerScope.internetDependencies(env: String) {
     env(Internet.OKHTTP)
     env(Internet.OKHTTP_INTERCEPTOR)
     env(Internet.RETROFIT2)
-    env(Internet.RETROFIT2_CONVERTER_GSON)
     env(Internet.RETROFIT2_CONVERTER_MOSHI)
 }
 

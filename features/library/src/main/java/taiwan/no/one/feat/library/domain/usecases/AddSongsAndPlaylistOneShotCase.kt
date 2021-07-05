@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,8 @@
 package taiwan.no.one.feat.library.domain.usecases
 
 import com.devrapid.kotlinknifer.loge
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
 import org.kodein.di.instance
@@ -43,18 +44,22 @@ internal class AddSongsAndPlaylistOneShotCase(
     override val di by closestDI(DropBeatApp.appContext)
 
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        val gson by instance<Gson>()
+        val moshi by instance<Moshi>()
         val list = try {
-            gson.fromJson(songsStream, Array<SongEntity>::class.java).toList()
-        } catch (e: Exception) {
+            val type = Types.newParameterizedType(List::class.java, SongEntity::class.java)
+            moshi.adapter<List<SongEntity>>(type).fromJson(songsStream.orEmpty()).orEmpty()
+        }
+        catch (e: Exception) {
             loge(e)
             return@ensure false
         }
         try {
             songRepository.addMusics(list)
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             // The error happens because the music has been in the database.
-        } finally {
+        }
+        finally {
             list.forEach {
                 val track = when {
                     it.uri.isNotEmpty() -> songRepository.getMusic(remoteUri = it.uri)
@@ -67,7 +72,7 @@ internal class AddSongsAndPlaylistOneShotCase(
         true
     }
 
-    internal data class Request(
+    data class Request(
         val songsStream: String? = null,
         val playlistId: Int,
     ) : RequestValues

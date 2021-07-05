@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,9 @@ package taiwan.no.one.feat.search.presentation.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
-import com.google.gson.Gson
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
@@ -35,9 +37,14 @@ internal class SongViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
-    private val gson by instance<Gson>()
+    private val moshi by instance<Moshi>()
+    private val songAdapter: JsonAdapter<List<SongEntity>>
+        get() {
+            val type = Types.newParameterizedType(List::class.java, SongEntity::class.java)
+            return moshi.adapter<List<SongEntity>>(type)
+        }
 
-    fun songToStream(song: SongEntity) = gson.toJson(listOf(song))
+    fun songToStream(song: SongEntity) = songAdapter.toJson(listOf(song))
 
-    fun songToStream(song: List<SongEntity>) = gson.toJson(song)
+    fun songToStream(song: List<SongEntity>) = songAdapter.toJson(song)
 }

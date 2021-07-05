@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,6 @@
 package taiwan.no.one.core.data.extensions
 
 import android.content.Context
-import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonReader
 
 /**
  * Parse the json file to an object by [Gson].
@@ -40,19 +36,19 @@ import com.google.gson.stream.JsonReader
 inline fun <reified T> Context.parseObjectFromJson(filePath: String): T? {
     var dataObj: T? = null
 
-    try {
-        val gson = Gson().newBuilder().create()
-        applicationContext.assets.open(filePath).use { inputStream ->
-            JsonReader(inputStream.reader()).use { jsonReader ->
-                val type = object : TypeToken<T>() {}.type
-                dataObj = gson.fromJson<T>(jsonReader, type)
-            }
-        }
-    }
-    catch (e: Exception) {
-        e.printStackTrace()
-        Log.e("data layer", "Error for parsing json account", e)
-    }
+//    try {
+//        val moshi = Moshi.Builder().build()
+//        applicationContext.assets.open(filePath).use { inputStream ->
+//            JsonReader(inputStream.reader()).use { jsonReader ->
+//                val type = object : TypeToken<T>() {}.type
+//                dataObj = moshi.adapter<T>().fromJson(jsonReader)
+//            }
+//        }
+//    }
+//    catch (e: Exception) {
+//        e.printStackTrace()
+//        Log.e("data layer", "Error for parsing json account", e)
+//    }
 
     return dataObj
 }

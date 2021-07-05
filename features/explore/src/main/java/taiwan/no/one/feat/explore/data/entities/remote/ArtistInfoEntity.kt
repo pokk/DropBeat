@@ -35,6 +35,7 @@ import taiwan.no.one.ext.DEFAULT_STR
 internal data class ArtistInfoEntity(
     val artist: ArtistEntity?,
 ) {
+    @JsonClass(generateAdapter = true)
     internal data class ArtistEntity(
         val name: String? = DEFAULT_STR,
         val mbid: String? = DEFAULT_STR,
@@ -64,6 +65,7 @@ internal data class ArtistInfoEntity(
         val updatedAt: Date = Date(),
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class BioEntity(
         val links: LinksEntity?,
         val published: String?,
@@ -71,10 +73,12 @@ internal data class ArtistInfoEntity(
         val content: String?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class LinksEntity(
         val link: LinkEntity?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class LinkEntity(
         @Json(name = "#text")
         val text: String?,
@@ -82,12 +86,14 @@ internal data class ArtistInfoEntity(
         val href: String?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class StatsEntity(
         val listeners: String?,
         @Json(name = "playcount")
         val playCount: String?,
     )
 
+    @JsonClass(generateAdapter = true)
     internal data class SimilarEntity(
         @Json(name = "artist")
         val artists: List<ArtistEntity>?,
