@@ -69,6 +69,7 @@ fun DependencyHandlerScope.coreDependencies() {
     localDependencies(DepEnvApi)
     // Others
     DepEnvApi(Tool.MOSHI)
+    DepEnvApi(Tool.MOSHI_ADAPTER)
     DepEnvApi(Tool.MOSHI_KOTLIN)
     DepEnvKapt(Tool.MOSHI_CODEGEN)
 }
