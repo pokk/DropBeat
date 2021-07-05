@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,22 +24,25 @@
 
 package taiwan.no.one.feat.ranking.data.entities.remote
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
 
+@JsonClass(generateAdapter = true)
 internal data class MusicInfoEntity(
     val status: String = DEFAULT_STR,
-    @SerializedName("data")
-    val entity: MusicEntity = MusicEntity()
+    @Json(name = "data")
+    val entity: MusicEntity = MusicEntity(),
 ) {
+    @JsonClass(generateAdapter = true)
     internal data class MusicEntity(
         // 🔽 Only Music has.
-        @SerializedName("has_more")
+        @Json(name = "has_more")
         val hasMore: Boolean = false,
         val items: List<SongEntity> = emptyList(),
         // 🔽 Only Rank has.
         val timestamp: Double = 0.0,
-        val songs: List<SongEntity> = emptyList()
+        val songs: List<SongEntity> = emptyList(),
     )
 }

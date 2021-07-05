@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,18 @@
 package taiwan.no.one.feat.explore.data.entities.remote
 
 import com.devrapid.kotlinshaver.trimMarginAndNewLine
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import taiwan.no.one.ext.DEFAULT_INT
 
+@JsonClass(generateAdapter = true)
 internal data class AlbumInfoEntity(
     val album: AlbumEntity?,
 ) {
+    @JsonClass(generateAdapter = true)
     internal data class AlbumEntity(
         val artist: String?,
-        @SerializedName("playcount")
+        @Json(name = "playcount")
         val playCount: String? = null,
     ) : BaseAlbumEntity() {
         override fun toString() = """
@@ -44,9 +47,10 @@ internal data class AlbumInfoEntity(
             |""".trimMarginAndNewLine()
     }
 
+    @JsonClass(generateAdapter = true)
     internal data class AlbumWithArtistEntity(
         val artist: ArtistInfoEntity.ArtistEntity?,
-        @SerializedName("playcount")
+        @Json(name = "playcount")
         val playCount: String? = null,
         val index: Int = DEFAULT_INT,
     ) : BaseAlbumEntity() {
@@ -59,17 +63,18 @@ internal data class AlbumInfoEntity(
             |""".trimMarginAndNewLine()
     }
 
+    @JsonClass(generateAdapter = true)
     internal open class BaseAlbumEntity(
-        @SerializedName("@attr")
+        @Json(name = "@attr")
         var attr: CommonLastFmEntity.AttrEntity? = null,
-        @SerializedName("image")
+        @Json(name = "image")
         var images: List<CommonLastFmEntity.ImageEntity>? = null,
         var listeners: String? = null,
         var mbid: String? = null,
         var name: String? = null,
         var tags: CommonLastFmEntity.TagsEntity? = null,
         var title: String? = null,
-        @SerializedName("tracks")
+        @Json(name = "tracks")
         var tracks: TopTrackInfoEntity.TracksEntity? = null,
         var url: String? = null,
         var wiki: CommonLastFmEntity.WikiEntity? = null,

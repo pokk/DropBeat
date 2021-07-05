@@ -69,6 +69,8 @@ fun DependencyHandlerScope.coreDependencies() {
     localDependencies(DepEnvApi)
     // Others
     DepEnvApi(Tool.GSON)
+    DepEnvApi(Tool.MOSHI)
+    DepEnvKapt(Tool.MOSHI_CODEGEN)
 }
 
 fun DependencyHandlerScope.appDependencies() {
@@ -211,6 +213,7 @@ fun DependencyHandlerScope.internetDependencies(env: String) {
     env(Internet.OKHTTP_INTERCEPTOR)
     env(Internet.RETROFIT2)
     env(Internet.RETROFIT2_CONVERTER_GSON)
+    env(Internet.RETROFIT2_CONVERTER_MOSHI)
 }
 
 fun DependencyHandlerScope.firebaseDependencies(env: String) {

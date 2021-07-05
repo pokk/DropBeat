@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,12 @@
 package taiwan.no.one.core.data.remote.provider
 
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 open class RetrofitProvider {
     open fun provideBuilder(domainUrl: String) = Retrofit.Builder()
         .baseUrl(domainUrl)
         .addConverterFactory(provideJsonConverter())
 
-    open fun provideJsonConverter() = GsonConverterFactory.create()
+    open fun provideJsonConverter() = MoshiConverterFactory.create()
 }

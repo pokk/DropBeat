@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,19 @@
 
 package taiwan.no.one.feat.explore.data.entities.remote
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class TopTrackInfoEntity(
-    @SerializedName("tracks")
-    val track: TracksEntity
+    @Json(name = "tracks")
+    val track: TracksEntity,
 ) {
+    @JsonClass(generateAdapter = true)
     internal data class TracksEntity(
-        @SerializedName("track")
+        @Json(name = "track")
         val tracks: List<TrackInfoEntity.TrackEntity>,
-        @SerializedName("@attr")
-        val attr: CommonLastFmEntity.AttrEntity?
+        @Json(name = "@attr")
+        val attr: CommonLastFmEntity.AttrEntity?,
     )
 }

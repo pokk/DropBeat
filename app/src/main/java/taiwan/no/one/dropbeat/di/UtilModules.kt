@@ -35,6 +35,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
 import com.tencent.mmkv.MMKV
 import java.lang.ref.WeakReference
 import org.kodein.di.DI
@@ -61,6 +62,7 @@ object UtilModules {
                 create()
             }
         }
+        bindInstance<Moshi> { Moshi.Builder().build() }
         bindInstance { requireNotNull(MMKV.defaultMMKV()) }
         bindInstance<LrcBuilder> { DefaultLrcBuilder() }
     }

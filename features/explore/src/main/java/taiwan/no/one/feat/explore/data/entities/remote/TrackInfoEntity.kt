@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,14 @@
 package taiwan.no.one.feat.explore.data.entities.remote
 
 import com.devrapid.kotlinshaver.trimMarginAndNewLine
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class TrackInfoEntity(
     val track: TrackEntity?,
 ) {
+    @JsonClass(generateAdapter = true)
     internal data class TrackEntity(
         val streamable: CommonLastFmEntity.StreamableEntity?,
     ) : BaseTrackEntity() {
@@ -40,6 +43,7 @@ internal data class TrackInfoEntity(
             |""".trimMarginAndNewLine()
     }
 
+    @JsonClass(generateAdapter = true)
     internal data class TrackWithStreamableEntity(
         val streamable: String?,
     ) : BaseTrackEntity() {
@@ -50,21 +54,22 @@ internal data class TrackInfoEntity(
             |""".trimMarginAndNewLine()
     }
 
+    @JsonClass(generateAdapter = true)
     internal open class BaseTrackEntity(
         var album: AlbumInfoEntity.AlbumEntity? = null,
-        @SerializedName("@attr")
+        @Json(name = "@attr")
         var attr: CommonLastFmEntity.AttrEntity? = null,
         var artist: ArtistInfoEntity.ArtistEntity? = null,
         var duration: String? = null,
-        @SerializedName("image")
+        @Json(name = "image")
         var images: List<CommonLastFmEntity.ImageEntity>? = null,
         var listeners: String? = null,
         var match: Double? = null,
         var mbid: String? = null,
         var name: String? = null,
-        @SerializedName("playcount")
+        @Json(name = "playcount")
         var playcount: String? = null,
-        @SerializedName("toptags")
+        @Json(name = "toptags")
         var topTag: CommonLastFmEntity.TagsEntity? = null,
         var url: String? = null,
         var realUrl: String? = null,
