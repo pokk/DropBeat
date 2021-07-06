@@ -28,7 +28,7 @@ import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import com.squareup.moshi.asArrayType
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
@@ -40,7 +40,7 @@ internal class SongViewModel(
     private val moshi by instance<Moshi>()
     private val songAdapter: JsonAdapter<List<SongEntity>>
         get() {
-            val type = Types.newParameterizedType(List::class.java, SongEntity::class.java)
+            val type = SongEntity::class.java.asArrayType()
             return moshi.adapter<List<SongEntity>>(type)
         }
 

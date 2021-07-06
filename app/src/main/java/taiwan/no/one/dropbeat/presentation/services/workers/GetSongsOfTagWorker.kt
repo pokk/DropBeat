@@ -29,7 +29,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import com.squareup.moshi.asArrayType
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
@@ -65,7 +65,7 @@ internal class GetSongsOfTagWorker(
                 val isFavorite = libraryProvider.isFavoriteTrack(it.uri).getOrNull() ?: false
                 it.isFavorite = isFavorite
             }
-            val type = Types.newParameterizedType(List::class.java, SimpleTrackEntity::class.java)
+            val type = SimpleTrackEntity::class.java.asArrayType()
             val json = moshi.adapter<List<SimpleTrackEntity>>(type).toJson(entities)
             Result.success(data.putString(PARAM_KEY_RESULT_OF_SONGS, json).build())
         }

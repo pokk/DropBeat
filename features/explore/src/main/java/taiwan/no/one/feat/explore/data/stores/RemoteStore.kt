@@ -55,14 +55,22 @@ internal class RemoteStore(
         lastFmService.retrieveArtistInfo(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid))
 
     override suspend fun getArtistTopAlbum(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistTopAlbum(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS,
-                                                               name,
-                                                               mbid))
+        lastFmService.retrieveArtistTopAlbum(
+            combineArtistName(
+                Constant.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS,
+                name,
+                mbid
+            )
+        )
 
     override suspend fun getArtistTopTrack(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistTopTrack(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS,
-                                                               name,
-                                                               mbid))
+        lastFmService.retrieveArtistTopTrack(
+            combineArtistName(
+                Constant.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS,
+                name,
+                mbid
+            )
+        )
 
     override suspend fun getSimilarArtistInfo(mbid: String) =
         lastFmService.retrieveSimilarArtistInfo(infoQuery(Constant.LASTFM_PARAM_ARTIST_GET_SIMILAR, mbid))

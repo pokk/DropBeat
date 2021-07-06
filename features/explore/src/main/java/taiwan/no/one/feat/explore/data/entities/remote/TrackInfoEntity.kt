@@ -35,26 +35,56 @@ internal data class TrackInfoEntity(
     @JsonClass(generateAdapter = true)
     internal data class TrackEntity(
         val streamable: CommonLastFmEntity.StreamableEntity?,
-    ) : BaseTrackEntity() {
-        override fun toString() = """
-            |${this::class.java.simpleName}(
-            |streamable: $streamable,
-            |${super.toString()})
-            |""".trimMarginAndNewLine()
-    }
+        // Common part from [BaseTrackEntity]
+        val album: AlbumInfoEntity.AlbumEntity? = null,
+        @Json(name = "@attr")
+        val attr: CommonLastFmEntity.AttrEntity? = null,
+        val artist: ArtistInfoEntity.ArtistEntity? = null,
+        val duration: String? = null,
+        @Json(name = "image")
+        var images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
+        var listeners: String? = null,
+        val match: Double? = null,
+        val mbid: String? = null,
+        var name: String? = null,
+        @Json(name = "playcount")
+        val playcount: String? = null,
+        @Json(name = "toptags")
+        val topTag: CommonLastFmEntity.TagsEntity? = null,
+        var url: String? = null,
+        val realUrl: String? = null,
+        val wiki: CommonLastFmEntity.WikiEntity? = null,
+        // Other
+        var isFavorite: Boolean? = null,
+    )
 
     @JsonClass(generateAdapter = true)
     internal data class TrackWithStreamableEntity(
         val streamable: String?,
-    ) : BaseTrackEntity() {
-        override fun toString() = """
-            |${this::class.java.simpleName}(
-            |streamable: $streamable,
-            |${super.toString()})
-            |""".trimMarginAndNewLine()
-    }
+        // Common part from [BaseTrackEntity]
+        val album: AlbumInfoEntity.AlbumEntity? = null,
+        @Json(name = "@attr")
+        val attr: CommonLastFmEntity.AttrEntity? = null,
+        val artist: ArtistInfoEntity.ArtistEntity? = null,
+        val duration: String? = null,
+        @Json(name = "image")
+        var images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
+        var listeners: String? = null,
+        val match: Double? = null,
+        val mbid: String? = null,
+        var name: String? = null,
+        @Json(name = "playcount")
+        val playcount: String? = null,
+        @Json(name = "toptags")
+        val topTag: CommonLastFmEntity.TagsEntity? = null,
+        var url: String? = null,
+        val realUrl: String? = null,
+        val wiki: CommonLastFmEntity.WikiEntity? = null,
+        // Other
+        var isFavorite: Boolean? = null,
+    )
 
-    @JsonClass(generateAdapter = true)
+    @Deprecated("Moshi is difficult to use")
     internal open class BaseTrackEntity(
         var album: AlbumInfoEntity.AlbumEntity? = null,
         @Json(name = "@attr")
@@ -62,7 +92,7 @@ internal data class TrackInfoEntity(
         var artist: ArtistInfoEntity.ArtistEntity? = null,
         var duration: String? = null,
         @Json(name = "image")
-        var images: List<CommonLastFmEntity.ImageEntity>? = null,
+        var images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
         var listeners: String? = null,
         var match: Double? = null,
         var mbid: String? = null,
