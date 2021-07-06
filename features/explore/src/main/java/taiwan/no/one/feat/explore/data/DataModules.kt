@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ import retrofit2.Retrofit
 import taiwan.no.one.core.data.remote.DefaultRetrofitConfig
 import taiwan.no.one.dropbeat.di.Constant
 import taiwan.no.one.dropbeat.di.Constant.TAG_FEAT_REPO_SHARED_PREFS
+import taiwan.no.one.dropbeat.di.Constant.TAG_NETWORK_MOSHI_RETROFIT
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.data.contracts.DataStore
@@ -60,14 +61,18 @@ internal object DataModules : ModuleProvider {
         bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance(), instance(), context) }
 
         bindSingleton<LastFmRepo> {
-            LastFmRepository(instance(TAG_LOCAL_DATA_STORE),
-                             instance(TAG_REMOTE_DATA_STORE),
-                             instance(TAG_FEAT_REPO_SHARED_PREFS))
+            LastFmRepository(
+                instance(TAG_LOCAL_DATA_STORE),
+                instance(TAG_REMOTE_DATA_STORE),
+                instance(TAG_FEAT_REPO_SHARED_PREFS)
+            )
         }
         bindSingleton<LastFmExtraRepo> {
-            LastFmExtraRepository(instance(TAG_LOCAL_DATA_STORE),
-                                  instance(TAG_REMOTE_DATA_STORE),
-                                  instance(TAG_FEAT_REPO_SHARED_PREFS))
+            LastFmExtraRepository(
+                instance(TAG_LOCAL_DATA_STORE),
+                instance(TAG_REMOTE_DATA_STORE),
+                instance(TAG_FEAT_REPO_SHARED_PREFS)
+            )
         }
     }
 
@@ -78,7 +83,11 @@ internal object DataModules : ModuleProvider {
         bindInstance { RestfulApiFactory().createLastFmConfig() }
 
         bindSingleton(Constant.TAG_FEAT_EXPLORE_RETROFIT) {
-            DefaultRetrofitConfig(context, instance<LastFmConfig>().apiBaseUrl).provideRetrofitBuilder().build()
+            DefaultRetrofitConfig(
+                context,
+                instance<LastFmConfig>().apiBaseUrl,
+                retrofitProvider = instance(TAG_NETWORK_MOSHI_RETROFIT)
+            ).provideRetrofitBuilder().build()
         }
         bindSingleton { instance<Retrofit>(Constant.TAG_FEAT_EXPLORE_RETROFIT).create(LastFmService::class.java) }
 

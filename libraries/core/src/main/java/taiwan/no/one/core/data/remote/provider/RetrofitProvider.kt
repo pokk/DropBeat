@@ -24,10 +24,7 @@
 
 package taiwan.no.one.core.data.remote.provider
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import java.util.Date
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -36,11 +33,5 @@ open class RetrofitProvider {
         .baseUrl(domainUrl)
         .addConverterFactory(provideJsonConverter())
 
-    open fun provideJsonConverter() = MoshiConverterFactory.create(
-        // FIXME(jieyi): 7/6/21 Should be from the DI
-        Moshi.Builder()
-            .add(Date::class.java, Rfc3339DateJsonAdapter())
-            .addLast(KotlinJsonAdapterFactory())
-            .build()
-    )
+    open fun provideJsonConverter(): Converter.Factory = MoshiConverterFactory.create()
 }

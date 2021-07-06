@@ -22,23 +22,12 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.di
+package taiwan.no.one.dropbeat.data.remote.provider
 
-object Constant {
-    const val TAG_FEAT_REPO_SHARED_PREFS = "repo shared preferences"
+import com.squareup.moshi.Moshi
+import retrofit2.converter.moshi.MoshiConverterFactory
+import taiwan.no.one.core.data.remote.provider.RetrofitProvider
 
-    const val TAG_FEAT_SEARCH_RETROFIT = "retrofit search"
-    const val TAG_FEAT_RANKING_RETROFIT = "retrofit ranking"
-    const val TAG_FEAT_EXPLORE_RETROFIT = "retrofit explore"
-    const val TAG_FEAT_LIBRARY_RETROFIT = "retrofit library"
-
-    const val TAG_WORKER_INIT_DATA = "worker for initializing"
-    const val TAG_WORKER_ADD_SONG_TO_DB = "worker for adding a song to the database"
-    const val TAG_WORKER_ADD_SONG_TO_PLAYLIST = "worker for adding a song to a playlist"
-    const val TAG_WORKER_GET_SONGS_OF_TAG = "worker for getting songs of tag"
-
-    const val TAG_EDGE_FACTORY_NONE = "recyclerview none edge effect"
-    const val TAG_EDGE_FACTORY_BOUNCED = "recyclerview bounced edge effect"
-
-    const val TAG_NETWORK_MOSHI_RETROFIT = "moshi retrofit setting"
+class MoshiRetrofitProvider(private val moshi: Moshi) : RetrofitProvider() {
+    override fun provideJsonConverter() = MoshiConverterFactory.create(moshi)
 }

@@ -76,7 +76,11 @@ internal object DataModules : ModuleProvider {
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
         bindInstance { RestfulApiFactory().createDownloadConfig() }
         bindSingleton<Retrofit>(Constant.TAG_FEAT_LIBRARY_RETROFIT) {
-            DefaultRetrofitConfig(context, instance<DownloadConfig>().apiBaseUrl).provideRetrofitBuilder().build()
+            DefaultRetrofitConfig(
+                context,
+                instance<DownloadConfig>().apiBaseUrl,
+                retrofitProvider = instance(Constant.TAG_NETWORK_MOSHI_RETROFIT)
+            ).provideRetrofitBuilder().build()
         }
         bindSingleton { instance<Retrofit>(Constant.TAG_FEAT_LIBRARY_RETROFIT).create(DownloadService::class.java) }
     }
