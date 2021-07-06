@@ -35,7 +35,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo.State
 import androidx.work.WorkManager
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.asArrayType
+import com.squareup.moshi.Types
 import kotlinx.coroutines.launch
 import org.kodein.di.factory
 import org.kodein.di.instance
@@ -66,7 +66,7 @@ internal class SongsOfTagViewModel(
                 when (workInfo.state) {
                     State.SUCCEEDED -> {
                         val json = workInfo.outputData.getString(WorkerConstant.PARAM_KEY_RESULT_OF_SONGS).orEmpty()
-                        val type = SimpleTrackEntity::class.java.asArrayType()
+                        val type = Types.newParameterizedType(List::class.java, SimpleTrackEntity::class.java)
                         val result = moshi.adapter<List<SimpleTrackEntity>>(type).fromJson(json).orEmpty()
                         _songs.value = Result.success(result)
                     }
