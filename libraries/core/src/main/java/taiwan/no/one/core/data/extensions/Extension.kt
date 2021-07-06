@@ -25,9 +25,18 @@
 package taiwan.no.one.core.data.extensions
 
 import android.content.Context
+import android.util.Log
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import java.util.Date
+import okio.buffer
+import okio.source
 
 /**
- * Parse the json file to an object by [Gson].
+ * Parse the json file to an object by [Moshi].
+ * OPTIMIZE(jieyi): 7/6/21 we might use native way to parse instead of a third-party lib.
  *
  * @receiver Context
  * @param filePath String using full path on assets folder, eg. "json/xxx.json"
@@ -35,20 +44,20 @@ import android.content.Context
  */
 inline fun <reified T> Context.parseObjectFromJson(filePath: String): T? {
     var dataObj: T? = null
-    // FIXME(jieyi): 7/6/21 Use Moshi
-//    try {
-//        val moshi = Moshi.Builder().build()
-//        applicationContext.assets.open(filePath).use { inputStream ->
-//            JsonReader(inputStream.reader()).use { jsonReader ->
-//                val type = object : TypeToken<T>() {}.type
-//                dataObj = moshi.adapter<T>().fromJson(jsonReader)
-//            }
-//        }
-//    }
-//    catch (e: Exception) {
-//        e.printStackTrace()
-//        Log.e("data layer", "Error for parsing json account", e)
-//    }
+    try {
+        val moshi = Moshi.Builder()
+            .add(Date::class.java, Rfc3339DateJsonAdapter())
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
+        val adapter = moshi.adapter<T>()
+        applicationContext.assets.open(filePath).use { inputStream ->
+            dataObj = adapter.fromJson(inputStream.source().buffer())
+        }
+    }
+    catch (e: Exception) {
+        e.printStackTrace()
+        Log.e("data layer", "Error for parsing json account", e)
+    }
 
     return dataObj
 }
