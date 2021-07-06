@@ -26,7 +26,7 @@ package taiwan.no.one.feat.library.domain.usecases
 
 import com.devrapid.kotlinknifer.loge
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import com.squareup.moshi.asArrayType
 import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
 import org.kodein.di.instance
@@ -46,7 +46,7 @@ internal class AddSongsAndPlaylistOneShotCase(
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         val moshi by instance<Moshi>()
         val list = try {
-            val type = Types.newParameterizedType(List::class.java, SongEntity::class.java)
+            val type = SongEntity::class.java.asArrayType()
             moshi.adapter<List<SongEntity>>(type).fromJson(songsStream.orEmpty()).orEmpty()
         }
         catch (e: Exception) {
