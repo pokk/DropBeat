@@ -59,7 +59,6 @@ import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 object UtilModules {
     fun provideCommon(context: Context) = DI.Module("Util Module") {
         bindInstance { WorkManager.getInstance(context) }
-        // OPTIMIZE(jieyi): 2018/10/16 We might use Gson for mapping data.
         bindInstance<Moshi> {
             Moshi.Builder()
                 .add(Date::class.java, Rfc3339DateJsonAdapter())

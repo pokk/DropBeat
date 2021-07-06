@@ -24,26 +24,29 @@
 
 package taiwan.no.one.dropbeat.data.local.services.v1
 
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
 import com.tencent.mmkv.MMKV
 import taiwan.no.one.dropbeat.data.local.services.PrivacyService
 import taiwan.no.one.entity.UserInfoEntity
 
 internal class MmkvService(
     private val mmkv: MMKV,
-    private val gson: Gson,
+    private val moshi: Moshi,
 ) : PrivacyService {
     companion object Constant {
         private const val CODE_LOGIN_INFO = "user login info"
     }
 
+    private val adapter = moshi.adapter<UserInfoEntity>()
+
     override suspend fun retrieveLoginInfo(): UserInfoEntity {
         val infoString = mmkv.getString(CODE_LOGIN_INFO, null) ?: throw NullPointerException()
-        return gson.fromJson(infoString, UserInfoEntity::class.java)
+        return adapter.fromJson(infoString) ?: throw Exception("parsing failed.")
     }
 
     override suspend fun insertLoginInfo(entity: UserInfoEntity): Boolean {
-        val infoString = gson.toJson(entity)
+        val infoString = adapter.toJson(entity)
         return mmkv.encode(CODE_LOGIN_INFO, infoString)
     }
 
