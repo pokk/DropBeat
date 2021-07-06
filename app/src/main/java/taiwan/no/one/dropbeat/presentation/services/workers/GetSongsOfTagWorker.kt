@@ -47,7 +47,7 @@ internal class GetSongsOfTagWorker(
     params: WorkerParameters,
 ) : CoroutineWorker(context, params), DIAware {
     override val di by DI.lazy {
-        import(UtilModules.provide(context))
+        import(UtilModules.provideCommon(context))
         import(FeatModuleHelper.provide())
     }
     private val moshi by instance<Moshi>()

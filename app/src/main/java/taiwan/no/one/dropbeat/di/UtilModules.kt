@@ -42,9 +42,14 @@ import org.kodein.di.DI
 import org.kodein.di.bindFactory
 import org.kodein.di.bindInstance
 import org.kodein.di.bindProvider
+import org.kodein.di.bindSingleton
+import org.kodein.di.instance
 import taiwan.no.one.analytics.AnalyticsSender
+import taiwan.no.one.core.data.remote.provider.RetrofitProvider
+import taiwan.no.one.dropbeat.data.remote.provider.MoshiRetrofitProvider
 import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_BOUNCED
 import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_NONE
+import taiwan.no.one.dropbeat.di.Constant.TAG_NETWORK_MOSHI_RETROFIT
 import taiwan.no.one.mediaplayer.lyric.DefaultLrcBuilder
 import taiwan.no.one.mediaplayer.lyric.LrcBuilder
 import taiwan.no.one.widget.recyclerviews.effectors.BounceEdgeEffectFactory
@@ -52,7 +57,7 @@ import taiwan.no.one.widget.recyclerviews.effectors.NoneEdgeEffectFactory
 import taiwan.no.one.widget.recyclerviews.listeners.LinearLoadMoreScrollListener
 
 object UtilModules {
-    fun provide(context: Context) = DI.Module("Util Module") {
+    fun provideCommon(context: Context) = DI.Module("Util Module") {
         bindInstance { WorkManager.getInstance(context) }
         // OPTIMIZE(jieyi): 2018/10/16 We might use Gson for mapping data.
         bindInstance<Moshi> {
@@ -65,11 +70,15 @@ object UtilModules {
         bindInstance<LrcBuilder> { DefaultLrcBuilder() }
     }
 
-    fun provideAnalytics(context: Context) = DI.Module("Analytics Module") {
+    private fun provideNetwork(context: Context) = DI.Module("Common Network Module") {
+        bindSingleton<RetrofitProvider>(TAG_NETWORK_MOSHI_RETROFIT) { MoshiRetrofitProvider(instance()) }
+    }
+
+    private fun provideAnalytics(context: Context) = DI.Module("Analytics Module") {
         bindInstance { AnalyticsSender(Firebase.analytics) }
     }
 
-    fun provideUi() = DI.Module("Util UI Module") {
+    private fun provideUi() = DI.Module("Util UI Module") {
         // Linear Layout Manager.
         bindFactory { params: LayoutManagerParams ->
             LinearLayoutManager(params.context.get(), params.orientation, params.reverseLayout)
@@ -87,7 +96,12 @@ object UtilModules {
         }
     }
 
-    fun provideAll(context: Context) = listOf(provide(context), provideAnalytics(context), provideUi())
+    fun provideAll(context: Context) = listOf(
+        provideCommon(context),
+        provideNetwork(context),
+        provideAnalytics(context),
+        provideUi()
+    )
 
     data class LayoutManagerParams(
         val context: WeakReference<Context>,

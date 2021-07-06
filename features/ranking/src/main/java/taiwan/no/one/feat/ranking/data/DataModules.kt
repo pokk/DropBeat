@@ -72,7 +72,11 @@ internal object DataModules : ModuleProvider {
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
         bindInstance { RestfulApiFactory().createRankingConfig() }
         bindSingleton<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT) {
-            DefaultRetrofitConfig(context, instance<RankingConfig>().apiBaseUrl).provideRetrofitBuilder().build()
+            DefaultRetrofitConfig(
+                context,
+                instance<RankingConfig>().apiBaseUrl,
+                retrofitProvider = instance(Constant.TAG_NETWORK_MOSHI_RETROFIT)
+            ).provideRetrofitBuilder().build()
         }
         bindSingleton { instance<Retrofit>(Constant.TAG_FEAT_RANKING_RETROFIT).create(RankingMusicService::class.java) }
     }

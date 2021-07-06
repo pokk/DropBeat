@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,14 @@ package taiwan.no.one.core.data.remote
 import android.content.Context
 import taiwan.no.one.core.data.remote.provider.DefaultOkHttpClientProvider
 import taiwan.no.one.core.data.remote.provider.DefaultRetrofitProvider
+import taiwan.no.one.core.data.remote.provider.OkHttpClientProvider
+import taiwan.no.one.core.data.remote.provider.RetrofitProvider
 
 class DefaultRetrofitConfig(
     context: Context,
-    baseDomainUrl: String
-) : BaseRetrofitConfig(context, DefaultOkHttpClientProvider(context), DefaultRetrofitProvider()) {
+    baseDomainUrl: String,
+    clientProvider: OkHttpClientProvider = DefaultOkHttpClientProvider(context),
+    retrofitProvider: RetrofitProvider = DefaultRetrofitProvider(),
+) : BaseRetrofitConfig(context, clientProvider, retrofitProvider) {
     override val baseUrl = baseDomainUrl
 }

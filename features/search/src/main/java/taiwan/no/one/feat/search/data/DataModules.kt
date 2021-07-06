@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,9 +59,11 @@ internal object DataModules : ModuleProvider {
         bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance()) }
 
         bindSingleton<SearchMusicRepo> {
-            SearchMusicRepository(instance(TAG_REMOTE_DATA_STORE),
-                                  instance(TAG_LOCAL_DATA_STORE),
-                                  instance(TAG_FEAT_REPO_SHARED_PREFS))
+            SearchMusicRepository(
+                instance(TAG_REMOTE_DATA_STORE),
+                instance(TAG_LOCAL_DATA_STORE),
+                instance(TAG_FEAT_REPO_SHARED_PREFS)
+            )
         }
         bindSingleton<HistoryRepo> { HistoryRepository(instance(TAG_LOCAL_DATA_STORE)) }
     }
@@ -76,7 +78,11 @@ internal object DataModules : ModuleProvider {
         bindInstance { RestfulApiFactory().createSeekerConfig() }
 
         bindSingleton<Retrofit>(Constant.TAG_FEAT_SEARCH_RETROFIT) {
-            DefaultRetrofitConfig(context, instance<SeekerConfig>().apiBaseUrl).provideRetrofitBuilder().build()
+            DefaultRetrofitConfig(
+                context,
+                instance<SeekerConfig>().apiBaseUrl,
+                retrofitProvider = instance(Constant.TAG_NETWORK_MOSHI_RETROFIT)
+            ).provideRetrofitBuilder().build()
         }
 
         bindSingleton<SeekerBankService> {
