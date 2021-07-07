@@ -109,7 +109,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
                     displayNoSongs()
                 }
                 else {
-                    displaySongs(it.songs.map(EntityMapper::libraryToSimpleTrackEntity))
+                    displaySongs(it.songs.map(EntityMapper::songToSimpleEntity))
                 }
             }.onFailure(::loge)
         }

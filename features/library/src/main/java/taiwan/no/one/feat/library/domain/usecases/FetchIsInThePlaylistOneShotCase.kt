@@ -36,7 +36,7 @@ internal class FetchIsInThePlaylistOneShotCase(
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         val id = if (trackUri != null) {
             try {
-                songRepository.getMusic(trackUri).id
+                songRepository.fetchMusic(trackUri).id
             }
             catch (nfe: NotFoundException) {
                 return@ensure false

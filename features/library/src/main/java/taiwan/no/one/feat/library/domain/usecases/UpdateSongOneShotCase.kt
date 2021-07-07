@@ -64,14 +64,14 @@ internal class UpdateSongOneShotCase(
     private suspend fun updateSongAndPlaylistProcess(entity: SimpleTrackEntity, isFavorite: Boolean) {
         val addedSong = try {
             songRepo.run {
-                getMusic(entity.uri).apply { updateMusic(copy(isFavorite = isFavorite)) }
+                fetchMusic(entity.uri).apply { updateMusic(copy(isFavorite = isFavorite)) }
             }
         }
         catch (e: NotFoundException) {
             // When the song is not in our playlist, will add.
             songRepo.run {
                 addMusic(EntityMapper.simpleToSongEntity(entity.copy(isFavorite = isFavorite)))
-                getMusic(entity.uri)
+                fetchMusic(entity.uri)
             }
         }
         updateFavoritePlaylist(addedSong, isFavorite)
@@ -79,7 +79,7 @@ internal class UpdateSongOneShotCase(
 
     private suspend fun updateSongAndPlaylistProcess(songId: Int, isFavorite: Boolean) {
         songRepo.updateMusic(songId, isFavorite)
-        val song = songRepo.getMusic(songId)
+        val song = songRepo.fetchMusic(songId)
         updateFavoritePlaylist(song, isFavorite)
     }
 

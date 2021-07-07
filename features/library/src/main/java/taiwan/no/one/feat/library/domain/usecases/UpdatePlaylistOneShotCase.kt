@@ -83,7 +83,7 @@ internal class UpdatePlaylistOneShotCase(
         if (request.songIds != null) {
             return request.songIds
         }
-        return request.songsPaths?.map { songRepository.getMusic(null, it).id } ?: throw NullPointerException()
+        return request.songsPaths?.map { songRepository.fetchMusic(null, it).id } ?: throw NullPointerException()
     }
 
     internal data class Request(

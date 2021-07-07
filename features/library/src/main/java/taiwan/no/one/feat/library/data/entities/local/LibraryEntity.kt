@@ -81,6 +81,10 @@ internal data class LibraryEntity(
         @ColumnInfo(name = "cover_uri")
         val coverUri: String = DEFAULT_STR,
         val duration: Int = 0,
+        @ColumnInfo(name = "lyric_url")
+        val lyricUrl: String = DEFAULT_STR,
+        @ColumnInfo(name = "lyric_local_uri")
+        val lyricLocalUri: String = DEFAULT_STR,
         @ColumnInfo(name = "is_favorite")
         val isFavorite: Boolean = false,
         @Embedded

@@ -40,7 +40,8 @@ data class SimpleTrackEntity(
     val uri: String,
     val localUri: String,
     val thumbUri: String,
-    val lyricUri: String,
+    val lyricUrl: String, // Remote Url
+    val lyricUri: String, // Local Uri
     val duration: Int,
     var isFavorite: Boolean,
     val isOwn: Boolean,

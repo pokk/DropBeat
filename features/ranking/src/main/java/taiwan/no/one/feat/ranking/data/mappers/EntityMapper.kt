@@ -38,9 +38,10 @@ internal object EntityMapper {
             DEFAULT_STR,
             it.coverURL,
             it.lyricURL,
+            DEFAULT_STR,
             it.length,
-            false,
-            false,
+            isFavorite = false,
+            isOwn = false,
         )
     }
 }
