@@ -29,18 +29,24 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 object StorageUtils {
-    fun saveFileToDisk(byteArray: ByteArray, file: File) {
-        try {
-            byteArray.inputStream().use { input ->
-                FileOutputStream(file).use { output ->
-                    input.copyTo(output)
-                    output.flush()
-                }
+    fun createDir(dirPath: String) = File(dirPath).apply {
+        if (!exists()) {
+            mkdirs()
+        }
+    }
+
+    fun saveFileToDisk(byteArray: ByteArray, file: File) = try {
+        byteArray.inputStream().use { input ->
+            FileOutputStream(file).use { output ->
+                input.copyTo(output)
+                output.flush()
             }
         }
-        catch (ioe: IOException) {
-            ioe.printStackTrace()
-        }
+        true
+    }
+    catch (ioe: IOException) {
+        ioe.printStackTrace()
+        false
     }
 
     fun readFileFromDisk(file: File) = file.inputStream().use { input ->
@@ -51,6 +57,10 @@ object StorageUtils {
         }
         catch (ioe: IOException) {
             ioe.printStackTrace()
+            return@use false
         }
+        true
     }
+
+    fun removeFileFromDisk(file: File) = file.delete()
 }
