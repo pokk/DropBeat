@@ -22,23 +22,35 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.dropbeat.core.helpers
+package taiwan.no.one.ext.utils
 
-import android.app.DownloadManager
-import android.app.DownloadManager.Request
-import android.content.Context
-import android.net.Uri
-import android.os.Environment
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
-object DownloadHelper {
-    fun downloadTrack(context: Context, uri: Uri, filename: String, songEntityStream: String) {
-        val downloadManager = context.applicationContext.getSystemService(DownloadManager::class.java)
-        val request = Request(uri).apply {
-            setDestinationInExternalFilesDir(context.applicationContext, Environment.DIRECTORY_MUSIC, "$filename.mp3")
-            setAllowedNetworkTypes(Request.NETWORK_MOBILE or Request.NETWORK_WIFI)
-            setTitle(filename)
-            setDescription(songEntityStream)
+object StorageUtils {
+    fun saveFileToDisk(byteArray: ByteArray, file: File) {
+        try {
+            byteArray.inputStream().use { input ->
+                FileOutputStream(file).use { output ->
+                    input.copyTo(output)
+                    output.flush()
+                }
+            }
         }
-        downloadManager.enqueue(request)
+        catch (ioe: IOException) {
+            ioe.printStackTrace()
+        }
+    }
+
+    fun readFileFromDisk(file: File) = file.inputStream().use { input ->
+        try {
+            input.bufferedReader().use { buffer ->
+                buffer.readText()
+            }
+        }
+        catch (ioe: IOException) {
+            ioe.printStackTrace()
+        }
     }
 }
