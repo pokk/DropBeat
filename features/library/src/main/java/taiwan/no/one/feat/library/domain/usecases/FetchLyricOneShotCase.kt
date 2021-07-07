@@ -24,17 +24,47 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
-import java.nio.charset.StandardCharsets
+import java.io.File
+import java.io.IOException
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.ext.utils.StorageUtils
+import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
 import taiwan.no.one.feat.library.domain.repositories.LyricRepo
+import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
 internal class FetchLyricOneShotCase(
-    private val repository: LyricRepo,
+    private val lyricRepo: LyricRepo,
+    private val songRepo: SongRepo,
 ) : FetchLyricCase() {
+    /**
+     * @param parameter Request? song's id.
+     * @return String The whole lyric text.
+     * @see <a href="https://whimsical.com/lyric-flow-WvoNC1qMDQUv6WNAK3hCDC">Fetch Lyric Flow Diagram</a>
+     */
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
-        val bytes = repository.fetchLyric(fileUrl)
-        bytes.toString(StandardCharsets.UTF_8)
+        val song = songRepo.fetchMusic(songId)
+        val uri = if (song.lyricLocalUri.isEmpty()) obtainLyricFromRemote(song) else song.lyricLocalUri
+        // 4. Get the whole text from the local storage.
+        StorageUtils.readFileFromDisk(File(uri)) ?: throw IOException("Reading Lyric failed.")
     }
 
-    internal data class Request(val fileUrl: String) : RequestValues
+    /**
+     * Fetch the remote lyric process when the lyric is not kept in the local storage.
+     *
+     * @param song SongEntity
+     * @return String
+     */
+    private suspend fun obtainLyricFromRemote(song: LibraryEntity.SongEntity): String {
+        // 1. Fetch the lyric from the remote server.
+        val bytes = lyricRepo.fetchLyric(song.lyricUrl)
+        // 2. Save the lyric to the local storage
+        val dirFile = StorageUtils.createDir("")
+        val file = File(dirFile, "")
+        StorageUtils.saveFileToDisk(bytes, file)
+        // 3. Update the database information of the song.
+        songRepo.updateMusic(song.copy(localUri = file.path))
+        return file.path
+    }
+
+    internal data class Request(val songId: Int) : RequestValues
 }

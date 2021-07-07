@@ -68,6 +68,6 @@ internal object DomainModules : ModuleProvider {
         bindSingleton<AddSongsAndPlaylistCase> { AddSongsAndPlaylistOneShotCase(instance(), instance()) }
         bindSingleton<UpdateSongCase> { UpdateSongOneShotCase(instance(), instance()) }
         bindSingleton<CreateDefaultPlaylistCase> { CreateDefaultPlaylistOneShotCase(instance()) }
-        bindSingleton<FetchLyricCase> { FetchLyricOneShotCase(instance()) }
+        bindSingleton<FetchLyricCase> { FetchLyricOneShotCase(instance(), instance()) }
     }
 }

@@ -137,6 +137,6 @@ internal class MyHomeViewModel(
     }
 
     private fun getSongs(playlist: PlayListEntity) = playlist.songs
-        .map(EntityMapper::libraryToSimpleTrackEntity)
+        .map(EntityMapper::songToSimpleEntity)
         .let { songs -> if (songs.size <= 4) songs else songs.subList(0, 4) }
 }

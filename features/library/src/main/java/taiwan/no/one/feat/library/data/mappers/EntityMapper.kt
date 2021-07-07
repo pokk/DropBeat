@@ -26,27 +26,10 @@ package taiwan.no.one.feat.library.data.mappers
 
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 
 internal object EntityMapper {
-    fun libraryToSimpleTrackEntity(entity: SongEntity) = entity.let {
-        SimpleTrackEntity(
-            it.id,
-            it.title,
-            it.artist,
-            it.uri,
-            it.localUri,
-            it.coverUri,
-            DEFAULT_STR,
-            it.duration,
-            it.isFavorite,
-            it.hasOwn,
-            it.refPath,
-        )
-    }
-
     fun simpleToSongEntity(entity: SimpleTrackEntity) = entity.let {
         SongEntity(
             it.id,
@@ -55,6 +38,8 @@ internal object EntityMapper {
             it.uri,
             it.thumbUri,
             it.duration,
+            it.lyricUrl,
+            it.lyricUri,
             it.isFavorite,
             refPath = it.refPath,
         )
@@ -68,7 +53,8 @@ internal object EntityMapper {
             it.uri,
             it.localUri,
             it.coverUri,
-            DEFAULT_STR,
+            it.lyricUrl,
+            it.lyricLocalUri,
             it.duration,
             it.isFavorite,
             it.hasOwn,

@@ -57,9 +57,8 @@ object StorageUtils {
         }
         catch (ioe: IOException) {
             ioe.printStackTrace()
-            return@use false
+            null
         }
-        true
     }
 
     fun removeFileFromDisk(file: File) = file.delete()

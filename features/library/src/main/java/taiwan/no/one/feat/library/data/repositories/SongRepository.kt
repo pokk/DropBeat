@@ -32,9 +32,9 @@ internal class SongRepository(
     private val local: DataStore,
     private val remote: DataStore,
 ) : SongRepo {
-    override suspend fun getMusic(songId: Int) = local.getMusic(songId)
+    override suspend fun fetchMusic(songId: Int) = local.getMusic(songId)
 
-    override suspend fun getMusic(remoteUri: String?, localUri: String?) = local.getMusic(remoteUri, localUri)
+    override suspend fun fetchMusic(remoteUri: String?, localUri: String?) = local.getMusic(remoteUri, localUri)
 
     override suspend fun addMusic(song: SongEntity) = local.createMusic(song)
 

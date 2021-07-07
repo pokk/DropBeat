@@ -62,8 +62,8 @@ internal class AddSongsAndPlaylistOneShotCase(
         finally {
             list.forEach {
                 val track = when {
-                    it.uri.isNotEmpty() -> songRepository.getMusic(remoteUri = it.uri)
-                    it.localUri.isNotEmpty() -> songRepository.getMusic(localUri = it.localUri)
+                    it.uri.isNotEmpty() -> songRepository.fetchMusic(remoteUri = it.uri)
+                    it.localUri.isNotEmpty() -> songRepository.fetchMusic(localUri = it.localUri)
                     else -> throw ParameterNotMatchException()
                 }
                 playlistRepository.addMusic(track, playlistId)
