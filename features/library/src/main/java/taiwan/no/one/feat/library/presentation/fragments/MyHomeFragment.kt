@@ -294,11 +294,11 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                     logw(it)
                     GlobalScope.launch {
                         val a = (it["playlists"] as List<DocumentReference>).map {
-                            //                            suspendCancellableCoroutine<Map<String, Any>> { continuation ->
-                            //                                it.get().addOnSuccessListener {
-                            //                                    continuation.resume(it.data.orEmpty())
-                            //                                }.addOnFailureListener(continuation::resumeWithException)
-                            //                            }
+//                            suspendCancellableCoroutine<Map<String, Any>> { continuation ->
+//                                it.get().addOnSuccessListener {
+//                                    continuation.resume(it.data.orEmpty())
+//                                }.addOnFailureListener(continuation::resumeWithException)
+//                            }
                             it.get().await().data
                         }
                         logw(a)
