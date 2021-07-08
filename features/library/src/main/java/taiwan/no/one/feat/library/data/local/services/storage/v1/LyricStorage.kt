@@ -22,11 +22,22 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.local.services.storage
+package taiwan.no.one.feat.library.data.local.services.storage.v1
 
-import taiwan.no.one.dropbeat.DropBeatApp
+import java.io.File
+import java.io.IOException
+import taiwan.no.one.ext.utils.StorageUtils
+import taiwan.no.one.feat.library.data.local.services.storage.Constants
 
-internal object Constants {
-    private const val LYRIC_DIRECTORY_NAME = "lyrics"
-    val LYRIC_DIRECTORY_PATH = "${DropBeatApp.appContext.filesDir.path}/$LYRIC_DIRECTORY_NAME"
+internal class LyricStorage : StorageService {
+    override suspend fun retrieveLyric(uri: String) =
+        StorageUtils.readFileFromDisk(File(uri)) ?: throw IOException("Reading Lyric failed.")
+
+    override suspend fun insertLyric(bytes: ByteArray, filename: String): String {
+        val dirPath = StorageUtils.createDir(Constants.LYRIC_DIRECTORY_PATH).path
+        val file = File(dirPath, filename)
+        val result = StorageUtils.saveFileToDisk(bytes, file)
+        if (!result) throw IOException("Couldn't write the file into the local storage.")
+        return file.path
+    }
 }

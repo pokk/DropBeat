@@ -32,4 +32,8 @@ import taiwan.no.one.core.domain.repository.Repository
  */
 internal interface LyricRepo : Repository {
     suspend fun fetchLyric(url: String): ByteArray
+
+    suspend fun fetchStorageLyric(uri: String): ByteArray
+
+    suspend fun addStorageLyric(byteArray: ByteArray, filename: String): String
 }

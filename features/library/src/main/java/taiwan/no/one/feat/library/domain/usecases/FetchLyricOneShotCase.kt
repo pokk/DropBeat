@@ -24,12 +24,8 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
-import java.io.File
-import java.io.IOException
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
-import taiwan.no.one.ext.utils.StorageUtils
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
-import taiwan.no.one.feat.library.data.local.services.storage.Constants
 import taiwan.no.one.feat.library.domain.repositories.LyricRepo
 import taiwan.no.one.feat.library.domain.repositories.SongRepo
 
@@ -46,7 +42,7 @@ internal class FetchLyricOneShotCase(
         val song = songRepo.fetchMusic(songId)
         val uri = if (song.lyricLocalUri.isEmpty()) obtainLyricFromRemote(song) else song.lyricLocalUri
         // 4. Get the whole text from the local storage.
-        StorageUtils.readFileFromDisk(File(uri)) ?: throw IOException("Reading Lyric failed.")
+        lyricRepo.fetchStorageLyric(uri).toString()
     }
 
     /**
@@ -59,14 +55,12 @@ internal class FetchLyricOneShotCase(
         // 1. Fetch the lyric from the remote server.
         val bytes = lyricRepo.fetchLyric(song.lyricUrl)
         // 2. Save the lyric to the local storage
-        val dirPath = StorageUtils.createDir(Constants.LYRIC_DIRECTORY_PATH).path
         val filename = song.lyricLocalUri.split("/").last()
-        val file = File(dirPath, filename)
-        val isSuccess = StorageUtils.saveFileToDisk(bytes, file)
+        val filePath = lyricRepo.addStorageLyric(bytes, filename)
         // 3. Update the database information of the song.
-        songRepo.updateMusic(song.copy(localUri = file.path))
-        return file.path
+        songRepo.updateMusic(song.copy(localUri = filePath))
+        return filePath
     }
 
-    internal data class Request(val songId: Int) : RequestValues
+    data class Request(val songId: Int) : RequestValues
 }

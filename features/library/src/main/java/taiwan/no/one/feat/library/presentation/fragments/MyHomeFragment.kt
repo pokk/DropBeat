@@ -204,7 +204,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             }
         }
         vm.getAllPlaylists()
-        vm.test()
+//        vm.test()
     }
 
     private fun setListClickListener(trackAdapter: TrackAdapter) {

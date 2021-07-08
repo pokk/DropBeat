@@ -65,4 +65,6 @@ internal interface DataStore {
     suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?)
 
     suspend fun getLyric(url: String): ByteArray
+
+    suspend fun storeLyric(byteArray: ByteArray, filename: String): String
 }
