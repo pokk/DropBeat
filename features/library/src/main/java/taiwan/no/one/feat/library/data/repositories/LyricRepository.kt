@@ -32,4 +32,8 @@ internal class LyricRepository(
     private val remote: DataStore,
 ) : LyricRepo {
     override suspend fun fetchLyric(url: String) = remote.getLyric(url)
+
+    override suspend fun fetchStorageLyric(uri: String) = local.getLyric(uri)
+
+    override suspend fun addStorageLyric(byteArray: ByteArray, filename: String) = local.storeLyric(byteArray, filename)
 }

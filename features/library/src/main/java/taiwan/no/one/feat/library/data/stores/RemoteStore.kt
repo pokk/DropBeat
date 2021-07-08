@@ -63,12 +63,13 @@ internal class RemoteStore(
 
     override suspend fun getTheNewestPlaylist() = UnsupportedOperation()
 
-    override suspend fun createPlaylist(playlist: PlayListEntity, ifExistAndIgnore: Boolean): Unit =
-        UnsupportedOperation()
+    override suspend fun createPlaylist(playlist: PlayListEntity, ifExistAndIgnore: Boolean) = UnsupportedOperation()
 
     override suspend fun modifyPlaylist(playlist: PlayListEntity) = UnsupportedOperation()
 
     override suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?) = UnsupportedOperation()
 
     override suspend fun getLyric(url: String): ByteArray = downloadService.retrieveLyric(url).bytes()
+
+    override suspend fun storeLyric(byteArray: ByteArray, filename: String) = UnsupportedOperation()
 }

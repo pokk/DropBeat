@@ -36,6 +36,8 @@ import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.library.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.local.configs.MusicLibraryDatabase
+import taiwan.no.one.feat.library.data.local.services.storage.v1.LyricStorage
+import taiwan.no.one.feat.library.data.local.services.storage.v1.StorageService
 import taiwan.no.one.feat.library.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.library.data.remote.configs.DownloadConfig
 import taiwan.no.one.feat.library.data.remote.services.retofit.v1.DownloadService
@@ -56,7 +58,7 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance()) }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance(), instance()) }
         bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance()) }
 
         bindSingleton<PlaylistRepo> {
@@ -71,6 +73,7 @@ internal object DataModules : ModuleProvider {
 
         bindSingleton { instance<MusicLibraryDatabase>().createPlaylistDao() }
         bindSingleton { instance<MusicLibraryDatabase>().createSongDao() }
+        bindInstance<StorageService> { LyricStorage() }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {

@@ -32,6 +32,7 @@ import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEnti
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
 import taiwan.no.one.feat.library.data.local.services.database.v1.PlaylistDao
 import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
+import taiwan.no.one.feat.library.data.local.services.storage.v1.StorageService
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -40,6 +41,7 @@ import taiwan.no.one.feat.library.data.local.services.database.v1.SongDao
 internal class LocalStore(
     private val playlistDao: PlaylistDao,
     private val songDao: SongDao,
+    private val storageService: StorageService,
 ) : DataStore {
     override suspend fun getMusic(songId: Int) = songDao.getMusicBy(songId)
 
@@ -101,7 +103,10 @@ internal class LocalStore(
         }
     }
 
-    override suspend fun getLyric(url: String) = TODO()
+    override suspend fun getLyric(url: String) = storageService.retrieveLyric(url)
+
+    override suspend fun storeLyric(byteArray: ByteArray, filename: String) =
+        storageService.insertLyric(byteArray, filename)
 
     private suspend fun getArrangedSongs(originIds: List<Int>) = buildList {
         val songsMap = songDao.getMusics(originIds).map { it.id to it }.toMap()

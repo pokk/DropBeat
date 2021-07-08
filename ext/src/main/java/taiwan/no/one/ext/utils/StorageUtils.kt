@@ -25,6 +25,7 @@
 package taiwan.no.one.ext.utils
 
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -48,12 +49,16 @@ object StorageUtils {
         ioe.printStackTrace()
         false
     }
+    catch (fnfe: FileNotFoundException) {
+        fnfe.printStackTrace()
+        false
+    }
 
     fun readFileFromDisk(file: File) = file.inputStream().use { input ->
         try {
             input.bufferedReader().use { buffer ->
                 buffer.readText()
-            }
+            }.toByteArray()
         }
         catch (ioe: IOException) {
             ioe.printStackTrace()

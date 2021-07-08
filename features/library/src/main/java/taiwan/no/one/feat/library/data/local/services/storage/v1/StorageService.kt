@@ -22,11 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.local.services.storage
+package taiwan.no.one.feat.library.data.local.services.storage.v1
 
-import taiwan.no.one.dropbeat.DropBeatApp
+/**
+ * We will implement about the local storage.
+ * Using prefix name (retrieve), (insert), (replace), (release)
+ */
+internal interface StorageService {
+    suspend fun retrieveLyric(uri: String): ByteArray
 
-internal object Constants {
-    private const val LYRIC_DIRECTORY_NAME = "lyrics"
-    val LYRIC_DIRECTORY_PATH = "${DropBeatApp.appContext.filesDir.path}/$LYRIC_DIRECTORY_NAME"
+    suspend fun insertLyric(bytes: ByteArray, filename: String): String
 }
