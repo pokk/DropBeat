@@ -194,7 +194,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         userEntity.takeIf { it?.uid.isNotNull() }?.let {
             mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
-//            doSync(it)
+            //            doSync(it)
             if (privacyVm.shouldDisplaySyncDialog) {
                 privacyVm.shouldDisplaySyncDialog = false
                 // Show sync dialog
@@ -204,6 +204,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             }
         }
         vm.getAllPlaylists()
+        vm.test()
     }
 
     private fun setListClickListener(trackAdapter: TrackAdapter) {
@@ -293,11 +294,11 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
                     logw(it)
                     GlobalScope.launch {
                         val a = (it["playlists"] as List<DocumentReference>).map {
-//                            suspendCancellableCoroutine<Map<String, Any>> { continuation ->
-//                                it.get().addOnSuccessListener {
-//                                    continuation.resume(it.data.orEmpty())
-//                                }.addOnFailureListener(continuation::resumeWithException)
-//                            }
+                            //                            suspendCancellableCoroutine<Map<String, Any>> { continuation ->
+                            //                                it.get().addOnSuccessListener {
+                            //                                    continuation.resume(it.data.orEmpty())
+                            //                                }.addOnFailureListener(continuation::resumeWithException)
+                            //                            }
                             it.get().await().data
                         }
                         logw(a)
