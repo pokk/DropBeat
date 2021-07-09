@@ -188,6 +188,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
             find<RecyclerView>(AppResId.rv_musics).apply {
                 layoutManager = linearLayoutManager()
                 adapter = topArtistAdapter
+                edgeEffectFactory = noneEdgeEffectFactory()
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopArtist"
         }
@@ -195,6 +196,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
             find<RecyclerView>(AppResId.rv_musics).apply {
                 layoutManager = linearLayoutManager()
                 adapter = topTrackAdapter
+                edgeEffectFactory = noneEdgeEffectFactory()
             }
             find<TextView>(AppResId.mtv_explore_title).text = "TopTrack"
         }
