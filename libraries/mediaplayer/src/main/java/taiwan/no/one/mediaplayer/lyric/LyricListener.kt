@@ -22,17 +22,10 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
+package taiwan.no.one.mediaplayer.lyric
 
-import taiwan.no.one.feat.player.databinding.ItemLyricBinding
-import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapter
-import taiwan.no.one.mediaplayer.lyric.LrcRowEntity
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
+interface LyricListener {
+    fun seekLrcToTime(time: Long)
 
-internal class LyricViewHolder(
-    private val binding: ItemLyricBinding,
-) : ViewHolderBinding<LrcRowEntity, LyricAdapter>(binding.root) {
-    override fun initView(entity: LrcRowEntity, adapter: LyricAdapter) {
-        binding.mtvLyric.text = entity.content.orEmpty()
-    }
+    fun setLrcSoughtTimeListener(listener: (pos: Int, lrcEntity: LrcRowEntity) -> Unit)
 }

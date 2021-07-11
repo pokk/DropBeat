@@ -76,6 +76,7 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
+import taiwan.no.one.mediaplayer.lyric.DefaultLrcBuilder
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
@@ -154,8 +155,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             parent.apply {
                 if (!isBottomNaviBarVisible) {
                     collapsePlayer()
-                }
-                else {
+                } else {
                     isEnabled = false
                     onBackPressed()
                 }
@@ -208,25 +208,35 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 StringUtil.buildDurationToDigitalTime((it * player.curDuration).toLong())
             }
             rvLyric.apply {
-                adapter = LyricAdapter(
-                    listOf(
-                        "",
-                        "",
-                        "Toruss prarere in audax berolinum!",
-                        "Nunquam reperire mortem.",
-                        "Abaculus noster parma est.",
-                        "Ignigena cadunts, tanquam emeritis clabulare.",
-                        "Salvus, raptus scutums etiam examinare de velox, superbus tumultumque.",
-                        "Candidatuss favere in emeritis quadrata!",
-                        "Ferox, bi-color byssuss recte imperium de varius, festus competition.",
-                        "Cur candidatus velum?",
-                        "Primus epos unus imperiums cannabis est.",
-                        "Musas sunt extums de domesticus fluctui.",
-                        "Tuss favere in germanus avenio!Cum mensa peregrinationes, omnes exemplares albus hilotaees.",
-                        "",
-                        "",
-                    )
-                )
+                val lyricContent = """
+                    [by:丶Vince]
+                    [ti:This is what you came for]
+                    [ar:Rihanna&Calvin Harris&Helena Legend]
+                    [al:This is what you came for]
+                    [by:丶Vince]
+                    [00:30.53]Baby, this is what you came for
+                    [00:34.16]Lightning strikes every time she moves
+                    [00:40.99]And everybody’s watching her
+                    [00:43.46]But she’s looking at
+                    [00:44.96]you, oh, oh，you oh oh
+                    [00:52.40]you oh oh you oh oh
+                    [01:00.24]Baby,this is what you came for
+                    [01:04.00]Lightening strikes every time she moves
+                    [01:10.90]And everybody’s watching her
+                    [01:13.37]But she’s looking at
+                    [02:07.51]Baby, this is what you came for
+                    [02:11.23]Lightning strikes every time she moves
+                    [02:22.43]Baby, this is what you came for
+                    [02:26.15]Lightning strikes every time she moves
+                    [02:33.22]And everybody’s watching her
+                    [02:35.48]But she’s looking at
+                """.trimIndent()
+                val builder = DefaultLrcBuilder()
+                adapter = LyricAdapter(builder.getLrcRows(lyricContent)).apply {
+                    setLrcSoughtTimeListener { pos, lrcEntity ->
+                        player.seekTo(lrcEntity.time.toInt())
+                    }
+                }
                 layoutManager = linearLayoutManager()
                 edgeEffectFactory = noneEdgeEffectFactory()
             }
@@ -284,8 +294,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             sivAlbum.setOnClickListener {
                 if (root.currentState == R.id.mini_player_end) {
                     expandPlayer()
-                }
-                else {
+                } else {
                     expandLyrics()
                 }
             }

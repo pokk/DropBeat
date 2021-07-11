@@ -30,10 +30,12 @@ import androidx.recyclerview.widget.RecyclerView
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.ItemLyricBinding
 import taiwan.no.one.feat.player.presentation.recyclerviews.viewholders.LyricViewHolder
+import taiwan.no.one.mediaplayer.lyric.LrcRowEntity
+import taiwan.no.one.mediaplayer.lyric.LyricListener
 
 internal class LyricAdapter(
-    private val lyrics: List<String>,
-) : RecyclerView.Adapter<LyricViewHolder>() {
+    private val lyrics: List<LrcRowEntity>,
+) : RecyclerView.Adapter<LyricViewHolder>(), LyricListener {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).inflate(R.layout.item_lyric, parent, false)
             .let { LyricViewHolder(ItemLyricBinding.bind(it)) }
@@ -41,4 +43,8 @@ internal class LyricAdapter(
     override fun onBindViewHolder(holder: LyricViewHolder, position: Int) = holder.initView(lyrics.get(position), this)
 
     override fun getItemCount() = lyrics.size
+
+    override fun seekLrcToTime(time: Long) = TODO()
+
+    override fun setLrcSoughtTimeListener(listener: (pos: Int, lrcEntity: LrcRowEntity) -> Unit) = TODO()
 }
