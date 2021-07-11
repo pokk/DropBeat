@@ -52,8 +52,10 @@ import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinknifer.waitForMeasure
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
+import org.kodein.di.instance
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.PlaylistConstant
@@ -69,6 +71,7 @@ import taiwan.no.one.feat.player.presentation.popups.SettingPopupWindow
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.decorators.PlaylistItemDecorator
+import taiwan.no.one.feat.player.presentation.recyclerviews.states.LrcState
 import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
@@ -77,7 +80,7 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
-import taiwan.no.one.mediaplayer.lyric.DefaultLrcBuilder
+import taiwan.no.one.mediaplayer.lyric.LrcBuilder
 import taiwan.no.one.mediaplayer.lyric.LrcRowEntity
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
@@ -90,14 +93,61 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private var isTouchingSlider = false
     private var isRunningAnim = false
     private var playlistPopupMenu: CustomPopupWindow<*>? = null
-    private var dummyItems = 0
+
+    //region Variable of ViewModel
     private val vm by viewModels<PlayerViewModel>()
+    //endregion
+
+    //region Variable of Views
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
-    private val isPlaying get() = player.isPlaying
+
+    // Animation callbacks & listeners
+    private val sliderTouchListener = object : Slider.OnSliderTouchListener {
+        override fun onStartTrackingTouch(slider: Slider) {
+            isTouchingSlider = true
+        }
+
+        override fun onStopTrackingTouch(slider: Slider) {
+            player.seekTo((slider.value * player.curDuration).toInt())
+            isTouchingSlider = false
+        }
+    }
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            parent.apply {
+                if (!isBottomNaviBarVisible) {
+                    collapsePlayer()
+                }
+                else {
+                    isEnabled = false
+                    onBackPressed()
+                }
+            }
+        }
+    }
+    //endregion
+
+    //region Variable of RecyclerView
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()))
     }
     private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
+    private val lrcBuilder by instance<LrcBuilder>()
+    private val smoothMiddleScroller
+        get() = object : LinearSmoothScroller(binding.rvLyric.context) {
+            override fun calculateDtToFit(
+                viewStart: Int,
+                viewEnd: Int,
+                boxStart: Int,
+                boxEnd: Int,
+                snapPreference: Int
+            ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
+        }
+    //endregion
+
+    //region Variable of MediaPlayer
+    private val player = SimpleMusicPlayer.getInstance()
+    private val isPlaying get() = player.isPlaying
     private val playerCallback = object : PlayerCallback {
         override fun onTrackChanged(music: MusicInfo) {
             logw(music)
@@ -127,16 +177,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             loge(error)
         }
     }
-    private val sliderTouchListener = object : Slider.OnSliderTouchListener {
-        override fun onStartTrackingTouch(slider: Slider) {
-            isTouchingSlider = true
-        }
-
-        override fun onStopTrackingTouch(slider: Slider) {
-            player.seekTo((slider.value * player.curDuration).toInt())
-            isTouchingSlider = false
-        }
-    }
     private val seekBarChangeListener = object : OnSeekBarChangeListener {
         override fun onStartTrackingTouch(seekBar: SeekBar) {
             isTouchingSlider = true
@@ -153,29 +193,8 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 StringUtil.buildDurationToDigitalTime((progress * player.curDuration / FULL_PERCENTAGE).toLong())
         }
     }
-    private val backPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            parent.apply {
-                if (!isBottomNaviBarVisible) {
-                    collapsePlayer()
-                } else {
-                    isEnabled = false
-                    onBackPressed()
-                }
-            }
-        }
-    }
-    private val player = SimpleMusicPlayer.getInstance()
-    private val smoothMiddleScroller
-        get() = object : LinearSmoothScroller(binding.rvLyric.context) {
-            override fun calculateDtToFit(
-                viewStart: Int,
-                viewEnd: Int,
-                boxStart: Int,
-                boxEnd: Int,
-                snapPreference: Int
-            ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
-        }
+    //endregion
+
     val playlist = listOf(
         MusicInfo(
             "title1",
@@ -228,15 +247,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         parent.onBackPressedDispatcher.addCallback(this, backPressedCallback)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.rvLyric.post {
-            val halfHeightOfRecyclerView = binding.rvLyric.height / 2
-            val itemHeight = binding.rvLyric.layoutManager?.getChildAt(0)?.height ?: 1
-            dummyItems = halfHeightOfRecyclerView / itemHeight
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         player.setPlayerEventCallback(null)
@@ -252,11 +262,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             binding.sliderMiniProgress.setLabelFormatter {
                 StringUtil.buildDurationToDigitalTime((it * player.curDuration).toLong())
             }
-            val builder = DefaultLrcBuilder()
-            val items = (0..5).map { LrcRowEntity(null, 0, it.toString()) }
-            val newItems = items.toMutableList().apply { addAll(builder.getLrcRows(lyricContent)) }
             rvLyric.apply {
-                adapter = LyricAdapter(newItems)
                 layoutManager = linearLayoutManager()
                 edgeEffectFactory = noneEdgeEffectFactory()
             }
@@ -312,23 +318,14 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             sliderMiniProgress.clearOnSliderTouchListeners()
             sliderMiniProgress.addOnSliderTouchListener(sliderTouchListener)
             sivAlbum.setOnClickListener {
-                if (root.currentState == R.id.mini_player_end) {
-                    expandPlayer()
-                } else {
-                    expandLyrics()
-                }
+                if (root.currentState == R.id.mini_player_end) expandPlayer() else expandLyrics()
             }
             sivLyrics.setOnClickListener { collapseLyrics() }
         }
         merge.apply {
             btnFavorite.setOnClickListener { handleFavorite() }
             btnVideo.setOnClickListener {}
-            btnPlay.setOnClickListener {
-//                binding.rvLyric.layoutManager?.startSmoothScroll(smoothMiddleScroller.apply {
-//                    targetPosition = 9
-//                })
-                handlePlayAction()
-            }
+            btnPlay.setOnClickListener { handlePlayAction() }
             btnNext.setOnClickListener { player.next() }
             btnPrevious.setOnClickListener { player.previous() }
             btnShuffle.setOnClickListener { player.mode = Mode.Shuffle }
@@ -476,6 +473,32 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         parent.apply {
             if (shouldHideBottomNavBar) isBottomNaviBarVisible = false
             isMinimalPlayer = false
+        }
+    }
+
+    private fun test() {
+//        binding.rvLyric.layoutManager?.startSmoothScroll(smoothMiddleScroller.apply {
+//            targetPosition = 9
+//        })
+        binding.rvLyric.waitForMeasure { v, w, h ->
+            val rv = v as? RecyclerView ?: return@waitForMeasure
+            val halfHeightOfRecyclerView = h / 2
+            val items = lrcBuilder.getLrcRows(lyricContent).toMutableList().apply {
+                add(0, LrcRowEntity(null, 0, null))
+                add(LrcRowEntity(null, 0, null))
+            }
+            val states = (0..items.size).map {
+                if (it == 0 || it == items.size - 1) {
+                    LrcState(rowHeight = halfHeightOfRecyclerView)
+                }
+                else if (it == 1) {
+                    LrcState(requireContext().getColor(android.R.color.white))
+                }
+                else {
+                    LrcState(requireContext().getColor(android.R.color.holo_blue_bright))
+                }
+            }
+            rv.adapter = LyricAdapter(states, items)
         }
     }
 }

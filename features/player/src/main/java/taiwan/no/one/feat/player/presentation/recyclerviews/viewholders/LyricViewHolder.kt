@@ -24,21 +24,25 @@
 
 package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
 
+import android.view.ViewGroup
+import androidx.core.view.updateLayoutParams
 import taiwan.no.one.feat.player.databinding.ItemLyricBinding
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapter
+import taiwan.no.one.feat.player.presentation.recyclerviews.states.LrcState
 import taiwan.no.one.mediaplayer.lyric.LrcRowEntity
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class LyricViewHolder(
     private val binding: ItemLyricBinding,
-) : ViewHolderBinding<LrcRowEntity, LyricAdapter>(binding.root) {
-    override fun initView(entity: LrcRowEntity, adapter: LyricAdapter) {
-        binding.mtvLyric.text = entity.content.orEmpty()
-    }
-
-    private fun setMiddleItem(target: LrcRowEntity, current: LrcRowEntity) {
-        binding.mtvLyric.setTextColor(
-            binding.root.context.getColor(if (target == current) android.R.color.white else android.R.color.darker_gray)
-        )
+) : ViewHolderBinding<Pair<LrcState, LrcRowEntity>, LyricAdapter>(binding.root) {
+    override fun initView(entity: Pair<LrcState, LrcRowEntity>, adapter: LyricAdapter) {
+        val (state, lrc) = entity
+        binding.mtvLyric.apply {
+            text = lrc.content.orEmpty()
+            setTextColor(state.color)
+            updateLayoutParams {
+                height = if (lrc.content == null) state.rowHeight else ViewGroup.LayoutParams.WRAP_CONTENT
+            }
+        }
     }
 }

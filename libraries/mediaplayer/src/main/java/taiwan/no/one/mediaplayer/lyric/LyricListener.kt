@@ -27,5 +27,5 @@ package taiwan.no.one.mediaplayer.lyric
 interface LyricListener {
     fun seekLrcToTime(entity: LrcRowEntity)
 
-    fun setLrcSoughtTimeListener(listener: (pos: Int, lrcEntity: LrcRowEntity) -> Unit)
+    fun setLrcSoughtTimeListener(pos: Int, lrcEntity: LrcRowEntity)
 }

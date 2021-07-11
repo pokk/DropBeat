@@ -22,27 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.player.presentation.recyclerviews.adapters
+package taiwan.no.one.feat.player.presentation.recyclerviews.states
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import taiwan.no.one.feat.player.R
-import taiwan.no.one.feat.player.databinding.ItemLyricBinding
-import taiwan.no.one.feat.player.presentation.recyclerviews.states.LrcState
-import taiwan.no.one.feat.player.presentation.recyclerviews.viewholders.LyricViewHolder
-import taiwan.no.one.mediaplayer.lyric.LrcRowEntity
+import taiwan.no.one.ext.DEFAULT_INT
 
-internal class LyricAdapter(
-    private val states: List<LrcState>,
-    private val lyrics: List<LrcRowEntity>,
-) : RecyclerView.Adapter<LyricViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        LayoutInflater.from(parent.context).inflate(R.layout.item_lyric, parent, false)
-            .let { LyricViewHolder(ItemLyricBinding.bind(it)) }
-
-    override fun onBindViewHolder(holder: LyricViewHolder, position: Int) =
-        holder.initView(states[position] to lyrics[position], this)
-
-    override fun getItemCount() = lyrics.size
-}
+data class LrcState(
+    val color: Int = DEFAULT_INT,
+    val rowHeight: Int = DEFAULT_INT,
+)
