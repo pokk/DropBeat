@@ -35,4 +35,10 @@ internal class LyricViewHolder(
     override fun initView(entity: LrcRowEntity, adapter: LyricAdapter) {
         binding.mtvLyric.text = entity.content.orEmpty()
     }
+
+    private fun setMiddleItem(target: LrcRowEntity, current: LrcRowEntity) {
+        binding.mtvLyric.setTextColor(
+            binding.root.context.getColor(if (target == current) android.R.color.white else android.R.color.darker_gray)
+        )
+    }
 }

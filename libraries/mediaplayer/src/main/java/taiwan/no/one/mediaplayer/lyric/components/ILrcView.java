@@ -22,10 +22,25 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.mediaplayer.lyric
+package taiwan.no.one.mediaplayer.lyric.components;
 
-interface LyricListener {
-    fun seekLrcToTime(entity: LrcRowEntity)
+import java.util.List;
+import taiwan.no.one.mediaplayer.lyric.LrcRowEntity;
 
-    fun setLrcSoughtTimeListener(listener: (pos: Int, lrcEntity: LrcRowEntity) -> Unit)
+public interface ILrcView {
+
+    /**
+     * Set the lyrics line collection to be displayed
+     */
+    void setLrc(List<LrcRowEntity> lrcRows);
+
+    /**
+     * When the music is playing, call this method to scroll the lyrics, highlight the lyrics that is playing
+     */
+    void seekLrcToTime(long time);
+
+    /**
+     * Set the monitoring class when dragging lyrics
+     */
+    void setListener(ILrcViewListener l);
 }

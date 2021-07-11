@@ -44,6 +44,7 @@ import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import coil.loadAny
 import com.devrapid.kotlinknifer.displayMetrics
@@ -77,6 +78,7 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.mediaplayer.lyric.DefaultLrcBuilder
+import taiwan.no.one.mediaplayer.lyric.LrcRowEntity
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
@@ -88,6 +90,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private var isTouchingSlider = false
     private var isRunningAnim = false
     private var playlistPopupMenu: CustomPopupWindow<*>? = null
+    private var dummyItems = 0
     private val vm by viewModels<PlayerViewModel>()
     private val merge get() = MergePlayerControllerBinding.bind(binding.root)
     private val isPlaying get() = player.isPlaying
@@ -163,6 +166,16 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
     }
     private val player = SimpleMusicPlayer.getInstance()
+    private val smoothMiddleScroller
+        get() = object : LinearSmoothScroller(binding.rvLyric.context) {
+            override fun calculateDtToFit(
+                viewStart: Int,
+                viewEnd: Int,
+                boxStart: Int,
+                boxEnd: Int,
+                snapPreference: Int
+            ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
+        }
     val playlist = listOf(
         MusicInfo(
             "title1",
@@ -181,34 +194,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             "",
         ),
     )
-
-    init {
-        player.replacePlaylist(playlist)
-    }
-
-    //region Fragment Lifecycle
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parent.onBackPressedDispatcher.addCallback(this, backPressedCallback)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        player.setPlayerEventCallback(null)
-    }
-    //endregion
-
-    override fun viewComponentBinding() {
-        addStatusBarHeightMarginTop(binding.btnClose)
-        binding.apply {
-            (player.curPlayingInfo ?: playlist.first()).also(this@PlayerFragment::setMusicInfo)
-            merge.mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(player.curTrackSec)
-            setProgress(player.curTrackSec / player.curDuration.toFloat())
-            binding.sliderMiniProgress.setLabelFormatter {
-                StringUtil.buildDurationToDigitalTime((it * player.curDuration).toLong())
-            }
-            rvLyric.apply {
-                val lyricContent = """
+    val lyricContent = """
                     [by:丶Vince]
                     [ti:This is what you came for]
                     [ar:Rihanna&Calvin Harris&Helena Legend]
@@ -231,12 +217,46 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                     [02:33.22]And everybody’s watching her
                     [02:35.48]But she’s looking at
                 """.trimIndent()
-                val builder = DefaultLrcBuilder()
-                adapter = LyricAdapter(builder.getLrcRows(lyricContent)).apply {
-                    setLrcSoughtTimeListener { pos, lrcEntity ->
-                        player.seekTo(lrcEntity.time.toInt())
-                    }
-                }
+
+    init {
+        player.replacePlaylist(playlist)
+    }
+
+    //region Fragment Lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parent.onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvLyric.post {
+            val halfHeightOfRecyclerView = binding.rvLyric.height / 2
+            val itemHeight = binding.rvLyric.layoutManager?.getChildAt(0)?.height ?: 1
+            dummyItems = halfHeightOfRecyclerView / itemHeight
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player.setPlayerEventCallback(null)
+    }
+    //endregion
+
+    override fun viewComponentBinding() {
+        addStatusBarHeightMarginTop(binding.btnClose)
+        binding.apply {
+            (player.curPlayingInfo ?: playlist.first()).also(this@PlayerFragment::setMusicInfo)
+            merge.mtvCurrentTime.text = StringUtil.buildDurationToDigitalTime(player.curTrackSec)
+            setProgress(player.curTrackSec / player.curDuration.toFloat())
+            binding.sliderMiniProgress.setLabelFormatter {
+                StringUtil.buildDurationToDigitalTime((it * player.curDuration).toLong())
+            }
+            val builder = DefaultLrcBuilder()
+            val items = (0..5).map { LrcRowEntity(null, 0, it.toString()) }
+            val newItems = items.toMutableList().apply { addAll(builder.getLrcRows(lyricContent)) }
+            rvLyric.apply {
+                adapter = LyricAdapter(newItems)
                 layoutManager = linearLayoutManager()
                 edgeEffectFactory = noneEdgeEffectFactory()
             }
@@ -303,7 +323,12 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         merge.apply {
             btnFavorite.setOnClickListener { handleFavorite() }
             btnVideo.setOnClickListener {}
-            btnPlay.setOnClickListener { handlePlayAction() }
+            btnPlay.setOnClickListener {
+//                binding.rvLyric.layoutManager?.startSmoothScroll(smoothMiddleScroller.apply {
+//                    targetPosition = 9
+//                })
+                handlePlayAction()
+            }
             btnNext.setOnClickListener { player.next() }
             btnPrevious.setOnClickListener { player.previous() }
             btnShuffle.setOnClickListener { player.mode = Mode.Shuffle }

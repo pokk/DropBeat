@@ -22,10 +22,13 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.mediaplayer.lyric
+package taiwan.no.one.mediaplayer.lyric.components;
 
-interface LyricListener {
-    fun seekLrcToTime(entity: LrcRowEntity)
+import taiwan.no.one.mediaplayer.lyric.LrcRowEntity;
 
-    fun setLrcSoughtTimeListener(listener: (pos: Int, lrcEntity: LrcRowEntity) -> Unit)
+public interface ILrcViewListener {
+    /**
+     * Call back this method when the lyrics are dragged up and down by the user
+     */
+    void onLrcSeeked(int newPosition, LrcRowEntity row);
 }
