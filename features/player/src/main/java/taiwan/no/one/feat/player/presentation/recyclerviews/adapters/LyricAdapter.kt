@@ -40,11 +40,11 @@ internal class LyricAdapter(
         LayoutInflater.from(parent.context).inflate(R.layout.item_lyric, parent, false)
             .let { LyricViewHolder(ItemLyricBinding.bind(it)) }
 
-    override fun onBindViewHolder(holder: LyricViewHolder, position: Int) = holder.initView(lyrics.get(position), this)
+    override fun onBindViewHolder(holder: LyricViewHolder, position: Int) = holder.initView(lyrics[position], this)
 
     override fun getItemCount() = lyrics.size
 
-    override fun seekLrcToTime(time: Long) = TODO()
+    override fun seekLrcToTime(entity: LrcRowEntity) = Unit
 
-    override fun setLrcSoughtTimeListener(listener: (pos: Int, lrcEntity: LrcRowEntity) -> Unit) = TODO()
+    override fun setLrcSoughtTimeListener(listener: (pos: Int, lrcEntity: LrcRowEntity) -> Unit) = Unit
 }

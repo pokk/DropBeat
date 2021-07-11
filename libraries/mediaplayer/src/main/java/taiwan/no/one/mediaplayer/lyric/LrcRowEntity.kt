@@ -62,7 +62,8 @@ data class LrcRowEntity(
         @WorkerThread
         fun createRows(standardLrcLine: String) = try {
             if (standardLrcLine.indexOf(OPENED_BRACKET) != POS_OPENED_BRACKET ||
-                standardLrcLine.indexOf(CLOSED_BRACKET) != POS_CLOSED_BRACKET) {
+                standardLrcLine.indexOf(CLOSED_BRACKET) != POS_CLOSED_BRACKET
+            ) {
                 throw LyricFormatException("The time format is wrong.")
             }
             // [02:34.14][01:07.00] When you and I accidentally think of her
@@ -90,8 +91,7 @@ data class LrcRowEntity(
                 // [01:07.00]When you and I accidentally think of her
                 .map { LrcRowEntity(it, timeConvert(it), content) }
                 .toList()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
             emptyList()
         }
