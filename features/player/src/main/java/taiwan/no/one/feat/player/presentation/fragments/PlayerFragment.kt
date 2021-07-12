@@ -55,6 +55,9 @@ import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.waitForMeasure
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -476,6 +479,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
     }
 
+    //region testing
     private fun test() {
 //        binding.rvLyric.layoutManager?.startSmoothScroll(smoothMiddleScroller.apply {
 //            targetPosition = 9
@@ -489,16 +493,27 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             }
             val states = (0..items.size).map {
                 if (it == 0 || it == items.size - 1) {
-                    LrcState(rowHeight = halfHeightOfRecyclerView)
+                    LrcState(color = android.R.color.white, rowHeight = halfHeightOfRecyclerView)
                 }
                 else if (it == 1) {
-                    LrcState(requireContext().getColor(android.R.color.white))
+                    LrcState(1, android.R.color.white)
                 }
                 else {
-                    LrcState(requireContext().getColor(android.R.color.holo_blue_bright))
+                    LrcState(-1, android.R.color.holo_blue_bright)
                 }
             }
-            rv.adapter = LyricAdapter(states, items)
+            rv.adapter = LyricAdapter(states, items).apply {
+                stateFlow = this@PlayerFragment.stateFlow
+            }
         }
     }
+
+    private val stateFlow = MutableStateFlow(LrcState())
+
+    private fun submit() {
+        launch(Dispatchers.Main) {
+            stateFlow.emit(LrcState(4, android.R.color.holo_green_light))
+        }
+    }
+    //endregion
 }
