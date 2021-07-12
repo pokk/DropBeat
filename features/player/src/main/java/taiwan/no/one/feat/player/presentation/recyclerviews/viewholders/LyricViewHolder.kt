@@ -26,6 +26,14 @@ package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
 
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import com.devrapid.kotlinknifer.getColor
+import com.devrapid.kotlinknifer.loge
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.feat.player.databinding.ItemLyricBinding
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.states.LrcState
@@ -35,13 +43,35 @@ import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 internal class LyricViewHolder(
     private val binding: ItemLyricBinding,
 ) : ViewHolderBinding<Pair<LrcState, LrcRowEntity>, LyricAdapter>(binding.root) {
+    private var lrcRowEntity: LrcRowEntity? = null
+
     override fun initView(entity: Pair<LrcState, LrcRowEntity>, adapter: LyricAdapter) {
         val (state, lrc) = entity
+        lrcRowEntity = lrc
         binding.mtvLyric.apply {
             text = lrc.content.orEmpty()
-            setTextColor(state.color)
+            setTextColor(context.getColor(state.color))
             updateLayoutParams {
                 height = if (lrc.content == null) state.rowHeight else ViewGroup.LayoutParams.WRAP_CONTENT
+            }
+        }
+    }
+
+    fun start(adapter: LyricAdapter) {
+        binding.root.findViewTreeLifecycleOwner()?.lifecycleScope?.launch(Dispatchers.Main.immediate) {
+            adapter.stateFlow?.collect {
+                if (it.color == DEFAULT_INT) {
+                    loge("????????????????????????????????")
+                }
+                else {
+                    loge("$absoluteAdapterPosition =====")
+                    if (absoluteAdapterPosition == it.position) {
+                        binding.root.setTextColor(binding.root.getColor(it.color))
+                    }
+                    else {
+                        binding.root.setTextColor(binding.root.getColor(android.R.color.darker_gray))
+                    }
+                }
             }
         }
     }

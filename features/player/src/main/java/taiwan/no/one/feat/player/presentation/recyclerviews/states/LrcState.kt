@@ -24,9 +24,12 @@
 
 package taiwan.no.one.feat.player.presentation.recyclerviews.states
 
+import androidx.annotation.ColorRes
 import taiwan.no.one.ext.DEFAULT_INT
 
 data class LrcState(
+    val position: Int = DEFAULT_INT,
+    @ColorRes
     val color: Int = DEFAULT_INT,
     val rowHeight: Int = DEFAULT_INT,
 )
