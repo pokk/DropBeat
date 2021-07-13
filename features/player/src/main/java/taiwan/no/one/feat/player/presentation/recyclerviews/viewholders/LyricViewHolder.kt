@@ -29,11 +29,11 @@ import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.devrapid.kotlinknifer.getColor
-import com.devrapid.kotlinknifer.loge
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import taiwan.no.one.ext.DEFAULT_INT
+import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.ItemLyricBinding
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.states.LrcState
@@ -44,6 +44,7 @@ internal class LyricViewHolder(
     private val binding: ItemLyricBinding,
 ) : ViewHolderBinding<Pair<LrcState, LrcRowEntity>, LyricAdapter>(binding.root) {
     private var lrcRowEntity: LrcRowEntity? = null
+    private var job: Job? = null
 
     override fun initView(entity: Pair<LrcState, LrcRowEntity>, adapter: LyricAdapter) {
         val (state, lrc) = entity
@@ -52,27 +53,27 @@ internal class LyricViewHolder(
             text = lrc.content.orEmpty()
             setTextColor(context.getColor(state.color))
             updateLayoutParams {
-                height = if (lrc.content == null) state.rowHeight else ViewGroup.LayoutParams.WRAP_CONTENT
+                height = if (state is LrcState.DummyState) state.rowHeight else ViewGroup.LayoutParams.WRAP_CONTENT
             }
         }
     }
 
-    fun start(adapter: LyricAdapter) {
-        binding.root.findViewTreeLifecycleOwner()?.lifecycleScope?.launch(Dispatchers.Main.immediate) {
+    fun observeStateChange(adapter: LyricAdapter) {
+        val root = binding.root
+        job = root.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
             adapter.stateFlow?.collect {
-                if (it.color == DEFAULT_INT) {
-                    loge("????????????????????????????????")
-                }
-                else {
-                    loge("$absoluteAdapterPosition =====")
-                    if (absoluteAdapterPosition == it.position) {
-                        binding.root.setTextColor(binding.root.getColor(it.color))
-                    }
-                    else {
-                        binding.root.setTextColor(binding.root.getColor(android.R.color.darker_gray))
-                    }
+                if (it.color != DEFAULT_INT) {
+                    root.setTextColor(
+                        root.getColor(
+                            if (absoluteAdapterPosition == it.highlightPos) it.color else R.color.silver_chalice
+                        )
+                    )
                 }
             }
         }
+    }
+
+    fun unsubscribeStateChange() {
+        job?.cancel()
     }
 }
