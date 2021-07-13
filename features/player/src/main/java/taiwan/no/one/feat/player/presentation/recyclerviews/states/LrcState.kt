@@ -26,10 +26,15 @@ package taiwan.no.one.feat.player.presentation.recyclerviews.states
 
 import androidx.annotation.ColorRes
 import taiwan.no.one.ext.DEFAULT_INT
+import taiwan.no.one.feat.player.R
 
-data class LrcState(
-    val position: Int = DEFAULT_INT,
+internal open class LrcState(
+    val highlightPos: Int = DEFAULT_INT,
     @ColorRes
     val color: Int = DEFAULT_INT,
     val rowHeight: Int = DEFAULT_INT,
-)
+) {
+    internal class DummyState(height: Int) : LrcState(color = android.R.color.white, rowHeight = height)
+    internal class HighlightState(highlightPos: Int) : LrcState(highlightPos, android.R.color.white)
+    internal class NoFocusedState(highlightPos: Int) : LrcState(highlightPos, R.color.silver_chalice)
+}

@@ -42,6 +42,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.children
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
@@ -55,7 +56,6 @@ import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.waitForMeasure
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
@@ -146,6 +146,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 snapPreference: Int
             ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
         }
+    private val stateFlow = MutableStateFlow(LrcState())
     //endregion
 
     //region Variable of MediaPlayer
@@ -481,9 +482,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
 
     //region testing
     private fun test() {
-//        binding.rvLyric.layoutManager?.startSmoothScroll(smoothMiddleScroller.apply {
-//            targetPosition = 9
-//        })
         binding.rvLyric.waitForMeasure { v, w, h ->
             val rv = v as? RecyclerView ?: return@waitForMeasure
             val halfHeightOfRecyclerView = h / 2
@@ -493,13 +491,13 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             }
             val states = (0..items.size).map {
                 if (it == 0 || it == items.size - 1) {
-                    LrcState(color = android.R.color.white, rowHeight = halfHeightOfRecyclerView)
+                    LrcState.DummyState(halfHeightOfRecyclerView)
                 }
                 else if (it == 1) {
-                    LrcState(1, android.R.color.white)
+                    LrcState.HighlightState(1)
                 }
                 else {
-                    LrcState(-1, android.R.color.holo_blue_bright)
+                    LrcState.NoFocusedState(-1)
                 }
             }
             rv.adapter = LyricAdapter(states, items).apply {
@@ -508,11 +506,12 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
     }
 
-    private val stateFlow = MutableStateFlow(LrcState())
-
-    private fun submit() {
-        launch(Dispatchers.Main) {
-            stateFlow.emit(LrcState(4, android.R.color.holo_green_light))
+    private fun submitHighlightPosition(position: Int) {
+        lifecycleScope.launch {
+            stateFlow.emit(LrcState.HighlightState(position))
+            binding.rvLyric.layoutManager?.startSmoothScroll(smoothMiddleScroller.apply {
+                targetPosition = position
+            })
         }
     }
     //endregion

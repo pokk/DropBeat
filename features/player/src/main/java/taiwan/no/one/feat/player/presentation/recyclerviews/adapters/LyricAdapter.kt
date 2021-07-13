@@ -27,7 +27,6 @@ package taiwan.no.one.feat.player.presentation.recyclerviews.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devrapid.kotlinknifer.loge
 import kotlinx.coroutines.flow.StateFlow
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.ItemLyricBinding
@@ -50,13 +49,12 @@ internal class LyricAdapter(
 
     override fun onViewAttachedToWindow(holder: LyricViewHolder) {
         super.onViewAttachedToWindow(holder)
-        loge(holder.absoluteAdapterPosition)
-        holder.start(this)
+        holder.observeStateChange(this)
     }
 
     override fun onViewDetachedFromWindow(holder: LyricViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        loge(holder.absoluteAdapterPosition)
+        holder.unsubscribeStateChange()
     }
 
     override fun getItemCount() = lyrics.size
