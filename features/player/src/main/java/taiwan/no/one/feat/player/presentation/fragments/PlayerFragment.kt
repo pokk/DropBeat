@@ -84,7 +84,6 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
 import taiwan.no.one.mediaplayer.lyric.LrcBuilder
-import taiwan.no.one.mediaplayer.lyric.LrcRowEntity
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
@@ -175,6 +174,10 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                     setProgress(second / player.curDuration.toFloat())
                 }
             }
+            val currentLrcPos = vm.lrcMapper[second]
+            if (currentLrcPos != null) {
+                submitHighlightPosition(currentLrcPos)
+            }
         }
 
         override fun onErrorCallback(error: PlaybackException) {
@@ -217,29 +220,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             "",
         ),
     )
-    val lyricContent = """
-                    [by:丶Vince]
-                    [ti:This is what you came for]
-                    [ar:Rihanna&Calvin Harris&Helena Legend]
-                    [al:This is what you came for]
-                    [by:丶Vince]
-                    [00:30.53]Baby, this is what you came for
-                    [00:34.16]Lightning strikes every time she moves
-                    [00:40.99]And everybody’s watching her
-                    [00:43.46]But she’s looking at
-                    [00:44.96]you, oh, oh，you oh oh
-                    [00:52.40]you oh oh you oh oh
-                    [01:00.24]Baby,this is what you came for
-                    [01:04.00]Lightening strikes every time she moves
-                    [01:10.90]And everybody’s watching her
-                    [01:13.37]But she’s looking at
-                    [02:07.51]Baby, this is what you came for
-                    [02:11.23]Lightning strikes every time she moves
-                    [02:22.43]Baby, this is what you came for
-                    [02:26.15]Lightning strikes every time she moves
-                    [02:33.22]And everybody’s watching her
-                    [02:35.48]But she’s looking at
-                """.trimIndent()
 
     init {
         player.replacePlaylist(playlist)
@@ -485,10 +465,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         binding.rvLyric.waitForMeasure { v, w, h ->
             val rv = v as? RecyclerView ?: return@waitForMeasure
             val halfHeightOfRecyclerView = h / 2
-            val items = lrcBuilder.getLrcRows(lyricContent).toMutableList().apply {
-                add(0, LrcRowEntity(null, 0, null))
-                add(LrcRowEntity(null, 0, null))
-            }
+            val items = vm.lrcRows
             val states = (0..items.size).map {
                 if (it == 0 || it == items.size - 1) {
                     LrcState.DummyState(halfHeightOfRecyclerView)
