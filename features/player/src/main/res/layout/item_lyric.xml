@@ -29,5 +29,6 @@
     android:id="@+id/mtv_lyric"
     android:layout_width="match_parent"
     android:layout_height="@dimen/md_three_half_unit"
+    android:gravity="center"
     tools:showIn="@layout/fragment_player"
     tools:text="@tools:sample/lorem"/>

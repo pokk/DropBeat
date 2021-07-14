@@ -52,7 +52,9 @@ internal class PlayerViewModel(
             add(LrcRowEntity(null, 0, null))
         }.toList()
     }
+    // OPTIMIZE(jieyi): 7/15/21 the time accuracy is not perfect correct, should have in ms.
     val lrcMapper by lazy {
+        // Minus 2 is for the dummy lrc entities.
         // Add an extra space for rounding the last number.
         val map = IntArray((lrcRows[lrcRows.size - 2].time / 1000).toInt() + 1)
         var index = 0
@@ -60,11 +62,10 @@ internal class PlayerViewModel(
             if (entity.time == 0L) return@forEachIndexed
             val bound = (entity.time / 1000).toInt()
             while (index < bound) {
-                map[index++] = i
+                map[index++] = i - 1
             }
         }
         map
-//        lrcRows.mapIndexed { index, lrcRowEntity -> (lrcRowEntity.time / 1000) to index }.toMap()
     }
     private val lyricContent = """
 [ti:One Life]

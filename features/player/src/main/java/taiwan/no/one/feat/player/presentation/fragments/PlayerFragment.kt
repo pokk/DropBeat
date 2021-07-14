@@ -56,9 +56,9 @@ import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.waitForMeasure
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
+import kotlin.math.min
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.kodein.di.instance
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.fragment.BaseFragment
 import taiwan.no.one.dropbeat.core.PlaylistConstant
@@ -83,7 +83,6 @@ import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Standby
 import taiwan.no.one.mediaplayer.interfaces.PlayerCallback
-import taiwan.no.one.mediaplayer.lyric.LrcBuilder
 import taiwan.no.one.widget.WidgetResDimen
 import taiwan.no.one.widget.popupwindow.CustomPopupWindow
 
@@ -134,7 +133,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         LayoutManagerParams(WeakReference(requireActivity()))
     }
     private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
-    private val lrcBuilder by instance<LrcBuilder>()
     private val smoothMiddleScroller
         get() = object : LinearSmoothScroller(binding.rvLyric.context) {
             override fun calculateDtToFit(
@@ -174,6 +172,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                     setProgress(second / player.curDuration.toFloat())
                 }
             }
+            // Update the lyric recyclerview.
+            val currentLrcPos = vm.lrcMapper[min(second.toInt(), vm.lrcMapper.size - 1)]
+            submitHighlightPosition(currentLrcPos)
         }
 
         override fun onErrorCallback(error: PlaybackException) {
@@ -194,21 +195,18 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             if (!isTouchingSlider) return
             merge.mtvCurrentTime.text =
                 StringUtil.buildDurationToDigitalTime((progress * player.curDuration / FULL_PERCENTAGE).toLong())
-
-            val currentLrcPos = vm.lrcMapper[player.curDuration.toInt()]
-            submitHighlightPosition(currentLrcPos)
         }
     }
     //endregion
 
     val playlist = listOf(
         MusicInfo(
-            "title1",
-            "artist1",
-            "http://cdn.nilsonstorage.com/music/1b/8f3e854275abf92aadffe4548d4ba3.mp3",
-            196,
-            "http://cdn.nilsonstorage.com/image/1b/8f3e854275abf92aadffe4548d4ba3.jpg",
-            "",
+            "One Life",
+            "Helena Paparizou",
+            "http://cdn.nilsonstorage.com/music/5c/80fffcfc3dbf94afcd3e55375d9278.mp3",
+            215,
+            "http://cdn.nilsonstorage.com/image/5c/80fffcfc3dbf94afcd3e55375d9278.jpg",
+            "http://cdn.nilsonstorage.com/lyric/93/a778b546c7175e6f37ce7cfdb460de.lrc",
         ),
         MusicInfo(
             "title2",
