@@ -174,10 +174,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                     setProgress(second / player.curDuration.toFloat())
                 }
             }
-            val currentLrcPos = vm.lrcMapper[second]
-            if (currentLrcPos != null) {
-                submitHighlightPosition(currentLrcPos)
-            }
         }
 
         override fun onErrorCallback(error: PlaybackException) {
@@ -198,6 +194,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             if (!isTouchingSlider) return
             merge.mtvCurrentTime.text =
                 StringUtil.buildDurationToDigitalTime((progress * player.curDuration / FULL_PERCENTAGE).toLong())
+
+            val currentLrcPos = vm.lrcMapper[player.curDuration.toInt()]
+            submitHighlightPosition(currentLrcPos)
         }
     }
     //endregion
