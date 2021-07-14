@@ -53,7 +53,18 @@ internal class PlayerViewModel(
         }.toList()
     }
     val lrcMapper by lazy {
-        lrcRows.mapIndexed { index, lrcRowEntity -> (lrcRowEntity.time / 1000) to index }.toMap()
+        // Add an extra space for rounding the last number.
+        val map = IntArray((lrcRows[lrcRows.size - 2].time / 1000).toInt() + 1)
+        var index = 0
+        lrcRows.forEachIndexed { i, entity ->
+            if (entity.time == 0L) return@forEachIndexed
+            val bound = (entity.time / 1000).toInt()
+            while (index < bound) {
+                map[index++] = i
+            }
+        }
+        map
+//        lrcRows.mapIndexed { index, lrcRowEntity -> (lrcRowEntity.time / 1000) to index }.toMap()
     }
     private val lyricContent = """
 [ti:One Life]
