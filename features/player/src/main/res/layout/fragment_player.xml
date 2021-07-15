@@ -216,4 +216,14 @@
         app:trackColorActive="@color/grapefruit"
         app:trackColorInactive="@android:color/white"/>
     <!--endregion-->
+
+    <TextView
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toBottomOf="@id/rv_lyric"
+        app:layout_constraintEnd_toEndOf="@id/rv_lyric"
+        app:layout_constraintStart_toStartOf="@id/rv_lyric"
+        app:layout_constraintTop_toTopOf="@id/rv_lyric"/>
 </androidx.constraintlayout.motion.widget.MotionLayout>
