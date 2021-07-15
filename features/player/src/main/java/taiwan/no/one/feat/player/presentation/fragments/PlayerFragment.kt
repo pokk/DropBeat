@@ -57,6 +57,7 @@ import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.waitForMeasure
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
+import kotlin.math.abs
 import kotlin.math.min
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -76,7 +77,6 @@ import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapte
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.decorators.PlaylistItemDecorator
 import taiwan.no.one.feat.player.presentation.recyclerviews.states.LrcState
-import taiwan.no.one.feat.player.presentation.recyclerviews.viewholders.LyricViewHolder
 import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
@@ -96,6 +96,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private var isTouchingSlider = false
     private var isRunningAnim = false
     private var playlistPopupMenu: CustomPopupWindow<*>? = null
+    private var preLyricPosition = 0
 
     //region Variable of ViewModel
     private val vm by viewModels<PlayerViewModel>()
@@ -135,48 +136,6 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         LayoutManagerParams(WeakReference(requireActivity()))
     }
     private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
-    private val smoothMiddleScroller
-        get() = object : LinearSmoothScroller(binding.rvLyric.context) {
-            override fun calculateDtToFit(
-                viewStart: Int,
-                viewEnd: Int,
-                boxStart: Int,
-                boxEnd: Int,
-                snapPreference: Int
-            ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
-
-            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics) = 1f
-
-            private fun selectMiddleItem(): RecyclerView.ViewHolder? {
-                fun getViewLocationOnScreen(view: View): IntArray {
-                    val loc = IntArray(2)
-                    view.getLocationOnScreen(loc)
-                    return loc
-                }
-
-                val lm = layoutManager as? LinearLayoutManager ?: return null
-                val firstVisibleIndex = lm.findFirstVisibleItemPosition()
-                val lastVisibleIndex = lm.findLastVisibleItemPosition()
-                val visibleIndexes = listOf(firstVisibleIndex..lastVisibleIndex).flatten()
-
-                val midOfLyricRV = getViewLocationOnScreen(binding.rvLyric)[1]
-
-                for (i in visibleIndexes) {
-                    val vh = binding.rvLyric.findViewHolderForLayoutPosition(i)
-                    if (vh?.itemView == null) continue
-                    val y = getViewLocationOnScreen(vh.itemView)[1]
-                    val halfHeight = vh.itemView.height * .5
-                    val topSide = y.toDouble()
-                    val botSide = y + halfHeight * 2
-                    val isInMiddle = (midOfLyricRV + binding.rvLyric.height * .5) in topSide..botSide
-                    if (isInMiddle) {
-                        return vh
-                    }
-                }
-
-                return null
-            }
-        }
     private val stateFlow = MutableStateFlow(LrcState())
     //endregion
 
@@ -208,6 +167,9 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             }
             // Update the lyric recyclerview.
             val currentLrcPos = vm.lrcMapper[min(second.toInt(), vm.lrcMapper.size - 1)]
+            if (preLyricPosition == currentLrcPos) return
+            // Keep the last position for preventing the scrolling all the time.
+            preLyricPosition = currentLrcPos
             submitHighlightPosition(currentLrcPos)
         }
 
@@ -491,6 +453,60 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
     }
 
+    private fun createMidSmoothScroll(targetPosition: Int) = object : LinearSmoothScroller(binding.rvLyric.context) {
+        private val betweenDistance = 8
+        private val extraBuffer = betweenDistance + 5
+
+        override fun calculateDtToFit(
+            viewStart: Int,
+            viewEnd: Int,
+            boxStart: Int,
+            boxEnd: Int,
+            snapPreference: Int
+        ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
+
+        override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
+            val middleViewHolder = selectMiddleItem() ?: return 1f
+            val midPosition = middleViewHolder.absoluteAdapterPosition
+            val diff = abs(targetPosition - midPosition)
+            // Divide to 10 different speeds.
+            return if (diff > betweenDistance) {
+                super.calculateSpeedPerPixel(displayMetrics)
+            }
+            else {
+                displayMetrics.densityDpi / betweenDistance.toFloat() * (extraBuffer - diff) / displayMetrics.densityDpi
+            }
+        }
+
+        private fun selectMiddleItem(): RecyclerView.ViewHolder? {
+            fun getViewLocationOnScreen(view: View): IntArray {
+                val loc = IntArray(2)
+                view.getLocationOnScreen(loc)
+                return loc
+            }
+
+            val lm = layoutManager as? LinearLayoutManager ?: return null
+            val firstVisibleIndex = lm.findFirstVisibleItemPosition()
+            val lastVisibleIndex = lm.findLastVisibleItemPosition()
+            val visibleIndexes = listOf(firstVisibleIndex..lastVisibleIndex).flatten()
+
+            val midOfLyricRV = getViewLocationOnScreen(binding.rvLyric)[1]
+
+            for (i in visibleIndexes) {
+                val vh = binding.rvLyric.findViewHolderForLayoutPosition(i)
+                if (vh?.itemView == null) continue
+                val y = getViewLocationOnScreen(vh.itemView)[1]
+                val halfHeight = vh.itemView.height * .5
+                val topSide = y.toDouble()
+                val botSide = y + halfHeight * 2
+                val isInMiddle = (midOfLyricRV + binding.rvLyric.height * .5) in topSide..botSide
+                if (isInMiddle) return vh
+            }
+
+            return null
+        }
+    }
+
     //region testing
     private fun test() {
         binding.rvLyric.waitForMeasure { v, w, h ->
@@ -517,38 +533,10 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private fun submitHighlightPosition(position: Int) {
         lifecycleScope.launch {
             stateFlow.emit(LrcState.HighlightState(position))
-            binding.rvLyric.layoutManager?.startSmoothScroll(smoothMiddleScroller.apply {
+            binding.rvLyric.layoutManager?.startSmoothScroll(createMidSmoothScroll(position).apply {
                 targetPosition = position
             })
         }
-    }
-
-    private fun selectMiddleItem(): RecyclerView.ViewHolder? {
-        val layoutManager = binding.rvLyric.layoutManager as? LinearLayoutManager ?: return null
-        val firstVisibleIndex = layoutManager.findFirstVisibleItemPosition()
-        val lastVisibleIndex = layoutManager.findLastVisibleItemPosition()
-        val visibleIndexes = listOf(firstVisibleIndex..lastVisibleIndex).flatten()
-
-        val rvLocation = IntArray(2)
-        binding.rvLyric.getLocationOnScreen(rvLocation)
-        val midOfLyricRV = rvLocation[1]
-
-        for (i in visibleIndexes) {
-            val vh = binding.rvLyric.findViewHolderForLayoutPosition(i)
-            if (vh?.itemView == null) continue
-            val location = IntArray(2)
-            vh.itemView.getLocationOnScreen(location)
-            val y = location[1]
-            val halfHeight = vh.itemView.height * .5
-            val topSide = y.toDouble()
-            val botSide = y + halfHeight * 2
-            val isInMiddle = (midOfLyricRV + binding.rvLyric.height * .5) in topSide..botSide
-            if (isInMiddle) {
-                return vh
-            }
-        }
-
-        return null
     }
     //endregion
 }
