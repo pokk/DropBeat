@@ -27,6 +27,7 @@ package taiwan.no.one.feat.player.presentation.fragments
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,7 @@ import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapte
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
 import taiwan.no.one.feat.player.presentation.recyclerviews.decorators.PlaylistItemDecorator
 import taiwan.no.one.feat.player.presentation.recyclerviews.states.LrcState
+import taiwan.no.one.feat.player.presentation.recyclerviews.viewholders.LyricViewHolder
 import taiwan.no.one.feat.player.presentation.viewmodels.PlayerViewModel
 import taiwan.no.one.mediaplayer.MusicInfo
 import taiwan.no.one.mediaplayer.SimpleMusicPlayer
@@ -142,6 +144,38 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 boxEnd: Int,
                 snapPreference: Int
             ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
+
+            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics) = 1f
+
+            private fun selectMiddleItem(): RecyclerView.ViewHolder? {
+                fun getViewLocationOnScreen(view: View): IntArray {
+                    val loc = IntArray(2)
+                    view.getLocationOnScreen(loc)
+                    return loc
+                }
+
+                val lm = layoutManager as? LinearLayoutManager ?: return null
+                val firstVisibleIndex = lm.findFirstVisibleItemPosition()
+                val lastVisibleIndex = lm.findLastVisibleItemPosition()
+                val visibleIndexes = listOf(firstVisibleIndex..lastVisibleIndex).flatten()
+
+                val midOfLyricRV = getViewLocationOnScreen(binding.rvLyric)[1]
+
+                for (i in visibleIndexes) {
+                    val vh = binding.rvLyric.findViewHolderForLayoutPosition(i)
+                    if (vh?.itemView == null) continue
+                    val y = getViewLocationOnScreen(vh.itemView)[1]
+                    val halfHeight = vh.itemView.height * .5
+                    val topSide = y.toDouble()
+                    val botSide = y + halfHeight * 2
+                    val isInMiddle = (midOfLyricRV + binding.rvLyric.height * .5) in topSide..botSide
+                    if (isInMiddle) {
+                        return vh
+                    }
+                }
+
+                return null
+            }
         }
     private val stateFlow = MutableStateFlow(LrcState())
     //endregion
@@ -487,6 +521,34 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 targetPosition = position
             })
         }
+    }
+
+    private fun selectMiddleItem(): RecyclerView.ViewHolder? {
+        val layoutManager = binding.rvLyric.layoutManager as? LinearLayoutManager ?: return null
+        val firstVisibleIndex = layoutManager.findFirstVisibleItemPosition()
+        val lastVisibleIndex = layoutManager.findLastVisibleItemPosition()
+        val visibleIndexes = listOf(firstVisibleIndex..lastVisibleIndex).flatten()
+
+        val rvLocation = IntArray(2)
+        binding.rvLyric.getLocationOnScreen(rvLocation)
+        val midOfLyricRV = rvLocation[1]
+
+        for (i in visibleIndexes) {
+            val vh = binding.rvLyric.findViewHolderForLayoutPosition(i)
+            if (vh?.itemView == null) continue
+            val location = IntArray(2)
+            vh.itemView.getLocationOnScreen(location)
+            val y = location[1]
+            val halfHeight = vh.itemView.height * .5
+            val topSide = y.toDouble()
+            val botSide = y + halfHeight * 2
+            val isInMiddle = (midOfLyricRV + binding.rvLyric.height * .5) in topSide..botSide
+            if (isInMiddle) {
+                return vh
+            }
+        }
+
+        return null
     }
     //endregion
 }
