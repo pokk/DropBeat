@@ -224,7 +224,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         vm.lrcRowEntities.observe(this) { res ->
             res.onSuccess {
                 // Display the lyric to the recycler view.
-                val states = vm.createLyricStates(it, binding.rvLyric.height)
+                val states = vm.createLyricStates(it, binding.rvLyric.height / 2)
                 binding.rvLyric.adapter = LyricAdapter(states, it).apply { stateFlow = this@PlayerFragment.stateFlow }
             }.onFailure(::logw)
         }
