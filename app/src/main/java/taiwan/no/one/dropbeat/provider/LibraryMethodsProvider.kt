@@ -62,4 +62,10 @@ interface LibraryMethodsProvider {
 
     @WorkerThread
     suspend fun updateSongWithFavorite(song: SimpleTrackEntity, isFavorite: Boolean): Boolean
+
+    @WorkerThread
+    suspend fun getLyric(songId: Int): Result<String>
+
+    @WorkerThread
+    suspend fun getLyric(lyricUrl: String): Result<String>
 }

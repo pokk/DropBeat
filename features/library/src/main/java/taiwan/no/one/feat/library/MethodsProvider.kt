@@ -45,6 +45,8 @@ import taiwan.no.one.feat.library.domain.usecases.CreateDefaultPlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
 import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.FetchIsInThePlaylistReq
+import taiwan.no.one.feat.library.domain.usecases.FetchLyricCase
+import taiwan.no.one.feat.library.domain.usecases.FetchLyricReq
 import taiwan.no.one.feat.library.domain.usecases.FetchSongCase
 import taiwan.no.one.feat.library.domain.usecases.FetchSongReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
@@ -65,6 +67,7 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     private val fetchAllPlaylistsCase by instance<FetchAllPlaylistsCase>()
     private val fetchSongCase by instance<FetchSongCase>()
     private val fetchIsInThePlaylistCase by instance<FetchIsInThePlaylistCase>()
+    private val fetchLyricCase by instance<FetchLyricCase>()
 
     override suspend fun createDefaultPlaylists(): Boolean {
         createDefaultPlaylistCase.execute()
@@ -118,5 +121,11 @@ class MethodsProvider : LibraryMethodsProvider, DIAware {
     override suspend fun updateSongWithFavorite(song: SimpleTrackEntity, isFavorite: Boolean): Boolean {
         updateSongCase.execute(UpdateSongReq(song, isFavorite = isFavorite))
         return true
+    }
+
+    override suspend fun getLyric(songId: Int) = kotlin.runCatching { fetchLyricCase.execute(FetchLyricReq(songId)) }
+
+    override suspend fun getLyric(lyricUrl: String): Result<String> {
+        TODO("Not yet implemented")
     }
 }

@@ -46,8 +46,6 @@ import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.mappers.EntityMapper
 import taiwan.no.one.feat.library.domain.usecases.FetchAllPlaylistsCase
-import taiwan.no.one.feat.library.domain.usecases.FetchLyricCase
-import taiwan.no.one.feat.library.domain.usecases.FetchLyricReq
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistCase
 import taiwan.no.one.feat.library.domain.usecases.UpdatePlaylistReq
 import taiwan.no.one.feat.library.domain.usecases.UpdateSongCase
@@ -64,7 +62,6 @@ internal class MyHomeViewModel(
     private val syncPlaylistCase by instance<SyncPlaylistCase>()
     private val updatePlaylistCase by instance<UpdatePlaylistCase>()
     private val updateSongCase by instance<UpdateSongCase>()
-    private val fetchLyricCase by instance<FetchLyricCase>()
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<PlayListEntity>>() }
     val playlists get() = _playlists.toLiveData()
@@ -137,13 +134,6 @@ internal class MyHomeViewModel(
     }
 
     fun syncPlaylistOnRemote(userInfo: UserInfoEntity) = viewModelScope.launch {
-    }
-
-    fun test() = launchBehind {
-        val a = fetchLyricCase.execute(FetchLyricReq(1))
-        println("=================================================")
-        println(a)
-        println("=================================================")
     }
 
     private fun getSongs(playlist: PlayListEntity) = playlist.songs
