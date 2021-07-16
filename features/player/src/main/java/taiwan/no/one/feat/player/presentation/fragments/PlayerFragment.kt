@@ -54,7 +54,6 @@ import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
-import com.devrapid.kotlinknifer.waitForMeasure
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
 import kotlin.math.abs
@@ -222,6 +221,13 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parent.onBackPressedDispatcher.addCallback(this, backPressedCallback)
+        vm.lrcRowEntities.observe(this) { res ->
+            res.onSuccess {
+                // Display the lyric to the recycler view.
+                val states = vm.createLyricStates(it, binding.rvLyric.height)
+                binding.rvLyric.adapter = LyricAdapter(states, it).apply { stateFlow = this@PlayerFragment.stateFlow }
+            }.onFailure(::logw)
+        }
     }
 
     override fun onDestroy() {
@@ -417,39 +423,13 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         binding.sliderMiniProgress.isEnabled = isEnable
     }
 
-    private fun collapseLyrics() {
-        if (isRunningAnim) return
-        binding.root.apply {
-            setTransition(R.id.transition_expand_lyric)
-            transitionToStart()
-        }
-    }
-
-    private fun expandLyrics() {
-        if (isRunningAnim || binding.root.currentState == R.id.mini_player_end) return
-        binding.root.apply {
-            setTransition(R.id.transition_expand_lyric)
-            transitionToEnd()
-        }
-    }
-
-    private fun collapsePlayer(shouldShowBottomNavBar: Boolean = true) {
-        if (isRunningAnim) return
-        binding.root.transitionToState(R.id.mini_player_end)
-        backPressedCallback.isEnabled = false
-        parent.apply {
-            if (shouldShowBottomNavBar) isBottomNaviBarVisible = true
-            isMinimalPlayer = true
-        }
-    }
-
-    private fun expandPlayer(shouldHideBottomNavBar: Boolean = true) {
-        if (isRunningAnim) return
-        binding.root.transitionToState(R.id.mini_player_start)
-        backPressedCallback.isEnabled = true
-        parent.apply {
-            if (shouldHideBottomNavBar) isBottomNaviBarVisible = false
-            isMinimalPlayer = false
+    //region Lyric Recyclerview
+    private fun submitHighlightPosition(position: Int) {
+        lifecycleScope.launch {
+            stateFlow.emit(LrcState.HighlightState(position))
+            binding.rvLyric.layoutManager?.startSmoothScroll(createMidSmoothScroll(position).apply {
+                targetPosition = position
+            })
         }
     }
 
@@ -506,36 +486,42 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             return null
         }
     }
+    //endregion
 
-    //region testing
-    private fun test() {
-        binding.rvLyric.waitForMeasure { v, w, h ->
-            val rv = v as? RecyclerView ?: return@waitForMeasure
-            val halfHeightOfRecyclerView = h / 2
-            val items = vm.lrcRows
-            val states = (0..items.size).map {
-                if (it == 0 || it == items.size - 1) {
-                    LrcState.DummyState(halfHeightOfRecyclerView)
-                }
-                else if (it == 1) {
-                    LrcState.HighlightState(1)
-                }
-                else {
-                    LrcState.NoFocusedState(-1)
-                }
-            }
-            rv.adapter = LyricAdapter(states, items).apply {
-                stateFlow = this@PlayerFragment.stateFlow
-            }
+    //region View Animation
+    private fun collapseLyrics() {
+        if (isRunningAnim) return
+        binding.root.apply {
+            setTransition(R.id.transition_expand_lyric)
+            transitionToStart()
         }
     }
 
-    private fun submitHighlightPosition(position: Int) {
-        lifecycleScope.launch {
-            stateFlow.emit(LrcState.HighlightState(position))
-            binding.rvLyric.layoutManager?.startSmoothScroll(createMidSmoothScroll(position).apply {
-                targetPosition = position
-            })
+    private fun expandLyrics() {
+        if (isRunningAnim || binding.root.currentState == R.id.mini_player_end) return
+        binding.root.apply {
+            setTransition(R.id.transition_expand_lyric)
+            transitionToEnd()
+        }
+    }
+
+    private fun collapsePlayer(shouldShowBottomNavBar: Boolean = true) {
+        if (isRunningAnim) return
+        binding.root.transitionToState(R.id.mini_player_end)
+        backPressedCallback.isEnabled = false
+        parent.apply {
+            if (shouldShowBottomNavBar) isBottomNaviBarVisible = true
+            isMinimalPlayer = true
+        }
+    }
+
+    private fun expandPlayer(shouldHideBottomNavBar: Boolean = true) {
+        if (isRunningAnim) return
+        binding.root.transitionToState(R.id.mini_player_start)
+        backPressedCallback.isEnabled = true
+        parent.apply {
+            if (shouldHideBottomNavBar) isBottomNaviBarVisible = false
+            isMinimalPlayer = false
         }
     }
     //endregion
