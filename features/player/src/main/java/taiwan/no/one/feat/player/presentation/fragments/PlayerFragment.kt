@@ -443,7 +443,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
             boxStart: Int,
             boxEnd: Int,
             snapPreference: Int
-        ) = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
+        ) = boxStart + (boxEnd - boxStart) / 2 - (viewStart + (viewEnd - viewStart) / 2)
 
         override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {
             val middleViewHolder = selectMiddleItem() ?: return 1f
@@ -479,7 +479,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 val halfHeight = vh.itemView.height * .5
                 val topSide = y.toDouble()
                 val botSide = y + halfHeight * 2
-                val isInMiddle = (midOfLyricRV + binding.rvLyric.height * .5) in topSide..botSide
+                val isInMiddle = midOfLyricRV + binding.rvLyric.height * .5 in topSide..botSide
                 if (isInMiddle) return vh
             }
 
@@ -487,6 +487,10 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
     }
     //endregion
+
+    // TODO(jieyi):
+    //  1. When the lyric animation runs, the recycler view's position doesn't change
+    //  2. Playing button doesn't trigger the play action before moving the track bar
 
     //region View Animation
     private fun collapseLyrics() {

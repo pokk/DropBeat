@@ -103,7 +103,7 @@ internal class FetchLyricOneShotCase(
     override suspend fun acquireCase(parameter: Request?) = parameter.ensure {
         return@ensure fakeData
         val song = songRepo.fetchMusic(songId)
-        val uri = if (song.lyricLocalUri.isEmpty()) obtainLyricFromRemote(song) else song.lyricLocalUri
+        val uri = song.lyricLocalUri.ifEmpty { obtainLyricFromRemote(song) }
         // 4. Get the whole text from the local storage.
         lyricRepo.fetchStorageLyric(uri).toString()
     }
