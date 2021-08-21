@@ -29,7 +29,7 @@ import config.LibraryDependency.Version.NAVIGATION_KTX
 object GradleDependency {
     object Version {
         const val SAFE_ARGS = NAVIGATION_KTX
-        const val GOOGLE_SERVICE = "4.3.8"
+        const val GOOGLE_SERVICE = "4.3.10"
         const val CRASHLYTICS = "2.7.1"
         const val PERFORMANCE = "1.4.0"
     }
