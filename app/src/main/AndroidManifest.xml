@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:label"
         tools:targetApi="M">
-        <activity android:name=".presentation.activities.SplashActivity">
+        <activity
+            android:name=".presentation.activities.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -53,6 +55,7 @@
         </activity>
         <activity
             android:name="taiwan.no.one.dropbeat.presentation.activities.MainActivity"
+            android:exported="false"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -65,7 +68,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="taiwan.no.one.dropbeat.presentation.services.DownloadReceiver">
+        <receiver
+            android:name="taiwan.no.one.dropbeat.presentation.services.DownloadReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
             </intent-filter>
