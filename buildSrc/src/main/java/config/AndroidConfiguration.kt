@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package config
 
 object AndroidConfiguration {
     const val MIN_SDK = 23
-    const val TARGET_SDK = 30
+    const val TARGET_SDK = 31
     const val COMPILE_SDK = TARGET_SDK
     const val RELEASE_VERSION = 1
     const val FEATURE_VERSION = 0

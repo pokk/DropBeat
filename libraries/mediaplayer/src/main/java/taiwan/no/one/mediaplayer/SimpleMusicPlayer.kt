@@ -26,7 +26,6 @@ package taiwan.no.one.mediaplayer
 
 import android.content.Context
 import android.net.Uri
-import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.Timeline
@@ -51,7 +50,6 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
-import taiwan.no.one.mediaplayer.exceptions.PlaybackException
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.Mode.Default
@@ -103,7 +101,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     private val queue by lazy { ConcatenatingMediaSource() }
     private val curPlayingIndex get() = exoPlayer.currentWindowIndex
     override val isPlaying get() = exoPlayer.isPlaying
-    override val curPlayingInfo get() = playlist.find { exoPlayer.currentTag == it.uri }
+    override val curPlayingInfo get() = playlist.find { exoPlayer.currentMediaItem?.mediaId == it.uri }
     override val curTrackSec get() = exoPlayer.currentPosition / MediaUtil.SECOND_UNIT
     override val curDuration get() = exoPlayer.duration / MediaUtil.SECOND_UNIT
     override var mode: Mode by Delegates.observable(Default) { _, oldMode, newMode ->
@@ -193,9 +191,6 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     }
 
     internal inner class MusicEventListener : Player.Listener {
-        override fun onPlayerError(error: ExoPlaybackException) =
-            callback?.onErrorCallback(PlaybackException(error)) ?: Unit
-
         override fun onLoadingChanged(isLoading: Boolean) = Unit
 
         override fun onRepeatModeChanged(repeatMode: Int) = Unit
