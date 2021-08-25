@@ -97,5 +97,7 @@ internal interface DataStore {
     suspend fun getTagTopArtist(mbid: String): TagTopArtistEntity
 
     suspend fun getTagTopTrack(tagName: String): TopTrackInfoEntity
+
+    suspend fun createTagTopTrack(tagName: String): Boolean
     //endregion
 }

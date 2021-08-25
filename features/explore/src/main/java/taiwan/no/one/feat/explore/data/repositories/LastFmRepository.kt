@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package taiwan.no.one.feat.explore.data.repositories
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import java.util.*
+import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.core.domain.repository.Repository
@@ -37,6 +37,7 @@ import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.Tracks
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.stores.LocalStore.Constant.TYPE_CHART_TOP_ARTIST
 import taiwan.no.one.feat.explore.data.stores.LocalStore.Constant.TYPE_CHART_TOP_TRACK
+import taiwan.no.one.feat.explore.data.stores.LocalStore.Constant.TYPE_TAG_TRACK
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
 
 internal class LastFmRepository(
@@ -111,5 +112,20 @@ internal class LastFmRepository(
 
     override suspend fun fetchTagTopArtist(mbid: String) = remote.getTagTopArtist(mbid).topArtists
 
-    override suspend fun fetchTagTopTrack(tagName: String) = remote.getTagTopTrack(tagName).track
+    override suspend fun fetchTagTopTrack(tagName: String) = object : LayerCaching<TracksEntity>() {
+        override var timestamp: Long
+            get() = sp.getLong(convertToKey(TYPE_TAG_TRACK), 0L)
+            set(value) {
+                sp.edit { putLong(convertToKey(TYPE_TAG_TRACK), value) }
+            }
+
+        override suspend fun saveCallResult(data: TracksEntity) {
+        }
+
+        override suspend fun shouldFetch(data: TracksEntity) = Date().time - timestamp > Repository.EXPIRED_DURATION
+
+        override suspend fun loadFromLocal() = local.getTagTopTrack(tagName).track
+
+        override suspend fun createCall() = remote.getTagTopTrack(tagName).track
+    }.value()
 }

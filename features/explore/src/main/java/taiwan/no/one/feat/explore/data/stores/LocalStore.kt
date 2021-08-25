@@ -46,6 +46,7 @@ internal class LocalStore(
     companion object Constant {
         const val TYPE_CHART_TOP_TRACK = "top_track"
         const val TYPE_CHART_TOP_ARTIST = "top_artist"
+        const val TYPE_TAG_TRACK = "tag_track"
     }
 
     override suspend fun getAlbumInfo(mbid: String) = UnsupportedOperation()
@@ -76,16 +77,20 @@ internal class LocalStore(
     override suspend fun getTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) = UnsupportedOperation()
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
-        mmkvCache.get(convertToKey(page, limit, TYPE_CHART_TOP_TRACK),
-                      TopTrackInfoEntity::class.java)?.second ?: throw NotFoundException()
+        mmkvCache.get(
+            convertToKey(page, limit, TYPE_CHART_TOP_TRACK),
+            TopTrackInfoEntity::class.java
+        )?.second ?: throw NotFoundException()
 
     override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = tryWrapper {
         mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), entity)
     }
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
-        mmkvCache.get(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST),
-                      TopArtistInfoEntity::class.java)?.second ?: throw NotFoundException()
+        mmkvCache.get(
+            convertToKey(page, limit, TYPE_CHART_TOP_ARTIST),
+            TopArtistInfoEntity::class.java
+        )?.second ?: throw NotFoundException()
 
     override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) = tryWrapper {
         mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), entity)
@@ -100,4 +105,6 @@ internal class LocalStore(
     override suspend fun getTagTopArtist(mbid: String) = UnsupportedOperation()
 
     override suspend fun getTagTopTrack(mbid: String) = UnsupportedOperation()
+
+    override suspend fun createTagTopTrack(tagName: String) = true
 }

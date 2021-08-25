@@ -125,6 +125,8 @@ internal class RemoteStore(
             put(Constant.LASTFM_QUERY_LIMIT, "20")
         })
 
+    override suspend fun createTagTopTrack(tagName: String) = UnsupportedOperation()
+
     private fun combineLastFmQuery(method: String, block: MutableMap<String, String>.() -> Unit) = hashMapOf(
         Constant.LASTFM_QUERY_TOKEN to lastFmToken,
         Constant.LASTFM_QUERY_METHOD to method,

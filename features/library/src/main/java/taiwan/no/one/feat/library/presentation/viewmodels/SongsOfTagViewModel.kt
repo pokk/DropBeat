@@ -36,7 +36,9 @@ import androidx.work.WorkInfo.State
 import androidx.work.WorkManager
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.kodein.di.factory
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
@@ -88,7 +90,8 @@ internal class SongsOfTagViewModel(
             val updatedList = _songs.value?.getOrNull()?.map {
                 if (it.uri == entity.uri) newEntity else it
             } ?: return@launchBehind
-            _songs.postValue(Result.success(updatedList))
+            // Make sure the callback won't be replaced. If we are using [Dispatchers.IO] or default.
+            withContext(Dispatchers.Main) { _songs.postValue(Result.success(updatedList)) }
         }.onFailure {
             _songs.postValue(Result.failure(it))
         }
