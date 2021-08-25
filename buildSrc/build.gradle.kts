@@ -37,7 +37,7 @@ repositories {
 
 dependencies {
     implementation("com.android.tools.build:gradle:7.1.0-alpha09")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30-RC")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.0")
     implementation("com.github.ben-manes:gradle-versions-plugin:0.39.0")
