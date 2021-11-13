@@ -212,7 +212,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
             // TODO(jieyiwu): 6/13/20 The real state change should be here!
         }
 
-        @ObsoleteCoroutinesApi
+        @OptIn(ObsoleteCoroutinesApi::class)
         override fun onIsPlayingChanged(isPlaying: Boolean) {
             if (isPlaying) {
                 // Send the callback function each second when the player is playing.

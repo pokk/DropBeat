@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
 import androidx.core.content.ContextCompat
-import coil.loadAny
+import coil.load
 import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
@@ -75,7 +75,7 @@ internal class TopChartViewHolder(
             mtvArtistName.text = entity.artist?.name.orEmpty()
             mtvAlbumName.text = entity.name.orEmpty()
             entity.isFavorite?.let(this@TopChartViewHolder::setFavoriteIcon)
-            sivAlbumThumb.loadAny(
+            sivAlbumThumb.load(
                 (entity.images?.find { it.size == "cover" }?.text ?: entity.images?.get(0)?.text).orEmpty()
             )
         }
@@ -87,7 +87,7 @@ internal class TopChartViewHolder(
             entity.second?.apply {
                 popularTrackThisWeek.isFavorite?.let(this@TopChartViewHolder::setFavoriteIcon)
                 mtvAlbumName.text = popularTrackThisWeek.name.orEmpty()
-                sivAlbumThumb.loadAny(coverPhotoUrl)
+                sivAlbumThumb.load(coverPhotoUrl)
             }
         }
     }

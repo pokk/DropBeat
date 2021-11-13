@@ -29,7 +29,7 @@ import BuildTaskGroups
 val ktlint by configurations.creating
 
 dependencies {
-    ktlint("com.pinterest:ktlint:0.42.1")
+    ktlint("com.pinterest:ktlint:0.43.0")
 }
 
 tasks {

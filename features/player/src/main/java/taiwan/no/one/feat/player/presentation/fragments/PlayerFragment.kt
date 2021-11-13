@@ -48,7 +48,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import coil.loadAny
+import coil.imageLoader
+import coil.load
+import coil.request.ImageRequest
 import com.devrapid.kotlinknifer.displayMetrics
 import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.getDrawable
@@ -400,9 +402,11 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {
-            sivAlbumInner.loadAny(music.thumbUri.takeIf { it.isNotBlank() } ?: "") {
-                allowHardware(false)
-            }
+            sivAlbumInner.load(music.thumbUri.takeIf { it.isNotBlank() } ?: "",
+                               requireContext().imageLoader,
+                               fun ImageRequest.Builder.() {
+                                   allowHardware(false)
+                               })
             mtvArtist.text = music.artist
             mtvTrack.text = music.title
         }

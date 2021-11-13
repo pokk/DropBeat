@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.search.presentation.recyclerviews.viewholders
 
-import coil.loadAny
+import coil.load
 import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
@@ -37,7 +37,7 @@ internal class ResultViewHolder(
         binding.apply {
             mtvAlbumName.text = entity.title
             mtvArtistName.text = entity.artist
-            sivAlbumThumb.loadAny(entity.cdnCoverUrl)
+            sivAlbumThumb.load(entity.cdnCoverUrl)
         }
         binding.clItem.setOnClickListener {
             adapter.onClickListener?.invoke(entity)

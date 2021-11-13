@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.library.presentation.recyclerviews.viewholders
 
-import coil.loadAny
+import coil.load
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.presentation.recyclerviews.adapters.PlaylistAdapter
@@ -39,7 +39,7 @@ internal class PlaylistViewHolder(
         binding.apply {
             mtvTitle.text = entity.name
             mtvNumOfSongs.text = "${entity.songIds.size} songs"
-            sivThumbnail.loadAny(entity.coverUrl)
+            sivThumbnail.load(entity.coverUrl)
             root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }

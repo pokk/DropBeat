@@ -26,9 +26,9 @@ package config
 
 object CoreDependency {
     object Version {
-        const val KOTLIN = "1.5.30"
-        const val KOTLIN_COROUTINE = "1.5.1"
-        const val KOTLIN_DATETIME = "0.2.1"
+        const val KOTLIN = "1.6.0-RC2"
+        const val KOTLIN_COROUTINE = "1.5.2"
+        const val KOTLIN_DATETIME = "0.3.1"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib:${Version.KOTLIN}"

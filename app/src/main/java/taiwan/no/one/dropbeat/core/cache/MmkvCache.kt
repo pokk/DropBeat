@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,9 @@
 
 package taiwan.no.one.dropbeat.core.cache
 
-import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tencent.mmkv.MMKV
 import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.Caching.Constant.TIME_STAMP
@@ -33,17 +35,22 @@ import taiwan.no.one.core.data.repostory.cache.local.DiskCache
 class MmkvCache(
     private val mmkv: MMKV,
 ) : DiskCache {
-    private val gson by lazy { GsonBuilder().create() }
+    private val moshi by lazy {
+        Moshi.Builder()
+            .add(Date::class.java, Rfc3339DateJsonAdapter())
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
+    }
 
     override fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>? {
         val stringValue = mmkv.getString(key, null) ?: return null
         val timestamp = mmkv.getString("$key+$TIME_STAMP", null)?.toLong() ?: return null
-        return timestamp to gson.fromJson(stringValue, classOf)
+        return timestamp to requireNotNull(moshi.adapter(classOf).fromJson(stringValue))
     }
 
     override fun put(key: String, value: Any?) {
         if (value == null) return
         mmkv.putString("$key+$TIME_STAMP", Date().time.toString())
-        mmkv.putString(key, gson.toJson(value))
+        mmkv.putString(key, moshi.adapter<Any>(value::class.java).toJson(value))
     }
 }

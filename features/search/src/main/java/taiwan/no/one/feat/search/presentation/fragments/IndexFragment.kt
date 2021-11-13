@@ -166,8 +166,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
     }
 
-    @ExperimentalCoroutinesApi
-    @FlowPreview
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     @SuppressLint("ClickableViewAccessibility")
     override fun componentListenersBinding() {
         binding.root.setOnTouchListener { v, event ->

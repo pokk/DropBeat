@@ -70,8 +70,7 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
         addStatusBarHeightMarginTop(binding.btnBack)
     }
 
-    @ExperimentalCoroutinesApi
-    @FlowPreview
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     override fun componentListenersBinding() {
         binding.btnReset.setOnClickListener {
             vm.resetPassword(binding.tietEmail.text.toString())
