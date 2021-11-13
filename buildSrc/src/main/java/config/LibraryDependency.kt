@@ -28,7 +28,7 @@ object LibraryDependency {
     object Version {
         const val ARV = "1.0.16"
         const val KINFER = "2.4.0"
-        const val MATERIAL = "1.5.0-alpha05"
+        const val MATERIAL = "1.5.0-beta01"
         const val ANDROIDX = "1.0.0"
         const val ANNOTATION = "1.3.0"
         const val APPCOMPAT = "1.4.0-rc01"
@@ -52,7 +52,7 @@ object LibraryDependency {
         const val ROOM = "2.4.0-beta01"
         const val MMKV = "1.2.11"
         const val PLAY_CORE = "1.10.2"
-        const val COIL = "2.0.0-alpha02"
+        const val COIL = "2.0.0-alpha03"
         const val RETROFIT2 = "2.9.0"
         const val OKHTTP3 = "5.0.0-alpha.2"
         const val JSOUP = "1.14.3"
@@ -65,7 +65,7 @@ object LibraryDependency {
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
         const val LOTTIE = "4.2.0"
-        const val SENTRY = "5.3.0"
+        const val SENTRY = "5.4.0"
     }
 
     object Jieyi {
