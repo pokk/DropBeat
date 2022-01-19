@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
-import coil.loadAny
+import coil.load
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.PlaylistAdapter
@@ -39,7 +39,7 @@ internal class PlaylistViewHolder(
         binding.apply {
             mtvTitle.text = entity.name
             mtvNumOfSongs.text = "${entity.songIds.size} songs"
-            sivThumbnail.loadAny(entity.thumbUrl)
+            sivThumbnail.load(entity.thumbUrl)
             root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }

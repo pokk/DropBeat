@@ -22,31 +22,11 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.player.presentation.recyclerviews.viewholders
+package taiwan.no.one.core.exceptions
 
-import coil.load
-import taiwan.no.one.dropbeat.core.helpers.TouchHelper
-import taiwan.no.one.entity.SimplePlaylistEntity
-import taiwan.no.one.feat.player.databinding.ItemPlaylistBinding
-import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.PlaylistAdapter
-import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
-
-internal class PlaylistViewHolder(
-    private val binding: ItemPlaylistBinding,
-) : ViewHolderBinding<SimplePlaylistEntity, PlaylistAdapter>(binding.root) {
-    private val clickFlag = TouchHelper.ClickFlag()
-
-    override fun initView(entity: SimplePlaylistEntity, adapter: PlaylistAdapter) {
-        binding.apply {
-            mtvTitle.text = entity.name
-            mtvSubtitle.text = "${entity.songIds.size} songs"
-            sivPlaylistThumb.load(entity.thumbUrl)
-            clParent.setOnTouchListener { v, event ->
-                TouchHelper.simulateClickEvent(event, clickFlag) {
-                    adapter.onClickListener?.invoke(entity)
-                }
-                true
-            }
-        }
-    }
+class JsonParseException(
+    errorMsg: String? = null,
+    throwable: Throwable? = null,
+) : RuntimeException(errorMsg, throwable) {
+    constructor(throwable: Throwable) : this(null, throwable)
 }

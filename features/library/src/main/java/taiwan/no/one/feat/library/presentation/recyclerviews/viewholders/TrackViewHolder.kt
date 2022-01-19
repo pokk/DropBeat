@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.library.presentation.recyclerviews.viewholders
 
 import androidx.core.content.ContextCompat
-import coil.loadAny
+import coil.load
 import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.entity.SimpleTrackEntity
@@ -43,7 +43,7 @@ internal class TrackViewHolder(
     override fun initView(entity: SimpleTrackEntity, adapter: TrackAdapter) {
         binding.apply {
             mtvNumber.text = "#${absoluteAdapterPosition + 1}"
-            sivAlbumThumb.loadAny(entity.thumbUri)
+            sivAlbumThumb.load(entity.thumbUri)
             mtvAlbumName.text = entity.name
             mtvArtistName.text = entity.artist
             setFavoriteIcon(entity.isFavorite)

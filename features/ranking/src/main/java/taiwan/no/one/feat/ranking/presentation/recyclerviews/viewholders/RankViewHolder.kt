@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
-import coil.loadAny
+import coil.load
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
 import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
@@ -36,7 +36,7 @@ internal class RankViewHolder(
     override fun initView(entity: BriefRankEntity, adapter: RankAdapter) {
         binding.apply {
             mtvTitle.text = entity.title
-            sivThumbnail.loadAny(entity.coverUrl)
+            sivThumbnail.load(entity.coverUrl)
             mtvNumOfSongs.text = "${entity.numberOfSongs} songs"
             mcvMusic.setOnClickListener {
                 adapter.onClickListener?.invoke(entity.rankId, entity.title)

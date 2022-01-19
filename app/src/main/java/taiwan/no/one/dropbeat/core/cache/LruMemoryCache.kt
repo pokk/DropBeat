@@ -26,7 +26,8 @@ package taiwan.no.one.dropbeat.core.cache
 
 import androidx.collection.LruCache
 import com.devrapid.kotlinshaver.LookUp
-import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
 
@@ -38,12 +39,12 @@ class LruMemoryCache(
         private const val KEY_DATA = "data"
     }
 
-    private val gson by lazy { GsonBuilder().create() }
+    private val parser by lazy { Moshi.Builder().add(KotlinJsonAdapterFactory()).build() }
 
     override fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>? {
         val map = lruCache.get(key) ?: return null
         val timestamp = map[KEY_TIMESTAMP]?.toLong() ?: 0
-        return timestamp to gson.fromJson(map[KEY_DATA], classOf)
+        return timestamp to requireNotNull(parser.adapter<RT>(classOf).fromJson(requireNotNull(map[KEY_DATA])))
     }
 
     override fun put(key: String, value: Any?) {
@@ -51,7 +52,7 @@ class LruMemoryCache(
         lruCache.put(
             key, hashMapOf(
                 KEY_TIMESTAMP to Date().time.toString(),
-                KEY_DATA to gson.toJson(value),
+                KEY_DATA to parser.adapter<Any>(Any::class.java).toJson(value),
             )
         )
     }

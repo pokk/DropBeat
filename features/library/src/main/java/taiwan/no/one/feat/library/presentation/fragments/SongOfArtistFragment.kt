@@ -29,7 +29,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.loadAny
+import coil.load
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import java.lang.ref.WeakReference
@@ -110,7 +110,7 @@ internal class SongOfArtistFragment : BaseLibraryFragment<BaseActivity<*>, Fragm
     }
 
     private fun displayArtistInfo(entity: SimpleArtistEntity) {
-        binding.sivBackdrop.loadAny(entity.thumbnail)
+        binding.sivBackdrop.load(entity.thumbnail)
         mergeArticleInformationBinding.apply {
             mtvPlaylist.text = entity.topAlbums.size.toString()
             mtvFollower.text = entity.listener.toString()

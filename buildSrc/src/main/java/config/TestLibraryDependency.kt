@@ -26,13 +26,13 @@ package config
 
 object TestLibraryDependency {
     private object Version {
-        const val KTX_CORE = "1.4.1-alpha01"
+        const val KTX_CORE = "1.4.1-alpha03"
         const val CORE = "2.1.0"
-        const val JUNIT = "1.1.4-alpha01"
-        const val ASSERTK = "0.24"
-        const val ESPRESSO = "3.5.0-alpha01"
+        const val JUNIT = "1.1.4-alpha03"
+        const val ASSERTK = "0.25"
+        const val ESPRESSO = "3.5.0-alpha03"
         const val KAKAO = "2.1.0"
-        const val MOCKK = "1.12.0"
+        const val MOCKK = "1.12.2"
     }
 
     const val COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${CoreDependency.Version.KOTLIN_COROUTINE}"

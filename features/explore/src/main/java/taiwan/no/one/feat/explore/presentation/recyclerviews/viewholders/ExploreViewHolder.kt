@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
-import coil.loadAny
+import coil.load
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
 import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
 import taiwan.no.one.feat.explore.presentation.model.MusicCategory
@@ -37,7 +37,7 @@ internal class ExploreViewHolder(
     override fun initView(entity: TagEntity, adapter: ExploreAdapter) {
         binding.apply {
             mtvTitle.text = entity.name
-            sivThumbnail.loadAny(MusicCategory.getArrayMap()[entity.name]?.imageResId)
+            sivThumbnail.load(MusicCategory.getArrayMap()[entity.name]?.imageResId)
             root.setOnClickListener { adapter.clickListener?.invoke(entity) }
         }
     }

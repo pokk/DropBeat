@@ -43,7 +43,7 @@ class AnalyticsSender(
             val sentryEvent = SentryEvent(Date()).apply {
                 level = SentryLevel.INFO
                 logger = event.eventName
-                message = Message().apply { acceptUnknownProperties(event.params) }
+                message = Message().apply { unknown = event.params }
             }
             Sentry.captureEvent(sentryEvent)
         }

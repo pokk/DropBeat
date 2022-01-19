@@ -30,8 +30,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.devrapid.kotlinknifer.loge
 import com.google.android.material.transition.MaterialSharedAxis
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -70,8 +68,6 @@ internal class ForgotPasswordFragment : BaseFragment<BaseActivity<*>, FragmentFo
         addStatusBarHeightMarginTop(binding.btnBack)
     }
 
-    @ExperimentalCoroutinesApi
-    @FlowPreview
     override fun componentListenersBinding() {
         binding.btnReset.setOnClickListener {
             vm.resetPassword(binding.tietEmail.text.toString())

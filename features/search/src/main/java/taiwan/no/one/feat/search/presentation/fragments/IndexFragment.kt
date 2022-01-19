@@ -41,8 +41,6 @@ import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.debounce
@@ -166,8 +164,6 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
     }
 
-    @ExperimentalCoroutinesApi
-    @FlowPreview
     @SuppressLint("ClickableViewAccessibility")
     override fun componentListenersBinding() {
         binding.root.setOnTouchListener { v, event ->

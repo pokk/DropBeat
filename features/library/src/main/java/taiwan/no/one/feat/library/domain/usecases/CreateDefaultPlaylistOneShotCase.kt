@@ -24,9 +24,9 @@
 
 package taiwan.no.one.feat.library.domain.usecases
 
-import com.google.gson.JsonParseException
 import taiwan.no.one.core.data.extensions.parseObjectFromJson
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
+import taiwan.no.one.core.exceptions.JsonParseException
 import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.core.helpers.ResourceHelper
