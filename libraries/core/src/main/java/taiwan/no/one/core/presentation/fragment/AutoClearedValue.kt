@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,26 +25,48 @@
 package taiwan.no.one.core.presentation.fragment
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.observe
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class AutoClearedValue<T : Any> : ReadWriteProperty<Fragment, T>, LifecycleObserver {
+/**
+ * Ref [https://github.com/android/architecture-components-samples/blob/main/GithubBrowserSample/app/src/main/java/com/android/example/github/util/AutoClearedValue.kt]
+ *
+ * A lazy property that gets cleaned up when the fragment's view is destroyed.
+ *
+ * Accessing this variable while the fragment's view is destroyed will throw NPE.
+ */
+class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Fragment, T> {
     private var _value: T? = null
 
-    override fun getValue(thisRef: Fragment, property: KProperty<*>): T =
-        _value ?: throw IllegalStateException("Trying to call an auto-cleared value outside of the view lifecycle.")
+    init {
+        fragment.lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onCreate(owner: LifecycleOwner) {
+                fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
+                    viewLifecycleOwner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
+                        override fun onDestroy(owner: LifecycleOwner) {
+                            _value = null
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    @Throws(IllegalStateException::class)
+    override fun getValue(thisRef: Fragment, property: KProperty<*>) =
+        _value ?: throw IllegalStateException(
+            "should never call auto-cleared-value get when it might not be available"
+        )
 
     override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
-        thisRef.viewLifecycleOwner.lifecycle.removeObserver(this)
         _value = value
-        thisRef.viewLifecycleOwner.lifecycle.addObserver(this)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
-        _value = null
     }
 }
+
+/**
+ * Creates an [AutoClearedValue] associated with this fragment.
+ */
+fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)

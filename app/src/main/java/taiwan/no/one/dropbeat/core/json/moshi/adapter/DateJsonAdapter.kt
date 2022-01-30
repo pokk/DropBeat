@@ -22,39 +22,30 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.data.repostory.cache
+package taiwan.no.one.dropbeat.core.json.moshi.adapter
 
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
+import java.io.IOException
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.Date
-import taiwan.no.one.core.exceptions.NotFoundException
 
-abstract class LayerCaching<RT> {
-    protected open var timestamp = 0L
+class DateJsonAdapter : JsonAdapter<Date>() {
+    private val dateFormat = "yyyy/MM/dd HH:mm:ss"
+    private val sdFormat = SimpleDateFormat(dateFormat)
 
-    suspend fun value() = try {
-        val dbSource = loadFromLocal()
-        if (dbSource == null || shouldFetch(dbSource)) {
-            timestamp = Date().time
-            fetchFromRemote()
-        }
-        else {
-            dbSource
-        }
-    } catch (notFoundException: NotFoundException) {
-        // If can't find from the cache or the local persistence, will throw the [NotFoundException].
-        timestamp = Date().time
-        fetchFromRemote()
-    } catch (e: Exception) {
-        timestamp = Date().time
-        fetchFromRemote()
+    @Synchronized
+    @Throws(ParseException::class)
+    override fun fromJson(reader: JsonReader): Date {
+        val string = reader.nextString()
+        return sdFormat.parse(string)
     }
 
-    private suspend fun fetchFromRemote() = createCall().apply { saveCallResult(this) }
-
-    protected abstract suspend fun saveCallResult(data: RT)
-
-    protected abstract suspend fun shouldFetch(data: RT): Boolean
-
-    protected abstract suspend fun loadFromLocal(): RT?
-
-    protected abstract suspend fun createCall(): RT
+    @Synchronized
+    @Throws(IOException::class)
+    override fun toJson(writer: JsonWriter, value: Date?) {
+        writer.value(sdFormat.format(value))
+    }
 }

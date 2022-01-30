@@ -28,8 +28,8 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import taiwan.no.one.ext.DEFAULT_STR
 
-@JsonClass(generateAdapter = true)
 internal object CommonMusicEntity {
+    @JsonClass(generateAdapter = true)
     internal data class UserEntity(
         val address: String = DEFAULT_STR,
         @Json(name = "avatar_url")

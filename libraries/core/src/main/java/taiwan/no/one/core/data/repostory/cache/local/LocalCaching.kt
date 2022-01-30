@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 package taiwan.no.one.core.data.repostory.cache.local
 
 import java.lang.reflect.ParameterizedType
-import java.util.*
+import java.util.Date
 import taiwan.no.one.core.exceptions.NotFoundException
 
 abstract class LocalCaching<RT>(
@@ -56,7 +56,7 @@ abstract class LocalCaching<RT>(
         }
     }
 
-    protected open suspend fun saveCallResult(data: RT?) = memoryCache.put(key, data)
+    protected open suspend fun saveCallResult(data: RT?) = memoryCache.put(key, data, classOf)
 
     protected open suspend fun loadFromCache() = memoryCache.get(key, classOf)
 

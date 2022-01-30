@@ -249,7 +249,7 @@ formatting:
     autoCorrect: false
     layout: '*,java.**,javax.**,kotlin.**,^'
   Indentation:
-    active: true
+    active: false
     autoCorrect: true
     indentSize: 4
     continuationIndentSize: 4

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,8 +51,8 @@ internal class LocalStore(
         }.value()
 
     override suspend fun createMusicRanking(rankId: String, entity: MusicInfoEntity): Boolean {
-        mmkvCache.put(convertToKey(rankId), entity)
-        lruMemoryCache.put(convertToKey(rankId), entity)
+        mmkvCache.put(convertToKey(rankId), entity, MusicInfoEntity::class.java)
+        lruMemoryCache.put(convertToKey(rankId), entity, MusicInfoEntity::class.java)
         return true
     }
 

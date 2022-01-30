@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ import taiwan.no.one.core.presentation.activity.BaseActivity
  * The basic fragment is for the normal activity that prepares all necessary variables or functions.
  */
 abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : LoadableFragment(),
-                                                                        CoroutineScope by MainScope() {
+    CoroutineScope by MainScope() {
     @Suppress("UNCHECKED_CAST")
     protected val parent
         // If there's no parent, forcing crashing the app.
@@ -90,16 +90,10 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
         rendered(savedInstanceState)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onDetach() {
-        super.onDetach()
         cancel() // cancel is extension on CoroutineScope
+        super.onDetach()
     }
-
     //endregion
 
     //region Loading
@@ -115,7 +109,6 @@ abstract class BaseFragment<out A : BaseActivity<*>, V : ViewBinding> : Loadable
     //endregion
 
     //region Customized methods
-
     /** The block of binding to [androidx.lifecycle.ViewModel]'s [androidx.lifecycle.LiveData]. */
     @UiThread
     protected open fun bindLiveData() = Unit

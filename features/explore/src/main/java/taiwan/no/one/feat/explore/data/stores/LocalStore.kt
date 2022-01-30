@@ -64,7 +64,7 @@ internal class LocalStore(
         mmkvCache.get(convertToKey(artistName), ArtistMoreDetailEntity::class.java)?.second ?: throw NotFoundException()
 
     override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) = tryWrapper {
-        mmkvCache.put(convertToKey(artistName), entity)
+        mmkvCache.put(convertToKey(artistName), entity, ArtistMoreDetailEntity::class.java)
     }
 
     override suspend fun getTrackInfo(mbid: String) = UnsupportedOperation()
@@ -80,7 +80,7 @@ internal class LocalStore(
                       TopTrackInfoEntity::class.java)?.second ?: throw NotFoundException()
 
     override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = tryWrapper {
-        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), entity)
+        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), entity, TopTrackInfoEntity::class.java)
     }
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
@@ -88,7 +88,7 @@ internal class LocalStore(
                       TopArtistInfoEntity::class.java)?.second ?: throw NotFoundException()
 
     override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) = tryWrapper {
-        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), entity)
+        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), entity, TopArtistInfoEntity::class.java)
     }
 
     override suspend fun getChartTopTag(page: Int, limit: Int) = UnsupportedOperation()

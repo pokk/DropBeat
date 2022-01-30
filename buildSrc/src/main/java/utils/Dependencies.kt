@@ -58,6 +58,7 @@ fun DependencyHandlerScope.annotationDependencies() {
     DepEnvKapt(Database.ROOM_ANNOTATION)
     DepEnvKapt(JetPack.LIFECYCLE_COMPILER)
     DepEnvKapt(Tool.AUTO_SERVICE)
+    DepEnvKapt(Tool.MOSHI_CODEGEN)
 }
 
 fun DependencyHandlerScope.coreDependencies() {
@@ -71,7 +72,6 @@ fun DependencyHandlerScope.coreDependencies() {
     DepEnvApi(Tool.MOSHI)
     DepEnvApi(Tool.MOSHI_ADAPTER)
     DepEnvApi(Tool.MOSHI_KOTLIN)
-    DepEnvKapt(Tool.MOSHI_CODEGEN)
 }
 
 fun DependencyHandlerScope.appDependencies() {
@@ -242,7 +242,7 @@ fun DependencyHandlerScope.uiDependencies(env: String) {
 fun DependencyHandlerScope.debugDependencies(env: String) {
     env(DebugDependency.STEHO)
     env(DebugDependency.STEHO_INTERCEPTOR)
-    //    env(DebugDependency.LEAKCANARY)
+    env(DebugDependency.LEAKCANARY)
     //    env(DebugDependency.DEBUG_DB)
     //    env(DebugDependency.OK_HTTP_PROFILER)
 }

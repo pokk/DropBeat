@@ -27,9 +27,9 @@ package taiwan.no.one.dropbeat.core.cache
 import androidx.collection.LruCache
 import com.devrapid.kotlinshaver.LookUp
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
+import taiwan.no.one.dropbeat.core.json.moshi.adapter.DateJsonAdapter
 
 class LruMemoryCache(
     private val lruCache: LruCache<String, LookUp<String>>,
@@ -39,7 +39,7 @@ class LruMemoryCache(
         private const val KEY_DATA = "data"
     }
 
-    private val parser by lazy { Moshi.Builder().add(KotlinJsonAdapterFactory()).build() }
+    private val parser by lazy { Moshi.Builder().add(Date::class.java, DateJsonAdapter()).build() }
 
     override fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>? {
         val map = lruCache.get(key) ?: return null
@@ -47,12 +47,13 @@ class LruMemoryCache(
         return timestamp to requireNotNull(parser.adapter<RT>(classOf).fromJson(requireNotNull(map[KEY_DATA])))
     }
 
-    override fun put(key: String, value: Any?) {
+    override fun <RT> put(key: String, value: RT?, classOf: Class<RT>) {
         if (value == null) return
         lruCache.put(
-            key, hashMapOf(
+            key,
+            hashMapOf(
                 KEY_TIMESTAMP to Date().time.toString(),
-                KEY_DATA to parser.adapter<Any>(Any::class.java).toJson(value),
+                KEY_DATA to parser.adapter<RT>(classOf).toJson(value),
             )
         )
     }

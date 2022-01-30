@@ -41,7 +41,7 @@ internal class PlaylistViewHolder(
             mtvTitle.text = entity.name
             mtvSubtitle.text = "${entity.songIds.size} songs"
             sivPlaylistThumb.load(entity.thumbUrl)
-            clParent.setOnTouchListener { v, event ->
+            clParent.setOnTouchListener { _, event ->
                 TouchHelper.simulateClickEvent(event, clickFlag) {
                     adapter.onClickListener?.invoke(entity)
                 }
