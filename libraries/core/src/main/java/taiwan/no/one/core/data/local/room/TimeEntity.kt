@@ -25,8 +25,10 @@
 package taiwan.no.one.core.data.local.room
 
 import androidx.room.ColumnInfo
+import com.squareup.moshi.JsonClass
 import java.util.Date
 
+@JsonClass(generateAdapter = true)
 data class TimeEntity(
     @ColumnInfo(name = "created_at")
     val createdAt: Date = Date(),

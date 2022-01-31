@@ -24,21 +24,31 @@
 
 package taiwan.no.one.core.presentation.fragment
 
+import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.observe
+import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * Ref [https://github.com/android/architecture-components-samples/blob/main/GithubBrowserSample/app/src/main/java/com/android/example/github/util/AutoClearedValue.kt]
+ * This is from the google github
+ *
+ * *** Ref [https://shorturl.at/ilEFL]
+ *
+ * *** Ref [https://medium.com/scalereal/let-your-delegates-auto-nullify-references-%EF%B8%8F-3ad6d8875497]
  *
  * A lazy property that gets cleaned up when the fragment's view is destroyed.
  *
  * Accessing this variable while the fragment's view is destroyed will throw NPE.
  */
-class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Fragment, T> {
+class AutoClearedValue<T : Any>(
+    val fragment: Fragment,
+    private val initializer: (() -> T)?,
+) : ReadWriteProperty<Fragment, T> {
     private var _value: T? = null
 
     init {
@@ -56,10 +66,18 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
     }
 
     @Throws(IllegalStateException::class)
-    override fun getValue(thisRef: Fragment, property: KProperty<*>) =
-        _value ?: throw IllegalStateException(
-            "should never call auto-cleared-value get when it might not be available"
-        )
+    override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
+        val value = _value
+        if (value != null) return value
+
+        if (thisRef.viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.INITIALIZED)) {
+            return initializer?.invoke().also { _value = it }
+                ?: throw IllegalStateException("The value has not yet been set or no default initializer provided")
+        }
+        else {
+            throw IllegalStateException("Fragment might have been destroyed or not initialized yet")
+        }
+    }
 
     override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
         _value = value
@@ -69,4 +87,7 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
 /**
  * Creates an [AutoClearedValue] associated with this fragment.
  */
-fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)
+fun <T : Any> Fragment.autoCleared(initializer: (() -> T)? = null) = AutoClearedValue(this, initializer)
+
+inline fun <T : ViewBinding> AppCompatActivity.viewBinding(crossinline bindingInflater: (LayoutInflater) -> T) =
+    lazy(LazyThreadSafetyMode.NONE) { bindingInflater.invoke(layoutInflater) }

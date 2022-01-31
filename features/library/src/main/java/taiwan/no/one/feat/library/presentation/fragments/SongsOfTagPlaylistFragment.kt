@@ -53,7 +53,7 @@ internal class SongsOfTagPlaylistFragment : BaseLibraryFragment<BaseActivity<*>,
     //endregion
 
     //region Variable of Recycler View
-    private val adapter by lazy { TrackAdapter() }
+    private val adapter by lazy(::TrackAdapter)
     private val layoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.VERTICAL)
     }
@@ -88,10 +88,7 @@ internal class SongsOfTagPlaylistFragment : BaseLibraryFragment<BaseActivity<*>,
                 playlistViewModel.updateSong(it, it.isFavorite)
                 analyticsVm.clickedFavorite(it.isFavorite, it.obtainTrackAndArtistName())
             }
-            setRequestPicCallback {
-                // TODO(jieyi): 1/13/21 Send the pic request to the backend server thru a viewmodel.
-                vm.getCoverThumb(it)
-            }
+            setRequestPicCallback(vm::getCoverThumb)
         }
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()

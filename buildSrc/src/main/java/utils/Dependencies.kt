@@ -44,6 +44,7 @@ const val DepEnvImpl = "implementation"
 const val DepEnvApi = "api"
 const val DepEnvDebugApi = "debugApi"
 const val DepEnvKapt = "kapt"
+const val DepEnvKsp = "ksp"
 const val DepEnvTest = "testImplementation"
 const val DepEnvAndroidTest = "androidTestImplementation"
 
@@ -58,7 +59,7 @@ fun DependencyHandlerScope.annotationDependencies() {
     DepEnvKapt(Database.ROOM_ANNOTATION)
     DepEnvKapt(JetPack.LIFECYCLE_COMPILER)
     DepEnvKapt(Tool.AUTO_SERVICE)
-    DepEnvKapt(Tool.MOSHI_CODEGEN)
+    DepEnvKsp(Tool.MOSHI_CODEGEN)
 }
 
 fun DependencyHandlerScope.coreDependencies() {

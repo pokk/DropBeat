@@ -102,6 +102,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
 
     override fun onDestroyView() {
         foreachSubviewPlaylist { find<RecyclerView>(AppResId.rv_musics).adapter = null }
+        includePlaylist.find<RecyclerView>(AppResId.rv_musics).adapter = null
         super.onDestroyView()
     }
 

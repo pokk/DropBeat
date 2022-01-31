@@ -78,8 +78,8 @@ internal class SplashActivity : AppCompatActivity(), DIAware {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         binding = null
+        super.onDestroy()
     }
 
     private fun launchApp() {

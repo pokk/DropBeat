@@ -46,6 +46,7 @@ subprojects {
                     plugin("kotlin-android")
                     plugin("kotlin-parcelize")
                     plugin("kotlin-kapt")
+                    plugin("com.google.devtools.ksp")
                     plugin("androidx.navigation.safeargs.kotlin")
                 }
             }

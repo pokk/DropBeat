@@ -38,7 +38,9 @@ internal class CreateDefaultPlaylistOneShotCase(
 ) : CreateDefaultPlaylistCase() {
     private val defaultPlaylistUrl by lazy {
         listOf(
-            AppResDrawable.bg_downloaded, AppResDrawable.bg_favorite, AppResDrawable.bg_history
+            AppResDrawable.bg_downloaded,
+            AppResDrawable.bg_favorite,
+            AppResDrawable.bg_history
         ).map(ResourceHelper::getUriForDrawableResource)
     }
 

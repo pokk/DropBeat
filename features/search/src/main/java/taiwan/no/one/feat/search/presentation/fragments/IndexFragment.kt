@@ -117,8 +117,8 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     override fun onDetach() {
-        super.onDetach()
         loadMoreListener.fetchMoreBlock = null
+        super.onDetach()
     }
     //endregion
 

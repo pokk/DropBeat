@@ -72,6 +72,7 @@ import taiwan.no.one.dropbeat.presentation.activities.MainActivity
 import taiwan.no.one.feat.player.R
 import taiwan.no.one.feat.player.databinding.FragmentPlayerBinding
 import taiwan.no.one.feat.player.databinding.MergePlayerControllerBinding
+import taiwan.no.one.feat.player.databinding.PopupPlaylistBinding
 import taiwan.no.one.feat.player.presentation.popups.PlaylistPopupWindow
 import taiwan.no.one.feat.player.presentation.popups.SettingPopupWindow
 import taiwan.no.one.feat.player.presentation.recyclerviews.adapters.LyricAdapter
@@ -96,7 +97,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
 
     private var isTouchingSlider = false
     private var isRunningAnim = false
-    private var playlistPopupMenu: CustomPopupWindow<*>? = null
+    private var playlistPopupMenu: CustomPopupWindow<PopupPlaylistBinding>? = null
     private var preLyricPosition = 0
 
     //region Variable of ViewModel
@@ -232,9 +233,15 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
         }
     }
 
+    override fun onDestroyView() {
+        binding.rvLyric.adapter = null
+
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
-        super.onDestroy()
         player.setPlayerEventCallback(null)
+        super.onDestroy()
     }
     //endregion
 
@@ -396,15 +403,19 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     }.anchorOn(merge.btnAddPlaylist)
 
     private fun dismissPlaylistMenu() {
-        playlistPopupMenu?.dismiss()
+        playlistPopupMenu?.dismiss {
+            rvPlaylist.adapter = null
+        }
         playlistPopupMenu = null
     }
 
     private fun setMusicInfo(music: MusicInfo) {
         binding.apply {
-            sivAlbumInner.load(music.thumbUri.takeIf { it.isNotBlank() } ?: "",
-                               requireContext().imageLoader,
-                               fun ImageRequest.Builder.() { allowHardware(false) })
+            sivAlbumInner.load(
+                music.thumbUri.takeIf { it.isNotBlank() } ?: "",
+                requireContext().imageLoader,
+                fun ImageRequest.Builder.() { allowHardware(false) }
+            )
             mtvArtist.text = music.artist
             mtvTrack.text = music.title
         }

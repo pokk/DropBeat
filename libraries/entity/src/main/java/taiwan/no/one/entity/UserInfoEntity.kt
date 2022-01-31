@@ -24,6 +24,9 @@
 
 package taiwan.no.one.entity
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class UserInfoEntity(
     val uid: String?,
     val providerId: String?,

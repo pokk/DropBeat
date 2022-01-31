@@ -29,7 +29,6 @@ import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.Date
 import okio.buffer
 import okio.source
@@ -42,12 +41,12 @@ import okio.source
  * @param filePath String using full path on assets folder, eg. "json/xxx.json"
  * @return T?
  */
+@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T> Context.parseObjectFromJson(filePath: String): T? {
     var dataObj: T? = null
     try {
         val moshi = Moshi.Builder()
             .add(Date::class.java, Rfc3339DateJsonAdapter())
-            .addLast(KotlinJsonAdapterFactory())
             .build()
         val adapter = moshi.adapter<T>()
         applicationContext.assets.open(filePath).use { inputStream ->

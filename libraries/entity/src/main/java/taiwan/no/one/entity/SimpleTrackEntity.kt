@@ -26,6 +26,7 @@ package taiwan.no.one.entity
 
 import android.os.Parcelable
 import androidx.annotation.Keep
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -33,6 +34,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Keep
 @Parcelize
+@JsonClass(generateAdapter = true)
 data class SimpleTrackEntity(
     val id: Int,
     val name: String,

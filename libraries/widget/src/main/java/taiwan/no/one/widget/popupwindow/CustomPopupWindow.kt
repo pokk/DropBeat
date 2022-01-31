@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -98,10 +98,11 @@ abstract class CustomPopupWindow<VB : ViewBinding>(private val context: Context)
     }
 
     @UiThread
-    fun dismiss() {
+    fun dismiss(preDismissProc: (VB.() -> Unit)? = null) {
         if (popup.isShowing) {
-            popup.dismiss()
+            preDismissProc?.invoke(binding)
             _binding = null
+            popup.dismiss()
         }
     }
 }

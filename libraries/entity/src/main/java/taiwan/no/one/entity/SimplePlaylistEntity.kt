@@ -25,6 +25,7 @@
 package taiwan.no.one.entity
 
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import java.util.Date
 import kotlinx.parcelize.Parcelize
 
@@ -32,6 +33,7 @@ import kotlinx.parcelize.Parcelize
  * [SimplePlaylistEntity] is for global usage and it only keeps brief information.
  */
 @Parcelize
+@JsonClass(generateAdapter = true)
 data class SimplePlaylistEntity(
     val id: Int,
     val name: String,

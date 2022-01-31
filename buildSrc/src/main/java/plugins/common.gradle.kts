@@ -57,8 +57,10 @@ subprojects {
                         // This is exceptions.
                         if (this@subprojects.name == "app") {
                             //                            isMinifyEnabled = true
-                            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
-                                          file("proguard-rules.pro"))
+                            proguardFiles(
+                                getDefaultProguardFile("proguard-android-optimize.txt"),
+                                file("proguard-rules.pro")
+                            )
                         }
                     }
                     getByName("debug") {

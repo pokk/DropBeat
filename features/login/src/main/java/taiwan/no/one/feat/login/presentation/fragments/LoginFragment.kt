@@ -76,10 +76,12 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     }
     private val snsAdapter by lazy {
         ThirdPartyLoginAdapter().apply {
-            submitList(listOf(R.drawable.ic_facebook,
-                              R.drawable.ic_google,
-                              R.drawable.ic_twitter,
-                              R.drawable.ic_instagram))
+            submitList(listOf(
+                R.drawable.ic_facebook,
+                R.drawable.ic_google,
+                R.drawable.ic_twitter,
+                R.drawable.ic_instagram
+            ))
         }
     }
 
@@ -144,8 +146,8 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     }
 
     override fun onDetach() {
-        super.onDetach()
         LoginManager.getInstance().unregisterCallback(facebookCallbackManager)
+        super.onDetach()
     }
     //endregion
 
@@ -211,9 +213,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
                         .addOnFailureListener(::loge)
                     analyticsVm.clickedLogin("Twitter")
                 }
-                R.drawable.ic_instagram -> {
-                    analyticsVm.clickedLogin("Instagram")
-                }
+                R.drawable.ic_instagram -> analyticsVm.clickedLogin("Instagram")
                 else -> Unit
             }
         }

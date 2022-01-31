@@ -73,7 +73,7 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
     //endregion
 
     //region Variable of Recycler View
-    private val playlistAdapter by lazy { TrackAdapter() }
+    private val playlistAdapter by lazy(::TrackAdapter)
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
     private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
     //endregion
@@ -94,9 +94,9 @@ internal class PlaylistFragment : BaseLibraryFragment<BaseActivity<*>, FragmentP
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         prevSavedState?.set("playlist", playlistAdapter.data)
         prevSavedState = null
+        super.onDestroy()
     }
     //endregion
 

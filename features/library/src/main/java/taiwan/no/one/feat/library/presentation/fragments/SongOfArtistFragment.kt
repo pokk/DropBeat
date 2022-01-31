@@ -58,7 +58,7 @@ internal class SongOfArtistFragment : BaseLibraryFragment<BaseActivity<*>, Fragm
     //endregion
 
     //region Variable of Recycler View
-    private val playlistAdapter by lazy { TrackAdapter() }
+    private val playlistAdapter by lazy(::TrackAdapter)
     private val layoutManager: (LayoutManagerParams) -> LinearLayoutManager by factory()
     //endregion
 

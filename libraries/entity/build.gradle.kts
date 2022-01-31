@@ -27,10 +27,13 @@ import utils.kotlinDependencies
 
 apply {
     plugin("kotlin-parcelize")
+    plugin("com.google.devtools.ksp")
 }
 
 dependencies {
-    //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     kotlinDependencies(utils.DepEnvImpl)
     implementation(LibraryDependency.JetPack.ANNOT)
+    implementation(config.LibraryDependency.Tool.MOSHI_KOTLIN)
+    utils.DepEnvKsp(config.LibraryDependency.Tool.MOSHI_CODEGEN)
 }

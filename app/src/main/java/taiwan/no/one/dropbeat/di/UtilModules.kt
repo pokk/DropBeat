@@ -34,7 +34,6 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tencent.mmkv.MMKV
 import java.lang.ref.WeakReference
 import java.util.Date
@@ -62,7 +61,6 @@ object UtilModules {
         bindInstance<Moshi> {
             Moshi.Builder()
                 .add(Date::class.java, Rfc3339DateJsonAdapter())
-                .addLast(KotlinJsonAdapterFactory())
                 .build()
         }
         bindInstance { requireNotNull(MMKV.defaultMMKV()) }

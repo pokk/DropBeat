@@ -30,6 +30,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.squareup.moshi.JsonClass
 import java.util.Date
 import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_LONG
@@ -40,6 +41,7 @@ internal data class LibraryEntity(
     val playlists: List<PlayListEntity>,
 ) {
     @Entity(tableName = "table_playlist", indices = [Index("name", unique = true)])
+    @JsonClass(generateAdapter = true)
     internal data class PlayListEntity(
         @PrimaryKey(autoGenerate = true)
         val id: Int = 0, // For the room database
@@ -72,6 +74,7 @@ internal data class LibraryEntity(
     }
 
     @Entity(tableName = "table_song", indices = [Index("title", "artist", unique = true)])
+    @JsonClass(generateAdapter = true)
     internal data class SongEntity(
         @PrimaryKey(autoGenerate = true)
         val id: Int = 0, // For the room database

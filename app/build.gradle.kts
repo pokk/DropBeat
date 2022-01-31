@@ -34,12 +34,14 @@ import utils.unitTestDependencies
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
-    id("kotlin-parcelize")
+    `kotlin-kapt`
+    `kotlin-parcelize`
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
+
+plugins.apply("com.google.devtools.ksp")
 
 android {
     signingConfigs {
@@ -71,11 +73,13 @@ android {
 
 dependencies {
     //    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    listOf(project(CommonModuleDependency.LIB_CORE),
-           project(CommonModuleDependency.LIB_MEDIA_PLAYER),
-           project(CommonModuleDependency.LIB_SYNC),
-           project(CommonModuleDependency.LIB_ENTITY),
-           project(CommonModuleDependency.LIB_ANALYTICS)).forEach { api(it) }
+    listOf(
+        project(CommonModuleDependency.LIB_CORE),
+        project(CommonModuleDependency.LIB_MEDIA_PLAYER),
+        project(CommonModuleDependency.LIB_SYNC),
+        project(CommonModuleDependency.LIB_ENTITY),
+        project(CommonModuleDependency.LIB_ANALYTICS)
+    ).forEach { api(it) }
     testImplementation(project(CommonModuleDependency.LIB_TEST))
     appDependencies()
     annotationDependencies()

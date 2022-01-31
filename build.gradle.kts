@@ -46,6 +46,7 @@ buildscript {
         classpath(config.GradleDependency.GOOGLE_SERVICE)
         classpath(config.GradleDependency.CRASHLYTICS)
         classpath(config.GradleDependency.PERFORMANCE)
+        classpath(config.GradleDependency.KSP)
     }
 }
 

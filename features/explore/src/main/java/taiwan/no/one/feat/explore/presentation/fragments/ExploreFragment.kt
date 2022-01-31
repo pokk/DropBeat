@@ -71,10 +71,10 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
     // FIXME(jieyi): 10/30/20 This still has bug after update the layout manager.
     //    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
     private val playlistLayoutManager get() = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
-    private val exploreAdapter by lazy { ExploreAdapter() }
-    private val playlistAdapter by lazy { PlaylistAdapter() }
-    private val topArtistAdapter by lazy { TopChartAdapter() }
-    private val topTrackAdapter by lazy { TopChartAdapter() }
+    private val exploreAdapter by lazy(::ExploreAdapter)
+    private val playlistAdapter by lazy(::PlaylistAdapter)
+    private val topArtistAdapter by lazy(::TopChartAdapter)
+    private val topTrackAdapter by lazy(::TopChartAdapter)
 
     // NOTE(Jieyi): 8/11/20 Because the layout xml is not in the module,
     //  viewbinding can't use for `include` xml from other modules.
@@ -204,7 +204,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
 
     override fun componentListenersBinding() {
         exploreAdapter.setOnClickListener {
-            it.name?.takeIf { it.isNotEmpty() }?.also {
+            it.name?.takeIf(String::isNotEmpty)?.also {
                 findNavController().navigate(ExploreFragmentDirections.actionExploreToPlaylistSongsOfTag(it))
                 analyticsVm.navigatedToPlaylist("song tag: $it")
             }

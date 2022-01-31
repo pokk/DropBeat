@@ -32,6 +32,7 @@ object GradleDependency {
         const val GOOGLE_SERVICE = "4.3.10"
         const val CRASHLYTICS = "2.7.1"
         const val PERFORMANCE = "1.4.0"
+        const val KSP = "1.6.10-1.0.2"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${CoreDependency.Version.KOTLIN}"
@@ -39,4 +40,5 @@ object GradleDependency {
     const val GOOGLE_SERVICE = "com.google.gms:google-services:${Version.GOOGLE_SERVICE}"
     const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics-gradle:${Version.CRASHLYTICS}"
     const val PERFORMANCE = "com.google.firebase:perf-plugin:${Version.PERFORMANCE}"
+    const val KSP = "com.google.devtools.ksp:symbol-processing-gradle-plugin:${Version.KSP}"
 }
