@@ -24,18 +24,17 @@
 
 package taiwan.no.one.dropbeat.core.cache
 
+import com.devrapid.kotlinknifer.loge
 import com.squareup.moshi.Moshi
 import com.tencent.mmkv.MMKV
 import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.Caching.Constant.TIME_STAMP
 import taiwan.no.one.core.data.repostory.cache.local.DiskCache
-import taiwan.no.one.dropbeat.core.json.moshi.adapter.DateJsonAdapter
 
 class MmkvCache(
     private val mmkv: MMKV,
+    private val parser: Moshi,
 ) : DiskCache {
-    private val parser by lazy { Moshi.Builder().add(Date::class.java, DateJsonAdapter()).build() }
-
     override fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>? {
         val stringValue = mmkv.getString(key, null) ?: return null
         val timestamp = mmkv.getString("$key+$TIME_STAMP", null)?.toLong() ?: return null
@@ -44,6 +43,8 @@ class MmkvCache(
 
     override fun <RT> put(key: String, value: RT?, classOf: Class<RT>) {
         if (value == null) return
+        loge(Date().time.toString())
+        loge()
         mmkv.putString("$key+$TIME_STAMP", Date().time.toString())
         mmkv.putString(key, parser.adapter<RT>(classOf).toJson(value))
     }

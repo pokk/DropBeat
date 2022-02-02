@@ -132,7 +132,6 @@ fun DependencyHandlerScope.analyticsDependencies() {
 fun DependencyHandlerScope.syncDependencies() {
     kotlinDependencies(DepEnvImpl)
     DepEnvImpl(JetPack.DATASTORE)
-    DepEnvImpl(CoreDependency.KOTLIN_DATETIME)
     DepEnvApi(platform(Firebase.FIREBASE_BOM))
     DepEnvApi(Firebase.FIREBASE_FIRESTORE)
 }
@@ -154,6 +153,7 @@ fun DependencyHandlerScope.kotlinDependencies(env: String) {
     env(CoreDependency.KOTLIN)
     env(CoreDependency.KOTLIN_REFLECT)
     env(CoreDependency.KOTLIN_COROUTINE)
+    env(CoreDependency.KOTLIN_DATETIME)
 }
 
 fun DependencyHandlerScope.kotlinAndroidDependencies(env: String) {
@@ -237,15 +237,15 @@ fun DependencyHandlerScope.localDependencies(env: String) {
 fun DependencyHandlerScope.uiDependencies(env: String) {
     env(Ui.LOTTIE)
     env(Ui.SHAPE_OF_VIEW)
-    //    env(Jieyi.ARV)
+    // env(Jieyi.ARV)
 }
 
 fun DependencyHandlerScope.debugDependencies(env: String) {
     env(DebugDependency.STEHO)
     env(DebugDependency.STEHO_INTERCEPTOR)
     env(DebugDependency.LEAKCANARY)
-    //    env(DebugDependency.DEBUG_DB)
-    //    env(DebugDependency.OK_HTTP_PROFILER)
+    // env(DebugDependency.DEBUG_DB)
+    // env(DebugDependency.OK_HTTP_PROFILER)
 }
 
 fun DependencyHandlerScope.unitTestDependencies(env: String = DepEnvTest) {

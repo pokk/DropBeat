@@ -29,17 +29,15 @@ import com.devrapid.kotlinshaver.LookUp
 import com.squareup.moshi.Moshi
 import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
-import taiwan.no.one.dropbeat.core.json.moshi.adapter.DateJsonAdapter
 
 class LruMemoryCache(
     private val lruCache: LruCache<String, LookUp<String>>,
+    private val parser: Moshi,
 ) : MemoryCache {
     companion object Constant {
         private const val KEY_TIMESTAMP = "time stamp"
         private const val KEY_DATA = "data"
     }
-
-    private val parser by lazy { Moshi.Builder().add(Date::class.java, DateJsonAdapter()).build() }
 
     override fun <RT> get(key: String, classOf: Class<RT>): Pair<Long, RT>? {
         val map = lruCache.get(key) ?: return null

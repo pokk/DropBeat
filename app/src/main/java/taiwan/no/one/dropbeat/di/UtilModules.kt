@@ -46,6 +46,7 @@ import org.kodein.di.instance
 import taiwan.no.one.analytics.AnalyticsSender
 import taiwan.no.one.core.data.remote.provider.RetrofitProvider
 import taiwan.no.one.dropbeat.data.remote.provider.MoshiRetrofitProvider
+import taiwan.no.one.dropbeat.di.Constant.TAG_DEFAULT_MMKV
 import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_BOUNCED
 import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_NONE
 import taiwan.no.one.dropbeat.di.Constant.TAG_NETWORK_MOSHI_RETROFIT
@@ -63,7 +64,7 @@ object UtilModules {
                 .add(Date::class.java, Rfc3339DateJsonAdapter())
                 .build()
         }
-        bindInstance { requireNotNull(MMKV.defaultMMKV()) }
+        bindInstance(TAG_DEFAULT_MMKV) { requireNotNull(MMKV.defaultMMKV()) }
         bindInstance<LrcBuilder> { DefaultLrcBuilder() }
     }
 
