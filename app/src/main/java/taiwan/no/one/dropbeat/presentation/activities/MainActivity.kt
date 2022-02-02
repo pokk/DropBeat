@@ -34,6 +34,7 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.core.view.updateLayoutParams
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devrapid.kotlinknifer.changeStatusBarColor
 import com.devrapid.kotlinknifer.getDimen
@@ -63,6 +64,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             field = value
         }
     private val vm by viewModels<PrivacyViewModel>()
+
+    // If we are using [NavHostFragment], need to use this way for get the navController.
+    private val navigator
+        get() = binding.navHostFragment.getFragment<NavHostFragment>().findNavController()
+
+    //region Animation Listeners
     private val slideInAnimation by lazy {
         AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_up).apply {
             setAnimationListener(object : AnimationListener {
@@ -101,10 +108,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
     }
-
-    // If we are using [NavHostFragment], need to use this way for get the navController.
-    private val navigator
-        get() = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    //endregion
 
     init {
         SplitModuleAddLifecycle(DropBeatApp.appContext, listOf("featSearchMusic"))
