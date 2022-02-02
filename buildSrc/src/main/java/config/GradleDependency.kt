@@ -30,8 +30,8 @@ object GradleDependency {
     object Version {
         const val SAFE_ARGS = NAVIGATION_KTX
         const val GOOGLE_SERVICE = "4.3.10"
-        const val CRASHLYTICS = "2.7.1"
-        const val PERFORMANCE = "1.4.0"
+        const val CRASHLYTICS = "2.8.1"
+        const val PERFORMANCE = "1.4.1"
         const val KSP = "1.6.10-1.0.2"
     }
 

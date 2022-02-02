@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ object DebugDependency {
     private object Version {
         const val STEHO = "1.6.0"
         const val DEBUG_DB = "1.0.6"
-        const val LEAKCANARY = "2.7"
+        const val LEAKCANARY = "2.8.1"
     }
 
     const val STEHO = "com.facebook.stetho:stetho:${Version.STEHO}"
