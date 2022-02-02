@@ -24,7 +24,6 @@
 
 package taiwan.no.one.feat.search.presentation.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -41,6 +40,8 @@ import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.debounce
@@ -112,7 +113,10 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
     }
 
     override fun onDestroyView() {
-        rvMusics.adapter = null
+        rvMusics.apply {
+            adapter = null
+            clearOnScrollListeners()
+        }
         super.onDestroyView()
     }
 
@@ -164,7 +168,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     override fun componentListenersBinding() {
         binding.root.setOnTouchListener { v, event ->
             TouchHelper.simulateClickEvent(event, clickFlag, v::hideSoftKeyboard)
@@ -175,7 +179,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     hideSoftKeyboard()
-                    // Check if the motion should be enable or not.
+                    // Check if the motion should be enabled or not.
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                         enableMotionWhenScrollable(recyclerView)
                     }

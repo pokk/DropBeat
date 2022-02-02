@@ -43,21 +43,27 @@ import taiwan.no.one.feat.ranking.presentation.viewmodels.RankViewModel
 class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
     var navigationCallback: ((title: String, rankId: Int) -> Unit)? = null
     private val vm by viewModels<RankViewModel>()
+    private val rankAdapter by lazy(::RankAdapter)
     private val linearLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
     private val noneEdgeEffectFactory by provider<RecyclerView.EdgeEffectFactory>(DiConstant.TAG_EDGE_FACTORY_NONE)
 
+    override fun onDestroyView() {
+        binding.rvMusics.adapter = null
+        super.onDestroyView()
+    }
+
     override fun viewComponentBinding() {
         binding.rvMusics.apply {
-            adapter = RankAdapter()
+            adapter = rankAdapter
             layoutManager = linearLayoutManager()
             edgeEffectFactory = noneEdgeEffectFactory()
         }
     }
 
     override fun componentListenersBinding() {
-        (binding.rvMusics.adapter as? RankAdapter)?.setOnClickListener { id, title ->
+        rankAdapter.setOnClickListener { id, title ->
             navigationCallback?.invoke(title, id)
         }
     }
@@ -65,7 +71,7 @@ class RankingFragment : BaseFragment<MainActivity, FragmentRankingBinding>() {
     override fun rendered(savedInstanceState: Bundle?) {
         vm.rankings.observe(viewLifecycleOwner) { res ->
             res.onSuccess {
-                (binding.rvMusics.adapter as? RankAdapter)?.submitList(it)
+                rankAdapter.submitList(it)
                 binding.pbProgress.gone()
             }.onFailure(::logw)
         }

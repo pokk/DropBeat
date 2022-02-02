@@ -95,7 +95,6 @@ object LibraryDependency {
         const val COORDINATOR_LAYOUT = "androidx.coordinatorlayout:coordinatorlayout:${Version.COORDINATORLAYOUT}"
         const val LIFECYCLE_SAVEDSTATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.AAC_LIFECYCLE}"
         const val LIFECYCLE_COMPILER = "androidx.lifecycle:lifecycle-compiler:${Version.AAC_LIFECYCLE}"
-        const val LIFECYCLE_JAVA8 = "androidx.lifecycle:lifecycle-common-java8:${Version.AAC_LIFECYCLE}"
         const val LIFECYCLE_SERVICE = "androidx.lifecycle:lifecycle-service:${Version.AAC_LIFECYCLE}"
         const val NAVIGATION_DYNAMIC_FEATURE =
             "androidx.navigation:navigation-dynamic-features-fragment:${Version.NAVIGATION_KTX}"

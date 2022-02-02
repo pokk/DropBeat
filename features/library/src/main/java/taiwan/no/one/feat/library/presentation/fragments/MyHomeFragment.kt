@@ -83,7 +83,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         LayoutManagerParams(WeakReference(requireActivity()))
     }
 
-    //    private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
+    // private val playlistLayoutManager get() = FirstBigSizeLayoutManager()
     private val playlistLayoutManager: () -> LinearLayoutManager by provider {
         LayoutManagerParams(WeakReference(requireActivity()), RecyclerView.HORIZONTAL)
     }
@@ -195,7 +195,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
         userEntity.takeIf { it?.uid.isNotNull() }?.let {
             mergeTopControllerBinding.mtvTitle.text = it.displayName ?: it.email
             mergeTopControllerBinding.btnLogin.gone()
-            //            doSync(it)
+            // doSync(it)
             if (privacyVm.shouldDisplaySyncDialog) {
                 privacyVm.shouldDisplaySyncDialog = false
                 // Show sync dialog
@@ -205,7 +205,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             }
         }
         vm.getAllPlaylists()
-//        vm.test()
+        // vm.test()
     }
 
     private fun setListClickListener(trackAdapter: TrackAdapter) {
