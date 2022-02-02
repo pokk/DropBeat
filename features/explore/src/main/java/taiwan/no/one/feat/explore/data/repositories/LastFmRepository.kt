@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package taiwan.no.one.feat.explore.data.repositories
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import java.util.*
+import kotlinx.datetime.Instant
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
-import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
@@ -73,7 +73,7 @@ internal class LastFmRepository(
         }
 
         override suspend fun shouldFetch(data: TopTrackInfoEntity) =
-            Date().time - timestamp > Repository.EXPIRED_DURATION
+            Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
         override suspend fun loadFromLocal() = local.getChartTopTrack(page, limit)
 
@@ -96,7 +96,7 @@ internal class LastFmRepository(
         }
 
         override suspend fun shouldFetch(data: TopArtistInfoEntity) =
-            Date().time - timestamp > Repository.EXPIRED_DURATION
+            Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
         override suspend fun loadFromLocal() = local.getChartTopArtist(page, limit)
 

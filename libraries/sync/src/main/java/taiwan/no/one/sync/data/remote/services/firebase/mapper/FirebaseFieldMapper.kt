@@ -24,12 +24,12 @@
 
 package taiwan.no.one.sync.data.remote.services.firebase.mapper
 
-import java.util.Date
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_LONG
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.sync.data.remote.services.firebase.castToDocList
 
 object FirebaseFieldMapper {
@@ -48,7 +48,7 @@ object FirebaseFieldMapper {
             get("name") as? String ?: DEFAULT_STR,
             emptyList(),
             get("thumb_url") as? String ?: DEFAULT_STR,
-            Date(),
+            now(),
             refPath,
             castToDocList(get("songs")).orEmpty().map { it.path },
             get("last_synced_time") as? Long ?: DEFAULT_LONG,

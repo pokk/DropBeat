@@ -24,19 +24,21 @@
 
 package taiwan.no.one.dropbeat.presentation.analytics
 
-import java.util.Date
+import kotlinx.datetime.Instant
 import taiwan.no.one.analytics.AnalyticsEvent
 import taiwan.no.one.analytics.Constant
 
 object ClickedEvent {
     class SendClicked(
         which: String,
-        timestamp: Date,
-    ) : AnalyticsEvent(Constant.Events.SendClicked.name,
-                       mapOf(
-                           Constant.Events.SendClicked.Params.TIME_OF_CLICKS to timestamp,
-                           Constant.Events.SendClicked.Params.WHICH to which,
-                       )) {
+        timestamp: Instant,
+    ) : AnalyticsEvent(
+        Constant.Events.SendClicked.name,
+        mapOf(
+            Constant.Events.SendClicked.Params.TIME_OF_CLICKS to timestamp.toString(),
+            Constant.Events.SendClicked.Params.WHICH to which,
+        )
+    ) {
         enum class TypeSource {
             PLAY,
             STOP_TRACK,
@@ -62,14 +64,16 @@ object ClickedEvent {
         from: NavigationSource,
         to: NavigationSource,
         extraInfo: String? = null,
-        timestamp: Date,
-    ) : AnalyticsEvent(Constant.Events.Navigated.name,
-                       buildMap {
-                           put(Constant.Events.Navigated.Params.TIME_OF_CLICKS, timestamp)
-                           put(Constant.Events.Navigated.Params.FROM, from.name)
-                           put(Constant.Events.Navigated.Params.TO, to.name)
-                           extraInfo?.let { put(Constant.Events.Navigated.Params.EXTRA_INFO, it) }
-                       })
+        timestamp: Instant,
+    ) : AnalyticsEvent(
+        Constant.Events.Navigated.name,
+        buildMap {
+            put(Constant.Events.Navigated.Params.TIME_OF_CLICKS, timestamp.toString())
+            put(Constant.Events.Navigated.Params.FROM, from.name)
+            put(Constant.Events.Navigated.Params.TO, to.name)
+            extraInfo?.let { put(Constant.Events.Navigated.Params.EXTRA_INFO, it) }
+        }
+    )
 
     // Screen Name.
     enum class NavigationSource {

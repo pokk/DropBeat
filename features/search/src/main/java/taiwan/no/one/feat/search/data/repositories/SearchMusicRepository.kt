@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package taiwan.no.one.feat.search.data.repositories
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import java.util.*
+import kotlinx.datetime.Instant
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
-import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
@@ -50,7 +50,8 @@ internal class SearchMusicRepository(
             local.createMusic(keyword, page, data)
         }
 
-        override suspend fun shouldFetch(data: MusicInfoEntity) = Date().time - timestamp > Repository.EXPIRED_DURATION
+        override suspend fun shouldFetch(data: MusicInfoEntity) =
+            Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
         override suspend fun loadFromLocal() = local.getMusic(keyword, page)
 

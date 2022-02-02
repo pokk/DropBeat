@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,9 @@ package taiwan.no.one.feat.search.data.local.services.database.v1
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import java.util.*
 import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.core.data.local.room.BaseDao
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
 
 /**
@@ -50,10 +50,10 @@ internal abstract class SearchHistoryDao : BaseDao<SearchHistoryEntity> {
     open suspend fun insertBy(keyword: String) {
         val history = getHistory(keyword)
         if (history == null) {
-            insert(SearchHistoryEntity(0, keyword, Date()))
+            insert(SearchHistoryEntity(0, keyword, now()))
         }
         else {
-            update(history.copy(updated = Date()))
+            update(history.copy(updated = now()))
         }
     }
 

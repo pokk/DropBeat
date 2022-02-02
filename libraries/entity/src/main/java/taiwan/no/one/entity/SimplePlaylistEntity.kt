@@ -26,8 +26,9 @@ package taiwan.no.one.entity
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
-import java.util.Date
+import kotlinx.datetime.Instant
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 /**
  * [SimplePlaylistEntity] is for global usage and it only keeps brief information.
@@ -39,7 +40,8 @@ data class SimplePlaylistEntity(
     val name: String,
     val songIds: List<Int>,
     val thumbUrl: String,
-    val updatedAt: Date,
+    // TODO(jieyi): Here might have some issue?!
+    val updatedAt: @RawValue Instant,
     // Those are for syncing.
     var refPath: String = "",
     var refOfSongs: List<String> = emptyList(),

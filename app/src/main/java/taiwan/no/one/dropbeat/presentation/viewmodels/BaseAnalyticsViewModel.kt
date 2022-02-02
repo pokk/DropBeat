@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@
 package taiwan.no.one.dropbeat.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
-import java.util.Calendar
 import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
 import org.kodein.di.instance
@@ -33,16 +32,17 @@ import taiwan.no.one.analytics.AnalyticsSender
 import taiwan.no.one.dropbeat.DropBeatApp
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent
 import taiwan.no.one.dropbeat.presentation.analytics.ClickedEvent.NavigationSource
+import taiwan.no.one.ext.extensions.now
 
 open class BaseAnalyticsViewModel : ViewModel(), DIAware {
     override val di by closestDI(DropBeatApp.appContext)
     protected val sender by instance<AnalyticsSender>()
 
     protected open fun sendClickedEvent(which: String) {
-        sender.sendEvent(ClickedEvent.SendClicked(which, Calendar.getInstance().time))
+        sender.sendEvent(ClickedEvent.SendClicked(which, now()))
     }
 
     protected open fun navigated(from: NavigationSource, to: NavigationSource, extra: String? = null) {
-        sender.sendEvent(ClickedEvent.Navigated(from, to, extra, Calendar.getInstance().time))
+        sender.sendEvent(ClickedEvent.Navigated(from, to, extra, now()))
     }
 }

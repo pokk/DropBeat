@@ -26,12 +26,13 @@ package taiwan.no.one.core.data.local.room
 
 import androidx.room.ColumnInfo
 import com.squareup.moshi.JsonClass
-import java.util.Date
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 @JsonClass(generateAdapter = true)
 data class TimeEntity(
     @ColumnInfo(name = "created_at")
-    val createdAt: Date = Date(),
+    val createdAt: Instant = Clock.System.now(),
     @ColumnInfo(name = "updated_at")
-    val updatedAt: Date = Date(),
+    val updatedAt: Instant = Clock.System.now(),
 )

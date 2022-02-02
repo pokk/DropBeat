@@ -33,10 +33,9 @@ import androidx.work.WorkManager
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.tencent.mmkv.MMKV
 import java.lang.ref.WeakReference
-import java.util.Date
+import kotlinx.datetime.Instant
 import org.kodein.di.DI
 import org.kodein.di.bindFactory
 import org.kodein.di.bindInstance
@@ -45,6 +44,7 @@ import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 import taiwan.no.one.analytics.AnalyticsSender
 import taiwan.no.one.core.data.remote.provider.RetrofitProvider
+import taiwan.no.one.core.json.adapter.DateJsonAdapter
 import taiwan.no.one.dropbeat.data.remote.provider.MoshiRetrofitProvider
 import taiwan.no.one.dropbeat.di.Constant.TAG_DEFAULT_MMKV
 import taiwan.no.one.dropbeat.di.Constant.TAG_EDGE_FACTORY_BOUNCED
@@ -61,7 +61,7 @@ object UtilModules {
         bindInstance { WorkManager.getInstance(context) }
         bindInstance<Moshi> {
             Moshi.Builder()
-                .add(Date::class.java, Rfc3339DateJsonAdapter())
+                .add(Instant::class.java, DateJsonAdapter())
                 .build()
         }
         bindInstance(TAG_DEFAULT_MMKV) { requireNotNull(MMKV.defaultMMKV()) }

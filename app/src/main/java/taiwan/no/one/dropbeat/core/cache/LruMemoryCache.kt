@@ -27,8 +27,8 @@ package taiwan.no.one.dropbeat.core.cache
 import androidx.collection.LruCache
 import com.devrapid.kotlinshaver.LookUp
 import com.squareup.moshi.Moshi
-import java.util.Date
 import taiwan.no.one.core.data.repostory.cache.local.MemoryCache
+import taiwan.no.one.ext.extensions.now
 
 class LruMemoryCache(
     private val lruCache: LruCache<String, LookUp<String>>,
@@ -50,7 +50,7 @@ class LruMemoryCache(
         lruCache.put(
             key,
             hashMapOf(
-                KEY_TIMESTAMP to Date().time.toString(),
+                KEY_TIMESTAMP to now().toEpochMilliseconds().toString(),
                 KEY_DATA to parser.adapter<RT>(classOf).toJson(value),
             )
         )

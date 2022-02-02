@@ -24,9 +24,9 @@
 
 package taiwan.no.one.feat.library.data.stores
 
-import java.util.Date
 import taiwan.no.one.core.exceptions.NotFoundException
 import taiwan.no.one.core.exceptions.internet.InternetException.ParameterNotMatchException
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.library.data.contracts.DataStore
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.PlayListEntity
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity.SongEntity
@@ -91,7 +91,7 @@ internal class LocalStore(
     }
 
     override suspend fun modifyPlaylist(playlist: PlayListEntity) = playlistDao.update(
-        playlist.copy(time = playlist.time.copy(updatedAt = Date()))
+        playlist.copy(time = playlist.time.copy(updatedAt = now()))
     )
 
     override suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?) {

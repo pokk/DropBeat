@@ -26,10 +26,11 @@ package taiwan.no.one.feat.explore.data.repositories
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import java.util.Date
+import kotlinx.datetime.Instant
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.entity.SimpleTrackEntity
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
@@ -40,10 +41,6 @@ internal class LastFmExtraRepository(
     private val remote: DataStore,
     private val sp: SharedPreferences,
 ) : LastFmExtraRepo {
-    companion object Constant {
-        private const val EXPIRED_DURATION = 2_592_000_000L // one month 30 x 24 x 60 x 60 x 1000
-    }
-
     override suspend fun fetchArtistPhotoInfo(artistName: String, page: Int) =
         remote.getArtistPhotosInfo(artistName, page).photos
 
@@ -59,7 +56,7 @@ internal class LastFmExtraRepository(
         }
 
         override suspend fun shouldFetch(data: ArtistMoreDetailEntity) =
-            Date().time - timestamp > EXPIRED_DURATION
+            Instant.fromEpochMilliseconds(timestamp) + expired > now()
 
         override suspend fun loadFromLocal() = local.getArtistMoreInfo(artistName)
 

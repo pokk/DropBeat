@@ -22,41 +22,34 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.data.repostory.cache
+package taiwan.no.one.core.json.adapter
 
-import taiwan.no.one.core.exceptions.NotFoundException
-import taiwan.no.one.ext.extensions.now
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
+import java.io.IOException
+import kotlinx.datetime.Instant
 
-abstract class LayerCaching<RT> {
-    protected open var timestamp = 0L
+class DateJsonAdapter : JsonAdapter<Instant>() {
+    @Synchronized
+    @Throws(IOException::class)
+    override fun fromJson(reader: JsonReader): Instant? {
+        if (reader.peek() == JsonReader.Token.NULL) {
+            return reader.nextNull()
+        }
+        val epoch = reader.nextLong()
+        return Instant.fromEpochMilliseconds(epoch)
+    }
 
-    suspend fun value() = try {
-        val dbSource = loadFromLocal()
-        if (dbSource == null || shouldFetch(dbSource)) {
-            timestamp = now().toEpochMilliseconds()
-            fetchFromRemote()
+    @Synchronized
+    @Throws(IOException::class)
+    override fun toJson(writer: JsonWriter, value: Instant?) {
+        if (value == null) {
+            writer.nullValue()
         }
         else {
-            dbSource
+            val epoch = value.toEpochMilliseconds()
+            writer.value(epoch)
         }
     }
-    catch (notFoundException: NotFoundException) {
-        // If can't find from the cache or the local persistence, will throw the [NotFoundException].
-        timestamp = now().toEpochMilliseconds()
-        fetchFromRemote()
-    }
-    catch (e: Exception) {
-        timestamp = now().toEpochMilliseconds()
-        fetchFromRemote()
-    }
-
-    private suspend fun fetchFromRemote() = createCall().apply { saveCallResult(this) }
-
-    protected abstract suspend fun saveCallResult(data: RT)
-
-    protected abstract suspend fun shouldFetch(data: RT): Boolean
-
-    protected abstract suspend fun loadFromLocal(): RT?
-
-    protected abstract suspend fun createCall(): RT
 }

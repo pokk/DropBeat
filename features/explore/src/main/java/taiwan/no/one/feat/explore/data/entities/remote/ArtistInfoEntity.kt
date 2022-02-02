@@ -24,11 +24,11 @@
 
 package taiwan.no.one.feat.explore.data.entities.remote
 
-import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Ignore
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.Date
+import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_STR
 
 @JsonClass(generateAdapter = true)
@@ -59,10 +59,8 @@ internal data class ArtistInfoEntity(
         val bio: BioEntity? = null,
         // For database searching
         val paging: Int? = null,
-        @ColumnInfo(name = "created_at")
-        val createdAt: Date = Date(),
-        @ColumnInfo(name = "updated_at")
-        val updatedAt: Date = Date(),
+        @Embedded
+        val time: TimeEntity = TimeEntity(),
     )
 
     @JsonClass(generateAdapter = true)

@@ -27,8 +27,8 @@ package taiwan.no.one.feat.library.data.local.services.database.v1
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import java.util.Date
 import taiwan.no.one.core.data.local.room.BaseDao
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
 
 /**
@@ -83,7 +83,7 @@ internal abstract class SongDao : BaseDao<LibraryEntity.SongEntity> {
         // Update the download date if the data isn't download information.
         if (!newData.hasOwn || newData.hasOwn && existMusic?.hasOwn == true) {
             updatedData = newData.copy(
-                downloadedAt = Date(0),
+                downloadedAt = now(),
                 lastListenAt = if (!updatedData.hasOwn) {
                     updatedData.lastListenAt
                 }

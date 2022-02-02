@@ -28,10 +28,10 @@ import android.content.Context
 import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import java.util.Date
+import kotlinx.datetime.Instant
 import okio.buffer
 import okio.source
+import taiwan.no.one.core.json.adapter.DateJsonAdapter
 
 /**
  * Parse the json file to an object by [Moshi].
@@ -46,7 +46,7 @@ inline fun <reified T> Context.parseObjectFromJson(filePath: String): T? {
     var dataObj: T? = null
     try {
         val moshi = Moshi.Builder()
-            .add(Date::class.java, Rfc3339DateJsonAdapter())
+            .add(Instant::class.java, DateJsonAdapter())
             .build()
         val adapter = moshi.adapter<T>()
         applicationContext.assets.open(filePath).use { inputStream ->

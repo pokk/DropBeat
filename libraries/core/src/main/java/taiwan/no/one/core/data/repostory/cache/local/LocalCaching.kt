@@ -25,19 +25,19 @@
 package taiwan.no.one.core.data.repostory.cache.local
 
 import java.lang.reflect.ParameterizedType
-import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
+import kotlinx.datetime.Instant
 import taiwan.no.one.core.exceptions.NotFoundException
+import taiwan.no.one.ext.extensions.now
 
 abstract class LocalCaching<RT>(
     private val memoryCache: MemoryCache,
     private val diskCache: DiskCache,
 ) {
-    companion object Constant {
-        private const val EXPIRED_DURATION = 1_000 // 1 * 1000
-    }
-
     protected abstract val key: String
     private var timestamp = 0L
+    private val expired = 1.toDuration(DurationUnit.DAYS)
 
     @Suppress("UNCHECKED_CAST")
     private val classOf by lazy {
@@ -68,7 +68,7 @@ abstract class LocalCaching<RT>(
      * @param data RT?
      * @return Boolean if `true` will fetch the disk cache; otherwise, will just return the data from the memory cache.
      */
-    protected open suspend fun shouldFetch(data: RT?) = Date().time - timestamp > EXPIRED_DURATION
+    protected open suspend fun shouldFetch(data: RT?) = Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
     private suspend fun fetchFromDisk() = createCall().apply { saveCallResult(this?.second) }
 }

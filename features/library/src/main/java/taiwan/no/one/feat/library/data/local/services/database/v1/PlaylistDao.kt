@@ -29,10 +29,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import java.util.Date
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.library.data.entities.local.LibraryEntity
 
 /**
@@ -83,7 +83,7 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         val newPlaylist = playlist.copy(
             name = name.takeIf { it != DEFAULT_STR } ?: playlist.name,
             count = trackNumber.takeIf { it >= 0 } ?: playlist.count,
-            time = playlist.time.copy(updatedAt = Date())
+            time = playlist.time.copy(updatedAt = now())
         )
         update(newPlaylist)
     }
@@ -93,7 +93,7 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         val playlist = getPlaylist(id)
         val remained = tracksId - playlist.songIds
         val songIds = playlist.songIds.toMutableList().apply { addAll(remained) }
-        update(playlist.copy(songIds = songIds, count = songIds.size, time = playlist.time.copy(updatedAt = Date())))
+        update(playlist.copy(songIds = songIds, count = songIds.size, time = playlist.time.copy(updatedAt = now())))
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -124,7 +124,7 @@ internal abstract class PlaylistDao : BaseDao<LibraryEntity.PlayListEntity> {
         val playlist = getPlaylist(id)
         val songIds = playlist.songIds.toMutableList()
         songIds.remove(songId)
-        update(playlist.copy(songIds = songIds, count = songIds.size, time = playlist.time.copy(updatedAt = Date())))
+        update(playlist.copy(songIds = songIds, count = songIds.size, time = playlist.time.copy(updatedAt = now())))
     }
 
     /**

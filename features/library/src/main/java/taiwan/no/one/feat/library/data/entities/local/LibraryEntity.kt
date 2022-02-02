@@ -31,7 +31,8 @@ import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
-import java.util.Date
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_LONG
 import taiwan.no.one.ext.DEFAULT_STR
@@ -98,9 +99,9 @@ internal data class LibraryEntity(
         @ColumnInfo(name = "local_uri")
         val localUri: String = DEFAULT_STR,
         @ColumnInfo(name = "last_listen_at")
-        val lastListenAt: Date = Date(),
+        val lastListenAt: Instant = Clock.System.now(),
         @ColumnInfo(name = "downloaded_at")
-        val downloadedAt: Date = Date(),
+        val downloadedAt: Instant = Clock.System.now(),
         // ↓↓↓ Remote sync path ↓↓↓
         @ColumnInfo(name = "ref_path")
         val refPath: String = DEFAULT_STR,

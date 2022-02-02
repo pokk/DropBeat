@@ -25,12 +25,12 @@
 package taiwan.no.one.core.data.local.room.convert
 
 import androidx.room.TypeConverter
-import java.util.Date
+import kotlinx.datetime.Instant
 
 class DateConvert {
     @TypeConverter
-    fun fromTimestamp(value: Long?) = value?.let(::Date)
+    fun fromTimestamp(value: Long?) = value?.let(Instant::fromEpochMilliseconds)
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?) = date?.time
+    fun dateToTimestamp(date: Instant?) = date?.toEpochMilliseconds()
 }

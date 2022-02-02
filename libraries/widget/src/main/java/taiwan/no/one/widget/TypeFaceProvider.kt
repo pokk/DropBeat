@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,12 @@ package taiwan.no.one.widget
 
 import android.content.Context
 import android.graphics.Typeface
-import java.util.*
 
 object TypeFaceProvider {
     private const val TYPEFACE_FOLDER = "fonts"
     private const val TYPEFACE_EXTENSION = ".ttf"
 
-    private val typeFaces = Hashtable<String, Typeface>(6)
+    private val typeFaces = HashMap<String, Typeface>(6)
 
     fun getTypeFace(context: Context, fileName: String): Typeface {
         var tempTypeface = typeFaces[fileName]

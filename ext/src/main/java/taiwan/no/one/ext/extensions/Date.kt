@@ -22,11 +22,8 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.core.domain.repository
+package taiwan.no.one.ext.extensions
 
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlinx.datetime.Clock
 
-interface Repository {
-    val expired get() = 7.toDuration(DurationUnit.DAYS)
-}
+inline fun now() = Clock.System.now()

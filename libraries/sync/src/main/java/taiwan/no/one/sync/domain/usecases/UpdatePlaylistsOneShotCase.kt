@@ -83,7 +83,7 @@ internal class UpdatePlaylistsOneShotCase(
                     // The situation is that stays the same device and syncs it all the time.
                     remotePlaylist.syncedStamp == playlist.syncedStamp -> {
                         // only situation (update time > remote sync time)
-                        val playlistEpoch = playlist.updatedAt.time
+                        val playlistEpoch = playlist.updatedAt.toEpochMilliseconds()
                         if (playlistEpoch > remotePlaylist.syncedStamp) {
                             createOrUpdatePlaylistProcess(playlist, currentTime, refOfSongs[index])
                         }

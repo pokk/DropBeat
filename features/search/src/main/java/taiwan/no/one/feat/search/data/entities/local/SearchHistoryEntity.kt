@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,8 @@ package taiwan.no.one.feat.search.data.entities.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import taiwan.no.one.ext.DEFAULT_STR
 
 @Entity(tableName = "table_history")
@@ -34,5 +35,5 @@ internal data class SearchHistoryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val keyword: String = DEFAULT_STR,
-    val updated: Date = Date(),
+    val updated: Instant = Clock.System.now(),
 )
