@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -69,9 +69,9 @@ private val executionDataTree = fileTree(buildDir) {
 }
 
 fun JacocoReportsContainer.reports() {
-    xml.isEnabled = true
-    html.isEnabled = true
-    csv.isEnabled = false
+    xml.required.set(true)
+    html.required.set(true)
+    csv.required.set(false)
 }
 
 fun JacocoReport.setDirectories() {

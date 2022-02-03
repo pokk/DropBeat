@@ -48,6 +48,8 @@ import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import org.kodein.di.provider
 import taiwan.no.one.core.presentation.activity.BaseActivity
 import taiwan.no.one.core.presentation.fragment.BaseFragment
@@ -151,6 +153,7 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     }
     //endregion
 
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     override fun bindLiveData() {
         vm.userInfo.observe(this) {
             it.onSuccess {

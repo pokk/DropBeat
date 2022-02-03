@@ -24,6 +24,9 @@
 
 package plugins
 
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.DynamicFeatureExtension
+import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.DefaultConfig
 import config.AndroidConfiguration
@@ -38,47 +41,52 @@ subprojects {
         //region Common Setting
         if (name !in listOf("ext", "features", "libraries")) {
             // BaseExtension is common parent for application, library and test modules
-            extensions.configure<BaseExtension> {
-                compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
-                defaultConfig {
-                    minSdk = AndroidConfiguration.MIN_SDK
-                    targetSdk = AndroidConfiguration.TARGET_SDK
-                    vectorDrawables.useSupportLibrary = true
-                    testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
-                    consumerProguardFiles(file("consumer-rules.pro"))
-                    //region NOTE: This is exceptions, only the library is using room.
-                    if (this@subprojects.name in features) {
-                        applyRoomSetting()
+            extensions.apply {
+                configure<BaseExtension> {
+                    compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
+                    defaultConfig {
+                        minSdk = AndroidConfiguration.MIN_SDK
+                        targetSdk = AndroidConfiguration.TARGET_SDK
+                        vectorDrawables.useSupportLibrary = true
+                        testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
+                        consumerProguardFiles(file("consumer-rules.pro"))
+                        //region NOTE: This is exceptions, only the library is using room.
+                        if (this@subprojects.name in features) {
+                            applyRoomSetting()
+                        }
+                        //endregion
                     }
-                    //endregion
-                }
-                buildTypes {
-                    getByName("release") {
-                        // This is exceptions.
-                        if (this@subprojects.name == "app") {
-                            //                            isMinifyEnabled = true
-                            proguardFiles(
-                                getDefaultProguardFile("proguard-android-optimize.txt"),
-                                file("proguard-rules.pro")
-                            )
+                    buildTypes {
+                        getByName("release") {
+                            // This is exceptions.
+                            if (this@subprojects.name == "app") {
+                                // isMinifyEnabled = true
+                                proguardFiles(
+                                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                                    file("proguard-rules.pro")
+                                )
+                            }
+                        }
+                        getByName("debug") {
+                            splits.abi.isEnable = false
+                            splits.density.isEnable = false
+                            aaptOptions.cruncherEnabled = false
+                            isTestCoverageEnabled = true
+                            // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
+                            // ext.set("alwaysUpdateBuildId", false)
+                            isCrunchPngs = false // Enabled by default for RELEASE build type
                         }
                     }
-                    getByName("debug") {
-                        splits.abi.isEnable = false
-                        splits.density.isEnable = false
-                        aaptOptions.cruncherEnabled = false
-                        isTestCoverageEnabled = true
-                        // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
-                        //                        ext.set("alwaysUpdateBuildId", false)
-                        isCrunchPngs = false // Enabled by default for RELEASE build type
+                    applyCompileOptions()
+                    applyTestOptions()
+                    if (this@subprojects.name !in modules) {
+                        buildFeatures.viewBinding = true
                     }
                 }
-                applyLintOptions()
-                applyCompileOptions()
-                applyTestOptions()
-                if (this@subprojects.name !in modules) {
-                    buildFeatures.viewBinding = true
-                }
+                // For the different type of the project.
+                findByType(ApplicationExtension::class.java)?.applyLintOptions()
+                findByType(DynamicFeatureExtension::class.java)?.applyLintOptions()
+                findByType(LibraryExtension::class.java)?.applyLintOptions()
             }
         }
         if (name in features + listOf("app", "core")) {
@@ -102,14 +110,6 @@ fun DefaultConfig.applyRoomSetting() {
     }
 }
 
-fun BaseExtension.applyLintOptions() {
-    lintOptions {
-        isAbortOnError = false
-        isIgnoreWarnings = true
-        isQuiet = true
-    }
-}
-
 fun BaseExtension.applyCompileOptions() {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -123,5 +123,29 @@ fun BaseExtension.applyTestOptions() {
             isReturnDefaultValues = true
             isIncludeAndroidResources = true
         }
+    }
+}
+
+fun DynamicFeatureExtension.applyLintOptions() {
+    lint {
+        abortOnError = false
+        ignoreWarnings = true
+        quiet = true
+    }
+}
+
+fun ApplicationExtension.applyLintOptions() {
+    lint {
+        abortOnError = false
+        ignoreWarnings = true
+        quiet = true
+    }
+}
+
+fun LibraryExtension.applyLintOptions() {
+    lint {
+        abortOnError = false
+        ignoreWarnings = true
+        quiet = true
     }
 }

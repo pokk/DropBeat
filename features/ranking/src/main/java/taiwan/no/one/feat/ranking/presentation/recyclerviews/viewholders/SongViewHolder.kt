@@ -35,7 +35,7 @@ internal class SongViewHolder(
 ) : ViewHolderBinding<SongEntity, SongAdapter>(binding.root) {
     override fun initView(entity: SongEntity, adapter: SongAdapter) {
         binding.apply {
-            mtvNumber.text = "#${position + 1}"
+            mtvNumber.text = "#${absoluteAdapterPosition + 1}"
             mtvAlbumName.text = entity.title
             mtvArtistName.text = entity.artist
             sivAlbumThumb.load(entity.cdnCoverUrl)

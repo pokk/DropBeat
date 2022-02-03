@@ -37,7 +37,7 @@ tasks {
         group = BuildTaskGroups.VERIFICATION
         description = "Check Kotlin code style."
         classpath = ktlint
-        main = "com.pinterest.ktlint.Main"
+        mainClass.set("com.pinterest.ktlint.Main")
         args("--android", "src/**/*.kt")
     }
 
@@ -45,7 +45,7 @@ tasks {
         group = BuildTaskGroups.VERIFICATION
         description = "Fix Kotlin code style deviations."
         classpath = ktlint
-        main = "com.pinterest.ktlint.Main"
+        mainClass.set("com.pinterest.ktlint.Main")
         args("--android", "-F", "src/**/*.kt")
     }
 }

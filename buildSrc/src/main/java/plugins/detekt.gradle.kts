@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@ subprojects {
     }
 
     detekt {
-        input = objects.fileCollection().from(
+        source = objects.fileCollection().from(
             DetektExtension.DEFAULT_SRC_DIR_JAVA,
             "src/test/java",
             DetektExtension.DEFAULT_SRC_DIR_KOTLIN,
@@ -61,12 +61,6 @@ subprojects {
         )
         buildUponDefaultConfig = true
         baseline = baselineFile
-
-        reports {
-            xml.enabled = true
-            html.enabled = true
-            txt.enabled = true
-        }
     }
 }
 
@@ -84,9 +78,9 @@ val detektFormat by tasks.registering(Detekt::class) {
     exclude(buildFiles)
     baseline.set(baselineFile)
     reports {
-        xml.enabled = false
-        html.enabled = false
-        txt.enabled = false
+        xml.required.set(false)
+        html.required.set(false)
+        txt.required.set(false)
     }
 }
 
@@ -102,9 +96,9 @@ val detektAll by tasks.registering(Detekt::class) {
     exclude(buildFiles)
     baseline.set(baselineFile)
     reports {
-        xml.enabled = false
-        html.enabled = false
-        txt.enabled = false
+        xml.required.set(false)
+        html.required.set(false)
+        txt.required.set(false)
     }
 }
 

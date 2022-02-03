@@ -32,8 +32,8 @@ subprojects {
             jvmTarget = JavaVersion.VERSION_11.toString()
             suppressWarnings = false
             freeCompilerArgs = listOf(
-                "-Xopt-in=kotlin.RequiresOptIn",
-                "-Xopt-in=kotlin.ExperimentalStdlibApi",
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.ExperimentalStdlibApi",
                 "-Xallow-result-return-type"
             )
         }
