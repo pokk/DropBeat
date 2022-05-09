@@ -32,7 +32,7 @@ object GradleDependency {
         const val GOOGLE_SERVICE = "4.3.10"
         const val CRASHLYTICS = "2.8.1"
         const val PERFORMANCE = "1.4.1"
-        const val KSP = "1.6.10-1.0.2"
+        const val KSP = "1.7.0-Beta-1.0.5"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${CoreDependency.Version.KOTLIN}"

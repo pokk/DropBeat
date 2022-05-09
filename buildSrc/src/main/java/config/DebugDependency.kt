@@ -28,7 +28,7 @@ object DebugDependency {
     private object Version {
         const val STEHO = "1.6.0"
         const val DEBUG_DB = "1.0.6"
-        const val LEAKCANARY = "2.8.1"
+        const val LEAKCANARY = "2.9.1"
     }
 
     const val STEHO = "com.facebook.stetho:stetho:${Version.STEHO}"

@@ -36,10 +36,10 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.2.0-beta01")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+    implementation("com.android.tools.build:gradle:7.3.0-alpha09")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0-Beta")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
     implementation("com.github.ben-manes:gradle-versions-plugin:0.41.0")
-    implementation("com.pinterest:ktlint:0.43.2")
+    implementation("com.pinterest:ktlint:0.45.2")
 }

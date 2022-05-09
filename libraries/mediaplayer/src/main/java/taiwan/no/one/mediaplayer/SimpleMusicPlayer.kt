@@ -26,10 +26,10 @@ package taiwan.no.one.mediaplayer
 
 import android.content.Context
 import android.net.Uri
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.Timeline
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -46,7 +46,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.ticker
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer
@@ -63,8 +62,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     companion object {
         private const val NAME = "LocalExoPlayer"
 
-        @Volatile
-        private var INSTANCE: SimpleMusicPlayer? = null
+        @Volatile private var INSTANCE: SimpleMusicPlayer? = null
 
         fun initialize(context: Context) {
             val tempInstance = INSTANCE
@@ -184,9 +182,10 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
         )
         // This is the MediaSource representing the media to be played.
         return ProgressiveMediaSource.Factory(dataSourceFactory)
-            .setExtractorsFactory(DefaultExtractorsFactory())
-            .setTag(url) // Keep the uri to tag.
-            .createMediaSource(uri)
+            // FIXME(jieyi): 2022/05/09 This is the new API.
+            // .setExtractorsFactory(DefaultExtractorsFactory())
+            // .setTag(url) // Keep the uri to tag.
+            .createMediaSource(MediaItem.fromUri(uri))
     }
 
     internal inner class MusicEventListener : Player.Listener {
