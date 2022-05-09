@@ -26,8 +26,8 @@ package config
 
 object AndroidConfiguration {
     const val MIN_SDK = 23
-    const val TARGET_SDK = 31
-    const val COMPILE_SDK = TARGET_SDK
+    const val TARGET_SDK = "Tiramisu"
+    const val COMPILE_SDK = "android-Tiramisu"
     const val RELEASE_VERSION = 1
     const val FEATURE_VERSION = 0
     const val VERSION_CODE = 4

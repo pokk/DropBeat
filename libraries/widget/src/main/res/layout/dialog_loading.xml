@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2021 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/lottie_loading"
-        app:lottie_scale="0.1"/>
+        app:lottie_rawRes="@raw/lottie_loading"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

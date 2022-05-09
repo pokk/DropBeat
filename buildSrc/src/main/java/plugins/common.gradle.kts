@@ -46,7 +46,7 @@ subprojects {
                     compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
                     defaultConfig {
                         minSdk = AndroidConfiguration.MIN_SDK
-                        targetSdk = AndroidConfiguration.TARGET_SDK
+                        targetSdkPreview = AndroidConfiguration.TARGET_SDK
                         vectorDrawables.useSupportLibrary = true
                         testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
                         consumerProguardFiles(file("consumer-rules.pro"))
