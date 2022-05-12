@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,10 @@ package taiwan.no.one.dropbeat.startup
 
 import android.content.Context
 import androidx.startup.Initializer
-import com.facebook.FacebookSdk
 
 internal class FacebookInitializer : Initializer<Unit> {
     override fun create(context: Context) {
-        FacebookSdk.sdkInitialize(context)
+        // FacebookSdk.sdkInitialize(context.applicationContext)
     }
 
     override fun dependencies() = emptyList<Class<out Initializer<*>>>()
