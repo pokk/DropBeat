@@ -32,7 +32,7 @@ object TestLibraryDependency {
         const val ASSERTK = "0.25"
         const val ESPRESSO = "3.5.0-alpha06"
         const val KAKAO = "2.1.0"
-        const val MOCKK = "1.12.3"
+        const val MOCKK = "1.12.4"
     }
 
     const val COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${CoreDependency.Version.KOTLIN_COROUTINE}"

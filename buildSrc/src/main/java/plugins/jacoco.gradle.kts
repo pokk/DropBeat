@@ -29,7 +29,7 @@ plugins {
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.8"
 }
 
 tasks.withType<Test> {
@@ -42,30 +42,24 @@ tasks.withType<Test> {
 }
 
 private val sourceDirectoriesTree = fileTree(project.projectDir) {
-    setIncludes(listOf(
-        "src/main/java/**",
-        "src/main/kotlin/**",
-        "src/debug/java/**",
-        "src/debug/kotlin/**"
-    ))
+    setIncludes(listOf("src/main/java/**", "src/main/kotlin/**", "src/debug/java/**", "src/debug/kotlin/**"))
 }
 
 private val classDirectoriesTree = fileTree("$buildDir/tmp/kotlin-classes/debug") {
-    setExcludes(listOf(
-        "**/R.class",
-        "**/R\$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*"
-    ))
+    setExcludes(
+        listOf(
+            "**/R.class",
+            "**/R\$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "android/**/*.*"
+        )
+    )
 }
 
 private val executionDataTree = fileTree(buildDir) {
-    setIncludes(listOf(
-        "jacoco/testDebugUnitTest.exec",
-        "outputs/code_coverage/connected/*coverage.ec"
-    ))
+    setIncludes(listOf("jacoco/testDebugUnitTest.exec", "outputs/code_coverage/connected/*coverage.ec"))
 }
 
 fun JacocoReportsContainer.reports() {
