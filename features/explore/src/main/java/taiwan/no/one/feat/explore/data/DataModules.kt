@@ -37,6 +37,7 @@ import taiwan.no.one.dropbeat.di.Constant.TAG_NETWORK_MOSHI_RETROFIT
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.local.configs.MusicDatabase
 import taiwan.no.one.feat.explore.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraImpl
@@ -77,6 +78,11 @@ internal object DataModules : ModuleProvider {
     }
 
     private fun localProvide() = DI.Module("${FEAT_NAME}LocalModule") {
+        bindSingleton { MusicDatabase.getDatabase(instance()) }
+
+        bindSingleton { instance<MusicDatabase>().createArtistDao() }
+        bindSingleton { instance<MusicDatabase>().createImageDao() }
+        bindSingleton { instance<MusicDatabase>().createBioDao() }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
