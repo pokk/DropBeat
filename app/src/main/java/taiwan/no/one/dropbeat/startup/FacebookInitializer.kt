@@ -26,10 +26,17 @@ package taiwan.no.one.dropbeat.startup
 
 import android.content.Context
 import androidx.startup.Initializer
+import com.facebook.FacebookSdk
+import com.facebook.LoggingBehavior
+import taiwan.no.one.dropbeat.BuildConfig
 
 internal class FacebookInitializer : Initializer<Unit> {
     override fun create(context: Context) {
-        // FacebookSdk.sdkInitialize(context.applicationContext)
+        FacebookSdk.sdkInitialize(context.applicationContext)
+        if (BuildConfig.DEBUG) {
+            FacebookSdk.setIsDebugEnabled(true)
+            FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS)
+        }
     }
 
     override fun dependencies() = emptyList<Class<out Initializer<*>>>()
