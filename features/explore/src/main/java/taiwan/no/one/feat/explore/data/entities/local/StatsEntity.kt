@@ -30,20 +30,18 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import taiwan.no.one.core.data.local.room.TimeEntity
-import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.ext.DEFAULT_LONG
 import taiwan.no.one.feat.explore.data.contracts.Po
 
-@Entity(tableName = "table_artist", indices = [Index("mbid", "name", unique = true)])
-internal data class ArtistEntity(
+@Entity(tableName = "table_stats", indices = [Index("artist_id", unique = true)])
+internal data class StatsEntity(
     @PrimaryKey(autoGenerate = true)
+    val statsId: Long = 0L, // For the room database
     @ColumnInfo(name = "artist_id")
-    val artistId: Long = 0L, // For the room database
-    val name: String = DEFAULT_STR,
-    val mbid: String = DEFAULT_STR,
-    val url: String = DEFAULT_STR,
+    val artistId: Long = DEFAULT_LONG,
+    val listeners: Long = DEFAULT_LONG,
     @ColumnInfo(name = "play_count")
-    val playCount: String = DEFAULT_STR,
-    // For database searching
+    val playCount: Long = DEFAULT_LONG,
     @Embedded
     val time: TimeEntity = TimeEntity(),
 ) : Po

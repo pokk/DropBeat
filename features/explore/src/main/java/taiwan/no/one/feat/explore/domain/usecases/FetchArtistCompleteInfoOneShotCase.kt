@@ -29,7 +29,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.entity.SimpleArtistEntity
-import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity.TracksWithStreamableEntity
 import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity.TopAlbumsEntity
@@ -60,7 +60,7 @@ internal class FetchArtistCompleteInfoOneShotCase(
     }
 
     private fun populating(
-        artistEntity: ArtistWithImageAndBioEntity,
+        artistEntity: ArtistWithImageAndBioEntityAndStats,
         topAlbumsEntity: TopAlbumsEntity,
         tracksWithStreamableEntity: TracksWithStreamableEntity,
         extraInfoEntity: ArtistMoreDetailEntity,

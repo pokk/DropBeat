@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.explore.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
-import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity
@@ -44,9 +44,9 @@ internal interface LastFmRepo : Repository {
     //endregion
 
     //region ArtistEntity
-    suspend fun fetchArtist(name: String?, mbid: String?): ArtistWithImageAndBioEntity
+    suspend fun fetchArtist(name: String?, mbid: String?): ArtistWithImageAndBioEntityAndStats
 
-    suspend fun addArtist(entity: ArtistWithImageAndBioEntity)
+    suspend fun addArtist(entity: ArtistWithImageAndBioEntityAndStats)
 
     suspend fun fetchArtistTopAlbum(name: String?, mbid: String?): CommonLastFmEntity.TopAlbumsEntity
 

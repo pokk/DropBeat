@@ -22,22 +22,17 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.entities.local
+package taiwan.no.one.feat.explore.data.local.services.database.v1
 
-import androidx.room.Embedded
-import androidx.room.Relation
+import androidx.room.Dao
+import taiwan.no.one.core.data.local.room.BaseDao
+import taiwan.no.one.feat.explore.data.entities.local.StatsEntity
 
-internal data class ArtistWithImageAndBioEntity(
-    @Embedded
-    val artist: ArtistEntity,
-    @Relation(
-        parentColumn = "artist_id",
-        entityColumn = "artist_id",
-    )
-    val images: List<ImageEntity>,
-    @Relation(
-        parentColumn = "artist_id",
-        entityColumn = "artist_id",
-    )
-    val bio: BioEntity,
-)
+/**
+ * Integrated the base [androidx.room.Room] database operations.
+ * Thru [androidx.room.Room] we can just define the interfaces that we want to
+ * access for from a local database.
+ * Using prefix name (get), (insert), (update), (delete)
+ */
+@Dao
+internal abstract class StatsDao : BaseDao<StatsEntity>

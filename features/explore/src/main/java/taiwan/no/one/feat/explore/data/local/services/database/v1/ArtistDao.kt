@@ -29,7 +29,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
-import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 
 /**
  * Integrated the base [androidx.room.Room] database operations.
@@ -41,5 +41,5 @@ import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntit
 internal abstract class ArtistDao : BaseDao<ArtistEntity> {
     @Transaction
     @Query("SELECT * FROM table_artist WHERE name=:name")
-    abstract fun getArtistBy(name: String): ArtistWithImageAndBioEntity
+    abstract fun getArtistBy(name: String): ArtistWithImageAndBioEntityAndStats
 }

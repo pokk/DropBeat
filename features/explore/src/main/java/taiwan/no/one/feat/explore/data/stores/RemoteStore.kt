@@ -30,12 +30,13 @@ import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.Constant
-import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.mappers.dto.ArtistMapper
+import taiwan.no.one.feat.explore.data.mappers.dto.ArtistStateMapper
 import taiwan.no.one.feat.explore.data.mappers.dto.BioMapper
 import taiwan.no.one.feat.explore.data.mappers.dto.ImageMapper
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
@@ -55,17 +56,19 @@ internal class RemoteStore(
     override suspend fun getAlbumInfo(mbid: String) =
         lastFmService.retrieveAlbumInfo(infoQuery(Constant.LASTFM_PARAM_ALBUM_GET_INFO, mbid))
 
-    override suspend fun getArtistInfo(name: String?, mbid: String?): ArtistWithImageAndBioEntity {
+    override suspend fun getArtistInfo(name: String?, mbid: String?): ArtistWithImageAndBioEntityAndStats {
         val artist = lastFmService.retrieveArtistInfo(
             combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid)
         ).artist ?: throw IllegalArgumentException()
         val mapper1 = ArtistMapper()
         val mapper2 = ImageMapper()
         val mapper3 = BioMapper()
-        return ArtistWithImageAndBioEntity(
+        val mapper4 = ArtistStateMapper()
+        return ArtistWithImageAndBioEntityAndStats(
             mapper1.dtoToPo(artist),
             artist.images?.map(mapper2::dtoToPo).orEmpty(),
             mapper3.dtoToPo(artist.bio ?: throw IllegalArgumentException()),
+            mapper4.dtoToPo(artist.stats ?: throw IllegalArgumentException())
         )
     }
 
@@ -99,7 +102,7 @@ internal class RemoteStore(
     override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) =
         UnsupportedOperation()
 
-    override suspend fun createArtist(entity: ArtistWithImageAndBioEntity): Boolean {
+    override suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats): Boolean {
         TODO("Not yet implemented")
     }
 

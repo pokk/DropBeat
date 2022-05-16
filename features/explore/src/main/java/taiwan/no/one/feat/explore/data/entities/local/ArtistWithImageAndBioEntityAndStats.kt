@@ -24,26 +24,25 @@
 
 package taiwan.no.one.feat.explore.data.entities.local
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
-import taiwan.no.one.core.data.local.room.TimeEntity
-import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.explore.data.contracts.Po
+import androidx.room.Relation
 
-@Entity(tableName = "table_artist", indices = [Index("mbid", "name", unique = true)])
-internal data class ArtistEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "artist_id")
-    val artistId: Long = 0L, // For the room database
-    val name: String = DEFAULT_STR,
-    val mbid: String = DEFAULT_STR,
-    val url: String = DEFAULT_STR,
-    @ColumnInfo(name = "play_count")
-    val playCount: String = DEFAULT_STR,
-    // For database searching
+internal data class ArtistWithImageAndBioEntityAndStats(
     @Embedded
-    val time: TimeEntity = TimeEntity(),
-) : Po
+    val artist: ArtistEntity,
+    @Relation(
+        parentColumn = "artist_id",
+        entityColumn = "artist_id",
+    )
+    val images: List<ImageEntity>,
+    @Relation(
+        parentColumn = "artist_id",
+        entityColumn = "artist_id",
+    )
+    val bio: BioEntity,
+    @Relation(
+        parentColumn = "artist_id",
+        entityColumn = "artist_id",
+    )
+    val stats: StatsEntity,
+)

@@ -31,7 +31,7 @@ import taiwan.no.one.core.exceptions.NotFoundException
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
-import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
@@ -39,6 +39,7 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEnti
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ArtistDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.BioDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ImageDao
+import taiwan.no.one.feat.explore.data.local.services.database.v1.StatsDao
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -49,6 +50,7 @@ internal class LocalStore(
     private val artistDao: ArtistDao,
     private val imageDao: ImageDao,
     private val bioDao: BioDao,
+    private val statsDao: StatsDao,
 ) : DataStore {
     companion object Constant {
         const val TYPE_CHART_TOP_TRACK = "top_track"
@@ -74,10 +76,12 @@ internal class LocalStore(
         mmkvCache.put(convertToKey(artistName), entity, ArtistMoreDetailEntity::class.java)
     }
 
-    override suspend fun createArtist(entity: ArtistWithImageAndBioEntity): Boolean {
-        val id = artistDao.insert(entity.artist)
-        entity.images.forEach { imageDao.insert(it.copy(artistId = id)) }
-        bioDao.insert(entity.bio.copy(artistId = id))
+    override suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats): Boolean {
+        artistDao.insert(entity.artist).also { id ->
+            entity.images.forEach { imageDao.insert(it.copy(artistId = id)) }
+            bioDao.insert(entity.bio.copy(artistId = id))
+            statsDao.insert(entity.stats.copy(artistId = id))
+        }
         return true
     }
 

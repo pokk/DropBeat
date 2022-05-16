@@ -30,7 +30,7 @@ import taiwan.no.one.entity.SimpleArtistEntity.SimpleBioEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity.AlbumWithArtistEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackWithStreamableEntity
@@ -96,16 +96,14 @@ internal object EntityMapper {
         )
     }
 
-    fun artistToSimpleArtistEntity(entity: ArtistWithImageAndBioEntity) = entity.let {
+    fun artistToSimpleArtistEntity(entity: ArtistWithImageAndBioEntityAndStats) = entity.let {
         SimpleArtistEntity(
             0,
             it.artist.name,
             it.images[0].url,
             it.artist.url,
-            DEFAULT_INT,
-            DEFAULT_INT,
-            // it.stats?.listeners?.toInt() ?: DEFAULT_INT,
-            // it.stats?.playCount?.toInt() ?: DEFAULT_INT,
+            it.stats.listeners.toInt(),
+            it.stats.playCount.toInt(),
             emptyList(),
             emptyList(),
             it.bio.let { bio -> SimpleBioEntity(bio.content.orEmpty(), bio.summary.orEmpty()) }

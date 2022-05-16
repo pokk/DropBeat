@@ -33,17 +33,20 @@ import taiwan.no.one.core.data.local.room.convert.DateConvert
 import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.local.BioEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
+import taiwan.no.one.feat.explore.data.entities.local.StatsEntity
 import taiwan.no.one.feat.explore.data.local.room.converts.QualityConvert
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ArtistDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.BioDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ImageDao
+import taiwan.no.one.feat.explore.data.local.services.database.v1.StatsDao
 
 /**
  * The access operations to a database.
  */
 @Database(
-    entities = [ArtistEntity::class, ImageEntity::class, BioEntity::class],
+    entities = [ArtistEntity::class, ImageEntity::class, BioEntity::class, StatsEntity::class],
     version = 1,
+    exportSchema = false,
 )
 @TypeConverters(DateConvert::class, QualityConvert::class)
 internal abstract class MusicDatabase : RoomDatabase() {
@@ -74,6 +77,8 @@ internal abstract class MusicDatabase : RoomDatabase() {
     abstract fun createArtistDao(): ArtistDao
 
     abstract fun createImageDao(): ImageDao
+
+    abstract fun createStatsDao(): StatsDao
 
     abstract fun createBioDao(): BioDao
 }

@@ -22,28 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.entities.local
+package taiwan.no.one.feat.explore.data.mappers.dto
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
-import taiwan.no.one.core.data.local.room.TimeEntity
-import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.explore.data.contracts.Po
+import taiwan.no.one.ext.DEFAULT_LONG
+import taiwan.no.one.feat.explore.data.contracts.Mapper
+import taiwan.no.one.feat.explore.data.entities.local.StatsEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 
-@Entity(tableName = "table_artist", indices = [Index("mbid", "name", unique = true)])
-internal data class ArtistEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "artist_id")
-    val artistId: Long = 0L, // For the room database
-    val name: String = DEFAULT_STR,
-    val mbid: String = DEFAULT_STR,
-    val url: String = DEFAULT_STR,
-    @ColumnInfo(name = "play_count")
-    val playCount: String = DEFAULT_STR,
-    // For database searching
-    @Embedded
-    val time: TimeEntity = TimeEntity(),
-) : Po
+internal class ArtistStateMapper : Mapper<ArtistInfoEntity.StatsEntity, StatsEntity> {
+    override fun dtoToPo(dto: ArtistInfoEntity.StatsEntity) = StatsEntity(
+        0L,
+        DEFAULT_LONG,
+        dto.listeners?.toLongOrNull() ?: DEFAULT_LONG,
+        dto.playCount?.toLongOrNull() ?: DEFAULT_LONG
+    )
+}

@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.explore.data.contracts
 
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
@@ -52,7 +52,7 @@ internal interface DataStore {
     //endregion
 
     //region Artist Data
-    suspend fun getArtistInfo(name: String?, mbid: String?): ArtistWithImageAndBioEntity
+    suspend fun getArtistInfo(name: String?, mbid: String?): ArtistWithImageAndBioEntityAndStats
 
     suspend fun getArtistTopAlbum(name: String?, mbid: String?): ArtistTopAlbumInfoEntity
 
@@ -66,7 +66,7 @@ internal interface DataStore {
 
     suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity): Boolean
 
-    suspend fun createArtist(entity: ArtistWithImageAndBioEntity): Boolean
+    suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats): Boolean
     //endregion
 
     //region Track Data

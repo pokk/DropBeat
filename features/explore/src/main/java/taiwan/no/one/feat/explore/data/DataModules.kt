@@ -58,7 +58,9 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance(), instance(), instance()) }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) {
+            LocalStore(instance(), instance(), instance(), instance(), instance())
+        }
         bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance(), instance(), context) }
 
         bindSingleton<LastFmRepo> {
@@ -83,6 +85,7 @@ internal object DataModules : ModuleProvider {
         bindSingleton { instance<MusicDatabase>().createArtistDao() }
         bindSingleton { instance<MusicDatabase>().createImageDao() }
         bindSingleton { instance<MusicDatabase>().createBioDao() }
+        bindSingleton { instance<MusicDatabase>().createStatsDao() }
     }
 
     private fun remoteProvide(context: Context) = DI.Module("${FEAT_NAME}RemoteModule") {
