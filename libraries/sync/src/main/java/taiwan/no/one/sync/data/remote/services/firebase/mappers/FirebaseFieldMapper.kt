@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.sync.data.remote.services.firebase.mapper
+package taiwan.no.one.sync.data.remote.services.firebase.mappers
 
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@
 package taiwan.no.one.feat.explore.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity
@@ -44,7 +44,9 @@ internal interface LastFmRepo : Repository {
     //endregion
 
     //region ArtistEntity
-    suspend fun fetchArtist(name: String?, mbid: String?): ArtistInfoEntity.ArtistEntity
+    suspend fun fetchArtist(name: String?, mbid: String?): ArtistWithImageAndBioEntity
+
+    suspend fun addArtist(entity: ArtistWithImageAndBioEntity)
 
     suspend fun fetchArtistTopAlbum(name: String?, mbid: String?): CommonLastFmEntity.TopAlbumsEntity
 

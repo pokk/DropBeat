@@ -30,11 +30,12 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.explore.data.contracts.Dto
 
 @JsonClass(generateAdapter = true)
 internal data class ArtistInfoEntity(
     val artist: ArtistEntity?,
-) {
+) : Dto {
     @JsonClass(generateAdapter = true)
     internal data class ArtistEntity(
         val name: String? = DEFAULT_STR,
@@ -61,7 +62,7 @@ internal data class ArtistInfoEntity(
         val paging: Int? = null,
         @Embedded
         val time: TimeEntity = TimeEntity(),
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class BioEntity(
@@ -69,12 +70,12 @@ internal data class ArtistInfoEntity(
         val published: String?,
         val summary: String?,
         val content: String?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class LinksEntity(
         val link: LinkEntity?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class LinkEntity(
@@ -82,18 +83,18 @@ internal data class ArtistInfoEntity(
         val text: String?,
         val rel: String?,
         val href: String?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class StatsEntity(
         val listeners: String?,
         @Json(name = "playcount")
         val playCount: String?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class SimilarEntity(
         @Json(name = "artist")
         val artists: List<ArtistEntity>?,
-    )
+    ) : Dto
 }

@@ -22,31 +22,15 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.entities.local
+package taiwan.no.one.feat.explore.data.local.room.converts
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
-import taiwan.no.one.core.data.local.room.TimeEntity
-import taiwan.no.one.ext.DEFAULT_LONG
-import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.explore.data.contracts.Po
+import androidx.room.TypeConverter
+import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
 
-@Entity(tableName = "table_image", indices = [Index("url", unique = true)])
-internal data class ImageEntity(
-    @PrimaryKey(autoGenerate = true)
-    val imageId: Long = 0L, // For the room database
-    val quality: ImgQuality = ImgQuality.ELSE,
-    val url: String = DEFAULT_STR,
-    // related connection id
-    @ColumnInfo(name = "artist_id")
-    val artistId: Long = DEFAULT_LONG,
-    @ColumnInfo(name = "album_id")
-    val albumId: Long = DEFAULT_LONG,
-    @ColumnInfo(name = "track_id")
-    val trackId: Long = DEFAULT_LONG,
-    @Embedded
-    val time: TimeEntity = TimeEntity(),
-) : Po
+internal class QualityConvert {
+    @TypeConverter
+    fun fromQualityInteger(ordinal: Int?) = ordinal?.let { ImgQuality.values()[it] }
+
+    @TypeConverter
+    fun qualityToInt(quality: ImgQuality?) = quality?.ordinal
+}

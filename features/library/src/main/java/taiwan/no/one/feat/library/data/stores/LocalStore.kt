@@ -62,7 +62,9 @@ internal class LocalStore(
 
     override suspend fun modifyMusic(songId: Int, isFavorite: Boolean) = songDao.updateFavorite(songId, isFavorite)
 
-    override suspend fun createMusic(song: SongEntity) = songDao.insert(song)
+    override suspend fun createMusic(song: SongEntity) {
+        songDao.insert(song)
+    }
 
     override suspend fun createMusics(songs: List<SongEntity>) = songDao.insert(*songs.toTypedArray())
 
@@ -90,9 +92,8 @@ internal class LocalStore(
         playlistDao.insertIfExist(playlist)
     }
 
-    override suspend fun modifyPlaylist(playlist: PlayListEntity) = playlistDao.update(
-        playlist.copy(time = playlist.time.copy(updatedAt = now()))
-    )
+    override suspend fun modifyPlaylist(playlist: PlayListEntity) =
+        playlistDao.update(playlist.copy(time = playlist.time.copy(updatedAt = now())))
 
     override suspend fun removePlaylist(playlistId: Int?, playlist: PlayListEntity?) {
         if (playlist != null) {

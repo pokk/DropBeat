@@ -78,12 +78,14 @@ internal class LoginFragment : BaseFragment<BaseActivity<*>, FragmentLoginBindin
     }
     private val snsAdapter by lazy {
         ThirdPartyLoginAdapter().apply {
-            submitList(listOf(
-                R.drawable.ic_facebook,
-                R.drawable.ic_google,
-                R.drawable.ic_twitter,
-                R.drawable.ic_instagram
-            ))
+            submitList(
+                listOf(
+                    R.drawable.ic_facebook,
+                    R.drawable.ic_google,
+                    R.drawable.ic_twitter,
+                    R.drawable.ic_instagram
+                )
+            )
         }
     }
 

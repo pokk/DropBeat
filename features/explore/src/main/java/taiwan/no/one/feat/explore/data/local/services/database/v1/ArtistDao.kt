@@ -25,8 +25,11 @@
 package taiwan.no.one.feat.explore.data.local.services.database.v1
 
 import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 
 /**
  * Integrated the base [androidx.room.Room] database operations.
@@ -35,4 +38,8 @@ import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
  * Using prefix name (get), (insert), (update), (delete)
  */
 @Dao
-internal abstract class ArtistDao : BaseDao<ArtistEntity>
+internal abstract class ArtistDao : BaseDao<ArtistEntity> {
+    @Transaction
+    @Query("SELECT * FROM table_artist WHERE name=:name")
+    abstract fun getArtistBy(name: String): ArtistWithImageAndBioEntity
+}

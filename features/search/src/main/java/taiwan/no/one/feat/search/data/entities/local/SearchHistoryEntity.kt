@@ -33,7 +33,7 @@ import taiwan.no.one.ext.DEFAULT_STR
 @Entity(tableName = "table_history")
 internal data class SearchHistoryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int = 0, // For the room database
     val keyword: String = DEFAULT_STR,
     val updated: Instant = Clock.System.now(),
 )

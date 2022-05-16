@@ -31,6 +31,7 @@ import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
@@ -47,7 +48,19 @@ internal class LastFmRepository(
     override suspend fun fetchAlbum(mbid: String) = remote.getAlbumInfo(mbid).album ?: throw Exception()
 
     override suspend fun fetchArtist(name: String?, mbid: String?) =
-        remote.getArtistInfo(name, mbid).artist ?: throw Exception()
+        object : LayerCaching<ArtistWithImageAndBioEntity>() {
+            override suspend fun saveCallResult(data: ArtistWithImageAndBioEntity) = addArtist(data)
+
+            override suspend fun shouldFetch(data: ArtistWithImageAndBioEntity) = true
+
+            override suspend fun loadFromLocal() = local.getArtistInfo(name, mbid)
+
+            override suspend fun createCall() = remote.getArtistInfo(name, mbid)
+        }.value()
+
+    override suspend fun addArtist(entity: ArtistWithImageAndBioEntity) {
+        local.createArtist(entity)
+    }
 
     override suspend fun fetchArtistTopAlbum(name: String?, mbid: String?) =
         remote.getArtistTopAlbum(name, mbid).topAlbums

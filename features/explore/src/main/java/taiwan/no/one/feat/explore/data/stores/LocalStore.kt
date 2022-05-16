@@ -31,10 +31,14 @@ import taiwan.no.one.core.exceptions.NotFoundException
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.local.services.database.v1.ArtistDao
+import taiwan.no.one.feat.explore.data.local.services.database.v1.BioDao
+import taiwan.no.one.feat.explore.data.local.services.database.v1.ImageDao
 
 /**
  * The implementation of the local data store. The responsibility is selecting a correct
@@ -42,6 +46,9 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEnti
  */
 internal class LocalStore(
     private val mmkvCache: DiskCache,
+    private val artistDao: ArtistDao,
+    private val imageDao: ImageDao,
+    private val bioDao: BioDao,
 ) : DataStore {
     companion object Constant {
         const val TYPE_CHART_TOP_TRACK = "top_track"
@@ -50,7 +57,7 @@ internal class LocalStore(
 
     override suspend fun getAlbumInfo(mbid: String) = UnsupportedOperation()
 
-    override suspend fun getArtistInfo(name: String?, mbid: String?) = UnsupportedOperation()
+    override suspend fun getArtistInfo(name: String?, mbid: String?) = artistDao.getArtistBy(name.orEmpty())
 
     override suspend fun getArtistTopAlbum(name: String?, mbid: String?) = UnsupportedOperation()
 
@@ -67,6 +74,13 @@ internal class LocalStore(
         mmkvCache.put(convertToKey(artistName), entity, ArtistMoreDetailEntity::class.java)
     }
 
+    override suspend fun createArtist(entity: ArtistWithImageAndBioEntity): Boolean {
+        val id = artistDao.insert(entity.artist)
+        entity.images.forEach { imageDao.insert(it.copy(artistId = id)) }
+        bioDao.insert(entity.bio.copy(artistId = id))
+        return true
+    }
+
     override suspend fun getTrackInfo(mbid: String) = UnsupportedOperation()
 
     override suspend fun getSimilarTrackInfo(mbid: String) = UnsupportedOperation()
@@ -76,16 +90,20 @@ internal class LocalStore(
     override suspend fun getTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) = UnsupportedOperation()
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
-        mmkvCache.get(convertToKey(page, limit, TYPE_CHART_TOP_TRACK),
-                      TopTrackInfoEntity::class.java)?.second ?: throw NotFoundException()
+        mmkvCache.get(
+            convertToKey(page, limit, TYPE_CHART_TOP_TRACK),
+            TopTrackInfoEntity::class.java
+        )?.second ?: throw NotFoundException()
 
     override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = tryWrapper {
         mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), entity, TopTrackInfoEntity::class.java)
     }
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
-        mmkvCache.get(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST),
-                      TopArtistInfoEntity::class.java)?.second ?: throw NotFoundException()
+        mmkvCache.get(
+            convertToKey(page, limit, TYPE_CHART_TOP_ARTIST),
+            TopArtistInfoEntity::class.java
+        )?.second ?: throw NotFoundException()
 
     override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) = tryWrapper {
         mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), entity, TopArtistInfoEntity::class.java)

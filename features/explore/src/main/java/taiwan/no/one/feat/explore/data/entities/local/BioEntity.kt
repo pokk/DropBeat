@@ -24,20 +24,26 @@
 
 package taiwan.no.one.feat.explore.data.entities.local
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import taiwan.no.one.core.data.local.room.TimeEntity
+import taiwan.no.one.ext.DEFAULT_LONG
+import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.explore.data.contracts.Po
 
-@Entity(tableName = "table_bio")
+@Entity(tableName = "table_bio", indices = [Index("artist_id", unique = true)])
 internal data class BioEntity(
     @PrimaryKey(autoGenerate = true)
-    val bioId: Int,
-    val artistId: Int,
-    val link: String,
-    val published: String,
-    val summary: String,
-    val content: String,
+    val bioId: Long = 0L, // For the room database
+    @ColumnInfo(name = "artist_id")
+    val artistId: Long = DEFAULT_LONG,
+    val link: String = DEFAULT_STR,
+    val published: String = DEFAULT_STR,
+    val summary: String = DEFAULT_STR,
+    val content: String = DEFAULT_STR,
     @Embedded
     val time: TimeEntity = TimeEntity(),
-)
+) : Po

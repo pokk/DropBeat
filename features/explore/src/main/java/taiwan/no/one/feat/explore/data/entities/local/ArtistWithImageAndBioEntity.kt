@@ -31,13 +31,13 @@ internal data class ArtistWithImageAndBioEntity(
     @Embedded
     val artist: ArtistEntity,
     @Relation(
-        parentColumn = "artistId",
-        entityColumn = "artistId",
+        parentColumn = "artist_id",
+        entityColumn = "artist_id",
     )
     val images: List<ImageEntity>,
     @Relation(
-        parentColumn = "artistId",
-        entityColumn = "artistId",
+        parentColumn = "artist_id",
+        entityColumn = "artist_id",
     )
     val bio: BioEntity,
 )

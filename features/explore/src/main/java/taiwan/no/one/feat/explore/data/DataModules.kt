@@ -37,7 +37,7 @@ import taiwan.no.one.dropbeat.di.Constant.TAG_NETWORK_MOSHI_RETROFIT
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.data.contracts.DataStore
-import taiwan.no.one.feat.explore.data.local.configs.MusicDatabase
+import taiwan.no.one.feat.explore.data.local.room.configs.MusicDatabase
 import taiwan.no.one.feat.explore.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraImpl
@@ -58,7 +58,7 @@ internal object DataModules : ModuleProvider {
         import(localProvide())
         import(remoteProvide(context))
 
-        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance()) }
+        bindSingleton<DataStore>(TAG_LOCAL_DATA_STORE) { LocalStore(instance(), instance(), instance(), instance()) }
         bindSingleton<DataStore>(TAG_REMOTE_DATA_STORE) { RemoteStore(instance(), instance(), context) }
 
         bindSingleton<LastFmRepo> {

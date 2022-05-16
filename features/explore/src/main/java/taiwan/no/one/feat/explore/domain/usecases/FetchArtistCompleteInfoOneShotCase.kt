@@ -29,7 +29,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.entity.SimpleArtistEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity.ArtistEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity.TracksWithStreamableEntity
 import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity.TopAlbumsEntity
@@ -43,33 +43,32 @@ internal class FetchArtistCompleteInfoOneShotCase(
 ) : FetchArtistCompleteInfoCase() {
     override suspend fun acquireCase(parameter: FetchArtistCompleteInfoReq?) = parameter.ensure {
         val artistInfo = repository.fetchArtist(name, null)
-        val mbid = artistInfo.mbid?.takeUnless(String::isNullOrBlank)
+        val mbid = artistInfo.artist.mbid
         coroutineScope {
             val deferredAlbumOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopAlbum(name, mbid) }
             val deferredTrackOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopTrack(name, mbid) }
             val deferredDetailOfArtist = async(Dispatchers.IO) {
                 extraRepository.fetchArtistMoreDetail(name?.replace(" ", "+").orEmpty())
             }
-            populating(artistInfo,
-                       deferredAlbumOfArtist.await(),
-                       deferredTrackOfArtist.await(),
-                       deferredDetailOfArtist.await())
+            populating(
+                artistInfo,
+                deferredAlbumOfArtist.await(),
+                deferredTrackOfArtist.await(),
+                deferredDetailOfArtist.await()
+            )
         }
     }
 
     private fun populating(
-        artistEntity: ArtistEntity,
+        artistEntity: ArtistWithImageAndBioEntity,
         topAlbumsEntity: TopAlbumsEntity,
         tracksWithStreamableEntity: TracksWithStreamableEntity,
         extraInfoEntity: ArtistMoreDetailEntity,
     ): SimpleArtistEntity {
         val albums = topAlbumsEntity.albums.map(EntityMapper::albumToSimpleAlbumEntity)
         val tracks = tracksWithStreamableEntity.tracks.map(EntityMapper::trackToSimpleTrackEntity)
-        return EntityMapper
-            .artistToSimpleArtistEntity(artistEntity)
-            .copy(thumbnail = extraInfoEntity.coverPhotoUrl,
-                  topAlbums = albums,
-                  topTracks = tracks)
+        return EntityMapper.artistToSimpleArtistEntity(artistEntity)
+            .copy(thumbnail = extraInfoEntity.coverPhotoUrl, topAlbums = albums, topTracks = tracks)
     }
 
     internal data class Request(

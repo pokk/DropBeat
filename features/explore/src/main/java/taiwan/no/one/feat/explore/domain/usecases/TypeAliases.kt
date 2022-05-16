@@ -27,6 +27,7 @@ package taiwan.no.one.feat.explore.domain.usecases
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.entity.SimpleArtistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
@@ -42,7 +43,7 @@ internal typealias ArtistWithMoreDetailEntities = List<ArtistWithMoreDetailEntit
 
 internal typealias FetchAlbumCase = OneShotUsecase<AlbumInfoEntity.AlbumEntity, FetchAlbumReq>
 internal typealias FetchAlbumReq = FetchAlbumOneShotCase.Request
-internal typealias FetchArtistInfoCase = OneShotUsecase<ArtistInfoEntity.ArtistEntity, FetchArtistReq>
+internal typealias FetchArtistInfoCase = OneShotUsecase<ArtistWithImageAndBioEntity, FetchArtistReq>
 internal typealias FetchArtistReq = FetchArtistInfoOneShotCase.Request
 internal typealias FetchArtistPhotoCase = OneShotUsecase<List<ArtistPhotoEntity>, FetchArtistPhotoReq>
 internal typealias FetchArtistPhotoReq = FetchArtistPhotoOneShotCase.Request

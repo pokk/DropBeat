@@ -30,8 +30,8 @@ import taiwan.no.one.entity.SimpleArtistEntity.SimpleBioEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity.AlbumWithArtistEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackWithStreamableEntity
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
@@ -96,19 +96,19 @@ internal object EntityMapper {
         )
     }
 
-    fun artistToSimpleArtistEntity(entity: ArtistEntity) = entity.let {
+    fun artistToSimpleArtistEntity(entity: ArtistWithImageAndBioEntity) = entity.let {
         SimpleArtistEntity(
             0,
-            it.name.orEmpty(),
-            DEFAULT_STR,
-            it.url.orEmpty(),
-            it.stats?.listeners?.toInt() ?: DEFAULT_INT,
-            it.stats?.playCount?.toInt() ?: DEFAULT_INT,
+            it.artist.name,
+            it.images[0].url,
+            it.artist.url,
+            DEFAULT_INT,
+            DEFAULT_INT,
+            // it.stats?.listeners?.toInt() ?: DEFAULT_INT,
+            // it.stats?.playCount?.toInt() ?: DEFAULT_INT,
             emptyList(),
             emptyList(),
-            it.bio?.let { bio ->
-                SimpleBioEntity(bio.content.orEmpty(), bio.summary.orEmpty())
-            } ?: SimpleBioEntity(DEFAULT_STR, DEFAULT_STR)
+            it.bio.let { bio -> SimpleBioEntity(bio.content.orEmpty(), bio.summary.orEmpty()) }
         )
     }
 }

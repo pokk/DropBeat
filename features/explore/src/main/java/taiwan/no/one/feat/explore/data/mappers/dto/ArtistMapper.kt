@@ -22,31 +22,18 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.entities.local
+package taiwan.no.one.feat.explore.data.mappers.dto
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
-import taiwan.no.one.core.data.local.room.TimeEntity
-import taiwan.no.one.ext.DEFAULT_LONG
-import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.explore.data.contracts.Po
+import taiwan.no.one.feat.explore.data.contracts.Mapper
+import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 
-@Entity(tableName = "table_image", indices = [Index("url", unique = true)])
-internal data class ImageEntity(
-    @PrimaryKey(autoGenerate = true)
-    val imageId: Long = 0L, // For the room database
-    val quality: ImgQuality = ImgQuality.ELSE,
-    val url: String = DEFAULT_STR,
-    // related connection id
-    @ColumnInfo(name = "artist_id")
-    val artistId: Long = DEFAULT_LONG,
-    @ColumnInfo(name = "album_id")
-    val albumId: Long = DEFAULT_LONG,
-    @ColumnInfo(name = "track_id")
-    val trackId: Long = DEFAULT_LONG,
-    @Embedded
-    val time: TimeEntity = TimeEntity(),
-) : Po
+internal class ArtistMapper : Mapper<ArtistInfoEntity.ArtistEntity, ArtistEntity> {
+    override fun dtoToPo(dto: ArtistInfoEntity.ArtistEntity) = ArtistEntity(
+        0L,
+        dto.name.orEmpty(),
+        dto.mbid.orEmpty(),
+        dto.url.orEmpty(),
+        dto.playCount.orEmpty(),
+    )
+}

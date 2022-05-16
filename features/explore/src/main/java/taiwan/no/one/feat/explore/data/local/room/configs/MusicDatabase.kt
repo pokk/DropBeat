@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.local.configs
+package taiwan.no.one.feat.explore.data.local.room.configs
 
 import android.content.Context
 import androidx.room.Database
@@ -33,6 +33,7 @@ import taiwan.no.one.core.data.local.room.convert.DateConvert
 import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.local.BioEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
+import taiwan.no.one.feat.explore.data.local.room.converts.QualityConvert
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ArtistDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.BioDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ImageDao
@@ -44,10 +45,11 @@ import taiwan.no.one.feat.explore.data.local.services.database.v1.ImageDao
     entities = [ArtistEntity::class, ImageEntity::class, BioEntity::class],
     version = 1,
 )
-@TypeConverters(DateConvert::class)
+@TypeConverters(DateConvert::class, QualityConvert::class)
 internal abstract class MusicDatabase : RoomDatabase() {
     companion object {
-        @Volatile private var INSTANCE: MusicDatabase? = null
+        @Volatile
+        private var INSTANCE: MusicDatabase? = null
         private const val DATABASE_NAME = "fm_music_cache.db"
 
         fun getDatabase(context: Context): MusicDatabase {

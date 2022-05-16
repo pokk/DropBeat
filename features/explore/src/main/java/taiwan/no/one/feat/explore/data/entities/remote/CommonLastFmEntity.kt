@@ -26,6 +26,7 @@ package taiwan.no.one.feat.explore.data.entities.remote
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import taiwan.no.one.feat.explore.data.contracts.Dto
 
 object CommonLastFmEntity {
     @JsonClass(generateAdapter = true)
@@ -34,7 +35,7 @@ object CommonLastFmEntity {
         val albums: List<AlbumInfoEntity.AlbumWithArtistEntity>,
         @Json(name = "@attr")
         val attr: AttrEntity?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class TagsEntity(
@@ -42,28 +43,28 @@ object CommonLastFmEntity {
         val tags: List<TagInfoEntity.TagEntity>?,
         @Json(name = "@attr")
         val attr: AttrEntity?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class ImageEntity(
         @Json(name = "#text")
         val text: String?,
         val size: String?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class StreamableEntity(
         @Json(name = "#text")
         val text: String?,
         val fulltrack: String?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class WikiEntity(
         val published: String?,
         val summary: String?,
         val content: String?,
-    )
+    ) : Dto
 
     @JsonClass(generateAdapter = true)
     internal data class AttrEntity(
@@ -76,5 +77,5 @@ object CommonLastFmEntity {
         @Json(name = "perPage")
         val perPage: String?,
         val page: String?,
-    )
+    ) : Dto
 }

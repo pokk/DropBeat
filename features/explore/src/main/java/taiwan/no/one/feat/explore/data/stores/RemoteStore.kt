@@ -30,10 +30,14 @@ import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.Constant
+import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.mappers.dto.ArtistMapper
+import taiwan.no.one.feat.explore.data.mappers.dto.BioMapper
+import taiwan.no.one.feat.explore.data.mappers.dto.ImageMapper
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
 
@@ -51,8 +55,19 @@ internal class RemoteStore(
     override suspend fun getAlbumInfo(mbid: String) =
         lastFmService.retrieveAlbumInfo(infoQuery(Constant.LASTFM_PARAM_ALBUM_GET_INFO, mbid))
 
-    override suspend fun getArtistInfo(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistInfo(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid))
+    override suspend fun getArtistInfo(name: String?, mbid: String?): ArtistWithImageAndBioEntity {
+        val artist = lastFmService.retrieveArtistInfo(
+            combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid)
+        ).artist ?: throw IllegalArgumentException()
+        val mapper1 = ArtistMapper()
+        val mapper2 = ImageMapper()
+        val mapper3 = BioMapper()
+        return ArtistWithImageAndBioEntity(
+            mapper1.dtoToPo(artist),
+            artist.images?.map(mapper2::dtoToPo).orEmpty(),
+            mapper3.dtoToPo(artist.bio ?: throw IllegalArgumentException()),
+        )
+    }
 
     override suspend fun getArtistTopAlbum(name: String?, mbid: String?) =
         lastFmService.retrieveArtistTopAlbum(
@@ -83,6 +98,10 @@ internal class RemoteStore(
 
     override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) =
         UnsupportedOperation()
+
+    override suspend fun createArtist(entity: ArtistWithImageAndBioEntity): Boolean {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun getTrackInfo(mbid: String) =
         lastFmService.retrieveTrackInfo(infoQuery(Constant.LASTFM_PARAM_TRACK_INFO, mbid))
@@ -120,10 +139,12 @@ internal class RemoteStore(
         lastFmService.retrieveTagTopArtist(infoQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_ARTISTS, mbid))
 
     override suspend fun getTagTopTrack(tagName: String) =
-        lastFmService.retrieveTagTopTrack(combineLastFmQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
-            put("tag", tagName)
-            put(Constant.LASTFM_QUERY_LIMIT, "20")
-        })
+        lastFmService.retrieveTagTopTrack(
+            combineLastFmQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
+                put("tag", tagName)
+                put(Constant.LASTFM_QUERY_LIMIT, "20")
+            }
+        )
 
     private fun combineLastFmQuery(method: String, block: MutableMap<String, String>.() -> Unit) = hashMapOf(
         Constant.LASTFM_QUERY_TOKEN to lastFmToken,

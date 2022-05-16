@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2021 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,8 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.library.data.local.services.database.convert
+package taiwan.no.one.feat.explore.data.contracts
 
-import androidx.room.TypeConverter
-
-internal class IdListConvert {
-    companion object {
-        private const val SEPARATOR = ","
-    }
-
-    @TypeConverter
-    fun fromIdsToStr(ids: List<Int>?): String {
-        return ids?.joinToString(SEPARATOR).orEmpty()
-    }
-
-    @TypeConverter
-    fun fromStrToIds(idsString: String?) =
-        idsString?.takeIf(String::isNotEmpty)?.split(SEPARATOR)?.map(String::toInt).orEmpty()
+internal interface Mapper<DTO : Dto, PO : Po> {
+    fun dtoToPo(dto: DTO): PO
 }

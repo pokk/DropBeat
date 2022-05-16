@@ -38,7 +38,7 @@ import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.entity.UserInfoEntity
 import taiwan.no.one.sync.data.remote.services.SyncService
 import taiwan.no.one.sync.data.remote.services.firebase.castToDocList
-import taiwan.no.one.sync.data.remote.services.firebase.mapper.FirebaseFieldMapper
+import taiwan.no.one.sync.data.remote.services.firebase.mappers.FirebaseFieldMapper
 
 // NOTE(jieyi): 5/26/21
 //  For one-shot async calls, use the [suspendCancellableCoroutine] API.

@@ -24,22 +24,26 @@
 
 package taiwan.no.one.feat.explore.data.entities.local
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.explore.data.contracts.Po
 
 @Entity(tableName = "table_artist", indices = [Index("mbid", unique = true)])
 internal data class ArtistEntity(
     @PrimaryKey(autoGenerate = true)
-    val artistId: Int,
+    @ColumnInfo(name = "artist_id")
+    val artistId: Long = 0L, // For the room database
     val name: String = DEFAULT_STR,
     val mbid: String = DEFAULT_STR,
     val url: String = DEFAULT_STR,
+    @ColumnInfo(name = "play_count")
     val playCount: String = DEFAULT_STR,
     // For database searching
     @Embedded
     val time: TimeEntity = TimeEntity(),
-)
+) : Po

@@ -57,7 +57,6 @@ internal class SongOfArtistViewModel(
     val artistAlbums
         get() = _artistInfo.map { it.getOrNull()?.topAlbums.orEmpty() }
 
-    @WorkerThread
     fun getArtistInfo(name: String) = launchBehind {
         _artistInfo.postValue(kotlin.runCatching { exploreMethodsProvider.getArticleInfo(name) })
     }
