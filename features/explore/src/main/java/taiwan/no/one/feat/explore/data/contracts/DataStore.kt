@@ -67,6 +67,8 @@ internal interface DataStore {
     suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity): Boolean
 
     suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats): Boolean
+
+    suspend fun removeArtist(entity: ArtistWithImageAndBioEntityAndStats)
     //endregion
 
     //region Track Data

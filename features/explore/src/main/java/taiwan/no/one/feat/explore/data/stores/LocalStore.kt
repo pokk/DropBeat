@@ -85,6 +85,14 @@ internal class LocalStore(
         return true
     }
 
+    override suspend fun removeArtist(entity: ArtistWithImageAndBioEntityAndStats) {
+        val artistId = entity.artist.artistId.toInt()
+        artistDao.delete(entity.artist)
+        imageDao.deleteBy(artistId)
+        bioDao.deleteBy(artistId)
+        statsDao.deleteBy(artistId)
+    }
+
     override suspend fun getTrackInfo(mbid: String) = UnsupportedOperation()
 
     override suspend fun getSimilarTrackInfo(mbid: String) = UnsupportedOperation()

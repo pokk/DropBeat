@@ -25,6 +25,7 @@
 package taiwan.no.one.feat.explore.data.local.services.database.v1
 
 import androidx.room.Dao
+import androidx.room.Query
 import taiwan.no.one.core.data.local.room.BaseDao
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
 
@@ -35,4 +36,7 @@ import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
  * Using prefix name (get), (insert), (update), (delete)
  */
 @Dao
-internal abstract class ImageDao : BaseDao<ImageEntity>
+internal abstract class ImageDao : BaseDao<ImageEntity> {
+    @Query("DELETE FROM table_image WHERE artist_id = :artistId")
+    abstract suspend fun deleteBy(artistId: Int)
+}

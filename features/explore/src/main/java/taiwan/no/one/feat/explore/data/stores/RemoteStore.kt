@@ -102,9 +102,9 @@ internal class RemoteStore(
     override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) =
         UnsupportedOperation()
 
-    override suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats): Boolean {
-        TODO("Not yet implemented")
-    }
+    override suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats) = UnsupportedOperation()
+
+    override suspend fun removeArtist(entity: ArtistWithImageAndBioEntityAndStats) = UnsupportedOperation()
 
     override suspend fun getTrackInfo(mbid: String) =
         lastFmService.retrieveTrackInfo(infoQuery(Constant.LASTFM_PARAM_TRACK_INFO, mbid))

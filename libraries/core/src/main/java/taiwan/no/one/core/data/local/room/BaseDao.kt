@@ -61,10 +61,26 @@ interface BaseDao<in T> {
     suspend fun update(obj: T)
 
     /**
+     * Update an array of objects from the database.
+     *
+     * @param obj the object to be updated.
+     */
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(vararg obj: T)
+
+    /**
      * Delete an object from the database.
      *
      * @param obj the object to be deleted.
      */
     @Delete
     suspend fun delete(obj: T)
+
+    /**
+     * Delete an array of objects from the database.
+     *
+     * @param obj the object to be deleted.
+     */
+    @Delete
+    suspend fun delete(vararg obj: T)
 }
