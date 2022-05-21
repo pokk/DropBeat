@@ -31,6 +31,7 @@ import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
+import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity.AlbumWithArtistEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackWithStreamableEntity
@@ -100,7 +101,7 @@ internal object EntityMapper {
         SimpleArtistEntity(
             0,
             it.artist.name,
-            it.images[0].url,
+            it.images.find { img -> img.quality == ImgQuality.COVER }?.url.orEmpty(),
             it.artist.url,
             it.stats.listeners.toInt(),
             it.stats.playCount.toInt(),

@@ -30,7 +30,6 @@ import kotlinx.coroutines.coroutineScope
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.entity.SimpleArtistEntity
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity.TracksWithStreamableEntity
 import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity.TopAlbumsEntity
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
@@ -47,14 +46,10 @@ internal class FetchArtistCompleteInfoOneShotCase(
         coroutineScope {
             val deferredAlbumOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopAlbum(name, mbid) }
             val deferredTrackOfArtist = async(Dispatchers.IO) { repository.fetchArtistTopTrack(name, mbid) }
-            val deferredDetailOfArtist = async(Dispatchers.IO) {
-                extraRepository.fetchArtistMoreDetail(name?.replace(" ", "+").orEmpty())
-            }
             populating(
                 artistInfo,
                 deferredAlbumOfArtist.await(),
                 deferredTrackOfArtist.await(),
-                deferredDetailOfArtist.await()
             )
         }
     }
@@ -63,12 +58,10 @@ internal class FetchArtistCompleteInfoOneShotCase(
         artistEntity: ArtistWithImageAndBioEntityAndStats,
         topAlbumsEntity: TopAlbumsEntity,
         tracksWithStreamableEntity: TracksWithStreamableEntity,
-        extraInfoEntity: ArtistMoreDetailEntity,
     ): SimpleArtistEntity {
         val albums = topAlbumsEntity.albums.map(EntityMapper::albumToSimpleAlbumEntity)
         val tracks = tracksWithStreamableEntity.tracks.map(EntityMapper::trackToSimpleTrackEntity)
-        return EntityMapper.artistToSimpleArtistEntity(artistEntity)
-            .copy(thumbnail = extraInfoEntity.coverPhotoUrl, topAlbums = albums, topTracks = tracks)
+        return EntityMapper.artistToSimpleArtistEntity(artistEntity).copy(topAlbums = albums, topTracks = tracks)
     }
 
     internal data class Request(

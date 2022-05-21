@@ -71,13 +71,8 @@ internal class LocalStore(
 
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) = UnsupportedOperation()
 
-    override suspend fun getArtistMoreInfo(artistName: String): ArtistMoreDetailEntity {
-        // imageDao.getBy()
-        return mmkvCache.get(
-            convertToKey(artistName),
-            ArtistMoreDetailEntity::class.java
-        )?.second ?: throw NotFoundException()
-    }
+    override suspend fun getArtistMoreInfo(artistName: String) =
+        mmkvCache.get(convertToKey(artistName), ArtistMoreDetailEntity::class.java)?.second ?: throw NotFoundException()
 
     override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) = tryWrapper {
         artistDao.getArtistBy(artistName.replace("+", " ")).artist.artistId.also { id ->
@@ -87,6 +82,7 @@ internal class LocalStore(
 
     override suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats): Boolean {
         artistDao.insert(entity.artist).also { id ->
+            entity.images.forEach { imageDao.insert(it.copy(artistId = id)) }
             bioDao.insert(entity.bio.copy(artistId = id))
             statsDao.insert(entity.stats.copy(artistId = id))
         }

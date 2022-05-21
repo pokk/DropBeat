@@ -31,6 +31,8 @@ import taiwan.no.one.feat.explore.R
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.Constant
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
+import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
+import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
@@ -38,7 +40,6 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEnti
 import taiwan.no.one.feat.explore.data.mappers.dto.ArtistMapper
 import taiwan.no.one.feat.explore.data.mappers.dto.ArtistStateMapper
 import taiwan.no.one.feat.explore.data.mappers.dto.BioMapper
-import taiwan.no.one.feat.explore.data.mappers.dto.ImageMapper
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
 
@@ -60,13 +61,13 @@ internal class RemoteStore(
         val artist = lastFmService.retrieveArtistInfo(
             combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid)
         ).artist ?: throw IllegalArgumentException()
+        val moreInfo = getArtistMoreInfo(artist.name?.replace(" ", "+").orEmpty())
         val mapper1 = ArtistMapper()
-        val mapper2 = ImageMapper()
         val mapper3 = BioMapper()
         val mapper4 = ArtistStateMapper()
         return ArtistWithImageAndBioEntityAndStats(
             mapper1.dtoToPo(artist),
-            artist.images?.map(mapper2::dtoToPo).orEmpty(),
+            listOf(ImageEntity(0L, ImgQuality.COVER, moreInfo.coverPhotoUrl)),
             mapper3.dtoToPo(artist.bio ?: throw IllegalArgumentException()),
             mapper4.dtoToPo(artist.stats ?: throw IllegalArgumentException())
         )
