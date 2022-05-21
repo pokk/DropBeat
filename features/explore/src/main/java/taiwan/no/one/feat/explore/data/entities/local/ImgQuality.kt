@@ -25,5 +25,5 @@
 package taiwan.no.one.feat.explore.data.entities.local
 
 internal enum class ImgQuality(val size: String) {
-    ELSE(""), MEGA("mega"), BEST("extralarge"), HIGH("large"), MEDIUM("medium"), LOW("small"),
+    ELSE(""), COVER("cover"), MEGA("mega"), BEST("extralarge"), HIGH("large"), MEDIUM("medium"), LOW("small"),
 }

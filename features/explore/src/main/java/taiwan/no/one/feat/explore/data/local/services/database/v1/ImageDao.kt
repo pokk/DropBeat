@@ -37,6 +37,9 @@ import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
  */
 @Dao
 internal abstract class ImageDao : BaseDao<ImageEntity> {
+    @Query("SELECT * FROM table_image WHERE artist_id = :artistId")
+    abstract suspend fun getBy(artistId: Int): List<ImageEntity>
+
     @Query("DELETE FROM table_image WHERE artist_id = :artistId")
     abstract suspend fun deleteBy(artistId: Int)
 }

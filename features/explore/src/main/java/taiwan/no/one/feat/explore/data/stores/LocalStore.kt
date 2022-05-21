@@ -32,6 +32,8 @@ import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
+import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
+import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
@@ -69,16 +71,22 @@ internal class LocalStore(
 
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) = UnsupportedOperation()
 
-    override suspend fun getArtistMoreInfo(artistName: String) =
-        mmkvCache.get(convertToKey(artistName), ArtistMoreDetailEntity::class.java)?.second ?: throw NotFoundException()
+    override suspend fun getArtistMoreInfo(artistName: String): ArtistMoreDetailEntity {
+        // imageDao.getBy()
+        return mmkvCache.get(
+            convertToKey(artistName),
+            ArtistMoreDetailEntity::class.java
+        )?.second ?: throw NotFoundException()
+    }
 
     override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) = tryWrapper {
-        mmkvCache.put(convertToKey(artistName), entity, ArtistMoreDetailEntity::class.java)
+        artistDao.getArtistBy(artistName.replace("+", " ")).artist.artistId.also { id ->
+            imageDao.insert(ImageEntity(0L, ImgQuality.HIGH, entity.coverPhotoUrl, id))
+        }
     }
 
     override suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats): Boolean {
         artistDao.insert(entity.artist).also { id ->
-            entity.images.forEach { imageDao.insert(it.copy(artistId = id)) }
             bioDao.insert(entity.bio.copy(artistId = id))
             statsDao.insert(entity.stats.copy(artistId = id))
         }
