@@ -25,21 +25,27 @@
 package taiwan.no.one.feat.explore.data.stores
 
 import android.content.Context
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.R
+import taiwan.no.one.feat.explore.data.DataModules
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.contracts.Mapper
 import taiwan.no.one.feat.explore.data.entities.Constant
+import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
+import taiwan.no.one.feat.explore.data.entities.local.BioEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
+import taiwan.no.one.feat.explore.data.entities.local.StatsEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
-import taiwan.no.one.feat.explore.data.mappers.dto.ArtistMapper
-import taiwan.no.one.feat.explore.data.mappers.dto.ArtistStateMapper
-import taiwan.no.one.feat.explore.data.mappers.dto.BioMapper
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
 
@@ -51,45 +57,34 @@ internal class RemoteStore(
     private val lastFmService: LastFmService,
     private val lastFmExtraService: LastFmExtraService,
     private val context: Context,
-) : DataStore {
+) : DataStore, DIAware {
+    override val di by DI.lazy { import(DataModules.mappersProvide()) }
     private val lastFmToken by lazy { context.getString(R.string.lastfm_api_key) }
 
     override suspend fun getAlbumInfo(mbid: String) =
         lastFmService.retrieveAlbumInfo(infoQuery(Constant.LASTFM_PARAM_ALBUM_GET_INFO, mbid))
 
     override suspend fun getArtistInfo(name: String?, mbid: String?): ArtistWithImageAndBioEntityAndStats {
+        val artistMapper by instance<Mapper<ArtistInfoEntity.ArtistEntity, ArtistEntity>>()
+        val bioMapper by instance<Mapper<ArtistInfoEntity.StatsEntity, StatsEntity>>()
+        val stateMapper by instance<Mapper<ArtistInfoEntity.BioEntity, BioEntity>>()
         val artist = lastFmService.retrieveArtistInfo(
             combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid)
         ).artist ?: throw IllegalArgumentException()
         val moreInfo = getArtistMoreInfo(artist.name?.replace(" ", "+").orEmpty())
-        val mapper1 = ArtistMapper()
-        val mapper3 = BioMapper()
-        val mapper4 = ArtistStateMapper()
         return ArtistWithImageAndBioEntityAndStats(
-            mapper1.dtoToPo(artist),
+            artistMapper.dtoToPo(artist),
             listOf(ImageEntity(0L, ImgQuality.COVER, moreInfo.coverPhotoUrl)),
-            mapper3.dtoToPo(artist.bio ?: throw IllegalArgumentException()),
-            mapper4.dtoToPo(artist.stats ?: throw IllegalArgumentException())
+            stateMapper.dtoToPo(artist.bio ?: throw IllegalArgumentException()),
+            bioMapper.dtoToPo(artist.stats ?: throw IllegalArgumentException())
         )
     }
 
     override suspend fun getArtistTopAlbum(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistTopAlbum(
-            combineArtistName(
-                Constant.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS,
-                name,
-                mbid
-            )
-        )
+        lastFmService.retrieveArtistTopAlbum(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_TOP_ALBUMS, name, mbid))
 
     override suspend fun getArtistTopTrack(name: String?, mbid: String?) =
-        lastFmService.retrieveArtistTopTrack(
-            combineArtistName(
-                Constant.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS,
-                name,
-                mbid
-            )
-        )
+        lastFmService.retrieveArtistTopTrack(combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_TOP_TRACKS, name, mbid))
 
     override suspend fun getSimilarArtistInfo(mbid: String) =
         lastFmService.retrieveSimilarArtistInfo(infoQuery(Constant.LASTFM_PARAM_ARTIST_GET_SIMILAR, mbid))
@@ -97,8 +92,7 @@ internal class RemoteStore(
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) =
         lastFmExtraService.retrieveArtistPhotosInfo(artistName, page)
 
-    override suspend fun getArtistMoreInfo(artistName: String) =
-        lastFmExtraService.retrieveArtistMoreDetail(artistName)
+    override suspend fun getArtistMoreInfo(artistName: String) = lastFmExtraService.retrieveArtistMoreDetail(artistName)
 
     override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) =
         UnsupportedOperation()
@@ -142,13 +136,12 @@ internal class RemoteStore(
     override suspend fun getTagTopArtist(mbid: String) =
         lastFmService.retrieveTagTopArtist(infoQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_ARTISTS, mbid))
 
-    override suspend fun getTagTopTrack(tagName: String) =
-        lastFmService.retrieveTagTopTrack(
-            combineLastFmQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
-                put("tag", tagName)
-                put(Constant.LASTFM_QUERY_LIMIT, "20")
-            }
-        )
+    override suspend fun getTagTopTrack(tagName: String) = lastFmService.retrieveTagTopTrack(
+        combineLastFmQuery(Constant.LASTFM_PARAM_TAG_GET_TOP_TRACKS) {
+            put("tag", tagName)
+            put(Constant.LASTFM_QUERY_LIMIT, "20")
+        }
+    )
 
     private fun combineLastFmQuery(method: String, block: MutableMap<String, String>.() -> Unit) = hashMapOf(
         Constant.LASTFM_QUERY_TOKEN to lastFmToken,
@@ -157,11 +150,10 @@ internal class RemoteStore(
         Constant.LASTFM_QUERY_LANGUAGE to "en", // TODO(jieyiwu): 6/9/20 We can get from system.
     ).apply(block)
 
-    private fun combineArtistName(method: String, name: String?, mbid: String?) =
-        combineLastFmQuery(method) {
-            name.takeUnless(String?::isNullOrBlank)?.let { put(Constant.LASTFM_QUERY_ARTIST_NAME, it) }
-            mbid.takeUnless(String?::isNullOrBlank)?.let { put(Constant.LASTFM_QUERY_MBID, it) }
-        }
+    private fun combineArtistName(method: String, name: String?, mbid: String?) = combineLastFmQuery(method) {
+        name.takeUnless(String?::isNullOrBlank)?.let { put(Constant.LASTFM_QUERY_ARTIST_NAME, it) }
+        mbid.takeUnless(String?::isNullOrBlank)?.let { put(Constant.LASTFM_QUERY_MBID, it) }
+    }
 
     private fun chartQuery(method: String, page: Int, limit: Int) = combineLastFmQuery(method) {
         put(Constant.LASTFM_QUERY_PAGE, page.toString())

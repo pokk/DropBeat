@@ -37,7 +37,15 @@ import taiwan.no.one.dropbeat.di.Constant.TAG_NETWORK_MOSHI_RETROFIT
 import taiwan.no.one.dropbeat.provider.ModuleProvider
 import taiwan.no.one.feat.explore.FeatModules.Constant.FEAT_NAME
 import taiwan.no.one.feat.explore.data.contracts.DataStore
+import taiwan.no.one.feat.explore.data.contracts.Mapper
+import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
+import taiwan.no.one.feat.explore.data.entities.local.BioEntity
+import taiwan.no.one.feat.explore.data.entities.local.StatsEntity
+import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
 import taiwan.no.one.feat.explore.data.local.room.configs.MusicDatabase
+import taiwan.no.one.feat.explore.data.mappers.dto.ArtistMapper
+import taiwan.no.one.feat.explore.data.mappers.dto.ArtistStateMapper
+import taiwan.no.one.feat.explore.data.mappers.dto.BioMapper
 import taiwan.no.one.feat.explore.data.remote.RestfulApiFactory
 import taiwan.no.one.feat.explore.data.remote.configs.LastFmConfig
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraImpl
@@ -96,10 +104,17 @@ internal object DataModules : ModuleProvider {
                 context,
                 instance<LastFmConfig>().apiBaseUrl,
                 retrofitProvider = instance(TAG_NETWORK_MOSHI_RETROFIT)
-            ).provideRetrofitBuilder().build()
+            ).provideRetrofitBuilder()
+                .build()
         }
         bindSingleton { instance<Retrofit>(Constant.TAG_FEAT_EXPLORE_RETROFIT).create(LastFmService::class.java) }
 
         bindInstance<LastFmExtraService> { LastFmExtraImpl() }
+    }
+
+    fun mappersProvide() = DI.Module("${FEAT_NAME}Mappers") {
+        bindInstance<Mapper<ArtistInfoEntity.ArtistEntity, ArtistEntity>> { ArtistMapper() }
+        bindInstance<Mapper<ArtistInfoEntity.StatsEntity, StatsEntity>> { ArtistStateMapper() }
+        bindInstance<Mapper<ArtistInfoEntity.BioEntity, BioEntity>> { BioMapper() }
     }
 }
