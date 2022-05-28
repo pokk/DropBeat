@@ -27,7 +27,6 @@ package taiwan.no.one.feat.explore.data.repositories
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import kotlin.time.Duration.Companion.days
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
@@ -54,7 +53,7 @@ internal class LastFmRepository(
             override suspend fun saveCallResult(data: ArtistWithImageAndBioEntityAndStats) = addArtist(data)
 
             override suspend fun shouldFetch(data: ArtistWithImageAndBioEntityAndStats): Boolean {
-                if (Clock.System.now() - data.artist.time.createdAt > 1.days) {
+                if (now() - data.artist.time.createdAt > 1.days) {
                     local.removeArtist(data)
                     return true
                 }
