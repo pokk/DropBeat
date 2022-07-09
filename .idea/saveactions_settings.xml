@@ -10,7 +10,6 @@
         <option value="organizeImports" />
         <option value="reformat" />
         <option value="rearrange" />
-        <option value="executeAction" />
       </set>
     </option>
     <option name="configurationPath" value="" />
