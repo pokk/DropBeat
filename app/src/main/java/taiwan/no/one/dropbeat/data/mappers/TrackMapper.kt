@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,13 +48,16 @@ object TrackMapper {
     }
 
     private fun musicInfoToSongEntityJson(music: MusicInfo) = buildString {
-        append("""{
+        append(
+            """{
     "title" : "${music.title}",
     "artist" : "${music.artist}",
     "uri" : "${music.uri}",
     "cover_uri" : "${music.thumbUri}",
     "duration" : ${music.duration},
     "has_own" : false
-}""".trimIndent())
+}
+            """.trimIndent()
+        )
     }
 }

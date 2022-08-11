@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,9 +46,11 @@ internal class SplashViewModel(
 
     // TODO(jieyiwu): 6/10/20 Those should move to data layer.
     fun getConfigs() = Firebase.remoteConfig.apply {
-        setConfigSettingsAsync(remoteConfigSettings {
-            minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else TimeUnit.HOURS.toSeconds(6)
-        })
+        setConfigSettingsAsync(
+            remoteConfigSettings {
+                minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else TimeUnit.HOURS.toSeconds(6)
+            }
+        )
         setDefaultsAsync(R.xml.remote_config_defaults)
         fetchAndActivate().addOnCompleteListener {
             _configs.value = if (it.isSuccessful) {

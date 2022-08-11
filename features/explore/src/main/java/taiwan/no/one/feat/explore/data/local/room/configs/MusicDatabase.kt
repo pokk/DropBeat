@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -61,15 +61,12 @@ internal abstract class MusicDatabase : RoomDatabase() {
             if (tempInstance != null) {
                 return tempInstance
             }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
+            return synchronized(this) {
+                Room.databaseBuilder(
                     context.applicationContext,
                     MusicDatabase::class.java,
                     DATABASE_NAME
-                ).build()
-                INSTANCE = instance
-
-                return instance
+                ).build().also { INSTANCE = it }
             }
         }
     }
