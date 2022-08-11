@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,13 @@ package config
 
 object TestLibraryDependency {
     private object Version {
-        const val KTX_CORE = "1.4.1-alpha06"
+        const val KTX_CORE = "1.5.0-alpha01"
         const val CORE = "2.1.0"
-        const val JUNIT = "1.1.4-alpha06"
+        const val JUNIT = "1.1.4-alpha07"
         const val ASSERTK = "0.25"
-        const val ESPRESSO = "3.5.0-alpha06"
+        const val ESPRESSO = "3.5.0-alpha07"
         const val KAKAO = "2.1.0"
-        const val MOCKK = "1.12.4"
+        const val MOCKK = "1.12.5"
     }
 
     const val COROUTINE = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${CoreDependency.Version.KOTLIN_COROUTINE}"

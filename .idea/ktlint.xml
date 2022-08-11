@@ -5,8 +5,8 @@
     <treatAsErrors>false</treatAsErrors>
     <disabledRules>
       <list>
-        <option value="keyword-spacing" />
         <option value="indent" />
+        <option value="keyword-spacing" />
       </list>
     </disabledRules>
     <editorConfigPath>$PROJECT_DIR$/.editorconfig</editorConfigPath>

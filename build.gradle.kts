@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.0-beta05")
+        classpath("com.android.tools.build:gradle:7.4.0-alpha09")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath(config.GradleDependency.KOTLIN)

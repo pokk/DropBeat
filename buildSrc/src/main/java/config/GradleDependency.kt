@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ import config.LibraryDependency.Version.NAVIGATION_KTX
 object GradleDependency {
     object Version {
         const val SAFE_ARGS = NAVIGATION_KTX
-        const val GOOGLE_SERVICE = "4.3.10"
-        const val CRASHLYTICS = "2.8.1"
+        const val GOOGLE_SERVICE = "4.3.13"
+        const val CRASHLYTICS = "2.9.1"
         const val PERFORMANCE = "1.4.1"
-        const val KSP = "1.7.0-Beta-1.0.5"
+        const val KSP = "1.7.20-Beta-1.0.6"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${CoreDependency.Version.KOTLIN}"

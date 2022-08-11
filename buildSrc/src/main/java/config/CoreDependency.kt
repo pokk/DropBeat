@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,9 @@ package config
 
 object CoreDependency {
     object Version {
-        const val KOTLIN = "1.7.0-Beta"
-        const val KOTLIN_COROUTINE = "1.6.1"
-        const val KOTLIN_DATETIME = "0.3.3"
+        const val KOTLIN = "1.7.20-Beta"
+        const val KOTLIN_COROUTINE = "1.6.4"
+        const val KOTLIN_DATETIME = "0.4.0"
     }
 
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib:${Version.KOTLIN}"

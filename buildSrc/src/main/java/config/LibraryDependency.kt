@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,43 +29,42 @@ object LibraryDependency {
         const val ARV = "1.0.16"
         const val KINFER = "2.4.0"
         const val MATERIAL = "1.7.0-alpha01"
-        const val ANDROIDX = "1.0.0"
-        const val ANNOTATION = "1.4.0-alpha02"
+        const val ANNOTATION = "1.4.0"
         const val APPCOMPAT = "1.6.0-alpha03"
         const val APP_STARTUP = "1.2.0-alpha01"
-        const val CARDVIEW = ANDROIDX
-        const val RECYCLERVIEW = "1.3.0-alpha02"
-        const val PAGING = "3.1.1"
+        const val CARDVIEW = "1.0.0"
+        const val RECYCLERVIEW = "1.3.0-beta02"
+        const val PAGING = "3.2.0-alpha02"
         const val CONSTRAINTLAYOUT = "2.1.3"
         const val COORDINATORLAYOUT = "1.2.0"
-        const val AAC_LIFECYCLE = "2.5.0-rc01"
+        const val AAC_LIFECYCLE = "2.5.1"
         const val DATASTORE = "1.0.0"
-        const val KODEIN = "7.11.0"
-        const val KTX = "1.9.0-alpha03"
+        const val KODEIN = "7.14.0"
+        const val KTX = "1.9.0-beta01"
         const val ACTIVITY_KTX = "1.6.0-alpha03"
-        const val FRAGMENT_KTX = "1.5.0-rc01"
+        const val FRAGMENT_KTX = "1.6.0-alpha01"
         const val PALETTE_KTX = "1.0.0"
         const val COLLECTION_KTX = "1.2.0"
-        const val NAVIGATION_KTX = "2.5.0-rc01"
-        const val WORK_KTX = "2.8.0-alpha02"
+        const val NAVIGATION_KTX = "2.5.1"
+        const val WORK_KTX = "2.8.0-alpha03"
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
-        const val ROOM = "2.5.0-alpha01"
-        const val MMKV = "1.2.13"
+        const val ROOM = "2.5.0-alpha02"
+        const val MMKV = "1.2.14"
         const val PLAY_CORE = "1.10.3"
-        const val COIL = "2.0.0"
+        const val COIL = "2.1.0"
         const val RETROFIT2 = "2.9.0"
-        const val OKHTTP3 = "5.0.0-alpha.7"
-        const val JSOUP = "1.14.3"
+        const val OKHTTP3 = "5.0.0-alpha.10"
+        const val JSOUP = "1.15.2"
         const val MOSHI = "1.13.0"
         const val AUTO_SERVICE = "1.0.1"
-        const val FIREBASE_BOM = "30.0.1"
+        const val FIREBASE_BOM = "30.3.2"
         const val FIREBASE_AUTH_GOOGLE = "20.2.0"
-        const val FIREBASE_AUTH_FACEBOOK = "13.2.0"
+        const val FIREBASE_AUTH_FACEBOOK = "14.1.0"
         const val EXOPLAYER = "2.17.1"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
-        const val LOTTIE = "5.1.1"
-        const val SENTRY = "6.0.0-beta.3"
+        const val LOTTIE = "5.2.0"
+        const val SENTRY = "6.3.1"
     }
 
     object Jieyi {

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.3.0-beta05")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0-Beta")
+    implementation("com.android.tools.build:gradle:7.4.0-alpha09")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20-Beta")
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
     implementation("com.github.ben-manes:gradle-versions-plugin:0.41.0")
