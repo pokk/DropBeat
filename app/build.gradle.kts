@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,6 @@ import utils.unitTestDependencies
 plugins {
     id("com.android.application")
     kotlin("android")
-    `kotlin-kapt`
     `kotlin-parcelize`
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")

@@ -52,13 +52,9 @@ subprojects {
                     plugin("com.android.dynamic-feature")
                     plugin("kotlin-android")
                     plugin("kotlin-parcelize")
-                    plugin("kotlin-kapt")
                     plugin("com.google.devtools.ksp")
                     plugin("androidx.navigation.safeargs.kotlin")
                 }
-            }
-            if (this@subprojects.name == "core") {
-                plugin("org.jetbrains.kotlin.kapt")
             }
         }
     }

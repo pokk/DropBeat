@@ -30,7 +30,6 @@ import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.BaseExtension
 import config.AndroidConfiguration
 import config.CommonModuleDependency
-import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 
 val modules = CommonModuleDependency.getLibraryModuleSimpleName()
 val features = CommonModuleDependency.getFeatureModuleSimpleName()
@@ -81,13 +80,6 @@ subprojects {
                 findByType(ApplicationExtension::class.java)?.applyLintOptions()
                 findByType(DynamicFeatureExtension::class.java)?.applyLintOptions()
                 findByType(LibraryExtension::class.java)?.applyLintOptions()
-            }
-        }
-        if (name in features + listOf("app", "core")) {
-            extensions.configure<KaptExtension> {
-                useBuildCache = true
-                correctErrorTypes = true
-                mapDiagnosticLocations = true
             }
         }
         //endregion

@@ -43,7 +43,6 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 const val DepEnvImpl = "implementation"
 const val DepEnvApi = "api"
 const val DepEnvDebugApi = "debugApi"
-const val DepEnvKapt = "kapt"
 const val DepEnvKsp = "ksp"
 const val DepEnvTest = "testImplementation"
 const val DepEnvAndroidTest = "androidTestImplementation"
@@ -56,7 +55,6 @@ const val DepAnnotationProcessor = "annotationProcessor"
  **********************************************************/
 
 fun DependencyHandlerScope.annotationDependencies() {
-    DepEnvKapt(JetPack.LIFECYCLE_COMPILER)
     DepEnvKsp(Tool.AUTO_SERVICE_KSP)
     DepEnvKsp(Database.ROOM_ANNOTATION)
     DepEnvKsp(Tool.MOSHI_CODEGEN)
