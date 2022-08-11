@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,9 +46,9 @@ subprojects {
                     compileSdkVersion(AndroidConfiguration.COMPILE_SDK)
                     defaultConfig {
                         minSdk = AndroidConfiguration.MIN_SDK
-                        targetSdkPreview = AndroidConfiguration.TARGET_SDK
+                        targetSdk = AndroidConfiguration.TARGET_SDK
                         vectorDrawables.useSupportLibrary = true
-                        testInstrumentationRunner = config.AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
+                        testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
                         consumerProguardFiles(file("consumer-rules.pro"))
                         //region NOTE: This is exceptions, only the library is using room.
                         if (this@subprojects.name in features) {
