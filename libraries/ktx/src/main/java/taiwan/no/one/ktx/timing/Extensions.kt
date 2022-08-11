@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import kotlin.system.measureTimeMillis
  * Executes the given [block] and returns elapsed time in milliseconds.
  */
 inline fun <reified T> measureTimeMillisReturn(block: () -> T): Pair<T, Long> {
-    var ret: T? = null
+    var ret: T?
     val time = measureTimeMillis {
         ret = block()
     }

@@ -57,6 +57,7 @@ object LibraryDependency {
         const val OKHTTP3 = "5.0.0-alpha.10"
         const val JSOUP = "1.15.2"
         const val MOSHI = "1.13.0"
+        const val AUTO_SERVICE_KSP = "1.0.0"
         const val AUTO_SERVICE = "1.0.1"
         const val FIREBASE_BOM = "30.3.2"
         const val FIREBASE_AUTH_GOOGLE = "20.2.0"
@@ -79,6 +80,7 @@ object LibraryDependency {
         const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Version.MOSHI}"
         const val MOSHI_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:${Version.MOSHI}"
 
+        const val AUTO_SERVICE_KSP = "dev.zacsweers.autoservice:auto-service-ksp:${Version.AUTO_SERVICE_KSP}"
         const val AUTO_SERVICE = "com.google.auto.service:auto-service:${Version.AUTO_SERVICE}"
     }
 

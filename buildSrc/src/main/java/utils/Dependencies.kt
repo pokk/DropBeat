@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ const val DepAnnotationProcessor = "annotationProcessor"
 
 fun DependencyHandlerScope.annotationDependencies() {
     DepEnvKapt(JetPack.LIFECYCLE_COMPILER)
-    DepEnvKapt(Tool.AUTO_SERVICE)
+    DepEnvKsp(Tool.AUTO_SERVICE_KSP)
     DepEnvKsp(Database.ROOM_ANNOTATION)
     DepEnvKsp(Tool.MOSHI_CODEGEN)
 }

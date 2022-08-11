@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@ dependencies {
     // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(CommonModuleDependency.LIB_CORE))
     implementation(project(CommonModuleDependency.LIB_ENTITY))
+    implementation(config.LibraryDependency.Jieyi.KNIFER)
     syncDependencies()
     unitTestDependencies()
 }

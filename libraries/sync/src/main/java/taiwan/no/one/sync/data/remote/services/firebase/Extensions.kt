@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package taiwan.no.one.sync.data.remote.services.firebase
 
+import com.devrapid.kotlinshaver.castOrNull
 import com.google.firebase.firestore.DocumentReference
 
-fun castToDocList(data: Any?) = data as? List<DocumentReference>
+fun castToDocList(data: Any?) = castOrNull<List<DocumentReference>>(data)

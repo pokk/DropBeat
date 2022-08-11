@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ package taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders
 
 import androidx.core.content.ContextCompat
 import coil.load
+import com.devrapid.kotlinshaver.castOrNull
 import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
@@ -38,18 +39,18 @@ internal class TopChartViewHolder(
     private val binding: ItemTypeOfMusicBinding,
 ) : ViewHolderBinding<Any, TopChartAdapter>(binding.root) {
     override fun initView(entity: Any, adapter: TopChartAdapter) {
-        (entity as? TrackEntity)?.let(::initTrackType)
-        (entity as? ArtistWithMoreDetailEntity)?.let(::initArtistType)
+        castOrNull<TrackEntity>(entity)?.let(::initTrackType)
+        castOrNull<ArtistWithMoreDetailEntity>(entity)?.let(::initArtistType)
         binding.apply {
             mtvNumber.text = (absoluteAdapterPosition + 1).toString()
             // XXX(jieyi): 10/31/20 We might be able to do better.
             btnFavorite.setOnClickListener {
-                (entity as? TrackEntity)?.let { trackEntity ->
+                castOrNull<TrackEntity>(entity)?.let { trackEntity ->
                     trackEntity.isFavorite = !(trackEntity.isFavorite ?: false)
                     setFavoriteIcon(requireNotNull(trackEntity.isFavorite))
                     adapter.favoriteListener?.invoke(EntityMapper.exploreToSimpleTrackEntity(trackEntity))
                 }
-                (entity as? ArtistWithMoreDetailEntity)?.let { artistWithMoreDetailEntity ->
+                castOrNull<ArtistWithMoreDetailEntity>(entity)?.let { artistWithMoreDetailEntity ->
                     artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite =
                         !(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite ?: false)
                     setFavoriteIcon(requireNotNull(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite))
@@ -57,10 +58,10 @@ internal class TopChartViewHolder(
                 }
             }
             btnOption.setOnClickListener {
-                (entity as? TrackEntity)?.let { trackEntity ->
+                castOrNull<TrackEntity>(entity)?.let { trackEntity ->
                     adapter.optionListener?.invoke(it, EntityMapper.exploreToSimpleTrackEntity(trackEntity))
                 }
-                (entity as? ArtistWithMoreDetailEntity)?.let { artistWithMoreDetailEntity ->
+                castOrNull<ArtistWithMoreDetailEntity>(entity)?.let { artistWithMoreDetailEntity ->
                     adapter.optionListener?.invoke(
                         it,
                         EntityMapper.artistToSimpleTrackEntity(artistWithMoreDetailEntity)
