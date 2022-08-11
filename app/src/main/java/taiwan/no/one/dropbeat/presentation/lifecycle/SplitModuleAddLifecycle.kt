@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,8 @@
 package taiwan.no.one.dropbeat.presentation.lifecycle
 
 import android.content.Context
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
@@ -35,8 +34,8 @@ import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 
 class SplitModuleAddLifecycle(
     private val context: Context,
-    private val modules: List<String>
-) : LifecycleObserver {
+    private val modules: List<String>,
+) : DefaultLifecycleObserver {
     private val manager by lazy { SplitInstallManagerFactory.create(context.applicationContext) }
     private val request by lazy {
         SplitInstallRequest.newBuilder().apply { modules.forEach { addModule(it) } }.build()
@@ -50,16 +49,18 @@ class SplitModuleAddLifecycle(
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun registerListener() {
+    override fun onResume(owner: LifecycleOwner) = register()
+
+    override fun onPause(owner: LifecycleOwner) = unregister()
+
+    fun register() {
         manager.run {
             registerListener(listener)
             startInstall(request)
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun unregisterListener() {
+    fun unregister() {
         manager.unregisterListener(listener)
     }
 }

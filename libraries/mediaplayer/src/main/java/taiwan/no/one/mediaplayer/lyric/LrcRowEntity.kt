@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package taiwan.no.one.mediaplayer.lyric
 
+import android.text.format.DateUtils
 import androidx.annotation.WorkerThread
 import taiwan.no.one.mediaplayer.exceptions.LyricFormatException
 
@@ -38,11 +39,9 @@ data class LrcRowEntity(
     // time = 02 * 60 * 1000 + 34 * 1000 + 14.
     val time: Long,
     // The content of the line's lyrics.
-    val content: String?
+    val content: String?,
 ) : Comparable<LrcRowEntity> {
     companion object {
-        private const val UNIT_OF_MINUTE = 1000 * 60
-        private const val UNIT_OF_SECOND_UNIT = 1000
         private const val POS_OPENED_BRACKET = 0
         private const val POS_CLOSED_BRACKET = 9
         private const val OPENED_BRACKET = '['
@@ -91,7 +90,8 @@ data class LrcRowEntity(
                 // [01:07.00]When you and I accidentally think of her
                 .map { LrcRowEntity(it, timeConvert(it), content) }
                 .toList()
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             e.printStackTrace()
             emptyList()
         }
@@ -106,8 +106,8 @@ data class LrcRowEntity(
             // Split the string XX:XX:XX
             val times = timeString.replace(SEPARATED_MS_MIN, SEPARATED_MIN).split(SEPARATED_MIN)
             // mm:ss:SS
-            return times[0].toLong() * UNIT_OF_MINUTE + // minute
-                times[1].toLong() * UNIT_OF_SECOND_UNIT + // second
+            return times[0].toLong() * DateUtils.MINUTE_IN_MILLIS + // minute
+                times[1].toLong() * DateUtils.SECOND_IN_MILLIS + // second
                 times[2].toLong() // millisecond
         }
     }

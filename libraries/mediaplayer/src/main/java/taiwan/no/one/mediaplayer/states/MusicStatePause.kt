@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package taiwan.no.one.mediaplayer.states
 
-import com.google.android.exoplayer2.ExoPlayer
+import androidx.media3.exoplayer.ExoPlayer
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Pause
 
 internal class MusicStatePause(player: ExoPlayer) : MusicState(player) {
@@ -38,18 +38,14 @@ internal class MusicStatePause(player: ExoPlayer) : MusicState(player) {
     override fun pause() = this
 
     override fun next(): MusicState {
-        if (!player.hasNext()) {
-            return this
-        }
-        player.next()
+        if (!player.hasNextMediaItem()) return this
+        player.seekToNextMediaItem()
         return play()
     }
 
     override fun previous(): MusicState {
-        if (!player.hasPrevious()) {
-            return this
-        }
-        player.previous()
+        if (!player.hasPreviousMediaItem()) return this
+        player.seekToPreviousMediaItem()
         return play()
     }
 

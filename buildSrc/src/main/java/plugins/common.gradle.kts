@@ -28,7 +28,6 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.DynamicFeatureExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.internal.dsl.DefaultConfig
 import config.AndroidConfiguration
 import config.CommonModuleDependency
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
@@ -50,11 +49,6 @@ subprojects {
                         vectorDrawables.useSupportLibrary = true
                         testInstrumentationRunner = AndroidConfiguration.TEST_INSTRUMENTATION_RUNNER
                         consumerProguardFiles(file("consumer-rules.pro"))
-                        //region NOTE: This is exceptions, only the library is using room.
-                        if (this@subprojects.name in features) {
-                            applyRoomSetting()
-                        }
-                        //endregion
                     }
                     buildTypes {
                         getByName("release") {
@@ -97,16 +91,6 @@ subprojects {
             }
         }
         //endregion
-    }
-}
-
-fun DefaultConfig.applyRoomSetting() {
-    javaCompileOptions {
-        annotationProcessorOptions {
-            arguments["room.schemaLocation"] = "$projectDir/schemas"
-            arguments["room.incremental"] = "true"
-            arguments["room.expandProjection"] = "true"
-        }
     }
 }
 

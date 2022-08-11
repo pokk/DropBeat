@@ -50,6 +50,7 @@ object LibraryDependency {
         const val DYN_ANIM_KTX = "1.0.0-alpha01"
         const val ROOM = "2.5.0-alpha02"
         const val MMKV = "1.2.14"
+        const val EXOPLAYER = "1.0.0-beta02"
         const val PLAY_CORE = "1.10.3"
         const val COIL = "2.1.0"
         const val RETROFIT2 = "2.9.0"
@@ -60,7 +61,6 @@ object LibraryDependency {
         const val FIREBASE_BOM = "30.3.2"
         const val FIREBASE_AUTH_GOOGLE = "20.2.0"
         const val FIREBASE_AUTH_FACEBOOK = "14.1.0"
-        const val EXOPLAYER = "2.17.1"
         const val SHAPE_OF_VIEW = "1.4.7"
         const val REALTIME_BLUR = "1.2.1"
         const val LOTTIE = "5.2.0"
@@ -155,7 +155,7 @@ object LibraryDependency {
     }
 
     object Media {
-        const val EXOPLAYER_CORE = "com.google.android.exoplayer:exoplayer-core:${Version.EXOPLAYER}"
+        const val EXOPLAYER_CORE = "androidx.media3:media3-exoplayer:${Version.EXOPLAYER}"
     }
 
     object Ui {

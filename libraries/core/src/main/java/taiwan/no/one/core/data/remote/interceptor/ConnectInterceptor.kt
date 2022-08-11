@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package taiwan.no.one.core.data.remote.interceptor
 
 import android.content.Context
+import android.text.format.DateUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 import taiwan.no.one.ktx.internet.hasNetwork
@@ -33,7 +34,7 @@ class ConnectInterceptor(
     private val context: Context,
 ) : Interceptor {
     companion object {
-        private const val AWeekTime = 60 * 60 * 24 * 7
+        private const val AWeekTime = DateUtils.WEEK_IN_MILLIS / DateUtils.SECOND_IN_MILLIS // 60 * 60 * 24 * 7
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -63,8 +64,10 @@ class ConnectInterceptor(
              *  The 'only-if-cached' attribute indicates to not retrieve add data; fetch the cache
              *  only instead.
              */
-            request.newBuilder().header("Cache-Control",
-                                        "public, only-if-cached, max-stale=$AWeekTime").build()
+            request.newBuilder().header(
+                "Cache-Control",
+                "public, only-if-cached, max-stale=$AWeekTime"
+            ).build()
         }
         // End of if-else statement
 

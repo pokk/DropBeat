@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package taiwan.no.one.mediaplayer.states
 
-import com.google.android.exoplayer2.ExoPlayer
+import androidx.media3.exoplayer.ExoPlayer
 import taiwan.no.one.mediaplayer.interfaces.MusicPlayer.State.Play
 
 internal class MusicStatePlay(player: ExoPlayer) : MusicState(player) {
@@ -41,12 +41,12 @@ internal class MusicStatePlay(player: ExoPlayer) : MusicState(player) {
     }
 
     override fun next(): MusicState {
-        player.next()
+        player.seekToNextMediaItem()
         return this
     }
 
     override fun previous(): MusicState {
-        player.previous()
+        player.seekToPreviousMediaItem()
         return this
     }
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,13 @@ subprojects {
                 in modules -> {
                     plugin("com.android.library")
                     plugin("kotlin-android")
+                    // special plugins
+                    if (name in listOf("entity", "core")) {
+                        plugin("com.google.devtools.ksp")
+                    }
+                    if (name in listOf("entity")) {
+                        plugin("kotlin-parcelize")
+                    }
                 }
                 in features -> {
                     plugin("com.android.dynamic-feature")

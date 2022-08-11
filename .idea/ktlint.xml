@@ -7,6 +7,7 @@
       <list>
         <option value="indent" />
         <option value="keyword-spacing" />
+        <option value="trailing-comma" />
       </list>
     </disabledRules>
     <editorConfigPath>$PROJECT_DIR$/.editorconfig</editorConfigPath>

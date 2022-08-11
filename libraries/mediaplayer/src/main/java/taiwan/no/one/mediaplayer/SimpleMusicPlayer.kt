@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,24 +26,24 @@ package taiwan.no.one.mediaplayer
 
 import android.content.Context
 import android.net.Uri
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.Timeline
-import com.google.android.exoplayer2.source.ConcatenatingMediaSource
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.ShuffleOrder.DefaultShuffleOrder
-import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.Timeline
+import androidx.media3.common.Tracks
+import androidx.media3.common.util.Util
+import androidx.media3.datasource.DefaultDataSourceFactory
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ConcatenatingMediaSource
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import androidx.media3.exoplayer.source.ShuffleOrder
+import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import kotlin.properties.Delegates
 import kotlin.random.Random
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -62,7 +62,8 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     companion object {
         private const val NAME = "LocalExoPlayer"
 
-        @Volatile private var INSTANCE: SimpleMusicPlayer? = null
+        @Volatile
+        private var INSTANCE: SimpleMusicPlayer? = null
 
         fun initialize(context: Context) {
             val tempInstance = INSTANCE
@@ -87,7 +88,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
         }
     private var callback: PlayerCallback? = null
     private val exoPlayer by lazy {
-        SimpleExoPlayer.Builder(context).build().apply {
+        ExoPlayer.Builder(context).build().apply {
             setMediaSource(queue, true)
             prepare()
             addListener(MusicEventListener())
@@ -96,7 +97,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
     }
     private val playlist by lazy { mutableListOf<MusicInfo>() }
     private val queue by lazy { ConcatenatingMediaSource() }
-    private val curPlayingIndex get() = exoPlayer.currentWindowIndex
+    private val curPlayingIndex get() = exoPlayer.currentMediaItemIndex
     override val isPlaying get() = exoPlayer.isPlaying
     override val curPlayingInfo get() = playlist.find { exoPlayer.currentMediaItem?.mediaId == it.uri }
     override val curTrackSec get() = exoPlayer.currentPosition / MediaUtil.SECOND_UNIT
@@ -108,7 +109,7 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
         }
         if (newMode == Shuffle) {
             exoPlayer.shuffleModeEnabled = true
-            queue.setShuffleOrder(DefaultShuffleOrder(queue.size, Random.nextLong()))
+            queue.setShuffleOrder(ShuffleOrder.DefaultShuffleOrder(queue.size, Random.nextLong()))
         }
         exoPlayer.repeatMode = mode.value
     }
@@ -197,19 +198,17 @@ class SimpleMusicPlayer(private val context: Context) : MusicPlayer {
 
         override fun onTimelineChanged(timeline: Timeline, reason: Int) = Unit
 
-        override fun onTracksChanged(trackGroups: TrackGroupArray, trackSelections: TrackSelectionArray) {
+        override fun onTracksChanged(tracks: Tracks) {
             // Only trackGroups is not empty, the track will really play the next/previous track.
-            if (!trackGroups.isEmpty) {
-                curPlayingInfo?.let {
-                    callback?.onTrackChanged(it)
-                }
-            }
+            if (tracks.groups.isEmpty()) return
+            curPlayingInfo?.let { callback?.onTrackChanged(it) }
         }
 
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
             // TODO(jieyiwu): 6/13/20 The real state change should be here!
         }
 
+        @OptIn(ObsoleteCoroutinesApi::class)
         override fun onIsPlayingChanged(isPlaying: Boolean) {
             if (isPlaying) {
                 // Send the callback function each second when the player is playing.

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,15 +28,17 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.devrapid.kotlinshaver.cast
 
 @SuppressLint("MissingPermission")
 fun hasNetwork(context: Context): Boolean {
-    var isConnected = false // Initial Value
-    val connectivityManager = cast<ConnectivityManager>(context.getSystemService(CONNECTIVITY_SERVICE))
-    val activeNetwork = connectivityManager.activeNetworkInfo
-    if (activeNetwork != null && activeNetwork.isConnected) {
-        isConnected = true
-    }
-    return isConnected
+    return runCatching {
+        cast<ConnectivityManager>(context.getSystemService(CONNECTIVITY_SERVICE))
+    }.mapCatching {
+        requireNotNull(it.getNetworkCapabilities(it.activeNetwork))
+    }.map {
+        it.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            it.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    }.getOrNull() ?: false
 }
