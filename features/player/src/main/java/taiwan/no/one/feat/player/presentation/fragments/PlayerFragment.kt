@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,6 +56,7 @@ import com.devrapid.kotlinknifer.getDimen
 import com.devrapid.kotlinknifer.getDrawable
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
+import com.devrapid.kotlinshaver.castOrNull
 import com.google.android.material.slider.Slider
 import java.lang.ref.WeakReference
 import kotlin.math.abs
@@ -362,7 +363,7 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
                 root.addView(divider)
             }
             val textview = LayoutInflater.from(root.context).inflate(R.layout.item_setting, root, false)
-            (textview as? TextView)?.apply {
+            castOrNull<TextView>(textview)?.apply {
                 text = it.title
                 tag = it.itemId
                 setCompoundDrawablesWithIntrinsicBounds(it.icon, null, null, null)
@@ -440,9 +441,11 @@ internal class PlayerFragment : BaseFragment<MainActivity, FragmentPlayerBinding
     private fun submitHighlightPosition(position: Int) {
         lifecycleScope.launch {
             stateFlow.emit(LrcState.HighlightState(position))
-            binding.rvLyric.layoutManager?.startSmoothScroll(createMidSmoothScroll(position).apply {
-                targetPosition = position
-            })
+            binding.rvLyric.layoutManager?.startSmoothScroll(
+                createMidSmoothScroll(position).apply {
+                    targetPosition = position
+                }
+            )
         }
     }
 

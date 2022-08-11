@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.devrapid.kotlinshaver.castOrNull
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.entity.SimpleTrackEntity
@@ -56,7 +57,7 @@ internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>() {
     override fun getItemCount() = data.size
 
     fun setDataset(dataset: Any) {
-        data = ((dataset as? TracksEntity)?.tracks ?: (dataset as? ArtistWithMoreDetailEntities))
+        data = (castOrNull<TracksEntity>(dataset)?.tracks ?: castOrNull<ArtistWithMoreDetailEntities>(dataset))
             ?.subList(0, 4)
             .orEmpty()
         notifyDataSetChanged()

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -92,28 +92,30 @@ internal class ExploreViewModel(
         _playlists.value = libraryProvider.getPlaylists()
     }
 
-    @WorkerThread
     fun getTopTracks() = launchBehind {
-        _topTracks.postValue(kotlin.runCatching {
-            fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, SONG_LIMITATION, SONG_LIMITATION)).apply {
-                tracks.onEach {
-                    val url = it.url ?: return@onEach
-                    val isFavorite = libraryProvider.isFavoriteTrack(url)
-                    it.isFavorite = isFavorite.getOrNull()
-                }
-            }.also { transformData(it) }
-        })
+        _topTracks.postValue(
+            kotlin.runCatching {
+                fetchChartTopTrackCase.execute(FetchChartTopTrackReq(1, SONG_LIMITATION, SONG_LIMITATION)).apply {
+                    tracks.onEach {
+                        val url = it.url ?: return@onEach
+                        val isFavorite = libraryProvider.isFavoriteTrack(url)
+                        it.isFavorite = isFavorite.getOrNull()
+                    }
+                }.also { transformData(it) }
+            }
+        )
     }
 
-    @WorkerThread
     fun getTopArtists() = launchBehind {
-        _topArtists.postValue(kotlin.runCatching {
-            fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, SONG_LIMITATION, SONG_LIMITATION)).onEach {
-                val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
-                val isFavorite = libraryProvider.isFavoriteTrack(url)
-                it.second?.popularTrackThisWeek?.isFavorite = isFavorite.getOrNull()
-            }.also { transformData(it) }
-        })
+        _topArtists.postValue(
+            kotlin.runCatching {
+                fetchChartTopArtistCase.execute(FetchChartTopArtistReq(1, SONG_LIMITATION, SONG_LIMITATION)).onEach {
+                    val url = it.second?.popularTrackThisWeek?.url ?: return@onEach
+                    val isFavorite = libraryProvider.isFavoriteTrack(url)
+                    it.second?.popularTrackThisWeek?.isFavorite = isFavorite.getOrNull()
+                }.also { transformData(it) }
+            }
+        )
     }
 
     fun updateSong(song: SimpleTrackEntity, isFavorite: Boolean) = viewModelScope.launch {

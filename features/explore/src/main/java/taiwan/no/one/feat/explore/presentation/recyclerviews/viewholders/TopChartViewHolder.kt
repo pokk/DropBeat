@@ -39,33 +39,36 @@ internal class TopChartViewHolder(
     private val binding: ItemTypeOfMusicBinding,
 ) : ViewHolderBinding<Any, TopChartAdapter>(binding.root) {
     override fun initView(entity: Any, adapter: TopChartAdapter) {
-        castOrNull<TrackEntity>(entity)?.let(::initTrackType)
-        castOrNull<ArtistWithMoreDetailEntity>(entity)?.let(::initArtistType)
-        binding.apply {
-            mtvNumber.text = (absoluteAdapterPosition + 1).toString()
-            // XXX(jieyi): 10/31/20 We might be able to do better.
-            btnFavorite.setOnClickListener {
-                castOrNull<TrackEntity>(entity)?.let { trackEntity ->
-                    trackEntity.isFavorite = !(trackEntity.isFavorite ?: false)
-                    setFavoriteIcon(requireNotNull(trackEntity.isFavorite))
-                    adapter.favoriteListener?.invoke(EntityMapper.exploreToSimpleTrackEntity(trackEntity))
+        val track = castOrNull<TrackEntity>(entity)
+        val artist = castOrNull<ArtistWithMoreDetailEntity>(entity)
+        if (track != null || artist != null) {
+            binding.mtvNumber.text = (absoluteAdapterPosition + 1).toString()
+        }
+        // XXX(jieyi): 10/31/20 We might be able to do better.
+        if (track != null) {
+            initTrackType(track)
+            binding.apply {
+                btnFavorite.setOnClickListener {
+                    track.isFavorite = !(track.isFavorite ?: false)
+                    setFavoriteIcon(requireNotNull(track.isFavorite))
+                    adapter.favoriteListener?.invoke(EntityMapper.exploreToSimpleTrackEntity(track))
                 }
-                castOrNull<ArtistWithMoreDetailEntity>(entity)?.let { artistWithMoreDetailEntity ->
-                    artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite =
-                        !(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite ?: false)
-                    setFavoriteIcon(requireNotNull(artistWithMoreDetailEntity.second?.popularTrackThisWeek?.isFavorite))
-                    adapter.favoriteListener?.invoke(EntityMapper.artistToSimpleTrackEntity(artistWithMoreDetailEntity))
+                btnOption.setOnClickListener {
+                    adapter.optionListener?.invoke(it, EntityMapper.exploreToSimpleTrackEntity(track))
                 }
             }
-            btnOption.setOnClickListener {
-                castOrNull<TrackEntity>(entity)?.let { trackEntity ->
-                    adapter.optionListener?.invoke(it, EntityMapper.exploreToSimpleTrackEntity(trackEntity))
+        }
+        else if (artist != null) {
+            initArtistType(artist)
+            binding.apply {
+                btnFavorite.setOnClickListener {
+                    artist.second?.popularTrackThisWeek?.isFavorite =
+                        !(artist.second?.popularTrackThisWeek?.isFavorite ?: false)
+                    setFavoriteIcon(requireNotNull(artist.second?.popularTrackThisWeek?.isFavorite))
+                    adapter.favoriteListener?.invoke(EntityMapper.artistToSimpleTrackEntity(artist))
                 }
-                castOrNull<ArtistWithMoreDetailEntity>(entity)?.let { artistWithMoreDetailEntity ->
-                    adapter.optionListener?.invoke(
-                        it,
-                        EntityMapper.artistToSimpleTrackEntity(artistWithMoreDetailEntity)
-                    )
+                btnOption.setOnClickListener {
+                    adapter.optionListener?.invoke(it, EntityMapper.artistToSimpleTrackEntity(artist))
                 }
             }
         }

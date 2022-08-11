@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.visible
+import com.devrapid.kotlinshaver.castOrNull
 import com.google.android.material.transition.MaterialSharedAxis
 import java.lang.ref.WeakReference
 import org.kodein.di.provider
@@ -244,7 +245,7 @@ internal class ExploreFragment : BaseFragment<MainActivity, FragmentExploreBindi
     }
 
     private fun findRankingFragment() =
-        childFragmentManager.findFragmentByTag("part_explore") as? RankingFragment
+        castOrNull<RankingFragment>(childFragmentManager.findFragmentByTag("part_explore"))
 
     private fun showMenu(anchor: View, entity: SimpleTrackEntity) =
         popupMenuWithIcon(requireActivity(), anchor, AppResMenu.menu_more_track).apply {

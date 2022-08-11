@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package taiwan.no.one.sync.data.remote.services.firebase.mappers
 
+import com.devrapid.kotlinshaver.castOrNull
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
@@ -44,14 +45,14 @@ object FirebaseFieldMapper {
 
     fun fieldMapToSimplePlaylist(fieldMap: Map<String, Any>, refPath: String) = fieldMap.run {
         SimplePlaylistEntity(
-            (get("id") as? Long)?.toInt() ?: DEFAULT_INT,
-            get("name") as? String ?: DEFAULT_STR,
+            castOrNull<Long>(get("id"))?.toInt() ?: DEFAULT_INT,
+            castOrNull<String>(get("name")) ?: DEFAULT_STR,
             emptyList(),
-            get("thumb_url") as? String ?: DEFAULT_STR,
+            castOrNull<String>(get("thumb_url")) ?: DEFAULT_STR,
             now(),
             refPath,
             castToDocList(get("songs")).orEmpty().map { it.path },
-            get("last_synced_time") as? Long ?: DEFAULT_LONG,
+            castOrNull<Long>(get("last_synced_time")) ?: DEFAULT_LONG,
         )
     }
 

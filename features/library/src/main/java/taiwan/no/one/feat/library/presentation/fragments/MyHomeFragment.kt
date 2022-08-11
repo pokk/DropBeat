@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ import com.devrapid.kotlinknifer.gone
 import com.devrapid.kotlinknifer.loge
 import com.devrapid.kotlinknifer.logw
 import com.devrapid.kotlinknifer.visible
+import com.devrapid.kotlinshaver.castOrNull
 import com.devrapid.kotlinshaver.isNotNull
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
@@ -181,9 +182,9 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             }
         }
         listOf(
-            includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
-            includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
-            includeHistory.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter,
+            castOrNull<TrackAdapter>(includeFavorite.find<RecyclerView>(AppResId.rv_musics).adapter),
+            castOrNull<TrackAdapter>(includeDownloaded.find<RecyclerView>(AppResId.rv_musics).adapter),
+            castOrNull<TrackAdapter>(includeHistory.find<RecyclerView>(AppResId.rv_musics).adapter),
         ).forEach { it?.let(::setListClickListener) }
         mergeTopControllerBinding.btnMore.setOnClickListener {
             showMenu(it)
@@ -233,7 +234,7 @@ internal class MyHomeFragment : BaseLibraryFragment<BaseActivity<*>, FragmentMyP
             layout.find<TextView>(AppResId.mtv_no_music).visible()
         }
         else {
-            (layout.find<RecyclerView>(AppResId.rv_musics).adapter as? TrackAdapter)?.apply {
+            castOrNull<TrackAdapter>(layout.find<RecyclerView>(AppResId.rv_musics).adapter)?.apply {
                 data = songs
                 // It doesn't have many data, just reset all.
                 notifyDataSetChanged()
