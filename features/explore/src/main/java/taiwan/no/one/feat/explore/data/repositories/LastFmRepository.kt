@@ -50,7 +50,9 @@ internal class LastFmRepository(
 
     override suspend fun fetchArtist(name: String?, mbid: String?) =
         object : LayerCaching<ArtistWithImageAndBioEntityAndStats>() {
-            override suspend fun saveCallResult(data: ArtistWithImageAndBioEntityAndStats) = addArtist(data)
+            override suspend fun saveCallResult(data: ArtistWithImageAndBioEntityAndStats) {
+                local.createArtist(data)
+            }
 
             override suspend fun shouldFetch(data: ArtistWithImageAndBioEntityAndStats): Boolean {
                 if (now() - data.artist.time.createdAt > 1.days) {
@@ -64,10 +66,6 @@ internal class LastFmRepository(
 
             override suspend fun createCall() = remote.getArtistInfo(name, mbid)
         }.value()
-
-    override suspend fun addArtist(entity: ArtistWithImageAndBioEntityAndStats) {
-        local.createArtist(entity)
-    }
 
     override suspend fun fetchArtistTopAlbum(name: String?, mbid: String?) =
         remote.getArtistTopAlbum(name, mbid).topAlbums

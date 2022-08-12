@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,22 +30,12 @@ import taiwan.no.one.ext.extensions.now
 abstract class LayerCaching<RT> {
     protected open var timestamp = 0L
 
-    suspend fun value() = try {
-        val dbSource = loadFromLocal()
-        if (dbSource == null || shouldFetch(dbSource)) {
-            timestamp = now().toEpochMilliseconds()
-            fetchFromRemote()
-        }
-        else {
-            dbSource
-        }
-    }
-    catch (notFoundException: NotFoundException) {
-        // If can't find from the cache or the local persistence, will throw the [NotFoundException].
-        timestamp = now().toEpochMilliseconds()
-        fetchFromRemote()
-    }
-    catch (e: Exception) {
+    suspend fun value() = kotlin.runCatching {
+        getData()
+    }.onFailure {
+        // If you can't find from the cache or the local persistence, will throw the [NotFoundException].
+        it.printStackTrace()
+    }.getOrElse {
         timestamp = now().toEpochMilliseconds()
         fetchFromRemote()
     }
@@ -59,4 +49,16 @@ abstract class LayerCaching<RT> {
     protected abstract suspend fun loadFromLocal(): RT?
 
     protected abstract suspend fun createCall(): RT
+
+    @Throws(NotFoundException::class)
+    private suspend fun getData(): RT {
+        val dbSource = loadFromLocal()
+        return if (dbSource == null || shouldFetch(dbSource)) {
+            timestamp = now().toEpochMilliseconds()
+            fetchFromRemote()
+        }
+        else {
+            dbSource
+        }
+    }
 }

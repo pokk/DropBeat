@@ -46,9 +46,7 @@ internal interface LastFmRepo : Repository {
     //region ArtistEntity
     suspend fun fetchArtist(name: String?, mbid: String?): ArtistWithImageAndBioEntityAndStats
 
-    suspend fun addArtist(entity: ArtistWithImageAndBioEntityAndStats)
-
-    suspend fun fetchArtistTopAlbum(name: String?, mbid: String?): CommonLastFmEntity.TopAlbumsEntity
+    suspend fun fetchArtistTopAlbum(name: String?, mbid: String?): NetworkCommonLastFm.NetworkTopAlbums
 
     suspend fun fetchArtistTopTrack(name: String?, mbid: String?): NetworkArtistTopTrackInfo.NetworkTracksWithStreamable
 
