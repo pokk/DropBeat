@@ -28,7 +28,7 @@ object LibraryDependency {
     object Version {
         const val ARV = "1.0.16"
         const val KINFER = "2.4.0"
-        const val MATERIAL = "1.7.0-alpha01"
+        const val MATERIAL = "1.7.0-beta01"
         const val ANNOTATION = "1.4.0"
         const val APPCOMPAT = "1.6.0-beta01"
         const val APP_STARTUP = "1.2.0-alpha01"

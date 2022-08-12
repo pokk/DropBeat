@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2020 Jieyi
+  ~ Copyright (c) 2022 Jieyi
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -32,5 +32,13 @@
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/md_two_unit</item>
         <item name="android:layout_marginTop">@dimen/md_four_unit</item>
+    </style>
+
+    <style name="Taiwan.No.One.Switch.Overlay" parent="">
+        <item name="colorPrimary">@color/coral</item>
+    </style>
+
+    <style name="Taiwan.No.One.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="materialThemeOverlay">@style/Taiwan.No.One.Switch.Overlay</item>
     </style>
 </resources>
