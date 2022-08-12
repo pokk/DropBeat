@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
 
 import org.jsoup.Jsoup
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
-import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity.ImageEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistPhotos
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkCommonLastFm.NetworkImage
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 
 internal class LastFmExtraImpl : LastFmExtraService {
     companion object {
@@ -40,21 +40,21 @@ internal class LastFmExtraImpl : LastFmExtraService {
         private const val LASTFM_IMAGE_URL = "https://lastfm-img2.akamaized.net/i/u/770x0/%s.jpg"
     }
 
-    override suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity {
+    override suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): NetworkArtistPhotos {
         val doc = Jsoup.connect("$LASTFM_DOMAIN_MUSIC$artistName$LASTFM_IMAGE_REQUEST?page=$page").get()
 
         val hasNext = doc.select("li.pagination-next").select("a").toString().isNotBlank()
         val photos = doc.select("ul.image-list").select("li")
             .map { it.select("img.image-list-image").attr("src") }
             .map { it.split("/").last() }
-            .map { ArtistPhotosEntity.ArtistPhotoEntity(LASTFM_IMAGE_URL.format(it), it) }
+            .map { NetworkArtistPhotos.NetworkArtistPhoto(LASTFM_IMAGE_URL.format(it), it) }
 
-        return ArtistPhotosEntity(photos, hasNext)
+        return NetworkArtistPhotos(photos, hasNext)
     }
 
-    override suspend fun retrieveArtistMoreDetail(artistName: String): ArtistMoreDetailEntity {
+    override suspend fun retrieveArtistMoreDetail(artistName: String): NetworkArtistMoreDetail {
         val doc = Jsoup.connect("$LASTFM_DOMAIN_MUSIC$artistName").get()
-        val trackEntity = TrackEntity(null)
+        val trackEntity = NetworkTrack(null)
 
         val photo = doc.select("div.header-new-background-image").attr("content")
         doc.select("h3.artist-header-featured-items-item-name")[1].apply {
@@ -63,14 +63,14 @@ internal class LastFmExtraImpl : LastFmExtraService {
         }
         trackEntity.listeners = doc.select("p.artist-header-featured-items-item-listeners").text()
 
-        return ArtistMoreDetailEntity(photo, trackEntity)
+        return NetworkArtistMoreDetail(photo, trackEntity)
     }
 
-    override suspend fun retrieveTrackCover(url: String, trackEntity: TrackEntity): TrackEntity {
+    override suspend fun retrieveTrackCover(url: String, trackEntity: NetworkTrack): NetworkTrack {
         val photoUrl = retrieveCoverThumbnail(url)
 
         val images = trackEntity.images.orEmpty().toMutableList().apply {
-            add(ImageEntity(photoUrl, "cover"))
+            add(NetworkImage(photoUrl, "cover"))
         }
         trackEntity.images = images
         return trackEntity

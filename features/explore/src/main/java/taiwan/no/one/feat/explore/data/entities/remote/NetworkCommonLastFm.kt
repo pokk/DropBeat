@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,46 +28,46 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import taiwan.no.one.feat.explore.data.contracts.Dto
 
-object CommonLastFmEntity {
+object NetworkCommonLastFm {
     @JsonClass(generateAdapter = true)
-    internal data class TopAlbumsEntity(
+    internal data class NetworkTopAlbums(
         @Json(name = "album")
-        val albums: List<AlbumInfoEntity.AlbumWithArtistEntity>,
+        val albums: List<NetworkAlbumInfo.NetworkAlbumWithArtist>,
         @Json(name = "@attr")
-        val attr: AttrEntity?,
+        val attr: NetworkAttr?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class TagsEntity(
+    internal data class NetworkTags(
         @Json(name = "tag")
-        val tags: List<TagInfoEntity.TagEntity>?,
+        val tags: List<NetworkTagInfo.NetworkTag>?,
         @Json(name = "@attr")
-        val attr: AttrEntity?,
+        val attr: NetworkAttr?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class ImageEntity(
+    internal data class NetworkImage(
         @Json(name = "#text")
         val text: String?,
         val size: String?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class StreamableEntity(
+    internal data class NetworkStreamable(
         @Json(name = "#text")
         val text: String?,
         val fulltrack: String?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class WikiEntity(
+    internal data class NetworkWiki(
         val published: String?,
         val summary: String?,
         val content: String?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class AttrEntity(
+    internal data class NetworkAttr(
         val artist: String?,
         @Json(name = "totalPages")
         val totalPages: String?,

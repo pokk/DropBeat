@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@
 package taiwan.no.one.feat.explore.data.remote.services.retrofit.v1
 
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistPhotos
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 
 /**
  * We will implement those them by [org.jsoup.Jsoup] because we can't use api from
@@ -35,11 +35,11 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEnti
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 internal interface LastFmExtraService {
-    suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): ArtistPhotosEntity
+    suspend fun retrieveArtistPhotosInfo(artistName: String, page: Int): NetworkArtistPhotos
 
-    suspend fun retrieveArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
+    suspend fun retrieveArtistMoreDetail(artistName: String): NetworkArtistMoreDetail
 
-    suspend fun retrieveTrackCover(url: String, trackEntity: TrackEntity): TrackEntity
+    suspend fun retrieveTrackCover(url: String, trackEntity: NetworkTrack): NetworkTrack
 
     suspend fun retrieveTrackCover(url: String, simpleTrackEntity: SimpleTrackEntity): SimpleTrackEntity
 }

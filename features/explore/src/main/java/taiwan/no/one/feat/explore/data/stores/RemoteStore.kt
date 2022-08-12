@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,11 +41,11 @@ import taiwan.no.one.feat.explore.data.entities.local.BioEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.local.StatsEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopArtistInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmExtraService
 import taiwan.no.one.feat.explore.data.remote.services.retrofit.v1.LastFmService
 
@@ -65,9 +65,9 @@ internal class RemoteStore(
         lastFmService.retrieveAlbumInfo(infoQuery(Constant.LASTFM_PARAM_ALBUM_GET_INFO, mbid))
 
     override suspend fun getArtistInfo(name: String?, mbid: String?): ArtistWithImageAndBioEntityAndStats {
-        val artistMapper by instance<Mapper<ArtistInfoEntity.ArtistEntity, ArtistEntity>>()
-        val bioMapper by instance<Mapper<ArtistInfoEntity.StatsEntity, StatsEntity>>()
-        val stateMapper by instance<Mapper<ArtistInfoEntity.BioEntity, BioEntity>>()
+        val artistMapper by instance<Mapper<NetworkArtistInfo.NetworkArtist, ArtistEntity>>()
+        val bioMapper by instance<Mapper<NetworkArtistInfo.NetworkStats, StatsEntity>>()
+        val stateMapper by instance<Mapper<NetworkArtistInfo.NetworkBio, BioEntity>>()
         val artist = lastFmService.retrieveArtistInfo(
             combineArtistName(Constant.LASTFM_PARAM_ARTIST_GET_INFO, name, mbid)
         ).artist ?: throw IllegalArgumentException()
@@ -94,7 +94,7 @@ internal class RemoteStore(
 
     override suspend fun getArtistMoreInfo(artistName: String) = lastFmExtraService.retrieveArtistMoreDetail(artistName)
 
-    override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) =
+    override suspend fun createArtistMoreInfo(artistName: String, entity: NetworkArtistMoreDetail) =
         UnsupportedOperation()
 
     override suspend fun createArtist(entity: ArtistWithImageAndBioEntityAndStats) = UnsupportedOperation()
@@ -107,7 +107,7 @@ internal class RemoteStore(
     override suspend fun getSimilarTrackInfo(mbid: String) =
         lastFmService.retrieveSimilarTrackInfo(infoQuery(Constant.LASTFM_PARAM_TRACK_GET_SIMILAR, mbid))
 
-    override suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity) =
+    override suspend fun getTrackCover(trackUrl: String, trackEntity: NetworkTrack) =
         lastFmExtraService.retrieveTrackCover(trackUrl, trackEntity)
 
     override suspend fun getTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) =
@@ -116,12 +116,13 @@ internal class RemoteStore(
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
         lastFmService.retrieveChartTopTrack(chartQuery(Constant.LASTFM_PARAM_CHART_GET_TOP_TRACKS, page, limit))
 
-    override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = UnsupportedOperation()
+    override suspend fun createChartTopTrack(page: Int, limit: Int, entity: NetworkTopTrackInfo) =
+        UnsupportedOperation()
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
         lastFmService.retrieveChartTopArtist(chartQuery(Constant.LASTFM_PARAM_CHART_GET_TOP_ARTISTS, page, limit))
 
-    override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) =
+    override suspend fun createChartTopArtist(page: Int, limit: Int, entity: NetworkTopArtistInfo) =
         UnsupportedOperation()
 
     override suspend fun getChartTopTag(page: Int, limit: Int) =

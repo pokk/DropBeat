@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,8 @@ import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.explore.data.contracts.DataStore
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
 
 internal class LastFmExtraRepository(
@@ -44,18 +44,18 @@ internal class LastFmExtraRepository(
     override suspend fun fetchArtistPhotoInfo(artistName: String, page: Int) =
         remote.getArtistPhotosInfo(artistName, page).photos
 
-    override suspend fun fetchArtistMoreDetail(artistName: String) = object : LayerCaching<ArtistMoreDetailEntity>() {
+    override suspend fun fetchArtistMoreDetail(artistName: String) = object : LayerCaching<NetworkArtistMoreDetail>() {
         override var timestamp
             get() = sp.getLong(convertToKey(artistName), 0L)
             set(value) {
                 sp.edit { putLong(convertToKey(artistName), value) }
             }
 
-        override suspend fun saveCallResult(data: ArtistMoreDetailEntity) {
+        override suspend fun saveCallResult(data: NetworkArtistMoreDetail) {
             local.createArtistMoreInfo(artistName, data)
         }
 
-        override suspend fun shouldFetch(data: ArtistMoreDetailEntity) =
+        override suspend fun shouldFetch(data: NetworkArtistMoreDetail) =
             Instant.fromEpochMilliseconds(timestamp) + expired > now()
 
         override suspend fun loadFromLocal() = local.getArtistMoreInfo(artistName)
@@ -63,7 +63,7 @@ internal class LastFmExtraRepository(
         override suspend fun createCall() = remote.getArtistMoreInfo(artistName)
     }.value()
 
-    override suspend fun fetchTrackCover(trackUrl: String, trackEntity: TrackEntity) =
+    override suspend fun fetchTrackCover(trackUrl: String, trackEntity: NetworkTrack) =
         remote.getTrackCover(trackUrl, trackEntity)
 
     override suspend fun fetchTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) =

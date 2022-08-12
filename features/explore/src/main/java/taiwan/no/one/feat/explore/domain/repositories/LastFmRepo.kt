@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,13 @@ package taiwan.no.one.feat.explore.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
-import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkAlbumInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistTopTrackInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkCommonLastFm
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTagInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopArtistInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo
 
 /**
  * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
@@ -40,7 +40,7 @@ import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity
  */
 internal interface LastFmRepo : Repository {
     //region AlbumEntity
-    suspend fun fetchAlbum(mbid: String): AlbumInfoEntity.AlbumEntity
+    suspend fun fetchAlbum(mbid: String): NetworkAlbumInfo.NetworkAlbum
     //endregion
 
     //region ArtistEntity
@@ -50,34 +50,34 @@ internal interface LastFmRepo : Repository {
 
     suspend fun fetchArtistTopAlbum(name: String?, mbid: String?): CommonLastFmEntity.TopAlbumsEntity
 
-    suspend fun fetchArtistTopTrack(name: String?, mbid: String?): ArtistTopTrackInfoEntity.TracksWithStreamableEntity
+    suspend fun fetchArtistTopTrack(name: String?, mbid: String?): NetworkArtistTopTrackInfo.NetworkTracksWithStreamable
 
-    suspend fun fetchSimilarArtistInfo(mbid: String): TopArtistInfoEntity.ArtistsEntity
+    suspend fun fetchSimilarArtistInfo(mbid: String): NetworkTopArtistInfo.NetworkArtists
     //endregion
 
     //region TrackEntity
-    suspend fun fetchTrack(mbid: String): TrackInfoEntity.TrackEntity
+    suspend fun fetchTrack(mbid: String): NetworkTrackInfo.NetworkTrack
 
-    suspend fun fetchSimilarTrackInfo(mbid: String): TopTrackInfoEntity.TracksEntity
+    suspend fun fetchSimilarTrackInfo(mbid: String): NetworkTopTrackInfo.NetworkTracks
     //endregion
 
     //region Chart
-    suspend fun fetchChartTopTrack(page: Int, limit: Int): TopTrackInfoEntity.TracksEntity
+    suspend fun fetchChartTopTrack(page: Int, limit: Int): NetworkTopTrackInfo.NetworkTracks
 
-    suspend fun addChartTopTrack(page: Int, limit: Int, entities: List<TrackInfoEntity.TrackEntity>)
+    suspend fun addChartTopTrack(page: Int, limit: Int, entities: List<NetworkTrackInfo.NetworkTrack>)
 
-    suspend fun fetchChartTopArtist(page: Int, limit: Int): TopArtistInfoEntity.ArtistsEntity
+    suspend fun fetchChartTopArtist(page: Int, limit: Int): NetworkTopArtistInfo.NetworkArtists
 
-    suspend fun fetchChartTopTag(page: Int, limit: Int): CommonLastFmEntity.TagsEntity
+    suspend fun fetchChartTopTag(page: Int, limit: Int): NetworkCommonLastFm.NetworkTags
     //endregion
 
     //region TagEntity
-    suspend fun fetchTag(mbid: String): TagInfoEntity.TagEntity
+    suspend fun fetchTag(mbid: String): NetworkTagInfo.NetworkTag
 
-    suspend fun fetchTagTopAlbum(mbid: String): CommonLastFmEntity.TopAlbumsEntity
+    suspend fun fetchTagTopAlbum(mbid: String): NetworkCommonLastFm.NetworkTopAlbums
 
-    suspend fun fetchTagTopArtist(mbid: String): TopArtistInfoEntity.ArtistsEntity
+    suspend fun fetchTagTopArtist(mbid: String): NetworkTopArtistInfo.NetworkArtists
 
-    suspend fun fetchTagTopTrack(tagName: String): TopTrackInfoEntity.TracksEntity
+    suspend fun fetchTagTopTrack(tagName: String): NetworkTopTrackInfo.NetworkTracks
     //endregion
 }

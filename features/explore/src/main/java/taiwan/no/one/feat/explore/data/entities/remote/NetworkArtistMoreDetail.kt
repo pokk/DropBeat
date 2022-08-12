@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,11 @@
 
 package taiwan.no.one.feat.explore.data.entities.remote
 
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 
 @JsonClass(generateAdapter = true)
-internal data class ArtistTopTrackInfoEntity(
-    @Json(name = "toptracks")
-    val topTracks: TracksWithStreamableEntity,
-) {
-    @JsonClass(generateAdapter = true)
-    internal data class TracksWithStreamableEntity(
-        @Json(name = "track")
-        val tracks: List<TrackInfoEntity.TrackWithStreamableEntity>,
-        @Json(name = "@attr")
-        val attr: CommonLastFmEntity.AttrEntity?,
-    )
-}
+internal data class NetworkArtistMoreDetail(
+    val coverPhotoUrl: String,
+    val popularTrackThisWeek: NetworkTrack,
+)

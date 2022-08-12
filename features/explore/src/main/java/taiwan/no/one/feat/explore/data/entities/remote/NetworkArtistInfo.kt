@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,17 +33,17 @@ import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.explore.data.contracts.Dto
 
 @JsonClass(generateAdapter = true)
-internal data class ArtistInfoEntity(
-    val artist: ArtistEntity?,
+internal data class NetworkArtistInfo(
+    val artist: NetworkArtist?,
 ) : Dto {
     @JsonClass(generateAdapter = true)
-    internal data class ArtistEntity(
+    internal data class NetworkArtist(
         val name: String? = DEFAULT_STR,
         val mbid: String? = DEFAULT_STR,
         val match: String? = DEFAULT_STR,
         val url: String? = DEFAULT_STR,
         @Json(name = "image")
-        val images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
+        val images: List<NetworkCommonLastFm.NetworkImage>? = emptyList(),
         val streamable: String? = DEFAULT_STR,
         val listeners: String? = DEFAULT_STR,
         @Json(name = "ontour")
@@ -51,13 +51,13 @@ internal data class ArtistInfoEntity(
         @Json(name = "playcount")
         val playCount: String? = DEFAULT_STR,
         @Ignore
-        val stats: StatsEntity? = null,
+        val stats: NetworkStats? = null,
         @Ignore
-        val similar: SimilarEntity? = null,
+        val similar: NetworkSimilar? = null,
         @Ignore
-        val tags: CommonLastFmEntity.TagsEntity? = null,
+        val tags: NetworkCommonLastFm.NetworkTags? = null,
         @Ignore
-        val bio: BioEntity? = null,
+        val bio: NetworkBio? = null,
         // For database searching
         val paging: Int? = null,
         @Embedded
@@ -65,20 +65,20 @@ internal data class ArtistInfoEntity(
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class BioEntity(
-        val links: LinksEntity?,
+    internal data class NetworkBio(
+        val links: NetworkLinks?,
         val published: String?,
         val summary: String?,
         val content: String?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class LinksEntity(
-        val link: LinkEntity?,
+    internal data class NetworkLinks(
+        val link: NetworkLink?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class LinkEntity(
+    internal data class NetworkLink(
         @Json(name = "#text")
         val text: String?,
         val rel: String?,
@@ -86,15 +86,15 @@ internal data class ArtistInfoEntity(
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class StatsEntity(
+    internal data class NetworkStats(
         val listeners: String?,
         @Json(name = "playcount")
         val playCount: String?,
     ) : Dto
 
     @JsonClass(generateAdapter = true)
-    internal data class SimilarEntity(
+    internal data class NetworkSimilar(
         @Json(name = "artist")
-        val artists: List<ArtistEntity>?,
+        val artists: List<NetworkArtist>?,
     ) : Dto
 }

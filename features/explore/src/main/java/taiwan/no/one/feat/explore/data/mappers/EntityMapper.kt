@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,13 +32,13 @@ import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
-import taiwan.no.one.feat.explore.data.entities.remote.AlbumInfoEntity.AlbumWithArtistEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackWithStreamableEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkAlbumInfo.NetworkAlbumWithArtist
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrackWithStreamable
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 
 internal object EntityMapper {
-    fun exploreToSimpleTrackEntity(entity: TrackEntity) = entity.let {
+    fun exploreToSimpleTrackEntity(entity: NetworkTrack) = entity.let {
         SimpleTrackEntity(
             0,
             it.name.orEmpty(),
@@ -54,7 +54,7 @@ internal object EntityMapper {
         )
     }
 
-    fun trackToSimpleTrackEntity(entity: TrackWithStreamableEntity) = entity.let {
+    fun trackToSimpleTrackEntity(entity: NetworkTrackWithStreamable) = entity.let {
         SimpleTrackEntity(
             0,
             it.name.orEmpty(),
@@ -70,7 +70,7 @@ internal object EntityMapper {
         )
     }
 
-    fun albumToSimpleAlbumEntity(entity: AlbumWithArtistEntity) = entity.let {
+    fun albumToSimpleAlbumEntity(entity: NetworkAlbumWithArtist) = entity.let {
         SimpleAlbumEntity(
             it.mbid.orEmpty(),
             it.name.orEmpty(),

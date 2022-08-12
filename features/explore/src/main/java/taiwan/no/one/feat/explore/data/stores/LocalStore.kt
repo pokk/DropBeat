@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +34,10 @@ import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopArtistInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ArtistDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.BioDao
 import taiwan.no.one.feat.explore.data.local.services.database.v1.ImageDao
@@ -72,9 +72,12 @@ internal class LocalStore(
     override suspend fun getArtistPhotosInfo(artistName: String, page: Int) = UnsupportedOperation()
 
     override suspend fun getArtistMoreInfo(artistName: String) =
-        mmkvCache.get(convertToKey(artistName), ArtistMoreDetailEntity::class.java)?.second ?: throw NotFoundException()
+        mmkvCache.get(
+            convertToKey(artistName),
+            NetworkArtistMoreDetail::class.java
+        )?.second ?: throw NotFoundException()
 
-    override suspend fun createArtistMoreInfo(artistName: String, entity: ArtistMoreDetailEntity) = tryWrapper {
+    override suspend fun createArtistMoreInfo(artistName: String, entity: NetworkArtistMoreDetail) = tryWrapper {
         artistDao.getArtistBy(artistName.replace("+", " ")).artist.artistId.also { id ->
             imageDao.insert(ImageEntity(0L, ImgQuality.HIGH, entity.coverPhotoUrl, id))
         }
@@ -101,28 +104,28 @@ internal class LocalStore(
 
     override suspend fun getSimilarTrackInfo(mbid: String) = UnsupportedOperation()
 
-    override suspend fun getTrackCover(trackUrl: String, trackEntity: TrackEntity) = UnsupportedOperation()
+    override suspend fun getTrackCover(trackUrl: String, trackEntity: NetworkTrack) = UnsupportedOperation()
 
     override suspend fun getTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity) = UnsupportedOperation()
 
     override suspend fun getChartTopTrack(page: Int, limit: Int) =
         mmkvCache.get(
             convertToKey(page, limit, TYPE_CHART_TOP_TRACK),
-            TopTrackInfoEntity::class.java
+            NetworkTopTrackInfo::class.java
         )?.second ?: throw NotFoundException()
 
-    override suspend fun createChartTopTrack(page: Int, limit: Int, entity: TopTrackInfoEntity) = tryWrapper {
-        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), entity, TopTrackInfoEntity::class.java)
+    override suspend fun createChartTopTrack(page: Int, limit: Int, entity: NetworkTopTrackInfo) = tryWrapper {
+        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), entity, NetworkTopTrackInfo::class.java)
     }
 
     override suspend fun getChartTopArtist(page: Int, limit: Int) =
         mmkvCache.get(
             convertToKey(page, limit, TYPE_CHART_TOP_ARTIST),
-            TopArtistInfoEntity::class.java
+            NetworkTopArtistInfo::class.java
         )?.second ?: throw NotFoundException()
 
-    override suspend fun createChartTopArtist(page: Int, limit: Int, entity: TopArtistInfoEntity) = tryWrapper {
-        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), entity, TopArtistInfoEntity::class.java)
+    override suspend fun createChartTopArtist(page: Int, limit: Int, entity: NetworkTopArtistInfo) = tryWrapper {
+        mmkvCache.put(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), entity, NetworkTopArtistInfo::class.java)
     }
 
     override suspend fun getChartTopTag(page: Int, limit: Int) = UnsupportedOperation()

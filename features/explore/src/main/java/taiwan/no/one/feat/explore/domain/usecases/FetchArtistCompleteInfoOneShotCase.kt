@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,8 @@ import kotlinx.coroutines.coroutineScope
 import taiwan.no.one.core.domain.usecase.Usecase.RequestValues
 import taiwan.no.one.entity.SimpleArtistEntity
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistTopTrackInfoEntity.TracksWithStreamableEntity
-import taiwan.no.one.feat.explore.data.entities.remote.CommonLastFmEntity.TopAlbumsEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistTopTrackInfo.NetworkTracksWithStreamable
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkCommonLastFm.NetworkTopAlbums
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.domain.repositories.LastFmExtraRepo
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
@@ -56,8 +56,8 @@ internal class FetchArtistCompleteInfoOneShotCase(
 
     private fun populating(
         artistEntity: ArtistWithImageAndBioEntityAndStats,
-        topAlbumsEntity: TopAlbumsEntity,
-        tracksWithStreamableEntity: TracksWithStreamableEntity,
+        topAlbumsEntity: NetworkTopAlbums,
+        tracksWithStreamableEntity: NetworkTracksWithStreamable,
     ): SimpleArtistEntity {
         val albums = topAlbumsEntity.albums.map(EntityMapper::albumToSimpleAlbumEntity)
         val tracks = tracksWithStreamableEntity.tracks.map(EntityMapper::trackToSimpleTrackEntity)

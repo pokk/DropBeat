@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,10 @@ package taiwan.no.one.feat.explore.data.mappers.dto
 import taiwan.no.one.ext.DEFAULT_LONG
 import taiwan.no.one.feat.explore.data.contracts.Mapper
 import taiwan.no.one.feat.explore.data.entities.local.BioEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistInfoEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistInfo
 
-internal class BioMapper : Mapper<ArtistInfoEntity.BioEntity, BioEntity> {
-    override fun dtoToPo(dto: ArtistInfoEntity.BioEntity) = BioEntity(
+internal class BioMapper : Mapper<NetworkArtistInfo.NetworkBio, BioEntity> {
+    override fun dtoToPo(dto: NetworkArtistInfo.NetworkBio) = BioEntity(
         0L,
         DEFAULT_LONG,
         dto.links?.link?.rel.orEmpty(),

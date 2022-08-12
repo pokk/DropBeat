@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,18 +29,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.feat.explore.R
-import taiwan.no.one.feat.explore.data.entities.remote.TagInfoEntity.TagEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTagInfo.NetworkTag
 import taiwan.no.one.feat.explore.databinding.ItemExploreBinding
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.ExploreViewHolder
 
-internal class ExploreAdapter : ListAdapter<TagEntity, ExploreViewHolder>(DiffItemCallback) {
-    var clickListener: ((TagEntity) -> Unit)? = null
+internal class ExploreAdapter : ListAdapter<NetworkTag, ExploreViewHolder>(DiffItemCallback) {
+    var clickListener: ((NetworkTag) -> Unit)? = null
         private set
 
-    private object DiffItemCallback : DiffUtil.ItemCallback<TagEntity>() {
-        override fun areItemsTheSame(oldItem: TagEntity, newItem: TagEntity) = oldItem.name == newItem.name
+    private object DiffItemCallback : DiffUtil.ItemCallback<NetworkTag>() {
+        override fun areItemsTheSame(oldItem: NetworkTag, newItem: NetworkTag) = oldItem.name == newItem.name
 
-        override fun areContentsTheSame(oldItem: TagEntity, newItem: TagEntity) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: NetworkTag, newItem: NetworkTag) = oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
@@ -50,7 +50,7 @@ internal class ExploreAdapter : ListAdapter<TagEntity, ExploreViewHolder>(DiffIt
     override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) =
         holder.initView(getItem(position), this)
 
-    fun setOnClickListener(listener: (entity: TagEntity) -> Unit) {
+    fun setOnClickListener(listener: (entity: NetworkTag) -> Unit) {
         clickListener = listener
     }
 }

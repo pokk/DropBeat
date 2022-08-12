@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,15 +30,15 @@ import com.squareup.moshi.JsonClass
 import taiwan.no.one.ext.DEFAULT_INT
 
 @JsonClass(generateAdapter = true)
-internal data class AlbumInfoEntity(
-    val album: AlbumEntity?,
+internal data class NetworkAlbumInfo(
+    val album: NetworkAlbum?,
 ) {
     @JsonClass(generateAdapter = true)
-    internal data class AlbumEntity(
+    internal data class NetworkAlbum(
         val artist: String?,
         @Json(name = "playcount")
         val playCount: String? = null,
-    ) : BaseAlbumEntity() {
+    ) : NetworkBaseAlbum() {
         override fun toString() = """
             |${this::class.java.simpleName}(
             |artist=$artist
@@ -48,12 +48,12 @@ internal data class AlbumInfoEntity(
     }
 
     @JsonClass(generateAdapter = true)
-    internal data class AlbumWithArtistEntity(
-        val artist: ArtistInfoEntity.ArtistEntity?,
+    internal data class NetworkAlbumWithArtist(
+        val artist: NetworkArtistInfo.NetworkArtist?,
         @Json(name = "playcount")
         val playCount: String? = null,
         val index: Int = DEFAULT_INT,
-    ) : BaseAlbumEntity() {
+    ) : NetworkBaseAlbum() {
         override fun toString() = """
             |${this::class.java.simpleName}(
             |artist=$artist
@@ -64,20 +64,20 @@ internal data class AlbumInfoEntity(
     }
 
     @JsonClass(generateAdapter = true)
-    internal open class BaseAlbumEntity(
+    internal open class NetworkBaseAlbum(
         @Json(name = "@attr")
-        var attr: CommonLastFmEntity.AttrEntity? = null,
+        var attr: NetworkCommonLastFm.NetworkAttr? = null,
         @Json(name = "image")
-        var images: List<CommonLastFmEntity.ImageEntity>? = null,
+        var images: List<NetworkCommonLastFm.NetworkImage>? = null,
         var listeners: String? = null,
         var mbid: String? = null,
         var name: String? = null,
-        var tags: CommonLastFmEntity.TagsEntity? = null,
+        var tags: NetworkCommonLastFm.NetworkTags? = null,
         var title: String? = null,
         @Json(name = "tracks")
-        var tracks: TopTrackInfoEntity.TracksEntity? = null,
+        var tracks: NetworkTopTrackInfo.NetworkTracks? = null,
         var url: String? = null,
-        var wiki: CommonLastFmEntity.WikiEntity? = null,
+        var wiki: NetworkCommonLastFm.NetworkWiki? = null,
     ) {
         override fun toString() = """
             |attr=$attr,

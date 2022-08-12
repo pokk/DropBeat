@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,20 +29,20 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class TrackInfoEntity(
-    val track: TrackEntity?,
+internal data class NetworkTrackInfo(
+    val track: NetworkTrack?,
 ) {
     @JsonClass(generateAdapter = true)
-    internal data class TrackEntity(
-        val streamable: CommonLastFmEntity.StreamableEntity?,
+    internal data class NetworkTrack(
+        val streamable: NetworkCommonLastFm.NetworkStreamable?,
         // Common part from [BaseTrackEntity]
-        val album: AlbumInfoEntity.AlbumEntity? = null,
+        val album: NetworkAlbumInfo.NetworkAlbum? = null,
         @Json(name = "@attr")
-        val attr: CommonLastFmEntity.AttrEntity? = null,
-        val artist: ArtistInfoEntity.ArtistEntity? = null,
+        val attr: NetworkCommonLastFm.NetworkAttr? = null,
+        val artist: NetworkArtistInfo.NetworkArtist? = null,
         val duration: String? = null,
         @Json(name = "image")
-        var images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
+        var images: List<NetworkCommonLastFm.NetworkImage>? = emptyList(),
         var listeners: String? = null,
         val match: Double? = null,
         val mbid: String? = null,
@@ -50,25 +50,25 @@ internal data class TrackInfoEntity(
         @Json(name = "playcount")
         val playcount: String? = null,
         @Json(name = "toptags")
-        val topTag: CommonLastFmEntity.TagsEntity? = null,
+        val topTag: NetworkCommonLastFm.NetworkTags? = null,
         var url: String? = null,
         val realUrl: String? = null,
-        val wiki: CommonLastFmEntity.WikiEntity? = null,
+        val wiki: NetworkCommonLastFm.NetworkWiki? = null,
         // Other
         var isFavorite: Boolean? = null,
     )
 
     @JsonClass(generateAdapter = true)
-    internal data class TrackWithStreamableEntity(
+    internal data class NetworkTrackWithStreamable(
         val streamable: String?,
         // Common part from [BaseTrackEntity]
-        val album: AlbumInfoEntity.AlbumEntity? = null,
+        val album: NetworkAlbumInfo.NetworkAlbum? = null,
         @Json(name = "@attr")
-        val attr: CommonLastFmEntity.AttrEntity? = null,
-        val artist: ArtistInfoEntity.ArtistEntity? = null,
+        val attr: NetworkCommonLastFm.NetworkAttr? = null,
+        val artist: NetworkArtistInfo.NetworkArtist? = null,
         val duration: String? = null,
         @Json(name = "image")
-        var images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
+        var images: List<NetworkCommonLastFm.NetworkImage>? = emptyList(),
         var listeners: String? = null,
         val match: Double? = null,
         val mbid: String? = null,
@@ -76,23 +76,23 @@ internal data class TrackInfoEntity(
         @Json(name = "playcount")
         val playcount: String? = null,
         @Json(name = "toptags")
-        val topTag: CommonLastFmEntity.TagsEntity? = null,
+        val topTag: NetworkCommonLastFm.NetworkTags? = null,
         var url: String? = null,
         val realUrl: String? = null,
-        val wiki: CommonLastFmEntity.WikiEntity? = null,
+        val wiki: NetworkCommonLastFm.NetworkWiki? = null,
         // Other
         var isFavorite: Boolean? = null,
     )
 
     @Deprecated("Moshi is difficult to use")
     internal open class BaseTrackEntity(
-        var album: AlbumInfoEntity.AlbumEntity? = null,
+        var album: NetworkAlbumInfo.NetworkAlbum? = null,
         @Json(name = "@attr")
-        var attr: CommonLastFmEntity.AttrEntity? = null,
-        var artist: ArtistInfoEntity.ArtistEntity? = null,
+        var attr: NetworkCommonLastFm.NetworkAttr? = null,
+        var artist: NetworkArtistInfo.NetworkArtist? = null,
         var duration: String? = null,
         @Json(name = "image")
-        var images: List<CommonLastFmEntity.ImageEntity>? = emptyList(),
+        var images: List<NetworkCommonLastFm.NetworkImage>? = emptyList(),
         var listeners: String? = null,
         var match: Double? = null,
         var mbid: String? = null,
@@ -100,10 +100,10 @@ internal data class TrackInfoEntity(
         @Json(name = "playcount")
         var playcount: String? = null,
         @Json(name = "toptags")
-        var topTag: CommonLastFmEntity.TagsEntity? = null,
+        var topTag: NetworkCommonLastFm.NetworkTags? = null,
         var url: String? = null,
         var realUrl: String? = null,
-        var wiki: CommonLastFmEntity.WikiEntity? = null,
+        var wiki: NetworkCommonLastFm.NetworkWiki? = null,
         // Other
         var isFavorite: Boolean? = null,
     ) {
