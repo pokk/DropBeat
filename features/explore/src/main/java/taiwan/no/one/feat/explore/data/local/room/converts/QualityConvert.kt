@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 package taiwan.no.one.feat.explore.data.local.room.converts
 
 import androidx.room.TypeConverter
-import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
+import taiwan.no.one.feat.explore.data.entities.local.enums.ImgQuality
 
 internal class QualityConvert {
     @TypeConverter

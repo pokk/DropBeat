@@ -39,8 +39,8 @@ import taiwan.no.one.feat.explore.data.entities.local.ArtistEntity
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.local.BioEntity
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
-import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.local.StatsEntity
+import taiwan.no.one.feat.explore.data.entities.local.enums.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistInfo
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopArtistInfo

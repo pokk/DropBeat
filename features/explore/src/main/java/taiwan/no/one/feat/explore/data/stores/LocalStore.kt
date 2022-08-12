@@ -33,7 +33,7 @@ import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
 import taiwan.no.one.feat.explore.data.entities.local.ImageEntity
-import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
+import taiwan.no.one.feat.explore.data.entities.local.enums.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopArtistInfo
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo
