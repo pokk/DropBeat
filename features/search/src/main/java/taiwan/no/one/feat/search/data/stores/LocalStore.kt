@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.core.data.store.tryWrapper
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkMusicInfo
 import taiwan.no.one.feat.search.data.local.services.database.v1.SearchHistoryDao
 
 /**
@@ -45,13 +45,13 @@ internal class LocalStore(
     private val lruMemoryCache: MemoryCache,
 ) : DataStore {
     override suspend fun getMusic(keyword: String, page: Int) =
-        object : LocalCaching<MusicInfoEntity>(lruMemoryCache, mmkvCache) {
+        object : LocalCaching<NetworkMusicInfo>(lruMemoryCache, mmkvCache) {
             override val key get() = convertToKey(keyword, page)
         }.value()
 
-    override suspend fun createMusic(keyword: String, page: Int, music: MusicInfoEntity): Boolean {
-        mmkvCache.put(convertToKey(keyword, page), music, MusicInfoEntity::class.java)
-        lruMemoryCache.put(convertToKey(keyword, page), music, MusicInfoEntity::class.java)
+    override suspend fun createMusic(keyword: String, page: Int, music: NetworkMusicInfo): Boolean {
+        mmkvCache.put(convertToKey(keyword, page), music, NetworkMusicInfo::class.java)
+        lruMemoryCache.put(convertToKey(keyword, page), music, NetworkMusicInfo::class.java)
         return true
     }
 

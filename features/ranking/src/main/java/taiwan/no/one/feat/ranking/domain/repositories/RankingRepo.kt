@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,17 @@ package taiwan.no.one.feat.ranking.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.NetworkSong
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList.NetworkBriefRank
 
 /**
  * This interface will be the similar to [taiwan.no.one.feat.ranking.data.contracts.DataStore].
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface RankingRepo : Repository {
-    suspend fun fetchMusicRanking(rankId: String): List<SongEntity>
+    suspend fun fetchMusicRanking(rankId: String): List<NetworkSong>
 
-    suspend fun fetchDetailOfRankings(): List<BriefRankEntity>
+    suspend fun fetchDetailOfRankings(): List<NetworkBriefRank>
 
     suspend fun fetchRankings(): List<RankingIdEntity>
 

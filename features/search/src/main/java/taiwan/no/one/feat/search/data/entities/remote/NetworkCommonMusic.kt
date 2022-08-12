@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import taiwan.no.one.ext.DEFAULT_STR
 
-internal object CommonMusicEntity {
+internal object NetworkCommonMusic {
     @JsonClass(generateAdapter = true)
-    internal data class UserEntity(
+    internal data class NetworkUser(
         val address: String = DEFAULT_STR,
         @Json(name = "avatar_url")
         val avatarUrl: String = DEFAULT_STR,
@@ -47,7 +47,7 @@ internal object CommonMusicEntity {
     )
 
     @JsonClass(generateAdapter = true)
-    internal data class SongEntity(
+    internal data class NetworkSong(
         val artist: String = DEFAULT_STR,
         @Json(name = "cdn_coverURL")
         val cdnCoverUrl: String = DEFAULT_STR,
@@ -57,7 +57,7 @@ internal object CommonMusicEntity {
         val flag: Int = 0,
         val length: Int = 0,
         val lyricURL: String = DEFAULT_STR,
-        val mv: MvEntity = MvEntity(),
+        val mv: NetworkMv = NetworkMv(),
         @Json(name = "ori_coverURL")
         val oriCoverUrl: String = DEFAULT_STR,
         @Json(name = "other_sources")
@@ -67,14 +67,14 @@ internal object CommonMusicEntity {
         val sid: Int = 0,
         @Json(name = "song_id_ext")
         val songIdExt: String = DEFAULT_STR,
-        val source: SourceEntity = SourceEntity(),
+        val source: NetworkSource = NetworkSource(),
         val title: String = DEFAULT_STR,
         val uploader: String = DEFAULT_STR,
         val url: String = DEFAULT_STR,
     )
 
     @JsonClass(generateAdapter = true)
-    internal data class PlayListEntity(
+    internal data class NetworkPlayList(
         @Json(name = "comment_count")
         val commentCount: Int = 0,
         @Json(name = "fav_count")
@@ -104,15 +104,15 @@ internal object CommonMusicEntity {
         val songListType: Int = 0,
         @Json(name = "song_num")
         val songNum: Int = 0,
-        val songs: List<SongEntity> = emptyList(),
+        val songs: List<NetworkSong> = emptyList(),
         @Json(name = "tag_ids")
         val tagIds: List<Any> = emptyList(),
         val tags: List<Any> = emptyList(),
-        val user: UserEntity = UserEntity(),
+        val user: NetworkUser = NetworkUser(),
     )
 
     @JsonClass(generateAdapter = true)
-    internal data class MvEntity(
+    internal data class NetworkMv(
         val comments: Int = 0,
         @Json(name = "cover_image")
         val coverImage: String = DEFAULT_STR,
@@ -149,7 +149,7 @@ internal object CommonMusicEntity {
     )
 
     @JsonClass(generateAdapter = true)
-    internal data class SourceEntity(
+    internal data class NetworkSource(
         val unknown: Any? = null,
     )
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ import taiwan.no.one.dropbeat.core.helpers.TouchHelper
 import taiwan.no.one.dropbeat.di.Constant as DiConstant
 import taiwan.no.one.dropbeat.di.UtilModules.LayoutManagerParams
 import taiwan.no.one.feat.search.R
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkCommonMusic.NetworkSong
 import taiwan.no.one.feat.search.databinding.FragmentSearchIndexBinding
 import taiwan.no.one.feat.search.databinding.MergeSearchHasNoResultBinding
 import taiwan.no.one.feat.search.databinding.MergeSearchHasResultBinding
@@ -304,7 +304,7 @@ internal class IndexFragment : BaseFragment<BaseActivity<*>, FragmentSearchIndex
         jobs.clear()
     }
 
-    private fun clickedOnSongItem(song: SongEntity) {
+    private fun clickedOnSongItem(song: NetworkSong) {
         val filename = "${song.artist} - ${song.title}"
         DownloadHelper.downloadTrack(requireContext(), song.url.toUri(), filename, songVm.songToStream(song))
         analyticsVm.clickedDownload(filename)

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import taiwan.no.one.core.data.repostory.cache.LayerCaching
 import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.search.data.contracts.DataStore
-import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkMusicInfo
 import taiwan.no.one.feat.search.domain.repositories.SearchMusicRepo
 
 internal class SearchMusicRepository(
@@ -39,18 +39,18 @@ internal class SearchMusicRepository(
     private val local: DataStore,
     private val sp: SharedPreferences,
 ) : SearchMusicRepo {
-    override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<MusicInfoEntity>() {
+    override suspend fun fetchMusic(keyword: String, page: Int) = object : LayerCaching<NetworkMusicInfo>() {
         override var timestamp
             get() = sp.getLong(convertToKey(keyword, page), 0L)
             set(value) {
                 sp.edit { putLong(convertToKey(keyword, page), value) }
             }
 
-        override suspend fun saveCallResult(data: MusicInfoEntity) {
+        override suspend fun saveCallResult(data: NetworkMusicInfo) {
             local.createMusic(keyword, page, data)
         }
 
-        override suspend fun shouldFetch(data: MusicInfoEntity) =
+        override suspend fun shouldFetch(data: NetworkMusicInfo) =
             Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
         override suspend fun loadFromLocal() = local.getMusic(keyword, page)

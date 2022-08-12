@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package taiwan.no.one.feat.ranking.data.mappers
 
 import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.NetworkSong
 
 internal object EntityMapper {
-    fun songToSimpleTrackEntity(entity: SongEntity) = entity.let {
+    fun songToSimpleTrackEntity(entity: NetworkSong) = entity.let {
         SimpleTrackEntity(
             0,
             it.title,

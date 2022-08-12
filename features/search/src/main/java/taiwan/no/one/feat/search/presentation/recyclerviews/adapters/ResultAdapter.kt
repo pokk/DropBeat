@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,19 +32,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.devrapid.kotlinknifer.getDimen
 import taiwan.no.one.feat.search.R
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkCommonMusic.NetworkSong
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.viewholders.ResultViewHolder
 import taiwan.no.one.widget.WidgetResDimen
 
-internal class ResultAdapter : ListAdapter<SongEntity, ResultViewHolder>(DiffItemCallback) {
-    var onClickListener: ((SongEntity) -> Unit)? = null
+internal class ResultAdapter : ListAdapter<NetworkSong, ResultViewHolder>(DiffItemCallback) {
+    var onClickListener: ((NetworkSong) -> Unit)? = null
         private set
 
-    private object DiffItemCallback : DiffUtil.ItemCallback<SongEntity>() {
-        override fun areItemsTheSame(oldItem: SongEntity, newItem: SongEntity) = oldItem.url == newItem.url
+    private object DiffItemCallback : DiffUtil.ItemCallback<NetworkSong>() {
+        override fun areItemsTheSame(oldItem: NetworkSong, newItem: NetworkSong) = oldItem.url == newItem.url
 
-        override fun areContentsTheSame(oldItem: SongEntity, newItem: SongEntity) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: NetworkSong, newItem: NetworkSong) = oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context)
@@ -63,7 +63,7 @@ internal class ResultAdapter : ListAdapter<SongEntity, ResultViewHolder>(DiffIte
         holder.initView(getItem(position), this)
     }
 
-    fun setOnClickListener(block: (songEntity: SongEntity) -> Unit) {
+    fun setOnClickListener(block: (songEntity: NetworkSong) -> Unit) {
         onClickListener = block
     }
 

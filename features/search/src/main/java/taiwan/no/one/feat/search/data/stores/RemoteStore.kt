@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.search.BuildConfig
 import taiwan.no.one.feat.search.data.contracts.DataStore
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkMusicInfo
 import taiwan.no.one.feat.search.data.remote.parameters.SeekerBank
 import taiwan.no.one.feat.search.data.remote.services.retrofit.v1.SeekerBankService
 
@@ -37,9 +37,9 @@ import taiwan.no.one.feat.search.data.remote.services.retrofit.v1.SeekerBankServ
  * remote service to access the data.
  */
 internal class RemoteStore(
-    private val seekerBankService: SeekerBankService
+    private val seekerBankService: SeekerBankService,
 ) : DataStore {
-    override suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity {
+    override suspend fun getMusic(keyword: String, page: Int): NetworkMusicInfo {
         val queries = hashMapOf(
             BuildConfig.SearchMusicQuery1 to BuildConfig.SearchMusicParameter1,
             BuildConfig.SearchMusicQuery2 to BuildConfig.SearchMusicParameter2,
@@ -49,7 +49,7 @@ internal class RemoteStore(
         return seekerBankService.retrieveSearchMusic(queries)
     }
 
-    override suspend fun createMusic(keyword: String, page: Int, music: MusicInfoEntity) = UnsupportedOperation()
+    override suspend fun createMusic(keyword: String, page: Int, music: NetworkMusicInfo) = UnsupportedOperation()
 
     override fun getSearchHistories(count: Int) = UnsupportedOperation()
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,13 +36,16 @@ import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 /**
  * The access operations to a database.
  */
-@Database(entities = [RankingIdEntity::class],
-          version = 1,
-          exportSchema = false)
+@Database(
+    entities = [RankingIdEntity::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(DateConvert::class)
 internal abstract class RankingDatabase : RoomDatabase() {
     companion object {
-        @Volatile private var INSTANCE: RankingDatabase? = null
+        @Volatile
+        private var INSTANCE: RankingDatabase? = null
         private const val DATABASE_NAME = "music_ranking.db"
 
         fun getDatabase(context: Context): RankingDatabase {
@@ -51,15 +54,12 @@ internal abstract class RankingDatabase : RoomDatabase() {
             if (tempInstance != null) {
                 return tempInstance
             }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
+            return synchronized(this) {
+                Room.databaseBuilder(
                     context.applicationContext,
                     RankingDatabase::class.java,
                     DATABASE_NAME
-                ).build()
-                INSTANCE = instance
-
-                return instance
+                ).build().also { INSTANCE = it }
             }
         }
     }
