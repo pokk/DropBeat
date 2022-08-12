@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,15 @@
 package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
 import coil.load
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.NetworkSong
 import taiwan.no.one.feat.ranking.databinding.ItemRankSongBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.SongAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class SongViewHolder(
     private val binding: ItemRankSongBinding,
-) : ViewHolderBinding<SongEntity, SongAdapter>(binding.root) {
-    override fun initView(entity: SongEntity, adapter: SongAdapter) {
+) : ViewHolderBinding<NetworkSong, SongAdapter>(binding.root) {
+    override fun initView(entity: NetworkSong, adapter: SongAdapter) {
         binding.apply {
             mtvNumber.text = "#${absoluteAdapterPosition + 1}"
             mtvAlbumName.text = entity.title

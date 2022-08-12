@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicInfo
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal class RankingRepository(
@@ -40,18 +40,18 @@ internal class RankingRepository(
     private val remote: DataStore,
     private val sp: SharedPreferences,
 ) : RankingRepo {
-    override suspend fun fetchMusicRanking(rankId: String) = object : LayerCaching<MusicInfoEntity>() {
+    override suspend fun fetchMusicRanking(rankId: String) = object : LayerCaching<NetworkMusicInfo>() {
         override var timestamp
             get() = sp.getLong(convertToKey(rankId), 0L)
             set(value) {
                 sp.edit { putLong(convertToKey(rankId), value) }
             }
 
-        override suspend fun saveCallResult(data: MusicInfoEntity) {
+        override suspend fun saveCallResult(data: NetworkMusicInfo) {
             local.createMusicRanking(rankId, data)
         }
 
-        override suspend fun shouldFetch(data: MusicInfoEntity) =
+        override suspend fun shouldFetch(data: NetworkMusicInfo) =
             Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
         override suspend fun loadFromLocal() = local.getMusicRanking(rankId)

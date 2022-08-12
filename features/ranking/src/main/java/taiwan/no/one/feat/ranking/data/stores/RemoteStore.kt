@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@ import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.ranking.BuildConfig
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicInfo
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList
 import taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1.RankingMusicService
 
 /**
@@ -37,7 +37,7 @@ import taiwan.no.one.feat.ranking.data.remote.services.retrofit.v1.RankingMusicS
  * remote service to access the data.
  */
 internal class RemoteStore(
-    private val rankingMusicService: RankingMusicService
+    private val rankingMusicService: RankingMusicService,
 ) : DataStore {
     private val basicQuery
         get() = hashMapOf(
@@ -46,11 +46,11 @@ internal class RemoteStore(
 
     override suspend fun getMusicRanking(rankId: String) = rankingMusicService.retrieveMusicRanking(rankId, basicQuery)
 
-    override suspend fun createMusicRanking(rankId: String, entity: MusicInfoEntity) = UnsupportedOperation()
+    override suspend fun createMusicRanking(rankId: String, entity: NetworkMusicInfo) = UnsupportedOperation()
 
     override suspend fun getDetailOfRankings() = rankingMusicService.retrieveDetailOfRankings(basicQuery)
 
-    override suspend fun createDetailOfRankings(entity: MusicRankListEntity) = UnsupportedOperation()
+    override suspend fun createDetailOfRankings(entity: NetworkMusicRankList) = UnsupportedOperation()
 
     override suspend fun createRankingEntity(entities: List<RankingIdEntity>) = UnsupportedOperation()
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,37 +22,27 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.ranking.data.entities.remote
+package taiwan.no.one.feat.search.data.entities.remote
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import taiwan.no.one.ext.DEFAULT_DOUBLE
-import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
+import taiwan.no.one.feat.search.data.entities.remote.NetworkCommonMusic.NetworkSong
 
 @JsonClass(generateAdapter = true)
-internal data class MusicRankListEntity(
-    @Json(name = "status")
+internal data class NetworkMusicInfo(
     val status: String = DEFAULT_STR,
     @Json(name = "data")
-    val briefRankEntities: List<BriefRankEntity> = emptyList(),
+    val entity: NetworkMusic = NetworkMusic(),
 ) {
     @JsonClass(generateAdapter = true)
-    internal data class BriefRankEntity(
-        @Json(name = "title")
-        val title: String = DEFAULT_STR,
-        @Json(name = "timestamp")
-        val timestamp: Double = DEFAULT_DOUBLE,
-        @Json(name = "sub_title")
-        val subTitle: String = DEFAULT_STR,
-        @Json(name = "cover_url")
-        val coverUrl: String = DEFAULT_STR,
-        @Json(name = "source_tip")
-        val sourceTip: String = DEFAULT_STR,
-        @Json(name = "type")
-        val type: Int = DEFAULT_INT,
-        @Json(name = "rank_id")
-        val rankId: Int = DEFAULT_INT,
-        val numberOfSongs: Int = DEFAULT_INT,
+    data class NetworkMusic(
+        // 🔽 Only Music has.
+        @Json(name = "has_more")
+        val hasMore: Boolean = false,
+        val items: List<NetworkSong> = emptyList(),
+        // 🔽 Only Rank has.
+        val timestamp: Double = 0.0,
+        val songs: List<NetworkSong> = emptyList(),
     )
 }

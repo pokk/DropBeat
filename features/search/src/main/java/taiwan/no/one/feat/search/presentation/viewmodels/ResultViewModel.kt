@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.instance
 import taiwan.no.one.core.presentation.viewmodel.ResultLiveData
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkCommonMusic.NetworkSong
 import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryCase
 import taiwan.no.one.feat.search.domain.usecases.AddOrUpdateHistoryReq
 import taiwan.no.one.feat.search.domain.usecases.FetchMusicCase
@@ -44,7 +44,7 @@ internal class ResultViewModel(
 ) : BehindAndroidViewModel(application) {
     private val fetchMusicCase by instance<FetchMusicCase>()
     private val addOrUpdateHistoryCase by instance<AddOrUpdateHistoryCase>()
-    private val _musics by lazy { ResultLiveData<List<SongEntity>>() }
+    private val _musics by lazy { ResultLiveData<List<NetworkSong>>() }
     val musics get() = _musics.toLiveData()
     private val _addOrUpdateResult by lazy { ResultLiveData<Boolean>() }
     val addOrUpdateResult get() = _addOrUpdateResult.toLiveData()

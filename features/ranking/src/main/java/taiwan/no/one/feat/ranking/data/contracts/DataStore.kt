@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,21 +25,21 @@
 package taiwan.no.one.feat.ranking.data.contracts
 
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicInfo
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList
 
 /**
  * This interface will common the all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface DataStore {
-    suspend fun getMusicRanking(rankId: String): MusicInfoEntity
+    suspend fun getMusicRanking(rankId: String): NetworkMusicInfo
 
-    suspend fun createMusicRanking(rankId: String, entity: MusicInfoEntity): Boolean
+    suspend fun createMusicRanking(rankId: String, entity: NetworkMusicInfo): Boolean
 
-    suspend fun getDetailOfRankings(): MusicRankListEntity
+    suspend fun getDetailOfRankings(): NetworkMusicRankList
 
-    suspend fun createDetailOfRankings(entity: MusicRankListEntity): Boolean
+    suspend fun createDetailOfRankings(entity: NetworkMusicRankList): Boolean
 
     suspend fun createRankingEntity(entities: List<RankingIdEntity>): Boolean
 

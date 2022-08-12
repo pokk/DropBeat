@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,15 @@
 package taiwan.no.one.feat.search.presentation.recyclerviews.viewholders
 
 import coil.load
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkCommonMusic.NetworkSong
 import taiwan.no.one.feat.search.databinding.ItemSearchResultBinding
 import taiwan.no.one.feat.search.presentation.recyclerviews.adapters.ResultAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class ResultViewHolder(
     private val binding: ItemSearchResultBinding,
-) : ViewHolderBinding<SongEntity, ResultAdapter>(binding.root) {
-    override fun initView(entity: SongEntity, adapter: ResultAdapter) {
+) : ViewHolderBinding<NetworkSong, ResultAdapter>(binding.root) {
+    override fun initView(entity: NetworkSong, adapter: ResultAdapter) {
         binding.apply {
             mtvAlbumName.text = entity.title
             mtvArtistName.text = entity.artist

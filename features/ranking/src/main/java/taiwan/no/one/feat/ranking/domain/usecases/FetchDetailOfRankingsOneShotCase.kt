@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,13 +25,13 @@
 package taiwan.no.one.feat.ranking.domain.usecases
 
 import taiwan.no.one.core.domain.parameter.NonRequest
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList.NetworkBriefRank
 import taiwan.no.one.feat.ranking.domain.repositories.RankingRepo
 
 internal class FetchDetailOfRankingsOneShotCase(
     private val repository: RankingRepo,
 ) : FetchDetailOfRankingsCase() {
-    override suspend fun acquireCase(parameter: NonRequest?): List<BriefRankEntity> {
+    override suspend fun acquireCase(parameter: NonRequest?): List<NetworkBriefRank> {
         val ranking = repository.fetchDetailOfRankings()
         return ranking.map {
             val songs = repository.fetchMusicRanking(it.rankId.toString())

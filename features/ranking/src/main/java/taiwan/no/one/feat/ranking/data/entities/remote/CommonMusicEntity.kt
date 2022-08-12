@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ internal object CommonMusicEntity {
     )
 
     @JsonClass(generateAdapter = true)
-    internal data class SongEntity(
+    internal data class NetworkSong(
         val artist: String = DEFAULT_STR,
         @Json(name = "cdn_coverURL")
         val cdnCoverUrl: String = DEFAULT_STR,
@@ -104,7 +104,7 @@ internal object CommonMusicEntity {
         val songListType: Int = 0,
         @Json(name = "song_num")
         val songNum: Int = 0,
-        val songs: List<SongEntity> = emptyList(),
+        val songs: List<NetworkSong> = emptyList(),
         @Json(name = "tag_ids")
         val tagIds: List<Any> = emptyList(),
         val tags: List<Any> = emptyList(),

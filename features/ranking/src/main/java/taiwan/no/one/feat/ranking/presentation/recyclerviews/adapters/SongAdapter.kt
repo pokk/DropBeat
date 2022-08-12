@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,19 +29,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.feat.ranking.R
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.NetworkSong
 import taiwan.no.one.feat.ranking.databinding.ItemRankSongBinding
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.SongViewHolder
 
-internal class SongAdapter : ListAdapter<SongEntity, SongViewHolder>(DiffItemCallback) {
+internal class SongAdapter : ListAdapter<NetworkSong, SongViewHolder>(DiffItemCallback) {
     var onClickListener: (() -> Unit)? = null
         private set
 
-    private object DiffItemCallback : DiffUtil.ItemCallback<SongEntity>() {
-        override fun areItemsTheSame(oldItem: SongEntity, newItem: SongEntity) =
+    private object DiffItemCallback : DiffUtil.ItemCallback<NetworkSong>() {
+        override fun areItemsTheSame(oldItem: NetworkSong, newItem: NetworkSong) =
             oldItem.url == newItem.url
 
-        override fun areContentsTheSame(oldItem: SongEntity, newItem: SongEntity) =
+        override fun areContentsTheSame(oldItem: NetworkSong, newItem: NetworkSong) =
             oldItem == newItem
     }
 

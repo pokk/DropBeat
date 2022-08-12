@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,8 @@ import taiwan.no.one.core.data.store.tryWrapper
 import taiwan.no.one.ext.exceptions.UnsupportedOperation
 import taiwan.no.one.feat.ranking.data.contracts.DataStore
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicInfoEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicInfo
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList
 import taiwan.no.one.feat.ranking.data.local.services.database.v1.RankingDao
 
 /**
@@ -46,19 +46,19 @@ internal class LocalStore(
     private val lruMemoryCache: MemoryCache,
 ) : DataStore {
     override suspend fun getMusicRanking(rankId: String) =
-        object : LocalCaching<MusicInfoEntity>(lruMemoryCache, mmkvCache) {
+        object : LocalCaching<NetworkMusicInfo>(lruMemoryCache, mmkvCache) {
             override val key get() = convertToKey(rankId)
         }.value()
 
-    override suspend fun createMusicRanking(rankId: String, entity: MusicInfoEntity): Boolean {
-        mmkvCache.put(convertToKey(rankId), entity, MusicInfoEntity::class.java)
-        lruMemoryCache.put(convertToKey(rankId), entity, MusicInfoEntity::class.java)
+    override suspend fun createMusicRanking(rankId: String, entity: NetworkMusicInfo): Boolean {
+        mmkvCache.put(convertToKey(rankId), entity, NetworkMusicInfo::class.java)
+        lruMemoryCache.put(convertToKey(rankId), entity, NetworkMusicInfo::class.java)
         return true
     }
 
     override suspend fun getDetailOfRankings() = UnsupportedOperation()
 
-    override suspend fun createDetailOfRankings(entity: MusicRankListEntity) = TODO()
+    override suspend fun createDetailOfRankings(entity: NetworkMusicRankList) = TODO()
 
     override suspend fun createRankingEntity(entities: List<RankingIdEntity>) = tryWrapper {
         rankingDao.insert(*entities.toTypedArray())

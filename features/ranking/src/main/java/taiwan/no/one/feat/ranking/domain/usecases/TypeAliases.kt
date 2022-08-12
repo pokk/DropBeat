@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,12 @@ package taiwan.no.one.feat.ranking.domain.usecases
 import taiwan.no.one.core.domain.parameter.NonRequest
 import taiwan.no.one.core.domain.usecase.OneShotUsecase
 import taiwan.no.one.feat.ranking.data.entities.local.RankingIdEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.NetworkSong
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList.NetworkBriefRank
 
-internal typealias FetchMusicRankCase = OneShotUsecase<List<SongEntity>, FetchMusicRankReq>
+internal typealias FetchMusicRankCase = OneShotUsecase<List<NetworkSong>, FetchMusicRankReq>
 internal typealias FetchMusicRankReq = FetchMusicRankOneShotCase.Request
-internal typealias FetchDetailOfRankingsCase = OneShotUsecase<List<BriefRankEntity>, NonRequest>
+internal typealias FetchDetailOfRankingsCase = OneShotUsecase<List<NetworkBriefRank>, NonRequest>
 
 internal typealias FetchRankIdsCase = OneShotUsecase<List<RankingIdEntity>, NonRequest>
 internal typealias AddRankIdsCase = OneShotUsecase<Boolean, AddRankIdsReq>

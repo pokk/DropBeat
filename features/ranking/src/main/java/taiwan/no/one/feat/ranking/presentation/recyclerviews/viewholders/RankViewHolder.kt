@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +26,14 @@ package taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders
 
 import coil.load
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList.NetworkBriefRank
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.adapters.RankAdapter
 import taiwan.no.one.widget.recyclerviews.ViewHolderBinding
 
 internal class RankViewHolder(
     private val binding: ItemTrendBinding,
-) : ViewHolderBinding<BriefRankEntity, RankAdapter>(binding.root) {
-    override fun initView(entity: BriefRankEntity, adapter: RankAdapter) {
+) : ViewHolderBinding<NetworkBriefRank, RankAdapter>(binding.root) {
+    override fun initView(entity: NetworkBriefRank, adapter: RankAdapter) {
         binding.apply {
             mtvTitle.text = entity.title
             sivThumbnail.load(entity.coverUrl)

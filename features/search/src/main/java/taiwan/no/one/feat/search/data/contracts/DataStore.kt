@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,16 +26,16 @@ package taiwan.no.one.feat.search.data.contracts
 
 import kotlinx.coroutines.flow.Flow
 import taiwan.no.one.feat.search.data.entities.local.SearchHistoryEntity
-import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkMusicInfo
 
 /**
  * This interface will common the all data stores.
  * Using prefix name (get), (create), (modify), (remove), (store)
  */
 internal interface DataStore {
-    suspend fun getMusic(keyword: String, page: Int): MusicInfoEntity
+    suspend fun getMusic(keyword: String, page: Int): NetworkMusicInfo
 
-    suspend fun createMusic(keyword: String, page: Int, music: MusicInfoEntity): Boolean
+    suspend fun createMusic(keyword: String, page: Int, music: NetworkMusicInfo): Boolean
 
     fun getSearchHistories(count: Int): Flow<List<SearchHistoryEntity>>
 

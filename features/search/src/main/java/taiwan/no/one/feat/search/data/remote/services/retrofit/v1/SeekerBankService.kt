@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.QueryMap
 import taiwan.no.one.core.data.remote.interceptor.Constant
-import taiwan.no.one.feat.search.data.entities.remote.MusicInfoEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkMusicInfo
 import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
 
 /**
@@ -36,8 +36,13 @@ import taiwan.no.one.feat.search.data.remote.configs.SeekerConfig
  * Using prefix name (retrieve), (insert), (replace), (release)
  */
 internal interface SeekerBankService {
-    @Headers(Constant.HEADER_MOCK_DATA,
-             "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest")
+    @Headers(
+        Constant.HEADER_MOCK_DATA,
+        "User-Agent: Paw/3.1.7 (Macintosh; OS X/10.14.5) GCDHTTPRequest"
+    )
     @GET(SeekerConfig.API_REQUEST)
-    suspend fun retrieveSearchMusic(@QueryMap queries: Map<String, String>): MusicInfoEntity
+    suspend fun retrieveSearchMusic(
+        @QueryMap
+        queries: Map<String, String>,
+    ): NetworkMusicInfo
 }

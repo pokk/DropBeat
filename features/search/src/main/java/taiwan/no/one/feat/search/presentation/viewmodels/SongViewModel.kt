@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,20 +31,20 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import org.kodein.di.instance
 import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
-import taiwan.no.one.feat.search.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.search.data.entities.remote.NetworkCommonMusic.NetworkSong
 
 internal class SongViewModel(
     application: Application,
     override val handle: SavedStateHandle,
 ) : BehindAndroidViewModel(application) {
     private val moshi by instance<Moshi>()
-    private val songAdapter: JsonAdapter<List<SongEntity>>
+    private val songAdapter: JsonAdapter<List<NetworkSong>>
         get() {
-            val type = Types.newParameterizedType(List::class.java, SongEntity::class.java)
-            return moshi.adapter<List<SongEntity>>(type)
+            val type = Types.newParameterizedType(List::class.java, NetworkSong::class.java)
+            return moshi.adapter<List<NetworkSong>>(type)
         }
 
-    fun songToStream(song: SongEntity) = songAdapter.toJson(listOf(song))
+    fun songToStream(song: NetworkSong) = songAdapter.toJson(listOf(song))
 
-    fun songToStream(song: List<SongEntity>) = songAdapter.toJson(song)
+    fun songToStream(song: List<NetworkSong>) = songAdapter.toJson(song)
 }

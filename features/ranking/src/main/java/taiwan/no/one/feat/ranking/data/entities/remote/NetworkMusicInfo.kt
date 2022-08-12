@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,22 +27,22 @@ package taiwan.no.one.feat.ranking.data.entities.remote
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import taiwan.no.one.ext.DEFAULT_STR
-import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.SongEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.CommonMusicEntity.NetworkSong
 
 @JsonClass(generateAdapter = true)
-internal data class MusicInfoEntity(
+internal data class NetworkMusicInfo(
     val status: String = DEFAULT_STR,
     @Json(name = "data")
-    val entity: MusicEntity = MusicEntity(),
+    val entity: NetworkMusic = NetworkMusic(),
 ) {
     @JsonClass(generateAdapter = true)
-    internal data class MusicEntity(
+    internal data class NetworkMusic(
         // 🔽 Only Music has.
         @Json(name = "has_more")
         val hasMore: Boolean = false,
-        val items: List<SongEntity> = emptyList(),
+        val items: List<NetworkSong> = emptyList(),
         // 🔽 Only Rank has.
         val timestamp: Double = 0.0,
-        val songs: List<SongEntity> = emptyList(),
+        val songs: List<NetworkSong> = emptyList(),
     )
 }

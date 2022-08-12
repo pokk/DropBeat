@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,18 +30,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.databinding.ItemTrendBinding
-import taiwan.no.one.feat.ranking.data.entities.remote.MusicRankListEntity.BriefRankEntity
+import taiwan.no.one.feat.ranking.data.entities.remote.NetworkMusicRankList.NetworkBriefRank
 import taiwan.no.one.feat.ranking.presentation.recyclerviews.viewholders.RankViewHolder
 
-internal class RankAdapter : ListAdapter<BriefRankEntity, RankViewHolder>(DiffItemCallback) {
+internal class RankAdapter : ListAdapter<NetworkBriefRank, RankViewHolder>(DiffItemCallback) {
     var onClickListener: ((rankId: Int, title: String) -> Unit)? = null
         private set
 
-    private object DiffItemCallback : DiffUtil.ItemCallback<BriefRankEntity>() {
-        override fun areItemsTheSame(oldItem: BriefRankEntity, newItem: BriefRankEntity) =
+    private object DiffItemCallback : DiffUtil.ItemCallback<NetworkBriefRank>() {
+        override fun areItemsTheSame(oldItem: NetworkBriefRank, newItem: NetworkBriefRank) =
             oldItem.rankId == newItem.rankId
 
-        override fun areContentsTheSame(oldItem: BriefRankEntity, newItem: BriefRankEntity) =
+        override fun areContentsTheSame(oldItem: NetworkBriefRank, newItem: NetworkBriefRank) =
             oldItem == newItem
     }
 
