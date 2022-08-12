@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ import taiwan.no.one.core.data.local.room.TimeEntity
 import taiwan.no.one.ext.DEFAULT_LONG
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.explore.data.contracts.Po
+import taiwan.no.one.feat.explore.data.entities.local.enums.ImgQuality
 
 @Entity(tableName = "table_image", indices = [Index("url", unique = true)])
 internal data class ImageEntity(

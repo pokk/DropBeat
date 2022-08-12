@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,14 @@
  * SOFTWARE.
  */
 
-package taiwan.no.one.feat.explore.data.entities.local
+package taiwan.no.one.feat.explore.data.entities.local.enums
 
 internal enum class ImgQuality(val size: String) {
-    ELSE(""), COVER("cover"), MEGA("mega"), BEST("extralarge"), HIGH("large"), MEDIUM("medium"), LOW("small"),
+    ELSE(""),
+    COVER("cover"),
+    MEGA("mega"),
+    BEST("extralarge"),
+    HIGH("large"),
+    MEDIUM("medium"),
+    LOW("small"),
 }

@@ -31,7 +31,7 @@ import taiwan.no.one.entity.SimpleTrackEntity
 import taiwan.no.one.ext.DEFAULT_INT
 import taiwan.no.one.ext.DEFAULT_STR
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
-import taiwan.no.one.feat.explore.data.entities.local.ImgQuality
+import taiwan.no.one.feat.explore.data.entities.local.enums.ImgQuality
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkAlbumInfo.NetworkAlbumWithArtist
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrackWithStreamable
@@ -107,7 +107,7 @@ internal object EntityMapper {
             it.stats.playCount.toInt(),
             emptyList(),
             emptyList(),
-            it.bio.let { bio -> SimpleBioEntity(bio.content.orEmpty(), bio.summary.orEmpty()) }
+            it.bio.let { bio -> SimpleBioEntity(bio.content, bio.summary.orEmpty()) }
         )
     }
 }
