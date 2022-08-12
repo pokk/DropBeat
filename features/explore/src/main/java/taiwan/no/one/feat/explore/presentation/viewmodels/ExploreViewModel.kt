@@ -40,7 +40,7 @@ import taiwan.no.one.dropbeat.core.viewmodel.BehindAndroidViewModel
 import taiwan.no.one.dropbeat.provider.LibraryMethodsProvider
 import taiwan.no.one.entity.SimplePlaylistEntity
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo.NetworkTracks
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.domain.usecases.FetchChartTopArtistCase
@@ -73,7 +73,7 @@ internal class ExploreViewModel(
     private val libraryProvider by instance<LibraryMethodsProvider>()
     private val _playlists by lazy { ResultLiveData<List<SimplePlaylistEntity>>() }
     val playlists get() = _playlists.toLiveData()
-    private val _topTracks by lazy { ResultLiveData<TracksEntity>() }
+    private val _topTracks by lazy { ResultLiveData<NetworkTracks>() }
     val topTracks get() = _topTracks.toLiveData()
     private val _topArtists by lazy { ResultLiveData<ArtistWithMoreDetailEntities>() }
     val topArtists get() = _topArtists.toLiveData()
@@ -134,7 +134,7 @@ internal class ExploreViewModel(
     }
 
     @WorkerThread
-    private suspend fun transformData(entities: TracksEntity) {
+    private suspend fun transformData(entities: NetworkTracks) {
         val array = entities.tracks.map(EntityMapper::exploreToSimpleTrackEntity).toTypedArray()
         withContext(Dispatchers.Main) { _topSimpleEntities.value = TOP_TRACK to array }
     }

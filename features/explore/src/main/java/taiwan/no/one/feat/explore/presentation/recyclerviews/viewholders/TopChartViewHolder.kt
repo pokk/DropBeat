@@ -29,7 +29,7 @@ import coil.load
 import com.devrapid.kotlinshaver.castOrNull
 import taiwan.no.one.dropbeat.AppResDrawable
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 import taiwan.no.one.feat.explore.data.mappers.EntityMapper
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntity
 import taiwan.no.one.feat.explore.presentation.recyclerviews.adapters.TopChartAdapter
@@ -39,7 +39,7 @@ internal class TopChartViewHolder(
     private val binding: ItemTypeOfMusicBinding,
 ) : ViewHolderBinding<Any, TopChartAdapter>(binding.root) {
     override fun initView(entity: Any, adapter: TopChartAdapter) {
-        val track = castOrNull<TrackEntity>(entity)
+        val track = castOrNull<NetworkTrack>(entity)
         val artist = castOrNull<ArtistWithMoreDetailEntity>(entity)
         if (track != null || artist != null) {
             binding.mtvNumber.text = (absoluteAdapterPosition + 1).toString()
@@ -74,7 +74,7 @@ internal class TopChartViewHolder(
         }
     }
 
-    private fun initTrackType(entity: TrackEntity) {
+    private fun initTrackType(entity: NetworkTrack) {
         binding.apply {
             mtvArtistName.text = entity.artist?.name.orEmpty()
             mtvAlbumName.text = entity.name.orEmpty()

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,10 +33,10 @@ import taiwan.no.one.core.data.repostory.cache.local.convertToKey
 import taiwan.no.one.ext.extensions.now
 import taiwan.no.one.feat.explore.data.contracts.DataStore
 import taiwan.no.one.feat.explore.data.entities.local.ArtistWithImageAndBioEntityAndStats
-import taiwan.no.one.feat.explore.data.entities.remote.TopArtistInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopArtistInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo.NetworkTracks
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 import taiwan.no.one.feat.explore.data.stores.LocalStore.Constant.TYPE_CHART_TOP_ARTIST
 import taiwan.no.one.feat.explore.data.stores.LocalStore.Constant.TYPE_CHART_TOP_TRACK
 import taiwan.no.one.feat.explore.domain.repositories.LastFmRepo
@@ -81,18 +81,18 @@ internal class LastFmRepository(
 
     override suspend fun fetchSimilarTrackInfo(mbid: String) = remote.getSimilarTrackInfo(mbid).similarTracks
 
-    override suspend fun fetchChartTopTrack(page: Int, limit: Int) = object : LayerCaching<TopTrackInfoEntity>() {
+    override suspend fun fetchChartTopTrack(page: Int, limit: Int) = object : LayerCaching<NetworkTopTrackInfo>() {
         override var timestamp
             get() = sp.getLong(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), 0L)
             set(value) {
                 sp.edit { putLong(convertToKey(page, limit, TYPE_CHART_TOP_TRACK), value) }
             }
 
-        override suspend fun saveCallResult(data: TopTrackInfoEntity) {
+        override suspend fun saveCallResult(data: NetworkTopTrackInfo) {
             local.createChartTopTrack(page, limit, data)
         }
 
-        override suspend fun shouldFetch(data: TopTrackInfoEntity) =
+        override suspend fun shouldFetch(data: NetworkTopTrackInfo) =
             Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
         override suspend fun loadFromLocal() = local.getChartTopTrack(page, limit)
@@ -100,22 +100,22 @@ internal class LastFmRepository(
         override suspend fun createCall() = remote.getChartTopTrack(page, limit)
     }.value().track
 
-    override suspend fun addChartTopTrack(page: Int, limit: Int, entities: List<TrackEntity>) {
-        local.createChartTopTrack(page, limit, TopTrackInfoEntity(TracksEntity(entities, null)))
+    override suspend fun addChartTopTrack(page: Int, limit: Int, entities: List<NetworkTrack>) {
+        local.createChartTopTrack(page, limit, NetworkTopTrackInfo(NetworkTracks(entities, null)))
     }
 
-    override suspend fun fetchChartTopArtist(page: Int, limit: Int) = object : LayerCaching<TopArtistInfoEntity>() {
+    override suspend fun fetchChartTopArtist(page: Int, limit: Int) = object : LayerCaching<NetworkTopArtistInfo>() {
         override var timestamp
             get() = sp.getLong(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), 0L)
             set(value) {
                 sp.edit { putLong(convertToKey(page, limit, TYPE_CHART_TOP_ARTIST), value) }
             }
 
-        override suspend fun saveCallResult(data: TopArtistInfoEntity) {
+        override suspend fun saveCallResult(data: NetworkTopArtistInfo) {
             local.createChartTopArtist(page, limit, data)
         }
 
-        override suspend fun shouldFetch(data: TopArtistInfoEntity) =
+        override suspend fun shouldFetch(data: NetworkTopArtistInfo) =
             Instant.fromEpochMilliseconds(timestamp) + expired >= now()
 
         override suspend fun loadFromLocal() = local.getChartTopArtist(page, limit)

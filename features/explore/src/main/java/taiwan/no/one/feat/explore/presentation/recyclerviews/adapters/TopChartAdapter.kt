@@ -32,7 +32,7 @@ import com.devrapid.kotlinshaver.castOrNull
 import taiwan.no.one.dropbeat.AppResLayout
 import taiwan.no.one.dropbeat.databinding.ItemTypeOfMusicBinding
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TopTrackInfoEntity.TracksEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTopTrackInfo.NetworkTracks
 import taiwan.no.one.feat.explore.domain.usecases.ArtistWithMoreDetailEntities
 import taiwan.no.one.feat.explore.presentation.recyclerviews.viewholders.TopChartViewHolder
 
@@ -57,7 +57,7 @@ internal class TopChartAdapter : RecyclerView.Adapter<TopChartViewHolder>() {
     override fun getItemCount() = data.size
 
     fun setDataset(dataset: Any) {
-        data = (castOrNull<TracksEntity>(dataset)?.tracks ?: castOrNull<ArtistWithMoreDetailEntities>(dataset))
+        data = (castOrNull<NetworkTracks>(dataset)?.tracks ?: castOrNull<ArtistWithMoreDetailEntities>(dataset))
             ?.subList(0, 4)
             .orEmpty()
         notifyDataSetChanged()

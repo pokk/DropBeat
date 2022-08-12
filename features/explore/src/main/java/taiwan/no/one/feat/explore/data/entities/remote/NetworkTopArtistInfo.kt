@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,18 @@
 
 package taiwan.no.one.feat.explore.data.entities.remote
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class TagInfoEntity(
-    val tag: TagEntity,
+internal data class NetworkTopArtistInfo(
+    val artists: NetworkArtists,
 ) {
     @JsonClass(generateAdapter = true)
-    internal data class TagEntity(
-        val name: String?,
-        val total: Int?,
-        val reach: Int?,
-        val url: String?,
-        val wiki: CommonLastFmEntity.WikiEntity?,
+    internal data class NetworkArtists(
+        @Json(name = "artist")
+        val artists: List<NetworkArtistInfo.NetworkArtist>,
+        @Json(name = "@attr")
+        val attr: NetworkCommonLastFm.NetworkAttr?,
     )
 }

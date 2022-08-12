@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,20 +26,20 @@ package taiwan.no.one.feat.explore.domain.repositories
 
 import taiwan.no.one.core.domain.repository.Repository
 import taiwan.no.one.entity.SimpleTrackEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistMoreDetailEntity
-import taiwan.no.one.feat.explore.data.entities.remote.ArtistPhotosEntity.ArtistPhotoEntity
-import taiwan.no.one.feat.explore.data.entities.remote.TrackInfoEntity.TrackEntity
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistMoreDetail
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkArtistPhotos.NetworkArtistPhoto
+import taiwan.no.one.feat.explore.data.entities.remote.NetworkTrackInfo.NetworkTrack
 
 /**
  * This interface will be the similar to [taiwan.no.one.feat.explore.data.contracts.DataStore].
  * Using prefix name (fetch), (add), (update), (delete), (keep)
  */
 internal interface LastFmExtraRepo : Repository {
-    suspend fun fetchArtistPhotoInfo(artistName: String, page: Int): List<ArtistPhotoEntity>
+    suspend fun fetchArtistPhotoInfo(artistName: String, page: Int): List<NetworkArtistPhoto>
 
-    suspend fun fetchArtistMoreDetail(artistName: String): ArtistMoreDetailEntity
+    suspend fun fetchArtistMoreDetail(artistName: String): NetworkArtistMoreDetail
 
-    suspend fun fetchTrackCover(trackUrl: String, trackEntity: TrackEntity): TrackEntity
+    suspend fun fetchTrackCover(trackUrl: String, trackEntity: NetworkTrack): NetworkTrack
 
     suspend fun fetchTrackCover(trackUrl: String, simpleTrackEntity: SimpleTrackEntity): SimpleTrackEntity
 }
