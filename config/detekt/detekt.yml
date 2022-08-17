@@ -119,6 +119,10 @@ coroutines:
     active: true
   RedundantSuspendModifier:
     active: true
+  SleepInsteadOfDelay:
+    active: true
+  SuspendFunWithFlowReturnType:
+    active: true
 
 empty-blocks:
   active: true
@@ -534,17 +538,27 @@ style:
     values: ['TODO:', 'FIXME:', 'STOPSHIP:']
     allowedPatterns: ''
   ForbiddenImport:
-    active: false
-    imports: []
+    active: true
+    imports:
+      - value: 'org.assertj.core.api.Assertions'
+        reason: 'Import Assertions.assertThat instead.'
+      - value: 'org.junit.jupiter.api.Assertions*'
+        reason: 'Use AssertJ assertions instead.'
     forbiddenPatterns: ''
   ForbiddenMethodCall:
-    active: false
-    methods: ['kotlin.io.println', 'kotlin.io.print']
+    active: true
+    methods:
+      - 'kotlin.io.print'
+      - 'kotlin.io.println'
+      - 'java.net.URL.openStream'
+      - 'java.lang.Class.getResourceAsStream'
+      - 'java.lang.ClassLoader.getResourceAsStream'
+      - 'org.jetbrains.kotlin.diagnostics.DiagnosticUtils.getLineAndColumnInPsiFile'
   ForbiddenPublicDataClass:
     active: false
     ignorePackages: ['*.internal', '*.internal.*']
   ForbiddenVoid:
-    active: false
+    active: true
     ignoreOverridden: false
     ignoreUsageInGenerics: false
   FunctionOnlyReturningConstant:
@@ -562,15 +576,22 @@ style:
   MagicNumber:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    ignoreNumbers: ['-1', '0', '1', '2']
+
+    ignoreNumbers:
+      - '-1'
+      - '0'
+      - '1'
+      - '2'
+      - '100'
+      - '1000'
     ignoreHashCodeFunction: true
-    ignorePropertyDeclaration: false
+    ignorePropertyDeclaration: true
     ignoreLocalVariableDeclaration: false
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
-    ignoreAnnotation: false
+    ignoreAnnotation: true
     ignoreNamedArgument: true
-    ignoreEnums: false
+    ignoreEnums: true
     ignoreRanges: false
   MandatoryBracesIfStatements:
     active: false
@@ -636,6 +657,8 @@ style:
     active: false
   UnnecessaryInheritance:
     active: true
+  UnnecessaryFilter:
+    active: true
   UnnecessaryLet:
     active: true
   UnnecessaryParentheses:
@@ -648,7 +671,7 @@ style:
     active: true
   UnusedPrivateMember:
     active: true
-    allowedNames: '(_|ignored|expected|serialVersionUID)'
+    allowedNames: '(_|ignored|expected)'
   UseArrayLiteralsInAnnotations:
     active: true
   UseCheckNotNull:
@@ -660,7 +683,7 @@ style:
     excludeAnnotatedClasses: []
     allowVars: true
   UseEmptyCounterpart:
-    active: false
+    active: true
   UseIfInsteadOfWhen:
     active: true
   UseRequire:
@@ -669,11 +692,17 @@ style:
     active: true
   UselessCallOnNotNull:
     active: true
+  UseIfEmptyOrIfBlank:
+    active: true
+  UseIsNullOrEmpty:
+    active: true
+  UseOrEmpty:
+    active: true
   UtilityClassWithPublicConstructor:
     active: true
   VarCouldBeVal:
     active: true
+    ignoreAnnotated: ['Parameter']
   WildcardImport:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    excludeImports: ['java.util.*', 'kotlinx.android.synthetic.*']
