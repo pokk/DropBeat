@@ -35,7 +35,7 @@ object LibraryDependency {
         const val CARDVIEW = "1.0.0"
         const val RECYCLERVIEW = "1.3.0-beta02"
         const val PAGING = "3.2.0-alpha02"
-        const val CONSTRAINTLAYOUT = "2.1.3"
+        const val CONSTRAINTLAYOUT = "2.1.4"
         const val COORDINATORLAYOUT = "1.2.0"
         const val AAC_LIFECYCLE = "2.5.1"
         const val DATASTORE = "1.0.0"
