@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,31 +40,28 @@ import taiwan.no.one.feat.login.data.remote.services.firebase.Credential
 internal class FirebaseAuthService(
     private val auth: FirebaseAuth,
 ) : AuthService {
-    override suspend fun getLogin(email: String, password: String) =
-        suspendCancellableCoroutine<UserInfoEntity> { continuation ->
-            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-                continuation.resume(extractUserInfoEntity(it))
-            }.addOnFailureListener(continuation::resumeWithException)
-        }
+    override suspend fun getLogin(email: String, password: String) = suspendCancellableCoroutine { continuation ->
+        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+            continuation.resume(extractUserInfoEntity(it))
+        }.addOnFailureListener(continuation::resumeWithException)
+    }
 
-    override suspend fun getLogin(credential: Credential) =
-        suspendCancellableCoroutine<UserInfoEntity> { continuation ->
-            auth.signInWithCredential(credential.getAuthCredential()).addOnSuccessListener {
-                continuation.resume(extractUserInfoEntity(it))
-            }.addOnFailureListener(continuation::resumeWithException)
-        }
+    override suspend fun getLogin(credential: Credential) = suspendCancellableCoroutine { continuation ->
+        auth.signInWithCredential(credential.getAuthCredential()).addOnSuccessListener {
+            continuation.resume(extractUserInfoEntity(it))
+        }.addOnFailureListener(continuation::resumeWithException)
+    }
 
     override suspend fun getLogout(): Boolean {
         auth.signOut()
         return true
     }
 
-    override suspend fun createUser(email: String, password: String) =
-        suspendCancellableCoroutine<UserInfoEntity> { continuation ->
-            auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-                continuation.resume(extractUserInfoEntity(it))
-            }.addOnFailureListener(continuation::resumeWithException)
-        }
+    override suspend fun createUser(email: String, password: String) = suspendCancellableCoroutine { continuation ->
+        auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
+            continuation.resume(extractUserInfoEntity(it))
+        }.addOnFailureListener(continuation::resumeWithException)
+    }
 
     override suspend fun modifyPassword(email: String) {
         auth.sendPasswordResetEmail(email).await()
