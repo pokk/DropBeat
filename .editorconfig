@@ -12,9 +12,9 @@ indent_size=4
 max_line_length=120
 
 [{*.gradle.kts,*.kt,*.kts,*.main.kts}]
-ij_kotlin_allow_trailing_comma = true
-ij_kotlin_allow_trailing_comma_on_call_site = true
-kotlin_imports_layout = ascii
+ij_kotlin_allow_trailing_comma=true
+ij_kotlin_allow_trailing_comma_on_call_site=true
+kotlin_imports_layout=ascii
 
 [*.md]
 trim_trailing_whitespace=false
