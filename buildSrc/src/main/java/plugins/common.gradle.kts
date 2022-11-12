@@ -56,7 +56,7 @@ subprojects {
                                 // isMinifyEnabled = true
                                 proguardFiles(
                                     getDefaultProguardFile("proguard-android-optimize.txt"),
-                                    file("proguard-rules.pro")
+                                    file("proguard-rules.pro"),
                                 )
                             }
                         }
@@ -64,7 +64,10 @@ subprojects {
                             splits.abi.isEnable = false
                             splits.density.isEnable = false
                             aaptOptions.cruncherEnabled = false
-                            isTestCoverageEnabled = true
+                            // XXX(jieyi): Don't know the reason why if [isTestCoverageEnabled] removed, the jacoco
+                            //  report is generated.
+                            //  ref: [https://stackoverflow.com/questions/70589854/android-jacoco-code-coverage-is-not-generating-after-gradle-upgrade-to-7-0-x]
+                            // isTestCoverageEnabled = true
                             // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
                             // ext.set("alwaysUpdateBuildId", false)
                             isCrunchPngs = false // Enabled by default for RELEASE build type
