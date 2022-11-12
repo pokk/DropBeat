@@ -113,4 +113,10 @@
 
     <style name="Taiwan.No.One.PopupWindow" parent="Widget.AppCompat.PopupWindow">
     </style>
+
+    <!--<editor-fold desc="For Feature Modules testing, please don't use them.">-->
+    <style name="WhiteBackgroundTheme"/>
+
+    <style name="WhiteBackgroundDialogTheme"/>
+    <!--</editor-fold>-->
 </resources>

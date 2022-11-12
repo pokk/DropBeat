@@ -67,6 +67,7 @@ subprojects {
                             // XXX(jieyi): Don't know the reason why if [isTestCoverageEnabled] removed, the jacoco
                             //  report is generated.
                             //  ref: [https://stackoverflow.com/questions/70589854/android-jacoco-code-coverage-is-not-generating-after-gradle-upgrade-to-7-0-x]
+                            //  ref: [https://stackoverflow.com/questions/67299155/kotlin-jacoco-illegalclassformatexception-please-supply-original-non-instrume]
                             // isTestCoverageEnabled = true
                             // Only use this flag on builds you don't proguard or upload to beta-by-crashlytics.
                             // ext.set("alwaysUpdateBuildId", false)
