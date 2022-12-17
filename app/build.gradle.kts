@@ -43,6 +43,7 @@ plugins {
 plugins.apply("com.google.devtools.ksp")
 
 android {
+    namespace = "taiwan.no.one.dropbeat"
     signingConfigs {
         create("release") {
             storeFile = file("../taiwanno1_release.keystore")
@@ -68,6 +69,7 @@ android {
     (this as InternalApplicationExtension).apply {
         setDynamicFeatures(CommonModuleDependency.getDynamicFeatureModules())
     }
+    buildFeatures.buildConfig = true
 }
 
 dependencies {
@@ -77,7 +79,7 @@ dependencies {
         project(CommonModuleDependency.LIB_MEDIA_PLAYER),
         project(CommonModuleDependency.LIB_SYNC),
         project(CommonModuleDependency.LIB_ENTITY),
-        project(CommonModuleDependency.LIB_ANALYTICS)
+        project(CommonModuleDependency.LIB_ANALYTICS),
     ).forEach { api(it) }
     testImplementation(project(CommonModuleDependency.LIB_TEST))
     appDependencies()

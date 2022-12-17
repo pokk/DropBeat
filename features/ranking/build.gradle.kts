@@ -27,52 +27,54 @@ import config.CommonModuleDependency
 import utils.annotationDependencies
 
 android {
+    namespace = "taiwan.no.one.feat.ranking"
     buildTypes {
         getByName("release") {
             buildConfigField(
                 "String",
                 "RankingUriDomain",
-                gradleLocalProperties(rootDir).getProperty("ranking_uri_domain")
+                gradleLocalProperties(rootDir).getProperty("ranking_uri_domain"),
             )
             buildConfigField(
                 "String",
                 "RankingUriRequest",
-                gradleLocalProperties(rootDir).getProperty("ranking_uri_request")
+                gradleLocalProperties(rootDir).getProperty("ranking_uri_request"),
             )
             buildConfigField(
                 "String",
                 "SearchMusicQuery1",
-                gradleLocalProperties(rootDir).getProperty("seek_song_query_1")
+                gradleLocalProperties(rootDir).getProperty("seek_song_query_1"),
             )
             buildConfigField(
                 "String",
                 "SearchMusicParameter1",
-                gradleLocalProperties(rootDir).getProperty("seek_song_param_1")
+                gradleLocalProperties(rootDir).getProperty("seek_song_param_1"),
             )
         }
         getByName("debug") {
             buildConfigField(
                 "String",
                 "RankingUriDomain",
-                gradleLocalProperties(rootDir).getProperty("ranking_uri_domain")
+                gradleLocalProperties(rootDir).getProperty("ranking_uri_domain"),
             )
             buildConfigField(
                 "String",
                 "RankingUriRequest",
-                gradleLocalProperties(rootDir).getProperty("ranking_uri_request")
+                gradleLocalProperties(rootDir).getProperty("ranking_uri_request"),
             )
             buildConfigField(
                 "String",
                 "SearchMusicQuery1",
-                gradleLocalProperties(rootDir).getProperty("seek_song_query_1")
+                gradleLocalProperties(rootDir).getProperty("seek_song_query_1"),
             )
             buildConfigField(
                 "String",
                 "SearchMusicParameter1",
-                gradleLocalProperties(rootDir).getProperty("seek_song_param_1")
+                gradleLocalProperties(rootDir).getProperty("seek_song_param_1"),
             )
         }
     }
+    buildFeatures.buildConfig = true
 }
 
 ksp {

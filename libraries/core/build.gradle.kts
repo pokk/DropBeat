@@ -29,6 +29,11 @@ import utils.coreDependencies
 import utils.debugDependencies
 import utils.unitTestDependencies
 
+android {
+    namespace = "taiwan.no.one.core"
+    buildFeatures.buildConfig = true
+}
+
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")

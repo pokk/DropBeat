@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@ import org.gradle.kotlin.dsl.maven
 
 fun RepositoryHandler.addDefaults() {
     google()
-//    jcenter()
     mavenCentral()
     // required to find the project's artifacts
     maven("https://dl.bintray.com/kotlin/kotlin-eap")

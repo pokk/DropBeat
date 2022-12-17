@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_11.toString()
+            jvmTarget = JavaVersion.VERSION_17.toString()
             suppressWarnings = false
             freeCompilerArgs = listOf(
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=kotlin.ExperimentalStdlibApi",
-                "-Xallow-result-return-type"
+                "-Xallow-result-return-type",
             )
         }
     }

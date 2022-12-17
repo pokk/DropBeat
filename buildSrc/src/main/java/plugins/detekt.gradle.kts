@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ subprojects {
     }
 
     tasks.withType<Detekt>().configureEach {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
         exclude(".*/resources/.*", ".*/build/.*") // but exclude our legacy internal package
     }
 
@@ -57,7 +57,7 @@ subprojects {
             DetektExtension.DEFAULT_SRC_DIR_JAVA,
             "src/test/java",
             DetektExtension.DEFAULT_SRC_DIR_KOTLIN,
-            "src/test/kotlin"
+            "src/test/kotlin",
         )
         buildUponDefaultConfig = true
         baseline = baselineFile

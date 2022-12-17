@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,10 @@
 
 import config.CommonModuleDependency
 import utils.annotationDependencies
+
+android {
+    namespace = "taiwan.no.one.feat.player"
+}
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))

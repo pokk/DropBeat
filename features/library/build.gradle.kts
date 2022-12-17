@@ -25,6 +25,11 @@
 import config.CommonModuleDependency
 import utils.annotationDependencies
 
+android {
+    namespace = "taiwan.no.one.feat.library"
+    buildFeatures.buildConfig = true
+}
+
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")

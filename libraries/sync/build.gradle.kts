@@ -26,6 +26,10 @@ import config.CommonModuleDependency
 import utils.syncDependencies
 import utils.unitTestDependencies
 
+android {
+    namespace = "taiwan.no.one.sync"
+}
+
 dependencies {
     // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(CommonModuleDependency.LIB_CORE))

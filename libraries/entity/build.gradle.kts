@@ -25,6 +25,10 @@
 import config.LibraryDependency
 import utils.kotlinDependencies
 
+android {
+    namespace = "taiwan.no.one.entity"
+}
+
 dependencies {
     // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     kotlinDependencies(utils.DepEnvImpl)
