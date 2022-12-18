@@ -60,19 +60,6 @@ fun DependencyHandlerScope.annotationDependencies() {
     DepEnvKsp(Tool.MOSHI_CODEGEN)
 }
 
-fun DependencyHandlerScope.coreDependencies() {
-    kotlinAndroidDependencies(DepEnvApi)
-    commonAndroidxDependencies(DepEnvApi)
-    androidxUiDependencies(DepEnvApi)
-    diDependencies(DepEnvApi)
-    internetDependencies(DepEnvApi)
-    localDependencies(DepEnvApi)
-    // Others
-    DepEnvApi(Tool.MOSHI)
-    DepEnvApi(Tool.MOSHI_ADAPTER)
-    DepEnvApi(Tool.MOSHI_KOTLIN)
-}
-
 fun DependencyHandlerScope.appDependencies() {
     androidxKtxDependencies(DepEnvApi)
     uiDependencies(DepEnvApi)
@@ -84,26 +71,6 @@ fun DependencyHandlerScope.appDependencies() {
     DepEnvApi(Internet.COIL)
 }
 
-fun DependencyHandlerScope.ktxDependencies() {
-    commonAndroidxDependencies(DepEnvImpl)
-}
-
-fun DependencyHandlerScope.widgetDependencies() {
-    kotlinAndroidDependencies(DepEnvImpl)
-    commonAndroidxDependencies(DepEnvImpl)
-    // Auto Service
-    DepEnvApi(Tool.AUTO_SERVICE)
-    // Others
-    DepEnvImpl(JetPack.RECYCLERVIEW)
-    DepEnvImpl(JetPack.PAGING)
-    DepEnvImpl(JetPack.MATERIAL_DESIGN)
-    DepEnvImpl(JetPack.CARDVIEW)
-    DepEnvImpl(JetPack.CONSTRAINT_LAYOUT)
-    DepEnvImpl(Ui.LOTTIE)
-    //    DepEnvImpl(Deps.Presentation.arv)
-    //    DepEnvImpl(Deps.Widget.quickDialog)
-}
-
 fun DependencyHandlerScope.settingDependencies() {
     // Others
     DepEnvImpl(JetPack.DATASTORE)
@@ -112,20 +79,6 @@ fun DependencyHandlerScope.settingDependencies() {
 fun DependencyHandlerScope.firebaseAuthDependencies() {
     DepEnvImpl(Firebase.FIREBASE_AUTH_GOOGLE)
     DepEnvImpl(Firebase.FIREBASE_AUTH_FACEBOOK)
-}
-
-fun DependencyHandlerScope.analyticsDependencies() {
-    kotlinDependencies(DepEnvImpl)
-    DepEnvApi(platform(Firebase.FIREBASE_BOM))
-    DepEnvApi(Analytics.FIREBASE_ANALYTICS)
-    DepEnvApi(Analytics.SENTRY)
-}
-
-fun DependencyHandlerScope.syncDependencies() {
-    kotlinDependencies(DepEnvImpl)
-    DepEnvImpl(JetPack.DATASTORE)
-    DepEnvApi(platform(Firebase.FIREBASE_BOM))
-    DepEnvApi(Firebase.FIREBASE_FIRESTORE)
 }
 
 /************************************
@@ -188,17 +141,6 @@ fun DependencyHandlerScope.androidxUiDependencies(env: String) {
     env(JetPack.ANNOT)
 }
 
-fun DependencyHandlerScope.diDependencies(env: String) {
-    env(Di.KODEIN_ANDROID_X)
-}
-
-fun DependencyHandlerScope.internetDependencies(env: String) {
-    env(Internet.OKHTTP)
-    env(Internet.OKHTTP_INTERCEPTOR)
-    env(Internet.RETROFIT2)
-    env(Internet.RETROFIT2_CONVERTER_MOSHI)
-}
-
 fun DependencyHandlerScope.firebaseDependencies(env: String) {
     env(platform(Firebase.FIREBASE_BOM))
     env(Firebase.FIREBASE_CRASHLYTICS)
@@ -211,23 +153,10 @@ fun DependencyHandlerScope.firebaseDependencies(env: String) {
     env(Firebase.FIREBASE_AUTH_FACEBOOK)
 }
 
-fun DependencyHandlerScope.localDependencies(env: String) {
-    env(Database.ROOM)
-    env(Database.ROOM_KTX)
-}
-
 fun DependencyHandlerScope.uiDependencies(env: String) {
     env(Ui.LOTTIE)
     env(Ui.SHAPE_OF_VIEW)
     // env(Jieyi.ARV)
-}
-
-fun DependencyHandlerScope.debugDependencies(env: String) {
-    env(DebugDependency.STEHO)
-    env(DebugDependency.STEHO_INTERCEPTOR)
-    // env(DebugDependency.LEAKCANARY)
-    // env(DebugDependency.DEBUG_DB)
-    // env(DebugDependency.OK_HTTP_PROFILER)
 }
 
 fun DependencyHandlerScope.unitTestDependencies(env: String = DepEnvTest) {

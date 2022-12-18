@@ -64,7 +64,7 @@ jieyi_arv = { module = "com.devrapid.jieyi:adaptiverecyclerview", version.ref = 
 androidx_appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx_appcompat" }
 androidx_recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx_recyclerview" }
 androidx_cardview = { module = "androidx.cardview:cardview", version.ref = "androidx_cardview" }
-androidx_constraint_layout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx_constraintlayout" }
+androidx_constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx_constraintlayout" }
 androidx_coordinator_layout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "androidx_coordinatorlayout" }
 # Others
 androidx_startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx_startup" }
@@ -149,7 +149,7 @@ annotation_ksp = ["autoservice_ksp", "json_moshi_codegen", "androidx_room_ksp"]
 internet = ["retrofit2", "retrofit2_converter_moshi", "okhttp", "okhttp_interceptor"]
 database = ["androidx_room_runtime", "androidx_room_ktx"]
 storage = ["androidx_datastore", "mmkv"]
-androidx_ui = ["ui_material", "androidx_recyclerview", "androidx_cardview", "androidx_constraint_layout", "androidx_annotation"]
+androidx_ui = ["ui_material", "androidx_recyclerview", "androidx_cardview", "androidx_constraintlayout", "androidx_annotation"]
 androidx_ktx = [
     "androidx_core_ktx",
     "androidx_activity_ktx",
@@ -169,7 +169,7 @@ androidx_bom = [
     "ui_material",
     "androidx_recyclerview",
     "androidx_cardview",
-    "androidx_constraint_layout",
+    "androidx_constraintlayout",
     "androidx_annotation",
     "androidx_core_ktx",
     "androidx_activity_ktx",

@@ -23,7 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.widgetDependencies
 
 android {
     namespace = "taiwan.no.one.widget"
@@ -33,5 +32,12 @@ android {
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(CommonModuleDependency.LIB_PURE_EXT))
-    widgetDependencies()
+
+    implementation(libs.autoservice)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.cardview)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.ui.material)
+    implementation(libs.ui.lottie)
 }

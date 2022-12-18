@@ -23,8 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.syncDependencies
-import utils.unitTestDependencies
 
 android {
     namespace = "taiwan.no.one.sync"
@@ -34,7 +32,12 @@ dependencies {
     // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(CommonModuleDependency.LIB_CORE))
     implementation(project(CommonModuleDependency.LIB_ENTITY))
-    implementation(config.LibraryDependency.Jieyi.KNIFER)
-    syncDependencies()
-    unitTestDependencies()
+
+    implementation(libs.jieyi.knifer)
+    implementation(libs.androidx.datastore)
+
+    api(platform(libs.firebase.bom))
+    api(libs.firebase.firestore)
+
+    testImplementation(testLibs.bundles.test)
 }

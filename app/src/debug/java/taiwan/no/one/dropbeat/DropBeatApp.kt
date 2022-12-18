@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ package taiwan.no.one.dropbeat
 
 import android.app.Application
 import android.content.Context
-import com.facebook.stetho.Stetho
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -49,7 +48,6 @@ class DropBeatApp : Application(), DIAware {
 
     override fun onCreate() {
         super.onCreate()
-        Stetho.initializeWithDefaults(this)
         // Firebase setting
         val localhost = "10.0.2.2"
         Firebase.auth.useEmulator(localhost, 9099)

@@ -22,17 +22,19 @@
  * SOFTWARE.
  */
 
-import utils.analyticsDependencies
-import utils.androidTestDependencies
-import utils.unitTestDependencies
-
 android {
     namespace = "taiwan.no.one.analytics"
 }
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    analyticsDependencies()
-    unitTestDependencies()
-    androidTestDependencies()
+    implementation(coreLibs.bundles.kotlin)
+
+    api(platform(libs.firebase.bom))
+    api(libs.analytics.firebase)
+    api(libs.analytics.sentry)
+
+    testImplementation(testLibs.bundles.test)
+
+    androidTestImplementation(testLibs.bundles.android.test)
 }

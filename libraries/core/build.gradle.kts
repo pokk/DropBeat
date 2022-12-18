@@ -23,11 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.androidTestDependencies
-import utils.annotationDependencies
-import utils.coreDependencies
-import utils.debugDependencies
-import utils.unitTestDependencies
 
 android {
     namespace = "taiwan.no.one.core"
@@ -43,10 +38,21 @@ ksp {
 dependencies {
     // api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_KTX), project(CommonModuleDependency.LIB_DEVICE)).forEach { api(it) }
+
+    api(coreLibs.bundles.kotlin.android)
+
+    api(libs.bundles.androidx.bom)
+    api(libs.bundles.internet)
+    api(libs.bundles.database)
+    api(libs.bundles.moshi)
+    api(libs.di.kodein)
+    api(libs.autoservice)
+
+    ksp(libs.autoservice.ksp)
+    ksp(libs.bundles.annotation.ksp)
+
     testImplementation(project(CommonModuleDependency.LIB_TEST))
-    coreDependencies()
-    annotationDependencies()
-    debugDependencies(utils.DepEnvDebugApi)
-    unitTestDependencies()
-    androidTestDependencies()
+    testImplementation(testLibs.bundles.test)
+
+    androidTestImplementation(testLibs.bundles.android.test)
 }

@@ -23,7 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.kotlinDependencies
 
 android {
     namespace = "taiwan.no.one.device"
@@ -32,5 +31,5 @@ android {
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(CommonModuleDependency.LIB_PURE_EXT))
-    kotlinDependencies(utils.DepEnvImpl)
+    implementation(coreLibs.bundles.kotlin)
 }

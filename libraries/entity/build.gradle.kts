@@ -32,5 +32,6 @@ dependencies {
     implementation(coreLibs.bundles.kotlin)
     implementation(libs.androidx.annotation)
     implementation(libs.json.moshi.kotlin)
+
     ksp(libs.json.moshi.codegen)
 }

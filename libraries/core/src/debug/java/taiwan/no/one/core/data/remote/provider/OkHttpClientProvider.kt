@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@
 package taiwan.no.one.core.data.remote.provider
 
 import android.content.Context
-import com.facebook.stetho.okhttp3.StethoInterceptor
 import java.util.concurrent.TimeUnit
 import okhttp3.Cache
 import okhttp3.ConnectionSpec
@@ -53,7 +52,6 @@ abstract class OkHttpClientProvider(
         writeTimeout(writeTimeOut, TimeUnit.SECONDS)
         connectTimeout(connectTimeOut, TimeUnit.SECONDS)
         interceptors.forEach { addInterceptor(it) }
-        addNetworkInterceptor(StethoInterceptor())
         addInterceptor(MockRequestInterceptor(context))
         // Those three are for HTTPS protocol.
         connectionSpecs(mutableListOf(ConnectionSpec.RESTRICTED_TLS,
