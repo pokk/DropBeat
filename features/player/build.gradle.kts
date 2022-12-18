@@ -23,7 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.annotationDependencies
 
 android {
     namespace = "taiwan.no.one.feat.player"
@@ -31,5 +30,5 @@ android {
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
-    annotationDependencies()
+    ksp(libs.bundles.annotation.ksp)
 }

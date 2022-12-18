@@ -39,5 +39,6 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.ui.material)
+    implementation(libs.ui.shapeofview)
     implementation(libs.ui.lottie)
 }

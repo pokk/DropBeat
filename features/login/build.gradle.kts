@@ -23,8 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.annotationDependencies
-import utils.firebaseAuthDependencies
 
 android {
     namespace = "taiwan.no.one.feat.login"
@@ -32,6 +30,10 @@ android {
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
-    firebaseAuthDependencies()
-    annotationDependencies()
+
+    implementation(libs.bundles.auth)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
+    ksp(libs.bundles.annotation.ksp)
 }

@@ -23,7 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.annotationDependencies
 
 android {
     namespace = "taiwan.no.one.feat.library"
@@ -38,5 +37,5 @@ ksp {
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
-    annotationDependencies()
+    ksp(libs.bundles.annotation.ksp)
 }

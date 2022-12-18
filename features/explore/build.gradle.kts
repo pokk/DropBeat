@@ -23,7 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import utils.annotationDependencies
 
 android {
     namespace = "taiwan.no.one.feat.explore"
@@ -38,6 +37,6 @@ ksp {
 dependencies {
     implementation(project(CommonModuleDependency.APP))
     implementation(project(CommonModuleDependency.FEAT_RANKING))
-    annotationDependencies()
-    implementation(config.LibraryDependency.Tool.JSOUP)
+    implementation(libs.jsoup)
+    ksp(libs.bundles.annotation.ksp)
 }

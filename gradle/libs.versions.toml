@@ -45,8 +45,8 @@ autoservice_ksp = "1.0.0"
 autoservice = "1.0.1"
 
 firebase_bom = "30.3.2"
-firebase_auth_google = "20.2.0"
-firebase_auth_facebook = "14.1.0"
+auth_google = "20.2.0"
+auth_facebook = "14.1.0"
 
 material = "1.7.0"
 shapeOfView = "1.4.7"
@@ -125,6 +125,9 @@ jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 autoservice = { module = "com.google.auto.service:auto-service", version.ref = "autoservice" }
 autoservice_ksp = { module = "dev.zacsweers.autoservice:auto-service-ksp", version.ref = "autoservice_ksp" }
 
+# Playstore
+playstore = { module = "com.google.android.play:core", version.ref = "play_core" }
+
 # Firebase
 firebase_bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase_bom" }
 firebase_auth = { module = "com.google.firebase:firebase-auth-ktx" }
@@ -136,8 +139,8 @@ firebase_performance = { module = "com.google.firebase:firebase-perf-ktx" }
 firebase_config = { module = "com.google.firebase:firebase-config-ktx" }
 firebase_ml = { module = "com.google.firebase:firebase-ml-vision" }
 # Auth
-firebase_auth_google = { module = "com.google.android.gms:play-services-auth", version.ref = "firebase_auth_google" }
-firebase_auth_facebook = { module = "com.facebook.android:facebook-login", version.ref = "firebase_auth_facebook" }
+auth_google = { module = "com.google.android.gms:play-services-auth", version.ref = "auth_google" }
+auth_facebook = { module = "com.facebook.android:facebook-login", version.ref = "auth_facebook" }
 
 # Analytics
 analytics_firebase = { module = "com.google.firebase:firebase-analytics-ktx" }
@@ -161,16 +164,19 @@ androidx_ktx = [
     "androidx_collection_ktx",
     "androidx_palette_ktx",
 ]
+# android_ktx + android_ui
 androidx_bom = [
     "androidx_appcompat",
     "androidx_lifecycle_savedstate",
     "androidx_lifecycle_service",
     "androidx_navigation_dynamic_feature",
+    # android_ui
     "ui_material",
     "androidx_recyclerview",
     "androidx_cardview",
     "androidx_constraintlayout",
     "androidx_annotation",
+    # android_ktx
     "androidx_core_ktx",
     "androidx_activity_ktx",
     "androidx_fragment_ktx",
@@ -179,5 +185,16 @@ androidx_bom = [
     "androidx_runtime_ktx",
     "androidx_worker_ktx",
     "androidx_collection_ktx",
+    # storage
+    "androidx_datastore",
 ]
-firebase_auth = ["firebase_auth_facebook", "firebase_auth_google"]
+auth = ["auth_facebook", "auth_google"]
+firebase = [
+    "firebase_crashlytics",
+    "firebase_performance",
+    "firebase_config",
+    "firebase_messaging",
+    "firebase_db",
+    "firebase_firestore",
+    "firebase_auth",
+]

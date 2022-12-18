@@ -24,7 +24,6 @@
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import config.CommonModuleDependency
-import utils.annotationDependencies
 
 android {
     namespace = "taiwan.no.one.feat.search"
@@ -105,5 +104,5 @@ ksp {
 
 dependencies {
     implementation(project(CommonModuleDependency.APP))
-    annotationDependencies()
+    ksp(libs.bundles.annotation.ksp)
 }

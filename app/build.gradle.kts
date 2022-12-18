@@ -26,10 +26,6 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.android.build.gradle.internal.dsl.InternalApplicationExtension
 import config.AndroidConfiguration
 import config.CommonModuleDependency
-import utils.androidTestDependencies
-import utils.annotationDependencies
-import utils.appDependencies
-import utils.unitTestDependencies
 
 plugins {
     id("com.android.application")
@@ -81,11 +77,23 @@ dependencies {
         project(CommonModuleDependency.LIB_ENTITY),
         project(CommonModuleDependency.LIB_ANALYTICS),
     ).forEach { api(it) }
+
+    api(libs.bundles.androidx.bom)
+    api(libs.androidx.navigation.ui.ktx)
+    api(platform(libs.firebase.bom))
+    api(libs.bundles.firebase)
+    api(libs.bundles.auth)
+    api(libs.jieyi.knifer)
+    api(libs.playstore)
+    api(libs.ui.lottie)
+    api(libs.ui.shapeofview)
+    api(libs.mmkv)
+    api(libs.coil)
+
     testImplementation(project(CommonModuleDependency.LIB_TEST))
-    appDependencies()
-    annotationDependencies()
-    unitTestDependencies()
-    androidTestDependencies()
+    testImplementation(testLibs.bundles.test)
+
+    androidTestImplementation(testLibs.bundles.android.test)
 }
 
 fun com.android.build.gradle.internal.dsl.DefaultConfig.buildConfigField(name: String, value: Set<String>) {
