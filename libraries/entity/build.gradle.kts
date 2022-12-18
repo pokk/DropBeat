@@ -22,17 +22,15 @@
  * SOFTWARE.
  */
 
-import config.LibraryDependency
-import utils.kotlinDependencies
-
 android {
     namespace = "taiwan.no.one.entity"
 }
 
 dependencies {
     // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    kotlinDependencies(utils.DepEnvImpl)
-    implementation(LibraryDependency.JetPack.ANNOT)
-    implementation(LibraryDependency.Tool.MOSHI_KOTLIN)
-    utils.DepEnvKsp(LibraryDependency.Tool.MOSHI_CODEGEN)
+    implementation(coreLibs.kotlin.datetime)
+    implementation(coreLibs.bundles.kotlin)
+    implementation(libs.androidx.annotation)
+    implementation(libs.json.moshi.kotlin)
+    ksp(libs.json.moshi.codegen)
 }

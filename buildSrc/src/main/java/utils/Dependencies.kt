@@ -109,12 +109,6 @@ fun DependencyHandlerScope.settingDependencies() {
     DepEnvImpl(JetPack.DATASTORE)
 }
 
-fun DependencyHandlerScope.mediaDependencies() {
-    kotlinAndroidDependencies(DepEnvImpl)
-    commonAndroidxDependencies(DepEnvImpl)
-    DepEnvImpl(Media.EXOPLAYER_CORE)
-}
-
 fun DependencyHandlerScope.firebaseAuthDependencies() {
     DepEnvImpl(Firebase.FIREBASE_AUTH_GOOGLE)
     DepEnvImpl(Firebase.FIREBASE_AUTH_FACEBOOK)
@@ -132,15 +126,6 @@ fun DependencyHandlerScope.syncDependencies() {
     DepEnvImpl(JetPack.DATASTORE)
     DepEnvApi(platform(Firebase.FIREBASE_BOM))
     DepEnvApi(Firebase.FIREBASE_FIRESTORE)
-}
-
-fun DependencyHandlerScope.testDependencies() {
-    kotlinDependencies(DepEnvImpl)
-    DepEnvImpl(TestLibraryDependency.JUNIT)
-    DepEnvImpl(TestLibraryDependency.COROUTINE)
-    DepEnvImpl(TestLibraryDependency.ESPRESSO_CORE)
-
-    DepEnvImpl(JetPack.MATERIAL_DESIGN)
 }
 
 /************************************

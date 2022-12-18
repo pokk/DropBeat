@@ -22,13 +22,17 @@
  * SOFTWARE.
  */
 
-import utils.testDependencies
-
 android {
     namespace = "taiwan.no.one.test"
 }
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    testDependencies()
+    implementation(coreLibs.bundles.kotlin)
+
+    implementation(libs.ui.material)
+
+    implementation(testLibs.kotlin.coroutine)
+    implementation(testLibs.junit4)
+    implementation(testLibs.espresso)
 }

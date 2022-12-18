@@ -43,3 +43,20 @@ include(
     ":features:player",
     ":features:setting",
 )
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("lib") {
+            from(files("gradle/libs.versions.toml"))
+        }
+        create("coreLibs") {
+            from(files("gradle/core-libs.versions.toml"))
+        }
+        create("testLibs") {
+            from(files("gradle/test-libs.versions.toml"))
+        }
+        create("debugLibs") {
+            from(files("gradle/debug-libs.versions.toml"))
+        }
+    }
+}

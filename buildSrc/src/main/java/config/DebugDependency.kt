@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,10 @@ package config
 object DebugDependency {
     private object Version {
         const val STEHO = "1.6.0"
-        const val DEBUG_DB = "1.0.6"
         const val LEAKCANARY = "2.9.1"
     }
 
     const val STEHO = "com.facebook.stetho:stetho:${Version.STEHO}"
     const val STEHO_INTERCEPTOR = "com.facebook.stetho:stetho-okhttp3:${Version.STEHO}"
-    const val DEBUG_DB = "com.amitshekhar.android:debug-db:${Version.DEBUG_DB}"
     const val LEAKCANARY = "com.squareup.leakcanary:leakcanary-android:${Version.LEAKCANARY}"
 }

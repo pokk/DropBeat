@@ -1,0 +1,7 @@
+[versions]
+# Define the dependency versions
+leakcanary = "2.9.1"
+
+[libraries]
+# Memory Leak
+debug-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }

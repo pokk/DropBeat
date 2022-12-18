@@ -22,13 +22,14 @@
  * SOFTWARE.
  */
 
-import utils.mediaDependencies
-
 android {
     namespace = "taiwan.no.one.mediaplayer"
 }
 
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    mediaDependencies()
+    implementation(coreLibs.bundles.kotlin)
+    implementation(coreLibs.kotlin.coroutine.android)
+    implementation(libs.androidx.annotation)
+    implementation(libs.media.exoplayer)
 }

@@ -1,0 +1,27 @@
+[versions]
+# Define the dependency versions
+kotlin = "1.7.22"
+kotlin-coroutine = "1.6.4"
+kotlin-datetime = "0.4.0"
+
+[libraries]
+# Kotlin
+kotlin-stblib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+# Kotlin Coroutine
+kotlin-coroutine = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutine" }
+kotlin-coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutine" }
+kotlin-coroutine-googleplay = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlin-coroutine" }
+# DateTime
+kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime" }
+
+[bundles]
+kotlin = ["kotlin-stblib", "kotlin-reflect", "kotlin-coroutine"]
+kotlin_android = [
+    "kotlin-stblib",
+    "kotlin-reflect",
+    "kotlin-coroutine",
+    "kotlin-coroutine-android",
+    "kotlin-coroutine-googleplay",
+    "kotlin-datetime",
+]

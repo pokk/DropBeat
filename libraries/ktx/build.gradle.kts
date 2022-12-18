@@ -23,9 +23,6 @@
  */
 
 import config.CommonModuleDependency
-import config.LibraryDependency
-import utils.ktxDependencies
-import utils.unitTestDependencies
 
 android {
     namespace = "taiwan.no.one.ktx"
@@ -34,8 +31,13 @@ android {
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     listOf(project(CommonModuleDependency.LIB_WIDGET), project(CommonModuleDependency.LIB_PURE_EXT)).forEach { api(it) }
+
+    implementation(libs.jieyi.knifer)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.ui.material)
+    implementation(libs.bundles.androidx.ktx)
+
     testImplementation(project(CommonModuleDependency.LIB_TEST))
-    ktxDependencies()
-    implementation(LibraryDependency.Jieyi.KNIFER)
-    unitTestDependencies()
+    testImplementation(testLibs.bundles.test)
 }

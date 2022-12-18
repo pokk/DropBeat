@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Jieyi
+ * Copyright (c) 2022 Jieyi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,8 @@
  * SOFTWARE.
  */
 
-import utils.kotlinDependencies
-
 dependencies {
     //    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    kotlinDependencies(utils.DepEnvImpl)
+    implementation(coreLibs.kotlin.datetime)
+    implementation(coreLibs.bundles.kotlin)
 }
