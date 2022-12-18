@@ -41,13 +41,12 @@ buildscript {
         classpath("com.android.tools.build:gradle:8.0.0-alpha09")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath(config.GradleDependency.KOTLIN)
-        classpath(config.GradleDependency.SAFE_ARGS)
-        classpath(config.GradleDependency.GOOGLE_SERVICE)
-        classpath(config.GradleDependency.CRASHLYTICS)
-        classpath(config.GradleDependency.PERFORMANCE)
-        classpath(config.GradleDependency.KSP)
+        classpath(coreLibs.bundles.gradle.bom)
     }
+}
+
+plugins {
+    id("nl.littlerobots.version-catalog-update").version("0.7.0")
 }
 
 allprojects {

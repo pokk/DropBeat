@@ -3,6 +3,12 @@
 kotlin = "1.7.22"
 kotlin-coroutine = "1.6.4"
 kotlin-datetime = "0.4.0"
+# classpath
+safeargs = "2.5.1"
+googleservice = "4.3.13"
+crashlytics = "2.9.1"
+performance = "1.4.1"
+ksp = "1.7.22-1.0.8"
 
 [libraries]
 # Kotlin
@@ -15,6 +21,14 @@ kotlin-coroutine-googleplay = { module = "org.jetbrains.kotlinx:kotlinx-coroutin
 # DateTime
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime" }
 
+# Classpath Libraries
+classpath-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+classpath-safeargs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "safeargs" }
+classpath-googleservice = { module = "com.google.gms:google-services", version.ref = "googleservice" }
+classpath-crashlytics = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "crashlytics" }
+classpath-performance = { module = "com.google.firebase:perf-plugin", version.ref = "performance" }
+classpath-ksp = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
+
 [bundles]
 kotlin = ["kotlin-stblib", "kotlin-reflect", "kotlin-coroutine"]
 kotlin_android = [
@@ -24,4 +38,12 @@ kotlin_android = [
     "kotlin-coroutine-android",
     "kotlin-coroutine-googleplay",
     "kotlin-datetime",
+]
+gradle-bom = [
+    "classpath-kotlin",
+    "classpath-safeargs",
+    "classpath-googleservice",
+    "classpath-crashlytics",
+    "classpath-performance",
+    "classpath-ksp",
 ]
