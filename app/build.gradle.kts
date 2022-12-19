@@ -84,7 +84,7 @@ dependencies {
     api(libs.bundles.firebase)
     api(libs.bundles.auth)
     api(libs.jieyi.knifer)
-    api(libs.playstore)
+    // api(libs.playstore)
     api(libs.ui.lottie)
     api(libs.ui.shapeofview)
     api(libs.mmkv)

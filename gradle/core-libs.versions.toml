@@ -1,14 +1,14 @@
 [versions]
 # Define the dependency versions
-kotlin = "1.7.22"
+kotlin = "1.8.0-RC"
 kotlin-coroutine = "1.6.4"
 kotlin-datetime = "0.4.0"
 # classpath
-safeargs = "2.5.1"
-googleservice = "4.3.13"
-crashlytics = "2.9.1"
-performance = "1.4.1"
-ksp = "1.7.22-1.0.8"
+safeargs = "2.6.0-alpha03"
+googleservice = "4.3.14"
+crashlytics = "2.9.2"
+performance = "1.4.2"
+ksp = "1.8.0-RC-1.0.8"
 
 [libraries]
 # Kotlin
