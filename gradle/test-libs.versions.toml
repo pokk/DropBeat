@@ -1,11 +1,11 @@
 [versions]
 # Define the dependency versions
-junit4 = "1.1.4-alpha07"
+junit4 = "1.1.4"
 coroutine = "1.6.4"
-mockk = "1.12.5"
+mockk = "1.13.3"
 assertk = "0.25"
-espresso = "3.5.0-alpha07"
-androidx-ktx = "1.5.0-alpha01"
+espresso = "3.5.0"
+androidx-ktx = "1.5.0"
 androidx-core = "2.1.0"
 androidx-navigation = "2.5.1"
 androidx-fragment = "1.6.0-alpha01"
