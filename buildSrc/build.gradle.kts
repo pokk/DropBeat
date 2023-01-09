@@ -36,8 +36,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:8.0.0-alpha09")
-    implementation(kotlin("gradle-plugin", "1.8.0-RC"))
+    implementation("com.android.tools.build:gradle:8.0.0-alpha11")
+    implementation(kotlin("gradle-plugin", "1.8.0"))
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0")
     implementation("com.github.ben-manes:gradle-versions-plugin:0.44.0")
     implementation("com.pinterest:ktlint:0.48.0")
